@@ -1,0 +1,10 @@
+.wrapper{
+  position: relative;
+  .content-wrapper{
+    min-height: 720px;
+  }
+  .footer{
+    position: absolute;
+    bottom:0;
+  }
+}
