@@ -1,16 +1,6 @@
 <template>
-    <index title="会员特权" title-align="tc" title-bk-color="#f2f2f2" title-ft-color="#424242">
-     <div class="content-wrapper" slot="content">
-        <section class="content-header">
-            <div>
-                <ol class="breadcrumb">
-                    <li><a v-link="{'name':'default'}">首页</a></li>
-                    <li><a v-link="{'name':'account-management'}">财务处理</a></li>
-                    <li class="active">账户管理</li>
-                </ol>
-            </div>
-        </section>
-        <section class="content">
+    <index name="xxxx" title="账户列表" ptitle="财务处理1" hname="account-management" isshow="isshow">
+        <section class="content" slot="content">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
@@ -77,7 +67,7 @@
                                         <a v-link="{name:'default',params:{lid: '123'}}">{{trlist.balanceAmount}} {{$router.params | json}}</a>
                                     </td>
                                     <td v-if="trlist.status==0">
-                                        <span v-on:click="rewrite">编辑</span>
+                                        <span v-on:click="rewrite(trlist)">编辑</span>
                                         <span v-on:click="start">启用</span>
                                         <span v-on:click="delete">删除</span>
                                     </td>
@@ -214,7 +204,7 @@
                 </div>
             </div>
         </section>
-    </div>
+
     </index>
 </template>
 <style>
@@ -252,7 +242,7 @@
     import dialog from '../components/dialog.vue'
     export default{
         props:{
-            uname:{ type: String,default: ''}
+
         },
         data(){
             return{
@@ -326,8 +316,9 @@
                 this.start_show = false
                 this.delete_show = false
             },
-            rewrite:function(){
-                this.re_show = true
+            rewrite:function(_list){
+                this.re_show = true;
+                console.log(_list);
             },
             start:function(){
                 this.start_show = true
@@ -366,7 +357,7 @@
         },
         components:{
             'datepicker': datepicker,
-            'dialog': dialog
+            'dialog': dialog,
         }
     }
 </script>
