@@ -11,6 +11,15 @@ export default function(router){
                 require(['./views/CWCL/account-management.vue'],resolve);
             }
         },
+        //交易明细
+        '/trade-info':{
+            name:'trade-info',
+            router_type:'deposit',
+            component: function(resolve){
+                // console.log('member-new',resolve)
+                require(['./views/CWCL/trade-info.vue'],resolve);
+            }
+        },
         /* 首页 */
         '/default/':{
             name:'default',

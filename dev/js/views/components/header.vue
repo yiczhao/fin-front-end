@@ -11,7 +11,7 @@
         <nav class="navbar navbar-static-top">
             <div class="navbar-custom-menu">
                 <div class="pull-right">
-                    您好，<span v-text="name"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>
+                    您好，<span v-text="title"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>
                 </div>
             </div>
         </nav>
@@ -20,7 +20,13 @@
 <script>
     export default {
         props:{
-            name: {type: String,required: true}
+                title: {type: String, required: true},
+                align: {type: String, required: true},
+                type: {type: String, required: true},
+                bkColor: {type: String, require: true},
+                ftColor: {type: String, require: true},
+                section: {type: Array, require: true}
+            
         },
         data(){
             return {
