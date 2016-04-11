@@ -1,0 +1,17 @@
+{
+  "code": 0,
+  "dataList": [
+    {
+      "value": "备付金",
+      "accountType": "1"
+    },
+    {
+      "value": "本金",
+      "accountType": "2"
+    },
+    {
+      "value": "佣金",
+      "accountType": "3"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "code": 0,
+  "dataList":[
+  {
+    "companyName":"南昌卡说","companyId":"1"
+  },
+  {
+    "companyName":"武汉卡说","companyId":"2"
+  },
+  {
+    "companyName":"上海卡说","companyId":"3"
+  },
+  {
+    "companyName":"苏州卡说","companyId":"4"
+  }]
+}

@@ -1,7 +1,6 @@
 'use strict'
 
 export default function(router){
-	// console.log('routers')
     router.map({
         //账户管理
         '/account-management':{
@@ -9,24 +8,26 @@ export default function(router){
             router_type:'deposit',
             component: function(resolve){
                 // console.log('member-new',resolve)
-                require(['./views/account-management.vue'],resolve);
+                require(['./views/CWCL/account-management.vue'],resolve);
             }
         },
         /* 首页 */
-        '/index':{
-            name:'index',
+        '/default/':{
+            name:'default',
             router_type:'deposit',
             component: function(resolve){
                 // console.log('member-new',resolve)
-                require(['./views/index.vue'],resolve);
+                require(['./views/default.vue'],resolve);
             }
         },
-        /* 404路由 */
-        '*': {
-            component: function(resolve){
-                router.go({ name: 'index'})
-                // require(['./views/index.vue'],resolve);
+        // 404
+        '*':{
+            component:function () {
+                router.go({name:'default'})
             }
         }
     })
+    router.beforeEach(transition =>{
+        transition.next();
+    });
 }

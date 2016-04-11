@@ -1,0 +1,40 @@
+{
+  "code": 0,
+  "message": "success",
+  "dataList": [
+      {
+       "companyName": "南昌卡说",
+       "shortName": "南昌备付金",
+       "accountName": "南昌卡说信息技术有限公司",
+       "accountNumber": "36001050307052501760",
+       "bankName": "中国建设银行南昌怡园支行",
+       "accountType": 1,
+       "startDate": "2015-01-01",
+       "balanceAmount": 3652,
+       "chargePerson": 10011,
+       "status": 0
+     },{
+      "companyName": "南昌卡说",
+      "shortName": "南昌备付金",
+      "accountName": "南昌卡说信息技术有限公司",
+      "accountNumber": "36001050307052501760",
+      "bankName": "中国建设银行南昌怡园支行",
+      "accountType": 2,
+      "startDate": "2015-01-01",
+      "balanceAmount": 3652,
+      "chargePerson": 10012,
+      "status": 1
+     },{
+    "companyName": "南昌卡说",
+    "shortName": "南昌备付金",
+    "accountName": "南昌卡说信息技术有限公司",
+    "accountNumber": "36001050307052501760",
+    "bankName": "中国建设银行南昌怡园支行",
+    "accountType": 3,
+    "startDate": "2015-01-01",
+    "balanceAmount": 3652,
+    "chargePerson": 10013,
+    "status": 1
+   }],
+  "totalPage": 25
+}

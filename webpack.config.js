@@ -53,5 +53,16 @@ module.exports = {
 
 	plugins:[
 		new ExtractTextPlugin('app.css')
-	]
+	],
+	devServer: {
+		hot: true,
+		inline: true,
+		//其实很简单的，只要配置这个参数就可以了
+		proxy: {
+			'/dev/*': {
+				target: 'http://localhost:9000',
+				secure: false
+			}
+		}
+	}
 };
