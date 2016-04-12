@@ -37,7 +37,9 @@
             isshow: {type: String,default:''},
             title: {type: String,default:'首页'},
             ptitle: {type: String,default:''},
-            hname: {type: String,default:''}
+            p2title:{type:String ,default:''},
+            hname: {type: String,default:''},
+
         },
         components:{
             'nvHeader': nvHeader,
