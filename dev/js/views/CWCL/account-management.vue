@@ -45,7 +45,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-if="!!zdlists.length" v-for="trlist in zdlists">
+                                <tr v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">
                                     <td>{{trlist.companyName}}</td>
                                     <td>{{trlist.shortName}}</td>
                                     <td>{{trlist.accountName}}</td>
@@ -100,40 +100,43 @@
                         </dialog>
                         <!-- Promotion Modal -->
                         <!-- Promotion Modal -->
-                        <dialog :title="'添加账户'" :show="add_show" :cb-close="close_dialog" :width="500">
+                        <validator name="validation1">
+                        <dialog :title="'添加账户'" :show="add_show" :cb-close="close_dialog" :width="600">
                             <div class="modal-body member_rules_modal-body">
                                 <div class="form-group">
                                     <label><i>*</i>分公司</label>
-                                    <select class="form-control" v-model="addcSelect">
+                                    <select class="form-control" v-model="addcSelect" v-validate:must="{dirty:false,required:true}" >
                                         <option value="">请选择分公司</option>
                                         <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
                                     </select>
-                                    <span class="waring"></span>
+                                    <span class="waring" v-if="$validation1.must.required">请选择公司</span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>简称</label>
-                                    <input type="text" class="form-control" v-model="addJc" placeholder="15字以内">
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control" v-model="addJc" v-validate:jc="{ dirty:false,required:true,maxlength:{rule:15}}" placeholder="15字以内">
+                                    <span class="waring" v-if="$validation1.jc.required">请输入简称</span>
+                                    <span class="waring" v-if="$validation1.jc.maxlength">超出字数限制</span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>账户名</label>
-                                    <input type="text" class="form-control" v-model="addName">
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control"  v-validate:addzh="{dirty:true,required:true}"  v-model="addName">
+                                    <span class="waring" v-if="$validation1.addzh.required" >请输入账户名</span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>账号</label>
-                                    <input type="text" class="form-control" v-model="addNum" >
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control" v-validate:isnum="{dirty:true,required:true}"  v-validate:isnum1="['numeric']" v-model="addNum" >
+                                    <span class="waring" v-if="$validation1.isnum.required">请输入账号</span>
+                                    <span class="waring" v-if="$validation1.isnum1.numeric">账号只能为数字</span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>开户行</label>
-                                    <input type="text" class="form-control" v-model="addBank">
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control" v-model="addBank" v-validate:addbk="{dirty:true,required:true}">
+                                    <span class="waring" v-if="$validation1.addbk.required">请输入开户行</span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>起始日期</label>
-                                    <datepicker :width="'70%'" :readonly="true" :value.sync="params.create_time_begin" format="YYYY-MM-DD"></datepicker>
-                                    <span class="waring"></span>
+                                    <datepicker :width="'65%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
+                                    <span v-show="!relist.startDate">{{relist.startDate}}sdfsdfsfd</span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>类型</label>
@@ -141,70 +144,71 @@
                                         <option value="">请选择类型</option>
                                         <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                                     </select>
-                                    <span class="waring"></span>
+                                    <span class="waring">请选择类型</span>
                                 </div>
                                 <div class="form-group tc">
-                                    <button class="btn">添加</button>
+                                    <button class="btn" v-on:click="addBtn">添加</button>
                                 </div>
                             </div>
                         </dialog>
+                        </validator>
                         <!-- Promotion Modal -->
 
                         <!-- Promotion Modal -->
-                        <dialog :title="'编辑账户'" :show="re_show" :cb-close="close_dialog" :width="500">
+                        <dialog :title="'编辑账户'" :show="re_show" :cb-close="close_dialog" :width="600">
                             <div class="modal-body member_rules_modal-body">
                                 <div class="form-group">
                                     <label><i>*</i>分公司</label>
                                     <select class="form-control" v-model="recSelect">
                                         <option value="">请选择分公司</option>
-                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
+                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="relist.companyId"></option>
                                     </select>
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>简称</label>
-                                    <input type="text" class="form-control" v-model="reJc" placeholder="15字以内">
+                                    <input type="text" class="form-control" v-model="reJc" :value="relist.shortName" placeholder="15字以内">
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>账户名</label>
-                                    <input type="text" class="form-control" v-model="reName">
+                                    <input type="text" class="form-control" :value="relist.accountName"  v-model="reName">
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>账号</label>
-                                    <input type="text" class="form-control" v-model="reNum" >
+                                    <input type="text" class="form-control" :value="relist.accountNumber" v-model="reNum" >
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>开户行</label>
-                                    <input type="text" class="form-control" v-model="reBank">
+                                    <input type="text" class="form-control" :value="relist.bankName" v-model="reBank">
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>起始日期</label>
-                                    <datepicker :width="'70%'" :readonly="true" :value.sync="params.create_time_begin" format="YYYY-MM-DD"></datepicker>
+                                    <datepicker :width="'65%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>类型</label>
                                     <select class="form-control" v-model="retSelect">
                                         <option value="">请选择类型</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="relist.accountType"></option>
                                     </select>
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group tc">
-                                    <button class="btn">添加</button>
+                                    <button class="btn">保存</button>
                                 </div>
                             </div>
                         </dialog>
                         <!-- Promotion Modal -->
+
                     </div>
                 </div>
             </div>
         </section>
-
     </index>
 </template>
 <style>
@@ -216,15 +220,19 @@
     }
     .modal-body .form-control{
         text-align: left;
-        width:70%;
+        width:65%;
         display: inline-block;
     }
     .modal-body label{
-        width:15%;
+        width:13%;
         display: inline-block;
     }
     .modal-body label i{
         color:red;
+    }
+    .modal-body .waring{
+        color: red;
+        margin-left: 5px;
     }
     .modal-body button{
         width:35%;
@@ -237,6 +245,7 @@
         opacity: 80;
     }
 </style>
+
 <script>
     import datepicker from '../components/datepicker.vue'
     import dialog from '../components/dialog.vue'
@@ -247,6 +256,9 @@
         data(){
             return{
                 zdlists:[],
+                relist:{
+                    startDate:''
+                },
                 companylists:[],
                 typelists:[],
                 params:{},
@@ -311,14 +323,17 @@
                 this.add_show = true
             },
             close_dialog() {
-                this.add_show = false
-                this.re_show = false
-                this.start_show = false
-                this.delete_show = false
+                this.add_show = false;
+                this.re_show = false;
+                this.start_show = false;
+                this.delete_show = false;
+                this.$resetValidation();
             },
             rewrite:function(_list){
+                this.$set('relist', _list);
+                this.$set('recSelect', _list.companyId);
+                this.$set('retSelect', _list.accountType);
                 this.re_show = true;
-                console.log(_list);
             },
             start:function(){
                 this.start_show = true
@@ -348,16 +363,25 @@
                         }, function (response) {
                             console.log(response);
                         })
+            },
+            addBtn:function(){
+                console.log(this.$validation1.valid);
             }
         },
         ready: function () {
             this.getZlists({"accountId": 10010});
             this.getClist({"accountId": 10010});
             this.getTlists({"accountId": 10010});
+            console.log(this.$validation1.jc);
         },
         components:{
             'datepicker': datepicker,
             'dialog': dialog,
+        },
+        validators: {
+            numeric: function (val) {
+                return /^[-+]?[0-9]+$/.test(val)
+            }
         }
     }
 </script>

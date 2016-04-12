@@ -28,7 +28,7 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
-
+// console.log(validator);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,
