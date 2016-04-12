@@ -9,8 +9,8 @@
             <section class="content" slot="content">
                 <div class="col-xs-12">
                     <p>[财务管理系统]欢迎您!</p>
-                    <p>尊敬的[{{uname}}]您好! 这是您第[{{timenum}}]次登录本系统!</p>
-                    <p>最近一次登录时间：{{utime}} 最近一次登录IP地址：{{uip}}</p>
+                    <p>尊敬的[{{loginList.uname}}]您好! 这是您第[{{loginList.timenum}}]次登录本系统!</p>
+                    <p>最近一次登录时间：{{loginList.utime}} 最近一次登录IP地址：{{loginList.uip}}</p>
                 </div>
             </section>
     </index>
@@ -19,16 +19,21 @@
     export default{
         data(){
             return{
-                uname:'123',
-                timenum:123,
-                utime:'2015/7/29 10:19:19',
-                uip:'192.168.1.1'
+                loginList:{}
             }
         },
         components:{
+            
         },
         ready:function(){
-//            console.log(this.$route.params);
+            // *** 请求用户数据
+            this.$http.get('/dev/js/postjson/default.json',{})
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('loginList', response.data.dataLists) : null;
+                    }, function (response) {
+                        console.log(response);
+                    });
         },
         props:{
 

@@ -7,7 +7,6 @@ export default function(router){
             name:'account-management',
             router_type:'deposit',
             component: function(resolve){
-                // console.log('member-new',resolve)
                 require(['./views/CWCL/account-management.vue'],resolve);
             }
         },
@@ -16,7 +15,6 @@ export default function(router){
             name:'trade-info',
             router_type:'deposit',
             component: function(resolve){
-                // console.log('member-new',resolve)
                 require(['./views/CWCL/trade-info.vue'],resolve);
             }
         },
@@ -25,7 +23,6 @@ export default function(router){
             name:'default',
             router_type:'deposit',
             component: function(resolve){
-                // console.log('member-new',resolve)
                 require(['./views/default.vue'],resolve);
             }
         },

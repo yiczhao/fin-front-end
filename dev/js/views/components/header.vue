@@ -20,13 +20,7 @@
 <script>
     export default {
         props:{
-                title: {type: String, required: true},
-                align: {type: String, required: true},
-                type: {type: String, required: true},
-                bkColor: {type: String, require: true},
-                ftColor: {type: String, require: true},
-                section: {type: Array, require: true}
-            
+            name: {type: String,required: true}
         },
         data(){
             return {
