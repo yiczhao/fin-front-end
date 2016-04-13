@@ -174,7 +174,6 @@
             }
         },
         ready() {
-            !this.pageSizeList && (this.pageSizeList = [20,50,100])
         }
     }
 </script>

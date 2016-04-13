@@ -66,8 +66,8 @@
         <ul>
             <li v-show="islength">
                 每页展示
-                <select v-model="pageSize" class="page_length">
-                    <option v-for="n in pageSizeList" :value="+n" v-text="n"></option>    
+                <select v-model="page_size" class="page_length">
+                    <option v-for="n in pageSizeList" :value="+n" v-text="n"></option>
                 </select>条
                 &nbsp;&nbsp;&nbsp;&nbsp;
             </li>
@@ -79,7 +79,7 @@
             <li v-if="page_total>1 && show_last"><a v-on:click="cur++">下一页</a></li>
             <li v-show="page_total>1"><a v-on:click="jump('last')">尾页</a></li>
             <li><a>共<i v-text="page_total"></i>页</a></li>
-            <li v-show="page_total>pageSize">&nbsp;&nbsp;&nbsp;&nbsp;第<input type="text" class="jump-input form-control" v-model="jump_val | filter_number 1 ">页 <input type="button" value="确定" class="jump-button" @click="jump()" vaule="确定"></li>
+            <li v-show="page_total>page_size">&nbsp;&nbsp;&nbsp;&nbsp;第<input type="text" class="jump-input form-control" v-model="jump_val | filter_number 1 ">页 <input type="button" value="确定" class="jump-button" @click="jump()" vaule="确定"></li>
 
         </ul>
     </div>
@@ -94,7 +94,7 @@
             all: { type: Number, default: 0 },
             cur: { type: Number, default: 0 },
             pageSizeList: { type: Array, required:false},
-            pageSize: { type: Number, default: '' }
+            page_size: { type: Number, default: '' }
         },
         data(){
             return {
@@ -104,8 +104,9 @@
         },
         computed: {
             page_total() {
-                this.pageSize ? (this.islength = true) : (this.pageSize = this.pageSizeList[0])
-                return (this.all-(this.all%this.pageSize))/this.pageSize + ((this.all%this.pageSize) ? 1:0)
+                !this.pageSizeList && (this.pageSizeList = [15,50,100])
+                this.page_size ? (this.islength = true) : (this.page_size = this.pageSizeList[0])
+                return (this.all-(this.all%this.page_size))/this.page_size + ((this.all%this.page_size) ? 1:0)
 
             },
             indexs() {
@@ -156,25 +157,24 @@
                 switch(type){
                     case 'first':
                         this.cur = 1
-                    break
+                        break
                     case 'last':
                         this.cur = this.page_total
-                    break
+                        break
                     default :
-                    if(!+this.jump_val) return
-                    this.cur = +this.jump_val
-                    break    
+                        if(!+this.jump_val) return
+                        this.cur = +this.jump_val
+                        break
                 }
-                
+
             }
         },
         watch: {
-            pageSize() {
+            page_size() {
                 this.cur = 1
             }
         },
         ready() {
-            !this.pageSizeList && (this.pageSizeList = [20,50,100])
         }
     }
 </script>

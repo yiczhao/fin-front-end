@@ -8,6 +8,7 @@
                 :isshow="isshow"
                 :ptitle="ptitle"
                 :title="title"
+                :p2title="p2title"
                 :hname="hname"
         ></breadcrumb>
         <slot name="content" slot="content"></slot>

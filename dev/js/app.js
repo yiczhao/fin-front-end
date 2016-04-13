@@ -16,9 +16,9 @@ import routers from './routers.js'
 import interceptor from './interceptor.js'
 // *** 公共组件
 import Index from './views/components/index.vue'
-
+import page from './views/components/page.vue'
 Vue.component('index', Index);
-
+Vue.component('page', page);
 // *** 引入filter
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 // *** 引入directive
@@ -28,6 +28,7 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
+
 // console.log(validator);
 // *** 实例化VueRouter
 let router = new VueRouter({

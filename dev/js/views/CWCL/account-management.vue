@@ -1,5 +1,5 @@
 <template>
-    <index name="xxxx" title="账户列表" ptitle="财务处理1" hname="account-management" isshow="isshow">
+    <index :name="loginList.trueName" title="账户列表" ptitle="财务处理1" hname="account-management" isshow="isshow">
         <section class="content" slot="content">
             <div class="row">
                 <div class="col-xs-12">
@@ -10,19 +10,21 @@
                                     <input type="button" class="btn btn-info" v-on:click="addUser" value="添加账户">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="cSelect">
+                                    <select class="form-control" v-model="defaultData.companyId">
                                         <option value="">请选择分公司</option>
                                         <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="tSelect">
+                                    <select class="form-control" v-model="defaultData.accountType">
                                         <option value="">请选择类型</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                        <option value="1">备付金</option>
+                                        <option value="2">本金</option>
+                                        <option value="3">佣金</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="uText" placeholder="账号信息">
+                                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号信息">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
@@ -68,17 +70,41 @@
                                     </td>
                                     <td v-if="trlist.status==0">
                                         <span v-on:click="rewrite(trlist)">编辑</span>
-                                        <span v-on:click="start">启用</span>
-                                        <span v-on:click="delete">删除</span>
+                                        <span v-on:click="start(trlist.id)">启用</span>
+                                        <span v-on:click="delBtn(trlist.id)">删除</span>
                                     </td>
                                     <td v-else>
-                                        <span chargePerson="{{trlist.chargePerson}}" v-on:click.self="personDialog(trlist.chargePerson)">负责人</span>
+                                        <span chargePerson="{{trlist.chargePerson}}" v-on:click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+                            <page :all="pageall"
+                                  :cur.sync="pagecur"
+                                  :page_size.sync="page_size">
+                            </page>
                         </div>
-
+                        <!-- Promotion Modal -->
+                        <dialog :title="'负责人'" :show="person_show" :cb-close="close_dialog" :width="550">
+                            <div class="modal-body member_rules_modal-body">
+                                    <div class="form-group">
+                                        <label><i>*</i>负责人</label>
+                                        <input type="text" class="form-control" v-model="person.name" :value="person.name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>手机号</label>
+                                        <input type="text" class="form-control" v-model="person.phone" :value="person.phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>邮箱</label>
+                                        <input type="text" class="form-control" v-model="person.email" :value="person.email">
+                                    </div>
+                                    <div class="form-group tc">
+                                        <button class="btn" v-on:click="personTrue(person.id)">保存</button>
+                                    </div>
+                            </div>
+                        </dialog>
+                        <!-- Promotion Modal -->
                         <!-- Promotion Modal -->
                         <dialog :title="'你确定启用该账户么？'" :show="start_show" :cb-close="close_dialog" :width="400">
                             <div class="modal-body member_rules_modal-body">
@@ -101,110 +127,52 @@
                         <!-- Promotion Modal -->
                         <!-- Promotion Modal -->
                         <validator name="validation1">
-                        <dialog :title="'添加账户'" :show="add_show" :cb-close="close_dialog" :width="600">
-                            <div class="modal-body member_rules_modal-body">
-                                <div class="form-group">
-                                    <label><i>*</i>分公司</label>
-                                    <select class="form-control" v-model="addcSelect" v-validate:must="{dirty:false,required:true}" >
-                                        <option value="">请选择分公司</option>
-                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
-                                    </select>
-                                    <span class="waring" v-if="$validation1.must.required">请选择公司</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i>*</i>简称</label>
-                                    <input type="text" class="form-control" v-model="addJc" v-validate:jc="{ dirty:false,required:true,maxlength:{rule:15}}" placeholder="15字以内">
-                                    <span class="waring" v-if="$validation1.jc.required">请输入简称</span>
-                                    <span class="waring" v-if="$validation1.jc.maxlength">超出字数限制</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i>*</i>账户名</label>
-                                    <input type="text" class="form-control"  v-validate:addzh="{dirty:true,required:true}"  v-model="addName">
-                                    <span class="waring" v-if="$validation1.addzh.required" >请输入账户名</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i>*</i>账号</label>
-                                    <input type="text" class="form-control" v-validate:isnum="{dirty:true,required:true}"  v-validate:isnum1="['numeric']" v-model="addNum" >
-                                    <span class="waring" v-if="$validation1.isnum.required">请输入账号</span>
-                                    <span class="waring" v-if="$validation1.isnum1.numeric">账号只能为数字</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i>*</i>开户行</label>
-                                    <input type="text" class="form-control" v-model="addBank" v-validate:addbk="{dirty:true,required:true}">
-                                    <span class="waring" v-if="$validation1.addbk.required">请输入开户行</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i>*</i>起始日期</label>
-                                    <datepicker :width="'65%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
-                                    <span v-show="!relist.startDate">{{relist.startDate}}sdfsdfsfd</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i>*</i>类型</label>
-                                    <select class="form-control" v-model="addtSelect">
-                                        <option value="">请选择类型</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-                                    </select>
-                                    <span class="waring">请选择类型</span>
-                                </div>
-                                <div class="form-group tc">
-                                    <button class="btn" v-on:click="addBtn">添加</button>
-                                </div>
-                            </div>
-                        </dialog>
-                        </validator>
-                        <!-- Promotion Modal -->
-
-                        <!-- Promotion Modal -->
-                        <dialog :title="'编辑账户'" :show="re_show" :cb-close="close_dialog" :width="600">
+                        <dialog :title="re_title" :show="re_show" :cb-close="close_dialog" :width="600">
                             <div class="modal-body member_rules_modal-body">
                                 <div class="form-group">
                                     <label><i>*</i>分公司</label>
                                     <select class="form-control" v-model="recSelect">
                                         <option value="">请选择分公司</option>
-                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="relist.companyId"></option>
+                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
                                     </select>
-                                    <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>简称</label>
-                                    <input type="text" class="form-control" v-model="reJc" :value="relist.shortName" placeholder="15字以内">
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control" v-model="reshortName" :value="relist.shortName" maxlength="15" placeholder="15字以内">
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>账户名</label>
-                                    <input type="text" class="form-control" :value="relist.accountName"  v-model="reName">
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control" :value="relist.accountName" v-model="accountName">
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>账号</label>
-                                    <input type="text" class="form-control" :value="relist.accountNumber" v-model="reNum" >
-                                    <span class="waring"></span>
+                                    <input class="form-control" :value="relist.accountNumber" v-model="accountNumber">
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>开户行</label>
-                                    <input type="text" class="form-control" :value="relist.bankName" v-model="reBank">
-                                    <span class="waring"></span>
+                                    <input type="text" class="form-control" :value="relist.bankName" v-model="bankName">
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>起始日期</label>
                                     <datepicker :width="'65%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
-                                    <span class="waring"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><i>*</i>类型</label>
                                     <select class="form-control" v-model="retSelect">
                                         <option value="">请选择类型</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="relist.accountType"></option>
+                                        <option value="1">备付金</option>
+                                        <option value="2">本金</option>
+                                        <option value="3">佣金</option>
                                     </select>
                                     <span class="waring"></span>
                                 </div>
                                 <div class="form-group tc">
-                                    <button class="btn">保存</button>
+                                    <button class="btn" v-on:click="addBtn">保存</button>
                                 </div>
                             </div>
                         </dialog>
                         <!-- Promotion Modal -->
-
+                        </validator>
                     </div>
                 </div>
             </div>
@@ -244,6 +212,10 @@
     td span:hover{
         opacity: 80;
     }
+    .page-bar{
+        margin: 25px auto;
+        text-align: center;
+    }
 </style>
 
 <script>
@@ -255,22 +227,30 @@
         },
         data(){
             return{
+                loginList:{},
+                page_size:15,
+                pagecur:1,
+                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
-                relist:{
-                    startDate:''
-                },
+                pageall:1,
+                relist:{},
                 companylists:[],
                 typelists:[],
                 params:{},
                 tSelect:'',
                 cSelect:'',
                 uText:'',
-                add_show: false,
                 re_show: false,
                 start_show: false,
                 delete_show: false,
-                addcSelect:'0',addJc:'',addName:'',addNum:'',addBank:'',dataPick:'',addtSelect:'0',
-                recSelect:'0',reJc:'',reName:'',reNum:'',reBank:'',rePick:'',retSelect:'0'
+                person_show:false,
+                startDate:'',re_title:'',recSelect:'',retSelect:'',reshortName:'',accountName:'',accountNumber:'',bankName:'',
+                person:{
+                    name:'',
+                    phone:'',
+                    email:''
+                },
+                accountId:''
             }
         },
         methods:{
@@ -280,99 +260,141 @@
 
             // *** 请求账户列表数据
             getZlists:function(data){
-                    this.$http.get('/dev/js/postjson/zdlist.json',{data})
+                    this.$http.post('./bankaccount/list',data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
-                                (response.data.code==0) ? this.$set('zdlists', response.data.dataList) : null;
+                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                                (response.data.code==0) ? this.$set('pageall', response.data.data.length) : null;
                             }, function (response) {
                                 console.log(response);
                             });
             },
             getClist:function(){
                 // *** 请求公司数据
-                this.$http.get('/dev/js/postjson/companylists.json',{})
+                this.$http.get('./subcompany/list',{})
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.dataList) : null;
+                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
                         }, function (response) {
                             console.log(response);
                         });
             },
-            getTlists:function(){
-                // *** 请求类型数据
-                this.$http.get('/dev/js/postjson/typelists.json',{})
+            checkNew:function(){
+                this.initList();
+            },
+            addUser:function(){
+                this.relist={};
+                this.re_title='添加账户';
+                this.recSelect='1';
+                this.retSelect='';
+                this.accountId='';
+                this.re_show = true;
+            },
+            close_dialog() {
+                this.re_show = false;
+                this.start_show = false;
+                this.delete_show = false;
+                this.person_show=false;
+            },
+            initList:function(){
+                this.close_dialog();
+                this.getZlists(this.defaultData);
+            },
+            rewrite:function(_list){
+                this.accountId=_list.id;
+                this.$set('relist', _list);
+                this.$set('recSelect', 1);
+                this.$set('retSelect', _list.accountType);
+                this.re_show = true; this.re_title='编辑账户';
+            },
+            submit:function(a){
+                console.log(a);
+            },
+            start:function(a){
+                this.start_show = true;
+                this.accountId=a;
+            },
+            delBtn:function(a){
+                this.delete_show = true;
+                this.accountId=a;
+            },
+            personDialog:function(a,b){
+                this.accountId=b;
+                this.$http.post('./chargeperson/query/'+a)
                         .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('typelists', response.data.dataList) : null;
+                            // *** 判断请求是否成功如若成功则启用该数据
+                            var newperson={
+                                name:'',
+                                phone:'',
+                                email:''
+                            };
+                            if(response.data.data){
+                                this.$set('person', response.data.data)
+                            }else{
+                                this.$set('person',newperson)
+                            }
+                            this.person_show=true;
+                        }, function (response) {})
+            },
+            personTrue:function(a){
+                let data={
+                    "id": a,
+                    "accountId":this.accountId,
+                    "name": this.person.name,
+                    "phone": this.person.phone,
+                    "email": this.person.email,
+                }
+                this.$http.post('./chargeperson/save',data)
+                        .then(function (response) {
+                            this.initList();
                         }, function (response) {
                             console.log(response);
                         })
             },
-            checkNew:function(){
-               let data={
-                        "companyId": this.cSelect,
-                        "accountType": this.tSelect,
-                        "accountNumber": this.uText,
-                        "pageNumber": 1,
-                        "pageCount": 15
-                    };
-                console.log(data);
-                this.getZlists(data);
-            },
-            addUser:function(){
-                this.add_show = true
-            },
-            close_dialog() {
-                this.add_show = false;
-                this.re_show = false;
-                this.start_show = false;
-                this.delete_show = false;
-                this.$resetValidation();
-            },
-            rewrite:function(_list){
-                this.$set('relist', _list);
-                this.$set('recSelect', _list.companyId);
-                this.$set('retSelect', _list.accountType);
-                this.re_show = true;
-            },
-            start:function(){
-                this.start_show = true
-            },
-            delete:function(){
-                this.delete_show = true
-            },
-            personDialog:function(a){
-                console.log(a);
-            },
             startTrue:function(){
                 // *** 启用提交
-                this.$http.get('/dev/js/postjson/typelists.json',{})
+                this.$http.get('./bankaccount/change/'+this.accountId)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
-                            !!response.data.length ? this.$set('typelists', response.data) : null;
+                            this.initList();
                         }, function (response) {
                             console.log(response);
                         })
             },
             delTrue:function(){
                 // *** 删除提交
-                this.$http.get('/dev/js/postjson/typelists.json',{})
+                this.$http.get('./bankaccount/delete/'+this.accountId)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则删除该条数据
-
+                            this.initList();
                         }, function (response) {
                             console.log(response);
                         })
             },
             addBtn:function(){
-                console.log(this.$validation1.valid);
+                // *** 新增修改保存
+                let data={
+                    "id": this.accountId,
+                    "companyId": this.recSelect,
+                    "shortName": this.reshortName,
+                    "accountName": this.accountName,
+                    "accountNumber": this.accountNumber,
+                    "bankName": this.bankName,
+                    "accountType": this.retSelect,
+                    "startDate": this.relist.startDate
+                };
+                this.$http.post('./bankaccount/save',data)
+                        .then(function (response) {
+                            this.initList();
+                        }, function (response) {
+                            console.log(response);
+                        })
             }
         },
         ready: function () {
-            this.getZlists({"accountId": 10010});
-            this.getClist({"accountId": 10010});
-            this.getTlists({"accountId": 10010});
-            console.log(this.$validation1.jc);
+            (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            this.getZlists(this.defaultData);
+            this.getClist();
         },
         components:{
             'datepicker': datepicker,

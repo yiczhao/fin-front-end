@@ -2,6 +2,14 @@
 
 export default function(router){
     router.map({
+        /* 登陆 */
+        '/login':{
+            name:'login',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/login.vue'],resolve);
+            }
+        },
         //账户管理
         '/account-management':{
             name:'account-management',
@@ -37,7 +45,7 @@ export default function(router){
         // 404
         '*':{
             component:function () {
-                router.go({name:'default'})
+                router.go({name:'login'})
             }
         }
     })
