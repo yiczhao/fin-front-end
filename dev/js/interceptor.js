@@ -9,7 +9,7 @@ import date_format from 'date-format-lite'
 export default function install(Vue,router_proto) {
 
 	window.origin && (Vue.http.options.root = window.origin );
-	Vue.http.options.emulateJSON = true;
+	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 
 		//request (request) {
