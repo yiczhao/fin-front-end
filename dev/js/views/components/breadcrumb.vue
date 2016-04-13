@@ -9,7 +9,6 @@
             <ol class="breadcrumb">
                 <li><a v-link="{'name':'default'}">首页</a></li>
                 <li><a v-link="{'name':hname}" v-text="ptitle"></a></li>
-                <li v-if="p2title"><a v-link="{'name':hname}" v-text="p2title"></a></li>
                 <li class="active" v-text="title"></li>
             </ol>
         </div>
@@ -21,7 +20,6 @@
             isshow: {type: String, required: true},
             title: {type: String, required: true},
             ptitle: {type: String, required: true},
-            p2title: {type: String, required: true},
             hname: {type: String, required: true},
 
         },

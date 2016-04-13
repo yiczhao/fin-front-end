@@ -18,6 +18,14 @@ export default function(router){
                 require(['./views/CWCL/trade-info.vue'],resolve);
             }
         },
+        //补贴划付
+        '/subsidy-appropriation':{
+            name:'subsidy-appropriation',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/BFJZC/subsidy-appropriation.vue'],resolve);
+            }
+        },
         /* 首页 */
         '/default/':{
             name:'default',

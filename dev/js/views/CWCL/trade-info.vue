@@ -1,5 +1,5 @@
 <template>
-    <index title="交易明细" ptitle="财务处理" p2title="交易明细"  isshow="isshow">
+    <index title="交易明细" ptitle="财务处理"  isshow="isshow">
         <section class="content" slot="content">
             <div class="row">
                 <div class="col-xs-12">
@@ -7,25 +7,57 @@
                         <div class="box-header">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="showDialog" value="添加交易">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="cSelect">
-                                        <option value="" selected="selected">请选择分公司</option>
+                                    <select class="form-control" v-model="subCompanID" >
+                                    <option value="">请选择分公司</option>
                                         <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="tSelect">
-                                        <option value="">请选择类型</option>
+                                    <select class="form-control" v-model="cityID">
+                                    <option value="">请选择城市</option>
+                                        <option v-for="n in cityList" v-text="n.cityID" :value="n.name"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" v-model="type">
+                                    <option value="">请选择交易类型</option>
+                                    <option value="1">正常交易</option>
+                                    <option value="2">手工单</option>
                                         <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="uText" placeholder="账号信息">
+                                    <select class="form-control" v-model="timeRange">
+                                    <option value="LASTDAY">最近一周</option>
+                                    <option value="LASTWEEK">最近一个月</option>
+                                    <option value="LASTMONTH">最近三个月</option>
+                                    <option value="LASTTHREEMONTHS">自定义</option>
+                                    </select>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
+                                    <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="id" placeholder="交易ID">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="seriesNumber" placeholder="交易流水号">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="phone" placeholder="手机号">
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" v-model="activityID">
+                                    <option value="0">请选择参与活动</option>
+                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
                             </form>
                         </div>
@@ -102,21 +134,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <dialog :title="dialogTitle" :show="showAddWin" :cb-close="closeDialog" :width="500">
-                            <div class="modal-body member_rules_modal-body">
-                                <div class="form-group">
-                                    <label>流水号：</label>
-                                    <input type="text" class="form-control" v-model="reNum" >
-                                    <span class="waring"></span>
-                                </div> 
-                                <div class="form-group">
-                                    <label><i>*</i>商户名称</label>
-                                    <input type="text" class="form-control" v-model="reNum" >
-                                    <span class="waring"></span>
-                                </div>                                   
-                            </div>
-                        </dialog>
                     </div>
                 </div>
             </div>
@@ -142,14 +159,24 @@
         },
         data(){
             return{
+                subCompanID:"",
+                cityID:"",
+                type:"",
+                timeRange:"LASTDAY",
+                merchantID:"",      
+                merchantName:"",   
+                id:"",   
+                seriesNumber:"",        
+                phone:"",      
+                activityID:0,
                 tradeList:[],
-                dialogTitle:'',
-                showAddWin:false
+                cityList:[]
             }
         },
         methods:{
+            //获取交易记录
              getTradeList:function(data){
-                this.$http.get('/dev/js/postjson/tradeList.json',{data})
+                this.$http.post('./tradedetail/list',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
@@ -157,17 +184,35 @@
                         console.log(response);
                     });
             },
-            showDialog:function(){
-                this.showAddWin=true,
-                this.dialogTitle="添加交易"
+            //获取城市数据
+            getCity:function(data){
+                 this.$http.post('./city/list',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                    }, function (response) {
+                        console.log(response);
+                    });
             },
-            closeDialog:function(){
-                this.showAddWin=false,
-                this.dialogTitle=""
-            }
+            query: function () {
+                let data={
+                        subCompanID:this.subCompanID,
+                        cityID:this.cityID,
+                        type:this.type,
+                        timeRange:this.timeRange,
+                        merchantID:this.merchantID,
+                        merchantName:this.merchantName,
+                        id:this.id,
+                        seriesNumber:this.seriesNumber,        
+                        phone:this.phone,      
+                        activityID:this.activityID
+                    };
+                this.getTradeList(data);
+            },
         },
         ready: function () {
-            this.getTradeList({"accountId": 10010});
+            this.getTradeList({});
+            this.getCity({});
         },
         components:{
            'datepicker': datepicker,
