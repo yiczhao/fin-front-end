@@ -6,16 +6,17 @@
                     <div class="box">
                         <div class="box-header">
                             <form class="form-inline manage-form">
+                                <br/>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanID" >
                                     <option value="">请选择分公司</option>
-                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
+                                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
                                     <option value="">请选择城市</option>
-                                        <option v-for="n in cityList" v-text="n.cityID" :value="n.name"></option>
+                                        <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -34,6 +35,7 @@
                                     <option value="LASTTHREEMONTHS">自定义</option>
                                     </select>
                                 </div>
+                                <br/>
                                 <br/>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
@@ -96,7 +98,7 @@
                                 <tbody>
                                 <tr v-if="!!tradeList.length" v-for="trlist in tradeList">
                                     <td>{{trlist.id}}</td>
-                                    <td>{{trlist.seriesNumber}}</td>
+                                    <td>{{trlist.serialNumber}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
                                     <td>{{trlist.cityName}}</td>
                                     <td>{{trlist.merchantID}}</td> 
@@ -127,12 +129,20 @@
                                         </template>
                                     </td>
                                     <td>
-                                       <a href="#">详情</a>
+                                        <template v-if="trlist.type==2">
+                                            <a href="#">详情</a>
+                                        </template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="box-footer">
+                            <page :all="pageall"
+                                  :cur.sync="pagecur"
+                                  :page_size.sync="page_size">
+                            </page>
                         </div>
                     </div>
                 </div>
@@ -142,12 +152,18 @@
 </template>
 <style>
     body{
-        background-color:#ff0000;
+        background-color:#fff;
     }
     .box-body{
         overflow:auto;
     }
-    
+    .page-bar{
+        margin: 25px auto;
+        text-align: center;
+    }
+    th{
+        min-width: 85px;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -169,6 +185,10 @@
                 seriesNumber:"",        
                 phone:"",      
                 activityID:0,
+                subcompanyList:[],
+                pageall:1,
+                pagecur:1,
+                page_size:15,
                 tradeList:[],
                 cityList:[]
             }
@@ -180,6 +200,17 @@
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
+                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                    }, function (response) {
+                        console.log(response);
+                    });
+            },
+            //获取分公司数据
+            getSubcompany:function(data){
+                 this.$http.post('./subcompany/list',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     }, function (response) {
                         console.log(response);
                     });
@@ -195,6 +226,7 @@
                     });
             },
             query: function () {
+                // let data=this.data;
                 let data={
                         subCompanID:this.subCompanID,
                         cityID:this.cityID,
@@ -212,6 +244,7 @@
         },
         ready: function () {
             this.getTradeList({});
+            this.getSubcompany({});
             this.getCity({});
         },
         components:{

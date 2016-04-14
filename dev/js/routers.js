@@ -34,6 +34,14 @@ export default function(router){
                 require(['./views/BFJZC/subsidy-appropriation.vue'],resolve);
             }
         },
+        //补贴划付
+        '/subsidy-tax-rebate':{
+            name:'subsidy-tax-rebate',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/BFJZC/subsidy-tax-rebate.vue'],resolve);
+            }
+        },
         /* 首页 */
         '/default/':{
             name:'default',
@@ -45,7 +53,7 @@ export default function(router){
         // 404
         '*':{
             component:function () {
-                router.go({name:'login'})
+                router.go({name:'default'})
             }
         }
     })

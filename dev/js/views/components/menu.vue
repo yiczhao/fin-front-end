@@ -18,6 +18,7 @@
                              <li><a v-link="{'name':'account-management'}"><i class="fa fa-circle-o"></i>账户管理</a></li>
                              <li><a v-link="{'name':'trade-info'}"><i class="fa fa-circle-o"></i>交易明细</a></li>
                              <li><a v-link="{'name':'subsidy-appropriation'}"><i class="fa fa-circle-o"></i>补贴划付</a></li>
+                             <li><a v-link="{'name':'subsidy-tax-rebate'}"><i class="fa fa-circle-o"></i>补贴退税</a></li>
                              <li><a href="#"><i class="fa fa-circle-o"></i>3211佣金明细</a></li>
                              <li class="treeview">
                                  <a href="#"><i class="fa fa-circle-o"></i>本金收入<i class="fa fa-angle-left pull-right"></i></a>
