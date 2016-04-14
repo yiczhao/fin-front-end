@@ -12,10 +12,14 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 
-		//request (request) {
-		//	Message.show('loading','加载中...');
-		//	return request
-		//},
+		request (request) {
+
+			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
+
+			request.headers['X-Auth-Token']=token;
+			console.log('loading加载中...');
+			return request
+		},
 
 		//response (response) {
 		//	Message.hide();

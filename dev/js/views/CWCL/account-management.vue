@@ -66,7 +66,7 @@
                                     </td>
                                     <td>{{trlist.startDate}}</td>
                                     <td>
-                                        <a v-link="{name:'default',params:{lid: '123'}}">{{trlist.balanceAmount}} {{$router.params | json}}</a>
+                                        <a v-link="{name:'default',params:{lid: '123'}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                                     </td>
                                     <td v-if="trlist.status==0">
                                         <span v-on:click="rewrite(trlist)">编辑</span>
@@ -227,9 +227,9 @@
         },
         data(){
             return{
-                loginList:{},
-                page_size:15,
                 pagecur:1,
+                page_size:15,
+                loginList:{},
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
                 pageall:1,
@@ -264,7 +264,7 @@
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.data.length) : null;
+                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                             }, function (response) {
                                 console.log(response);
                             });
@@ -371,6 +371,9 @@
                             console.log(response);
                         })
             },
+            btn_click:function(){
+              console.log(111);
+            },
             addBtn:function(){
                 // *** 新增修改保存
                 let data={
@@ -393,12 +396,22 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
-            this.getZlists(this.defaultData);
+            this.initList();
             this.getClist();
         },
         components:{
             'datepicker': datepicker,
             'dialog': dialog,
+        },
+        watch:{
+            pagecur:function(){
+                this.defaultData.pageIndex=this.pagecur;
+                this.getZlists(this.defaultData);
+            },
+            page_size:function(){
+                this.defaultData.pageSize=this.page_size;
+                this.getZlists(this.defaultData);
+            }
         },
         validators: {
             numeric: function (val) {

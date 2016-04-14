@@ -29,7 +29,18 @@
         },
         methods:{
             loginout() {
-                console.log('loginout')
+                this.$http.post('./passport/loginout')
+                        .then(function (response) {
+                            if(response.data.code===0){
+                                sessionStorage.removeItem('userData');
+                                this.$router.go({name:'login'});
+                            }
+                            else{
+                                alert(response.data.message);
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
             }
         },
         ready(){

@@ -1,6 +1,7 @@
 <template>
     <nv-header
             :name="name"
+            keep-alive
     ></nv-header>
     <nv-menu keep-alive></nv-menu>
     <div class="content-wrapper">
@@ -10,7 +11,7 @@
                 :title="title"
                 :p2title="p2title"
                 :hname="hname"
-        ></breadcrumb>
+                keep-alive></breadcrumb>
         <slot name="content" slot="content"></slot>
     </div>
     <nv-footer keep-alive></nv-footer>
@@ -40,7 +41,6 @@
             ptitle: {type: String,default:''},
             p2title:{type:String ,default:''},
             hname: {type: String,default:''},
-
         },
         components:{
             'nvHeader': nvHeader,

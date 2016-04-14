@@ -104,7 +104,7 @@
         },
         computed: {
             page_total() {
-                !this.pageSizeList && (this.pageSizeList = [15,50,100])
+                !this.pageSizeList && (this.pageSizeList = [15,25,50,100])
                 this.page_size ? (this.islength = true) : (this.page_size = this.pageSizeList[0])
                 return (this.all-(this.all%this.page_size))/this.page_size + ((this.all%this.page_size) ? 1:0)
 
