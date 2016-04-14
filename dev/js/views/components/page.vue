@@ -70,6 +70,8 @@
                     <option v-for="n in pageSizeList" :value="+n" v-text="n"></option>
                 </select>条
                 &nbsp;&nbsp;&nbsp;&nbsp;
+                共<i v-text="all"></i>条
+                &nbsp;&nbsp;&nbsp;&nbsp;
             </li>
             <li v-show="page_total>1"><a v-on:click="jump('first')">首页</a></li>
             <li v-if="page_total>1 && showFirst"><a v-on:click="cur--">上一页</a></li>
@@ -78,7 +80,7 @@
             </li>
             <li v-if="page_total>1 && show_last"><a v-on:click="cur++">下一页</a></li>
             <li v-show="page_total>1"><a v-on:click="jump('last')">尾页</a></li>
-            <li><a>共<i v-text="page_total"></i>页</a></li>
+            <li>共<i v-text="page_total"></i>页</li>
             <li v-show="page_total>page_size">&nbsp;&nbsp;&nbsp;&nbsp;第<input type="text" class="jump-input form-control" v-model="jump_val | filter_number 1 ">页 <input type="button" value="确定" class="jump-button" @click="jump()" vaule="确定"></li>
 
         </ul>

@@ -11,16 +11,11 @@ export default function install(Vue,router_proto) {
 	window.origin && (Vue.http.options.root = window.origin );
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
-
 		request (request) {
-
 			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
-
 			request.headers['X-Auth-Token']=token;
-			console.log('loading加载中...');
 			return request
-		},
-
+		}
 		//response (response) {
 		//	Message.hide();
 		//

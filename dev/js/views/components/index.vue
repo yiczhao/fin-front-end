@@ -10,7 +10,7 @@
                 :ptitle="ptitle"
                 :title="title"
                 :hname="hname"
-                keep-alive></breadcrumb>
+                ></breadcrumb>
         <slot name="content" slot="content"></slot>
     </div>
     <nv-footer keep-alive></nv-footer>

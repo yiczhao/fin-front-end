@@ -5,7 +5,7 @@ export default function(router){
         /* 登陆 */
         '/login':{
             name:'login',
-            router_type:'deposit',
+            router_type:'login',
             component: function(resolve){
                 require(['./views/login.vue'],resolve);
             }
@@ -16,6 +16,14 @@ export default function(router){
             router_type:'deposit',
             component: function(resolve){
                 require(['./views/CWCL/account-management.vue'],resolve);
+            }
+        },
+        //账户管理
+        '/provisions-info/:accountId':{
+            name:'provisions-info',
+            router_type:'deposit',
+            component: function(resolve){   
+                require(['./views/CWCL/provisions-info.vue'],resolve);
             }
         },
         //交易明细

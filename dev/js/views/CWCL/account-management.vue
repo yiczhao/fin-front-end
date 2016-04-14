@@ -1,5 +1,9 @@
 <template>
-    <index :name="loginList.trueName" title="账户列表" ptitle="财务处理1" hname="account-management" isshow="isshow">
+    <index :name="loginList.trueName"
+           :title="'账户列表'"
+           :ptitle="'财务处理'"
+           :hname="'account-management'"
+           :isshow="'isshow'">
         <section class="content" slot="content">
             <div class="row">
                 <div class="col-xs-12">
@@ -66,7 +70,7 @@
                                     </td>
                                     <td>{{trlist.startDate}}</td>
                                     <td>
-                                        <a v-link="{name:'default',params:{lid: '123'}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                        <a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                                     </td>
                                     <td v-if="trlist.status==0">
                                         <span v-on:click="rewrite(trlist)">编辑</span>
@@ -370,9 +374,6 @@
                         }, function (response) {
                             console.log(response);
                         })
-            },
-            btn_click:function(){
-              console.log(111);
             },
             addBtn:function(){
                 // *** 新增修改保存
