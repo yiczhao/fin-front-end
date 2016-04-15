@@ -381,8 +381,8 @@
                     sr+=e.incomeAmount;
                     zc+=e.payoutAmount;
                 });
-                this.shouru=sr;
-                this.zhichu=zc;
+                this.shouru=(sr/100).toFixed(2);
+                this.zhichu=(zc/100).toFixed(2);
             },
             pagecur:function(){
                 this.checkForm.pageIndex=this.pagecur;
