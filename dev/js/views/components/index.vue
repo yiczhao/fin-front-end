@@ -32,7 +32,6 @@
             }
         },
         props:{
-            name: {type: String,default:'xxxx'},
             isshow: {type: String,default:''},
             title: {type: String,default:'首页'},
             ptitle: {type: String,default:''},

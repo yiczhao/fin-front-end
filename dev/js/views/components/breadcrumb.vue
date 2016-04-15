@@ -30,9 +30,6 @@
             }
         },
         methods:{
-            loginout() {
-                console.log('loginout')
-            }
         },
         ready(){
         }

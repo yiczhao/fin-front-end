@@ -23,7 +23,6 @@
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
         },
         props:{
-
         }
     }
 </script>

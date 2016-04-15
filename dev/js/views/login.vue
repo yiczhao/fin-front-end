@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="box-footer">
-                <span  @click="login" class="btn btn-info">登录</span>
+                <span @click="login" class="btn btn-info">登录</span>
             </div>
         </form>
     </div>

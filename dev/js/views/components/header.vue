@@ -1,17 +1,12 @@
-<style>
-    .navbar-custom-menu{
-        padding: 13px 20px 0 0;
-    }
-</style>
 <template>
     <header class="main-header">
-        <a href="#" class="logo">
+        <a v-link="{name:'default'}" class="logo">
             <span class="logo-lg"><b>财务管理系统</b></span>
         </a>
         <nav class="navbar navbar-static-top">
             <div class="navbar-custom-menu">
                 <div class="pull-right">
-                    您好，<span v-text="name"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>
+                    您好，<span v-text="uname"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>
                 </div>
             </div>
         </nav>
@@ -20,11 +15,11 @@
 <script>
     export default {
         props:{
-            name: {type: String,required: true}
         },
         data(){
             return {
-                show:false
+                show:false,
+                uname:'',
             }
         },
         methods:{
@@ -41,9 +36,11 @@
                         }, function (response) {
                             console.log(response);
                         });
+
             }
         },
         ready(){
+            (!!sessionStorage.getItem('userData')) ? this.$set('uname',JSON.parse(sessionStorage.getItem('userData')).trueName) : null;
         }
     }
 </script>
