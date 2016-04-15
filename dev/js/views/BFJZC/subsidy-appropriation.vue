@@ -70,7 +70,7 @@
                                 </div>
                             </form> 
                         </div>
-                        <div class="box-body">
+                        <div class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -148,7 +148,7 @@
     </index>
 </template>
 <style>
-    .box-body{
+    .box-tbl{
         overflow:auto;
     }
     .page-bar{
@@ -160,7 +160,8 @@
     }
 </style>
 <script>
- import datepicker from '../components/datepicker.vue'
+    import datepicker from '../components/datepicker.vue'
+    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{

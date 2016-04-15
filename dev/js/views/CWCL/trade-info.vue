@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="activityID">
                                     <option value="0">请选择参与活动</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                        <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -67,7 +67,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -158,7 +158,7 @@
     body{
         background-color:#fff;
     }
-    .box-body{
+    .box-tbl{
         overflow:auto;
     }
     .page-bar{
@@ -196,7 +196,8 @@
                 pagecur:1,
                 page_size:15,
                 tradeList:[],
-                cityList:[]
+                cityList:[],
+                activityList:[]
             }
         },
         methods:{
@@ -231,6 +232,16 @@
                         console.log(response);
                     });
             },
+            //获取活动数据
+            getactivitys:function(data){
+                 this.$http.post('./activity/list',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('activityList', response.data.data) : null;
+                    }, function (response) {
+                        console.log(response);
+                    });
+            },
             query: function () {
                 // let data=this.data;
                 let data={
@@ -252,6 +263,7 @@
             this.getTradeList({});
             this.getSubcompany({});
             this.getCity({});
+            this.getactivitys({});
         },
         components:{
            'datepicker': datepicker,
