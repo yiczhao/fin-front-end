@@ -21,6 +21,7 @@
             isshow: {type: String, required: true},
             title: {type: String, required: true},
             ptitle: {type: String, required: true},
+            p2title: {type: String, required: true},
             hname: {type: String, required: true}
         },
         data(){

@@ -61,7 +61,7 @@ export default function(router){
         // 404
         '*':{
             component:function () {
-                router.go({name:'default'})
+                router.go({name:'login'})
             }
         }
     })
