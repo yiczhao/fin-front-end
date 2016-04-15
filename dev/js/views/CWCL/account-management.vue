@@ -16,7 +16,7 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="defaultData.companyId">
                                         <option value="">请选择分公司</option>
-                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
+                                        <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -137,7 +137,7 @@
                                     <label><i>*</i>分公司</label>
                                     <select class="form-control" v-model="recSelect">
                                         <option value="">请选择分公司</option>
-                                        <option v-for="(index,n) in companylists" v-text="n.companyName" :value="n.companyId"></option>
+                                        <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -275,7 +275,7 @@
             },
             getClist:function(){
                 // *** 请求公司数据
-                this.$http.get('./subcompany/list',{})
+                this.$http.post('./subcompany/list',{})
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -289,7 +289,7 @@
             addUser:function(){
                 this.relist={};
                 this.re_title='添加账户';
-                this.recSelect='1';
+                this.recSelect='';
                 this.retSelect='';
                 this.accountId='';
                 this.re_show = true;
@@ -307,7 +307,7 @@
             rewrite:function(_list){
                 this.accountId=_list.id;
                 this.$set('relist', _list);
-                this.$set('recSelect', 1);
+                this.$set('recSelect',_list.companyId);
                 this.$set('retSelect', _list.accountType);
                 this.re_show = true; this.re_title='编辑账户';
             },
