@@ -28,7 +28,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号信息">
+                                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">

@@ -9,6 +9,7 @@
                 :isshow="isshow"
                 :ptitle="ptitle"
                 :title="title"
+                :p2title="p2title"
                 :hname="hname"
                 ></breadcrumb>
         <slot name="content" slot="content"></slot>
@@ -38,6 +39,7 @@
             isshow: {type: String,default:''},
             title: {type: String,default:'首页'},
             ptitle: {type: String,default:''},
+            p2title: {type: String,default:''},
             hname: {type: String,default:''},
         },
         components:{
