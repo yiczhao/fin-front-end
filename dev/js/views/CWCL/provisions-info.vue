@@ -2,7 +2,6 @@
     <index :name="loginList.trueName"
            :title="'备付金明细'"
            :ptitle="'财务处理'"
-           :p2title="'账单管理'"
            :hname="'account-management'"
            :isshow="'isshow'">
         <section class="content" slot="content">

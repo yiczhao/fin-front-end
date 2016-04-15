@@ -35,6 +35,10 @@
                                     <option value="LASTTHREEMONTHS">自定义</option>
                                     </select>
                                 </div>
+                                <div class="form-group" v-show="timeRange=='LASTTHREEMONTHS'">
+                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                </div>
                                 <br/>
                                 <br/>
                                 <div class="form-group">
@@ -161,7 +165,7 @@
         margin: 25px auto;
         text-align: center;
     }
-    th{
+    .box-body #table1 th{
         min-width: 85px;
     }
 </style>
@@ -179,6 +183,8 @@
                 cityID:"",
                 type:"",
                 timeRange:"LASTDAY",
+                startDate:"",
+                endDate:"",
                 merchantID:"",      
                 merchantName:"",   
                 id:"",   

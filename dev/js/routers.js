@@ -2,7 +2,7 @@
 
 export default function(router){
     router.map({
-        /* 登陆 */
+        /* 登录 */
         '/login':{
             name:'login',
             router_type:'login',
@@ -58,10 +58,10 @@ export default function(router){
                 require(['./views/default.vue'],resolve);
             }
         },
-        // 404
+        // 转到登录页
         '*':{
             component:function () {
-                router.go({name:'default'})
+                router.go({name:'login'})
             }
         }
     })

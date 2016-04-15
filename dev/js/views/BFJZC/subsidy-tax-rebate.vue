@@ -27,6 +27,10 @@
                                     <option value="LASTTHREEMONTHS">自定义</option>
                                     </select>
                                 </div>
+                                <div class="form-group" v-show="timeRange=='LASTTHREEMONTHS'">
+                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                </div>
                                 <br/>
                                 <br/>
                                 <div class="form-group">
@@ -156,6 +160,7 @@
     }
 </style>
 <script>
+ import datepicker from '../components/datepicker.vue'
     export default{
         data(){
             return{
@@ -164,6 +169,8 @@
                 createType:"",
                 status:"",
                 timeRange:"LASTDAY",
+                startDate:"",
+                endDate:"",
                 merchantID:"",      
                 merchantName:"",   
                 id:"",   
@@ -232,7 +239,8 @@
             this.getCity({});
         },
         components:{
-           
+           'datepicker': datepicker,
+           'dialog': dialog,
         }
     }
 </script>
