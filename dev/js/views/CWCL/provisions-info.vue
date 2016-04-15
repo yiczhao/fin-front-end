@@ -14,6 +14,7 @@
                                 <div class="m20">
                                     <div class="form-group">
                                         <select class="form-control" v-model="dateS">
+                                            <option value="">请选择日期</option>
                                             <option value="0">昨天</option>
                                             <option value="1">最近一周</option>
                                             <option value="2">最近一个月</option>
@@ -26,7 +27,7 @@
                                         <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                     </div>
                                 </div>
-                                <div  class="m20">
+                                <div  class="">
                                     <div class="form-group">
                                         <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
                                     </div>
@@ -60,13 +61,17 @@
                                     <div class="form-group">
                                         <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
                                     </div>
-                                    <div class="form-group">
-                                        <input type="button" class="btn btn-info" value="导出">
-                                    </div>
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="button" class="btn btn-info" value="导出">-->
+                                    <!--</div>-->
                                 </div>
                             </form>
                         </div>
                         <div class="box-body">
+                            <div style="margin: 0 0 20px 0;font-size: 20px;">
+                                <span>总收入：</span><span>{{shouru}}</span>
+                                <span>总支出：</span><span>{{zhichu}}</span>
+                            </div>
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -113,12 +118,16 @@
                                     </td>
                                     <td>
                                         <a href="javascript:void(0);" v-on:click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
-                                        <a v-link="" v-on:click="duizhang(trlist)" v-if="trlist.status==1">详情</a>
+                                        <a v-link="" v-if="trlist.status==1">详情</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 </tbody>
                             </table>
+                            <page :all="pageall"
+                                  :cur.sync="pagecur"
+                                  :page_size.sync="page_size">
+                            </page>
                         </div>
 
                         <dialog :title="'负责人'" :show="dz_show" :cb-close="close_dialog" :width="350">
@@ -150,7 +159,7 @@
                                     <label class="w28" for="two">手工对账</label>
                                 </div>
                                 <div class="form-group tc" v-show="glradio=='one'">
-                                    <button class="btn" v-on:click="dzOne" v-model="checkOne">选择付款流水</button>
+                                    <button class="btn" v-on:click="dzOne">选择付款流水</button>
                                 </div>
                                 <div class="table2" v-show="checkOne&&glradio=='one'">
                                     <div class="box-body">
@@ -269,6 +278,11 @@
     .modal-body{
         padding: 0 15px;
     }
+
+    .page-bar{
+        margin: 25px auto;
+        text-align: center;
+    }
 </style>
 
 <script>
@@ -283,10 +297,14 @@
                 zdlists:[],
                 dzList:{},
                 dz_show:false,
-                pageall:'',
+                pagecur:1,
+                page_size:15,
+                pageall:1,
                 accountId:'',
                 checkOne:false,
-                dateS:0,
+                dateS:'',
+                shouru:0,
+                zhichu:0,
                 checkForm:{
                     certificate:'',
                     keyword:'',
@@ -333,6 +351,13 @@
             dzOne:function(){
                 console.log(222);
                 (this.checkOne)?this.checkOne=false:this.checkOne=true;
+            },
+            getTwo:function(num){
+                if(num.toString().length>=2) return num;
+                var str="";
+                for(var i=num.toString().length;i<2;i++)
+                    str +="0";
+                return str + num.toString();
             }
         },
         ready: function () {
@@ -345,7 +370,51 @@
             'dialog': dialog,
         },
         watch:{
-
+            zdlists:function(){
+                var sr=0,zc=0;
+                this.zdlists.forEach(function(e){
+                    sr+=e.incomeAmount;
+                    zc+=e.payoutAmount;
+                });
+                this.shouru=sr;
+                this.zhichu=zc;
+            },
+            pagecur:function(){
+                this.checkForm.pageIndex=this.pagecur;
+                this.initList();
+            },
+            page_size:function(){
+                this.checkForm.pageSize=this.page_size;
+                this.initList();
+            },
+            dateS:function(){
+                console.log();
+                var d=new Date()
+                var day=d.getDate()
+                var month=d.getMonth() + 1
+                var year=d.getFullYear()
+                var newD;
+                switch (this.dateS){
+                    case '0':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
+                        break;
+                    case '1':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+                        break;
+                    case '2':
+                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
+                        break;
+                    case '3':
+                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
+                        break;
+                    case '4':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                }
+                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                this.checkForm.startDate=newD;
+                this.checkForm.endDate=endD;
+            }
         },
         validators: {
 

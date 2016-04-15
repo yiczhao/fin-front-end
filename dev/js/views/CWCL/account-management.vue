@@ -233,10 +233,10 @@
             return{
                 pagecur:1,
                 page_size:15,
+                pageall:1,
                 loginList:{},
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
-                pageall:1,
                 relist:{},
                 companylists:[],
                 typelists:[],
