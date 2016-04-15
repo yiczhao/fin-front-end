@@ -1,6 +1,5 @@
 <template>
-    <index :name="loginList.trueName"
-           :title="'账户列表'"
+    <index :title="'账户列表'"
            :ptitle="'财务处理'"
            :hname="'account-management'"
            :isshow="'isshow'">
@@ -407,11 +406,11 @@
         watch:{
             pagecur:function(){
                 this.defaultData.pageIndex=this.pagecur;
-                this.getZlists(this.defaultData);
+                this.initList();
             },
             page_size:function(){
                 this.defaultData.pageSize=this.page_size;
-                this.getZlists(this.defaultData);
+                this.initList();
             }
         },
         validators: {

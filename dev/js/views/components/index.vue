@@ -1,8 +1,5 @@
 <template>
-    <nv-header
-            :name="name"
-            keep-alive
-    ></nv-header>
+    <nv-header keep-alive></nv-header>
     <nv-menu keep-alive></nv-menu>
     <div class="content-wrapper">
         <breadcrumb

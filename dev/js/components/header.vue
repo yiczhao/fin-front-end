@@ -15,11 +15,11 @@
 <script>
     export default {
         props:{
-            name: { type: String, default: '' }
         },
         data(){
             return {
-                show:false
+                show:false,
+                name:'',
             }
         },
         methods:{
@@ -28,6 +28,7 @@
             }
         },
         ready(){
+            (!!sessionStorage.getItem('userData')) ? this.$set('name',JSON.parse(sessionStorage.getItem('userData')).trueName) : null;
         }
     }
 </script>

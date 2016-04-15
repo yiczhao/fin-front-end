@@ -1,6 +1,5 @@
 <template>
-    <index :name="loginList.trueName"
-           :title="'备付金明细'"
+    <index :title="'备付金明细'"
            :ptitle="'财务处理'"
            :p2title="'账户列表'"
            :hname="'account-management'"
@@ -323,7 +322,13 @@
         methods:{
             // *** 请求账户数据
             getZlists:function(data){
-                console.log(data);
+                if(data.endDate<data.startDate){
+                    let a=data.endDate,b=data.startDate;
+                    this.checkForm.startDate=a;
+                    this.checkForm.endDate=b;
+                    data.startDate=a;
+                    data.endDate=b;
+                }
                 this.$http.post('./reservecash/detail',data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型

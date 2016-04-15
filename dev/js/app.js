@@ -45,7 +45,6 @@ router.start(app, "#app");
 Vue.set(app, '_userData', {});
 Vue.use(interceptor,router);
 Vue.config.debug = true;
-
 Vue.filter('datetime', function (value) {
 	var time = new Date(value);
 	var y = time.getFullYear();
