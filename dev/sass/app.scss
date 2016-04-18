@@ -1,11 +1,10 @@
 @import
- 		// 公用
- 		'./lib/normalize.min.scss',
- 		'./lib/bootstrap.min.scss',
- 		'./lib/font-awesome.min.scss',
- 		'./lib/ionicons.min.scss',
- 		'./lib/AdminLTE.min.scss',
- 		'./lib/_all-skins.min.scss',
+		'../css/icons/icomoon/styles.css',
+		'../css/bootstrap.css',
+		'../css/core.css',
+		'../css/components.css',
+		'../css/colors.css',
  		'./lib/zxx.lib.scss',
  		// 单独页面
 		'./style/app';
+
