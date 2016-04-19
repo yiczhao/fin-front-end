@@ -37,7 +37,7 @@
                                 <li><a href="#">3211佣金明细</a></li>
                                 <li>
                                     <a href="#" class="has-ul">本金收入</a>
-                                    <ul class="hidden-ul">
+                                    <ul class="hidden-ul" style="display: block">
                                         <li><a href="#">入账明细</a></li>
                                         <li><a href="#">交易入账</a></li>
                                         <li><a href="#">商户退款</a></li>
@@ -45,8 +45,8 @@
                                 </li>
                                 <li>
                                     <a href="#" class="has-ul">备付金支出</a>
-                                    <ul class="hidden-ul">
-                                        <li><a href="#">付款明细</a></li>
+                                    <ul class="hidden-ul" style="display: block">
+                                        <li><a v-link="{'name':'payment-details'}">付款明细</a></li>
                                         <li><a href="#">补贴划付</a></li>
                                         <li><a href="#">额度采购</a></li>
                                         <li><a href="#">补贴退税</a></li>
@@ -57,7 +57,7 @@
                                 <li><a href="#">三方管理</a></li>
                                 <li>
                                     <a href="#" class="has-ul">商户管理</a>
-                                    <ul class="hidden-ul">
+                                    <ul class="hidden-ul" style="display: block">
                                         <li><a href="#">商户管理</a></li>
                                         <li><a href="#">额度采购</a></li>
                                         <li><a href="#">预付款</a></li>
@@ -72,24 +72,24 @@
                             <a href="#" class="has-ul">
                                 <span>活动管理</span>
                             </a>
-                            <ul class="treeview-menu">
+                            <ul class="hidden-ul" style="display: block">
                                 <li><a href="#">活动列表</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="#" class="has-ul">
                                 <span>佣金管理</span>
                             </a>
-                            <ul class="treeview-menu">
+                            <ul class="hidden-ul" style="display: block">
                                 <li><a href="#">概况</a></li>
                                 <li><a href="#">自定义统计</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
+                        <li>
+                            <a href="#" class="has-ul">
                                 <span>系统配置</span>
                             </a>
-                            <ul class="treeview-menu">
+                            <ul class="hidden-ul" style="display: block">
                                 <li><a href="#"></i>通道管理</a></li>
                                 <li><a href="#"></i>角色管理</a></li>
                                 <li><a href="#"></i>员工管理</a></li>

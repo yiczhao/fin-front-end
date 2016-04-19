@@ -10,7 +10,7 @@ export default function(router){
                 require(['./views/login.vue'],resolve);
             }
         },
-        //账户管理
+        //账户列表
         '/account-management':{
             name:'account-management',
             router_type:'deposit',
@@ -18,7 +18,7 @@ export default function(router){
                 require(['./views/CWCL/account-management.vue'],resolve);
             }
         },
-        //账户管理
+        //账户明细
         '/provisions-info/:accountId':{
             name:'provisions-info',
             router_type:'deposit',
@@ -48,6 +48,14 @@ export default function(router){
             router_type:'deposit',
             component: function(resolve){
                 require(['./views/BFJZC/subsidy-tax-rebate.vue'],resolve);
+            }
+        },
+        //备付金支出交易明细
+        '/payment-details':{
+            name:'payment-details',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/BFJZC/payment-details.vue'],resolve);
             }
         },
         /* 首页 */

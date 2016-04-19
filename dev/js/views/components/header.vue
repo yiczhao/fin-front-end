@@ -2,7 +2,7 @@
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" v-link="{name:'default'}">
-                <img src="" alt="">
+                <!--<img src="" alt="">-->
             </a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-mobile">

@@ -74,11 +74,11 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
             </li>
             <li v-show="page_total>1"><a v-on:click="jump('first')">首页</a></li>
-            <li v-if="page_total>1 && showFirst"><a v-on:click="cur--">上一页</a></li>
+            <li v-if="page_total>1 && showFirst"><a v-on:click="curs('prev')">上一页</a></li>
             <li v-for="index in indexs"  v-bind:class="{ 'active': cur == index}">
                 <a v-on:click="btn_click(index)">{{ index }}</a>
             </li>
-            <li v-if="page_total>1 && show_last"><a v-on:click="cur++">下一页</a></li>
+            <li v-if="page_total>1 && show_last"><a v-on:click="curs('next')">下一页</a></li>
             <li v-show="page_total>1"><a v-on:click="jump('last')">尾页</a></li>
             <li>共<i v-text="page_total"></i>页</li>
             <li v-show="page_total>page_size">&nbsp;&nbsp;&nbsp;&nbsp;第<input type="text" class="jump-input form-control" v-model="jump_val | filter_number 1 ">页 <input type="button" value="确定" class="jump-button" @click="jump()" vaule="确定"></li>
@@ -152,23 +152,38 @@
         methods: {
             btn_click(data) {
                 if(data != this.cur){
-                    this.cur = data
+                    this.cur = data;
+                    $('body').animate({'scrollTop':0},300);
                 }
             },
             jump(type) {
                 switch(type){
                     case 'first':
+                        if(this.cur==1)return;
+                        $('body').animate({'scrollTop':0},300);
                         this.cur = 1
                         break
                     case 'last':
+                        if(this.cur==this.page_total)return;
                         this.cur = this.page_total
+                        $('body').animate({'scrollTop':0},300);
                         break
                     default :
-                        if(!+this.jump_val) return
-                        this.cur = +this.jump_val
+                        if(!+this.jump_val) return;
+                        this.cur = +this.jump_val;
                         break
                 }
-
+            },
+            curs(a){
+                switch(a){
+                    case 'prev':
+                        this.cur--
+                        break
+                    case 'next':
+                        this.cur++
+                        break
+                }
+                $('body').animate({'scrollTop':0},300);
             }
         },
         watch: {

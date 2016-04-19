@@ -4,76 +4,75 @@
            :p2title="'账户列表'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <form class="form-inline manage-form">
-                                <div class="m20">
-                                    <div class="form-group">
-                                        <select class="form-control" v-model="dateS">
-                                            <option value="">请选择日期</option>
-                                            <option value="0">昨天</option>
-                                            <option value="1">最近一周</option>
-                                            <option value="2">最近一个月</option>
-                                            <option value="3">最近三个月</option>
-                                            <option value="4">自定义时间</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" v-show="dateS==4">
-                                        <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                        <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                                    </div>
-                                </div>
-                                <div  class="">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" v-model="checkForm.status">
-                                            <option value="">请选择对账状态</option>
-                                            <option value="1">成功</option>
-                                            <option value="0">待对账</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" v-model="checkForm.purpose">
-                                            <option value="">请选择用途</option>
-                                            <option value="1">佣金划付</option>
-                                            <option value="2">往来款</option>
-                                            <option value="3">转账退款</option>
-                                            <option value="4">账户费用</option>
-                                            <option value="5">其它</option>
-                                            <option value="6">往来款</option>
-                                            <option value="7">转账退款</option>
-                                            <option value="8">账户费用</option>
-                                            <option value="9">其它</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
-                                    </div>
-                                    <!--<div class="form-group">-->
-                                        <!--<input type="button" class="btn btn-info" value="导出">-->
-                                    <!--</div>-->
-                                </div>
-                            </form>
-                        </div>
-                        <div class="box-body">
-                            <div style="margin: 0 0 20px 0;font-size: 20px;">
-                                <span>总收入：</span><span>{{shouru}}</span>
-                                <span>总支出：</span><span>{{zhichu}}</span>
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <form class="form-inline manage-form">
+                        <div class="m20">
+                            <div class="form-group">
+                                <select class="form-control" v-model="dateS">
+                                    <option value="">请选择日期</option>
+                                    <option value="0">昨天</option>
+                                    <option value="1">最近一周</option>
+                                    <option value="2">最近一个月</option>
+                                    <option value="3">最近三个月</option>
+                                    <option value="4">自定义时间</option>
+                                </select>
                             </div>
-                            <table id="table1" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
+                            <div class="form-group" v-show="dateS==4">
+                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                            </div>
+                        </div>
+                        <div  class="">
+                            <div class="form-group">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" v-model="checkForm.status">
+                                    <option value="">请选择对账状态</option>
+                                    <option value="1">成功</option>
+                                    <option value="0">待对账</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" v-model="checkForm.purpose">
+                                    <option value="">请选择用途</option>
+                                    <option value="1">佣金划付</option>
+                                    <option value="2">往来款</option>
+                                    <option value="3">转账退款</option>
+                                    <option value="4">账户费用</option>
+                                    <option value="5">其它</option>
+                                    <option value="6">往来款</option>
+                                    <option value="7">转账退款</option>
+                                    <option value="8">账户费用</option>
+                                    <option value="9">其它</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
+                            </div>
+                            <div class="form-group">
+                                <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
+                            </div>
+                            <!--<div class="form-group">-->
+                            <!--<input type="button" class="btn btn-info" value="导出">-->
+                            <!--</div>-->
+                        </div>
+                    </form>
+                </div>
+                <div class="dataTables_wrapper no-footer">
+                    <div style="margin: 0 0 20px 20px;font-size: 20px;">
+                        <span>总收入：</span><span>{{shouru}}</span>
+                        <span>总支出：</span><span>{{zhichu}}</span>
+                    </div>
+                    <div class="datatable-scroll">
+                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                            <thead>
+                                <tr  role="row">
                                     <th>编号</th>
                                     <th>凭证号</th>
                                     <th>收款方</th>
@@ -88,9 +87,9 @@
                                     <th>操作</th>
                                     <th>备注</th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">
+                            </thead>
+                            <tbody>
+                                <tr role="row" v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.certificate}}</td>
                                     <td>{{trlist.collectionName}}</td>
@@ -116,115 +115,126 @@
                                         <span v-else>待对账</span>
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0);" v-on:click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  v-on:click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
                                         <a v-link="" v-if="trlist.status==1">详情</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
-                                </tbody>
-                            </table>
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
-                        </div>
-
-                        <dialog :title="'负责人'" :show="dz_show" :cb-close="close_dialog" :width="350">
-                            <div class="modal-body member_rules_modal-body">
-                                <div class="form-group">
-                                    <span class="iblock">账户名：</span><span>{{dzList.accountName}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <span class="iblock">账 号：</span><span>{{dzList.accountNumber}}</span>
-                                </div>
-                                <!--<div class="form-group">-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="datatable-footer">
+                        <page :all="pageall"
+                              :cur.sync="pagecur"
+                              :page_size.sync="page_size">
+                        </page>
+                    </div>
+                </div>
+                <div id="modal_fzr" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">负责人</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-body member_rules_modal-body">
+                                    <div class="form-group">
+                                        <span class="iblock">账户名：</span><span>{{dzList.accountName}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="iblock">账 号：</span><span>{{dzList.accountNumber}}</span>
+                                    </div>
+                                    <!--<div class="form-group">-->
                                     <!--<span class="iblock">开户行：</span><span>{{dzList.khh}}</span>-->
-                                <!--</div>-->
-                                <div class="form-group">
-                                    <span class="iblock">时 间：</span><span>{{dzList.tradeTime | datetime}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <span class="iblock">收入：</span><span>{{dzList.incomeAmount/100 | currency '' }}</span>
-                                    <span class="tr iblock">支出：</span><span>{{dzList.payoutAmount/100 | currency '' }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <span class="iblock">凭证号：</span><span>{{dzList.certificate}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="w28" ><i>*</i>对账方式：</label>
-                                    <input type="radio" id="one" value="one" v-model="glradio">
-                                    <label class="w28" for="one">关联对账</label>
-                                    <input type="radio" id="two" value="two" v-model="glradio">
-                                    <label class="w28" for="two">手工对账</label>
-                                </div>
-                                <div class="form-group tc" v-show="glradio=='one'">
-                                    <button class="btn" v-on:click="dzOne">选择付款流水</button>
-                                </div>
-                                <div class="table2" v-show="checkOne&&glradio=='one'">
-                                    <div class="box-body">
-                                        <table id="table2" class="table table-bordered table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th>订单号</th>
-                                                <th>付款日期</th>
-                                                <th>名称</th>
-                                                <th>收款信息</th>
-                                                <th>付款金额</th>
-                                                <th>用途</th>
-                                                <th>备注 </th>
-                                                <th>操作</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>20150418105038252</td>
-                                                <td>2015-04-18</td>
-                                                <td>张青</td>
-                                                <td>张青
-                                                    36001050307052501764</td>
-                                                <td>{{377/100 | currency '' }}</td>
-                                                <td>佣金划付</td>
-                                                <td>2015年3月份商户返佣</td>
-                                                <td><a href="">选择</a></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div  v-show="glradio=='two'">
+                                    <!--</div>-->
                                     <div class="form-group">
-                                        <label class="w28"><i>*</i>用途：</label>
-                                        <select  v-model="checkForm.purpose">
-                                            <option value="">请选择用途</option>
-                                            <option value="1">佣金划付</option>
-                                            <option value="2">往来款</option>
-                                            <option value="3">转账退款</option>
-                                            <option value="4">账户费用</option>
-                                            <option value="5">其它</option>
-                                            <option value="6">往来款</option>
-                                            <option value="7">转账退款</option>
-                                            <option value="8">账户费用</option>
-                                            <option value="9">其它</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" >
-                                        <label class="w28">收款方：</label>
-                                        <input type="text" v-model="skf" placeholder="五十字以内">
+                                        <span class="iblock">时 间：</span><span>{{dzList.tradeTime | datetime}}</span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tarea" class="w28"><i>*</i>备注：</label>
-                                        <textarea id="tarea" width="70%" cols="20" rows="3"></textarea>
+                                        <span class="iblock">收入：</span><span>{{dzList.incomeAmount/100 | currency '' }}</span>
+                                        <span class="tr iblock">支出：</span><span>{{dzList.payoutAmount/100 | currency '' }}</span>
                                     </div>
-                                    <div class="form-group tc">
-                                        <button class="btn">保存</button>
+                                    <div class="form-group">
+                                        <span class="iblock">凭证号：</span><span>{{dzList.certificate}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="w28" ><i>*</i>对账方式：</label>
+                                        <input type="radio" id="one" value="one" v-model="glradio">
+                                        <label class="w28" for="one">关联对账</label>
+                                        <input type="radio" id="two" value="two" v-model="glradio">
+                                        <label class="w28" for="two">手工对账</label>
+                                    </div>
+                                    <div class="form-group tc" v-show="glradio=='one'">
+                                        <button class="btn" v-on:click="dzOne">选择付款流水</button>
+                                    </div>
+                                    <div class="table2" v-show="checkOne&&glradio=='one'">
+                                        <div class="box-body">
+                                            <table id="table2" class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>订单号</th>
+                                                    <th>付款日期</th>
+                                                    <th>名称</th>
+                                                    <th>收款信息</th>
+                                                    <th>付款金额</th>
+                                                    <th>用途</th>
+                                                    <th>备注 </th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>20150418105038252</td>
+                                                    <td>2015-04-18</td>
+                                                    <td>张青</td>
+                                                    <td>张青
+                                                        36001050307052501764</td>
+                                                    <td>{{377/100 | currency '' }}</td>
+                                                    <td>佣金划付</td>
+                                                    <td>2015年3月份商户返佣</td>
+                                                    <td><a href="">选择</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div  v-show="glradio=='two'">
+                                        <div class="form-group">
+                                            <label class="w28"><i>*</i>用途：</label>
+                                            <select  v-model="checkForm.purpose">
+                                                <option value="">请选择用途</option>
+                                                <option value="1">佣金划付</option>
+                                                <option value="2">往来款</option>
+                                                <option value="3">转账退款</option>
+                                                <option value="4">账户费用</option>
+                                                <option value="5">其它</option>
+                                                <option value="6">往来款</option>
+                                                <option value="7">转账退款</option>
+                                                <option value="8">账户费用</option>
+                                                <option value="9">其它</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" >
+                                            <label class="w28">收款方：</label>
+                                            <input type="text" v-model="skf" placeholder="五十字以内">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tarea" class="w28"><i>*</i>备注：</label>
+                                            <textarea id="tarea" width="70%" cols="20" rows="3"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </dialog>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </index>
 </template>
 <style>
@@ -286,7 +296,6 @@
 
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         props:{
         },
@@ -339,7 +348,6 @@
                         });
             },
             duizhang:function(a){
-                console.log(111);
                 this.$set('dzList', a);
                 this.dz_show=true;
             },
@@ -350,7 +358,7 @@
                 this.dz_show = false;
             },
             initList:function(){
-                this.close_dialog();
+                $(".modal").modal("hide");
                 this.getZlists(this.checkForm);
             },
             dzOne:function(){
@@ -372,7 +380,6 @@
         },
         components:{
             'datepicker': datepicker,
-            'dialog': dialog,
         },
         watch:{
             zdlists:function(){
@@ -393,7 +400,6 @@
                 this.initList();
             },
             dateS:function(){
-                console.log();
                 var d=new Date()
                 var day=d.getDate()
                 var month=d.getMonth() + 1
