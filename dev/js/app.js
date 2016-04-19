@@ -2,7 +2,6 @@
  * 入口文件
  * @author cwxtDesigner
  */
-
 require('../sass/app.scss');
 
 import Vue from 'vue'
@@ -55,4 +54,5 @@ Vue.filter('datetime', function (value) {
 	var s = time.getSeconds()+1;
 	function add0(m){return m<10?'0'+m:m }
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
-})
+});
+

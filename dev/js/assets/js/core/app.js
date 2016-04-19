@@ -15,79 +15,45 @@ $(window).on('load', function() {
 });
 
 
-$(function() {
-
     // Disable CSS transitions on page load
     $('body').addClass('no-transitions');
 
+// Calculate min height
+function containerHeight() {
+    var availableHeight = $(window).height() - $('.page-container').offset().top - $('.navbar-fixed-bottom').outerHeight();
 
-
-    // ========================================
-    //
-    // Content area height
-    //
-    // ========================================
-
-
-    // Calculate min height
-    function containerHeight() {
-        var availableHeight = $(window).height() - $('.page-container').offset().top - $('.navbar-fixed-bottom').outerHeight();
-
-        $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
-    }
-
-    // Initialize
-    containerHeight();
-
-
-
-
+    $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
+}
+containerHeight();
     // ========================================
     //
     // Heading elements
     //
     // ========================================
-
-
     // Heading elements toggler
     // -------------------------
-
     // Add control button toggler to page and panel headers if have heading elements
     $('.panel-heading, .page-header-content, .panel-body, .panel-footer').has('> .heading-elements').append('<a class="heading-elements-toggle"><i class="icon-more"></i></a>');
-
-
     // Toggle visible state of heading elements
     $('.heading-elements-toggle').on('click', function() {
         $(this).parent().children('.heading-elements').toggleClass('visible');
     });
-
-
-
     // Breadcrumb elements toggler
-    // -------------------------
-
+    // ------------------------
     // Add control button toggler to breadcrumbs if has elements
     $('.breadcrumb-line').has('.breadcrumb-elements').append('<a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>');
-
 
     // Toggle visible state of breadcrumb elements
     $('.breadcrumb-elements-toggle').on('click', function() {
         $(this).parent().children('.breadcrumb-elements').toggleClass('visible');
     });
-
-
-
-
     // ========================================
     //
     // Navbar
     //
     // ========================================
-
-
     // Navbar navigation
     // -------------------------
-
     // Prevent dropdown from closing on click
     $(document).on('click', '.dropdown-content', function (e) {
         e.stopPropagation();
@@ -613,5 +579,3 @@ $(function() {
 
     // Tooltip
     $('[data-popup="tooltip"]').tooltip();
-
-});

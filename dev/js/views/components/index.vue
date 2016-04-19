@@ -1,15 +1,17 @@
 <template>
     <nv-header keep-alive></nv-header>
-    <nv-menu keep-alive></nv-menu>
-    <div class="content-wrapper">
-        <breadcrumb
-                :isshow="isshow"
-                :ptitle="ptitle"
-                :title="title"
-                :p2title="p2title"
-                :hname="hname"
-                ></breadcrumb>
-        <slot name="content" slot="content"></slot>
+    <div class="page-container">
+        <div class="page-content">
+            <nv-menu keep-alive></nv-menu>
+            <breadcrumb
+                    :isshow="isshow"
+                    :ptitle="ptitle"
+                    :title="title"
+                    :p2title="p2title"
+                    :hname="hname"
+                    ></breadcrumb>
+            <slot name="content" slot="content"></slot>
+        </div>
     </div>
     <nv-footer keep-alive></nv-footer>
 </template>

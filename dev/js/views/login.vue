@@ -1,27 +1,48 @@
 <template>
-    <div class="box box-info pd50">
-        <div class="box-header with-border">
-            <h3 class="box-title">财务系统用户登录</h3>
+    <div class="login-container">
+        <div class="page-container" style="min-height:907px">
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main content -->
+            <div class="content-wrapper">
+                <!-- Content area -->
+                <div class="content">
+                    <!-- Simple login form -->
+                    <form action="index.html" class="form-validate">
+                        <div class="panel panel-body login-form">
+                            <div class="text-center">
+                                <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                                <h5 class="content-group">财务管理系统<small class="display-block">登录</small></h5>
+                            </div>
+                            <div class="form-group has-feedback has-feedback-left">
+                                <input type="text" class="form-control" v-model="username" placeholder="用户名">
+                                <div class="form-control-feedback">
+                                    <i class="icon-user text-muted"></i>
+                                </div>
+                                <label v-show="usershow" class="validation-error-label" v-text="usererror"></label>
+                            </div>
+                            <div class="form-group has-feedback has-feedback-left">
+                                <input type="password" class="form-control" name="password" v-model="password" placeholder="密码">
+                                <div class="form-control-feedback">
+                                    <i class="icon-lock2 text-muted"></i>
+                                </div>
+                                <label v-show="passshow" class="validation-error-label" v-text="passerror"></label>
+                            </div>
+                            <div class="form-group">
+                                <span v-on:click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /simple login form -->
+                    <!-- Footer -->
+                    <!-- /footer -->
+                </div>
+                <!-- /content area -->
+            </div>
+            <!-- /main content -->
         </div>
-        <form class="form-horizontal">
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">用户名</label>
-                    <div class="col-sm-10">
-                        <input type="text" v-model="username" class="form-control" placeholder="请输入用户名">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">密码</label>
-                    <div class="col-sm-10">
-                        <input type="password" v-model="password" class="form-control" placeholder="请输入密码">
-                    </div>
-                </div>
-            </div>
-            <div class="box-footer">
-                <span @click="login" class="btn btn-info">登录</span>
-            </div>
-        </form>
+        <!-- /page content -->
+    </div>
     </div>
 </template>
 <style>
@@ -41,13 +62,18 @@
         data(){
             return{
                 username:'15151527650',
-                password:'123456'
+                password:'123456',
+                usererror:'',
+                passerror:'',
+                usershow:false,
+                passshow:false
             }
         },
         components:{
         },
         methods:{
             login:function(){
+                if(this.usershow||this.passshow){return false;}
                 let data={'username':this.username,'password':this.password};
                 this.$http.post('./passport/login',data)
                         .then(function (response) {
@@ -62,6 +88,16 @@
                             console.log(response);
                         });
             }
+        },
+        watch:{
+          username:function(){
+              if(this.username==''){this.usererror='请输入用户名';this.usershow=true;}else{this.usererror='';this.usershow=false;}
+          },
+          password:function(){
+              if(this.password==''){this.passerror='请输入密码';this.passshow=true;}else{this.passerror='';this.passshow=false;}
+          }
+        },
+        ready:function(){
         }
     }
 </script>

@@ -1,16 +1,16 @@
 <template>
-    <header class="main-header">
-        <a v-link="{name:'default'}" class="logo">
-            <span class="logo-lg"><b>财务管理系统</b></span>
-        </a>
-        <nav class="navbar navbar-static-top">
-            <div class="navbar-custom-menu">
-                <div class="pull-right">
-                    您好，<span v-text="uname"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>
-                </div>
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" v-link="{name:'default'}">
+                <img src="" alt="">
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <div class="navbar-right" style="margin: 13px;">
+                您好，<span v-text="uname"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div>
 </template>
 <script>
     export default {
@@ -40,7 +40,11 @@
             }
         },
         ready(){
-            (!!sessionStorage.getItem('userData')) ? this.$set('uname',JSON.parse(sessionStorage.getItem('userData')).trueName) : null;
+            if(!!sessionStorage.getItem('userData')) {
+                this.$set('uname',JSON.parse(sessionStorage.getItem('userData')).trueName)
+            }else{
+                //this.$router.go('login');
+            }
         }
     }
 </script>

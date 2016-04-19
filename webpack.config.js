@@ -39,10 +39,10 @@ module.exports = {
             // {test: /\.(js|tag)$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?mimetype=image/svg+xml'},
-            {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
+            {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/woff"},
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/octet-stream"},
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"}
+            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
 		],
 		devtool: 'source-map'
 	},

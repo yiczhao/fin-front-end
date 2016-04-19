@@ -4,16 +4,16 @@
     }
 </style>
 <template>
-    <section class="content-header" v-if="isshow==='isshow'">
-        <div>
-            <ol class="breadcrumb">
-                <li><a v-link="{'name':'default'}">首页</a></li>
+    <div v-show="isshow=='isshow'" class="page-header page-header-default">
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <li><a v-link="{'name':'default'}"><i class="icon-home2 position-left"></i> 首页</a></li>
                 <li><a v-link="{'name':hname}" v-text="ptitle"></a></li>
                 <li v-if="!p2title==''"><a v-link="{'name':hname}" v-text="p2title"></a></li>
                 <li class="active" v-text="title"></li>
-            </ol>
+            </ul>
         </div>
-    </section>
+    </div>
 </template>
 <script>
     export default {

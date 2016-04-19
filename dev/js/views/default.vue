@@ -1,6 +1,6 @@
 <template>
     <index isshow="">
-            <section class="content" slot="content">
+            <section class="content-wrapper" slot="content">
                 <div class="col-xs-12" style="background: #fff;padding: 20px;">
                     <p>[财务管理系统]欢迎您!</p>
                     <p>尊敬的[{{loginList.trueName}}]您好! 这是您第[{{loginList.loginedCount}}]次登录本系统!</p>

@@ -14,7 +14,7 @@ export default function install(Vue,router_proto) {
 		request (request) {
 			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
 			request.headers['X-Auth-Token']=token;
-			return request
+			return request;
 		},
 		response (response) {
 			// *** 拦截session过期
@@ -23,7 +23,7 @@ export default function install(Vue,router_proto) {
 				  router_proto.go('login');
 			  })
 			}
-			return response
+			return response;
 		}
 	});
 
