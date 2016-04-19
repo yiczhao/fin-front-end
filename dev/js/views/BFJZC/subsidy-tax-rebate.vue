@@ -21,13 +21,15 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="timeRange">
-                                    <option value="LASTDAY">最近一周</option>
-                                    <option value="LASTWEEK">最近一个月</option>
-                                    <option value="LASTMONTH">最近三个月</option>
-                                    <option value="LASTTHREEMONTHS">自定义</option>
+                                        <option value="">请选择日期</option>
+                                        <option value="0">昨天</option>
+                                        <option value="1">最近一周</option>
+                                        <option value="2">最近一个月</option>
+                                        <option value="3">最近三个月</option>
+                                        <option value="4">自定义时间</option>
                                     </select>
                                 </div>
-                                <div class="form-group" v-show="timeRange=='LASTTHREEMONTHS'">
+                                <div class="form-group" v-show="timeRange==4">
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
@@ -169,7 +171,7 @@
                 cityID:"",
                 createType:"",
                 status:"",
-                timeRange:"LASTDAY",
+                timeRange:'',
                 startDate:"",
                 endDate:"",
                 merchantID:"",      
@@ -217,6 +219,13 @@
                         console.log(response);
                     });
             },
+            getTwo:function(num){
+                if(num.toString().length>=2) return num;
+                var str="";
+                for(var i=num.toString().length;i<2;i++)
+                    str +="0";
+                return str + num.toString();
+            },
             query: function () {
                 // let data=this.data;
                 let data={
@@ -239,6 +248,36 @@
             this.getSubcompany({});
             this.getCity({});
         },
+         watch:{
+            timeRange:function(){
+                console.log();
+                var d=new Date()
+                var day=d.getDate()
+                var month=d.getMonth() + 1
+                var year=d.getFullYear()
+                var newD;
+                switch (this.timeRange){
+                    case '0':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
+                        break;
+                    case '1':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+                        break;
+                    case '2':
+                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
+                        break;
+                    case '3':
+                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
+                        break;
+                    case '4':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                }
+                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                this.startDate=newD;
+                this.endDate=endD;
+            }
+       },
         components:{
            'datepicker': datepicker,
            'dialog': dialog,

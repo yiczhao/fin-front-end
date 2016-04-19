@@ -66,6 +66,14 @@ export default function(router){
                 require(['./views/default.vue'],resolve);
             }
         },
+        /* 员工管理 */
+        '/employee-managerment/':{
+            name:'employee-managerment',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/XTPZ/employee-managerment.vue'],resolve);
+            }
+        },
         // 转到登录页
         '*':{
             component:function () {
