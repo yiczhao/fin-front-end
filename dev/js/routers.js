@@ -67,11 +67,19 @@ export default function(router){
             }
         },
         /* 员工管理 */
-        '/employee-managerment/':{
-            name:'employee-managerment',
+        '/user-managerment/':{
+            name:'user-managerment',
             router_type:'deposit',
             component: function(resolve){
-                require(['./views/XTPZ/employee-managerment.vue'],resolve);
+                require(['./views/XTPZ/user-managerment.vue'],resolve);
+            }
+        },
+        /* 日志管理 */
+        '/log-management/':{
+            name:'log-management',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/XTPZ/log-management.vue'],resolve);
             }
         },
         // 转到登录页

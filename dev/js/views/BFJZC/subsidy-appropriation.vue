@@ -1,5 +1,5 @@
 <template>
-    <index title="补贴划付" ptitle="备付金之出"  isshow="isshow">
+    <index title="补贴划付" ptitle="备付金支出"  isshow="isshow">
         <section class="content" slot="content">
             <div class="row">
                 <div class="col-xs-12">

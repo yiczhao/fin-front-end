@@ -92,8 +92,8 @@
                             <ul class="hidden-ul" style="display: block">
                                 <li><a href="#"></i>通道管理</a></li>
                                 <li><a href="#"></i>角色管理</a></li>
-                                <li><a v-link="{'name':'employee-managerment'}"></i>员工管理</a></li>
-                                <li><a href="#"></i>系统日志</a></li>
+                                <li><a v-link="{'name':'user-managerment'}"></i>员工管理</a></li>
+                                <li><a v-link="{'name':'log-management'}"></i>系统日志</a></li>
                             </ul>
                         </li>
                     </ul>

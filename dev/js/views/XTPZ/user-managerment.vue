@@ -35,21 +35,39 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-if="!!userList.length" v-for="user in userList">
-                                    <td>{{user.loginTime}}</td>
+                                <tr v-if="!!userList.length" v-for="(index,user) in userList">
+                                    <td>{{index+1}}</td>
                                     <td>{{user.subCompanyName}}</td>
-                                    <td>{{user.userName}}</td>
+                                    <td>{{user.name}}</td>
                                     <td>{{user.phone}}</td>
                                     <td>{{user.name}}</td>
-                                    <td>{{user.loginTime}}</td>
+                                    <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a href="">权限</a>                                        
-                                        <a href="">管辖范围</a>                                        
-                                        <a href="">删除</a>                                        
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                        
+                                        <a href="javascript:void(0);" v-on:click="del(user.id)">删除</a>                                   
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div id="modal_ControlSpan" class="modal fade" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                     <div class="modal-header">
+                                        <h3>管辖范围</h3>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                     </div>
+                                     <div class="modal-body">
+                                         <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                                         <input type="button" id="othercheck" value="反选" />
+                                         <hr/>
+                                         <div v-if="!!controlSpanList.length" v-for="(index,controlSpan) in controlSpanList">
+                                             <input type="checkbox" name="ckbox" />{{controlSpan.name}}
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+                           
                         </div>
                         <div class="box-footer">
                             <page :all="pageall"
@@ -90,7 +108,9 @@
             return{
                 subCompanyID:"",
                 keywords:"",
+                id:"",
                 subcompanyList:[],
+                controlSpanList:[],
                 pageall:1,
                 pagecur:1,
                 page_size:15,
@@ -124,7 +144,27 @@
                         subCompanyID:this.subCompanID,
                         keywords:this.keywords
                     };
-                this.getTradeList(data);
+                this.getUserList(data);
+            },
+            //删除
+            del: function (userId) {
+            },
+            //显示员工管辖
+            showCS: function (userId) {
+                this.$http.post('./user/userControlSpanList/'+userId)
+                    .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('controlSpanList', response.data.data) : null;
+                        },
+                         function (response) {
+                            console.log(response);
+                        });
+            },
+            checkAll:function(){
+                $("input[name='ckbox']").prop({'checked':'hecked'});
+            },
+            othercheck:function(){
+
             },
         },
         ready: function () {
