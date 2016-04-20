@@ -19,7 +19,6 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
-                                    <option value="">请选择日期</option>
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -66,14 +65,11 @@
                             <div class="form-group">
                                 <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
                             </div>
-                            <!--<div class="form-group">-->
-                            <!--<input type="button" class="btn btn-info" value="导出">-->
-                            <!--</div>-->
                         </div>
                     </form>
                 </div>
             </div>
-            <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed" v-for="n in zdlists">
+            <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed" v-for="(index,n) in zdlists">
                 <div class="panel-heading bgddd">
                     <div class="panel-title">
                         <p>
@@ -86,24 +82,37 @@
                             <span>收款账户名:{{n.incomeAccountName}}</span>
                             <span>收款账号:{{n.incomeAccountNumber}}</span>
                             <span>银行凭证号:{{n.certificate}}</span>
-                            <span>付款时间:{{n.paymentTime}}</span>
-                            <span>用途:{{n.purpose}}</span>
+                            <span>付款时间:{{n.paymentTime | datetime}}</span>
+                            <span>用途:
+                                 <template v-if="n.purpose==1"> 补贴划付</template>
+                                 <template v-if="n.purpose==2"> 额度采购</template>
+                                 <template v-if="n.purpose==3"> 退税划付</template>
+                                 <template v-if="n.purpose==4"> 预付款</template>
+                                 <template v-if="n.purpose==5"> 供货商划付</template>
+                            </span>
                             <span>收款开户行:{{n.incomeBankName}}</span>
                             <span>申请分公司:{{n.applyCompany}}</span>
-                            <span>申请时间:{{n.applyTime}}</span>
-                            <span>状态:{{n.message}}</span>
+                            <span>申请时间:{{n.applyTime | datetime}}</span>
+                            <span>
+                                状态:
+                                 <template v-if="n.status==1"> 等待审核</template>
+                                 <template v-if="n.status==2"> 等待划付</template>
+                                 <template v-if="n.status==3"> 等待对账</template>
+                                 <template v-if="n.status==4"> 对账成功</template>
+                                 <template v-if="n.status==5"> 划付失败</template>
+                            </span>
                             <span>对账时间:</span>
                         </p>
                         <p>备注:{{n.remarks}}</p>
                     </div>
-                    <div class="pull-right">
+                    <div class="pull-right" v-on:click="getInfo(index)">
                         <span class="pull-left">查看详情</span>
                         <ul class="icons-list pull-left" >
                             <li><a data-action="collapse"></a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="dataTables_wrapper no-footer">
+                <div  v-show="!!n.listinfo.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -118,202 +127,158 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" >
-                                <td>20150703</td>
-                                <td>3898|深圳探鱼海岸城店</td>
-                                <td>{{7985111/100 | currency '' }}</td>
-                                <td>补贴划付</td>
+                            <tr role="row"  v-for="trlist in n.listinfo">
+                                <td>{{trlist.createAt | datetime}}</td>
+                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.amount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="n.purpose==1"> 补贴划付</template>
+                                    <template v-if="n.purpose==2"> 额度采购</template>
+                                    <template v-if="n.purpose==3"> 退税划付</template>
+                                    <template v-if="n.purpose==4"> 预付款</template>
+                                    <template v-if="n.purpose==5"> 供货商划付</template>
+                                </td>
                                 <td><a href="">详情</a></td>
-                                <td>等待划付</td>
-                                <td>0000134|20150602至20150630|共计156笔</td>
-                            </tr>
-                            <tr role="row" v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">
-                                <td>{{index+1}}</td>
-                                <td>{{trlist.certificate}}</td>
-                                <td>{{trlist.collectionName}}</td>
-                                <td>{{trlist.accountName}}</td>
-                                <td>{{trlist.accountNumber}}</td>
-                                <td>{{trlist.incomeAmount/100 | currency '' }}</td>
-                                <td>{{trlist.payoutAmount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="trlist.status==1"> 等待审核</template>
+                                    <template v-if="trlist.status==2"> 等待划付</template>
+                                    <template v-if="trlist.status==3"> 等待对账</template>
+                                    <template v-if="trlist.status==4"> 对账成功</template>
+                                    <template v-if="trlist.status==5"> 划付失败</template>
+                                    <template v-if="trlist.status==6"> 已关闭</template>
+                                </td>
+                                <td>{{trlist.remarks/100}}</td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="pull-right">
-                            <input type="button" class="btn btn-gray" value="对账">
+                            <template v-if="n.status==2">
+                                <input data-toggle="modal" data-target="#modal_waring" type="button" v-on:click="pay(n.id)" class="btn btn-gray" value="确认划付">
+                                <input data-toggle="modal" data-target="#modal_submit" type="button" v-on:click="back(n.id)" class="btn btn-gray" value="退回重审">
+                            </template>
+                            <template v-if="n.status==3">
+                                <input data-toggle="modal" data-target="#modal_checking" type="button" v-on:click="checking(n.id)" class="btn btn-gray" value="对账">
+                            </template>
+                            <template v-if="n.status==5">
+                                <input data-toggle="modal" data-target="#modal_waring" type="button" v-on:click="update(n.id)" class="btn btn-gray" value="更新订单">
+                                <input data-toggle="modal" data-target="#modal_submit" type="button" v-on:click="apply(n.id)" class="btn btn-gray" value="申请划付">
+                                <input data-toggle="modal" data-target="#modal_waring" type="button" v-on:click="close(n.id)" class="btn btn-gray" value="关闭订单">
+                            </template>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--<div class="panel panel-flat panel-collapsed">-->
-                <!--<div class="panel-heading bgddd">-->
-                    <!--<div class="panel-title">-->
-                        <!--<p>-->
-                            <!--<span>订单号:20150802105038252</span>-->
-                            <!--<span>付款金额:{{5800000/100 | currency '' }}</span>-->
-                            <!--<span>付款账户:深圳备付金</span>-->
-                            <!--<span>收款方:深圳探鱼餐饮管理有限公司</span>-->
-                            <!--<span>付款账户名:深圳卡说信息技术有限公司</span>-->
-                            <!--<span>付款账号:36001050307052502264</span>-->
-                            <!--<span>收款账户名:深圳探鱼餐饮管理有限公司</span>-->
-                            <!--<span>收款账号:626606960</span>-->
-                            <!--<span>银行凭证号:</span>-->
-                            <!--<span>付款时间:</span>-->
-                            <!--<span>用途:补贴划付</span>-->
-                            <!--<span>收款开户行:民生银行海岸城支行</span>-->
-                            <!--<span>申请分公司:深圳卡说</span>-->
-                            <!--<span>申请时间:2015-08-02 10:50:38</span>-->
-                            <!--<span>状态:待划付</span>-->
-                            <!--<span>对账时间:</span>-->
-                        <!--</p>-->
-                        <!--<p>备注:浦发银行[随机折扣1到5，就是这么任性！2015第一季],深圳探鱼4家门店,20150602至20150630补贴划付款</p>-->
-                    <!--</div>-->
-                    <!--<div class="pull-right">-->
-                        <!--<span class="pull-left">查看详情</span>-->
-                        <!--<ul class="icons-list pull-left">-->
-                            <!--<li><a data-action="collapse"></a></li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="dataTables_wrapper no-footer">-->
-                    <!--<div class="datatable-scroll">-->
-                        <!--<table class="table datatable-selection-single dataTable no-footer">-->
-                            <!--<thead>-->
-                            <!--<tr  role="row">-->
-                                <!--<th>生成日期</th>-->
-                                <!--<th>商户名称</th>-->
-                                <!--<th>划付金额</th>-->
-                                <!--<th>用途</th>-->
-                                <!--<th>操作</th>-->
-                                <!--<th>状态</th>-->
-                                <!--<th>备注</th>-->
-                            <!--</tr>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                            <!--<tr role="row" >-->
-                                <!--<td>20150703</td>-->
-                                <!--<td>3898|深圳探鱼海岸城店</td>-->
-                                <!--<td>{{7985111/100 | currency '' }}</td>-->
-                                <!--<td>补贴划付</td>-->
-                                <!--<td><a href="">详情</a></td>-->
-                                <!--<td>等待划付</td>-->
-                                <!--<td>0000134|20150602至20150630|共计156笔</td>-->
-                            <!--</tr>-->
-                            <!--<tr role="row" v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">-->
-                                <!--<td>{{index+1}}</td>-->
-                                <!--<td>{{trlist.certificate}}</td>-->
-                                <!--<td>{{trlist.collectionName}}</td>-->
-                                <!--<td>{{trlist.accountName}}</td>-->
-                                <!--<td>{{trlist.accountNumber}}</td>-->
-                                <!--<td>{{trlist.incomeAmount/100 | currency '' }}</td>-->
-                                <!--<td>{{trlist.payoutAmount/100 | currency '' }}</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                        <!--<div class="pull-right">-->
-                            <!--<input type="button" class="btn btn-gray" value="确认划付">-->
-                            <!--<input type="button" class="btn btn-gray" value="退回重审">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="panel panel-flat panel-collapsed">-->
-                <!--<div class="panel-heading bgddd">-->
-                    <!--<div class="panel-title">-->
-                        <!--<p>-->
-                            <!--<span>订单号:20150802105038252</span>-->
-                            <!--<span>付款金额:{{5800000/100 | currency '' }}</span>-->
-                            <!--<span>付款账户:深圳备付金</span>-->
-                            <!--<span>收款方:深圳探鱼餐饮管理有限公司</span>-->
-                            <!--<span>付款账户名:深圳卡说信息技术有限公司</span>-->
-                            <!--<span>付款账号:36001050307052502264</span>-->
-                            <!--<span>收款账户名:深圳探鱼餐饮管理有限公司</span>-->
-                            <!--<span>收款账号:626606960</span>-->
-                            <!--<span>银行凭证号:</span>-->
-                            <!--<span>付款时间:</span>-->
-                            <!--<span>用途:补贴划付</span>-->
-                            <!--<span>收款开户行:民生银行海岸城支行</span>-->
-                            <!--<span>申请分公司:深圳卡说</span>-->
-                            <!--<span>申请时间:2015-08-02 10:50:38</span>-->
-                            <!--<span>状态:待划付</span>-->
-                            <!--<span>对账时间:</span>-->
-                        <!--</p>-->
-                        <!--<p>备注:浦发银行[随机折扣1到5，就是这么任性！2015第一季],深圳探鱼4家门店,20150602至20150630补贴划付款</p>-->
-                    <!--</div>-->
-                    <!--<div class="pull-right">-->
-                        <!--<span class="pull-left">查看详情</span>-->
-                        <!--<ul class="icons-list pull-left mt0">-->
-                            <!--<li><a data-action="collapse"></a></li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="dataTables_wrapper no-footer">-->
-                    <!--<div class="datatable-scroll">-->
-                        <!--<table class="table datatable-selection-single dataTable no-footer">-->
-                            <!--<thead>-->
-                            <!--<tr  role="row">-->
-                                <!--<th>生成日期</th>-->
-                                <!--<th>商户名称</th>-->
-                                <!--<th>划付金额</th>-->
-                                <!--<th>用途</th>-->
-                                <!--<th>操作</th>-->
-                                <!--<th>状态</th>-->
-                                <!--<th>备注</th>-->
-                            <!--</tr>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                            <!--<tr role="row" >-->
-                                <!--<td>20150703</td>-->
-                                <!--<td>3898|深圳探鱼海岸城店</td>-->
-                                <!--<td>{{7985111/100 | currency '' }}</td>-->
-                                <!--<td>补贴划付</td>-->
-                                <!--<td><a href="">详情</a></td>-->
-                                <!--<td>等待划付</td>-->
-                                <!--<td>0000134|20150602至20150630|共计156笔</td>-->
-                            <!--</tr>-->
-                            <!--<tr role="row" >-->
-                                <!--<td>20150703</td>-->
-                                <!--<td>3898|深圳探鱼海岸城店</td>-->
-                                <!--<td>{{7985111/100 | currency '' }}</td>-->
-                                <!--<td>补贴划付</td>-->
-                                <!--<td><a href="">详情</a></td>-->
-                                <!--<td>等待划付</td>-->
-                                <!--<td>0000134|20150602至20150630|共计156笔</td>-->
-                            <!--</tr>-->
-                            <!--<tr role="row" >-->
-                                <!--<td>20150703</td>-->
-                                <!--<td>3898|深圳探鱼海岸城店</td>-->
-                                <!--<td>{{7985111/100 | currency '' }}</td>-->
-                                <!--<td>补贴划付</td>-->
-                                <!--<td><a href="">详情</a></td>-->
-                                <!--<td>等待划付</td>-->
-                                <!--<td>0000134|20150602至20150630|共计156笔</td>-->
-                            <!--</tr>-->
-                            <!--<tr role="row" v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">-->
-                                <!--<td>{{index+1}}</td>-->
-                                <!--<td>{{trlist.certificate}}</td>-->
-                                <!--<td>{{trlist.collectionName}}</td>-->
-                                <!--<td>{{trlist.accountName}}</td>-->
-                                <!--<td>{{trlist.accountNumber}}</td>-->
-                                <!--<td>{{trlist.incomeAmount/100 | currency '' }}</td>-->
-                                <!--<td>{{trlist.payoutAmount/100 | currency '' }}</td>-->
-                            <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                        <!--<div class="pull-right">-->
-                            <!--<input type="button" class="btn btn-gray" value="更新订单">-->
-                            <!--<input type="button" class="btn btn-gray" value="申请划付">-->
-                            <!--<input type="button" class="btn btn-gray" value="关闭订单">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="datatable-footer pd15">-->
-                        <!--失败原因：<span>余额不足。</span>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+            <page :all="pageall"
+                  :cur.sync="pagecur"
+                  :page_size.sync="page_size">
+            </page>
+            <div id="modal_waring" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h5 class="modal-title" v-text="waring"></h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group tc">
+                                <button  v-if="waring=='你确认更新账单？'" type="button" v-on:click="updateTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认划付该账单？'" type="button" v-on:click="payTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认关闭该账单？'" type="button" v-on:click="closeTrue" class="btn btn-primary">确认</button>
+                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal_submit" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h5 class="modal-title" v-text="title"></h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" v-if="subtitle=='退回重审'"><i>*</i>退回原因</label>
+                                <label class="col-lg-3 control-label" v-if="subtitle=='申请划付'"><i>*</i>备注</label>
+                                <div class="col-lg-9">
+                                    <textarea rows="5" cols="5" class="form-control" placeholder=""></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group tc">
+                                <button  v-if="subtitle=='退回重审'" type="button" v-on:click="backTrue" class="btn btn-primary">退回</button>
+                                <button  v-if="subtitle=='申请划付'" type="button" v-on:click="applyTrue" class="btn btn-primary">申请</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal_checking" class="modal fade" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h5 class="modal-title">对账</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tc f20">
+                                请选择备付金银行流水
+                            </div>
+                            <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>凭证号</th>
+                                                    <th>交易时间</th>
+                                                    <th>收款方</th>
+                                                    <th>收款信息</th>
+                                                    <th>付款金额</th>
+                                                    <th>用途</th>
+                                                    <th>备注</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody>
+                                            <tr role="row"  v-for="n in checkLists">
+                                                <td>{{n.certificate}}</td>
+                                                <td>{{n.tradeTime || datetime}}</td>
+                                                <td>{{n.collectionName}}</td>
+                                                <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
+                                                <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                                <td>
+                                                    <template v-if="n.purpose==1"> 补贴划付</template>
+                                                    <template v-if="n.purpose==2"> 额度采购</template>
+                                                    <template v-if="n.purpose==3"> 退税划付</template>
+                                                    <template v-if="n.purpose==4"> 预付款</template>
+                                                    <template v-if="n.purpose==5"> 供货商划付</template>
+                                                </td>
+                                                <td>{{n.remarks}}</td>
+                                                <td><a href="javascript:void(0)" v-on:click="checking(n.reserveCashId)">选择</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </index>
 </template>
 <style>
+    .f20{
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    .form-group{
+        overflow: hidden;
+    }
+    .modal-body label i{
+        color:red;
+    }
+    .modal-body button{
+        width:35%;
+    }
     .m20{
         margin-bottom:20px;
     }
@@ -377,10 +342,13 @@
     export default{
         data(){
             return{
+                id:'',
                 pagecur:1,
                 page_size:15,
                 pageall:1,
-                dateS:'',
+                dateS:'1',
+                waring:'',
+                subtitle:'',
                 checkForm:{
                     merchantId: '',
                     orderNumber: '',
@@ -394,49 +362,74 @@
                     pageIndex:1,
                     pageSize:15
                 },
-                zdlists:[
-                    {
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 0
-                    },
-                    {
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 0
-                    },
-                ],
+                zdlists:[],
+                checkLists:[]
             }
         },
         methods:{
             // *** 请求账户数据
             getZlists:function(data){
+                this.zdlists=[
+                    {
+                        id:1,
+                        "orderNumber": "20150802105038252",
+                        "payoutAccount": "深圳备付金",
+                        "payoutAccountNumber": "36001050307052502264",
+                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+                        "payoutAmount": 58000,
+                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+                        "incomeAccountNumber": "626606960",
+                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+                        "incomeBankName": "民生银行海岸城支行",
+                        "certificate": "",
+                        "purpose": "1",
+                        "paymentTime": "2015-08-02 10:50:38",
+                        "applyTime": "2015-08-02 10:50:38",
+                        "applyCompany": "深圳卡说",
+                        "remarks": "",
+                        "status": 3,
+                        listinfo:[]
+                    },
+                    {
+                        id:2,
+                        "orderNumber": "20150802105038252",
+                        "payoutAccount": "深圳备付金",
+                        "payoutAccountNumber": "36001050307052502264",
+                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+                        "payoutAmount": 58000,
+                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+                        "incomeAccountNumber": "626606960",
+                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+                        "incomeBankName": "民生银行海岸城支行",
+                        "certificate": "",
+                        "purpose": "1",
+                        "paymentTime": "2015-08-02 10:50:38",
+                        "applyTime": "2015-08-02 10:50:38",
+                        "applyCompany": "深圳卡说",
+                        "remarks": "",
+                        "status": 2,
+                        listinfo:[]
+                    },
+                    {
+                        id:3,
+                        "orderNumber": "20150802105038252",
+                        "payoutAccount": "深圳备付金",
+                        "payoutAccountNumber": "36001050307052502264",
+                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+                        "payoutAmount": 58000,
+                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+                        "incomeAccountNumber": "626606960",
+                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+                        "incomeBankName": "民生银行海岸城支行",
+                        "certificate": "",
+                        "purpose": "1",
+                        "paymentTime": "2015-08-02 10:50:38",
+                        "applyTime": "2015-08-02 10:50:38",
+                        "applyCompany": "深圳卡说",
+                        "remarks": "",
+                        "status": 5,
+                        listinfo:[]
+                    },];
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -459,6 +452,132 @@
             },
             checkNew:function(){
                 this.getZlists(this.checkForm);
+            },
+            getInfo(a){
+                if(this.zdlists[a].listinfo!='')return;
+                this.zdlists[a].listinfo=[
+                    {
+                    "id": 123,
+                    "createAt": "2016-04-12 08:32:00",
+                    "merchantName": "3898|深圳探鱼海岸城店",
+                    "amount": "17095",
+                    "purpose": 58000,
+                    "remarks": "",
+                    "status": 1
+                },
+                    {
+                    "id": 123,
+                    "createAt": "2016-04-12 08:32:00",
+                    "merchantName": "3898|深圳探鱼海岸城店",
+                    "amount": "17095",
+                    "purpose": 58000,
+                    "remarks": "",
+                    "status": 2
+                }];
+            },
+            back(a){
+                this.subtitle = '退回重审';
+                this.accountId=a;
+            },
+            apply(a){
+                this.subtitle = '申请划付';
+                this.accountId=a;
+            },
+            update(a){
+                this.waring = '你确认更新账单？';
+                this.accountId=a;
+            },
+            pay(a){
+                this.waring = '你确认划付该账单？';
+                this.accountId=a;
+            },
+            close(a){
+                this.waring = '你确认关闭该账单？';
+                this.accountId=a;
+            },
+            checking(a){
+                console.log(a);
+                this.checkLists=[{
+                    "reserveCashId": "20150802105038252",
+                    "certificate": "深圳备付金",
+                    "tradeTime": "2015-04-01 10:50:38",
+                    "collectionName": "南昌新开味馆豫章",
+                    "accountName": "张三",
+                    "accountNumber": "36001050307052501764",
+                    "payoutAmount": "407830",
+                    "purpose": "1",
+                    "remarks": "补贴划付"
+                },
+                {
+                    "reserveCashId": "20150802105038252",
+                    "certificate": "深圳备付金",
+                    "tradeTime": "2015-04-01 10:50:38",
+                    "collectionName": "南昌新开味馆豫章",
+                    "accountName": "张三",
+                    "accountNumber": "36001050307052501764",
+                    "payoutAmount": "407830",
+                    "purpose": "1",
+                    "remarks": "补贴划付"
+                }];
+            },
+            updateTrue(){
+                console.log(this.accountId);
+            },
+            payTrue(){
+                console.log(this.accountId);
+            },
+            closeTrue(){
+                console.log(this.accountId);
+            },
+            backTrue(){
+                console.log(this.accountId);
+            },
+            applyTrue(){
+                console.log(this.accountId);
+            },
+            checkingTrue(a){
+                console.log(a);
+            },
+            getTwo:function(num){
+                if(num.toString().length>=2) return num;
+                var str="";
+                for(var i=num.toString().length;i<2;i++)
+                    str +="0";
+                return str + num.toString();
+            },
+            getTime(){
+                var d=new Date()
+                var day=d.getDate()
+                var month=d.getMonth() + 1
+                var year=d.getFullYear()
+                var newD,endD;
+                switch (this.dateS){
+                    case '0':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '1':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '2':
+                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '3':
+                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '4':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    default:
+                        newD=endD='';
+                        break;
+                }
+                this.checkForm.startDate=newD;
+                this.checkForm.endDate=endD;
             }
         },
         watch:{
@@ -471,36 +590,16 @@
                 this.initList();
             },
             dateS:function(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.dateS){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.checkForm.startDate=newD;
-                this.checkForm.endDate=endD;
+                this.getTime();
             }
         },
         components:{
             'datepicker': datepicker,
         },
+        ready(){
+            this.getTime();
+            this.initList();
+        }
     }
     // Collapse on click
     $(document).on('click','.panel-heading .pull-right',function (e) {

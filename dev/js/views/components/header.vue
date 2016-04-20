@@ -43,7 +43,7 @@
             if(!!sessionStorage.getItem('userData')) {
                 this.$set('uname',JSON.parse(sessionStorage.getItem('userData')).trueName)
             }else{
-                //this.$router.go('login');
+//                this.$router.go('login');
             }
         }
     }

@@ -11,7 +11,6 @@
                         <div class="m20">
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
-                                    <option value="">请选择日期</option>
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -310,7 +309,7 @@
                 pageall:1,
                 accountId:'',
                 checkOne:false,
-                dateS:'',
+                dateS:'1',
                 shouru:0,
                 zhichu:0,
                 checkForm:{
@@ -371,11 +370,46 @@
                 for(var i=num.toString().length;i<2;i++)
                     str +="0";
                 return str + num.toString();
+            },
+            getTime(){
+                var d=new Date()
+                var day=d.getDate()
+                var month=d.getMonth() + 1
+                var year=d.getFullYear()
+                var newD,endD;
+                switch (this.dateS){
+                    case '0':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '1':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '2':
+                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '3':
+                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    case '4':
+                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                        break;
+                    default:
+                        newD=endD='';
+                        break;
+                }
+                this.checkForm.startDate=newD;
+                this.checkForm.endDate=endD;
             }
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             this.accountId=this.$route.params.accountId;//=this.checkForm.keyword
+            this.getTime();
             this.initList();
         },
         components:{
@@ -400,31 +434,7 @@
                 this.initList();
             },
             dateS:function(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.dateS){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.checkForm.startDate=newD;
-                this.checkForm.endDate=endD;
+                this.getTime();
             }
         },
         validators: {
