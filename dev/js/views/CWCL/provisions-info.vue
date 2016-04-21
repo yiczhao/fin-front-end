@@ -313,6 +313,7 @@
                 shouru:0,
                 zhichu:0,
                 checkForm:{
+                    accountId:'',
                     certificate:'',
                     keyword:'',
                     status:'',
@@ -408,7 +409,7 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
-            this.accountId=this.$route.params.accountId;//=this.checkForm.keyword
+            this.accountId=this.checkForm.accountId=this.$route.params.accountId
             this.getTime();
             this.initList();
         },
