@@ -3,7 +3,7 @@
            :ptitle="'备付金支出'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content details" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -172,7 +172,7 @@
                   :cur.sync="pagecur"
                   :page_size.sync="page_size">
             </page>
-            <div id="modal_waring" class="modal fade" style="display: none;">
+            <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <div id="modal_submit" class="modal fade" style="display: none;">
+            <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -215,7 +215,7 @@
                 </div>
             </div>
 
-            <div id="modal_checking" class="modal fade" style="display: none;">
+            <div data-backdrop="static"  id="modal_checking" class="modal fade" style="display: none;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -266,30 +266,30 @@
     </index>
 </template>
 <style>
-    .f20{
+    .details .f20{
         font-size: 20px;
         font-weight: bolder;
     }
-    .form-group{
+   .details .form-group{
         overflow: hidden;
     }
-    .modal-body label i{
+    .details   .modal-body label i{
         color:red;
     }
-    .modal-body button{
+    .details  .modal-body button{
         width:35%;
     }
-    .m20{
+    .details  .m20{
         margin-bottom:20px;
     }
-    .mt0{
+    .details  .mt0{
         margin-top: 0
     }
-    .page-bar{
+    .details .page-bar{
         margin: 25px auto;
         text-align: center;
     }
-    .panel-title p span{
+    .details .panel-title p span{
         width: 24%;
         margin-bottom: 3px;
         display: inline-block;
@@ -298,42 +298,42 @@
         white-space: nowrap;
         font-size: 13px;
     }
-   .panel-heading .pull-right{
+    .details .panel-heading .pull-right{
         position: absolute;
         right: 10px;
         bottom: 30px;
        cursor: pointer;
         background: #ECECEC;
     }
-   .dataTables_wrapper{
-       display: none;
-   }
-   .datatable-scroll{
+    .details .datatable-scroll{
        overflow: hidden;
        padding-bottom: 20px;
        padding-top: 20px;
    }
-    .datatable-scroll table{
+    .details .dataTables_wrapper{
+        display: none;
+    }
+    .details .datatable-scroll table{
         float: left;
         width: 80%;
         border: 1px solid #ccc;
         margin-left: 20px;
     }
-    .datatable-scroll .pull-right{
+    .details .datatable-scroll .pull-right{
         width: 15%;
     }
-    .pull-right input{
+    .details  .pull-right input{
         width: 80%;
         margin-bottom: 15px;
     }
-    .panel-flat > .panel-heading.bgddd{
+    .details  .panel-flat > .panel-heading.bgddd{
         background: #ECECEC;
     }
-    div.datatable-footer.pd15{
+    .details div.datatable-footer.pd15{
         padding: 15px 20px;
         font-weight: bolder;
     }
-    div.datatable-footer.pd15 span{
+    .details div.datatable-footer.pd15 span{
         color:red;
     }
 </style>
@@ -437,14 +437,14 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-                this.$http.post('./reservecash/order/list',data)
-                        .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
-                        });
+//                this.$http.post('./reservecash/order/list',data)
+//                        .then(function (response) {
+//                            // *** 判断请求是否成功如若成功则填充数据到模型
+//                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+//                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+//                        }, function (response) {
+//                            console.log(response);
+//                        });
             },
             initList:function(){
                 $(".modal").modal("hide");

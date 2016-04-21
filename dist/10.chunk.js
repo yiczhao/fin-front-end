@@ -1,4 +1,4 @@
-webpackJsonp([9],Array(61).concat([
+webpackJsonp([10],Array(61).concat([
 /* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3723,17 +3723,22 @@ webpackJsonp([9],Array(61).concat([
 /* 128 */,
 /* 129 */,
 /* 130 */,
-/* 131 */
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(132)
-	__vue_script__ = __webpack_require__(134)
+	__webpack_require__(137)
+	__vue_script__ = __webpack_require__(139)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\XTPZ\\user-managerment.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(135)
+	  console.warn("[vue-loader] dev\\js\\views\\XTPZ\\log-management.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(140)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -3743,7 +3748,7 @@ webpackJsonp([9],Array(61).concat([
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\XTPZ\\user-managerment.vue"
+	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\XTPZ\\log-management.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -3752,13 +3757,13 @@ webpackJsonp([9],Array(61).concat([
 	})()}
 
 /***/ },
-/* 132 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(133);
+	var content = __webpack_require__(138);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -3767,8 +3772,8 @@ webpackJsonp([9],Array(61).concat([
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./user-managerment.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./user-managerment.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./log-management.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./log-management.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -3778,7 +3783,7 @@ webpackJsonp([9],Array(61).concat([
 	}
 
 /***/ },
-/* 133 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -3792,7 +3797,7 @@ webpackJsonp([9],Array(61).concat([
 
 
 /***/ },
-/* 134 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3812,7 +3817,7 @@ webpackJsonp([9],Array(61).concat([
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// <template>
-	//     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
+	//     <index title="日志管理" ptitle="系统配置"  isshow="isshow">
 	//         <section class="content" slot="content">
 	//             <div class="row">
 	//                 <div class="col-xs-12">
@@ -3821,13 +3826,27 @@ webpackJsonp([9],Array(61).concat([
 	//                             <form class="form-inline manage-form">
 	//                                 <br/>
 	//                                 <div class="form-group">
+	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
+	//                                 </div>
+	//                                 <div class="form-group">
 	//                                     <select class="form-control" v-model="subCompanyID" >
 	//                                     <option value="">请选择分公司</option>
 	//                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
 	//                                     </select>
 	//                                 </div>
 	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
+	//                                     <select class="form-control" v-model="timeRange">
+	//                                         <option value="">请选择日期</option>
+	//                                         <option value="0">昨天</option>
+	//                                         <option value="1">最近一周</option>
+	//                                         <option value="2">最近一个月</option>
+	//                                         <option value="3">最近三个月</option>
+	//                                         <option value="4">自定义时间</option>
+	//                                     </select>
+	//                                 </div>
+	//                                 <div class="form-group" v-show="timeRange==4">
+	//                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
+	//                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
 	//                                 </div>
 	//                                 <div class="form-group">
 	//                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -3839,48 +3858,30 @@ webpackJsonp([9],Array(61).concat([
 	//                                 <thead>
 	//                                 <tr>
 	//                                     <th>序号</th>
-	//                                     <th>分公司</th>
 	//                                     <th>用户名</th>
-	//                                     <th>手机号</th>
 	//                                     <th>姓名</th>
-	//                                     <th>最后登录时间</th>
+	//                                     <th>分公司</th>
+	//                                     <th>URL</th>
+	//                                     <th>描述</th>
+	//                                     <th>创建时间</th>
 	//                                     <th>操作</th>
 	//                                 </tr>
 	//                                 </thead>
 	//                                 <tbody>
-	//                                 <tr v-if="!!userList.length" v-for="(index,user) in userList">
+	//                                 <tr role="row" v-if="!!logList.length" v-for="(index,log)in logList">
 	//                                     <td>{{index+1}}</td>
-	//                                     <td>{{user.subCompanyName}}</td>
-	//                                     <td>{{user.name}}</td>
-	//                                     <td>{{user.phone}}</td>
-	//                                     <td>{{user.name}}</td>
-	//                                     <td>{{user.loginTime | datetime}}</td>
+	//                                     <td>{{log.userName}}</td>
+	//                                     <td>{{log.name}}</td>
+	//                                     <td>{{log.subCompanyName}}</td>
+	//                                     <td>{{log.URL}}</td>
+	//                                     <td>{{log.description}}</td>
+	//                                     <td>{{log.createTiome}}</td>
 	//                                     <td>
-	//                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                       
-	//                                         <a href="javascript:void(0);" v-on:click="del(user.id)">删除</a>                                  
+	//                                         <a href="#">详情</a>                    
 	//                                     </td>
 	//                                 </tr>
 	//                                 </tbody>
 	//                             </table>
-	//                         </div>
-	//                         <div id="modal_ControlSpan" class="modal fade" style="display: none;">
-	//                             <div class="modal-dialog">
-	//                                 <div class="modal-content">
-	//                                      <div class="modal-header">
-	//                                         <h3>管辖范围</h3>
-	//                                         <button type="button" class="close" data-dismiss="modal">×</button>
-	//                                      </div>
-	//                                      <div class="modal-body">
-	//                                          <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
-	//                                          <input type="button" id="othercheck" value="反选" />
-	//                                          <hr/>
-	//                                          <div v-if="!!controlSpanList.length" v-for="(index,controlSpan) in controlSpanList">
-	//                                              <input type="checkbox" name="ckbox" />{{controlSpan.name}}
-	//                                          </div>
-	//                                      </div>
-	//                                 </div>
-	//                             </div>
-	//
 	//                         </div>
 	//                         <div class="box-footer">
 	//                             <page :all="pageall"
@@ -3916,22 +3917,21 @@ webpackJsonp([9],Array(61).concat([
 	        return {
 	            subCompanyID: "",
 	            keywords: "",
-	            id: "",
+	            timeRange: '',
 	            subcompanyList: [],
-	            controlSpanList: [],
 	            pageall: 1,
 	            pagecur: 1,
 	            page_size: 15,
-	            userList: []
+	            logList: []
 	        };
 	    },
 
 	    methods: {
 	        //获取员工数据
-	        getUserList: function getUserList(data) {
-	            this.$http.post('./user/list', data).then(function (response) {
+	        getLogList: function getLogList(data) {
+	            this.$http.post('./log/list', data).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('userList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('logList', response.data.data) : null;
 	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
 	            }, function (response) {
 	                console.log(response);
@@ -3946,34 +3946,55 @@ webpackJsonp([9],Array(61).concat([
 	                console.log(response);
 	            });
 	        },
+	        getTwo: function getTwo(num) {
+	            if (num.toString().length >= 2) return num;
+	            var str = "";
+	            for (var i = num.toString().length; i < 2; i++) {
+	                str += "0";
+	            }return str + num.toString();
+	        },
 	        query: function query() {
 	            var data = {
 	                subCompanyID: this.subCompanID,
 	                keywords: this.keywords
 	            };
-	            this.getUserList(data);
-	        },
-	        //删除
-	        del: function del(userId) {},
-	        //显示员工管辖
-	        showCS: function showCS(userId) {
-	            this.$http.post('./user/userControlSpanList/' + userId).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('controlSpanList', response.data.data) : null;
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        checkAll: function checkAll() {
-	            $("input[name='ckbox']").prop({ 'checked': 'hecked' });
-	        },
-	        othercheck: function othercheck() {}
+	            this.getTradeList(data);
+	        }
 	    },
 	    ready: function ready() {
-	        this.getUserList({});
+	        this.getLogList({});
 	        this.getSubcompany({});
 	    },
-	    watch: {},
+	    watch: {
+	        timeRange: function timeRange() {
+	            console.log();
+	            var d = new Date();
+	            var day = d.getDate();
+	            var month = d.getMonth() + 1;
+	            var year = d.getFullYear();
+	            var newD;
+	            switch (this.timeRange) {
+	                case '0':
+	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 1);
+	                    break;
+	                case '1':
+	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 7);
+	                    break;
+	                case '2':
+	                    newD = year + "-" + this.getTwo(month - 1) + "-" + this.getTwo(day);
+	                    break;
+	                case '3':
+	                    newD = year + "-" + this.getTwo(month - 3) + "-" + this.getTwo(day);
+	                    break;
+	                case '4':
+	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    break;
+	            }
+	            var endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	            this.startDate = newD;
+	            this.endDate = endD;
+	        }
+	    },
 	    components: {
 	        'datepicker': _datepicker2.default,
 	        'dialog': _dialog2.default
@@ -3982,10 +4003,10 @@ webpackJsonp([9],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 135 */
+/* 140 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<index title=\"员工管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>分公司</th>\n                                <th>用户名</th>\n                                <th>手机号</th>\n                                <th>姓名</th>\n                                <th>最后登录时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!userList.length\" v-for=\"(index,user) in userList\">\n                                <td>{{index+1}}</td>\n                                <td>{{user.subCompanyName}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.phone}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.loginTime | datetime}}</td>\n                                <td>\n                                    <a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal_ControlSpan\" v-on:click=\"showCS(user.id)\">管辖范围</a>                                        \n                                    <a href=\"javascript:void(0);\" v-on:click=\"del(user.id)\">删除</a>                                   \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div id=\"modal_ControlSpan\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>管辖范围</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                     <input type=\"button\" id=\"All\" value=\"全选\" v-on:click=\"checkAll()\"/>\n                                     <input type=\"button\" id=\"othercheck\" value=\"反选\" />\n                                     <hr/>\n                                     <div v-if=\"!!controlSpanList.length\" v-for=\"(index,controlSpan) in controlSpanList\">\n                                         <input type=\"checkbox\" name=\"ckbox\" />{{controlSpan.name}}\n                                     </div>\n                                 </div>\n                            </div>\n                        </div>\n                       \n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
+	module.exports = "\n<index title=\"日志管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"timeRange\">\n                                    <option value=\"\">请选择日期</option>\n                                    <option value=\"0\">昨天</option>\n                                    <option value=\"1\">最近一周</option>\n                                    <option value=\"2\">最近一个月</option>\n                                    <option value=\"3\">最近三个月</option>\n                                    <option value=\"4\">自定义时间</option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\" v-show=\"timeRange==4\">\n                                <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>用户名</th>\n                                <th>姓名</th>\n                                <th>分公司</th>\n                                <th>URL</th>\n                                <th>描述</th>\n                                <th>创建时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr role=\"row\" v-if=\"!!logList.length\" v-for=\"(index,log)in logList\">\n                                <td>{{index+1}}</td>\n                                <td>{{log.userName}}</td>\n                                <td>{{log.name}}</td>\n                                <td>{{log.subCompanyName}}</td>\n                                <td>{{log.URL}}</td>\n                                <td>{{log.description}}</td>\n                                <td>{{log.createTiome}}</td>\n                                <td>\n                                    <a href=\"#\">详情</a>                     \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
 
 /***/ }
 ]));
