@@ -59,7 +59,11 @@ webpackJsonp([8],{
 	    components: {},
 	    ready: function ready() {
 	        // *** 请求用户数据
-	        !!sessionStorage.getItem('userData') ? this.$set('loginList', JSON.parse(sessionStorage.getItem('userData'))) : null;
+	        if (!!sessionStorage.getItem('userData')) {
+	            this.$set('loginList', JSON.parse(sessionStorage.getItem('userData')));
+	        } else {
+	            this.$router.go('login');
+	        }
 	    },
 	    props: {}
 	};
