@@ -133,15 +133,15 @@
 
 	var _routers2 = _interopRequireDefault(_routers);
 
-	var _interceptor = __webpack_require__(136);
+	var _interceptor = __webpack_require__(141);
 
 	var _interceptor2 = _interopRequireDefault(_interceptor);
 
-	var _index = __webpack_require__(142);
+	var _index = __webpack_require__(147);
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _page = __webpack_require__(158);
+	var _page = __webpack_require__(163);
 
 	var _page2 = _interopRequireDefault(_page);
 
@@ -151,9 +151,8 @@
 	 * 入口文件
 	 * @author cwxtDesigner
 	 */
-	__webpack_require__(163);
+	__webpack_require__(168);
 	// *** 公共组件
-
 
 	_vue2.default.component('index', _index2.default);
 	_vue2.default.component('page', _page2.default);
@@ -17507,11 +17506,19 @@
 	            }
 	        },
 	        /* 员工管理 */
-	        '/employee-managerment/': {
-	            name: 'employee-managerment',
+	        '/user-managerment/': {
+	            name: 'user-managerment',
 	            router_type: 'deposit',
 	            component: function component(resolve) {
 	                __webpack_require__.e/* require */(9, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(131)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this));
+	            }
+	        },
+	        /* 日志管理 */
+	        '/log-management/': {
+	            name: 'log-management',
+	            router_type: 'deposit',
+	            component: function component(resolve) {
+	                __webpack_require__.e/* require */(10, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(136)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this));
 	            }
 	        },
 	        // 转到登录页
@@ -17884,7 +17891,12 @@
 /* 133 */,
 /* 134 */,
 /* 135 */,
-/* 136 */
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17894,11 +17906,11 @@
 	});
 	exports.default = install;
 
-	var _md = __webpack_require__(137);
+	var _md = __webpack_require__(142);
 
 	var _md2 = _interopRequireDefault(_md);
 
-	var _dateFormatLite = __webpack_require__(141);
+	var _dateFormatLite = __webpack_require__(146);
 
 	var _dateFormatLite2 = _interopRequireDefault(_dateFormatLite);
 
@@ -17932,14 +17944,14 @@
 	}
 
 /***/ },
-/* 137 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var crypt = __webpack_require__(138),
-	      utf8 = __webpack_require__(139).utf8,
-	      isBuffer = __webpack_require__(140),
-	      bin = __webpack_require__(139).bin,
+	  var crypt = __webpack_require__(143),
+	      utf8 = __webpack_require__(144).utf8,
+	      isBuffer = __webpack_require__(145),
+	      bin = __webpack_require__(144).bin,
 
 	  // The core
 	  md5 = function (message, options) {
@@ -18098,7 +18110,7 @@
 
 
 /***/ },
-/* 138 */
+/* 143 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -18200,7 +18212,7 @@
 
 
 /***/ },
-/* 139 */
+/* 144 */
 /***/ function(module, exports) {
 
 	var charenc = {
@@ -18239,7 +18251,7 @@
 
 
 /***/ },
-/* 140 */
+/* 145 */
 /***/ function(module, exports) {
 
 	/**
@@ -18262,7 +18274,7 @@
 
 
 /***/ },
-/* 141 */
+/* 146 */
 /***/ function(module, exports) {
 
 	
@@ -18407,16 +18419,16 @@
 
 
 /***/ },
-/* 142 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(143)
+	__vue_script__ = __webpack_require__(148)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(157)
+	__vue_template__ = __webpack_require__(162)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18435,7 +18447,7 @@
 	})()}
 
 /***/ },
-/* 143 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18444,19 +18456,19 @@
 	    value: true
 	});
 
-	var _header = __webpack_require__(144);
+	var _header = __webpack_require__(149);
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _menu = __webpack_require__(147);
+	var _menu = __webpack_require__(152);
 
 	var _menu2 = _interopRequireDefault(_menu);
 
-	var _breadcrumb = __webpack_require__(150);
+	var _breadcrumb = __webpack_require__(155);
 
 	var _breadcrumb2 = _interopRequireDefault(_breadcrumb);
 
-	var _footer = __webpack_require__(155);
+	var _footer = __webpack_require__(160);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
@@ -18511,16 +18523,16 @@
 	// </script>
 
 /***/ },
-/* 144 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(145)
+	__vue_script__ = __webpack_require__(150)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\header.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(146)
+	__vue_template__ = __webpack_require__(151)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18539,7 +18551,7 @@
 	})()}
 
 /***/ },
-/* 145 */
+/* 150 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -18589,7 +18601,7 @@
 	        if (!!sessionStorage.getItem('userData')) {
 	            this.$set('uname', JSON.parse(sessionStorage.getItem('userData')).trueName);
 	        } else {
-	            //                this.$router.go('login');
+	            this.$router.go('login');
 	        }
 	    }
 	};
@@ -18598,22 +18610,22 @@
 	//
 
 /***/ },
-/* 146 */
+/* 151 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"navbar navbar-inverse\">\n    <div class=\"navbar-header\">\n        <a class=\"navbar-brand\" v-link=\"{name:'default'}\">\n            <!--<img src=\"\" alt=\"\">-->\n        </a>\n    </div>\n    <div class=\"navbar-collapse collapse\" id=\"navbar-mobile\">\n        <div class=\"navbar-right\" style=\"margin: 13px;\">\n            您好，<span v-text=\"uname\"></span> <a href=\"javascript:void(0);\" v-on:click=\"loginout\" class=\"\">退出</a>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 147 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(148)
+	__vue_script__ = __webpack_require__(153)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\menu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(149)
+	__vue_template__ = __webpack_require__(154)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18632,7 +18644,7 @@
 	})()}
 
 /***/ },
-/* 148 */
+/* 153 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -18734,8 +18746,8 @@
 	//                             <ul class="hidden-ul" style="display: block">
 	//                                 <li><a href="#"></i>通道管理</a></li>
 	//                                 <li><a href="#"></i>角色管理</a></li>
-	//                                 <li><a v-link="{'name':'employee-managerment'}"></i>员工管理</a></li>
-	//                                 <li><a href="#"></i>系统日志</a></li>
+	//                                 <li><a v-link="{'name':'user-managerment'}"></i>员工管理</a></li>
+	//                                 <li><a v-link="{'name':'log-management'}"></i>系统日志</a></li>
 	//                             </ul>
 	//                         </li>
 	//                     </ul>
@@ -18777,23 +18789,23 @@
 	// </script>
 
 /***/ },
-/* 149 */
+/* 154 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"sidebar sidebar-main\">\n    <div class=\"sidebar-content\">\n        <!-- User menu -->\n        <div class=\"sidebar-user\">\n            <div class=\"category-content\">\n                <div class=\"media\">\n                    <!--<a href=\"#\" class=\"media-left\"><img src=\"\" class=\"img-circle img-sm\" alt=\"\"></a>-->\n                    <div class=\"media-body\">\n                        <span class=\"media-heading text-semibold\">财务管理系统</span>\n                        <div class=\"text-size-mini text-muted\">\n                            <i class=\"icon-pin text-size-small\">功能导航</i>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <!-- /user menu -->\n        <!-- Main navigation -->\n        <div class=\"sidebar-category sidebar-category-visible\">\n            <div class=\"category-content no-padding\">\n                <ul class=\"navigation navigation-main navigation-accordion\">\n                    <li class=\"active\">\n                        <a v-link=\"{'name':'default'}\">\n                            <span>首页</span></i>\n                        </a>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\">\n                            <span>财务处理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a v-link=\"{'name':'account-management'}\">账户管理</a></li>\n                            <li><a v-link=\"{'name':'trade-info'}\">交易明细</a></li>\n                            <li><a v-link=\"{'name':'subsidy-appropriation'}\">补贴划付</a></li>\n                            <li><a v-link=\"{'name':'subsidy-tax-rebate'}\">补贴退税</a></li>\n                            <li><a href=\"#\">3211佣金明细</a></li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">本金收入</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a href=\"#\">入账明细</a></li>\n                                    <li><a href=\"#\">交易入账</a></li>\n                                    <li><a href=\"#\">商户退款</a></li>\n                                </ul>\n                            </li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">备付金支出</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a v-link=\"{'name':'payment-details'}\">付款明细</a></li>\n                                    <li><a href=\"#\">补贴划付</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">补贴退税</a></li>\n                                    <li><a href=\"#\">预付款划付</a></li>\n                                    <li><a href=\"#\">供货商划付</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">三方管理</a></li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">商户管理</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a href=\"#\">商户管理</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">预付款</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">代理商管理</a></li>\n                            <li><a href=\"#\">会员管理</a></li>\n                            <li><a href=\"#\">供货商管理</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>活动管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\">活动列表</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>佣金管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\">概况</a></li>\n                            <li><a href=\"#\">自定义统计</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>系统配置</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\"></i>通道管理</a></li>\n                            <li><a href=\"#\"></i>角色管理</a></li>\n                            <li><a v-link=\"{'name':'employee-managerment'}\"></i>员工管理</a></li>\n                            <li><a href=\"#\"></i>系统日志</a></li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n        </div>\n        <!-- /main navigation -->\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"sidebar sidebar-main\">\n    <div class=\"sidebar-content\">\n        <!-- User menu -->\n        <div class=\"sidebar-user\">\n            <div class=\"category-content\">\n                <div class=\"media\">\n                    <!--<a href=\"#\" class=\"media-left\"><img src=\"\" class=\"img-circle img-sm\" alt=\"\"></a>-->\n                    <div class=\"media-body\">\n                        <span class=\"media-heading text-semibold\">财务管理系统</span>\n                        <div class=\"text-size-mini text-muted\">\n                            <i class=\"icon-pin text-size-small\">功能导航</i>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <!-- /user menu -->\n        <!-- Main navigation -->\n        <div class=\"sidebar-category sidebar-category-visible\">\n            <div class=\"category-content no-padding\">\n                <ul class=\"navigation navigation-main navigation-accordion\">\n                    <li class=\"active\">\n                        <a v-link=\"{'name':'default'}\">\n                            <span>首页</span></i>\n                        </a>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\">\n                            <span>财务处理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a v-link=\"{'name':'account-management'}\">账户管理</a></li>\n                            <li><a v-link=\"{'name':'trade-info'}\">交易明细</a></li>\n                            <li><a v-link=\"{'name':'subsidy-appropriation'}\">补贴划付</a></li>\n                            <li><a v-link=\"{'name':'subsidy-tax-rebate'}\">补贴退税</a></li>\n                            <li><a href=\"#\">3211佣金明细</a></li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">本金收入</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a href=\"#\">入账明细</a></li>\n                                    <li><a href=\"#\">交易入账</a></li>\n                                    <li><a href=\"#\">商户退款</a></li>\n                                </ul>\n                            </li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">备付金支出</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a v-link=\"{'name':'payment-details'}\">付款明细</a></li>\n                                    <li><a href=\"#\">补贴划付</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">补贴退税</a></li>\n                                    <li><a href=\"#\">预付款划付</a></li>\n                                    <li><a href=\"#\">供货商划付</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">三方管理</a></li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">商户管理</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a href=\"#\">商户管理</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">预付款</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">代理商管理</a></li>\n                            <li><a href=\"#\">会员管理</a></li>\n                            <li><a href=\"#\">供货商管理</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>活动管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\">活动列表</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>佣金管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\">概况</a></li>\n                            <li><a href=\"#\">自定义统计</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>系统配置</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\"></i>通道管理</a></li>\n                            <li><a href=\"#\"></i>角色管理</a></li>\n                            <li><a v-link=\"{'name':'user-managerment'}\"></i>员工管理</a></li>\n                            <li><a v-link=\"{'name':'log-management'}\"></i>系统日志</a></li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n        </div>\n        <!-- /main navigation -->\n    </div>\n</div>\n";
 
 /***/ },
-/* 150 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(151)
-	__vue_script__ = __webpack_require__(153)
+	__webpack_require__(156)
+	__vue_script__ = __webpack_require__(158)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\breadcrumb.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(154)
+	__vue_template__ = __webpack_require__(159)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18812,13 +18824,13 @@
 	})()}
 
 /***/ },
-/* 151 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(152);
+	var content = __webpack_require__(157);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -18838,7 +18850,7 @@
 	}
 
 /***/ },
-/* 152 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -18852,7 +18864,7 @@
 
 
 /***/ },
-/* 153 */
+/* 158 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -18900,17 +18912,17 @@
 	//
 
 /***/ },
-/* 154 */
+/* 159 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div v-show=\"isshow=='isshow'\" class=\"page-header page-header-default\">\n    <div class=\"breadcrumb-line\">\n        <ul class=\"breadcrumb\">\n            <li><a v-link=\"{'name':'default'}\"><i class=\"icon-home2 position-left\"></i> 首页</a></li>\n            <li><a v-link=\"{'name':hname}\" v-text=\"ptitle\"></a></li>\n            <li v-if=\"!p2title==''\"><a v-link=\"{'name':hname}\" v-text=\"p2title\"></a></li>\n            <li class=\"active\" v-text=\"title\"></li>\n        </ul>\n    </div>\n</div>\n";
 
 /***/ },
-/* 155 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_template__ = __webpack_require__(156)
+	__vue_template__ = __webpack_require__(161)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18929,29 +18941,29 @@
 	})()}
 
 /***/ },
-/* 156 */
+/* 161 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"navbar navbar-default\">\n    <div class=\"navbar-collapse collapse\" id=\"navbar-second\">\n        <div class=\"navbar-right\" style=\"margin-top: 13px;color: #ccc;\">财务管理系统 v2.0 @上海新卡说信息技术有限公司</div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 157 */
+/* 162 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<nv-header keep-alive></nv-header>\n<div class=\"page-container\">\n    <div class=\"page-content\">\n        <nv-menu keep-alive></nv-menu>\n        <breadcrumb\n                :isshow=\"isshow\"\n                :ptitle=\"ptitle\"\n                :title=\"title\"\n                :p2title=\"p2title\"\n                :hname=\"hname\"\n                ></breadcrumb>\n        <slot name=\"content\" slot=\"content\"></slot>\n    </div>\n</div>\n<nv-footer keep-alive></nv-footer>\n";
 
 /***/ },
-/* 158 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(159)
-	__vue_script__ = __webpack_require__(161)
+	__webpack_require__(164)
+	__vue_script__ = __webpack_require__(166)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\page.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(162)
+	__vue_template__ = __webpack_require__(167)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18970,13 +18982,13 @@
 	})()}
 
 /***/ },
-/* 159 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(160);
+	var content = __webpack_require__(165);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -18996,7 +19008,7 @@
 	}
 
 /***/ },
-/* 160 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -19010,7 +19022,7 @@
 
 
 /***/ },
-/* 161 */
+/* 166 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -19216,13 +19228,13 @@
 	// </script>
 
 /***/ },
-/* 162 */
+/* 167 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"page-bar\" v-show=\"all>0\">\n    <ul>\n        <li v-show=\"islength\">\n            每页展示\n            <select v-model=\"page_size\" class=\"page_length\">\n                <option v-for=\"n in pageSizeList\" :value=\"+n\" v-text=\"n\"></option>\n            </select>条\n            &nbsp;&nbsp;&nbsp;&nbsp;\n            共<i v-text=\"all\"></i>条\n            &nbsp;&nbsp;&nbsp;&nbsp;\n        </li>\n        <li v-show=\"page_total>1\"><a v-on:click=\"jump('first')\">首页</a></li>\n        <li v-if=\"page_total>1 && showFirst\"><a v-on:click=\"curs('prev')\">上一页</a></li>\n        <li v-for=\"index in indexs\"  v-bind:class=\"{ 'active': cur == index}\">\n            <a v-on:click=\"btn_click(index)\">{{ index }}</a>\n        </li>\n        <li v-if=\"page_total>1 && show_last\"><a v-on:click=\"curs('next')\">下一页</a></li>\n        <li v-show=\"page_total>1\"><a v-on:click=\"jump('last')\">尾页</a></li>\n        <li>共<i v-text=\"page_total\"></i>页</li>\n        <li v-show=\"page_total>page_size\">&nbsp;&nbsp;&nbsp;&nbsp;第<input type=\"text\" class=\"jump-input form-control\" v-model=\"jump_val | filter_number 1 \">页 <input type=\"button\" value=\"确定\" class=\"jump-button\" @click=\"jump()\" vaule=\"确定\"></li>\n\n    </ul>\n</div>\n";
 
 /***/ },
-/* 163 */
+/* 168 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

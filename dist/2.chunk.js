@@ -78,7 +78,7 @@ webpackJsonp([2],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\n.validation-error-label{\n    margin-left: 20%;\n}\n.form-group{\n    text-align: left;\n}\n.form-group.tc{\n    text-align: center;\n}\n.modal-body .form-control{\n    text-align: left;\n    width:67%;\n    display: inline-block;\n}\n.modal-body label{\n    width:20%;\n    display: inline-block;\n}\n.modal-body label i{\n    color:red;\n}\n.modal-body .waring{\n    color: red;\n    margin-left: 5px;\n}\n.modal-body button{\n    width:35%;\n}\ntd span{\n    cursor: pointer;\n    color: #3c8dbc;\n}\ntd span:hover{\n    opacity: 80;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n", ""]);
+	exports.push([module.id, "\n.validation-error-label{\n    margin-left: 20%;\n}\n.timeerror,.suberror{\n    display: none;\n}\n.suberror{\n    padding-top: 3px;\n}\n.form-group{\n    text-align: left;\n}\n.form-group.tc{\n    text-align: center;\n}\n.modal-body .form-control{\n    text-align: left;\n    width:67%;\n    display: inline-block;\n}\n.modal-body label{\n    width:20%;\n    display: inline-block;\n}\n.modal-body label i{\n    color:red;\n}\n.modal-body .waring{\n    color: red;\n    margin-left: 5px;\n}\n.modal-body button{\n    width:35%;\n}\ntd span{\n    cursor: pointer;\n    color: #3c8dbc;\n}\ntd span:hover{\n    opacity: 80;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n", ""]);
 
 	// exports
 
@@ -196,9 +196,11 @@ webpackJsonp([2],Array(61).concat([
 	//                 </div>
 	//             </div>
 	//             <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-	//                 未找到您要查询的账单信息
+	//                 未找到您要查询的账户
 	//             </div>
 	//         </div>
+	//             <validator name="vali2">
+	//                 <form novalidate>
 	//                         <!-- Promotion Modal -->
 	//                         <div id="modal_fzr" class="modal fade" style="display: none;">
 	//                             <div class="modal-dialog">
@@ -210,24 +212,32 @@ webpackJsonp([2],Array(61).concat([
 	//                                     <div class="modal-body">
 	//                                         <div class="form-group">
 	//                                             <label><i>*</i>负责人</label>
-	//                                             <input type="text" class="form-control" v-model="person.name" :value="person.name">
+	//                                             <input type="text" class="form-control" id="uname" v-validate:uname="['required']" v-model="person.name" :value="person.name">
+	//                                             <span v-if="$vali2.uname.required && $vali2.uname.dirty" class="validation-error-label">请输入负责人姓名</span>
 	//                                         </div>
 	//                                         <div class="form-group">
 	//                                             <label><i>*</i>手机号</label>
-	//                                             <input type="text" class="form-control" v-model="person.phone" :value="person.phone">
+	//                                             <input type="text" class="form-control" id="phone"  v-validate:phone="['required']" v-model="person.phone" :value="person.phone">
+	//                                             <span v-if="$vali2.phone.required && $vali2.phone.dirty" class="validation-error-label">请输入负责人电话</span>
 	//                                         </div>
 	//                                         <div class="form-group">
 	//                                             <label><i>*</i>邮箱</label>
-	//                                             <input type="text" class="form-control" v-model="person.email" :value="person.email">
+	//                                             <input type="text" class="form-control" id="email" v-validate:email="['required']" v-model="person.email" :value="person.email">
+	//                                             <span v-if="$vali2.email.required && $vali2.email.dirty" class="validation-error-label">请输入负责人邮箱</span>
 	//                                         </div>
-	//                                     </div>
-	//                                     <div class="modal-footer">
-	//                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-	//                                         <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+	//                                         <div class="form-group tc">
+	//                                             <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+	//                                             <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+	//                                         </div>
+	//                                         <div class="form-group">
+	//                                             <span class="suberror1 validation-error-label">你的信息未填写完整</span>
+	//                                         </div>
 	//                                     </div>
 	//                                 </div>
 	//                             </div>
 	//                         </div>
+	//                     </form>
+	//                 </validator>
 	//             <div id="modal_waring" class="modal fade" style="display: none;">
 	//                 <div class="modal-dialog">
 	//                     <div class="modal-content">
@@ -245,71 +255,84 @@ webpackJsonp([2],Array(61).concat([
 	//                     </div>
 	//                 </div>
 	//             </div>
-	//             <div id="modal_add" class="modal fade" style="display: none;">
-	//                 <div class="modal-dialog modal-sm">
-	//                     <div class="modal-content">
-	//                         <div class="modal-header">
-	//                             <button type="button" class="close" data-dismiss="modal">×</button>
-	//                             <h5 class="modal-title" v-text="addtitle"></h5>
-	//                         </div>
-	//                         <div class="modal-body">
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>分公司</label>
-	//                                 <select class="form-control" v-model="relist.companyId">
-	//                                     <option value="">请选择分公司</option>
-	//                                     <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-	//                                 </select>
-	//                                 <span v-show="!relist.companyId" class="validation-error-label">请选择分公司</span>
-	//                             </div>
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>简称</label>
-	//                                 <input type="text" class="form-control" v-model="relist.shortName" :value="relist.shortName" maxlength="15" placeholder="15字以内">
-	//                                 <span v-show="!relist.shortName" class="validation-error-label">请输入简称</span>
-	//                             </div>
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>账户名</label>
-	//                                 <input type="text" class="form-control" :value="relist.accountName" v-model="relist.accountName">
-	//                                 <span v-show="!relist.accountName" class="validation-error-label">请输入账户名</span>
-	//                             </div>
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>账号</label>
-	//                                 <input class="form-control" :value="relist.accountNumber" v-model="relist.accountNumber">
-	//                                 <span v-show="!relist.accountNumber" class="validation-error-label">请输入账号</span>
-	//                             </div>
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>开户行</label>
-	//                                 <input type="text" class="form-control" :value="relist.bankName" v-model="relist.bankName">
-	//                                 <span v-show="!relist.bankName" class="validation-error-label">请输入开户行</span>
-	//                             </div>
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>起始日期</label>
-	//                                 <datepicker :width="'67%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
-	//                                 <span v-show="!relist.startDate" class="validation-error-label">请选择起始日期</span>
-	//                             </div>
-	//                             <div class="form-group">
-	//                                 <label><i>*</i>类型</label>
-	//                                 <select class="form-control" v-model="relist.accountType">
-	//                                     <option value="">请选择类型</option>
-	//                                     <option value="1">备付金</option>
-	//                                     <option value="2">本金</option>
-	//                                     <option value="3">佣金</option>
-	//                                 </select>
-	//                                 <span v-show="!relist.accountType" class="validation-error-label">请选择类型</span>
-	//                             </div>
-	//                             <div class="form-group tc">
-	//                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-	//                                 <button type="button" v-on:click="addBtn" class="btn btn-primary">保存</button>
+	//             <validator name="vali">
+	//                 <form novalidate>
+	//                     <div id="modal_add" class="modal fade" style="display: none;">
+	//                         <div class="modal-dialog modal-sm">
+	//                             <div class="modal-content">
+	//                                 <div class="modal-header">
+	//                                     <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                     <h5 class="modal-title" v-text="addtitle"></h5>
+	//                                 </div>
+	//                                 <div class="modal-body">
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>分公司</label>
+	//                                         <select class="form-control" v-model="relist.companyId" id="val1" v-validate:val1="['required']">
+	//                                             <option value="">请选择分公司</option>
+	//                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+	//                                         </select>
+	//                                         <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请选择分公司</span>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>简称</label>
+	//                                         <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value="relist.shortName" maxlength="15" placeholder="15字以内">
+	//                                         <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>账户名</label>
+	//                                         <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value="relist.accountName" v-model="relist.accountName">
+	//                                         <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>账号</label>
+	//                                         <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value="relist.accountNumber" v-model="relist.accountNumber">
+	//                                         <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>开户行</label>
+	//                                         <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value="relist.bankName" v-model="relist.bankName">
+	//                                         <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>起始日期</label>
+	//                                         <datepicker :width="'67%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
+	//                                         <span class="timeerror validation-error-label">请选择起始日期</span>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label><i>*</i>类型</label>
+	//                                         <select class="form-control"  id="val7" v-validate:val7="['required']" v-model="relist.accountType">
+	//                                             <option value="">请选择类型</option>
+	//                                             <option value="1">备付金</option>
+	//                                             <option value="2">本金</option>
+	//                                             <option value="3">佣金</option>
+	//                                         </select>
+	//                                         <span v-if="$vali.val7.required && $vali.val7.dirty" class="validation-error-label">请选择类型</span>
+	//                                     </div>
+	//                                     <div class="form-group tc">
+	//                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+	//                                         <button type="button" v-on:click="addBtn" class="btn btn-primary">保存</button>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <span class="suberror validation-error-label">你的信息未填写完整</span>
+	//                                     </div>
+	//                                 </div>
 	//                             </div>
 	//                         </div>
 	//                     </div>
-	//                 </div>
-	//             </div>
+	//                 </form>
+	//                 </validator>
 	//         </div>
 	//     </index>
 	// </template>
 	// <style>
 	//     .validation-error-label{
 	//         margin-left: 20%;
+	//     }
+	//     .timeerror,.suberror{
+	//         display: none;
+	//     }
+	//     .suberror{
+	//         padding-top: 3px;
 	//     }
 	//     .form-group{
 	//         text-align: left;
@@ -429,9 +452,6 @@ webpackJsonp([2],Array(61).concat([
 	            this.$set('relist', _list);
 	            this.addtitle = '编辑账户';
 	        },
-	        submit: function submit(a) {
-	            console.log(a);
-	        },
 	        start: function start(a) {
 	            this.waring = '你确认启用该账户？';
 	            this.accountId = a;
@@ -458,6 +478,10 @@ webpackJsonp([2],Array(61).concat([
 	            }, function (response) {});
 	        },
 	        personTrue: function personTrue(a) {
+	            $('.suberror1').hide();
+	            if (!this.$vali2.valid) {
+	                $('.suberror1').show();return;
+	            }
 	            var data = {
 	                "id": a,
 	                "accountId": this.accountId,
@@ -490,6 +514,13 @@ webpackJsonp([2],Array(61).concat([
 	            });
 	        },
 	        addBtn: function addBtn() {
+	            $('.suberror,.timeerror').hide();
+	            if (!this.$vali.valid) {
+	                $('.suberror').show();return;
+	            }
+	            if (this.relist.startDate == '') {
+	                $('.timeerror').show();return;
+	            }
 	            // *** 新增修改保存
 	            var data = {
 	                "id": this.accountId,
@@ -4215,7 +4246,7 @@ webpackJsonp([2],Array(61).concat([
 /* 102 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<index :title=\"'账户列表'\"\n       :ptitle=\"'财务处理'\"\n       :hname=\"'account-management'\"\n       :isshow=\"'isshow'\">\n\n    <div class=\"content\" slot=\"content\">\n    <div class=\"panel panel-flat\">\n        <div class=\"panel-heading\">\n            <form class=\"form-inline manage-form\">\n                <div class=\"form-group\">\n                    <input type=\"button\" data-toggle=\"modal\" data-target=\"#modal_add\"  class=\"btn btn-info\" v-on:click=\"addUser\" value=\"添加账户\">\n                </div>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" v-model=\"defaultData.companyId\">\n                        <option value=\"\">请选择分公司</option>\n                        <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                    </select>\n                </div>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" v-model=\"defaultData.accountType\">\n                        <option value=\"\">请选择类型</option>\n                        <option value=\"1\">备付金</option>\n                        <option value=\"2\">本金</option>\n                        <option value=\"3\">佣金</option>\n                    </select>\n                </div>\n                <div class=\"form-group\">\n                    <input type=\"text\" class=\"form-control\" v-model=\"defaultData.accountNumber\" placeholder=\"账号\">\n                </div>\n                <div class=\"form-group\">\n                    <input type=\"button\" class=\"btn btn-info\" v-on:click=\"checkNew\" value=\"查询\">\n                </div>\n            </form>\n        </div>\n        <div v-if=\"!!zdlists.length\" id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper no-footer\">\n            <div class=\"datatable-scroll\">\n                <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                    <thead>\n                        <tr role=\"row\">\n                            <th>分公司</th>\n                            <th>简称</th>\n                            <th>账户名</th>\n                            <th>账号</th>\n                            <th>开户行</th>\n                            <th>类型</th>\n                            <th>起始日期</th>\n                            <th>余额 </th>\n                            <th>操作</th>\n                        </tr>\n                    </thead>\n                <tbody>\n                    <tr role=\"row\" v-for=\"(index,trlist) in zdlists\">\n                        <td>{{trlist.companyName}}</td>\n                        <td>{{trlist.shortName}}</td>\n                        <td>{{trlist.accountName}}</td>\n                        <td>{{trlist.accountNumber}}</td>\n                        <td>{{trlist.bankName}}</td>\n                        <td>\n                            <template v-if=\"trlist.accountType==1\">\n                                备付金\n                            </template>\n                            <template v-if=\"trlist.accountType==2\">\n                                本金\n                            </template>\n                            <template v-if=\"trlist.accountType==3\">\n                                佣金\n                            </template>\n                        </td>\n                        <td>{{trlist.startDate}}</td>\n                        <td>\n                            <a v-link=\"{name:'provisions-info',params:{accountId:trlist.id}}\">{{ trlist.balanceAmount/100 | currency '' }} </a>\n                        </td>\n                        <td v-if=\"trlist.status==0\">\n                            <span data-toggle=\"modal\" data-target=\"#modal_add\"  v-on:click=\"rewrite(trlist)\">编辑</span>\n                            <span data-toggle=\"modal\" data-target=\"#modal_waring\" v-on:click=\"start(trlist.id)\">启用</span>\n                            <span data-toggle=\"modal\" data-target=\"#modal_waring\" v-on:click=\"delBtn(trlist.id)\">删除</span>\n                        </td>\n                        <td v-else>\n                            <span data-toggle=\"modal\" data-target=\"#modal_fzr\" chargePerson=\"{{trlist.chargePerson}}\" v-on:click.self=\"personDialog(trlist.chargePerson,trlist.id)\">负责人</span>\n                        </td>\n                    </tr>\n                </tbody>\n            </table>\n            </div>\n            <div class=\"datatable-footer\">\n                <page :all=\"pageall\"\n                      :cur.sync=\"pagecur\"\n                      :page_size.sync=\"page_size\">\n                </page>\n            </div>\n        </div>\n        <div style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n            未找到您要查询的账单信息\n        </div>\n    </div>\n                    <!-- Promotion Modal -->\n                    <div id=\"modal_fzr\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                    <h5 class=\"modal-title\">负责人</h5>\n                                </div>\n                                <div class=\"modal-body\">\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>负责人</label>\n                                        <input type=\"text\" class=\"form-control\" v-model=\"person.name\" :value=\"person.name\">\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>手机号</label>\n                                        <input type=\"text\" class=\"form-control\" v-model=\"person.phone\" :value=\"person.phone\">\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>邮箱</label>\n                                        <input type=\"text\" class=\"form-control\" v-model=\"person.email\" :value=\"person.email\">\n                                    </div>\n                                </div>\n                                <div class=\"modal-footer\">\n                                    <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                    <button type=\"button\" v-on:click=\"personTrue(person.id)\" class=\"btn btn-primary\">保存</button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n        <div id=\"modal_waring\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\" v-text=\"waring\"></h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"form-group tc\">\n                            <button v-show=\"waring=='你确认启用该账户？'\" type=\"button\" v-on:click=\"startTrue\" class=\"btn btn-primary\">确认</button>\n                            <button v-show=\"waring=='你确认删除该账户？'\" type=\"button\" v-on:click=\"delTrue\" class=\"btn btn-primary\">确认</button>\n                            <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div id=\"modal_add\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog modal-sm\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\" v-text=\"addtitle\"></h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"form-group\">\n                            <label><i>*</i>分公司</label>\n                            <select class=\"form-control\" v-model=\"relist.companyId\">\n                                <option value=\"\">请选择分公司</option>\n                                <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                            </select>\n                            <span v-show=\"!relist.companyId\" class=\"validation-error-label\">请选择分公司</span>\n                        </div>\n                        <div class=\"form-group\">\n                            <label><i>*</i>简称</label>\n                            <input type=\"text\" class=\"form-control\" v-model=\"relist.shortName\" :value=\"relist.shortName\" maxlength=\"15\" placeholder=\"15字以内\">\n                            <span v-show=\"!relist.shortName\" class=\"validation-error-label\">请输入简称</span>\n                        </div>\n                        <div class=\"form-group\">\n                            <label><i>*</i>账户名</label>\n                            <input type=\"text\" class=\"form-control\" :value=\"relist.accountName\" v-model=\"relist.accountName\">\n                            <span v-show=\"!relist.accountName\" class=\"validation-error-label\">请输入账户名</span>\n                        </div>\n                        <div class=\"form-group\">\n                            <label><i>*</i>账号</label>\n                            <input class=\"form-control\" :value=\"relist.accountNumber\" v-model=\"relist.accountNumber\">\n                            <span v-show=\"!relist.accountNumber\" class=\"validation-error-label\">请输入账号</span>\n                        </div>\n                        <div class=\"form-group\">\n                            <label><i>*</i>开户行</label>\n                            <input type=\"text\" class=\"form-control\" :value=\"relist.bankName\" v-model=\"relist.bankName\">\n                            <span v-show=\"!relist.bankName\" class=\"validation-error-label\">请输入开户行</span>\n                        </div>\n                        <div class=\"form-group\">\n                            <label><i>*</i>起始日期</label>\n                            <datepicker :width=\"'67%'\" :readonly=\"true\" :value.sync=\"relist.startDate\" format=\"YYYY-MM-DD\"></datepicker>\n                            <span v-show=\"!relist.startDate\" class=\"validation-error-label\">请选择起始日期</span>\n                        </div>\n                        <div class=\"form-group\">\n                            <label><i>*</i>类型</label>\n                            <select class=\"form-control\" v-model=\"relist.accountType\">\n                                <option value=\"\">请选择类型</option>\n                                <option value=\"1\">备付金</option>\n                                <option value=\"2\">本金</option>\n                                <option value=\"3\">佣金</option>\n                            </select>\n                            <span v-show=\"!relist.accountType\" class=\"validation-error-label\">请选择类型</span>\n                        </div>\n                        <div class=\"form-group tc\">\n                            <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                            <button type=\"button\" v-on:click=\"addBtn\" class=\"btn btn-primary\">保存</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</index>\n";
+	module.exports = "\n<index :title=\"'账户列表'\"\n       :ptitle=\"'财务处理'\"\n       :hname=\"'account-management'\"\n       :isshow=\"'isshow'\">\n\n    <div class=\"content\" slot=\"content\">\n    <div class=\"panel panel-flat\">\n        <div class=\"panel-heading\">\n            <form class=\"form-inline manage-form\">\n                <div class=\"form-group\">\n                    <input type=\"button\" data-toggle=\"modal\" data-target=\"#modal_add\"  class=\"btn btn-info\" v-on:click=\"addUser\" value=\"添加账户\">\n                </div>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" v-model=\"defaultData.companyId\">\n                        <option value=\"\">请选择分公司</option>\n                        <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                    </select>\n                </div>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" v-model=\"defaultData.accountType\">\n                        <option value=\"\">请选择类型</option>\n                        <option value=\"1\">备付金</option>\n                        <option value=\"2\">本金</option>\n                        <option value=\"3\">佣金</option>\n                    </select>\n                </div>\n                <div class=\"form-group\">\n                    <input type=\"text\" class=\"form-control\" v-model=\"defaultData.accountNumber\" placeholder=\"账号\">\n                </div>\n                <div class=\"form-group\">\n                    <input type=\"button\" class=\"btn btn-info\" v-on:click=\"checkNew\" value=\"查询\">\n                </div>\n            </form>\n        </div>\n        <div v-if=\"!!zdlists.length\" id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper no-footer\">\n            <div class=\"datatable-scroll\">\n                <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                    <thead>\n                        <tr role=\"row\">\n                            <th>分公司</th>\n                            <th>简称</th>\n                            <th>账户名</th>\n                            <th>账号</th>\n                            <th>开户行</th>\n                            <th>类型</th>\n                            <th>起始日期</th>\n                            <th>余额 </th>\n                            <th>操作</th>\n                        </tr>\n                    </thead>\n                <tbody>\n                    <tr role=\"row\" v-for=\"(index,trlist) in zdlists\">\n                        <td>{{trlist.companyName}}</td>\n                        <td>{{trlist.shortName}}</td>\n                        <td>{{trlist.accountName}}</td>\n                        <td>{{trlist.accountNumber}}</td>\n                        <td>{{trlist.bankName}}</td>\n                        <td>\n                            <template v-if=\"trlist.accountType==1\">\n                                备付金\n                            </template>\n                            <template v-if=\"trlist.accountType==2\">\n                                本金\n                            </template>\n                            <template v-if=\"trlist.accountType==3\">\n                                佣金\n                            </template>\n                        </td>\n                        <td>{{trlist.startDate}}</td>\n                        <td>\n                            <a v-link=\"{name:'provisions-info',params:{accountId:trlist.id}}\">{{ trlist.balanceAmount/100 | currency '' }} </a>\n                        </td>\n                        <td v-if=\"trlist.status==0\">\n                            <span data-toggle=\"modal\" data-target=\"#modal_add\"  v-on:click=\"rewrite(trlist)\">编辑</span>\n                            <span data-toggle=\"modal\" data-target=\"#modal_waring\" v-on:click=\"start(trlist.id)\">启用</span>\n                            <span data-toggle=\"modal\" data-target=\"#modal_waring\" v-on:click=\"delBtn(trlist.id)\">删除</span>\n                        </td>\n                        <td v-else>\n                            <span data-toggle=\"modal\" data-target=\"#modal_fzr\" chargePerson=\"{{trlist.chargePerson}}\" v-on:click.self=\"personDialog(trlist.chargePerson,trlist.id)\">负责人</span>\n                        </td>\n                    </tr>\n                </tbody>\n            </table>\n            </div>\n            <div class=\"datatable-footer\">\n                <page :all=\"pageall\"\n                      :cur.sync=\"pagecur\"\n                      :page_size.sync=\"page_size\">\n                </page>\n            </div>\n        </div>\n        <div style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n            未找到您要查询的账户\n        </div>\n    </div>\n        <validator name=\"vali2\">\n            <form novalidate>\n                    <!-- Promotion Modal -->\n                    <div id=\"modal_fzr\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                    <h5 class=\"modal-title\">负责人</h5>\n                                </div>\n                                <div class=\"modal-body\">\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>负责人</label>\n                                        <input type=\"text\" class=\"form-control\" id=\"uname\" v-validate:uname=\"['required']\" v-model=\"person.name\" :value=\"person.name\">\n                                        <span v-if=\"$vali2.uname.required && $vali2.uname.dirty\" class=\"validation-error-label\">请输入负责人姓名</span>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>手机号</label>\n                                        <input type=\"text\" class=\"form-control\" id=\"phone\"  v-validate:phone=\"['required']\" v-model=\"person.phone\" :value=\"person.phone\">\n                                        <span v-if=\"$vali2.phone.required && $vali2.phone.dirty\" class=\"validation-error-label\">请输入负责人电话</span>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>邮箱</label>\n                                        <input type=\"text\" class=\"form-control\" id=\"email\" v-validate:email=\"['required']\" v-model=\"person.email\" :value=\"person.email\">\n                                        <span v-if=\"$vali2.email.required && $vali2.email.dirty\" class=\"validation-error-label\">请输入负责人邮箱</span>\n                                    </div>\n                                    <div class=\"form-group tc\">\n                                        <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                        <button type=\"button\" v-on:click=\"personTrue(person.id)\" class=\"btn btn-primary\">保存</button>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <span class=\"suberror1 validation-error-label\">你的信息未填写完整</span>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </form>\n            </validator>\n        <div id=\"modal_waring\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\" v-text=\"waring\"></h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"form-group tc\">\n                            <button v-show=\"waring=='你确认启用该账户？'\" type=\"button\" v-on:click=\"startTrue\" class=\"btn btn-primary\">确认</button>\n                            <button v-show=\"waring=='你确认删除该账户？'\" type=\"button\" v-on:click=\"delTrue\" class=\"btn btn-primary\">确认</button>\n                            <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <validator name=\"vali\">\n            <form novalidate>\n                <div id=\"modal_add\" class=\"modal fade\" style=\"display: none;\">\n                    <div class=\"modal-dialog modal-sm\">\n                        <div class=\"modal-content\">\n                            <div class=\"modal-header\">\n                                <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                <h5 class=\"modal-title\" v-text=\"addtitle\"></h5>\n                            </div>\n                            <div class=\"modal-body\">\n                                <div class=\"form-group\">\n                                    <label><i>*</i>分公司</label>\n                                    <select class=\"form-control\" v-model=\"relist.companyId\" id=\"val1\" v-validate:val1=\"['required']\">\n                                        <option value=\"\">请选择分公司</option>\n                                        <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                    </select>\n                                    <span v-if=\"$vali.val1.required && $vali.val1.dirty\" class=\"validation-error-label\">请选择分公司</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>简称</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val2\" v-validate:val2=\"['required']\" v-model=\"relist.shortName\" :value=\"relist.shortName\" maxlength=\"15\" placeholder=\"15字以内\">\n                                    <span v-if=\"$vali.val2.required && $vali.val2.dirty\" class=\"validation-error-label\">请输入简称</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>账户名</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val3\" v-validate:val3=\"['required']\"  :value=\"relist.accountName\" v-model=\"relist.accountName\">\n                                    <span v-if=\"$vali.val3.required && $vali.val3.dirty\" class=\"validation-error-label\">请输入账户名</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>账号</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val4\" v-validate:val4=\"['required']\"  :value=\"relist.accountNumber\" v-model=\"relist.accountNumber\">\n                                    <span v-if=\"$vali.val4.required && $vali.val4.dirty\" class=\"validation-error-label\">请输入账号</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>开户行</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val5\" v-validate:val5=\"['required']\" :value=\"relist.bankName\" v-model=\"relist.bankName\">\n                                    <span v-if=\"$vali.val5.required && $vali.val5.dirty\" class=\"validation-error-label\">请输入开户行</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>起始日期</label>\n                                    <datepicker :width=\"'67%'\" :readonly=\"true\" :value.sync=\"relist.startDate\" format=\"YYYY-MM-DD\"></datepicker>\n                                    <span class=\"timeerror validation-error-label\">请选择起始日期</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>类型</label>\n                                    <select class=\"form-control\"  id=\"val7\" v-validate:val7=\"['required']\" v-model=\"relist.accountType\">\n                                        <option value=\"\">请选择类型</option>\n                                        <option value=\"1\">备付金</option>\n                                        <option value=\"2\">本金</option>\n                                        <option value=\"3\">佣金</option>\n                                    </select>\n                                    <span v-if=\"$vali.val7.required && $vali.val7.dirty\" class=\"validation-error-label\">请选择类型</span>\n                                </div>\n                                <div class=\"form-group tc\">\n                                    <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                    <button type=\"button\" v-on:click=\"addBtn\" class=\"btn btn-primary\">保存</button>\n                                </div>\n                                <div class=\"form-group\">\n                                    <span class=\"suberror validation-error-label\">你的信息未填写完整</span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </form>\n            </validator>\n    </div>\n</index>\n";
 
 /***/ }
 ]));
