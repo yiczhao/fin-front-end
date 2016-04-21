@@ -4,7 +4,7 @@
            :p2title="'账户列表'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content info" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <div id="modal_fzr" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-sm">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
@@ -237,62 +237,58 @@
     </index>
 </template>
 <style>
-    div.wrapper{
+    .info div.wrapper{
         overflow: visible;
     }
-    div.dialog .content .box-body{
+    .info div.dialog .content .box-body{
         padding: 0 20px;
     }
-    .table2{
+    .info .table2{
         position: relative;
-        right: 120%;
-        width: 900px;
         background: rgb(255, 255, 255);
         padding: 20px 0;
     }
-    .box .box-header{
+    .info .box .box-header{
         padding-top: 20px;
     }
-    .m20{
+    .info .m20{
         margin-bottom:20px;
     }
-    .modal-body .form-group{
+    .info .modal-body .form-group{
          width: auto;
          text-align: left;
      }
-    .modal-body .tc{
+    .info  .modal-body .tc{
         text-align: center;
     }
-    .modal-body .tr{
+    .info .modal-body .tr{
         text-align: right;
         margin-left: 10px;
     }
-    .modal-body .form-group .iblock{
+    .info .modal-body .form-group .iblock{
         width: 20%;
         display: inline-block;
     }
-    .modal-body .form-group .w28{
+    .info  .modal-body .form-group .w28{
         width: 28%;
     }
-    .modal-body .form-group .w28 i{
+    .info .modal-body .form-group .w28 i{
         color:red;
     }
-    .content{
+    .info .content{
         padding: 0 15px;
     }
-    .datetime-picker{
+    .info  .datetime-picker{
         margin:0 15px;
     }
-    .modal-body{
+    .info .modal-body{
         padding: 0 15px;
     }
-
-    .page-bar{
+    .info .page-bar{
         margin: 25px auto;
         text-align: center;
     }
 </style>
-
 <script>
     import datepicker from '../components/datepicker.vue'
     export default{
@@ -363,7 +359,9 @@
             },
             dzOne:function(){
                 console.log(222);
+                var model=$('.info .modal-sm');
                 (this.checkOne)?this.checkOne=false:this.checkOne=true;
+                (model.hasClass('modal-lg'))?model.removeClass('modal-lg'):model.addClass('modal-lg')
             },
             getTwo:function(num){
                 if(num.toString().length>=2) return num;

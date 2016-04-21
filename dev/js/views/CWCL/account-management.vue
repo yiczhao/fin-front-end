@@ -94,6 +94,8 @@
                 未找到您要查询的账户
             </div>
         </div>
+            <validator name="vali2">
+                <form novalidate>
                         <!-- Promotion Modal -->
                         <div id="modal_fzr" class="modal fade" style="display: none;">
                             <div class="modal-dialog">
@@ -105,24 +107,32 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label><i>*</i>负责人</label>
-                                            <input type="text" class="form-control" v-model="person.name" :value="person.name">
+                                            <input type="text" class="form-control" id="uname" v-validate:uname="['required']" v-model="person.name" :value="person.name">
+                                            <span v-if="$vali2.uname.required && $vali2.uname.dirty" class="validation-error-label">请输入负责人姓名</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>手机号</label>
-                                            <input type="text" class="form-control" v-model="person.phone" :value="person.phone">
+                                            <input type="text" class="form-control" id="phone"  v-validate:phone="['required']" v-model="person.phone" :value="person.phone">
+                                            <span v-if="$vali2.phone.required && $vali2.phone.dirty" class="validation-error-label">请输入负责人电话</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>邮箱</label>
-                                            <input type="text" class="form-control" v-model="person.email" :value="person.email">
+                                            <input type="text" class="form-control" id="email" v-validate:email="['required']" v-model="person.email" :value="person.email">
+                                            <span v-if="$vali2.email.required && $vali2.email.dirty" class="validation-error-label">请输入负责人邮箱</span>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                        <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                                        <div class="form-group tc">
+                                            <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                            <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="suberror1 validation-error-label">你的信息未填写完整</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </form>
+                </validator>
             <div id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -368,6 +378,8 @@
                         }, function (response) {})
             },
             personTrue:function(a){
+                $('.suberror1').hide();
+                if(!this.$vali2.valid){$('.suberror1').show();return;}
                 let data={
                     "id": a,
                     "accountId":this.accountId,
