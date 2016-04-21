@@ -172,7 +172,7 @@
                   :cur.sync="pagecur"
                   :page_size.sync="page_size">
             </page>
-            <div id="modal_waring" class="modal fade" style="display: none;">
+            <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <div id="modal_submit" class="modal fade" style="display: none;">
+            <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -215,7 +215,7 @@
                 </div>
             </div>
 
-            <div id="modal_checking" class="modal fade" style="display: none;">
+            <div data-backdrop="static"  id="modal_checking" class="modal fade" style="display: none;">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">

@@ -3,7 +3,6 @@
            :ptitle="'财务处理'"
            :hname="'account-management'"
            :isshow="'isshow'">
-
         <div class="content" slot="content">
         <div class="panel panel-flat">
             <div class="panel-heading">
@@ -97,7 +96,7 @@
             <validator name="vali2">
                 <form novalidate>
                         <!-- Promotion Modal -->
-                        <div id="modal_fzr" class="modal fade" style="display: none;">
+                        <div id="modal_fzr" data-backdrop="static"  class="modal fade" style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -108,24 +107,21 @@
                                         <div class="form-group">
                                             <label><i>*</i>负责人</label>
                                             <input type="text" class="form-control" id="uname" v-validate:uname="['required']" v-model="person.name" :value="person.name">
-                                            <span v-if="$vali2.uname.required && $vali2.uname.dirty" class="validation-error-label">请输入负责人姓名</span>
+                                            <span v-if="$vali2.uname.required && fire" class="validation-error-label">请输入负责人姓名</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>手机号</label>
                                             <input type="text" class="form-control" id="phone"  v-validate:phone="['required']" v-model="person.phone" :value="person.phone">
-                                            <span v-if="$vali2.phone.required && $vali2.phone.dirty" class="validation-error-label">请输入负责人电话</span>
+                                            <span v-if="$vali2.phone.required && fire" class="validation-error-label">请输入负责人电话</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>邮箱</label>
                                             <input type="text" class="form-control" id="email" v-validate:email="['required']" v-model="person.email" :value="person.email">
-                                            <span v-if="$vali2.email.required && $vali2.email.dirty" class="validation-error-label">请输入负责人邮箱</span>
+                                            <span v-if="$vali2.email.required && fire" class="validation-error-label">请输入负责人邮箱</span>
                                         </div>
                                         <div class="form-group tc">
                                             <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                             <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
-                                        </div>
-                                        <div class="form-group">
-                                            <span class="suberror1 validation-error-label">你的信息未填写完整</span>
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +129,7 @@
                         </div>
                     </form>
                 </validator>
-            <div id="modal_waring" class="modal fade" style="display: none;">
+            <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -152,7 +148,7 @@
             </div>
             <validator name="vali">
                 <form novalidate>
-                    <div id="modal_add" class="modal fade" style="display: none;">
+                    <div id="modal_add" data-backdrop="static"  class="modal fade" style="display: none;">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -223,10 +219,10 @@
     .validation-error-label{
         margin-left: 20%;
     }
-    .timeerror,.suberror{
+    .timeerror,.suberror,.suberror1{
         display: none;
     }
-    .suberror{
+    .suberror,.suberror1{
         padding-top: 3px;
     }
     .form-group{
@@ -266,13 +262,10 @@
         text-align: center;
     }
 </style>
-
 <script>
     import datepicker from '../components/datepicker.vue'
     import dialog from '../components/dialog.vue'
     export default{
-        props:{
-        },
         data(){
             return{
                 pagecur:1,
@@ -292,6 +285,7 @@
                 uText:'',
                 addtitle:'',
                 waring:'',
+                fire:false,
                 person:{
                     name:'',
                     phone:'',
@@ -306,6 +300,9 @@
             // +'/level_setting/list'
 
             // *** 请求账户列表数据
+            errorHide(){
+                $('.suberror,.timeerror').hide();
+            },
             getZlists:function(data){
                     this.$http.post('./bankaccount/list',data)
                             .then(function (response) {
@@ -330,17 +327,12 @@
                 this.initList();
             },
             addUser:function(){
+                this.errorHide();
                 this.relist={
                     startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
                 },
                 this.accountId='';
                 this.addtitle = '添加账户';
-            },
-            close_dialog() {
-                this.re_show = false;
-                this.start_show = false;
-                this.delete_show = false;
-                this.person_show=false;
             },
             initList:function(){
                 $(".modal").modal("hide");
@@ -360,6 +352,7 @@
                 this.accountId=a;
             },
             personDialog:function(a,b){
+                this.errorHide();
                 this.accountId=b;
                 this.$http.post('./chargeperson/query/'+a)
                         .then(function (response) {
@@ -374,12 +367,10 @@
                             }else{
                                 this.$set('person',newperson)
                             }
-                            this.person_show=true;
                         }, function (response) {})
             },
             personTrue:function(a){
-                $('.suberror1').hide();
-                if(!this.$vali2.valid){$('.suberror1').show();return;}
+                if(!this.$vali2.valid){this.fire=true;return;}
                 let data={
                     "id": a,
                     "accountId":this.accountId,
@@ -415,7 +406,7 @@
                         })
             },
             addBtn:function(){
-                $('.suberror,.timeerror').hide();
+                this.errorHide();
                 if(!this.$vali.valid){$('.suberror').show();return;}
                 if(this.relist.startDate==''){$('.timeerror').show();return;}
                 // *** 新增修改保存
@@ -441,6 +432,11 @@
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             this.initList();
             this.getClist();
+            let vm=this;
+            $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
+                this.fire=false;
+                vm.$resetValidation();
+            })
         },
         components:{
             'datepicker': datepicker,

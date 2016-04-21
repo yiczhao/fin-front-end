@@ -61,8 +61,8 @@
     export default{
         data(){
             return{
-                username:'15151527650',
-                password:'123456',
+                username:'',
+                password:'',
                 usererror:'',
                 passerror:'',
                 usershow:false,

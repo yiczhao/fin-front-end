@@ -129,7 +129,7 @@
                         </page>
                     </div>
                 </div>
-                <div id="modal_fzr" class="modal fade" style="display: none;">
+                <div data-backdrop="static"  id="modal_fzr" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
                             <div class="modal-header">
