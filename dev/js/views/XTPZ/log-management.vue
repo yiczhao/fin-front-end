@@ -50,16 +50,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr role="row" v-if="!!logList.length" v-for="(index,log)in logList">
+                                <tr v-if="!!logList.length" v-for="(index,log) in logList">
                                     <td>{{index+1}}</td>
                                     <td>{{log.userName}}</td>
                                     <td>{{log.name}}</td>
                                     <td>{{log.subCompanyName}}</td>
                                     <td>{{log.URL}}</td>
                                     <td>{{log.description}}</td>
-                                    <td>{{log.createTiome}}</td>
+                                    <td>{{log.createTime | datetime}}</td>
                                     <td>
-                                        <a href="#">详情</a>                     
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>                     
                                     </td>
                                 </tr>
                                 </tbody>
@@ -70,6 +70,34 @@
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
                             </page>
+                        </div>
+                        <div id="modal_logInfo" data-backdrop="static" class="modal fade" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                     <div class="modal-header">
+                                        <h3>日志详情</h3>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                     </div>
+                                     <div class="modal-body">
+                                        <div>
+                                            <div><label>用户名：</label>{{log.userName}}</div>
+                                            <div><label>姓名：</label>{{log.name}}</div>
+                                            <div><label>URL：</label>
+                                                <textarea class="textarea-w">{{log.URL}}</textarea>
+                                            </div>
+                                            <div><label>描述：</label>
+                                                <textarea class="textarea-w">{{log.description}}</textarea>
+                                            </div>
+                                            <div><label>详情：</label>
+                                                <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
+                                            </div>
+                                            <div><label>创建IP：</label>{{log.userName}}</div>
+                                            <div><label>创建时间：</label>{{log.createTime | datetime}}</div>
+                                        </div>
+                                     </div>
+                                </div>
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -91,6 +119,13 @@
     .box-body #table1 th{
         min-width: 85px;
     }
+    .textarea-w{
+        width: 500px;
+        height: 40px;
+    }
+    .textarea-h{
+        height: 100px;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -110,6 +145,7 @@
                 pagecur:1,
                 page_size:15,
                 logList:[],
+                log:{}
             }
         },
         methods:{
@@ -141,12 +177,24 @@
                     str +="0";
                 return str + num.toString();
             },
+            showLog:function(id){
+                this.$http.post('./log/info/'+id)
+                    .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('log', response.data.data) : null;
+                        },
+                         function (response) {
+                            console.log(response);
+                        });
+            },
             query: function () {
                 let data={
-                        subCompanyID:this.subCompanID,
-                        keywords:this.keywords
+                        subCompanyID:this.subCompanyID,
+                        keywords:this.keywords,
+                        startDate:this.startDate,
+                        endDate:this.endDate
                     };
-                this.getTradeList(data);
+                this.getLogList(data);
             },
         },
         ready: function () {

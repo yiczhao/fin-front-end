@@ -44,13 +44,12 @@
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                        
-                                        <a href="javascript:void(0);" v-on:click="del(user.id)">删除</a>                                   
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div id="modal_ControlSpan" class="modal fade" style="display: none;">
+                        <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                      <div class="modal-header">
@@ -59,11 +58,18 @@
                                      </div>
                                      <div class="modal-body">
                                          <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
-                                         <input type="button" id="othercheck" value="反选" />
+                                         <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
                                          <hr/>
-                                         <div v-if="!!controlSpanList.length" v-for="(index,controlSpan) in controlSpanList">
-                                             <input type="checkbox" name="ckbox" />{{controlSpan.name}}
+                                         <div class="controlSpan" v-for="controlSpan in controlSpanList">
+                                             <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+                                             <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
                                          </div>
+                                         <hr/>
+                                     </div>
+                                     <div class="modal-foot">
+                                        <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
+                                        <input type="button" class="btn btn-gray" v-on:click="cancel" data-dismiss="modal" value="取消">
+                                        <br/>
                                      </div>
                                 </div>
                             </div>
@@ -95,6 +101,14 @@
     .box-body #table1 th{
         min-width: 85px;
     }
+    .controlSpan{
+        float: left;
+        margin-right: 10px;
+    }
+    .modal-foot{
+        clear:both;
+        text-align: center;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -109,12 +123,14 @@
                 subCompanyID:"",
                 keywords:"",
                 id:"",
+                userID:"",
                 subcompanyList:[],
                 controlSpanList:[],
                 pageall:1,
                 pagecur:1,
                 page_size:15,
                 userList:[],
+                controlSpanArray:[]
             }
         },
         methods:{
@@ -141,16 +157,15 @@
             },
             query: function () {
                 let data={
-                        subCompanyID:this.subCompanID,
+                        subCompanyID:this.subCompanyID,
                         keywords:this.keywords
                     };
                 this.getUserList(data);
             },
-            //删除
-            del: function (userId) {
-            },
+            
             //显示员工管辖
             showCS: function (userId) {
+                this.userID=userId
                 this.$http.post('./user/userControlSpanList/'+userId)
                     .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -161,11 +176,39 @@
                         });
             },
             checkAll:function(){
-                $("input[name='ckbox']").prop({'checked':'hecked'});
+                $("input[name='ckbox']").prop({'checked':true});
             },
             othercheck:function(){
-
+                $("input[name='ckbox']").each(function(){
+                  $(this).prop({'checked': !$(this).prop("checked")});  
+                })
             },
+            submit:function(){
+                var arrays = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  arrays.push($(this).prop("id"));  
+                });
+
+                let data={
+                    userID:this.userID,
+                    subCompanyIDs:arrays
+                }
+                this.$http.post('./user/saveUserControlSpans',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if (response.data.code==0)
+                        {
+                            alert("保存成功！");
+                        }
+                    }, function (response) {
+                        console.log(response);
+                    });
+                    //关闭弹出层
+                    $(".modal").modal("hide");
+            },
+            cancel:function(){
+
+            }
         },
         ready: function () {
             this.getUserList({});
