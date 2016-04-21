@@ -9,7 +9,7 @@
                     :title="title"
                     :p2title="p2title"
                     :hname="hname"
-                    ></breadcrumb>
+                    keep-alive></breadcrumb>
             <slot name="content" slot="content"></slot>
         </div>
     </div>
