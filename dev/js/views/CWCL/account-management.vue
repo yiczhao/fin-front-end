@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                未找到您要查询的账单信息
+                未找到您要查询的账户
             </div>
         </div>
                         <!-- Promotion Modal -->
@@ -140,71 +140,84 @@
                     </div>
                 </div>
             </div>
-            <div id="modal_add" class="modal fade" style="display: none;">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title" v-text="addtitle"></h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label><i>*</i>分公司</label>
-                                <select class="form-control" v-model="relist.companyId">
-                                    <option value="">请选择分公司</option>
-                                    <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                                </select>
-                                <span v-show="!relist.companyId" class="validation-error-label">请选择分公司</span>
-                            </div>
-                            <div class="form-group">
-                                <label><i>*</i>简称</label>
-                                <input type="text" class="form-control" v-model="relist.shortName" :value="relist.shortName" maxlength="15" placeholder="15字以内">
-                                <span v-show="!relist.shortName" class="validation-error-label">请输入简称</span>
-                            </div>
-                            <div class="form-group">
-                                <label><i>*</i>账户名</label>
-                                <input type="text" class="form-control" :value="relist.accountName" v-model="relist.accountName">
-                                <span v-show="!relist.accountName" class="validation-error-label">请输入账户名</span>
-                            </div>
-                            <div class="form-group">
-                                <label><i>*</i>账号</label>
-                                <input class="form-control" :value="relist.accountNumber" v-model="relist.accountNumber">
-                                <span v-show="!relist.accountNumber" class="validation-error-label">请输入账号</span>
-                            </div>
-                            <div class="form-group">
-                                <label><i>*</i>开户行</label>
-                                <input type="text" class="form-control" :value="relist.bankName" v-model="relist.bankName">
-                                <span v-show="!relist.bankName" class="validation-error-label">请输入开户行</span>
-                            </div>
-                            <div class="form-group">
-                                <label><i>*</i>起始日期</label>
-                                <datepicker :width="'67%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
-                                <span v-show="!relist.startDate" class="validation-error-label">请选择起始日期</span>
-                            </div>
-                            <div class="form-group">
-                                <label><i>*</i>类型</label>
-                                <select class="form-control" v-model="relist.accountType">
-                                    <option value="">请选择类型</option>
-                                    <option value="1">备付金</option>
-                                    <option value="2">本金</option>
-                                    <option value="3">佣金</option>
-                                </select>
-                                <span v-show="!relist.accountType" class="validation-error-label">请选择类型</span>
-                            </div>
-                            <div class="form-group tc">
-                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                <button type="button" v-on:click="addBtn" class="btn btn-primary">保存</button>
+            <validator name="vali">
+                <form novalidate>
+                    <div id="modal_add" class="modal fade" style="display: none;">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <h5 class="modal-title" v-text="addtitle"></h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label><i>*</i>分公司</label>
+                                        <select class="form-control" v-model="relist.companyId" id="val1" v-validate:val1="['required']">
+                                            <option value="">请选择分公司</option>
+                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                        </select>
+                                        <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请选择分公司</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>简称</label>
+                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value="relist.shortName" maxlength="15" placeholder="15字以内">
+                                        <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>账户名</label>
+                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value="relist.accountName" v-model="relist.accountName">
+                                        <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>账号</label>
+                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value="relist.accountNumber" v-model="relist.accountNumber">
+                                        <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>开户行</label>
+                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value="relist.bankName" v-model="relist.bankName">
+                                        <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>起始日期</label>
+                                        <datepicker :width="'67%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
+                                        <span class="timeerror validation-error-label">请选择起始日期</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i>*</i>类型</label>
+                                        <select class="form-control"  id="val7" v-validate:val7="['required']" v-model="relist.accountType">
+                                            <option value="">请选择类型</option>
+                                            <option value="1">备付金</option>
+                                            <option value="2">本金</option>
+                                            <option value="3">佣金</option>
+                                        </select>
+                                        <span v-if="$vali.val7.required && $vali.val7.dirty" class="validation-error-label">请选择类型</span>
+                                    </div>
+                                    <div class="form-group tc">
+                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                        <button type="button" v-on:click="addBtn" class="btn btn-primary">保存</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="suberror validation-error-label">你的信息未填写完整</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </form>
+                </validator>
         </div>
     </index>
 </template>
 <style>
     .validation-error-label{
         margin-left: 20%;
+    }
+    .timeerror,.suberror{
+        display: none;
+    }
+    .suberror{
+        padding-top: 3px;
     }
     .form-group{
         text-align: left;
@@ -249,7 +262,6 @@
     import dialog from '../components/dialog.vue'
     export default{
         props:{
-
         },
         data(){
             return{
@@ -275,7 +287,7 @@
                     phone:'',
                     email:''
                 },
-                accountId:''
+                accountId:'',
             }
         },
         methods:{
@@ -328,9 +340,6 @@
                 this.accountId=_list.id;
                 this.$set('relist', _list);
                 this.addtitle = '编辑账户';
-            },
-            submit:function(a){
-                console.log(a);
             },
             start:function(a){
                 this.waring = '你确认启用该账户？';
@@ -394,6 +403,9 @@
                         })
             },
             addBtn:function(){
+                $('.suberror,.timeerror').hide();
+                if(!this.$vali.valid){$('.suberror').show();return;}
+                if(this.relist.startDate==''){$('.timeerror').show();return;}
                 // *** 新增修改保存
                 let data={
                     "id": this.accountId,

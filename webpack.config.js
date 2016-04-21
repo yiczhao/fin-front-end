@@ -4,7 +4,7 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
 	entry:{
-		index:__dirname+'/dev/js/app.js'
+		index:__dirname+'/dev/js/app.js',
 	},
 	output:{
 		path:__dirname+'/dist',
@@ -51,6 +51,6 @@ module.exports = {
         plugins: ['transform-runtime']
     },
 	plugins:[
-		new ExtractTextPlugin('app.css')
+		new ExtractTextPlugin('app.css'),
 	]
 };
