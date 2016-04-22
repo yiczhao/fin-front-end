@@ -82,6 +82,22 @@ export default function(router){
                 require(['./views/XTPZ/log-management.vue'],resolve);
             }
         },
+        /* 商户管理-商户列表 */
+        '/business-lists/':{
+            name:'business-lists',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/SHGL/business-lists.vue'],resolve);
+            }
+        },
+        /* 商户管理-额度采购 */
+        '/business-limit/':{
+            name:'business-limit',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/SHGL/business-limit.vue'],resolve);
+            }
+        },
         // 转到登录页
         '*':{
             component:function () {

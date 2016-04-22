@@ -29,7 +29,7 @@
                                 <label v-show="passshow" class="validation-error-label" v-text="passerror"></label>
                             </div>
                             <div class="form-group">
-                                <span v-on:click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
+                                <span @click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
                             </div>
                         </div>
                     </form>
@@ -72,7 +72,7 @@
         components:{
         },
         methods:{
-            login:function(){
+            login(){
                 if(this.username==''){this.usererror='请输入用户名';this.usershow=true;return;}
                 if(this.password==''){this.passerror='请输入密码';this.passshow=true;return;}
                 if(this.usershow||this.passshow){return false;}
@@ -92,14 +92,14 @@
             }
         },
         watch:{
-          username:function(){
+          username(){
               if(this.username==''){this.usererror='请输入用户名';this.usershow=true;}else{this.usererror='';this.usershow=false;}
           },
-          password:function(){
+          password(){
               if(this.password==''){this.passerror='请输入密码';this.passshow=true;}else{this.passerror='';this.passshow=false;}
           }
         },
-        ready:function(){
+        ready(){
         }
     }
 </script>

@@ -55,7 +55,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
+                                <input type="button" class="btn btn-info" @click="checkNew" value="查询">
                             </div>
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
@@ -114,7 +114,7 @@
                                         <span v-else>待对账</span>
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  v-on:click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  @click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
                                         <a v-link="" v-if="trlist.status==1">详情</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
@@ -165,7 +165,7 @@
                                         <label class="w28" for="two">手工对账</label>
                                     </div>
                                     <div class="form-group tc" v-show="glradio=='one'">
-                                        <button class="btn" v-on:click="dzOne">选择付款流水</button>
+                                        <button class="btn" @click="dzOne">选择付款流水</button>
                                     </div>
                                     <div class="table2" v-show="checkOne&&glradio=='one'">
                                         <div class="box-body">
@@ -227,7 +227,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                                <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
                             </div>
                         </div>
                     </div>
@@ -326,7 +326,7 @@
         },
         methods:{
             // *** 请求账户数据
-            getZlists:function(data){
+            getZlists(data){
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -343,27 +343,27 @@
                             console.log(response);
                         });
             },
-            duizhang:function(a){
+            duizhang(a){
                 this.$set('dzList', a);
                 this.dz_show=true;
             },
-            checkNew:function(){
+            checkNew(){
                 this.getZlists(this.checkForm);
             },
             close_dialog() {
                 this.dz_show = false;
             },
-            initList:function(){
+            initList(){
                 $(".modal").modal("hide");
                 this.getZlists(this.checkForm);
             },
-            dzOne:function(){
+            dzOne(){
                 console.log(222);
                 var model=$('.info .modal-sm');
                 (this.checkOne)?this.checkOne=false:this.checkOne=true;
                 (model.hasClass('modal-lg'))?model.removeClass('modal-lg'):model.addClass('modal-lg')
             },
-            getTwo:function(num){
+            getTwo(num){
                 if(num.toString().length>=2) return num;
                 var str="";
                 for(var i=num.toString().length;i<2;i++)
@@ -415,7 +415,7 @@
             'datepicker': datepicker,
         },
         watch:{
-            zdlists:function(){
+            zdlists(){
                 var sr=0,zc=0;
                 this.zdlists.forEach(function(e){
                     sr+=e.incomeAmount;
@@ -424,15 +424,15 @@
                 this.shouru=(sr/100).toFixed(2);
                 this.zhichu=(zc/100).toFixed(2);
             },
-            pagecur:function(){
+            pagecur(){
                 this.checkForm.pageIndex=this.pagecur;
                 this.initList();
             },
-            page_size:function(){
+            page_size(){
                 this.checkForm.pageSize=this.page_size;
                 this.initList();
             },
-            dateS:function(){
+            dateS(){
                 this.getTime();
             }
         },
