@@ -18795,9 +18795,13 @@
 	            }
 	        });
 	        var nowa = $('.navigation').find('.v-link-active').closest('.hidden-ul');
-	        nowa.show().parent('li').addClass('active');
-	        if (nowa.closest('.hidden-ul').is(':hidden')) {
-	            nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
+	        if (!nowa.length) {
+	            $('.v-link-active').parent('li').addClass('active');
+	        } else {
+	            nowa.show().parent('li').addClass('active');
+	            if (nowa.closest('.hidden-ul').is(':hidden')) {
+	                nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
+	            }
 	        }
 	    }
 	};
