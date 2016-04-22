@@ -63,7 +63,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
+                                <input type="button" class="btn btn-info" @click="checkNew" value="查询">
                             </div>
                         </div>
                     </form>
@@ -105,14 +105,14 @@
                         </p>
                         <p>备注:{{n.remarks}}</p>
                     </div>
-                    <div class="pull-right" v-on:click="getInfo(index)">
+                    <div class="pull-right" @click="getInfo(index)">
                         <span class="pull-left">查看详情</span>
                         <ul class="icons-list pull-left" >
                             <li><a data-action="collapse"></a></li>
                         </ul>
                     </div>
                 </div>
-                <div  v-show="!!n.listinfo.length" class="dataTables_wrapper no-footer">
+                <div  v-show="!!zdlists.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -153,20 +153,23 @@
                         </table>
                         <div class="pull-right">
                             <template v-if="n.status==2">
-                                <input data-toggle="modal" data-target="#modal_waring" type="button" v-on:click="pay(n.id)" class="btn btn-gray" value="确认划付">
-                                <input data-toggle="modal" data-target="#modal_submit" type="button" v-on:click="back(n.id)" class="btn btn-gray" value="退回重审">
+                                <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
+                                <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
                             </template>
                             <template v-if="n.status==3">
-                                <input data-toggle="modal" data-target="#modal_checking" type="button" v-on:click="checking(n.id)" class="btn btn-gray" value="对账">
+                                <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
                             </template>
                             <template v-if="n.status==5">
-                                <input data-toggle="modal" data-target="#modal_waring" type="button" v-on:click="update(n.id)" class="btn btn-gray" value="更新订单">
-                                <input data-toggle="modal" data-target="#modal_submit" type="button" v-on:click="apply(n.id)" class="btn btn-gray" value="申请划付">
-                                <input data-toggle="modal" data-target="#modal_waring" type="button" v-on:click="close(n.id)" class="btn btn-gray" value="关闭订单">
+                                <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
+                                <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
+                                <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
                             </template>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                未找到您要查询的账单
             </div>
             <page :all="pageall"
                   :cur.sync="pagecur"
@@ -181,9 +184,9 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group tc">
-                                <button  v-if="waring=='你确认更新账单？'" type="button" v-on:click="updateTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认划付该账单？'" type="button" v-on:click="payTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认关闭该账单？'" type="button" v-on:click="closeTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认划付该账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -207,8 +210,8 @@
                                 </div>
                             </div>
                             <div class="form-group tc">
-                                <button  v-if="subtitle=='退回重审'" type="button" v-on:click="backTrue" class="btn btn-primary">退回</button>
-                                <button  v-if="subtitle=='申请划付'" type="button" v-on:click="applyTrue" class="btn btn-primary">申请</button>
+                                <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
+                                <button  v-if="subtitle=='申请划付'" type="button" @click="applyTrue" class="btn btn-primary">申请</button>
                             </div>
                         </div>
                     </div>
@@ -254,7 +257,7 @@
                                                     <template v-if="n.purpose==5"> 供货商划付</template>
                                                 </td>
                                                 <td>{{n.remarks}}</td>
-                                                <td><a href="javascript:void(0)" v-on:click="checking(n.reserveCashId)">选择</a></td>
+                                                <td><a href="javascript:void(0)" @click="checking(n.reserveCashId)">选择</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -271,7 +274,6 @@
         font-weight: bolder;
     }
    .details .form-group{
-        overflow: hidden;
     }
     .details   .modal-body label i{
         color:red;
@@ -362,74 +364,75 @@
                     pageIndex:1,
                     pageSize:15
                 },
-                zdlists:[],
+                zdlists:[
+                ],
                 checkLists:[]
             }
         },
         methods:{
             // *** 请求账户数据
-            getZlists:function(data){
-                this.zdlists=[
-                    {
-                        id:1,
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 3,
-                        listinfo:[]
-                    },
-                    {
-                        id:2,
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 2,
-                        listinfo:[]
-                    },
-                    {
-                        id:3,
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 5,
-                        listinfo:[]
-                    },];
+            getZlists(data){
+//                this.zdlists=[
+//                    {
+//                        id:1,
+//                        "orderNumber": "20150802105038252",
+//                        "payoutAccount": "深圳备付金",
+//                        "payoutAccountNumber": "36001050307052502264",
+//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "payoutAmount": 58000,
+//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+//                        "incomeAccountNumber": "626606960",
+//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "incomeBankName": "民生银行海岸城支行",
+//                        "certificate": "",
+//                        "purpose": "1",
+//                        "paymentTime": "2015-08-02 10:50:38",
+//                        "applyTime": "2015-08-02 10:50:38",
+//                        "applyCompany": "深圳卡说",
+//                        "remarks": "",
+//                        "status": 3,
+//                        listinfo:[]
+//                    },
+//                    {
+//                        id:2,
+//                        "orderNumber": "20150802105038252",
+//                        "payoutAccount": "深圳备付金",
+//                        "payoutAccountNumber": "36001050307052502264",
+//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "payoutAmount": 58000,
+//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+//                        "incomeAccountNumber": "626606960",
+//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "incomeBankName": "民生银行海岸城支行",
+//                        "certificate": "",
+//                        "purpose": "1",
+//                        "paymentTime": "2015-08-02 10:50:38",
+//                        "applyTime": "2015-08-02 10:50:38",
+//                        "applyCompany": "深圳卡说",
+//                        "remarks": "",
+//                        "status": 2,
+//                        listinfo:[]
+//                    },
+//                    {
+//                        id:3,
+//                        "orderNumber": "20150802105038252",
+//                        "payoutAccount": "深圳备付金",
+//                        "payoutAccountNumber": "36001050307052502264",
+//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "payoutAmount": 58000,
+//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+//                        "incomeAccountNumber": "626606960",
+//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "incomeBankName": "民生银行海岸城支行",
+//                        "certificate": "",
+//                        "purpose": "1",
+//                        "paymentTime": "2015-08-02 10:50:38",
+//                        "applyTime": "2015-08-02 10:50:38",
+//                        "applyCompany": "深圳卡说",
+//                        "remarks": "",
+//                        "status": 5,
+//                        listinfo:[]
+//                    },];
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -437,20 +440,20 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-//                this.$http.post('./reservecash/order/list',data)
-//                        .then(function (response) {
-//                            // *** 判断请求是否成功如若成功则填充数据到模型
-//                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-//                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-//                        }, function (response) {
-//                            console.log(response);
-//                        });
+                this.$http.post('./reservecash/order/list',data)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        }, function (response) {
+                            console.log(response);
+                        });
             },
-            initList:function(){
+            initList(){
                 $(".modal").modal("hide");
                 this.getZlists(this.checkForm);
             },
-            checkNew:function(){
+            checkNew(){
                 this.getZlists(this.checkForm);
             },
             getInfo(a){
@@ -538,7 +541,7 @@
             checkingTrue(a){
                 console.log(a);
             },
-            getTwo:function(num){
+            getTwo(num){
                 if(num.toString().length>=2) return num;
                 var str="";
                 for(var i=num.toString().length;i<2;i++)
@@ -581,15 +584,15 @@
             }
         },
         watch:{
-            pagecur:function(){
+            pagecur(){
                 this.checkForm.pageIndex=this.pagecur;
                 this.initList();
             },
-            page_size:function(){
+            page_size(){
                 this.checkForm.pageSize=this.page_size;
                 this.initList();
             },
-            dateS:function(){
+            dateS(){
                 this.getTime();
             }
         },

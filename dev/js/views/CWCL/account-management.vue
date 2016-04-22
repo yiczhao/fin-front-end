@@ -8,7 +8,7 @@
             <div class="panel-heading">
                 <form class="form-inline manage-form">
                     <div class="form-group">
-                        <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" v-on:click="addUser" value="添加账户">
+                        <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加账户">
                     </div>
                     <div class="form-group">
                         <select class="form-control" v-model="defaultData.companyId">
@@ -28,7 +28,7 @@
                         <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号">
                     </div>
                     <div class="form-group">
-                        <input type="button" class="btn btn-info" v-on:click="checkNew" value="查询">
+                        <input type="button" class="btn btn-info" @click="checkNew" value="查询">
                     </div>
                 </form>
             </div>
@@ -71,12 +71,12 @@
                                 <a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                             </td>
                             <td v-if="trlist.status==0">
-                                <span data-toggle="modal" data-target="#modal_add"  v-on:click="rewrite(trlist)">编辑</span>
-                                <span data-toggle="modal" data-target="#modal_waring" v-on:click="start(trlist.id)">启用</span>
-                                <span data-toggle="modal" data-target="#modal_waring" v-on:click="delBtn(trlist.id)">删除</span>
+                                <span data-toggle="modal" data-target="#modal_add"  @click="rewrite(trlist)">编辑</span>
+                                <span data-toggle="modal" data-target="#modal_waring" @click="start(trlist.id)">启用</span>
+                                <span data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id)">删除</span>
                             </td>
                             <td v-else>
-                                <span data-toggle="modal" data-target="#modal_fzr" chargePerson="{{trlist.chargePerson}}" v-on:click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
+                                <span data-toggle="modal" data-target="#modal_fzr" chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
                             </td>
                         </tr>
                     </tbody>
@@ -106,22 +106,22 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label><i>*</i>负责人</label>
-                                            <input type="text" class="form-control" id="uname" v-validate:uname="['required']" v-model="person.name" :value="person.name">
+                                            <input type="text" class="form-control" id="uname" v-validate:uname="['required']" v-model="person.name" value.sync="person.name">
                                             <span v-if="$vali2.uname.required && fire" class="validation-error-label">请输入负责人姓名</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>手机号</label>
-                                            <input type="text" class="form-control" id="phone"  v-validate:phone="['required']" v-model="person.phone" :value="person.phone">
+                                            <input type="text" class="form-control" id="phone"  v-validate:phone="['required']" v-model="person.phone" value.sync="person.phone">
                                             <span v-if="$vali2.phone.required && fire" class="validation-error-label">请输入负责人电话</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>邮箱</label>
-                                            <input type="text" class="form-control" id="email" v-validate:email="['required']" v-model="person.email" :value="person.email">
+                                            <input type="text" class="form-control" id="email" v-validate:email="['required']" v-model="person.email" value.sync="person.email">
                                             <span v-if="$vali2.email.required && fire" class="validation-error-label">请输入负责人邮箱</span>
                                         </div>
                                         <div class="form-group tc">
                                             <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                            <button type="button" v-on:click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                                            <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
                                         </div>
                                     </div>
                                 </div>
@@ -138,8 +138,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group tc">
-                                <button v-show="waring=='你确认启用该账户？'" type="button" v-on:click="startTrue" class="btn btn-primary">确认</button>
-                                <button v-show="waring=='你确认删除该账户？'" type="button" v-on:click="delTrue" class="btn btn-primary">确认</button>
+                                <button v-show="waring=='你确认启用该账户？'" type="button" @click="startTrue" class="btn btn-primary">确认</button>
+                                <button v-show="waring=='你确认删除该账户？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -166,22 +166,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>简称</label>
-                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value="relist.shortName" maxlength="15" placeholder="15字以内">
+                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value.sync="relist.shortName" maxlength="15" placeholder="15字以内">
                                         <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账户名</label>
-                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value="relist.accountName" v-model="relist.accountName">
+                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value.sync="relist.accountName" v-model="relist.accountName">
                                         <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
-                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value="relist.accountNumber" v-model="relist.accountNumber">
+                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value.sync="relist.accountNumber" v-model="relist.accountNumber">
                                         <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>开户行</label>
-                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value="relist.bankName" v-model="relist.bankName">
+                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value.sync="relist.bankName" v-model="relist.bankName">
                                         <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
                                     </div>
                                     <div class="form-group">
@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                        <button type="button" v-on:click="addBtn" class="btn btn-primary">保存</button>
+                                        <button type="button" @click="addBtn" class="btn btn-primary">保存</button>
                                     </div>
                                     <div class="form-group">
                                         <span class="suberror validation-error-label">你的信息未填写完整</span>
@@ -303,7 +303,7 @@
             errorHide(){
                 $('.suberror,.timeerror').hide();
             },
-            getZlists:function(data){
+            getZlists(data){
                     this.$http.post('./bankaccount/list',data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
@@ -313,7 +313,7 @@
                                 console.log(response);
                             });
             },
-            getClist:function(){
+            getClist(){
                 // *** 请求公司数据
                 this.$http.post('./subcompany/list',{})
                         .then(function (response) {
@@ -323,10 +323,10 @@
                             console.log(response);
                         });
             },
-            checkNew:function(){
+            checkNew(){
                 this.initList();
             },
-            addUser:function(){
+            addUser(){
                 this.errorHide();
                 this.relist={
                     startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
@@ -334,24 +334,24 @@
                 this.accountId='';
                 this.addtitle = '添加账户';
             },
-            initList:function(){
+            initList(){
                 $(".modal").modal("hide");
                 this.getZlists(this.defaultData);
             },
-            rewrite:function(_list){
+            rewrite(_list){
                 this.accountId=_list.id;
-                this.$set('relist', _list);
+                $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
             },
-            start:function(a){
+            start(a){
                 this.waring = '你确认启用该账户？';
                 this.accountId=a;
             },
-            delBtn:function(a){
+            delBtn(a){
                 this.waring = '你确认删除该账户？';
                 this.accountId=a;
             },
-            personDialog:function(a,b){
+            personDialog(a,b){
                 this.errorHide();
                 this.accountId=b;
                 this.$http.post('./chargeperson/query/'+a)
@@ -369,7 +369,7 @@
                             }
                         }, function (response) {})
             },
-            personTrue:function(a){
+            personTrue(a){
                 if(!this.$vali2.valid){this.fire=true;return;}
                 let data={
                     "id": a,
@@ -385,7 +385,7 @@
                             console.log(response);
                         })
             },
-            startTrue:function(){
+            startTrue(){
                 // *** 启用提交
                 this.$http.get('./bankaccount/change/'+this.accountId)
                         .then(function (response) {
@@ -395,7 +395,7 @@
                             console.log(response);
                         })
             },
-            delTrue:function(){
+            delTrue(){
                 // *** 删除提交
                 this.$http.get('./bankaccount/delete/'+this.accountId)
                         .then(function (response) {
@@ -405,7 +405,7 @@
                             console.log(response);
                         })
             },
-            addBtn:function(){
+            addBtn(){
                 this.errorHide();
                 if(!this.$vali.valid){$('.suberror').show();return;}
                 if(this.relist.startDate==''){$('.timeerror').show();return;}
@@ -443,11 +443,11 @@
             'dialog': dialog,
         },
         watch:{
-            pagecur:function(){
+            pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();
             },
-            page_size:function(){
+            page_size(){
                 this.defaultData.pageSize=this.page_size;
                 this.initList();
             }

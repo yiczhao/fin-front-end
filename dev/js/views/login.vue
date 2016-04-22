@@ -15,21 +15,21 @@
                                 <h5 class="content-group">财务管理系统<small class="display-block">登录</small></h5>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
-                                <input type="text" class="form-control" v-model="username" placeholder="用户名">
+                                <input @keyup.enter="login" type="text" class="form-control" v-model="username" placeholder="用户名">
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
                                 <label v-show="usershow" class="validation-error-label" v-text="usererror"></label>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
-                                <input type="password" class="form-control" name="password" v-model="password" placeholder="密码">
+                                <input @keyup.enter="login" type="password" class="form-control" name="password" v-model="password" placeholder="密码">
                                 <div class="form-control-feedback">
                                     <i class="icon-lock2 text-muted"></i>
                                 </div>
                                 <label v-show="passshow" class="validation-error-label" v-text="passerror"></label>
                             </div>
                             <div class="form-group">
-                                <span v-on:click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
+                                <span @click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
                             </div>
                         </div>
                     </form>
@@ -72,7 +72,9 @@
         components:{
         },
         methods:{
-            login:function(){
+            login(){
+                if(this.username==''){this.usererror='请输入用户名';this.usershow=true;return;}
+                if(this.password==''){this.passerror='请输入密码';this.passshow=true;return;}
                 if(this.usershow||this.passshow){return false;}
                 let data={'username':this.username,'password':this.password};
                 this.$http.post('./passport/login',data)
@@ -90,14 +92,14 @@
             }
         },
         watch:{
-          username:function(){
+          username(){
               if(this.username==''){this.usererror='请输入用户名';this.usershow=true;}else{this.usererror='';this.usershow=false;}
           },
-          password:function(){
+          password(){
               if(this.password==''){this.passerror='请输入密码';this.passshow=true;}else{this.passerror='';this.passshow=false;}
           }
         },
-        ready:function(){
+        ready(){
         }
     }
 </script>

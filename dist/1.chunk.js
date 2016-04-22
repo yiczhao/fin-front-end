@@ -104,14 +104,14 @@ webpackJsonp([1],{
 	//                                 <h5 class="content-group">财务管理系统<small class="display-block">登录</small></h5>
 	//                             </div>
 	//                             <div class="form-group has-feedback has-feedback-left">
-	//                                 <input type="text" class="form-control" v-model="username" placeholder="用户名">
+	//                                 <input @keyup.enter="login" type="text" class="form-control" v-model="username" placeholder="用户名">
 	//                                 <div class="form-control-feedback">
 	//                                     <i class="icon-user text-muted"></i>
 	//                                 </div>
 	//                                 <label v-show="usershow" class="validation-error-label" v-text="usererror"></label>
 	//                             </div>
 	//                             <div class="form-group has-feedback has-feedback-left">
-	//                                 <input type="password" class="form-control" name="password" v-model="password" placeholder="密码">
+	//                                 <input @keyup.enter="login" type="password" class="form-control" name="password" v-model="password" placeholder="密码">
 	//                                 <div class="form-control-feedback">
 	//                                     <i class="icon-lock2 text-muted"></i>
 	//                                 </div>
@@ -150,8 +150,8 @@ webpackJsonp([1],{
 	exports.default = {
 	    data: function data() {
 	        return {
-	            username: '15151527650',
-	            password: '123456',
+	            username: '',
+	            password: '',
 	            usererror: '',
 	            passerror: '',
 	            usershow: false,
@@ -162,6 +162,12 @@ webpackJsonp([1],{
 	    components: {},
 	    methods: {
 	        login: function login() {
+	            if (this.username == '') {
+	                this.usererror = '请输入用户名';this.usershow = true;return;
+	            }
+	            if (this.password == '') {
+	                this.passerror = '请输入密码';this.passshow = true;return;
+	            }
 	            if (this.usershow || this.passshow) {
 	                return false;
 	            }
@@ -220,7 +226,7 @@ webpackJsonp([1],{
 /***/ 63:
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"login-container\">\n    <div class=\"page-container\" style=\"min-height:907px\">\n    <!-- Page content -->\n    <div class=\"page-content\">\n        <!-- Main content -->\n        <div class=\"content-wrapper\">\n            <!-- Content area -->\n            <div class=\"content\">\n                <!-- Simple login form -->\n                <form action=\"index.html\" class=\"form-validate\">\n                    <div class=\"panel panel-body login-form\">\n                        <div class=\"text-center\">\n                            <div class=\"icon-object border-slate-300 text-slate-300\"><i class=\"icon-reading\"></i></div>\n                            <h5 class=\"content-group\">财务管理系统<small class=\"display-block\">登录</small></h5>\n                        </div>\n                        <div class=\"form-group has-feedback has-feedback-left\">\n                            <input type=\"text\" class=\"form-control\" v-model=\"username\" placeholder=\"用户名\">\n                            <div class=\"form-control-feedback\">\n                                <i class=\"icon-user text-muted\"></i>\n                            </div>\n                            <label v-show=\"usershow\" class=\"validation-error-label\" v-text=\"usererror\"></label>\n                        </div>\n                        <div class=\"form-group has-feedback has-feedback-left\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" v-model=\"password\" placeholder=\"密码\">\n                            <div class=\"form-control-feedback\">\n                                <i class=\"icon-lock2 text-muted\"></i>\n                            </div>\n                            <label v-show=\"passshow\" class=\"validation-error-label\" v-text=\"passerror\"></label>\n                        </div>\n                        <div class=\"form-group\">\n                            <span v-on:click=\"login\" class=\"btn btn-primary btn-block\">登录 <i class=\"icon-circle-right2 position-right\"></i></span>\n                        </div>\n                    </div>\n                </form>\n                <!-- /simple login form -->\n                <!-- Footer -->\n                <!-- /footer -->\n            </div>\n            <!-- /content area -->\n        </div>\n        <!-- /main content -->\n    </div>\n    <!-- /page content -->\n</div>\n</div>\n";
+	module.exports = "\n<div class=\"login-container\">\n    <div class=\"page-container\" style=\"min-height:907px\">\n    <!-- Page content -->\n    <div class=\"page-content\">\n        <!-- Main content -->\n        <div class=\"content-wrapper\">\n            <!-- Content area -->\n            <div class=\"content\">\n                <!-- Simple login form -->\n                <form action=\"index.html\" class=\"form-validate\">\n                    <div class=\"panel panel-body login-form\">\n                        <div class=\"text-center\">\n                            <div class=\"icon-object border-slate-300 text-slate-300\"><i class=\"icon-reading\"></i></div>\n                            <h5 class=\"content-group\">财务管理系统<small class=\"display-block\">登录</small></h5>\n                        </div>\n                        <div class=\"form-group has-feedback has-feedback-left\">\n                            <input @keyup.enter=\"login\" type=\"text\" class=\"form-control\" v-model=\"username\" placeholder=\"用户名\">\n                            <div class=\"form-control-feedback\">\n                                <i class=\"icon-user text-muted\"></i>\n                            </div>\n                            <label v-show=\"usershow\" class=\"validation-error-label\" v-text=\"usererror\"></label>\n                        </div>\n                        <div class=\"form-group has-feedback has-feedback-left\">\n                            <input @keyup.enter=\"login\" type=\"password\" class=\"form-control\" name=\"password\" v-model=\"password\" placeholder=\"密码\">\n                            <div class=\"form-control-feedback\">\n                                <i class=\"icon-lock2 text-muted\"></i>\n                            </div>\n                            <label v-show=\"passshow\" class=\"validation-error-label\" v-text=\"passerror\"></label>\n                        </div>\n                        <div class=\"form-group\">\n                            <span v-on:click=\"login\" class=\"btn btn-primary btn-block\">登录 <i class=\"icon-circle-right2 position-right\"></i></span>\n                        </div>\n                    </div>\n                </form>\n                <!-- /simple login form -->\n                <!-- Footer -->\n                <!-- /footer -->\n            </div>\n            <!-- /content area -->\n        </div>\n        <!-- /main content -->\n    </div>\n    <!-- /page content -->\n</div>\n</div>\n";
 
 /***/ }
 

@@ -18485,7 +18485,7 @@
 	//                     :title="title"
 	//                     :p2title="p2title"
 	//                     :hname="hname"
-	//                     ></breadcrumb>
+	//                     keep-alive></breadcrumb>
 	//             <slot name="content" slot="content"></slot>
 	//         </div>
 	//     </div>
@@ -18647,14 +18647,14 @@
 /* 153 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	// <template>
 	//     <div class="sidebar sidebar-main">
-	//         <div class="sidebar-content">
+	//         <div class="sidebar-content" style="min-height: 750px">
 	//             <!-- User menu -->
 	//             <div class="sidebar-user">
 	//                 <div class="category-content">
@@ -18674,32 +18674,32 @@
 	//             <div class="sidebar-category sidebar-category-visible">
 	//                 <div class="category-content no-padding">
 	//                     <ul class="navigation navigation-main navigation-accordion">
-	//                         <li class="active">
+	//                         <li>
 	//                             <a v-link="{'name':'default'}">
 	//                                 <span>首页</span></i>
 	//                             </a>
 	//                         </li>
 	//                         <li>
-	//                             <a href="javascript:void(0);">
+	//                             <a href="javascript:void(0);" class="has-ul">
 	//                                 <span>财务处理</span>
 	//                             </a>
-	//                             <ul class="hidden-ul" style="display: block">
+	//                             <ul class="hidden-ul">
 	//                                 <li><a v-link="{'name':'account-management'}">账户管理</a></li>
 	//                                 <li><a v-link="{'name':'trade-info'}">交易明细</a></li>
 	//                                 <li><a v-link="{'name':'subsidy-appropriation'}">补贴划付</a></li>
 	//                                 <li><a v-link="{'name':'subsidy-tax-rebate'}">补贴退税</a></li>
 	//                                 <li><a href="#">3211佣金明细</a></li>
 	//                                 <li>
-	//                                     <a href="#" class="has-ul">本金收入</a>
-	//                                     <ul class="hidden-ul" style="display: block">
+	//                                     <a href="javascript:void(0);" class="has-ul">本金收入</a>
+	//                                     <ul class="hidden-ul">
 	//                                         <li><a href="#">入账明细</a></li>
 	//                                         <li><a href="#">交易入账</a></li>
 	//                                         <li><a href="#">商户退款</a></li>
 	//                                     </ul>
 	//                                 </li>
 	//                                 <li>
-	//                                     <a href="#" class="has-ul">备付金支出</a>
-	//                                     <ul class="hidden-ul" style="display: block">
+	//                                     <a href="javascript:void(0);" class="has-ul">备付金支出</a>
+	//                                     <ul class="hidden-ul">
 	//                                         <li><a v-link="{'name':'payment-details'}">付款明细</a></li>
 	//                                         <li><a href="#">补贴划付</a></li>
 	//                                         <li><a href="#">额度采购</a></li>
@@ -18710,8 +18710,8 @@
 	//                                 </li>
 	//                                 <li><a href="#">三方管理</a></li>
 	//                                 <li>
-	//                                     <a href="#" class="has-ul">商户管理</a>
-	//                                     <ul class="hidden-ul" style="display: block">
+	//                                     <a href="javascript:void(0);" class="has-ul">商户管理</a>
+	//                                     <ul class="hidden-ul">
 	//                                         <li><a href="#">商户管理</a></li>
 	//                                         <li><a href="#">额度采购</a></li>
 	//                                         <li><a href="#">预付款</a></li>
@@ -18723,27 +18723,27 @@
 	//                             </ul>
 	//                         </li>
 	//                         <li>
-	//                             <a href="#" class="has-ul">
+	//                             <a href="javascript:void(0);" class="has-ul">
 	//                                 <span>活动管理</span>
 	//                             </a>
-	//                             <ul class="hidden-ul" style="display: block">
+	//                             <ul class="hidden-ul">
 	//                                 <li><a href="#">活动列表</a></li>
 	//                             </ul>
 	//                         </li>
 	//                         <li>
-	//                             <a href="#" class="has-ul">
+	//                             <a href="javascript:void(0);" class="has-ul">
 	//                                 <span>佣金管理</span>
 	//                             </a>
-	//                             <ul class="hidden-ul" style="display: block">
+	//                             <ul class="hidden-ul">
 	//                                 <li><a href="#">概况</a></li>
 	//                                 <li><a href="#">自定义统计</a></li>
 	//                             </ul>
 	//                         </li>
 	//                         <li>
-	//                             <a href="#" class="has-ul">
+	//                             <a href="javascript:void(0);" class="has-ul">
 	//                                 <span>系统配置</span>
 	//                             </a>
-	//                             <ul class="hidden-ul" style="display: block">
+	//                             <ul class="hidden-ul">
 	//                                 <li><a href="#"></i>通道管理</a></li>
 	//                                 <li><a href="#"></i>角色管理</a></li>
 	//                                 <li><a v-link="{'name':'user-managerment'}"></i>员工管理</a></li>
@@ -18784,6 +18784,25 @@
 	            this.menus[0].open = true;
 	            this.menus[0].sub_menu[router_type].open = true;
 	        }
+	        // Main navigation
+	        $('.navigation-main').find('li').has('ul').children('a').on('click', function (e) {
+	            e.preventDefault();
+	            // Collapsible
+	            $(this).parent('li').not('.disabled').not($('.sidebar-xs').not('.sidebar-xs-indicator').find('.navigation-main').children('li')).toggleClass('active').children('ul').slideToggle(250);
+	            // Accordion
+	            if ($('.navigation-main').hasClass('navigation-accordion')) {
+	                $(this).parent('li').not('.disabled').not($('.sidebar-xs').not('.sidebar-xs-indicator').find('.navigation-main').children('li')).siblings(':has(.has-ul)').removeClass('active').children('ul').slideUp(250);
+	            }
+	        });
+	        var nowa = $('.navigation').find('.v-link-active').closest('.hidden-ul');
+	        if (!nowa.length) {
+	            $('.v-link-active').parent('li').addClass('active');
+	        } else {
+	            nowa.show().parent('li').addClass('active');
+	            if (nowa.closest('.hidden-ul').is(':hidden')) {
+	                nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
+	            }
+	        }
 	    }
 	};
 	// </script>
@@ -18792,7 +18811,7 @@
 /* 154 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"sidebar sidebar-main\">\n    <div class=\"sidebar-content\">\n        <!-- User menu -->\n        <div class=\"sidebar-user\">\n            <div class=\"category-content\">\n                <div class=\"media\">\n                    <!--<a href=\"#\" class=\"media-left\"><img src=\"\" class=\"img-circle img-sm\" alt=\"\"></a>-->\n                    <div class=\"media-body\">\n                        <span class=\"media-heading text-semibold\">财务管理系统</span>\n                        <div class=\"text-size-mini text-muted\">\n                            <i class=\"icon-pin text-size-small\">功能导航</i>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <!-- /user menu -->\n        <!-- Main navigation -->\n        <div class=\"sidebar-category sidebar-category-visible\">\n            <div class=\"category-content no-padding\">\n                <ul class=\"navigation navigation-main navigation-accordion\">\n                    <li class=\"active\">\n                        <a v-link=\"{'name':'default'}\">\n                            <span>首页</span></i>\n                        </a>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\">\n                            <span>财务处理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a v-link=\"{'name':'account-management'}\">账户管理</a></li>\n                            <li><a v-link=\"{'name':'trade-info'}\">交易明细</a></li>\n                            <li><a v-link=\"{'name':'subsidy-appropriation'}\">补贴划付</a></li>\n                            <li><a v-link=\"{'name':'subsidy-tax-rebate'}\">补贴退税</a></li>\n                            <li><a href=\"#\">3211佣金明细</a></li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">本金收入</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a href=\"#\">入账明细</a></li>\n                                    <li><a href=\"#\">交易入账</a></li>\n                                    <li><a href=\"#\">商户退款</a></li>\n                                </ul>\n                            </li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">备付金支出</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a v-link=\"{'name':'payment-details'}\">付款明细</a></li>\n                                    <li><a href=\"#\">补贴划付</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">补贴退税</a></li>\n                                    <li><a href=\"#\">预付款划付</a></li>\n                                    <li><a href=\"#\">供货商划付</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">三方管理</a></li>\n                            <li>\n                                <a href=\"#\" class=\"has-ul\">商户管理</a>\n                                <ul class=\"hidden-ul\" style=\"display: block\">\n                                    <li><a href=\"#\">商户管理</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">预付款</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">代理商管理</a></li>\n                            <li><a href=\"#\">会员管理</a></li>\n                            <li><a href=\"#\">供货商管理</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>活动管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\">活动列表</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>佣金管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\">概况</a></li>\n                            <li><a href=\"#\">自定义统计</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"#\" class=\"has-ul\">\n                            <span>系统配置</span>\n                        </a>\n                        <ul class=\"hidden-ul\" style=\"display: block\">\n                            <li><a href=\"#\"></i>通道管理</a></li>\n                            <li><a href=\"#\"></i>角色管理</a></li>\n                            <li><a v-link=\"{'name':'user-managerment'}\"></i>员工管理</a></li>\n                            <li><a v-link=\"{'name':'log-management'}\"></i>系统日志</a></li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n        </div>\n        <!-- /main navigation -->\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"sidebar sidebar-main\">\n    <div class=\"sidebar-content\" style=\"min-height: 750px\">\n        <!-- User menu -->\n        <div class=\"sidebar-user\">\n            <div class=\"category-content\">\n                <div class=\"media\">\n                    <!--<a href=\"#\" class=\"media-left\"><img src=\"\" class=\"img-circle img-sm\" alt=\"\"></a>-->\n                    <div class=\"media-body\">\n                        <span class=\"media-heading text-semibold\">财务管理系统</span>\n                        <div class=\"text-size-mini text-muted\">\n                            <i class=\"icon-pin text-size-small\">功能导航</i>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <!-- /user menu -->\n        <!-- Main navigation -->\n        <div class=\"sidebar-category sidebar-category-visible\">\n            <div class=\"category-content no-padding\">\n                <ul class=\"navigation navigation-main navigation-accordion\">\n                    <li>\n                        <a v-link=\"{'name':'default'}\">\n                            <span>首页</span></i>\n                        </a>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>财务处理</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a v-link=\"{'name':'account-management'}\">账户管理</a></li>\n                            <li><a v-link=\"{'name':'trade-info'}\">交易明细</a></li>\n                            <li><a v-link=\"{'name':'subsidy-appropriation'}\">补贴划付</a></li>\n                            <li><a v-link=\"{'name':'subsidy-tax-rebate'}\">补贴退税</a></li>\n                            <li><a href=\"#\">3211佣金明细</a></li>\n                            <li>\n                                <a href=\"javascript:void(0);\" class=\"has-ul\">本金收入</a>\n                                <ul class=\"hidden-ul\">\n                                    <li><a href=\"#\">入账明细</a></li>\n                                    <li><a href=\"#\">交易入账</a></li>\n                                    <li><a href=\"#\">商户退款</a></li>\n                                </ul>\n                            </li>\n                            <li>\n                                <a href=\"javascript:void(0);\" class=\"has-ul\">备付金支出</a>\n                                <ul class=\"hidden-ul\">\n                                    <li><a v-link=\"{'name':'payment-details'}\">付款明细</a></li>\n                                    <li><a href=\"#\">补贴划付</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">补贴退税</a></li>\n                                    <li><a href=\"#\">预付款划付</a></li>\n                                    <li><a href=\"#\">供货商划付</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">三方管理</a></li>\n                            <li>\n                                <a href=\"javascript:void(0);\" class=\"has-ul\">商户管理</a>\n                                <ul class=\"hidden-ul\">\n                                    <li><a href=\"#\">商户管理</a></li>\n                                    <li><a href=\"#\">额度采购</a></li>\n                                    <li><a href=\"#\">预付款</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">代理商管理</a></li>\n                            <li><a href=\"#\">会员管理</a></li>\n                            <li><a href=\"#\">供货商管理</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>活动管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a href=\"#\">活动列表</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>佣金管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a href=\"#\">概况</a></li>\n                            <li><a href=\"#\">自定义统计</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>系统配置</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a href=\"#\"></i>通道管理</a></li>\n                            <li><a href=\"#\"></i>角色管理</a></li>\n                            <li><a v-link=\"{'name':'user-managerment'}\"></i>员工管理</a></li>\n                            <li><a v-link=\"{'name':'log-management'}\"></i>系统日志</a></li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n        </div>\n        <!-- /main navigation -->\n    </div>\n</div>\n";
 
 /***/ },
 /* 155 */
@@ -18950,7 +18969,7 @@
 /* 162 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<nv-header keep-alive></nv-header>\n<div class=\"page-container\">\n    <div class=\"page-content\">\n        <nv-menu keep-alive></nv-menu>\n        <breadcrumb\n                :isshow=\"isshow\"\n                :ptitle=\"ptitle\"\n                :title=\"title\"\n                :p2title=\"p2title\"\n                :hname=\"hname\"\n                ></breadcrumb>\n        <slot name=\"content\" slot=\"content\"></slot>\n    </div>\n</div>\n<nv-footer keep-alive></nv-footer>\n";
+	module.exports = "\n<nv-header keep-alive></nv-header>\n<div class=\"page-container\">\n    <div class=\"page-content\">\n        <nv-menu keep-alive></nv-menu>\n        <breadcrumb\n                :isshow=\"isshow\"\n                :ptitle=\"ptitle\"\n                :title=\"title\"\n                :p2title=\"p2title\"\n                :hname=\"hname\"\n                keep-alive></breadcrumb>\n        <slot name=\"content\" slot=\"content\"></slot>\n    </div>\n</div>\n<nv-footer keep-alive></nv-footer>\n";
 
 /***/ },
 /* 163 */

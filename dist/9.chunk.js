@@ -3786,7 +3786,7 @@ webpackJsonp([9],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n", ""]);
+	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n.controlSpan{\n    float: left;\n    margin-right: 10px;\n}\n.modal-foot{\n    clear:both;\n    text-align: center;\n}\n", ""]);
 
 	// exports
 
@@ -3857,13 +3857,12 @@ webpackJsonp([9],Array(61).concat([
 	//                                     <td>{{user.loginTime | datetime}}</td>
 	//                                     <td>
 	//                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                       
-	//                                         <a href="javascript:void(0);" v-on:click="del(user.id)">删除</a>                                  
 	//                                     </td>
 	//                                 </tr>
 	//                                 </tbody>
 	//                             </table>
 	//                         </div>
-	//                         <div id="modal_ControlSpan" class="modal fade" style="display: none;">
+	//                         <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
 	//                             <div class="modal-dialog">
 	//                                 <div class="modal-content">
 	//                                      <div class="modal-header">
@@ -3872,11 +3871,18 @@ webpackJsonp([9],Array(61).concat([
 	//                                      </div>
 	//                                      <div class="modal-body">
 	//                                          <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
-	//                                          <input type="button" id="othercheck" value="反选" />
+	//                                          <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
 	//                                          <hr/>
-	//                                          <div v-if="!!controlSpanList.length" v-for="(index,controlSpan) in controlSpanList">
-	//                                              <input type="checkbox" name="ckbox" />{{controlSpan.name}}
+	//                                          <div class="controlSpan" v-for="controlSpan in controlSpanList">
+	//                                              <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+	//                                              <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>  
 	//                                          </div>
+	//                                          <hr/>
+	//                                      </div>
+	//                                      <div class="modal-foot">
+	//                                         <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
+	//                                         <input type="button" class="btn btn-gray" v-on:click="cancel" data-dismiss="modal" value="取消">
+	//                                         <br/>
 	//                                      </div>
 	//                                 </div>
 	//                             </div>
@@ -3908,6 +3914,14 @@ webpackJsonp([9],Array(61).concat([
 	//     .box-body #table1 th{
 	//         min-width: 85px;
 	//     }
+	//     .controlSpan{
+	//         float: left;
+	//         margin-right: 10px;
+	//     }
+	//     .modal-foot{
+	//         clear:both;
+	//         text-align: center;
+	//     }
 	// </style>
 	// <script>
 	exports.default = {
@@ -3917,12 +3931,14 @@ webpackJsonp([9],Array(61).concat([
 	            subCompanyID: "",
 	            keywords: "",
 	            id: "",
+	            userID: "",
 	            subcompanyList: [],
 	            controlSpanList: [],
 	            pageall: 1,
 	            pagecur: 1,
 	            page_size: 15,
-	            userList: []
+	            userList: [],
+	            controlSpanArray: []
 	        };
 	    },
 
@@ -3948,15 +3964,15 @@ webpackJsonp([9],Array(61).concat([
 	        },
 	        query: function query() {
 	            var data = {
-	                subCompanyID: this.subCompanID,
+	                subCompanyID: this.subCompanyID,
 	                keywords: this.keywords
 	            };
 	            this.getUserList(data);
 	        },
-	        //删除
-	        del: function del(userId) {},
+
 	        //显示员工管辖
 	        showCS: function showCS(userId) {
+	            this.userID = userId;
 	            this.$http.post('./user/userControlSpanList/' + userId).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
 	                response.data.code == 0 ? this.$set('controlSpanList', response.data.data) : null;
@@ -3965,9 +3981,35 @@ webpackJsonp([9],Array(61).concat([
 	            });
 	        },
 	        checkAll: function checkAll() {
-	            $("input[name='ckbox']").prop({ 'checked': 'hecked' });
+	            $("input[name='ckbox']").prop({ 'checked': true });
 	        },
-	        othercheck: function othercheck() {}
+	        othercheck: function othercheck() {
+	            $("input[name='ckbox']").each(function () {
+	                $(this).prop({ 'checked': !$(this).prop("checked") });
+	            });
+	        },
+	        submit: function submit() {
+	            var arrays = [];
+	            $("input[name='ckbox']:checked").each(function () {
+	                arrays.push($(this).prop("id"));
+	            });
+
+	            var data = {
+	                userID: this.userID,
+	                subCompanyIDs: arrays
+	            };
+	            this.$http.post('./user/saveUserControlSpans', data).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                if (response.data.code == 0) {
+	                    alert("保存成功！");
+	                }
+	            }, function (response) {
+	                console.log(response);
+	            });
+	            //关闭弹出层
+	            $(".modal").modal("hide");
+	        },
+	        cancel: function cancel() {}
 	    },
 	    ready: function ready() {
 	        this.getUserList({});
@@ -3985,7 +4027,7 @@ webpackJsonp([9],Array(61).concat([
 /* 135 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<index title=\"员工管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>分公司</th>\n                                <th>用户名</th>\n                                <th>手机号</th>\n                                <th>姓名</th>\n                                <th>最后登录时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!userList.length\" v-for=\"(index,user) in userList\">\n                                <td>{{index+1}}</td>\n                                <td>{{user.subCompanyName}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.phone}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.loginTime | datetime}}</td>\n                                <td>\n                                    <a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal_ControlSpan\" v-on:click=\"showCS(user.id)\">管辖范围</a>                                        \n                                    <a href=\"javascript:void(0);\" v-on:click=\"del(user.id)\">删除</a>                                   \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div id=\"modal_ControlSpan\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>管辖范围</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                     <input type=\"button\" id=\"All\" value=\"全选\" v-on:click=\"checkAll()\"/>\n                                     <input type=\"button\" id=\"othercheck\" value=\"反选\" />\n                                     <hr/>\n                                     <div v-if=\"!!controlSpanList.length\" v-for=\"(index,controlSpan) in controlSpanList\">\n                                         <input type=\"checkbox\" name=\"ckbox\" />{{controlSpan.name}}\n                                     </div>\n                                 </div>\n                            </div>\n                        </div>\n                       \n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
+	module.exports = "\n<index title=\"员工管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>分公司</th>\n                                <th>用户名</th>\n                                <th>手机号</th>\n                                <th>姓名</th>\n                                <th>最后登录时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!userList.length\" v-for=\"(index,user) in userList\">\n                                <td>{{index+1}}</td>\n                                <td>{{user.subCompanyName}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.phone}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.loginTime | datetime}}</td>\n                                <td>\n                                    <a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal_ControlSpan\" v-on:click=\"showCS(user.id)\">管辖范围</a>                                        \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div id=\"modal_ControlSpan\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>管辖范围</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                     <input type=\"button\" id=\"All\" value=\"全选\" v-on:click=\"checkAll()\"/>\n                                     <input type=\"button\" id=\"othercheck\" value=\"反选\" v-on:click=\"othercheck()\"/>\n                                     <hr/>\n                                     <div class=\"controlSpan\" v-for=\"controlSpan in controlSpanList\">\n                                         <input type=\"checkbox\" :id=\"controlSpan.subCompanyID\" name=\"ckbox\"  :checked=\"controlSpan.selected\"/>\n                                         <label :for=\"controlSpan.subCompanyID\">{{controlSpan.name}}</label>   \n                                     </div>\n                                     <hr/>\n                                 </div>\n                                 <div class=\"modal-foot\">\n                                    <input type=\"button\" class=\"btn btn-primary\" v-on:click=\"submit\" value=\"提交\">\n                                    <input type=\"button\" class=\"btn btn-gray\" v-on:click=\"cancel\" data-dismiss=\"modal\" value=\"取消\">\n                                    <br/>\n                                 </div>\n                            </div>\n                        </div>\n                       \n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
 
 /***/ }
 ]));
