@@ -1,5 +1,5 @@
 <template>
-    <index title="补贴退税" ptitle="备付金支出"  isshow="isshow">
+    <index title="预付款划付" ptitle="备付金支出"  isshow="isshow">
         <section class="content" slot="content">
             <div class="row">
                 <div class="col-xs-12">
@@ -42,13 +42,6 @@
                                     <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="createType">
-                                        <option value="">请选择生成方式</option>
-                                        <option value="1">系统生成</option>
-                                        <option value="2">手工录入</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
                                         <option value="1">等待审核</option>
@@ -70,44 +63,39 @@
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>生成日期</th>
+                                        <th>编号</th>
+                                        <th>申请时间</th>
                                         <th>分公司</th>
                                         <th>城市</th>
                                         <th>付款账户</th>
                                         <th>商户ID</th>
                                         <th>商户名称</th>
                                         <th>收款账户信息</th>
-                                        <th>生成方式</th>
-                                        <th>退税金额</th>
-                                        <th>交易</th>
+                                        <th>预付金额</th>
+                                        <th>账户详情</th>
                                         <th>状态</th>
                                         <th>付款流水</th>
                                         <th>备注</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="!!subsidyTaxRebateDetailList.length" v-for="strd in subsidyTaxRebateDetailList">
-                                        <td>{{strd.id}}</td>
-                                        <td>{{strd.createTime | datetime}}</td>
-                                        <td>{{strd.subCompanyName}}</td>
-                                        <td>{{strd.cityName}}</td>
-                                        <td>{{strd.payAccount}}</td>
-                                        <td>{{strd.merchantOperationID}}</td>
-                                        <td>{{strd.merchantName}}</td>
-                                        <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>
+                                    <tr v-if="!!advancePaymentDetailList.length" v-for="(index,apd) in advancePaymentDetailList">
+                                        <td>{{index+1}}</td>
+                                        <td>{{apd.applyTime | datetime}}</td>
+                                        <td>{{apd.subCompanyName}}</td>
+                                        <td>{{apd.cityName}}</td>
+                                        <td>{{apd.payAccount}}</td>
+                                        <td>{{apd.merchantOperationID}}</td>
+                                        <td>{{apd.merchantName}}</td>
+                                        <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
+                                        <td>{{apd.advancePaymentAmount}}</td>
+                                        <td><a :href="apd.advancePaymentMerchantId">查看</a></td>
                                         <td>
-                                            <template v-if="strd.createType==1">系统生成</template>
-                                            <template v-if="strd.createType==2">手工录入</template>
+                                            <template v-if="apd.status==1">对账成功</template>
+                                            <template v-if="apd.status==2">对账失败</template>
                                         </td>
-                                        <td>{{strd.taxRebateAmount}}</td>
-                                        <td><a :href="strd.id">明细</a> </td>
-                                        <td>
-                                            <template v-if="strd.status==1">等待对账</template>
-                                            <template v-if="strd.status==2">划付失败</template>
-                                        </td>
-                                        <td><a :href="strd.id">申请划付</a></td>
-                                        <td>{{strd.remarks}}</td>
+                                        <td><a :href="apd.id">查看</a></td>
+                                        <td>{{apd.remarks}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -150,8 +138,8 @@
                 startDate:"",
                 endDate:"",
                 merchantID:"",      
-                merchantName:"", 
-                keywords:"",
+                merchantName:"",
+                keywords:"", 
                 id:"",   
                 seriesNumber:"",        
                 activityID:0,
@@ -160,16 +148,16 @@
                 pagecur:1,
                 page_size:15,
                 cityList:[],
-                subsidyTaxRebateDetailList:[]
+                advancePaymentDetailList:[]
             }
         },
         methods:{
             //获取补贴划付数据
-             getsubsidyTaxRebateDetailList:function(data){
-                this.$http.post('./subsidyTaxRebateDetail/list',data)
+             getadvancePaymentDetailList:function(data){
+                this.$http.post('./advancePaymentDetail/list',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
+                        (response.data.code==0) ? this.$set('advancePaymentDetailList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                     }, function (response) {
                         console.log(response);
@@ -207,7 +195,6 @@
                 let data={
                         subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
-                        createType:this.createType,
                         timeRange:this.timeRange,
                         merchantID:this.merchantID,
                         merchantName:this.merchantName,
@@ -215,13 +202,12 @@
                         id:this.id,
                         seriesNumber:this.seriesNumber,        
                         phone:this.phone,      
-                        activityID:this.activityID
                     };
-                this.getsubsidyTaxRebateDetailList(data);
+                this.getadvancePaymentDetailList(data);
             },
         },
         ready: function () {
-            this.getsubsidyTaxRebateDetailList({});
+            this.getadvancePaymentDetailList({});
             this.getSubcompany({});
             this.getCity({});
         },

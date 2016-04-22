@@ -8,7 +8,7 @@
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanID" >
+                                    <select class="form-control" v-model="subCompanyID" >
                                     <option value="">请选择分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
@@ -39,7 +39,7 @@
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantName" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="createType">
@@ -68,7 +68,7 @@
                                     <input type="text" class="form-control" v-model="remark" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="" value="查询">
+                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
                             </form> 
                         </div>
@@ -96,14 +96,14 @@
                                 </thead>
                                 <tbody>
                                     <tr v-if="!!subsidyAppropriationList.length" v-for="sa in subsidyAppropriationList">
-                                        <td>{{sa.ID}}</td>
+                                        <td>{{sa.id}}</td>
                                         <td>{{sa.createAT}}</td>
                                         <td>{{sa.subCompanyName}}</td>
                                         <td>{{sa.cityName}}</td>
-                                        <td>{{sa.paymentAccount}}</td>
+                                        <td>{{sa.paymentAccountShortName}}</td>
                                         <td>{{sa.merchantID}}</td>
                                         <td>{{sa.merchantName}}</td>
-                                        <td>{{sa.proceedsPerson}}{{sa.proceedsAccount}}</td>
+                                        <td>{{sa.receiptAccountName}}<br/>{{sa.receiptAccountNumber}}</td>
                                         <td>
                                             <template v-if="sa.createType==1">
                                                 系统生成
@@ -112,8 +112,9 @@
                                                 手工录入
                                             </template>
                                         </td>
-                                        <td>{{sa.thirdpartySubsidyShould}}</td>
+                                        <td>{{sa.thirdPartySubsidyShould}}</td>
                                         <td>{{sa.payAmount}}</td>
+                                        <td><a href="#">明细</a></td>
                                         <td>{{sa.status}}
                                             <template v-if="sa.status==1">
                                                 等待审核
@@ -131,6 +132,7 @@
                                                 划付失败
                                             </template>
                                         </td>
+                                        <td><a href="#">申请划付</a></td>
                                         <td>{{sa.activityName}}</td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
@@ -167,7 +169,7 @@
     export default{
         data(){
             return{
-                subCompanID:"",
+                subCompanyID:"",
                 cityID:"",
                 createType:"",
                 status:"",
@@ -175,7 +177,8 @@
                 startDate:"",
                 endDate:"",
                 merchantID:"",      
-                merchantName:"",   
+                merchantName:"",
+                keywords:"",  
                 id:"",   
                 seriesNumber:"",        
                 activityID:0,
@@ -190,7 +193,7 @@
         methods:{
             //获取补贴划付数据
              getSubsidyAppropriationList:function(data){
-                this.$http.post('./tradedetail/list',data)
+                this.$http.post('./subsidypaydetail/list',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subsidyAppropriationList', response.data.data) : null;
@@ -229,12 +232,13 @@
             query: function () {
                 // let data=this.data;
                 let data={
-                        subCompanID:this.subCompanID,
+                        subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
                         type:this.type,
                         timeRange:this.timeRange,
                         merchantID:this.merchantID,
                         merchantName:this.merchantName,
+                        keywords:this.keywords,
                         id:this.id,
                         seriesNumber:this.seriesNumber,        
                         phone:this.phone,      
