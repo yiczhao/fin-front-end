@@ -3791,7 +3791,7 @@ webpackJsonp([10],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n", ""]);
+	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n.textarea-w{\n    width: 500px;\n    height: 40px;\n}\n.textarea-h{\n    height: 100px;\n}\n", ""]);
 
 	// exports
 
@@ -3868,16 +3868,16 @@ webpackJsonp([10],Array(61).concat([
 	//                                 </tr>
 	//                                 </thead>
 	//                                 <tbody>
-	//                                 <tr role="row" v-if="!!logList.length" v-for="(index,log)in logList">
+	//                                 <tr v-if="!!logList.length" v-for="(index,log) in logList">
 	//                                     <td>{{index+1}}</td>
 	//                                     <td>{{log.userName}}</td>
 	//                                     <td>{{log.name}}</td>
 	//                                     <td>{{log.subCompanyName}}</td>
 	//                                     <td>{{log.URL}}</td>
 	//                                     <td>{{log.description}}</td>
-	//                                     <td>{{log.createTiome}}</td>
+	//                                     <td>{{log.createTime | datetime}}</td>
 	//                                     <td>
-	//                                         <a href="#">详情</a>                    
+	//                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>                    
 	//                                     </td>
 	//                                 </tr>
 	//                                 </tbody>
@@ -3888,6 +3888,34 @@ webpackJsonp([10],Array(61).concat([
 	//                                   :cur.sync="pagecur"
 	//                                   :page_size.sync="page_size">
 	//                             </page>
+	//                         </div>
+	//                         <div id="modal_logInfo" data-backdrop="static" class="modal fade" style="display: none;">
+	//                             <div class="modal-dialog">
+	//                                 <div class="modal-content">
+	//                                      <div class="modal-header">
+	//                                         <h3>日志详情</h3>
+	//                                         <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                      </div>
+	//                                      <div class="modal-body">
+	//                                         <div>
+	//                                             <div><label>用户名：</label>{{log.userName}}</div>
+	//                                             <div><label>姓名：</label>{{log.name}}</div>
+	//                                             <div><label>URL：</label>
+	//                                                 <textarea class="textarea-w">{{log.URL}}</textarea>
+	//                                             </div>
+	//                                             <div><label>描述：</label>
+	//                                                 <textarea class="textarea-w">{{log.description}}</textarea>
+	//                                             </div>
+	//                                             <div><label>详情：</label>
+	//                                                 <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
+	//                                             </div>
+	//                                             <div><label>创建IP：</label>{{log.userName}}</div>
+	//                                             <div><label>创建时间：</label>{{log.createTime | datetime}}</div>
+	//                                         </div>
+	//                                      </div>
+	//                                 </div>
+	//                             </div>
+	//
 	//                         </div>
 	//                     </div>
 	//                 </div>
@@ -3909,6 +3937,13 @@ webpackJsonp([10],Array(61).concat([
 	//     .box-body #table1 th{
 	//         min-width: 85px;
 	//     }
+	//     .textarea-w{
+	//         width: 500px;
+	//         height: 40px;
+	//     }
+	//     .textarea-h{
+	//         height: 100px;
+	//     }
 	// </style>
 	// <script>
 	exports.default = {
@@ -3922,7 +3957,8 @@ webpackJsonp([10],Array(61).concat([
 	            pageall: 1,
 	            pagecur: 1,
 	            page_size: 15,
-	            logList: []
+	            logList: [],
+	            log: {}
 	        };
 	    },
 
@@ -3953,12 +3989,22 @@ webpackJsonp([10],Array(61).concat([
 	                str += "0";
 	            }return str + num.toString();
 	        },
+	        showLog: function showLog(id) {
+	            this.$http.post('./log/info/' + id).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                response.data.code == 0 ? this.$set('log', response.data.data) : null;
+	            }, function (response) {
+	                console.log(response);
+	            });
+	        },
 	        query: function query() {
 	            var data = {
-	                subCompanyID: this.subCompanID,
-	                keywords: this.keywords
+	                subCompanyID: this.subCompanyID,
+	                keywords: this.keywords,
+	                startDate: this.startDate,
+	                endDate: this.endDate
 	            };
-	            this.getTradeList(data);
+	            this.getLogList(data);
 	        }
 	    },
 	    ready: function ready() {
@@ -4006,7 +4052,7 @@ webpackJsonp([10],Array(61).concat([
 /* 140 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<index title=\"日志管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"timeRange\">\n                                    <option value=\"\">请选择日期</option>\n                                    <option value=\"0\">昨天</option>\n                                    <option value=\"1\">最近一周</option>\n                                    <option value=\"2\">最近一个月</option>\n                                    <option value=\"3\">最近三个月</option>\n                                    <option value=\"4\">自定义时间</option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\" v-show=\"timeRange==4\">\n                                <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>用户名</th>\n                                <th>姓名</th>\n                                <th>分公司</th>\n                                <th>URL</th>\n                                <th>描述</th>\n                                <th>创建时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr role=\"row\" v-if=\"!!logList.length\" v-for=\"(index,log)in logList\">\n                                <td>{{index+1}}</td>\n                                <td>{{log.userName}}</td>\n                                <td>{{log.name}}</td>\n                                <td>{{log.subCompanyName}}</td>\n                                <td>{{log.URL}}</td>\n                                <td>{{log.description}}</td>\n                                <td>{{log.createTiome}}</td>\n                                <td>\n                                    <a href=\"#\">详情</a>                     \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
+	module.exports = "\n<index title=\"日志管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"timeRange\">\n                                    <option value=\"\">请选择日期</option>\n                                    <option value=\"0\">昨天</option>\n                                    <option value=\"1\">最近一周</option>\n                                    <option value=\"2\">最近一个月</option>\n                                    <option value=\"3\">最近三个月</option>\n                                    <option value=\"4\">自定义时间</option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\" v-show=\"timeRange==4\">\n                                <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>用户名</th>\n                                <th>姓名</th>\n                                <th>分公司</th>\n                                <th>URL</th>\n                                <th>描述</th>\n                                <th>创建时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!logList.length\" v-for=\"(index,log) in logList\">\n                                <td>{{index+1}}</td>\n                                <td>{{log.userName}}</td>\n                                <td>{{log.name}}</td>\n                                <td>{{log.subCompanyName}}</td>\n                                <td>{{log.URL}}</td>\n                                <td>{{log.description}}</td>\n                                <td>{{log.createTime | datetime}}</td>\n                                <td>\n                                    <a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal_logInfo\" v-on:click=\"showLog(log.id)\">详情</a>                     \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                    <div id=\"modal_logInfo\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>日志详情</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                    <div>\n                                        <div><label>用户名：</label>{{log.userName}}</div>\n                                        <div><label>姓名：</label>{{log.name}}</div>\n                                        <div><label>URL：</label>\n                                            <textarea class=\"textarea-w\">{{log.URL}}</textarea>\n                                        </div>\n                                        <div><label>描述：</label>\n                                            <textarea class=\"textarea-w\">{{log.description}}</textarea>\n                                        </div>\n                                        <div><label>详情：</label>\n                                            <textarea class=\"textarea-w textarea-h\">{{log.logInfo}}</textarea>\n                                        </div>\n                                        <div><label>创建IP：</label>{{log.userName}}</div>\n                                        <div><label>创建时间：</label>{{log.createTime | datetime}}</div>\n                                    </div>\n                                 </div>\n                            </div>\n                        </div>\n                       \n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
 
 /***/ }
 ]));

@@ -150,8 +150,8 @@ webpackJsonp([1],{
 	exports.default = {
 	    data: function data() {
 	        return {
-	            username: '15151527650',
-	            password: '123456',
+	            username: '',
+	            password: '',
 	            usererror: '',
 	            passerror: '',
 	            usershow: false,
@@ -162,6 +162,12 @@ webpackJsonp([1],{
 	    components: {},
 	    methods: {
 	        login: function login() {
+	            if (this.username == '') {
+	                this.usererror = '请输入用户名';this.usershow = true;return;
+	            }
+	            if (this.password == '') {
+	                this.passerror = '请输入密码';this.passshow = true;return;
+	            }
 	            if (this.usershow || this.passshow) {
 	                return false;
 	            }
