@@ -141,10 +141,14 @@
                     $(this).parent('li').not('.disabled').not($('.sidebar-xs').not('.sidebar-xs-indicator').find('.navigation-main').children('li')).siblings(':has(.has-ul)').removeClass('active').children('ul').slideUp(250);
                 }
             });
-            var nowa= $('.navigation').find('.v-link-active').closest('.hidden-ul')
-            nowa.show().parent('li').addClass('active');
-            if(nowa.closest('.hidden-ul').is(':hidden')){
-                nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
+            var nowa= $('.navigation').find('.v-link-active').closest('.hidden-ul');
+            if(!nowa.length){
+                $('.v-link-active').parent('li').addClass('active');
+            }else{
+                nowa.show().parent('li').addClass('active');
+                if(nowa.closest('.hidden-ul').is(':hidden')){
+                    nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
+                }
             }
         }
     }

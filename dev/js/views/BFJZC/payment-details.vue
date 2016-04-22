@@ -167,11 +167,14 @@
                         </div>
                     </div>
                 </div>
+                <page :all="pageall"
+                      :cur.sync="pagecur"
+                      :page_size.sync="page_size">
+                </page>
             </div>
-            <page :all="pageall"
-                  :cur.sync="pagecur"
-                  :page_size.sync="page_size">
-            </page>
+            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                未找到您要查询的账单
+            </div>
             <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -369,67 +372,67 @@
         methods:{
             // *** 请求账户数据
             getZlists:function(data){
-                this.zdlists=[
-                    {
-                        id:1,
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 3,
-                        listinfo:[]
-                    },
-                    {
-                        id:2,
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 2,
-                        listinfo:[]
-                    },
-                    {
-                        id:3,
-                        "orderNumber": "20150802105038252",
-                        "payoutAccount": "深圳备付金",
-                        "payoutAccountNumber": "36001050307052502264",
-                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-                        "payoutAmount": 58000,
-                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-                        "incomeAccountNumber": "626606960",
-                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-                        "incomeBankName": "民生银行海岸城支行",
-                        "certificate": "",
-                        "purpose": "1",
-                        "paymentTime": "2015-08-02 10:50:38",
-                        "applyTime": "2015-08-02 10:50:38",
-                        "applyCompany": "深圳卡说",
-                        "remarks": "",
-                        "status": 5,
-                        listinfo:[]
-                    },];
+//                this.zdlists=[
+//                    {
+//                        id:1,
+//                        "orderNumber": "20150802105038252",
+//                        "payoutAccount": "深圳备付金",
+//                        "payoutAccountNumber": "36001050307052502264",
+//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "payoutAmount": 58000,
+//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+//                        "incomeAccountNumber": "626606960",
+//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "incomeBankName": "民生银行海岸城支行",
+//                        "certificate": "",
+//                        "purpose": "1",
+//                        "paymentTime": "2015-08-02 10:50:38",
+//                        "applyTime": "2015-08-02 10:50:38",
+//                        "applyCompany": "深圳卡说",
+//                        "remarks": "",
+//                        "status": 3,
+//                        listinfo:[]
+//                    },
+//                    {
+//                        id:2,
+//                        "orderNumber": "20150802105038252",
+//                        "payoutAccount": "深圳备付金",
+//                        "payoutAccountNumber": "36001050307052502264",
+//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "payoutAmount": 58000,
+//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+//                        "incomeAccountNumber": "626606960",
+//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "incomeBankName": "民生银行海岸城支行",
+//                        "certificate": "",
+//                        "purpose": "1",
+//                        "paymentTime": "2015-08-02 10:50:38",
+//                        "applyTime": "2015-08-02 10:50:38",
+//                        "applyCompany": "深圳卡说",
+//                        "remarks": "",
+//                        "status": 2,
+//                        listinfo:[]
+//                    },
+//                    {
+//                        id:3,
+//                        "orderNumber": "20150802105038252",
+//                        "payoutAccount": "深圳备付金",
+//                        "payoutAccountNumber": "36001050307052502264",
+//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "payoutAmount": 58000,
+//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+//                        "incomeAccountNumber": "626606960",
+//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+//                        "incomeBankName": "民生银行海岸城支行",
+//                        "certificate": "",
+//                        "purpose": "1",
+//                        "paymentTime": "2015-08-02 10:50:38",
+//                        "applyTime": "2015-08-02 10:50:38",
+//                        "applyCompany": "深圳卡说",
+//                        "remarks": "",
+//                        "status": 5,
+//                        listinfo:[]
+//                    },];
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -437,14 +440,14 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-//                this.$http.post('./reservecash/order/list',data)
-//                        .then(function (response) {
-//                            // *** 判断请求是否成功如若成功则填充数据到模型
-//                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-//                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-//                        }, function (response) {
-//                            console.log(response);
-//                        });
+                this.$http.post('./reservecash/order/list',data)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        }, function (response) {
+                            console.log(response);
+                        });
             },
             initList:function(){
                 $(".modal").modal("hide");
