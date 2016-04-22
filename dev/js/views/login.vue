@@ -73,6 +73,8 @@
         },
         methods:{
             login:function(){
+                if(this.username==''){this.usererror='请输入用户名';this.usershow=true;return;}
+                if(this.password==''){this.passerror='请输入密码';this.passshow=true;return;}
                 if(this.usershow||this.passshow){return false;}
                 let data={'username':this.username,'password':this.password};
                 this.$http.post('./passport/login',data)
