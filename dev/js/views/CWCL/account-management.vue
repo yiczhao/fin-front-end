@@ -166,22 +166,22 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>简称</label>
-                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" value.sync="relist.shortName" maxlength="15" placeholder="15字以内">
+                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value.sync="relist.shortName" maxlength="15" placeholder="15字以内">
                                         <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账户名</label>
-                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  value.sync="relist.accountName" v-model="relist.accountName">
+                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value.sync="relist.accountName" v-model="relist.accountName">
                                         <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
-                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  value.sync="relist.accountNumber" v-model="relist.accountNumber">
+                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value.sync="relist.accountNumber" v-model="relist.accountNumber">
                                         <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>开户行</label>
-                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" value.sync="relist.bankName" v-model="relist.bankName">
+                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value.sync="relist.bankName" v-model="relist.bankName">
                                         <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
                                     </div>
                                     <div class="form-group">
@@ -340,7 +340,7 @@
             },
             rewrite(_list){
                 this.accountId=_list.id;
-                this.$set('relist', _list);
+                $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
             },
             start(a){
