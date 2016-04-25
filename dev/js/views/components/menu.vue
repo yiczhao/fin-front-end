@@ -32,8 +32,6 @@
                             <ul class="hidden-ul">
                                 <li><a v-link="{'name':'account-management'}">账户管理</a></li>
                                 <li><a v-link="{'name':'trade-info'}">交易明细</a></li>
-                                <li><a v-link="{'name':'subsidy-appropriation'}">补贴划付</a></li>
-                                <li><a v-link="{'name':'subsidy-tax-rebate'}">补贴退税</a></li>
                                 <li><a href="#">3211佣金明细</a></li>
                                 <li>
                                     <a href="javascript:void(0);" class="has-ul">本金收入</a>
@@ -47,10 +45,10 @@
                                     <a href="javascript:void(0);" class="has-ul">备付金支出</a>
                                     <ul class="hidden-ul">
                                         <li><a v-link="{'name':'payment-details'}">付款明细</a></li>
-                                        <li><a href="#">补贴划付</a></li>
-                                        <li><a href="#">额度采购</a></li>
-                                        <li><a href="#">补贴退税</a></li>
-                                        <li><a href="#">预付款划付</a></li>
+                                        <li><a v-link="{'name':'subsidy-appropriation'}">补贴划付</a></li>
+                                        <li><a v-link="{'name':'subsidy-tax-rebate'}">补贴退税</a></li>
+                                        <li><a v-link="{'name':'limit-purchase-detail'}">额度采购</a></li>
+                                        <li><a v-link="{'name':'advance-payment-detail'}">预付款划付</a></li>
                                         <li><a href="#">供货商划付</a></li>
                                     </ul>
                                 </li>

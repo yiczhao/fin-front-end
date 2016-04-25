@@ -34,6 +34,22 @@ export default function(router){
                 require(['./views/CWCL/trade-info.vue'],resolve);
             }
         },
+        //额度采购
+        '/limit-purchase-detail':{
+            name:'limit-purchase-detail',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/BFJZC/limit-purchase-detail.vue'],resolve);
+            }
+        },
+        //预付款划付
+        '/advance-payment-detail':{
+            name:'advance-payment-detail',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/BFJZC/advance-payment-detail.vue'],resolve);
+            }
+        },
         //补贴划付
         '/subsidy-appropriation':{
             name:'subsidy-appropriation',
