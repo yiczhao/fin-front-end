@@ -1,25 +1,6 @@
-webpackJsonp([9],Array(61).concat([
-/* 61 */
-/***/ function(module, exports, __webpack_require__) {
+webpackJsonp([9],{
 
-	module.exports = { "default": __webpack_require__(62), __esModule: true };
-
-/***/ },
-/* 62 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var core = __webpack_require__(9);
-	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-	  return (core.JSON && core.JSON.stringify || JSON.stringify).apply(JSON, arguments);
-	};
-
-/***/ },
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -48,7 +29,8 @@ webpackJsonp([9],Array(61).concat([
 	})()}
 
 /***/ },
-/* 69 */
+
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -74,7 +56,8 @@ webpackJsonp([9],Array(61).concat([
 	}
 
 /***/ },
-/* 70 */
+
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -88,7 +71,8 @@ webpackJsonp([9],Array(61).concat([
 
 
 /***/ },
-/* 71 */
+
+/***/ 71:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -384,23 +368,25 @@ webpackJsonp([9],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 72 */
+
+/***/ 72:
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"datetime-picker\" :style=\"{ width: width }\" _v-471eaf71=\"\">\n    <input type=\"text\" :style=\"styleObj\" :readonly=\"readonly\" :value=\"value\" @click=\"show = !show\" _v-471eaf71=\"\">\n        <span class=\"fa fa-close close\" v-show=\"value\" @click=\"clear()\" _v-471eaf71=\"\"></span>\n    <div class=\"picker-wrap\" v-show=\"show\" _v-471eaf71=\"\">\n        <table class=\"date-picker\" _v-471eaf71=\"\">\n            <thead _v-471eaf71=\"\">\n                <tr class=\"date-head\" _v-471eaf71=\"\">\n                    <th colspan=\"4\" _v-471eaf71=\"\">\n                        <span class=\"btn-prev\" @click=\"yearClick(-1)\" _v-471eaf71=\"\">&lt;</span>\n                        <span class=\"show-year\" _v-471eaf71=\"\">{{now.getFullYear()}}</span>\n                        <span class=\"btn-next\" @click=\"yearClick(1)\" _v-471eaf71=\"\">&gt;</span>\n                    </th>\n                    <th colspan=\"3\" _v-471eaf71=\"\">\n                        <span class=\"btn-prev\" @click=\"monthClick(-1)\" _v-471eaf71=\"\">&lt;</span>\n                        <span class=\"show-month\" _v-471eaf71=\"\">{{months[now.getMonth()]}}</span>\n                        <span class=\"btn-next\" @click=\"monthClick(1)\" _v-471eaf71=\"\">&gt;</span>\n                    </th>\n                </tr>\n                <tr class=\"date-days\" _v-471eaf71=\"\">\n                    <th v-for=\"day in days\" _v-471eaf71=\"\">{{day}}</th>\n                </tr>\n            </thead>\n            <tbody _v-471eaf71=\"\">\n                <tr v-for=\"i in 6\" _v-471eaf71=\"\">\n                    <td v-for=\"j in 7\" :class=\"date[i * 7 + j] &amp;&amp; date[i * 7 + j].status\" :date=\"date[i * 7 + j] &amp;&amp; date[i * 7 + j].date\" @click=\"pickDate(i * 7 + j)\" _v-471eaf71=\"\">{{date[i * 7 + j] &amp;&amp; date[i * 7 + j].text}}</td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n";
 
 /***/ },
-/* 73 */
+
+/***/ 133:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(74)
-	__vue_script__ = __webpack_require__(76)
+	__webpack_require__(134)
+	__vue_script__ = __webpack_require__(136)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\components\\dialog.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(101)
+	  console.warn("[vue-loader] dev\\js\\views\\BFJZC\\payment-details.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(137)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -410,7 +396,7 @@ webpackJsonp([9],Array(61).concat([
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\components\\dialog.vue"
+	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\BFJZC\\payment-details.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -419,13 +405,14 @@ webpackJsonp([9],Array(61).concat([
 	})()}
 
 /***/ },
-/* 74 */
+
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(75);
+	var content = __webpack_require__(135);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -434,8 +421,8 @@ webpackJsonp([9],Array(61).concat([
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./dialog.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./dialog.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./payment-details.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./payment-details.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -445,7 +432,8 @@ webpackJsonp([9],Array(61).concat([
 	}
 
 /***/ },
-/* 75 */
+
+/***/ 135:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -453,3346 +441,14 @@ webpackJsonp([9],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\n\n.dialog-mask {\n    position: fixed;top:0;right:0;z-index:100;\n    width:100%;height: 100%;\n    background: #222;\n    opacity: 0.3;\n}\n\n.dialog .content {\n    /*clear*/\n    padding: 0;margin:0;min-height:auto;\n    /*clear end*/\n    z-index:1000;\n    position: absolute;\n    border-radius: 3px;\n    background: #ffffff;\n    border-top: 3px solid #00c0ef;\n    box-shadow: 0 1px 1px rgba(0,0,0,0.1);\n\n}\n.dialog .content .box-body{\n    text-align: center;\n}\n.box-header{\n    padding-top: 5px;\n}\n.btn-style{\n    padding: 2px;\n    font-size: 18px;\n    background-color: #00c0ef;\n    border-color: #00acd6;\n    border-radius: 3px;\n    box-shadow: none;\n    border: 1px solid transparent;\n    color: #fff;\n    font-weight: bold;\n}\n.dialog .content .box-header h3{\n    margin: 0;\n    padding: 8px 10px;\n    font-size: 16px;\n    letter-spacing: 1px;\n    font-weight: bold;\n}\n.close{\n    position: absolute;\n    right: 10px;\n    top: 6px;\n}\n.dialog .content .box-body{\n    font-size: 14px;\n    padding: 0 20px 10px 20px;\n\n}\n.btn-def{\n    background-color: #f4f4f4;\n    border: 1px solid #ddd;\n    border-radius: 3px;\n    padding: 3px 9px;\n}\n.mr10{\n    margin-right: 10px;\n}\n", ""]);
+	exports.push([module.id, "\n .details .f20{\n     font-size: 20px;\n     font-weight: bolder;\n }\n.details .form-group{\n }\n .details   .modal-body label i{\n     color:red;\n }\n .details  .modal-body button{\n     width:35%;\n }\n .details  .m20{\n     margin-bottom:20px;\n }\n .details  .mt0{\n     margin-top: 0\n }\n .details .page-bar{\n     margin: 25px auto;\n     text-align: center;\n }\n .details .panel-title p span{\n     width: 24%;\n     margin-bottom: 3px;\n     display: inline-block;\n     text-overflow: ellipsis;\n     overflow: hidden;\n     white-space: nowrap;\n     font-size: 13px;\n }\n .details .panel-heading .pull-right{\n     position: absolute;\n     right: 10px;\n     bottom: 30px;\n    cursor: pointer;\n     background: #ECECEC;\n }\n .details .datatable-scroll{\n    overflow: hidden;\n    padding-bottom: 20px;\n    padding-top: 20px;\n}\n .details .dataTables_wrapper{\n     display: none;\n }\n .details .datatable-scroll table{\n     float: left;\n     width: 80%;\n     border: 1px solid #ccc;\n     margin-left: 20px;\n }\n .details .datatable-scroll .pull-right{\n     width: 15%;\n }\n .details  .pull-right input{\n     width: 80%;\n     margin-bottom: 15px;\n }\n .details  .panel-flat > .panel-heading.bgddd{\n     background: #ECECEC;\n }\n .details div.datatable-footer.pd15{\n     padding: 15px 20px;\n     font-weight: bolder;\n }\n .details div.datatable-footer.pd15 span{\n     color:red;\n }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 76 */
-/***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _align = __webpack_require__(77);
-
-	var _align2 = _interopRequireDefault(_align);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = {
-	    props: {
-	        title: { type: String, default: '标题' },
-	        show: { type: Boolean, default: false },
-	        width: { type: Number },
-	        cbClose: { type: Function }
-	    },
-	    data: function data() {
-	        return {
-	            align: {
-	                points: ['cc', 'cc']
-	            },
-	            monitor: true
-	        };
-	    },
-
-	    methods: {},
-	    ready: function ready() {
-	        // console.log(this.cbClose)
-	    },
-
-	    components: {
-	        'align': _align2.default
-	    }
-	};
-	// </script>
-	// <style>
-	//
-	//     .dialog-mask {
-	//         position: fixed;top:0;right:0;z-index:100;
-	//         width:100%;height: 100%;
-	//         background: #222;
-	//         opacity: 0.3;
-	//     }
-	//
-	//     .dialog .content {
-	//         /*clear*/
-	//         padding: 0;margin:0;min-height:auto;
-	//         /*clear end*/
-	//         z-index:1000;
-	//         position: absolute;
-	//         border-radius: 3px;
-	//         background: #ffffff;
-	//         border-top: 3px solid #00c0ef;
-	//         box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-	//
-	//     }
-	//     .dialog .content .box-body{
-	//         text-align: center;
-	//     }
-	//     .box-header{
-	//         padding-top: 5px;
-	//     }
-	//     .btn-style{
-	//         padding: 2px;
-	//         font-size: 18px;
-	//         background-color: #00c0ef;
-	//         border-color: #00acd6;
-	//         border-radius: 3px;
-	//         box-shadow: none;
-	//         border: 1px solid transparent;
-	//         color: #fff;
-	//         font-weight: bold;
-	//     }
-	//     .dialog .content .box-header h3{
-	//         margin: 0;
-	//         padding: 8px 10px;
-	//         font-size: 16px;
-	//         letter-spacing: 1px;
-	//         font-weight: bold;
-	//     }
-	//     .close{
-	//         position: absolute;
-	//         right: 10px;
-	//         top: 6px;
-	//     }
-	//     .dialog .content .box-body{
-	//         font-size: 14px;
-	//         padding: 0 20px 10px 20px;
-	//
-	//     }
-	//     .btn-def{
-	//         background-color: #f4f4f4;
-	//         border: 1px solid #ddd;
-	//         border-radius: 3px;
-	//         padding: 3px 9px;
-	//     }
-	//     .mr10{
-	//         margin-right: 10px;
-	//     }
-	// </style>
-	// <template>
-	//
-	//     <div class="dialog" v-show="show">
-	//         <align
-	//                 :align="align"
-	//                 :visible="show"
-	//                 :monitor-buffer-time="80">
-	//             <div class="content" :style="{width:width+'px'}">
-	//                 <div class="box-header">
-	//                     <h3 class="box-title" v-text="title"></h3>
-	//                     <!-- tools box -->
-	//                     <div class="close">
-	//                         <button class="btn-style" @click="cbClose('cancel')">×</button>
-	//                     </div><!-- /. tools -->
-	//                 </div><!-- /.box-header -->
-	//                 <div class="box-body">
-	//                     <slot></slot>
-	//                 </div>
-	//             </div>
-	//         </align>
-	//         <div class="dialog-mask"></div>
-	//     </div>
-	// </template>
-	// <script type="text/javascript">
-
-/***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(78)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\components\\base\\align.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(100)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\components\\base\\align.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 78 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _utils = __webpack_require__(79);
-
-	var _domAlign = __webpack_require__(92);
-
-	var _domAlign2 = _interopRequireDefault(_domAlign);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// <template>
-	// <slot></slot>
-	// </template>
-	//
-	// <script>
-
-	function isWindow(obj) {
-	  /* eslint no-eq-null: 0 */
-	  /* eslint eqeqeq: 0 */
-	  return obj != null && obj == obj.window;
-	}
-
-	function buffer(fn, ms) {
-	  var timer = void 0;
-
-	  return function bufferFn() {
-	    if (timer) {
-	      clearTimeout(timer);
-	    }
-	    timer = setTimeout(fn, ms);
-	  };
-	}
-
-	exports.default = {
-	  props: (0, _utils.defaultProps)({
-	    className: '',
-	    align: {
-	      type: Object,
-	      require: true
-	    },
-	    watchProps: _utils.any,
-	    visible: true,
-	    target: function target() {
-	      return window;
-	    },
-	    onAlign: function onAlign() {},
-	    monitorBufferTime: 50,
-	    monitorWindowResize: false,
-	    disabled: false
-	  }),
-
-	  computed: {
-	    currentNode: function currentNode() {
-	      // console.log('computed',this.$el,getTrustSlotNode)
-	      return (0, _utils.getTrustSlotNode)(this.$el);
-	    }
-	  },
-
-	  watch: {
-	    align: function align() {
-	      this._doAlign();
-	    },
-	    visible: function visible(val) {
-	      if (val) {
-	        this._doAlign();
-	      }
-	    },
-	    watchProps: function watchProps(newVal, oldVal) {
-	      if (newVal !== oldVal) {
-	        this._doAlign();
-	      }
-	    },
-	    monitorWindowResize: function monitorWindowResize(val) {
-	      if (val && !this.disabled) {
-	        this._startMonitorWindowResize();
-	      } else {
-	        this._stopMonitorWindowResize();
-	      }
-	    }
-	  },
-
-	  beforeDestory: function beforeDestory() {
-	    this._stopMonitorWindowResize();
-	  },
-	  compiled: function compiled() {
-	    // console.log('compiled',this)
-	    this._doAlign = (0, _utils.throttle)(this.__doAlign.bind(this), 50);
-	  },
-	  ready: function ready() {
-	    // console.log('ready',this._doAlign())
-	    this._doAlign();
-	    this.resizeHandler = buffer(this._onWindowResize, this.monitorBufferTime);
-
-	    if (this.monitorWindowResize && !this.disabled) {
-	      this._startMonitorWindowResize();
-	    } else {
-	      this._stopMonitorWindowResize();
-	    }
-
-	    this._doAlign;
-	  },
-
-
-	  methods: {
-	    __doAlign: function __doAlign() {
-	      var target = this.target();
-	      if (!target) {
-	        return;
-	      }
-	      // console.log('target',target)
-	      // return
-	      var currentNode = this.currentNode;
-	      // console.log('currentNode',currentNode)
-
-	      var display = currentNode.style.display;
-	      currentNode.style.left = '0';
-	      currentNode.style.top = '0';
-	      currentNode.style.display = 'block';
-	      this.onAlign(currentNode, (0, _domAlign2.default)(currentNode, target, this.align));
-	      currentNode.style.display = display;
-	    },
-	    _onWindowResize: function _onWindowResize() {
-	      if (!this.disabled) {
-	        this._doAlign();
-	      }
-	    },
-	    _startMonitorWindowResize: function _startMonitorWindowResize() {
-	      if (!this.hasListener) {
-	        this.hasListener = true;
-	        window.addEventListener('resize', this.resizeHandler, false);
-	      }
-	    },
-	    _stopMonitorWindowResize: function _stopMonitorWindowResize() {
-	      if (this.hasListener) {
-	        this.hasListener = false;
-	        window.removeEventListener('resize', this.resizeHandler, false);
-	      }
-	    }
-	  }
-	};
-
-	// </script>
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.slotMixin = exports.KeyCode = exports.cx = exports.guid = exports.removeEndEventListener = exports.addEndEventListener = exports.addEventListener = exports.any = exports.oneOf = exports.oneOfType = exports.defaultProps = exports.getTrustSlotNode = exports.contains = exports.insertAfter = exports.insertBefore = exports.addStyle = exports.removeClass = exports.addClass = exports.isIE9 = exports.inBrowser = exports.throttle = exports.strToObj = exports.camelize = exports.camelcaseToHyphen = undefined;
-
-	var _stringify = __webpack_require__(61);
-
-	var _stringify2 = _interopRequireDefault(_stringify);
-
-	var _lang = __webpack_require__(80);
-
-	Object.defineProperty(exports, 'camelcaseToHyphen', {
-	  enumerable: true,
-	  get: function get() {
-	    return _lang.camelcaseToHyphen;
-	  }
-	});
-	Object.defineProperty(exports, 'camelize', {
-	  enumerable: true,
-	  get: function get() {
-	    return _lang.camelize;
-	  }
-	});
-	Object.defineProperty(exports, 'strToObj', {
-	  enumerable: true,
-	  get: function get() {
-	    return _lang.strToObj;
-	  }
-	});
-	Object.defineProperty(exports, 'throttle', {
-	  enumerable: true,
-	  get: function get() {
-	    return _lang.throttle;
-	  }
-	});
-
-	var _env = __webpack_require__(81);
-
-	Object.defineProperty(exports, 'inBrowser', {
-	  enumerable: true,
-	  get: function get() {
-	    return _env.inBrowser;
-	  }
-	});
-	Object.defineProperty(exports, 'isIE9', {
-	  enumerable: true,
-	  get: function get() {
-	    return _env.isIE9;
-	  }
-	});
-
-	var _dom = __webpack_require__(82);
-
-	Object.defineProperty(exports, 'addClass', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.addClass;
-	  }
-	});
-	Object.defineProperty(exports, 'removeClass', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.removeClass;
-	  }
-	});
-	Object.defineProperty(exports, 'addStyle', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.addStyle;
-	  }
-	});
-	Object.defineProperty(exports, 'insertBefore', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.insertBefore;
-	  }
-	});
-	Object.defineProperty(exports, 'insertAfter', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.insertAfter;
-	  }
-	});
-	Object.defineProperty(exports, 'contains', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.contains;
-	  }
-	});
-	Object.defineProperty(exports, 'getTrustSlotNode', {
-	  enumerable: true,
-	  get: function get() {
-	    return _dom.getTrustSlotNode;
-	  }
-	});
-
-	var _props = __webpack_require__(86);
-
-	Object.defineProperty(exports, 'defaultProps', {
-	  enumerable: true,
-	  get: function get() {
-	    return _props.defaultProps;
-	  }
-	});
-	Object.defineProperty(exports, 'oneOfType', {
-	  enumerable: true,
-	  get: function get() {
-	    return _props.oneOfType;
-	  }
-	});
-	Object.defineProperty(exports, 'oneOf', {
-	  enumerable: true,
-	  get: function get() {
-	    return _props.oneOf;
-	  }
-	});
-	Object.defineProperty(exports, 'any', {
-	  enumerable: true,
-	  get: function get() {
-	    return _props.any;
-	  }
-	});
-
-	var _event = __webpack_require__(87);
-
-	Object.defineProperty(exports, 'addEventListener', {
-	  enumerable: true,
-	  get: function get() {
-	    return _event.addEventListener;
-	  }
-	});
-	Object.defineProperty(exports, 'addEndEventListener', {
-	  enumerable: true,
-	  get: function get() {
-	    return _event.addEndEventListener;
-	  }
-	});
-	Object.defineProperty(exports, 'removeEndEventListener', {
-	  enumerable: true,
-	  get: function get() {
-	    return _event.removeEndEventListener;
-	  }
-	});
-
-	var _guid = __webpack_require__(88);
-
-	Object.defineProperty(exports, 'guid', {
-	  enumerable: true,
-	  get: function get() {
-	    return _guid.guid;
-	  }
-	});
-	exports.getPlainObject = getPlainObject;
-
-	var _classnames = __webpack_require__(89);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _KeyCode2 = __webpack_require__(90);
-
-	var _KeyCode3 = _interopRequireDefault(_KeyCode2);
-
-	var _slotMixin2 = __webpack_require__(91);
-
-	var _slotMixin3 = _interopRequireDefault(_slotMixin2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var cx = exports.cx = _classnames2.default;
-	var KeyCode = exports.KeyCode = _KeyCode3.default;
-	var slotMixin = exports.slotMixin = _slotMixin3.default;
-
-	function getPlainObject(vueObject) {
-	  return JSON.parse((0, _stringify2.default)(vueObject));
-	}
-
-/***/ },
-/* 80 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.camelcaseToHyphen = camelcaseToHyphen;
-	exports.camelize = camelize;
-	exports.strToObj = strToObj;
-	exports.throttle = throttle;
-	function camelcaseToHyphen(str) {
-	  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-	}
-
-	var camelizeRE = /-(\w)/g;
-	var toUpper = function toUpper(_, c) {
-	  return c ? c.toUpperCase() : '';
-	};
-
-	function camelize(str) {
-	  return str.replace(camelizeRE, toUpper);
-	}
-
-	function strToObj(str) {
-	  var strArr = str.split(' ');
-	  var obj = {};
-	  strArr.forEach(function (item) {
-	    obj[item] = 1;
-	  });
-	  return obj;
-	}
-
-	// 节流函数
-	function throttle(func, wait, options) {
-	  var context = void 0,
-	      args = void 0,
-	      result = void 0;
-	  var timeout = null;
-	  var previous = 0;
-	  if (!options) options = {};
-	  var later = function later() {
-	    previous = options.leading === false ? 0 : Date.now();
-	    timeout = null;
-	    result = func.apply(context, args);
-	    if (!timeout) context = args = null;
-	  };
-	  return function () {
-	    var now = Date.now();
-	    if (!previous && options.leading === false) previous = now;
-	    var remaining = wait - (now - previous);
-	    context = this;
-	    args = arguments;
-	    if (remaining <= 0 || remaining > wait) {
-	      if (timeout) {
-	        clearTimeout(timeout);
-	        timeout = null;
-	      }
-	      previous = now;
-	      result = func.apply(context, args);
-	      if (!timeout) context = args = null;
-	    } else if (!timeout && options.trailing !== false) {
-	      timeout = setTimeout(later, remaining);
-	    }
-	    return result;
-	  };
-	}
-
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	// Browser environment sniffing
-	var inBrowser = exports.inBrowser = typeof window !== 'undefined' && Object.prototype.toString.call(window) !== '[object Object]';
-
-	var isIE9 = exports.isIE9 = inBrowser && navigator.userAgent.toLowerCase().indexOf('msie 9.0') > 0;
-
-/***/ },
-/* 82 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.scrollIntoView = undefined;
-
-	var _keys = __webpack_require__(1);
-
-	var _keys2 = _interopRequireDefault(_keys);
-
-	exports.addClass = addClass;
-	exports.removeClass = removeClass;
-	exports.addStyle = addStyle;
-	exports.insertBefore = insertBefore;
-	exports.insertAfter = insertAfter;
-	exports.contains = contains;
-	exports.getTrustSlotNode = getTrustSlotNode;
-
-	var _env = __webpack_require__(81);
-
-	var _lang = __webpack_require__(80);
-
-	var _domScrollIntoView = __webpack_require__(83);
-
-	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function setClass(el, cls) {
-	  /* istanbul ignore if */
-	  if (_env.isIE9 && el.hasOwnProperty('className')) {
-	    el.className = cls;
-	  } else {
-	    el.setAttribute('class', cls);
-	  }
-	}
-
-	function addClass(el, cls) {
-	  if (el.classList) {
-	    var clsArr = cls.split(' ');
-	    clsArr.map(function (cl) {
-	      return el.classList.add(cl);
-	    });
-	  } else {
-	    var cur = ' ' + (el.getAttribute('class') || '') + ' ';
-	    if (cur.indexOf(' ' + cls + ' ') < 0) {
-	      setClass(el, (cur + cls).trim());
-	    }
-	  }
-	}
-
-	function removeClass(el, cls) {
-	  if (el.classList) {
-	    el.classList.remove(cls);
-	  } else {
-	    var cur = ' ' + (el.getAttribute('class') || '') + ' ';
-	    var tar = ' ' + cls + ' ';
-	    while (cur.indexOf(tar) >= 0) {
-	      cur = cur.replace(tar, ' ');
-	    }
-	    setClass(el, cur.trim());
-	  }
-	  if (!el.className) {
-	    el.removeAttribute('class');
-	  }
-	}
-
-	function addStyle(el, clsObj) {
-	  (0, _keys2.default)(clsObj).forEach(function (name) {
-	    el.style[(0, _lang.camelize)(name)] = clsObj[name];
-	  });
-	}
-
-	/**
-	 * Insert el before target
-	 *
-	 * @param {Element} el
-	 * @param {Element} target
-	 */
-
-	function insertBefore(el, target) {
-	  target.parentNode.insertBefore(el, target);
-	}
-
-	/**
-	 * Insert el after target
-	 *
-	 * @param {Element} el
-	 * @param {Element} target
-	 */
-
-	function insertAfter(el, target) {
-	  if (target.nextSibling) {
-	    insertBefore(el, target.nextSibling);
-	  } else {
-	    target.parentNode.appendChild(el);
-	  }
-	}
-
-	function contains(root, node) {
-	  while (node) {
-	    if (node === root) {
-	      return true;
-	    }
-	    node = node.parentNode;
-	  }
-	  return false;
-	}
-
-	function getTrustSlotNode(node) {
-	  var childNode = node.nextSibling;
-	  if (childNode.nodeType !== 1) {
-	    return getTrustSlotNode(childNode);
-	  }
-	  return childNode;
-	}
-
-	var scrollIntoView = exports.scrollIntoView = _domScrollIntoView2.default;
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(84);
-
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var util = __webpack_require__(85);
-
-	function scrollIntoView(elem, container, config) {
-	  config = config || {};
-	  // document 归一化到 window
-	  if (container.nodeType === 9) {
-	    container = util.getWindow(container);
-	  }
-
-	  var allowHorizontalScroll = config.allowHorizontalScroll;
-	  var onlyScrollIfNeeded = config.onlyScrollIfNeeded;
-	  var alignWithTop = config.alignWithTop;
-	  var alignWithLeft = config.alignWithLeft;
-	  var offsetTop = config.offsetTop || 0;
-	  var offsetLeft = config.offsetLeft || 0;
-	  var offsetBottom = config.offsetBottom || 0;
-	  var offsetRight = config.offsetRight || 0;
-
-	  allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
-
-	  var isWin = util.isWindow(container);
-	  var elemOffset = util.offset(elem);
-	  var eh = util.outerHeight(elem);
-	  var ew = util.outerWidth(elem);
-	  var containerOffset = undefined;
-	  var ch = undefined;
-	  var cw = undefined;
-	  var containerScroll = undefined;
-	  var diffTop = undefined;
-	  var diffBottom = undefined;
-	  var win = undefined;
-	  var winScroll = undefined;
-	  var ww = undefined;
-	  var wh = undefined;
-
-	  if (isWin) {
-	    win = container;
-	    wh = util.height(win);
-	    ww = util.width(win);
-	    winScroll = {
-	      left: util.scrollLeft(win),
-	      top: util.scrollTop(win)
-	    };
-	    // elem 相对 container 可视视窗的距离
-	    diffTop = {
-	      left: elemOffset.left - winScroll.left - offsetLeft,
-	      top: elemOffset.top - winScroll.top - offsetTop
-	    };
-	    diffBottom = {
-	      left: elemOffset.left + ew - (winScroll.left + ww) + offsetRight,
-	      top: elemOffset.top + eh - (winScroll.top + wh) + offsetBottom
-	    };
-	    containerScroll = winScroll;
-	  } else {
-	    containerOffset = util.offset(container);
-	    ch = container.clientHeight;
-	    cw = container.clientWidth;
-	    containerScroll = {
-	      left: container.scrollLeft,
-	      top: container.scrollTop
-	    };
-	    // elem 相对 container 可视视窗的距离
-	    // 注意边框, offset 是边框到根节点
-	    diffTop = {
-	      left: elemOffset.left - (containerOffset.left + (parseFloat(util.css(container, 'borderLeftWidth')) || 0)) - offsetLeft,
-	      top: elemOffset.top - (containerOffset.top + (parseFloat(util.css(container, 'borderTopWidth')) || 0)) - offsetTop
-	    };
-	    diffBottom = {
-	      left: elemOffset.left + ew - (containerOffset.left + cw + (parseFloat(util.css(container, 'borderRightWidth')) || 0)) + offsetRight,
-	      top: elemOffset.top + eh - (containerOffset.top + ch + (parseFloat(util.css(container, 'borderBottomWidth')) || 0)) + offsetBottom
-	    };
-	  }
-
-	  if (diffTop.top < 0 || diffBottom.top > 0) {
-	    // 强制向上
-	    if (alignWithTop === true) {
-	      util.scrollTop(container, containerScroll.top + diffTop.top);
-	    } else if (alignWithTop === false) {
-	      util.scrollTop(container, containerScroll.top + diffBottom.top);
-	    } else {
-	      // 自动调整
-	      if (diffTop.top < 0) {
-	        util.scrollTop(container, containerScroll.top + diffTop.top);
-	      } else {
-	        util.scrollTop(container, containerScroll.top + diffBottom.top);
-	      }
-	    }
-	  } else {
-	    if (!onlyScrollIfNeeded) {
-	      alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
-	      if (alignWithTop) {
-	        util.scrollTop(container, containerScroll.top + diffTop.top);
-	      } else {
-	        util.scrollTop(container, containerScroll.top + diffBottom.top);
-	      }
-	    }
-	  }
-
-	  if (allowHorizontalScroll) {
-	    if (diffTop.left < 0 || diffBottom.left > 0) {
-	      // 强制向上
-	      if (alignWithLeft === true) {
-	        util.scrollLeft(container, containerScroll.left + diffTop.left);
-	      } else if (alignWithLeft === false) {
-	        util.scrollLeft(container, containerScroll.left + diffBottom.left);
-	      } else {
-	        // 自动调整
-	        if (diffTop.left < 0) {
-	          util.scrollLeft(container, containerScroll.left + diffTop.left);
-	        } else {
-	          util.scrollLeft(container, containerScroll.left + diffBottom.left);
-	        }
-	      }
-	    } else {
-	      if (!onlyScrollIfNeeded) {
-	        alignWithLeft = alignWithLeft === undefined ? true : !!alignWithLeft;
-	        if (alignWithLeft) {
-	          util.scrollLeft(container, containerScroll.left + diffTop.left);
-	        } else {
-	          util.scrollLeft(container, containerScroll.left + diffBottom.left);
-	        }
-	      }
-	    }
-	  }
-	}
-
-	module.exports = scrollIntoView;
-
-/***/ },
-/* 85 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
-
-	function getClientPosition(elem) {
-	  var box = undefined;
-	  var x = undefined;
-	  var y = undefined;
-	  var doc = elem.ownerDocument;
-	  var body = doc.body;
-	  var docElem = doc && doc.documentElement;
-	  // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-	  box = elem.getBoundingClientRect();
-
-	  // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-	  // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-	  // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
-
-	  x = box.left;
-	  y = box.top;
-
-	  // In IE, most of the time, 2 extra pixels are added to the top and left
-	  // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
-	  // IE6 standards mode, this border can be overridden by setting the
-	  // document element's border to zero -- thus, we cannot rely on the
-	  // offset always being 2 pixels.
-
-	  // In quirks mode, the offset can be determined by querying the body's
-	  // clientLeft/clientTop, but in standards mode, it is found by querying
-	  // the document element's clientLeft/clientTop.  Since we already called
-	  // getClientBoundingRect we have already forced a reflow, so it is not
-	  // too expensive just to query them all.
-
-	  // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
-	  // 窗口边框标准是设 documentElement ,quirks 时设置 body
-	  // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
-	  // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
-	  // 标准 ie 下 docElem.clientTop 就是 border-top
-	  // ie7 html 即窗口边框改变不了。永远为 2
-	  // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-
-	  x -= docElem.clientLeft || body.clientLeft || 0;
-	  y -= docElem.clientTop || body.clientTop || 0;
-
-	  return {
-	    left: x,
-	    top: y
-	  };
-	}
-
-	function getScroll(w, top) {
-	  var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
-	  var method = 'scroll' + (top ? 'Top' : 'Left');
-	  if (typeof ret !== 'number') {
-	    var d = w.document;
-	    // ie6,7,8 standard mode
-	    ret = d.documentElement[method];
-	    if (typeof ret !== 'number') {
-	      // quirks mode
-	      ret = d.body[method];
-	    }
-	  }
-	  return ret;
-	}
-
-	function getScrollLeft(w) {
-	  return getScroll(w);
-	}
-
-	function getScrollTop(w) {
-	  return getScroll(w, true);
-	}
-
-	function getOffset(el) {
-	  var pos = getClientPosition(el);
-	  var doc = el.ownerDocument;
-	  var w = doc.defaultView || doc.parentWindow;
-	  pos.left += getScrollLeft(w);
-	  pos.top += getScrollTop(w);
-	  return pos;
-	}
-	function _getComputedStyle(elem, name, computedStyle_) {
-	  var val = '';
-	  var d = elem.ownerDocument;
-	  var computedStyle = computedStyle_ || d.defaultView.getComputedStyle(elem, null);
-
-	  // https://github.com/kissyteam/kissy/issues/61
-	  if (computedStyle) {
-	    val = computedStyle.getPropertyValue(name) || computedStyle[name];
-	  }
-
-	  return val;
-	}
-
-	var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
-	var RE_POS = /^(top|right|bottom|left)$/;
-	var CURRENT_STYLE = 'currentStyle';
-	var RUNTIME_STYLE = 'runtimeStyle';
-	var LEFT = 'left';
-	var PX = 'px';
-
-	function _getComputedStyleIE(elem, name) {
-	  // currentStyle maybe null
-	  // http://msdn.microsoft.com/en-us/library/ms535231.aspx
-	  var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
-
-	  // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-	  // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
-	  // 在 ie 下不对，需要直接用 offset 方式
-	  // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-
-	  // From the awesome hack by Dean Edwards
-	  // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
-	  // If we're not dealing with a regular pixel number
-	  // but a number that has a weird ending, we need to convert it to pixels
-	  // exclude left right for relativity
-	  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
-	    // Remember the original values
-	    var style = elem.style;
-	    var left = style[LEFT];
-	    var rsLeft = elem[RUNTIME_STYLE][LEFT];
-
-	    // prevent flashing of content
-	    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-
-	    // Put in the new values to get a computed value out
-	    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
-	    ret = style.pixelLeft + PX;
-
-	    // Revert the changed values
-	    style[LEFT] = left;
-
-	    elem[RUNTIME_STYLE][LEFT] = rsLeft;
-	  }
-	  return ret === '' ? 'auto' : ret;
-	}
-
-	var getComputedStyleX = undefined;
-	if (typeof window !== 'undefined') {
-	  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
-	}
-
-	function each(arr, fn) {
-	  for (var i = 0; i < arr.length; i++) {
-	    fn(arr[i]);
-	  }
-	}
-
-	function isBorderBoxFn(elem) {
-	  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
-	}
-
-	var BOX_MODELS = ['margin', 'border', 'padding'];
-	var CONTENT_INDEX = -1;
-	var PADDING_INDEX = 2;
-	var BORDER_INDEX = 1;
-	var MARGIN_INDEX = 0;
-
-	function swap(elem, options, callback) {
-	  var old = {};
-	  var style = elem.style;
-	  var name = undefined;
-
-	  // Remember the old values, and insert the new ones
-	  for (name in options) {
-	    if (options.hasOwnProperty(name)) {
-	      old[name] = style[name];
-	      style[name] = options[name];
-	    }
-	  }
-
-	  callback.call(elem);
-
-	  // Revert the old values
-	  for (name in options) {
-	    if (options.hasOwnProperty(name)) {
-	      style[name] = old[name];
-	    }
-	  }
-	}
-
-	function getPBMWidth(elem, props, which) {
-	  var value = 0;
-	  var prop = undefined;
-	  var j = undefined;
-	  var i = undefined;
-	  for (j = 0; j < props.length; j++) {
-	    prop = props[j];
-	    if (prop) {
-	      for (i = 0; i < which.length; i++) {
-	        var cssProp = undefined;
-	        if (prop === 'border') {
-	          cssProp = prop + which[i] + 'Width';
-	        } else {
-	          cssProp = prop + which[i];
-	        }
-	        value += parseFloat(getComputedStyleX(elem, cssProp)) || 0;
-	      }
-	    }
-	  }
-	  return value;
-	}
-
-	/**
-	 * A crude way of determining if an object is a window
-	 * @member util
-	 */
-	function isWindow(obj) {
-	  // must use == for ie8
-	  /* eslint eqeqeq:0 */
-	  return obj != null && obj == obj.window;
-	}
-
-	var domUtils = {};
-
-	each(['Width', 'Height'], function (name) {
-	  domUtils['doc' + name] = function (refWin) {
-	    var d = refWin.document;
-	    return Math.max(
-	    // firefox chrome documentElement.scrollHeight< body.scrollHeight
-	    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
-	    d.documentElement['scroll' + name],
-	    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
-	    d.body['scroll' + name], domUtils['viewport' + name](d));
-	  };
-
-	  domUtils['viewport' + name] = function (win) {
-	    // pc browser includes scrollbar in window.innerWidth
-	    var prop = 'client' + name;
-	    var doc = win.document;
-	    var body = doc.body;
-	    var documentElement = doc.documentElement;
-	    var documentElementProp = documentElement[prop];
-	    // 标准模式取 documentElement
-	    // backcompat 取 body
-	    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
-	  };
-	});
-
-	/*
-	 得到元素的大小信息
-	 @param elem
-	 @param name
-	 @param {String} [extra]  'padding' : (css width) + padding
-	 'border' : (css width) + padding + border
-	 'margin' : (css width) + padding + border + margin
-	 */
-	function getWH(elem, name, extra) {
-	  if (isWindow(elem)) {
-	    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
-	  } else if (elem.nodeType === 9) {
-	    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
-	  }
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-	  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
-	  var computedStyle = getComputedStyleX(elem);
-	  var isBorderBox = isBorderBoxFn(elem, computedStyle);
-	  var cssBoxValue = 0;
-	  if (borderBoxValue == null || borderBoxValue <= 0) {
-	    borderBoxValue = undefined;
-	    // Fall back to computed then un computed css if necessary
-	    cssBoxValue = getComputedStyleX(elem, name);
-	    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
-	      cssBoxValue = elem.style[name] || 0;
-	    }
-	    // Normalize '', auto, and prepare for extra
-	    cssBoxValue = parseFloat(cssBoxValue) || 0;
-	  }
-	  if (extra === undefined) {
-	    extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
-	  }
-	  var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
-	  var val = borderBoxValue || cssBoxValue;
-	  if (extra === CONTENT_INDEX) {
-	    if (borderBoxValueOrIsBorderBox) {
-	      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
-	    }
-	    return cssBoxValue;
-	  }
-	  if (borderBoxValueOrIsBorderBox) {
-	    var padding = extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle);
-	    return val + (extra === BORDER_INDEX ? 0 : padding);
-	  }
-	  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
-	}
-
-	var cssShow = {
-	  position: 'absolute',
-	  visibility: 'hidden',
-	  display: 'block'
-	};
-
-	// fix #119 : https://github.com/kissyteam/kissy/issues/119
-	function getWHIgnoreDisplay(elem) {
-	  var val = undefined;
-	  var args = arguments;
-	  // in case elem is window
-	  // elem.offsetWidth === undefined
-	  if (elem.offsetWidth !== 0) {
-	    val = getWH.apply(undefined, args);
-	  } else {
-	    swap(elem, cssShow, function () {
-	      val = getWH.apply(undefined, args);
-	    });
-	  }
-	  return val;
-	}
-
-	function css(el, name, v) {
-	  var value = v;
-	  if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
-	    for (var i in name) {
-	      if (name.hasOwnProperty(i)) {
-	        css(el, i, name[i]);
-	      }
-	    }
-	    return undefined;
-	  }
-	  if (typeof value !== 'undefined') {
-	    if (typeof value === 'number') {
-	      value += 'px';
-	    }
-	    el.style[name] = value;
-	    return undefined;
-	  }
-	  return getComputedStyleX(el, name);
-	}
-
-	each(['width', 'height'], function (name) {
-	  var first = name.charAt(0).toUpperCase() + name.slice(1);
-	  domUtils['outer' + first] = function (el, includeMargin) {
-	    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
-	  };
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-
-	  domUtils[name] = function (elem, val) {
-	    if (val !== undefined) {
-	      if (elem) {
-	        var computedStyle = getComputedStyleX(elem);
-	        var isBorderBox = isBorderBoxFn(elem);
-	        if (isBorderBox) {
-	          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
-	        }
-	        return css(elem, name, val);
-	      }
-	      return undefined;
-	    }
-	    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
-	  };
-	});
-
-	// 设置 elem 相对 elem.ownerDocument 的坐标
-	function setOffset(elem, offset) {
-	  // set position first, in-case top/left are set even on static elem
-	  if (css(elem, 'position') === 'static') {
-	    elem.style.position = 'relative';
-	  }
-
-	  var old = getOffset(elem);
-	  var ret = {};
-	  var current = undefined;
-	  var key = undefined;
-
-	  for (key in offset) {
-	    if (offset.hasOwnProperty(key)) {
-	      current = parseFloat(css(elem, key)) || 0;
-	      ret[key] = current + offset[key] - old[key];
-	    }
-	  }
-	  css(elem, ret);
-	}
-
-	module.exports = _extends({
-	  getWindow: function getWindow(node) {
-	    var doc = node.ownerDocument || node;
-	    return doc.defaultView || doc.parentWindow;
-	  },
-	  offset: function offset(el, value) {
-	    if (typeof value !== 'undefined') {
-	      setOffset(el, value);
-	    } else {
-	      return getOffset(el);
-	    }
-	  },
-
-	  isWindow: isWindow,
-	  each: each,
-	  css: css,
-	  clone: function clone(obj) {
-	    var ret = {};
-	    for (var i in obj) {
-	      if (obj.hasOwnProperty(i)) {
-	        ret[i] = obj[i];
-	      }
-	    }
-	    var overflow = obj.overflow;
-	    if (overflow) {
-	      for (var i in obj) {
-	        if (obj.hasOwnProperty(i)) {
-	          ret.overflow[i] = obj.overflow[i];
-	        }
-	      }
-	    }
-	    return ret;
-	  },
-	  scrollLeft: function scrollLeft(w, v) {
-	    if (isWindow(w)) {
-	      if (v === undefined) {
-	        return getScrollLeft(w);
-	      }
-	      window.scrollTo(v, getScrollTop(w));
-	    } else {
-	      if (v === undefined) {
-	        return w.scrollLeft;
-	      }
-	      w.scrollLeft = v;
-	    }
-	  },
-	  scrollTop: function scrollTop(w, v) {
-	    if (isWindow(w)) {
-	      if (v === undefined) {
-	        return getScrollTop(w);
-	      }
-	      window.scrollTo(getScrollLeft(w), v);
-	    } else {
-	      if (v === undefined) {
-	        return w.scrollTop;
-	      }
-	      w.scrollTop = v;
-	    }
-	  },
-
-	  viewportWidth: 0,
-	  viewportHeight: 0
-	}, domUtils);
-
-/***/ },
-/* 86 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.defaultProps = defaultProps;
-	exports.oneOfType = oneOfType;
-	exports.oneOf = oneOf;
-	var toString = Object.prototype.toString;
-
-	// 返回vue匹配的props的对象
-	function defaultProps(props) {
-	  for (var i in props) {
-	    if (props.hasOwnProperty(i)) {
-	      var _ret = function () {
-	        var defaultValue = props[i];
-
-	        // 支持String， Number等类型
-	        if (defaultValue && defaultValue.name && window[defaultValue.name] === defaultValue) {
-	          props[i] = {
-	            type: defaultValue,
-	            default: null
-	          };
-
-	          return 'continue';
-	        }
-
-	        var type = toString.call(defaultValue).replace('[object ', '').replace(']', '');
-
-	        // 如果传进来的是vue的原生props对象的话
-	        if (type === 'Object') {
-	          if (defaultValue.type != null || defaultValue.default != null || defaultValue.validator != null || defaultValue.twoWay != null || defaultValue.required != null) {
-	            return 'continue';
-	          }
-	        }
-
-	        // 支持 Object和Array的简洁声明方式
-	        // Todo: 目前看来这样并没有什么卵用
-	        if (type === 'Array' || type === 'Object') {
-	          props[i] = {
-	            type: window[type],
-	            default: function _default() {
-	              return defaultValue;
-	            }
-	          };
-	          return 'continue';
-	        }
-
-	        props[i] = {
-	          type: window[type],
-	          default: defaultValue
-	        };
-	      }();
-
-	      if (_ret === 'continue') continue;
-	    }
-	  }
-
-	  return props;
-	}
-
-	function oneOfType(validList, defaultValue) {
-	  var validaObj = {};
-
-	  validaObj.default = defaultValue;
-	  validaObj.validator = function (value) {
-	    if (value == null) return true;
-
-	    for (var j = 0; j < validList.length; j++) {
-	      var currentValid = validList[j];
-	      var validName = void 0;
-	      if (typeof currentValid === 'string') {
-	        validName = currentValid;
-	      } else {
-	        validName = currentValid.name;
-	      }
-	      if (toString.call(value).indexOf(validName) > -1) {
-	        return true;
-	      }
-	    }
-	    return false;
-	  };
-
-	  return validaObj;
-	}
-
-	function oneOf(validList, defaultValue) {
-	  var validaObj = {};
-
-	  validaObj.default = defaultValue;
-	  validaObj.validator = function (value) {
-	    if (value == null) return true;
-
-	    for (var j = 0; j < validList.length; j++) {
-	      if (value === validList[j]) {
-	        return true;
-	      }
-	    }
-	    return false;
-	  };
-
-	  return validaObj;
-	}
-
-	var any = exports.any = {
-	  validator: function validator(value) {
-	    return true;
-	  }
-	};
-
-/***/ },
-/* 87 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.addEventListener = addEventListener;
-	exports.addEndEventListener = addEndEventListener;
-	exports.removeEndEventListener = removeEndEventListener;
-	/**
-	 * EVENT_NAME_MAP is used to determine which event fired when a
-	 * transition/animation ends, based on the style property used to
-	 * define that event.
-	 */
-	var EVENT_NAME_MAP = {
-	  transitionend: {
-	    transition: 'transitionend',
-	    WebkitTransition: 'webkitTransitionEnd',
-	    MozTransition: 'mozTransitionEnd',
-	    OTransition: 'oTransitionEnd',
-	    msTransition: 'MSTransitionEnd'
-	  },
-
-	  animationend: {
-	    animation: 'animationend',
-	    WebkitAnimation: 'webkitAnimationEnd',
-	    MozAnimation: 'mozAnimationEnd',
-	    OAnimation: 'oAnimationEnd',
-	    msAnimation: 'MSAnimationEnd'
-	  }
-	};
-
-	var endEvents = [];
-
-	var detectEvents = function detectEvents() {
-	  var testEl = document.createElement('div');
-	  var style = testEl.style;
-
-	  // On some platforms, in particular some releases of Android 4.x,
-	  // the un-prefixed "animation" and "transition" properties are defined on the
-	  // style object but the events that fire will still be prefixed, so we need
-	  // to check if the un-prefixed events are useable, and if not remove them
-	  // from the map
-	  if (!('AnimationEvent' in window)) {
-	    delete EVENT_NAME_MAP.animationend.animation;
-	  }
-
-	  if (!('TransitionEvent' in window)) {
-	    delete EVENT_NAME_MAP.transitionend.transition;
-	  }
-
-	  for (var baseEventName in EVENT_NAME_MAP) {
-	    var baseEvents = EVENT_NAME_MAP[baseEventName];
-	    for (var styleName in baseEvents) {
-	      if (styleName in style) {
-	        endEvents.push(baseEvents[styleName]);
-	        break;
-	      }
-	    }
-	  }
-	};
-
-	if (typeof window !== 'undefined') {
-	  detectEvents();
-	}
-
-	// We use the raw {add|remove}EventListener() call because EventListener
-	// does not know how to remove event listeners and we really should
-	// clean up. Also, these events are not triggered in older browsers
-	// so we should be A-OK here.
-	function addEventListener(target, eventName, eventListener) {
-	  if (target.addEventListener) {
-	    target.addEventListener(eventName, eventListener, false);
-	    return {
-	      remove: function remove() {
-	        target.removeEventListener(eventName, eventListener, false);
-	      }
-	    };
-	  } else if (target.attachEvent) {
-	    target.attachEvent('on' + eventName, eventListener);
-	    return {
-	      remove: function remove() {
-	        target.detachEvent('on' + eventName, eventListener);
-	      }
-	    };
-	  }
-	}
-
-	var removeEventListener = function removeEventListener(node, eventName, eventListener) {
-	  node.removeEventListener(eventName, eventListener, false);
-	};
-
-	function addEndEventListener(node, eventListener) {
-	  if (endEvents.length === 0) {
-	    // If CSS transitions are not supported, trigger an "end animation"
-	    // event immediately.
-	    window.setTimeout(eventListener, 0);
-	    return;
-	  }
-	  endEvents.forEach(function (endEvent) {
-	    addEventListener(node, endEvent, eventListener);
-	  });
-	}
-
-	function removeEndEventListener(node, eventListener) {
-	  if (endEvents.length === 0) {
-	    return;
-	  }
-	  endEvents.forEach(function (endEvent) {
-	    removeEventListener(node, endEvent, eventListener);
-	  });
-	}
-
-/***/ },
-/* 88 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.guid = guid;
-	var seed = 0;
-
-	function guid() {
-	  return Date.now() + '_' + seed++;
-	}
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 90 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * @ignore
-	 * some key-codes definition and utils from closure-library
-	 * @author yiminghe@gmail.com
-	 */
-
-	var KeyCode = {
-	  /**
-	   * MAC_ENTER
-	   */
-	  MAC_ENTER: 3,
-	  /**
-	   * BACKSPACE
-	   */
-	  BACKSPACE: 8,
-	  /**
-	   * TAB
-	   */
-	  TAB: 9,
-	  /**
-	   * NUMLOCK on FF/Safari Mac
-	   */
-	  NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
-	  /**
-	   * ENTER
-	   */
-	  ENTER: 13,
-	  /**
-	   * SHIFT
-	   */
-	  SHIFT: 16,
-	  /**
-	   * CTRL
-	   */
-	  CTRL: 17,
-	  /**
-	   * ALT
-	   */
-	  ALT: 18,
-	  /**
-	   * PAUSE
-	   */
-	  PAUSE: 19,
-	  /**
-	   * CAPS_LOCK
-	   */
-	  CAPS_LOCK: 20,
-	  /**
-	   * ESC
-	   */
-	  ESC: 27,
-	  /**
-	   * SPACE
-	   */
-	  SPACE: 32,
-	  /**
-	   * PAGE_UP
-	   */
-	  PAGE_UP: 33, // also NUM_NORTH_EAST
-	  /**
-	   * PAGE_DOWN
-	   */
-	  PAGE_DOWN: 34, // also NUM_SOUTH_EAST
-	  /**
-	   * END
-	   */
-	  END: 35, // also NUM_SOUTH_WEST
-	  /**
-	   * HOME
-	   */
-	  HOME: 36, // also NUM_NORTH_WEST
-	  /**
-	   * LEFT
-	   */
-	  LEFT: 37, // also NUM_WEST
-	  /**
-	   * UP
-	   */
-	  UP: 38, // also NUM_NORTH
-	  /**
-	   * RIGHT
-	   */
-	  RIGHT: 39, // also NUM_EAST
-	  /**
-	   * DOWN
-	   */
-	  DOWN: 40, // also NUM_SOUTH
-	  /**
-	   * PRINT_SCREEN
-	   */
-	  PRINT_SCREEN: 44,
-	  /**
-	   * INSERT
-	   */
-	  INSERT: 45, // also NUM_INSERT
-	  /**
-	   * DELETE
-	   */
-	  DELETE: 46, // also NUM_DELETE
-	  /**
-	   * ZERO
-	   */
-	  ZERO: 48,
-	  /**
-	   * ONE
-	   */
-	  ONE: 49,
-	  /**
-	   * TWO
-	   */
-	  TWO: 50,
-	  /**
-	   * THREE
-	   */
-	  THREE: 51,
-	  /**
-	   * FOUR
-	   */
-	  FOUR: 52,
-	  /**
-	   * FIVE
-	   */
-	  FIVE: 53,
-	  /**
-	   * SIX
-	   */
-	  SIX: 54,
-	  /**
-	   * SEVEN
-	   */
-	  SEVEN: 55,
-	  /**
-	   * EIGHT
-	   */
-	  EIGHT: 56,
-	  /**
-	   * NINE
-	   */
-	  NINE: 57,
-	  /**
-	   * QUESTION_MARK
-	   */
-	  QUESTION_MARK: 63, // needs localization
-	  /**
-	   * A
-	   */
-	  A: 65,
-	  /**
-	   * B
-	   */
-	  B: 66,
-	  /**
-	   * C
-	   */
-	  C: 67,
-	  /**
-	   * D
-	   */
-	  D: 68,
-	  /**
-	   * E
-	   */
-	  E: 69,
-	  /**
-	   * F
-	   */
-	  F: 70,
-	  /**
-	   * G
-	   */
-	  G: 71,
-	  /**
-	   * H
-	   */
-	  H: 72,
-	  /**
-	   * I
-	   */
-	  I: 73,
-	  /**
-	   * J
-	   */
-	  J: 74,
-	  /**
-	   * K
-	   */
-	  K: 75,
-	  /**
-	   * L
-	   */
-	  L: 76,
-	  /**
-	   * M
-	   */
-	  M: 77,
-	  /**
-	   * N
-	   */
-	  N: 78,
-	  /**
-	   * O
-	   */
-	  O: 79,
-	  /**
-	   * P
-	   */
-	  P: 80,
-	  /**
-	   * Q
-	   */
-	  Q: 81,
-	  /**
-	   * R
-	   */
-	  R: 82,
-	  /**
-	   * S
-	   */
-	  S: 83,
-	  /**
-	   * T
-	   */
-	  T: 84,
-	  /**
-	   * U
-	   */
-	  U: 85,
-	  /**
-	   * V
-	   */
-	  V: 86,
-	  /**
-	   * W
-	   */
-	  W: 87,
-	  /**
-	   * X
-	   */
-	  X: 88,
-	  /**
-	   * Y
-	   */
-	  Y: 89,
-	  /**
-	   * Z
-	   */
-	  Z: 90,
-	  /**
-	   * META
-	   */
-	  META: 91, // WIN_KEY_LEFT
-	  /**
-	   * WIN_KEY_RIGHT
-	   */
-	  WIN_KEY_RIGHT: 92,
-	  /**
-	   * CONTEXT_MENU
-	   */
-	  CONTEXT_MENU: 93,
-	  /**
-	   * NUM_ZERO
-	   */
-	  NUM_ZERO: 96,
-	  /**
-	   * NUM_ONE
-	   */
-	  NUM_ONE: 97,
-	  /**
-	   * NUM_TWO
-	   */
-	  NUM_TWO: 98,
-	  /**
-	   * NUM_THREE
-	   */
-	  NUM_THREE: 99,
-	  /**
-	   * NUM_FOUR
-	   */
-	  NUM_FOUR: 100,
-	  /**
-	   * NUM_FIVE
-	   */
-	  NUM_FIVE: 101,
-	  /**
-	   * NUM_SIX
-	   */
-	  NUM_SIX: 102,
-	  /**
-	   * NUM_SEVEN
-	   */
-	  NUM_SEVEN: 103,
-	  /**
-	   * NUM_EIGHT
-	   */
-	  NUM_EIGHT: 104,
-	  /**
-	   * NUM_NINE
-	   */
-	  NUM_NINE: 105,
-	  /**
-	   * NUM_MULTIPLY
-	   */
-	  NUM_MULTIPLY: 106,
-	  /**
-	   * NUM_PLUS
-	   */
-	  NUM_PLUS: 107,
-	  /**
-	   * NUM_MINUS
-	   */
-	  NUM_MINUS: 109,
-	  /**
-	   * NUM_PERIOD
-	   */
-	  NUM_PERIOD: 110,
-	  /**
-	   * NUM_DIVISION
-	   */
-	  NUM_DIVISION: 111,
-	  /**
-	   * F1
-	   */
-	  F1: 112,
-	  /**
-	   * F2
-	   */
-	  F2: 113,
-	  /**
-	   * F3
-	   */
-	  F3: 114,
-	  /**
-	   * F4
-	   */
-	  F4: 115,
-	  /**
-	   * F5
-	   */
-	  F5: 116,
-	  /**
-	   * F6
-	   */
-	  F6: 117,
-	  /**
-	   * F7
-	   */
-	  F7: 118,
-	  /**
-	   * F8
-	   */
-	  F8: 119,
-	  /**
-	   * F9
-	   */
-	  F9: 120,
-	  /**
-	   * F10
-	   */
-	  F10: 121,
-	  /**
-	   * F11
-	   */
-	  F11: 122,
-	  /**
-	   * F12
-	   */
-	  F12: 123,
-	  /**
-	   * NUMLOCK
-	   */
-	  NUMLOCK: 144,
-	  /**
-	   * SEMICOLON
-	   */
-	  SEMICOLON: 186, // needs localization
-	  /**
-	   * DASH
-	   */
-	  DASH: 189, // needs localization
-	  /**
-	   * EQUALS
-	   */
-	  EQUALS: 187, // needs localization
-	  /**
-	   * COMMA
-	   */
-	  COMMA: 188, // needs localization
-	  /**
-	   * PERIOD
-	   */
-	  PERIOD: 190, // needs localization
-	  /**
-	   * SLASH
-	   */
-	  SLASH: 191, // needs localization
-	  /**
-	   * APOSTROPHE
-	   */
-	  APOSTROPHE: 192, // needs localization
-	  /**
-	   * SINGLE_QUOTE
-	   */
-	  SINGLE_QUOTE: 222, // needs localization
-	  /**
-	   * OPEN_SQUARE_BRACKET
-	   */
-	  OPEN_SQUARE_BRACKET: 219, // needs localization
-	  /**
-	   * BACKSLASH
-	   */
-	  BACKSLASH: 220, // needs localization
-	  /**
-	   * CLOSE_SQUARE_BRACKET
-	   */
-	  CLOSE_SQUARE_BRACKET: 221, // needs localization
-	  /**
-	   * WIN_KEY
-	   */
-	  WIN_KEY: 224,
-	  /**
-	   * MAC_FF_META
-	   */
-	  MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
-	  /**
-	   * WIN_IME
-	   */
-	  WIN_IME: 229
-	};
-
-	/*
-	 whether text and modified key is entered at the same time.
-	 */
-	KeyCode.isTextModifyingKeyEvent = function (e) {
-	  var keyCode = e.keyCode;
-	  if (e.altKey && !e.ctrlKey || e.metaKey ||
-	  // Function keys don't generate text
-	  keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
-	    return false;
-	  }
-
-	  // The following keys are quite harmless, even in combination with
-	  // CTRL, ALT or SHIFT.
-	  switch (keyCode) {
-	    case KeyCode.ALT:
-	    case KeyCode.CAPS_LOCK:
-	    case KeyCode.CONTEXT_MENU:
-	    case KeyCode.CTRL:
-	    case KeyCode.DOWN:
-	    case KeyCode.END:
-	    case KeyCode.ESC:
-	    case KeyCode.HOME:
-	    case KeyCode.INSERT:
-	    case KeyCode.LEFT:
-	    case KeyCode.MAC_FF_META:
-	    case KeyCode.META:
-	    case KeyCode.NUMLOCK:
-	    case KeyCode.NUM_CENTER:
-	    case KeyCode.PAGE_DOWN:
-	    case KeyCode.PAGE_UP:
-	    case KeyCode.PAUSE:
-	    case KeyCode.PRINT_SCREEN:
-	    case KeyCode.RIGHT:
-	    case KeyCode.SHIFT:
-	    case KeyCode.UP:
-	    case KeyCode.WIN_KEY:
-	    case KeyCode.WIN_KEY_RIGHT:
-	      return false;
-	    default:
-	      return true;
-	  }
-	};
-
-	/*
-	 whether character is entered.
-	 */
-	KeyCode.isCharacterKey = function (keyCode) {
-	  if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
-	    return true;
-	  }
-
-	  if (keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY) {
-	    return true;
-	  }
-
-	  if (keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
-	    return true;
-	  }
-
-	  // Safari sends zero key code for non-latin characters.
-	  if (window.navigation.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
-	    return true;
-	  }
-
-	  switch (keyCode) {
-	    case KeyCode.SPACE:
-	    case KeyCode.QUESTION_MARK:
-	    case KeyCode.NUM_PLUS:
-	    case KeyCode.NUM_MINUS:
-	    case KeyCode.NUM_PERIOD:
-	    case KeyCode.NUM_DIVISION:
-	    case KeyCode.SEMICOLON:
-	    case KeyCode.DASH:
-	    case KeyCode.EQUALS:
-	    case KeyCode.COMMA:
-	    case KeyCode.PERIOD:
-	    case KeyCode.SLASH:
-	    case KeyCode.APOSTROPHE:
-	    case KeyCode.SINGLE_QUOTE:
-	    case KeyCode.OPEN_SQUARE_BRACKET:
-	    case KeyCode.BACKSLASH:
-	    case KeyCode.CLOSE_SQUARE_BRACKET:
-	      return true;
-	    default:
-	      return false;
-	  }
-	};
-
-	exports.default = KeyCode;
-
-/***/ },
-/* 91 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	function getSlotNode(el) {
-	  if (!el) return null;
-	  if (el.nodeType === 1 && el.getAttribute('slot') === 'trigger') {
-	    return el;
-	  }
-	  return getSlotNode(el.nextSibling);
-	}
-
-	exports.default = {
-	  ready: function ready() {
-	    this._bindTriggerEvent();
-	  },
-
-
-	  methods: {
-	    _getTriggerTarget: function _getTriggerTarget() {
-	      var el = getSlotNode(this.$el);
-
-	      var els = void 0;
-	      if (el.getAttribute('slot') === 'trigger') {
-	        els = [el];
-	      } else {
-	        els = getSlotNode(this.$el).querySelectorAll('[slot="trigger"]');
-	      }
-
-	      var len = els.length;
-	      if (len) {
-	        var currentWrap = els[len - 1];
-	        var children = currentWrap.children;
-	        if (children && children.length === 1) {
-	          return children[children.length - 1];
-	        } else {
-	          return currentWrap;
-	        }
-	      }
-	      return null;
-	    },
-	    _bindTriggerEvent: function _bindTriggerEvent() {
-	      var el = this._getTriggerTarget();
-	      if (el) {
-	        el.addEventListener('blur', this._onBlur.bind(this), false);
-	        el.addEventListener('click', this._onClick.bind(this), false);
-	        el.addEventListener('focus', this._onFocus.bind(this), false);
-	        el.addEventListener('mousedown', this._onMouseDown.bind(this), false);
-	        el.addEventListener('mouseenter', this._onMouseEnter.bind(this), false);
-	        el.addEventListener('mouseleave', this._onMouseLeave.bind(this), false);
-	        el.addEventListener('touchstart', this._onTouchStart.bind(this), false);
-	      }
-	    }
-	  }
-	};
-
-/***/ },
-/* 92 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * align dom node flexibly
-	 * @author yiminghe@gmail.com
-	 */
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(93);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	var _getOffsetParent = __webpack_require__(94);
-
-	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
-
-	var _getVisibleRectForElement = __webpack_require__(95);
-
-	var _getVisibleRectForElement2 = _interopRequireDefault(_getVisibleRectForElement);
-
-	var _adjustForViewport = __webpack_require__(96);
-
-	var _adjustForViewport2 = _interopRequireDefault(_adjustForViewport);
-
-	var _getRegion = __webpack_require__(97);
-
-	var _getRegion2 = _interopRequireDefault(_getRegion);
-
-	var _getElFuturePos = __webpack_require__(98);
-
-	var _getElFuturePos2 = _interopRequireDefault(_getElFuturePos);
-
-	// http://yiminghe.iteye.com/blog/1124720
-
-	function isFailX(elFuturePos, elRegion, visibleRect) {
-	  return elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right;
-	}
-
-	function isFailY(elFuturePos, elRegion, visibleRect) {
-	  return elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom;
-	}
-
-	function isCompleteFailX(elFuturePos, elRegion, visibleRect) {
-	  return elFuturePos.left > visibleRect.right || elFuturePos.left + elRegion.width < visibleRect.left;
-	}
-
-	function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
-	  return elFuturePos.top > visibleRect.bottom || elFuturePos.top + elRegion.height < visibleRect.top;
-	}
-
-	function flip(points, reg, map) {
-	  var ret = [];
-	  _utils2['default'].each(points, function (p) {
-	    ret.push(p.replace(reg, function (m) {
-	      return map[m];
-	    }));
-	  });
-	  return ret;
-	}
-
-	function flipOffset(offset, index) {
-	  offset[index] = -offset[index];
-	  return offset;
-	}
-
-	function convertOffset(str, offsetLen) {
-	  var n = undefined;
-	  if (/%$/.test(str)) {
-	    n = parseInt(str.substring(0, str.length - 1), 10) / 100 * offsetLen;
-	  } else {
-	    n = parseInt(str, 10);
-	  }
-	  return n || 0;
-	}
-
-	function normalizeOffset(offset, el) {
-	  offset[0] = convertOffset(offset[0], el.width);
-	  offset[1] = convertOffset(offset[1], el.height);
-	}
-
-	function domAlign(el, refNode, align) {
-	  var points = align.points;
-	  var offset = align.offset || [0, 0];
-	  var targetOffset = align.targetOffset || [0, 0];
-	  var overflow = align.overflow;
-	  var target = align.target || refNode;
-	  var source = align.source || el;
-	  offset = [].concat(offset);
-	  targetOffset = [].concat(targetOffset);
-	  overflow = overflow || {};
-	  var newOverflowCfg = {};
-
-	  var fail = 0;
-	  // 当前节点可以被放置的显示区域
-	  var visibleRect = (0, _getVisibleRectForElement2['default'])(source);
-	  // 当前节点所占的区域, left/top/width/height
-	  var elRegion = (0, _getRegion2['default'])(source);
-	  // 参照节点所占的区域, left/top/width/height
-	  var refNodeRegion = (0, _getRegion2['default'])(target);
-	  // 将 offset 转换成数值，支持百分比
-	  normalizeOffset(offset, elRegion);
-	  normalizeOffset(targetOffset, refNodeRegion);
-	  // 当前节点将要被放置的位置
-	  var elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
-	  // 当前节点将要所处的区域
-	  var newElRegion = _utils2['default'].merge(elRegion, elFuturePos);
-
-	  // 如果可视区域不能完全放置当前节点时允许调整
-	  if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
-	    if (overflow.adjustX) {
-	      // 如果横向不能放下
-	      if (isFailX(elFuturePos, elRegion, visibleRect)) {
-	        // 对齐位置反下
-	        var newPoints = flip(points, /[lr]/ig, {
-	          l: 'r',
-	          r: 'l'
-	        });
-	        // 偏移量也反下
-	        var newOffset = flipOffset(offset, 0);
-	        var newTargetOffset = flipOffset(targetOffset, 0);
-	        var newElFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset);
-	        if (!isCompleteFailX(newElFuturePos, elRegion, visibleRect)) {
-	          fail = 1;
-	          points = newPoints;
-	          offset = newOffset;
-	          targetOffset = newTargetOffset;
-	        }
-	      }
-	    }
-
-	    if (overflow.adjustY) {
-	      // 如果纵向不能放下
-	      if (isFailY(elFuturePos, elRegion, visibleRect)) {
-	        // 对齐位置反下
-	        var newPoints = flip(points, /[tb]/ig, {
-	          t: 'b',
-	          b: 't'
-	        });
-	        // 偏移量也反下
-	        var newOffset = flipOffset(offset, 1);
-	        var newTargetOffset = flipOffset(targetOffset, 1);
-	        var newElFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset);
-	        if (!isCompleteFailY(newElFuturePos, elRegion, visibleRect)) {
-	          fail = 1;
-	          points = newPoints;
-	          offset = newOffset;
-	          targetOffset = newTargetOffset;
-	        }
-	      }
-	    }
-
-	    // 如果失败，重新计算当前节点将要被放置的位置
-	    if (fail) {
-	      elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
-	      _utils2['default'].mix(newElRegion, elFuturePos);
-	    }
-
-	    // 检查反下后的位置是否可以放下了
-	    // 如果仍然放不下只有指定了可以调整当前方向才调整
-	    newOverflowCfg.adjustX = overflow.adjustX && isFailX(elFuturePos, elRegion, visibleRect);
-
-	    newOverflowCfg.adjustY = overflow.adjustY && isFailY(elFuturePos, elRegion, visibleRect);
-
-	    // 确实要调整，甚至可能会调整高度宽度
-	    if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
-	      newElRegion = (0, _adjustForViewport2['default'])(elFuturePos, elRegion, visibleRect, newOverflowCfg);
-	    }
-	  }
-
-	  // need judge to in case set fixed with in css on height auto element
-	  if (newElRegion.width !== elRegion.width) {
-	    _utils2['default'].css(source, 'width', source.width() + newElRegion.width - elRegion.width);
-	  }
-
-	  if (newElRegion.height !== elRegion.height) {
-	    _utils2['default'].css(source, 'height', source.height() + newElRegion.height - elRegion.height);
-	  }
-
-	  // https://github.com/kissyteam/kissy/issues/190
-	  // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
-	  // 相对于屏幕位置没变，而 left/top 变了
-	  // 例如 <div 'relative'><el absolute></div>
-	  _utils2['default'].offset(source, {
-	    left: newElRegion.left,
-	    top: newElRegion.top
-	  }, {
-	    useCssRight: align.useCssRight,
-	    useCssBottom: align.useCssBottom
-	  });
-
-	  return {
-	    points: points,
-	    offset: offset,
-	    targetOffset: targetOffset,
-	    overflow: newOverflowCfg
-	  };
-	}
-
-	domAlign.__getOffsetParent = _getOffsetParent2['default'];
-
-	domAlign.__getVisibleRectForElement = _getVisibleRectForElement2['default'];
-
-	exports['default'] = domAlign;
-
-	/**
-	 *  2012-04-26 yiminghe@gmail.com
-	 *   - 优化智能对齐算法
-	 *   - 慎用 resizeXX
-	 *
-	 *  2011-07-13 yiminghe@gmail.com note:
-	 *   - 增加智能对齐，以及大小调整选项
-	 **/
-	module.exports = exports['default'];
-
-/***/ },
-/* 93 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
-
-	var getComputedStyleX = undefined;
-
-	function css(el, name, v) {
-	  var value = v;
-	  if (typeof name === 'object') {
-	    for (var i in name) {
-	      if (name.hasOwnProperty(i)) {
-	        css(el, i, name[i]);
-	      }
-	    }
-	    return undefined;
-	  }
-	  if (typeof value !== 'undefined') {
-	    if (typeof value === 'number') {
-	      value = value + 'px';
-	    }
-	    el.style[name] = value;
-	    return undefined;
-	  }
-	  return getComputedStyleX(el, name);
-	}
-
-	function getClientPosition(elem) {
-	  var box = undefined;
-	  var x = undefined;
-	  var y = undefined;
-	  var doc = elem.ownerDocument;
-	  var body = doc.body;
-	  var docElem = doc && doc.documentElement;
-	  // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-	  box = elem.getBoundingClientRect();
-
-	  // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-	  // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-	  // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
-
-	  x = box.left;
-	  y = box.top;
-
-	  // In IE, most of the time, 2 extra pixels are added to the top and left
-	  // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
-	  // IE6 standards mode, this border can be overridden by setting the
-	  // document element's border to zero -- thus, we cannot rely on the
-	  // offset always being 2 pixels.
-
-	  // In quirks mode, the offset can be determined by querying the body's
-	  // clientLeft/clientTop, but in standards mode, it is found by querying
-	  // the document element's clientLeft/clientTop.  Since we already called
-	  // getClientBoundingRect we have already forced a reflow, so it is not
-	  // too expensive just to query them all.
-
-	  // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
-	  // 窗口边框标准是设 documentElement ,quirks 时设置 body
-	  // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
-	  // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
-	  // 标准 ie 下 docElem.clientTop 就是 border-top
-	  // ie7 html 即窗口边框改变不了。永远为 2
-	  // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-
-	  x -= docElem.clientLeft || body.clientLeft || 0;
-	  y -= docElem.clientTop || body.clientTop || 0;
-
-	  return { left: x, top: y };
-	}
-
-	function getScroll(w, top) {
-	  var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
-	  var method = 'scroll' + (top ? 'Top' : 'Left');
-	  if (typeof ret !== 'number') {
-	    var d = w.document;
-	    // ie6,7,8 standard mode
-	    ret = d.documentElement[method];
-	    if (typeof ret !== 'number') {
-	      // quirks mode
-	      ret = d.body[method];
-	    }
-	  }
-	  return ret;
-	}
-
-	function getScrollLeft(w) {
-	  return getScroll(w);
-	}
-
-	function getScrollTop(w) {
-	  return getScroll(w, true);
-	}
-
-	function getOffset(el) {
-	  var pos = getClientPosition(el);
-	  var doc = el.ownerDocument;
-	  var w = doc.defaultView || doc.parentWindow;
-	  pos.left += getScrollLeft(w);
-	  pos.top += getScrollTop(w);
-	  return pos;
-	}
-	function _getComputedStyle(elem, name, cs) {
-	  var computedStyle = cs;
-	  var val = '';
-	  var d = elem.ownerDocument;
-	  computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null);
-
-	  // https://github.com/kissyteam/kissy/issues/61
-	  if (computedStyle) {
-	    val = computedStyle.getPropertyValue(name) || computedStyle[name];
-	  }
-
-	  return val;
-	}
-
-	var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
-	var RE_POS = /^(top|right|bottom|left)$/;
-	var CURRENT_STYLE = 'currentStyle';
-	var RUNTIME_STYLE = 'runtimeStyle';
-	var LEFT = 'left';
-	var PX = 'px';
-
-	function _getComputedStyleIE(elem, name) {
-	  // currentStyle maybe null
-	  // http://msdn.microsoft.com/en-us/library/ms535231.aspx
-	  var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
-
-	  // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-	  // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
-	  // 在 ie 下不对，需要直接用 offset 方式
-	  // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-
-	  // From the awesome hack by Dean Edwards
-	  // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
-	  // If we're not dealing with a regular pixel number
-	  // but a number that has a weird ending, we need to convert it to pixels
-	  // exclude left right for relativity
-	  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
-	    // Remember the original values
-	    var style = elem.style;
-	    var left = style[LEFT];
-	    var rsLeft = elem[RUNTIME_STYLE][LEFT];
-
-	    // prevent flashing of content
-	    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-
-	    // Put in the new values to get a computed value out
-	    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
-	    ret = style.pixelLeft + PX;
-
-	    // Revert the changed values
-	    style[LEFT] = left;
-
-	    elem[RUNTIME_STYLE][LEFT] = rsLeft;
-	  }
-	  return ret === '' ? 'auto' : ret;
-	}
-
-	if (typeof window !== 'undefined') {
-	  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
-	}
-
-	function getOffsetDirection(dir, option) {
-	  if (dir === 'left') {
-	    return option.useCssRight ? 'right' : dir;
-	  }
-	  return option.useCssBottom ? 'bottom' : dir;
-	}
-
-	function oppositeOffsetDirection(dir) {
-	  if (dir === 'left') {
-	    return 'right';
-	  } else if (dir === 'right') {
-	    return 'left';
-	  } else if (dir === 'top') {
-	    return 'bottom';
-	  } else if (dir === 'bottom') {
-	    return 'top';
-	  }
-	}
-
-	// 设置 elem 相对 elem.ownerDocument 的坐标
-	function setOffset(elem, offset, option) {
-	  // set position first, in-case top/left are set even on static elem
-	  if (css(elem, 'position') === 'static') {
-	    elem.style.position = 'relative';
-	  }
-	  var presetH = -999;
-	  var presetV = -999;
-	  var horizontalProperty = getOffsetDirection('left', option);
-	  var verticalProperty = getOffsetDirection('top', option);
-	  var oppositeHorizontalProperty = oppositeOffsetDirection(horizontalProperty);
-	  var oppositeVerticalProperty = oppositeOffsetDirection(verticalProperty);
-
-	  if (horizontalProperty !== 'left') {
-	    presetH = 999;
-	  }
-
-	  if (verticalProperty !== 'top') {
-	    presetV = 999;
-	  }
-
-	  if ('left' in offset) {
-	    elem.style[oppositeHorizontalProperty] = '';
-	    elem.style[horizontalProperty] = presetH + 'px';
-	  }
-	  if ('top' in offset) {
-	    elem.style[oppositeVerticalProperty] = '';
-	    elem.style[verticalProperty] = presetV + 'px';
-	  }
-	  var old = getOffset(elem);
-	  var ret = {};
-	  var key = undefined;
-	  for (key in offset) {
-	    if (offset.hasOwnProperty(key)) {
-	      var dir = getOffsetDirection(key, option);
-	      var preset = key === 'left' ? presetH : presetV;
-	      if (dir === key) {
-	        ret[dir] = preset + offset[key] - old[key];
-	      } else {
-	        ret[dir] = preset + old[key] - offset[key];
-	      }
-	    }
-	  }
-	  css(elem, ret);
-	}
-
-	function each(arr, fn) {
-	  for (var i = 0; i < arr.length; i++) {
-	    fn(arr[i]);
-	  }
-	}
-
-	function isBorderBoxFn(elem) {
-	  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
-	}
-
-	var BOX_MODELS = ['margin', 'border', 'padding'];
-	var CONTENT_INDEX = -1;
-	var PADDING_INDEX = 2;
-	var BORDER_INDEX = 1;
-	var MARGIN_INDEX = 0;
-
-	function swap(elem, options, callback) {
-	  var old = {};
-	  var style = elem.style;
-	  var name = undefined;
-
-	  // Remember the old values, and insert the new ones
-	  for (name in options) {
-	    if (options.hasOwnProperty(name)) {
-	      old[name] = style[name];
-	      style[name] = options[name];
-	    }
-	  }
-
-	  callback.call(elem);
-
-	  // Revert the old values
-	  for (name in options) {
-	    if (options.hasOwnProperty(name)) {
-	      style[name] = old[name];
-	    }
-	  }
-	}
-
-	function getPBMWidth(elem, props, which) {
-	  var value = 0;
-	  var prop = undefined;
-	  var j = undefined;
-	  var i = undefined;
-	  for (j = 0; j < props.length; j++) {
-	    prop = props[j];
-	    if (prop) {
-	      for (i = 0; i < which.length; i++) {
-	        var cssProp = undefined;
-	        if (prop === 'border') {
-	          cssProp = prop + which[i] + 'Width';
-	        } else {
-	          cssProp = prop + which[i];
-	        }
-	        value += parseFloat(getComputedStyleX(elem, cssProp)) || 0;
-	      }
-	    }
-	  }
-	  return value;
-	}
-
-	/**
-	 * A crude way of determining if an object is a window
-	 * @member util
-	 */
-	function isWindow(obj) {
-	  // must use == for ie8
-	  /* eslint eqeqeq:0 */
-	  return obj !== null && obj !== undefined && obj == obj.window;
-	}
-
-	var domUtils = {};
-
-	each(['Width', 'Height'], function (name) {
-	  domUtils['doc' + name] = function (refWin) {
-	    var d = refWin.document;
-	    return Math.max(
-	    // firefox chrome documentElement.scrollHeight< body.scrollHeight
-	    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
-	    d.documentElement['scroll' + name],
-	    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
-	    d.body['scroll' + name], domUtils['viewport' + name](d));
-	  };
-
-	  domUtils['viewport' + name] = function (win) {
-	    // pc browser includes scrollbar in window.innerWidth
-	    var prop = 'client' + name;
-	    var doc = win.document;
-	    var body = doc.body;
-	    var documentElement = doc.documentElement;
-	    var documentElementProp = documentElement[prop];
-	    // 标准模式取 documentElement
-	    // backcompat 取 body
-	    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
-	  };
-	});
-
-	/*
-	 得到元素的大小信息
-	 @param elem
-	 @param name
-	 @param {String} [extra]  'padding' : (css width) + padding
-	 'border' : (css width) + padding + border
-	 'margin' : (css width) + padding + border + margin
-	 */
-	function getWH(elem, name, ex) {
-	  var extra = ex;
-	  if (isWindow(elem)) {
-	    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
-	  } else if (elem.nodeType === 9) {
-	    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
-	  }
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-	  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
-	  var computedStyle = getComputedStyleX(elem);
-	  var isBorderBox = isBorderBoxFn(elem, computedStyle);
-	  var cssBoxValue = 0;
-	  if (borderBoxValue === null || borderBoxValue === undefined || borderBoxValue <= 0) {
-	    borderBoxValue = undefined;
-	    // Fall back to computed then un computed css if necessary
-	    cssBoxValue = getComputedStyleX(elem, name);
-	    if (cssBoxValue === null || cssBoxValue === undefined || Number(cssBoxValue) < 0) {
-	      cssBoxValue = elem.style[name] || 0;
-	    }
-	    // Normalize '', auto, and prepare for extra
-	    cssBoxValue = parseFloat(cssBoxValue) || 0;
-	  }
-	  if (extra === undefined) {
-	    extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
-	  }
-	  var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
-	  var val = borderBoxValue || cssBoxValue;
-	  if (extra === CONTENT_INDEX) {
-	    if (borderBoxValueOrIsBorderBox) {
-	      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
-	    }
-	    return cssBoxValue;
-	  } else if (borderBoxValueOrIsBorderBox) {
-	    if (extra === BORDER_INDEX) {
-	      return val;
-	    }
-	    return val + (extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle));
-	  }
-	  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
-	}
-
-	var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
-
-	// fix #119 : https://github.com/kissyteam/kissy/issues/119
-	function getWHIgnoreDisplay() {
-	  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	    args[_key] = arguments[_key];
-	  }
-
-	  var val = undefined;
-	  var elem = args[0];
-	  // in case elem is window
-	  // elem.offsetWidth === undefined
-	  if (elem.offsetWidth !== 0) {
-	    val = getWH.apply(undefined, args);
-	  } else {
-	    swap(elem, cssShow, function () {
-	      val = getWH.apply(undefined, args);
-	    });
-	  }
-	  return val;
-	}
-
-	each(['width', 'height'], function (name) {
-	  var first = name.charAt(0).toUpperCase() + name.slice(1);
-	  domUtils['outer' + first] = function (el, includeMargin) {
-	    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
-	  };
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-
-	  domUtils[name] = function (elem, v) {
-	    var val = v;
-	    if (val !== undefined) {
-	      if (elem) {
-	        var computedStyle = getComputedStyleX(elem);
-	        var isBorderBox = isBorderBoxFn(elem);
-	        if (isBorderBox) {
-	          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
-	        }
-	        return css(elem, name, val);
-	      }
-	      return undefined;
-	    }
-	    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
-	  };
-	});
-
-	function mix(to, from) {
-	  for (var i in from) {
-	    if (from.hasOwnProperty(i)) {
-	      to[i] = from[i];
-	    }
-	  }
-	  return to;
-	}
-
-	var utils = {
-	  getWindow: function getWindow(node) {
-	    if (node && node.document && node.setTimeout) {
-	      return node;
-	    }
-	    var doc = node.ownerDocument || node;
-	    return doc.defaultView || doc.parentWindow;
-	  },
-	  offset: function offset(el, value, option) {
-	    if (typeof value !== 'undefined') {
-	      setOffset(el, value, option || {});
-	    } else {
-	      return getOffset(el);
-	    }
-	  },
-	  isWindow: isWindow,
-	  each: each,
-	  css: css,
-	  clone: function clone(obj) {
-	    var i = undefined;
-	    var ret = {};
-	    for (i in obj) {
-	      if (obj.hasOwnProperty(i)) {
-	        ret[i] = obj[i];
-	      }
-	    }
-	    var overflow = obj.overflow;
-	    if (overflow) {
-	      for (i in obj) {
-	        if (obj.hasOwnProperty(i)) {
-	          ret.overflow[i] = obj.overflow[i];
-	        }
-	      }
-	    }
-	    return ret;
-	  },
-	  mix: mix,
-	  getWindowScrollLeft: function getWindowScrollLeft(w) {
-	    return getScrollLeft(w);
-	  },
-	  getWindowScrollTop: function getWindowScrollTop(w) {
-	    return getScrollTop(w);
-	  },
-	  merge: function merge() {
-	    var ret = {};
-
-	    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	      args[_key2] = arguments[_key2];
-	    }
-
-	    for (var i = 0; i < args.length; i++) {
-	      utils.mix(ret, args[i]);
-	    }
-	    return ret;
-	  },
-	  viewportWidth: 0,
-	  viewportHeight: 0
-	};
-
-	mix(utils, domUtils);
-
-	exports['default'] = utils;
-	module.exports = exports['default'];
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(93);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	/**
-	 * 得到会导致元素显示不全的祖先元素
-	 */
-
-	function getOffsetParent(element) {
-	  // ie 这个也不是完全可行
-	  /*
-	   <div style="width: 50px;height: 100px;overflow: hidden">
-	   <div style="width: 50px;height: 100px;position: relative;" id="d6">
-	   元素 6 高 100px 宽 50px<br/>
-	   </div>
-	   </div>
-	   */
-	  // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
-	  //  In other browsers it only includes elements with position absolute, relative or
-	  // fixed, not elements with overflow set to auto or scroll.
-	  //        if (UA.ie && ieMode < 8) {
-	  //            return element.offsetParent;
-	  //        }
-	  // 统一的 offsetParent 方法
-	  var doc = element.ownerDocument;
-	  var body = doc.body;
-	  var parent = undefined;
-	  var positionStyle = _utils2['default'].css(element, 'position');
-	  var skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
-
-	  if (!skipStatic) {
-	    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
-	  }
-
-	  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
-	    positionStyle = _utils2['default'].css(parent, 'position');
-	    if (positionStyle !== 'static') {
-	      return parent;
-	    }
-	  }
-	  return null;
-	}
-
-	exports['default'] = getOffsetParent;
-	module.exports = exports['default'];
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(93);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	var _getOffsetParent = __webpack_require__(94);
-
-	var _getOffsetParent2 = _interopRequireDefault(_getOffsetParent);
-
-	/**
-	 * 获得元素的显示部分的区域
-	 */
-	function getVisibleRectForElement(element) {
-	  var visibleRect = {
-	    left: 0,
-	    right: Infinity,
-	    top: 0,
-	    bottom: Infinity
-	  };
-	  var el = (0, _getOffsetParent2['default'])(element);
-	  var scrollX = undefined;
-	  var scrollY = undefined;
-	  var winSize = undefined;
-	  var doc = element.ownerDocument;
-	  var win = doc.defaultView || doc.parentWindow;
-	  var body = doc.body;
-	  var documentElement = doc.documentElement;
-
-	  // Determine the size of the visible rect by climbing the dom accounting for
-	  // all scrollable containers.
-	  while (el) {
-	    // clientWidth is zero for inline block elements in ie.
-	    if ((navigator.userAgent.indexOf('MSIE') === -1 || el.clientWidth !== 0) &&
-	    // body may have overflow set on it, yet we still get the entire
-	    // viewport. In some browsers, el.offsetParent may be
-	    // document.documentElement, so check for that too.
-	    el !== body && el !== documentElement && _utils2['default'].css(el, 'overflow') !== 'visible') {
-	      var pos = _utils2['default'].offset(el);
-	      // add border
-	      pos.left += el.clientLeft;
-	      pos.top += el.clientTop;
-	      visibleRect.top = Math.max(visibleRect.top, pos.top);
-	      visibleRect.right = Math.min(visibleRect.right,
-	      // consider area without scrollBar
-	      pos.left + el.clientWidth);
-	      visibleRect.bottom = Math.min(visibleRect.bottom, pos.top + el.clientHeight);
-	      visibleRect.left = Math.max(visibleRect.left, pos.left);
-	    } else if (el === body || el === documentElement) {
-	      break;
-	    }
-	    el = (0, _getOffsetParent2['default'])(el);
-	  }
-
-	  // Clip by window's viewport.
-	  scrollX = _utils2['default'].getWindowScrollLeft(win);
-	  scrollY = _utils2['default'].getWindowScrollTop(win);
-	  visibleRect.left = Math.max(visibleRect.left, scrollX);
-	  visibleRect.top = Math.max(visibleRect.top, scrollY);
-	  winSize = {
-	    width: _utils2['default'].viewportWidth(win),
-	    height: _utils2['default'].viewportHeight(win)
-	  };
-	  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
-	  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
-	  return visibleRect.top >= 0 && visibleRect.left >= 0 && visibleRect.bottom > visibleRect.top && visibleRect.right > visibleRect.left ? visibleRect : null;
-	}
-
-	exports['default'] = getVisibleRectForElement;
-	module.exports = exports['default'];
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(93);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
-	  var pos = _utils2['default'].clone(elFuturePos);
-	  var size = {
-	    width: elRegion.width,
-	    height: elRegion.height
-	  };
-
-	  if (overflow.adjustX && pos.left < visibleRect.left) {
-	    pos.left = visibleRect.left;
-	  }
-
-	  // Left edge inside and right edge outside viewport, try to resize it.
-	  if (overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
-	    size.width -= pos.left + size.width - visibleRect.right;
-	  }
-
-	  // Right edge outside viewport, try to move it.
-	  if (overflow.adjustX && pos.left + size.width > visibleRect.right) {
-	    // 保证左边界和可视区域左边界对齐
-	    pos.left = Math.max(visibleRect.right - size.width, visibleRect.left);
-	  }
-
-	  // Top edge outside viewport, try to move it.
-	  if (overflow.adjustY && pos.top < visibleRect.top) {
-	    pos.top = visibleRect.top;
-	  }
-
-	  // Top edge inside and bottom edge outside viewport, try to resize it.
-	  if (overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
-	    size.height -= pos.top + size.height - visibleRect.bottom;
-	  }
-
-	  // Bottom edge outside viewport, try to move it.
-	  if (overflow.adjustY && pos.top + size.height > visibleRect.bottom) {
-	    // 保证上边界和可视区域上边界对齐
-	    pos.top = Math.max(visibleRect.bottom - size.height, visibleRect.top);
-	  }
-
-	  return _utils2['default'].mix(pos, size);
-	}
-
-	exports['default'] = adjustForViewport;
-	module.exports = exports['default'];
-
-/***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(93);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function getRegion(node) {
-	  var offset = undefined;
-	  var w = undefined;
-	  var h = undefined;
-	  if (!_utils2['default'].isWindow(node) && node.nodeType !== 9) {
-	    offset = _utils2['default'].offset(node);
-	    w = _utils2['default'].outerWidth(node);
-	    h = _utils2['default'].outerHeight(node);
-	  } else {
-	    var win = _utils2['default'].getWindow(node);
-	    offset = {
-	      left: _utils2['default'].getWindowScrollLeft(win),
-	      top: _utils2['default'].getWindowScrollTop(win)
-	    };
-	    w = _utils2['default'].viewportWidth(win);
-	    h = _utils2['default'].viewportHeight(win);
-	  }
-	  offset.width = w;
-	  offset.height = h;
-	  return offset;
-	}
-
-	exports['default'] = getRegion;
-	module.exports = exports['default'];
-
-/***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _getAlignOffset = __webpack_require__(99);
-
-	var _getAlignOffset2 = _interopRequireDefault(_getAlignOffset);
-
-	function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset) {
-	  var xy = undefined;
-	  var diff = undefined;
-	  var p1 = undefined;
-	  var p2 = undefined;
-
-	  xy = {
-	    left: elRegion.left,
-	    top: elRegion.top
-	  };
-
-	  p1 = (0, _getAlignOffset2['default'])(refNodeRegion, points[1]);
-	  p2 = (0, _getAlignOffset2['default'])(elRegion, points[0]);
-
-	  diff = [p2.left - p1.left, p2.top - p1.top];
-
-	  return {
-	    left: xy.left - diff[0] + offset[0] - targetOffset[0],
-	    top: xy.top - diff[1] + offset[1] - targetOffset[1]
-	  };
-	}
-
-	exports['default'] = getElFuturePos;
-	module.exports = exports['default'];
-
-/***/ },
-/* 99 */
-/***/ function(module, exports) {
-
-	/**
-	 * 获取 node 上的 align 对齐点 相对于页面的坐标
-	 */
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	function getAlignOffset(region, align) {
-	  var V = align.charAt(0);
-	  var H = align.charAt(1);
-	  var w = region.width;
-	  var h = region.height;
-	  var x = undefined;
-	  var y = undefined;
-
-	  x = region.left;
-	  y = region.top;
-
-	  if (V === 'c') {
-	    y += h / 2;
-	  } else if (V === 'b') {
-	    y += h;
-	  }
-
-	  if (H === 'c') {
-	    x += w / 2;
-	  } else if (H === 'r') {
-	    x += w;
-	  }
-
-	  return {
-	    left: x,
-	    top: y
-	  };
-	}
-
-	exports['default'] = getAlignOffset;
-	module.exports = exports['default'];
-
-/***/ },
-/* 100 */
-/***/ function(module, exports) {
-
-	module.exports = "\r\n<slot></slot>\r\n";
-
-/***/ },
-/* 101 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n<div class=\"dialog\" v-show=\"show\">\n    <align\n            :align=\"align\"\n            :visible=\"show\"\n            :monitor-buffer-time=\"80\">\n        <div class=\"content\" :style=\"{width:width+'px'}\">\n            <div class=\"box-header\">\n                <h3 class=\"box-title\" v-text=\"title\"></h3>\n                <!-- tools box -->\n                <div class=\"close\">\n                    <button class=\"btn-style\" @click=\"cbClose('cancel')\">×</button>\n                </div><!-- /. tools -->\n            </div><!-- /.box-header -->\n            <div class=\"box-body\">\n                <slot></slot>\n            </div>\n        </div>\n    </align>\n    <div class=\"dialog-mask\"></div>\n</div>\n";
-
-/***/ },
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__webpack_require__(132)
-	__vue_script__ = __webpack_require__(134)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\XTPZ\\user-managerment.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(135)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\XTPZ\\user-managerment.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 132 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(133);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(59)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./user-managerment.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./user-managerment.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 133 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(58)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n.controlSpan{\n    float: left;\n    margin-right: 10px;\n}\n.modal-foot{\n    clear:both;\n    text-align: center;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 134 */
+/***/ 136:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3805,229 +461,629 @@ webpackJsonp([9],Array(61).concat([
 
 	var _datepicker2 = _interopRequireDefault(_datepicker);
 
-	var _dialog = __webpack_require__(73);
-
-	var _dialog2 = _interopRequireDefault(_dialog);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// <template>
-	//     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
-	//         <section class="content" slot="content">
-	//             <div class="row">
-	//                 <div class="col-xs-12">
-	//                     <div class="box">
-	//                         <div class="box-header">
-	//                             <form class="form-inline manage-form">
-	//                                 <br/>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="subCompanyID" >
-	//                                     <option value="">请选择分公司</option>
-	//                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
-	//                                 </div>
-	//                             </form>
-	//                         </div>
-	//                         <div class="box-body box-tbl">
-	//                             <table id="table1" class="table table-bordered table-hover">
-	//                                 <thead>
-	//                                 <tr>
-	//                                     <th>序号</th>
-	//                                     <th>分公司</th>
-	//                                     <th>用户名</th>
-	//                                     <th>手机号</th>
-	//                                     <th>姓名</th>
-	//                                     <th>最后登录时间</th>
-	//                                     <th>操作</th>
-	//                                 </tr>
-	//                                 </thead>
-	//                                 <tbody>
-	//                                 <tr v-if="!!userList.length" v-for="(index,user) in userList">
-	//                                     <td>{{index+1}}</td>
-	//                                     <td>{{user.subCompanyName}}</td>
-	//                                     <td>{{user.name}}</td>
-	//                                     <td>{{user.phone}}</td>
-	//                                     <td>{{user.name}}</td>
-	//                                     <td>{{user.loginTime | datetime}}</td>
-	//                                     <td>
-	//                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                       
-	//                                     </td>
-	//                                 </tr>
-	//                                 </tbody>
-	//                             </table>
-	//                         </div>
-	//                         <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
-	//                             <div class="modal-dialog">
-	//                                 <div class="modal-content">
-	//                                      <div class="modal-header">
-	//                                         <h3>管辖范围</h3>
-	//                                         <button type="button" class="close" data-dismiss="modal">×</button>
-	//                                      </div>
-	//                                      <div class="modal-body">
-	//                                          <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
-	//                                          <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
-	//                                          <hr/>
-	//                                          <div class="controlSpan" v-for="controlSpan in controlSpanList">
-	//                                              <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
-	//                                              <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>  
-	//                                          </div>
-	//                                          <hr/>
-	//                                      </div>
-	//                                      <div class="modal-foot">
-	//                                         <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
-	//                                         <input type="button" class="btn btn-gray" v-on:click="cancel" data-dismiss="modal" value="取消">
-	//                                         <br/>
-	//                                      </div>
-	//                                 </div>
-	//                             </div>
-	//
-	//                         </div>
-	//                         <div class="box-footer">
-	//                             <page :all="pageall"
-	//                                   :cur.sync="pagecur"
-	//                                   :page_size.sync="page_size">
-	//                             </page>
-	//                         </div>
-	//                     </div>
-	//                 </div>
-	//             </div>
-	//         </section>
-	//     </index>
-	// </template>
-	// <style>
-	//     body{
-	//         background-color:#fff;
-	//     }
-	//     .box-tbl{
-	//         overflow:auto;
-	//     }
-	//     .page-bar{
-	//         margin: 25px auto;
-	//         text-align: center;
-	//     }
-	//     .box-body #table1 th{
-	//         min-width: 85px;
-	//     }
-	//     .controlSpan{
-	//         float: left;
-	//         margin-right: 10px;
-	//     }
-	//     .modal-foot{
-	//         clear:both;
-	//         text-align: center;
-	//     }
-	// </style>
-	// <script>
 	exports.default = {
-	    props: {},
 	    data: function data() {
 	        return {
-	            subCompanyID: "",
-	            keywords: "",
-	            id: "",
-	            userID: "",
-	            subcompanyList: [],
-	            controlSpanList: [],
-	            pageall: 1,
+	            id: '',
 	            pagecur: 1,
 	            page_size: 15,
-	            userList: [],
-	            controlSpanArray: []
+	            pageall: 1,
+	            dateS: '1',
+	            waring: '',
+	            subtitle: '',
+	            checkForm: {
+	                merchantId: '',
+	                orderNumber: '',
+	                certificate: '',
+	                keyword: '',
+	                status: '',
+	                purpose: '',
+	                remarks: '',
+	                startDate: '',
+	                endDate: '',
+	                pageIndex: 1,
+	                pageSize: 15
+	            },
+	            zdlists: [],
+	            checkLists: []
 	        };
 	    },
 
 	    methods: {
-	        //获取员工数据
-	        getUserList: function getUserList(data) {
-	            this.$http.post('./user/list', data).then(function (response) {
+	        // *** 请求账户数据
+
+	        getZlists: function getZlists(data) {
+	            //                this.zdlists=[
+	            //                    {
+	            //                        id:1,
+	            //                        "orderNumber": "20150802105038252",
+	            //                        "payoutAccount": "深圳备付金",
+	            //                        "payoutAccountNumber": "36001050307052502264",
+	            //                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+	            //                        "payoutAmount": 58000,
+	            //                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+	            //                        "incomeAccountNumber": "626606960",
+	            //                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+	            //                        "incomeBankName": "民生银行海岸城支行",
+	            //                        "certificate": "",
+	            //                        "purpose": "1",
+	            //                        "paymentTime": "2015-08-02 10:50:38",
+	            //                        "applyTime": "2015-08-02 10:50:38",
+	            //                        "applyCompany": "深圳卡说",
+	            //                        "remarks": "",
+	            //                        "status": 3,
+	            //                        listinfo:[]
+	            //                    },
+	            //                    {
+	            //                        id:2,
+	            //                        "orderNumber": "20150802105038252",
+	            //                        "payoutAccount": "深圳备付金",
+	            //                        "payoutAccountNumber": "36001050307052502264",
+	            //                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+	            //                        "payoutAmount": 58000,
+	            //                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+	            //                        "incomeAccountNumber": "626606960",
+	            //                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+	            //                        "incomeBankName": "民生银行海岸城支行",
+	            //                        "certificate": "",
+	            //                        "purpose": "1",
+	            //                        "paymentTime": "2015-08-02 10:50:38",
+	            //                        "applyTime": "2015-08-02 10:50:38",
+	            //                        "applyCompany": "深圳卡说",
+	            //                        "remarks": "",
+	            //                        "status": 2,
+	            //                        listinfo:[]
+	            //                    },
+	            //                    {
+	            //                        id:3,
+	            //                        "orderNumber": "20150802105038252",
+	            //                        "payoutAccount": "深圳备付金",
+	            //                        "payoutAccountNumber": "36001050307052502264",
+	            //                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
+	            //                        "payoutAmount": 58000,
+	            //                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
+	            //                        "incomeAccountNumber": "626606960",
+	            //                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
+	            //                        "incomeBankName": "民生银行海岸城支行",
+	            //                        "certificate": "",
+	            //                        "purpose": "1",
+	            //                        "paymentTime": "2015-08-02 10:50:38",
+	            //                        "applyTime": "2015-08-02 10:50:38",
+	            //                        "applyCompany": "深圳卡说",
+	            //                        "remarks": "",
+	            //                        "status": 5,
+	            //                        listinfo:[]
+	            //                    },];
+	            if (data.endDate < data.startDate) {
+	                var a = data.endDate,
+	                    b = data.startDate;
+	                this.checkForm.startDate = a;
+	                this.checkForm.endDate = b;
+	                data.startDate = a;
+	                data.endDate = b;
+	            }
+	            this.$http.post('./reservecash/order/list', data).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('userList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('zdlists', response.data.data) : null;
 	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
 	            }, function (response) {
 	                console.log(response);
 	            });
 	        },
-	        //获取分公司数据
-	        getSubcompany: function getSubcompany(data) {
-	            this.$http.post('./subcompany/list', data).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('subcompanyList', response.data.data) : null;
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        query: function query() {
-	            var data = {
-	                subCompanyID: this.subCompanyID,
-	                keywords: this.keywords
-	            };
-	            this.getUserList(data);
-	        },
-
-	        //显示员工管辖
-	        showCS: function showCS(userId) {
-	            this.userID = userId;
-	            this.$http.post('./user/userControlSpanList/' + userId).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('controlSpanList', response.data.data) : null;
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        checkAll: function checkAll() {
-	            $("input[name='ckbox']").prop({ 'checked': true });
-	        },
-	        othercheck: function othercheck() {
-	            $("input[name='ckbox']").each(function () {
-	                $(this).prop({ 'checked': !$(this).prop("checked") });
-	            });
-	        },
-	        submit: function submit() {
-	            var arrays = [];
-	            $("input[name='ckbox']:checked").each(function () {
-	                arrays.push($(this).prop("id"));
-	            });
-
-	            var data = {
-	                userID: this.userID,
-	                subCompanyIDs: arrays
-	            };
-	            this.$http.post('./user/saveUserControlSpans', data).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                if (response.data.code == 0) {
-	                    alert("保存成功！");
-	                }
-	            }, function (response) {
-	                console.log(response);
-	            });
-	            //关闭弹出层
+	        initList: function initList() {
 	            $(".modal").modal("hide");
+	            this.getZlists(this.checkForm);
 	        },
-	        cancel: function cancel() {}
+	        checkNew: function checkNew() {
+	            this.getZlists(this.checkForm);
+	        },
+	        getInfo: function getInfo(a) {
+	            if (this.zdlists[a].listinfo != '') return;
+	            this.zdlists[a].listinfo = [{
+	                "id": 123,
+	                "createAt": "2016-04-12 08:32:00",
+	                "merchantName": "3898|深圳探鱼海岸城店",
+	                "amount": "17095",
+	                "purpose": 58000,
+	                "remarks": "",
+	                "status": 1
+	            }, {
+	                "id": 123,
+	                "createAt": "2016-04-12 08:32:00",
+	                "merchantName": "3898|深圳探鱼海岸城店",
+	                "amount": "17095",
+	                "purpose": 58000,
+	                "remarks": "",
+	                "status": 2
+	            }];
+	        },
+	        back: function back(a) {
+	            this.subtitle = '退回重审';
+	            this.accountId = a;
+	        },
+	        apply: function apply(a) {
+	            this.subtitle = '申请划付';
+	            this.accountId = a;
+	        },
+	        update: function update(a) {
+	            this.waring = '你确认更新账单？';
+	            this.accountId = a;
+	        },
+	        pay: function pay(a) {
+	            this.waring = '你确认划付该账单？';
+	            this.accountId = a;
+	        },
+	        close: function close(a) {
+	            this.waring = '你确认关闭该账单？';
+	            this.accountId = a;
+	        },
+	        checking: function checking(a) {
+	            console.log(a);
+	            this.checkLists = [{
+	                "reserveCashId": "20150802105038252",
+	                "certificate": "深圳备付金",
+	                "tradeTime": "2015-04-01 10:50:38",
+	                "collectionName": "南昌新开味馆豫章",
+	                "accountName": "张三",
+	                "accountNumber": "36001050307052501764",
+	                "payoutAmount": "407830",
+	                "purpose": "1",
+	                "remarks": "补贴划付"
+	            }, {
+	                "reserveCashId": "20150802105038252",
+	                "certificate": "深圳备付金",
+	                "tradeTime": "2015-04-01 10:50:38",
+	                "collectionName": "南昌新开味馆豫章",
+	                "accountName": "张三",
+	                "accountNumber": "36001050307052501764",
+	                "payoutAmount": "407830",
+	                "purpose": "1",
+	                "remarks": "补贴划付"
+	            }];
+	        },
+	        updateTrue: function updateTrue() {
+	            console.log(this.accountId);
+	        },
+	        payTrue: function payTrue() {
+	            console.log(this.accountId);
+	        },
+	        closeTrue: function closeTrue() {
+	            console.log(this.accountId);
+	        },
+	        backTrue: function backTrue() {
+	            console.log(this.accountId);
+	        },
+	        applyTrue: function applyTrue() {
+	            console.log(this.accountId);
+	        },
+	        checkingTrue: function checkingTrue(a) {
+	            console.log(a);
+	        },
+	        getTwo: function getTwo(num) {
+	            if (num.toString().length >= 2) return num;
+	            var str = "";
+	            for (var i = num.toString().length; i < 2; i++) {
+	                str += "0";
+	            }return str + num.toString();
+	        },
+	        getTime: function getTime() {
+	            var d = new Date();
+	            var day = d.getDate();
+	            var month = d.getMonth() + 1;
+	            var year = d.getFullYear();
+	            var newD, endD;
+	            switch (this.dateS) {
+	                case '0':
+	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 1);
+	                    endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    break;
+	                case '1':
+	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 7);
+	                    endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    break;
+	                case '2':
+	                    newD = year + "-" + this.getTwo(month - 1) + "-" + this.getTwo(day);
+	                    endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    break;
+	                case '3':
+	                    newD = year + "-" + this.getTwo(month - 3) + "-" + this.getTwo(day);
+	                    endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    break;
+	                case '4':
+	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+	                    break;
+	                default:
+	                    newD = endD = '';
+	                    break;
+	            }
+	            this.checkForm.startDate = newD;
+	            this.checkForm.endDate = endD;
+	        }
+	    },
+	    watch: {
+	        pagecur: function pagecur() {
+	            this.checkForm.pageIndex = this.pagecur;
+	            this.initList();
+	        },
+	        page_size: function page_size() {
+	            this.checkForm.pageSize = this.page_size;
+	            this.initList();
+	        },
+	        dateS: function dateS() {
+	            this.getTime();
+	        }
+	    },
+	    components: {
+	        'datepicker': _datepicker2.default
 	    },
 	    ready: function ready() {
-	        this.getUserList({});
-	        this.getSubcompany({});
-	    },
-	    watch: {},
-	    components: {
-	        'datepicker': _datepicker2.default,
-	        'dialog': _dialog2.default
+	        this.getTime();
+	        this.initList();
 	    }
 	};
+	// Collapse on click
+	// <template>
+	//     <index :title="'备付金付款明细'"
+	//            :ptitle="'备付金支出'"
+	//            :hname="'account-management'"
+	//            :isshow="'isshow'">
+	//         <div class="content details" slot="content">
+	//             <div class="panel panel-flat">
+	//                 <div class="panel-heading">
+	//                     <form class="form-inline manage-form">
+	//                         <div class="m20">
+	//                             <div class="form-group">
+	//                                 <select class="form-control" v-model="checkForm.merchantId">
+	//                                     <option value="">请选择账户</option>
+	//                                     <option value="0">南昌备付金</option>
+	//                                 </select>
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <select class="form-control" v-model="dateS">
+	//                                     <option value="0">昨天</option>
+	//                                     <option value="1">最近一周</option>
+	//                                     <option value="2">最近一个月</option>
+	//                                     <option value="3">最近三个月</option>
+	//                                     <option value="4">自定义时间</option>
+	//                                 </select>
+	//                             </div>
+	//                             <div class="form-group" v-show="dateS==4">
+	//                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+	//                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+	//                             </div>
+	//                         </div>
+	//                         <div  class="">
+	//                             <div class="form-group">
+	//                                 <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <select class="form-control" v-model="checkForm.status">
+	//                                     <option value="">请选择对账状态</option>
+	//                                     <option value="1">成功</option>
+	//                                     <option value="0">待对账</option>
+	//                                 </select>
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <select class="form-control" v-model="checkForm.purpose">
+	//                                     <option value="">请选择用途</option>
+	//                                     <option value="1">佣金划付</option>
+	//                                     <option value="2">往来款</option>
+	//                                     <option value="3">转账退款</option>
+	//                                     <option value="4">账户费用</option>
+	//                                     <option value="5">其它</option>
+	//                                     <option value="6">往来款</option>
+	//                                     <option value="7">转账退款</option>
+	//                                     <option value="8">账户费用</option>
+	//                                     <option value="9">其它</option>
+	//                                 </select>
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
+	//                             </div>
+	//                             <div class="form-group">
+	//                                 <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+	//                             </div>
+	//                         </div>
+	//                     </form>
+	//                 </div>
+	//             </div>
+	//             <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed" v-for="(index,n) in zdlists">
+	//                 <div class="panel-heading bgddd">
+	//                     <div class="panel-title">
+	//                         <p>
+	//                             <span>订单号:{{n.orderNumber}}</span>
+	//                             <span>付款金额:{{n.payoutAmount/100 | currency '' }}</span>
+	//                             <span>付款账户:{{n.payoutAccount}}</span>
+	//                             <span>收款方:{{n.payoutAccountName}}</span>
+	//                             <span>付款账户名:{{n.payoutAccountName}}</span>
+	//                             <span>付款账号:{{n.payoutAccountNumber}}</span>
+	//                             <span>收款账户名:{{n.incomeAccountName}}</span>
+	//                             <span>收款账号:{{n.incomeAccountNumber}}</span>
+	//                             <span>银行凭证号:{{n.certificate}}</span>
+	//                             <span>付款时间:{{n.paymentTime | datetime}}</span>
+	//                             <span>用途:
+	//                                  <template v-if="n.purpose==1"> 补贴划付</template>
+	//                                  <template v-if="n.purpose==2"> 额度采购</template>
+	//                                  <template v-if="n.purpose==3"> 退税划付</template>
+	//                                  <template v-if="n.purpose==4"> 预付款</template>
+	//                                  <template v-if="n.purpose==5"> 供货商划付</template>
+	//                             </span>
+	//                             <span>收款开户行:{{n.incomeBankName}}</span>
+	//                             <span>申请分公司:{{n.applyCompany}}</span>
+	//                             <span>申请时间:{{n.applyTime | datetime}}</span>
+	//                             <span>
+	//                                 状态:
+	//                                  <template v-if="n.status==1"> 等待审核</template>
+	//                                  <template v-if="n.status==2"> 等待划付</template>
+	//                                  <template v-if="n.status==3"> 等待对账</template>
+	//                                  <template v-if="n.status==4"> 对账成功</template>
+	//                                  <template v-if="n.status==5"> 划付失败</template>
+	//                             </span>
+	//                             <span>对账时间:</span>
+	//                         </p>
+	//                         <p>备注:{{n.remarks}}</p>
+	//                     </div>
+	//                     <div class="pull-right" @click="getInfo(index)">
+	//                         <span class="pull-left">查看详情</span>
+	//                         <ul class="icons-list pull-left" >
+	//                             <li><a data-action="collapse"></a></li>
+	//                         </ul>
+	//                     </div>
+	//                 </div>
+	//                 <div  v-show="!!zdlists.length" class="dataTables_wrapper no-footer">
+	//                     <div class="datatable-scroll">
+	//                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
+	//                             <thead>
+	//                             <tr  role="row">
+	//                                 <th>生成日期</th>
+	//                                 <th>商户名称</th>
+	//                                 <th>划付金额</th>
+	//                                 <th>用途</th>
+	//                                 <th>操作</th>
+	//                                 <th>状态</th>
+	//                                 <th>备注</th>
+	//                             </tr>
+	//                             </thead>
+	//                             <tbody>
+	//                             <tr role="row"  v-for="trlist in n.listinfo">
+	//                                 <td>{{trlist.createAt | datetime}}</td>
+	//                                 <td>{{trlist.merchantName}}</td>
+	//                                 <td>{{trlist.amount/100 | currency '' }}</td>
+	//                                 <td>
+	//                                     <template v-if="n.purpose==1"> 补贴划付</template>
+	//                                     <template v-if="n.purpose==2"> 额度采购</template>
+	//                                     <template v-if="n.purpose==3"> 退税划付</template>
+	//                                     <template v-if="n.purpose==4"> 预付款</template>
+	//                                     <template v-if="n.purpose==5"> 供货商划付</template>
+	//                                 </td>
+	//                                 <td><a href="">详情</a></td>
+	//                                 <td>
+	//                                     <template v-if="trlist.status==1"> 等待审核</template>
+	//                                     <template v-if="trlist.status==2"> 等待划付</template>
+	//                                     <template v-if="trlist.status==3"> 等待对账</template>
+	//                                     <template v-if="trlist.status==4"> 对账成功</template>
+	//                                     <template v-if="trlist.status==5"> 划付失败</template>
+	//                                     <template v-if="trlist.status==6"> 已关闭</template>
+	//                                 </td>
+	//                                 <td>{{trlist.remarks/100}}</td>
+	//                             </tr>
+	//                             </tbody>
+	//                         </table>
+	//                         <div class="pull-right">
+	//                             <template v-if="n.status==2">
+	//                                 <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
+	//                                 <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
+	//                             </template>
+	//                             <template v-if="n.status==3">
+	//                                 <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
+	//                             </template>
+	//                             <template v-if="n.status==5">
+	//                                 <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
+	//                                 <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
+	//                                 <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
+	//                             </template>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//             </div>
+	//             <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-else>
+	//                 未找到您要查询的账单
+	//             </div>
+	//             <page :all="pageall"
+	//                   :cur.sync="pagecur"
+	//                   :page_size.sync="page_size">
+	//             </page>
+	//             <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
+	//                 <div class="modal-dialog">
+	//                     <div class="modal-content">
+	//                         <div class="modal-header">
+	//                             <button type="button" class="close" data-dismiss="modal">×</button>
+	//                             <h5 class="modal-title" v-text="waring"></h5>
+	//                         </div>
+	//                         <div class="modal-body">
+	//                             <div class="form-group tc">
+	//                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
+	//                                 <button  v-if="waring=='你确认划付该账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
+	//                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
+	//                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+	//                             </div>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//             </div>
+	//
+	//             <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">
+	//                 <div class="modal-dialog">
+	//                     <div class="modal-content">
+	//                         <div class="modal-header">
+	//                             <button type="button" class="close" data-dismiss="modal">×</button>
+	//                             <h5 class="modal-title" v-text="title"></h5>
+	//                         </div>
+	//                         <div class="modal-body">
+	//                             <div class="form-group">
+	//                                 <label class="col-lg-3 control-label" v-if="subtitle=='退回重审'"><i>*</i>退回原因</label>
+	//                                 <label class="col-lg-3 control-label" v-if="subtitle=='申请划付'"><i>*</i>备注</label>
+	//                                 <div class="col-lg-9">
+	//                                     <textarea rows="5" cols="5" class="form-control" placeholder=""></textarea>
+	//                                 </div>
+	//                             </div>
+	//                             <div class="form-group tc">
+	//                                 <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
+	//                                 <button  v-if="subtitle=='申请划付'" type="button" @click="applyTrue" class="btn btn-primary">申请</button>
+	//                             </div>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//             </div>
+	//
+	//             <div data-backdrop="static"  id="modal_checking" class="modal fade" style="display: none;">
+	//                 <div class="modal-dialog modal-lg">
+	//                     <div class="modal-content">
+	//                         <div class="modal-header">
+	//                             <button type="button" class="close" data-dismiss="modal">×</button>
+	//                             <h5 class="modal-title">对账</h5>
+	//                         </div>
+	//                         <div class="modal-body">
+	//                             <div class="tc f20">
+	//                                 请选择备付金银行流水
+	//                             </div>
+	//                             <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+	//                                             <thead>
+	//                                                 <tr role="row">
+	//                                                     <th>凭证号</th>
+	//                                                     <th>交易时间</th>
+	//                                                     <th>收款方</th>
+	//                                                     <th>收款信息</th>
+	//                                                     <th>付款金额</th>
+	//                                                     <th>用途</th>
+	//                                                     <th>备注</th>
+	//                                                     <th>操作</th>
+	//                                                 </tr>
+	//                                             </thead>
+	//                                         <tbody>
+	//                                             <tr role="row"  v-for="n in checkLists">
+	//                                                 <td>{{n.certificate}}</td>
+	//                                                 <td>{{n.tradeTime || datetime}}</td>
+	//                                                 <td>{{n.collectionName}}</td>
+	//                                                 <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
+	//                                                 <td>{{n.payoutAmount/100 | currency '' }}</td>
+	//                                                 <td>
+	//                                                     <template v-if="n.purpose==1"> 补贴划付</template>
+	//                                                     <template v-if="n.purpose==2"> 额度采购</template>
+	//                                                     <template v-if="n.purpose==3"> 退税划付</template>
+	//                                                     <template v-if="n.purpose==4"> 预付款</template>
+	//                                                     <template v-if="n.purpose==5"> 供货商划付</template>
+	//                                                 </td>
+	//                                                 <td>{{n.remarks}}</td>
+	//                                                 <td><a href="javascript:void(0)" @click="checking(n.reserveCashId)">选择</a></td>
+	//                                             </tr>
+	//                                         </tbody>
+	//                                     </table>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//             </div>
+	//         </div>
+	//     </index>
+	// </template>
+	// <style>
+	//     .details .f20{
+	//         font-size: 20px;
+	//         font-weight: bolder;
+	//     }
+	//    .details .form-group{
+	//     }
+	//     .details   .modal-body label i{
+	//         color:red;
+	//     }
+	//     .details  .modal-body button{
+	//         width:35%;
+	//     }
+	//     .details  .m20{
+	//         margin-bottom:20px;
+	//     }
+	//     .details  .mt0{
+	//         margin-top: 0
+	//     }
+	//     .details .page-bar{
+	//         margin: 25px auto;
+	//         text-align: center;
+	//     }
+	//     .details .panel-title p span{
+	//         width: 24%;
+	//         margin-bottom: 3px;
+	//         display: inline-block;
+	//         text-overflow: ellipsis;
+	//         overflow: hidden;
+	//         white-space: nowrap;
+	//         font-size: 13px;
+	//     }
+	//     .details .panel-heading .pull-right{
+	//         position: absolute;
+	//         right: 10px;
+	//         bottom: 30px;
+	//        cursor: pointer;
+	//         background: #ECECEC;
+	//     }
+	//     .details .datatable-scroll{
+	//        overflow: hidden;
+	//        padding-bottom: 20px;
+	//        padding-top: 20px;
+	//    }
+	//     .details .dataTables_wrapper{
+	//         display: none;
+	//     }
+	//     .details .datatable-scroll table{
+	//         float: left;
+	//         width: 80%;
+	//         border: 1px solid #ccc;
+	//         margin-left: 20px;
+	//     }
+	//     .details .datatable-scroll .pull-right{
+	//         width: 15%;
+	//     }
+	//     .details  .pull-right input{
+	//         width: 80%;
+	//         margin-bottom: 15px;
+	//     }
+	//     .details  .panel-flat > .panel-heading.bgddd{
+	//         background: #ECECEC;
+	//     }
+	//     .details div.datatable-footer.pd15{
+	//         padding: 15px 20px;
+	//         font-weight: bolder;
+	//     }
+	//     .details div.datatable-footer.pd15 span{
+	//         color:red;
+	//     }
+	// </style>
+	// <script>
+
+	$(document).on('click', '.panel-heading .pull-right', function (e) {
+	    e.preventDefault();
+	    var $categoryCollapse = $(this).closest('.panel-heading').nextAll();
+	    $(this).find('.icons-list [data-action=collapse]').parents('.category-title').toggleClass('category-collapsed');
+	    $(this).find('.icons-list [data-action=collapse]').toggleClass('rotate-180');
+	    $categoryCollapse.slideToggle(150);
+	});
 	// </script>
 
 /***/ },
-/* 135 */
+
+/***/ 137:
 /***/ function(module, exports) {
 
-	module.exports = "\n<index title=\"员工管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>分公司</th>\n                                <th>用户名</th>\n                                <th>手机号</th>\n                                <th>姓名</th>\n                                <th>最后登录时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!userList.length\" v-for=\"(index,user) in userList\">\n                                <td>{{index+1}}</td>\n                                <td>{{user.subCompanyName}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.phone}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.loginTime | datetime}}</td>\n                                <td>\n                                    <a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal_ControlSpan\" v-on:click=\"showCS(user.id)\">管辖范围</a>                                        \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div id=\"modal_ControlSpan\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>管辖范围</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                     <input type=\"button\" id=\"All\" value=\"全选\" v-on:click=\"checkAll()\"/>\n                                     <input type=\"button\" id=\"othercheck\" value=\"反选\" v-on:click=\"othercheck()\"/>\n                                     <hr/>\n                                     <div class=\"controlSpan\" v-for=\"controlSpan in controlSpanList\">\n                                         <input type=\"checkbox\" :id=\"controlSpan.subCompanyID\" name=\"ckbox\"  :checked=\"controlSpan.selected\"/>\n                                         <label :for=\"controlSpan.subCompanyID\">{{controlSpan.name}}</label>   \n                                     </div>\n                                     <hr/>\n                                 </div>\n                                 <div class=\"modal-foot\">\n                                    <input type=\"button\" class=\"btn btn-primary\" v-on:click=\"submit\" value=\"提交\">\n                                    <input type=\"button\" class=\"btn btn-gray\" v-on:click=\"cancel\" data-dismiss=\"modal\" value=\"取消\">\n                                    <br/>\n                                 </div>\n                            </div>\n                        </div>\n                       \n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
+	module.exports = "\n<index :title=\"'备付金付款明细'\"\n       :ptitle=\"'备付金支出'\"\n       :hname=\"'account-management'\"\n       :isshow=\"'isshow'\">\n    <div class=\"content details\" slot=\"content\">\n        <div class=\"panel panel-flat\">\n            <div class=\"panel-heading\">\n                <form class=\"form-inline manage-form\">\n                    <div class=\"m20\">\n                        <div class=\"form-group\">\n                            <select class=\"form-control\" v-model=\"checkForm.merchantId\">\n                                <option value=\"\">请选择账户</option>\n                                <option value=\"0\">南昌备付金</option>\n                            </select>\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" v-model=\"checkForm.orderNumber\" placeholder=\"订单号\">\n                        </div>\n                        <div class=\"form-group\">\n                            <select class=\"form-control\" v-model=\"dateS\">\n                                <option value=\"0\">昨天</option>\n                                <option value=\"1\">最近一周</option>\n                                <option value=\"2\">最近一个月</option>\n                                <option value=\"3\">最近三个月</option>\n                                <option value=\"4\">自定义时间</option>\n                            </select>\n                        </div>\n                        <div class=\"form-group\" v-show=\"dateS==4\">\n                            <datepicker  :readonly=\"true\" :value.sync=\"checkForm.startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                            <datepicker  :readonly=\"true\" :value.sync=\"checkForm.endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                        </div>\n                    </div>\n                    <div  class=\"\">\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" v-model=\"checkForm.certificate\" placeholder=\"凭证号\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" v-model=\"checkForm.keyword\" placeholder=\"收款方、账户名、账号\">\n                        </div>\n                        <div class=\"form-group\">\n                            <select class=\"form-control\" v-model=\"checkForm.status\">\n                                <option value=\"\">请选择对账状态</option>\n                                <option value=\"1\">成功</option>\n                                <option value=\"0\">待对账</option>\n                            </select>\n                        </div>\n                        <div class=\"form-group\">\n                            <select class=\"form-control\" v-model=\"checkForm.purpose\">\n                                <option value=\"\">请选择用途</option>\n                                <option value=\"1\">佣金划付</option>\n                                <option value=\"2\">往来款</option>\n                                <option value=\"3\">转账退款</option>\n                                <option value=\"4\">账户费用</option>\n                                <option value=\"5\">其它</option>\n                                <option value=\"6\">往来款</option>\n                                <option value=\"7\">转账退款</option>\n                                <option value=\"8\">账户费用</option>\n                                <option value=\"9\">其它</option>\n                            </select>\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" v-model=\"checkForm.remarks\" placeholder=\"备注\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"button\" class=\"btn btn-info\" @click=\"checkNew\" value=\"查询\">\n                        </div>\n                    </div>\n                </form>\n            </div>\n        </div>\n        <div v-if=\"!!zdlists.length\" class=\"panel panel-flat panel-collapsed\" v-for=\"(index,n) in zdlists\">\n            <div class=\"panel-heading bgddd\">\n                <div class=\"panel-title\">\n                    <p>\n                        <span>订单号:{{n.orderNumber}}</span>\n                        <span>付款金额:{{n.payoutAmount/100 | currency '' }}</span>\n                        <span>付款账户:{{n.payoutAccount}}</span>\n                        <span>收款方:{{n.payoutAccountName}}</span>\n                        <span>付款账户名:{{n.payoutAccountName}}</span>\n                        <span>付款账号:{{n.payoutAccountNumber}}</span>\n                        <span>收款账户名:{{n.incomeAccountName}}</span>\n                        <span>收款账号:{{n.incomeAccountNumber}}</span>\n                        <span>银行凭证号:{{n.certificate}}</span>\n                        <span>付款时间:{{n.paymentTime | datetime}}</span>\n                        <span>用途:\n                             <template v-if=\"n.purpose==1\"> 补贴划付</template>\n                             <template v-if=\"n.purpose==2\"> 额度采购</template>\n                             <template v-if=\"n.purpose==3\"> 退税划付</template>\n                             <template v-if=\"n.purpose==4\"> 预付款</template>\n                             <template v-if=\"n.purpose==5\"> 供货商划付</template>\n                        </span>\n                        <span>收款开户行:{{n.incomeBankName}}</span>\n                        <span>申请分公司:{{n.applyCompany}}</span>\n                        <span>申请时间:{{n.applyTime | datetime}}</span>\n                        <span>\n                            状态:\n                             <template v-if=\"n.status==1\"> 等待审核</template>\n                             <template v-if=\"n.status==2\"> 等待划付</template>\n                             <template v-if=\"n.status==3\"> 等待对账</template>\n                             <template v-if=\"n.status==4\"> 对账成功</template>\n                             <template v-if=\"n.status==5\"> 划付失败</template>\n                        </span>\n                        <span>对账时间:</span>\n                    </p>\n                    <p>备注:{{n.remarks}}</p>\n                </div>\n                <div class=\"pull-right\" @click=\"getInfo(index)\">\n                    <span class=\"pull-left\">查看详情</span>\n                    <ul class=\"icons-list pull-left\" >\n                        <li><a data-action=\"collapse\"></a></li>\n                    </ul>\n                </div>\n            </div>\n            <div  v-show=\"!!zdlists.length\" class=\"dataTables_wrapper no-footer\">\n                <div class=\"datatable-scroll\">\n                    <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                        <thead>\n                        <tr  role=\"row\">\n                            <th>生成日期</th>\n                            <th>商户名称</th>\n                            <th>划付金额</th>\n                            <th>用途</th>\n                            <th>操作</th>\n                            <th>状态</th>\n                            <th>备注</th>\n                        </tr>\n                        </thead>\n                        <tbody>\n                        <tr role=\"row\"  v-for=\"trlist in n.listinfo\">\n                            <td>{{trlist.createAt | datetime}}</td>\n                            <td>{{trlist.merchantName}}</td>\n                            <td>{{trlist.amount/100 | currency '' }}</td>\n                            <td>\n                                <template v-if=\"n.purpose==1\"> 补贴划付</template>\n                                <template v-if=\"n.purpose==2\"> 额度采购</template>\n                                <template v-if=\"n.purpose==3\"> 退税划付</template>\n                                <template v-if=\"n.purpose==4\"> 预付款</template>\n                                <template v-if=\"n.purpose==5\"> 供货商划付</template>\n                            </td>\n                            <td><a href=\"\">详情</a></td>\n                            <td>\n                                <template v-if=\"trlist.status==1\"> 等待审核</template>\n                                <template v-if=\"trlist.status==2\"> 等待划付</template>\n                                <template v-if=\"trlist.status==3\"> 等待对账</template>\n                                <template v-if=\"trlist.status==4\"> 对账成功</template>\n                                <template v-if=\"trlist.status==5\"> 划付失败</template>\n                                <template v-if=\"trlist.status==6\"> 已关闭</template>\n                            </td>\n                            <td>{{trlist.remarks/100}}</td>\n                        </tr>\n                        </tbody>\n                    </table>\n                    <div class=\"pull-right\">\n                        <template v-if=\"n.status==2\">\n                            <input data-toggle=\"modal\" data-target=\"#modal_waring\" type=\"button\" @click=\"pay(n.id)\" class=\"btn btn-gray\" value=\"确认划付\">\n                            <input data-toggle=\"modal\" data-target=\"#modal_submit\" type=\"button\" @click=\"back(n.id)\" class=\"btn btn-gray\" value=\"退回重审\">\n                        </template>\n                        <template v-if=\"n.status==3\">\n                            <input data-toggle=\"modal\" data-target=\"#modal_checking\" type=\"button\" @click=\"checking(n.id)\" class=\"btn btn-gray\" value=\"对账\">\n                        </template>\n                        <template v-if=\"n.status==5\">\n                            <input data-toggle=\"modal\" data-target=\"#modal_waring\" type=\"button\" @click=\"update(n.id)\" class=\"btn btn-gray\" value=\"更新订单\">\n                            <input data-toggle=\"modal\" data-target=\"#modal_submit\" type=\"button\" @click=\"apply(n.id)\" class=\"btn btn-gray\" value=\"申请划付\">\n                            <input data-toggle=\"modal\" data-target=\"#modal_waring\" type=\"button\" @click=\"close(n.id)\" class=\"btn btn-gray\" value=\"关闭订单\">\n                        </template>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"panel panel-flat panel-collapsed\" style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n            未找到您要查询的账单\n        </div>\n        <page :all=\"pageall\"\n              :cur.sync=\"pagecur\"\n              :page_size.sync=\"page_size\">\n        </page>\n        <div data-backdrop=\"static\"  id=\"modal_waring\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\" v-text=\"waring\"></h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"form-group tc\">\n                            <button  v-if=\"waring=='你确认更新账单？'\" type=\"button\" @click=\"updateTrue\" class=\"btn btn-primary\">确认</button>\n                            <button  v-if=\"waring=='你确认划付该账单？'\" type=\"button\" @click=\"payTrue\" class=\"btn btn-primary\">确认</button>\n                            <button  v-if=\"waring=='你确认关闭该账单？'\" type=\"button\" @click=\"closeTrue\" class=\"btn btn-primary\">确认</button>\n                            <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div data-backdrop=\"static\"  id=\"modal_submit\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\" v-text=\"title\"></h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"form-group\">\n                            <label class=\"col-lg-3 control-label\" v-if=\"subtitle=='退回重审'\"><i>*</i>退回原因</label>\n                            <label class=\"col-lg-3 control-label\" v-if=\"subtitle=='申请划付'\"><i>*</i>备注</label>\n                            <div class=\"col-lg-9\">\n                                <textarea rows=\"5\" cols=\"5\" class=\"form-control\" placeholder=\"\"></textarea>\n                            </div>\n                        </div>\n                        <div class=\"form-group tc\">\n                            <button  v-if=\"subtitle=='退回重审'\" type=\"button\" @click=\"backTrue\" class=\"btn btn-primary\">退回</button>\n                            <button  v-if=\"subtitle=='申请划付'\" type=\"button\" @click=\"applyTrue\" class=\"btn btn-primary\">申请</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div data-backdrop=\"static\"  id=\"modal_checking\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog modal-lg\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\">对账</h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"tc f20\">\n                            请选择备付金银行流水\n                        </div>\n                        <table class=\"table datatable-selection-single dataTable no-footer\" style=\"border: 1px solid #ccc;\">\n                                        <thead>\n                                            <tr role=\"row\">\n                                                <th>凭证号</th>\n                                                <th>交易时间</th>\n                                                <th>收款方</th>\n                                                <th>收款信息</th>\n                                                <th>付款金额</th>\n                                                <th>用途</th>\n                                                <th>备注</th>\n                                                <th>操作</th>\n                                            </tr>\n                                        </thead>\n                                    <tbody>\n                                        <tr role=\"row\"  v-for=\"n in checkLists\">\n                                            <td>{{n.certificate}}</td>\n                                            <td>{{n.tradeTime || datetime}}</td>\n                                            <td>{{n.collectionName}}</td>\n                                            <td>{{n.accountName}}</br>{{n.accountNumber}}</td>\n                                            <td>{{n.payoutAmount/100 | currency '' }}</td>\n                                            <td>\n                                                <template v-if=\"n.purpose==1\"> 补贴划付</template>\n                                                <template v-if=\"n.purpose==2\"> 额度采购</template>\n                                                <template v-if=\"n.purpose==3\"> 退税划付</template>\n                                                <template v-if=\"n.purpose==4\"> 预付款</template>\n                                                <template v-if=\"n.purpose==5\"> 供货商划付</template>\n                                            </td>\n                                            <td>{{n.remarks}}</td>\n                                            <td><a href=\"javascript:void(0)\" @click=\"checking(n.reserveCashId)\">选择</a></td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</index>\n";
 
 /***/ }
-]));
+
+});

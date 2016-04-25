@@ -1,4 +1,4 @@
-webpackJsonp([8],Array(61).concat([
+webpackJsonp([11],Array(61).concat([
 /* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3720,17 +3720,30 @@ webpackJsonp([8],Array(61).concat([
 /* 125 */,
 /* 126 */,
 /* 127 */,
-/* 128 */
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(129)
-	__vue_script__ = __webpack_require__(131)
+	__webpack_require__(142)
+	__vue_script__ = __webpack_require__(144)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\BFJZC\\subsidy-tax-rebate.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(132)
+	  console.warn("[vue-loader] dev\\js\\views\\XTPZ\\user-managerment.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(145)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -3740,7 +3753,7 @@ webpackJsonp([8],Array(61).concat([
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\BFJZC\\subsidy-tax-rebate.vue"
+	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\XTPZ\\user-managerment.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -3749,13 +3762,13 @@ webpackJsonp([8],Array(61).concat([
 	})()}
 
 /***/ },
-/* 129 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(130);
+	var content = __webpack_require__(143);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -3764,8 +3777,8 @@ webpackJsonp([8],Array(61).concat([
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./subsidy-tax-rebate.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./subsidy-tax-rebate.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./user-managerment.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./user-managerment.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -3775,7 +3788,7 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 130 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -3783,13 +3796,13 @@ webpackJsonp([8],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\nth{\n    min-width: 85px;\n}\n", ""]);
+	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n.controlSpan{\n    float: left;\n    margin-right: 10px;\n}\n.modal-foot{\n    clear:both;\n    text-align: center;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 131 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3809,7 +3822,7 @@ webpackJsonp([8],Array(61).concat([
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// <template>
-	//     <index title="补贴退税" ptitle="备付金支出"  isshow="isshow">
+	//     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
 	//         <section class="content" slot="content">
 	//             <div class="row">
 	//                 <div class="col-xs-12">
@@ -3824,52 +3837,7 @@ webpackJsonp([8],Array(61).concat([
 	//                                     </select>
 	//                                 </div>
 	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="cityID">
-	//                                     <option value="">请选择城市</option>
-	//                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="timeRange">
-	//                                         <option value="">请选择日期</option>
-	//                                         <option value="0">昨天</option>
-	//                                         <option value="1">最近一周</option>
-	//                                         <option value="2">最近一个月</option>
-	//                                         <option value="3">最近三个月</option>
-	//                                         <option value="4">自定义时间</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group" v-show="timeRange==4">
-	//                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-	//                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
-	//                                 </div>
-	//                                 <br/>
-	//                                 <br/>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="createType">
-	//                                         <option value="">请选择生成方式</option>
-	//                                         <option value="1">系统生成</option>
-	//                                         <option value="2">手工录入</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="status">
-	//                                         <option value="">请选择状态</option>
-	//                                         <option value="1">等待审核</option>
-	//                                         <option value="2">等待划付</option>
-	//                                         <option value="3">等待对账</option>
-	//                                         <option value="4">对账成功</option>
-	//                                         <option value="5">划付失败</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="remark" placeholder="备注">
+	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
 	//                                 </div>
 	//                                 <div class="form-group">
 	//                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -3879,48 +3847,56 @@ webpackJsonp([8],Array(61).concat([
 	//                         <div class="box-body box-tbl">
 	//                             <table id="table1" class="table table-bordered table-hover">
 	//                                 <thead>
-	//                                     <tr>
-	//                                         <th>ID</th>
-	//                                         <th>生成日期</th>
-	//                                         <th>分公司</th>
-	//                                         <th>城市</th>
-	//                                         <th>付款账户</th>
-	//                                         <th>商户ID</th>
-	//                                         <th>商户名称</th>
-	//                                         <th>收款账户信息</th>
-	//                                         <th>生成方式</th>
-	//                                         <th>退税金额</th>
-	//                                         <th>交易</th>
-	//                                         <th>状态</th>
-	//                                         <th>付款流水</th>
-	//                                         <th>备注</th>
-	//                                     </tr>
+	//                                 <tr>
+	//                                     <th>序号</th>
+	//                                     <th>分公司</th>
+	//                                     <th>用户名</th>
+	//                                     <th>手机号</th>
+	//                                     <th>姓名</th>
+	//                                     <th>最后登录时间</th>
+	//                                     <th>操作</th>
+	//                                 </tr>
 	//                                 </thead>
 	//                                 <tbody>
-	//                                     <tr v-if="!!subsidyTaxRebateDetailList.length" v-for="strd in subsidyTaxRebateDetailList">
-	//                                         <td>{{strd.id}}</td>
-	//                                         <td>{{strd.createTime | datetime}}</td>
-	//                                         <td>{{strd.subCompanyName}}</td>
-	//                                         <td>{{strd.cityName}}</td>
-	//                                         <td>{{strd.payAccount}}</td>
-	//                                         <td>{{strd.merchantOperationID}}</td>
-	//                                         <td>{{strd.merchantName}}</td>
-	//                                         <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>
-	//                                         <td>
-	//                                             <template v-if="strd.createType==1">系统生成</template>
-	//                                             <template v-if="strd.createType==2">手工录入</template>
-	//                                         </td>
-	//                                         <td>{{strd.taxRebateAmount}}</td>
-	//                                         <td><a :href="strd.id">明细</a> </td>
-	//                                         <td>
-	//                                             <template v-if="strd.status==1">等待对账</template>
-	//                                             <template v-if="strd.status==2">划付失败</template>
-	//                                         </td>
-	//                                         <td><a :href="strd.id">申请划付</a></td>
-	//                                         <td>{{strd.remarks}}</td>
-	//                                     </tr>
+	//                                 <tr v-if="!!userList.length" v-for="(index,user) in userList">
+	//                                     <td>{{index+1}}</td>
+	//                                     <td>{{user.subCompanyName}}</td>
+	//                                     <td>{{user.name}}</td>
+	//                                     <td>{{user.phone}}</td>
+	//                                     <td>{{user.name}}</td>
+	//                                     <td>{{user.loginTime | datetime}}</td>
+	//                                     <td>
+	//                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                       
+	//                                     </td>
+	//                                 </tr>
 	//                                 </tbody>
 	//                             </table>
+	//                         </div>
+	//                         <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
+	//                             <div class="modal-dialog">
+	//                                 <div class="modal-content">
+	//                                      <div class="modal-header">
+	//                                         <h3>管辖范围</h3>
+	//                                         <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                      </div>
+	//                                      <div class="modal-body">
+	//                                          <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+	//                                          <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
+	//                                          <hr/>
+	//                                          <div class="controlSpan" v-for="controlSpan in controlSpanList">
+	//                                              <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+	//                                              <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>  
+	//                                          </div>
+	//                                          <hr/>
+	//                                      </div>
+	//                                      <div class="modal-foot">
+	//                                         <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
+	//                                         <input type="button" class="btn btn-gray" v-on:click="cancel" data-dismiss="modal" value="取消">
+	//                                         <br/>
+	//                                      </div>
+	//                                 </div>
+	//                             </div>
+	//
 	//                         </div>
 	//                         <div class="box-footer">
 	//                             <page :all="pageall"
@@ -3931,10 +3907,13 @@ webpackJsonp([8],Array(61).concat([
 	//                     </div>
 	//                 </div>
 	//             </div>
-	//         </div>
+	//         </section>
 	//     </index>
 	// </template>
 	// <style>
+	//     body{
+	//         background-color:#fff;
+	//     }
 	//     .box-tbl{
 	//         overflow:auto;
 	//     }
@@ -3942,42 +3921,43 @@ webpackJsonp([8],Array(61).concat([
 	//         margin: 25px auto;
 	//         text-align: center;
 	//     }
-	//     th{
+	//     .box-body #table1 th{
 	//         min-width: 85px;
+	//     }
+	//     .controlSpan{
+	//         float: left;
+	//         margin-right: 10px;
+	//     }
+	//     .modal-foot{
+	//         clear:both;
+	//         text-align: center;
 	//     }
 	// </style>
 	// <script>
 	exports.default = {
+	    props: {},
 	    data: function data() {
 	        return {
 	            subCompanyID: "",
-	            cityID: "",
-	            createType: "",
-	            status: "",
-	            timeRange: '',
-	            startDate: "",
-	            endDate: "",
-	            merchantID: "",
-	            merchantName: "",
 	            keywords: "",
 	            id: "",
-	            seriesNumber: "",
-	            activityID: 0,
+	            userID: "",
 	            subcompanyList: [],
+	            controlSpanList: [],
 	            pageall: 1,
 	            pagecur: 1,
 	            page_size: 15,
-	            cityList: [],
-	            subsidyTaxRebateDetailList: []
+	            userList: [],
+	            controlSpanArray: []
 	        };
 	    },
 
 	    methods: {
-	        //获取补贴划付数据
-	        getsubsidyTaxRebateDetailList: function getsubsidyTaxRebateDetailList(data) {
-	            this.$http.post('./subsidyTaxRebateDetail/list', data).then(function (response) {
+	        //获取员工数据
+	        getUserList: function getUserList(data) {
+	            this.$http.post('./user/list', data).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('userList', response.data.data) : null;
 	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
 	            }, function (response) {
 	                console.log(response);
@@ -3992,75 +3972,60 @@ webpackJsonp([8],Array(61).concat([
 	                console.log(response);
 	            });
 	        },
-	        //获取城市数据
-	        getCity: function getCity(data) {
-	            this.$http.post('./city/list', data).then(function (response) {
+	        query: function query() {
+	            var data = {
+	                subCompanyID: this.subCompanyID,
+	                keywords: this.keywords
+	            };
+	            this.getUserList(data);
+	        },
+
+	        //显示员工管辖
+	        showCS: function showCS(userId) {
+	            this.userID = userId;
+	            this.$http.post('./user/userControlSpanList/' + userId).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('cityList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('controlSpanList', response.data.data) : null;
 	            }, function (response) {
 	                console.log(response);
 	            });
 	        },
-	        getTwo: function getTwo(num) {
-	            if (num.toString().length >= 2) return num;
-	            var str = "";
-	            for (var i = num.toString().length; i < 2; i++) {
-	                str += "0";
-	            }return str + num.toString();
+	        checkAll: function checkAll() {
+	            $("input[name='ckbox']").prop({ 'checked': true });
 	        },
-	        query: function query() {
-	            // let data=this.data;
+	        othercheck: function othercheck() {
+	            $("input[name='ckbox']").each(function () {
+	                $(this).prop({ 'checked': !$(this).prop("checked") });
+	            });
+	        },
+	        submit: function submit() {
+	            var arrays = [];
+	            $("input[name='ckbox']:checked").each(function () {
+	                arrays.push($(this).prop("id"));
+	            });
+
 	            var data = {
-	                subCompanyID: this.subCompanyID,
-	                cityID: this.cityID,
-	                createType: this.createType,
-	                timeRange: this.timeRange,
-	                merchantID: this.merchantID,
-	                merchantName: this.merchantName,
-	                keywords: this.keywords,
-	                id: this.id,
-	                seriesNumber: this.seriesNumber,
-	                phone: this.phone,
-	                activityID: this.activityID
+	                userID: this.userID,
+	                subCompanyIDs: arrays
 	            };
-	            this.getsubsidyTaxRebateDetailList(data);
-	        }
+	            this.$http.post('./user/saveUserControlSpans', data).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                if (response.data.code == 0) {
+	                    alert("保存成功！");
+	                }
+	            }, function (response) {
+	                console.log(response);
+	            });
+	            //关闭弹出层
+	            $(".modal").modal("hide");
+	        },
+	        cancel: function cancel() {}
 	    },
 	    ready: function ready() {
-	        this.getsubsidyTaxRebateDetailList({});
+	        this.getUserList({});
 	        this.getSubcompany({});
-	        this.getCity({});
 	    },
-	    watch: {
-	        timeRange: function timeRange() {
-	            console.log();
-	            var d = new Date();
-	            var day = d.getDate();
-	            var month = d.getMonth() + 1;
-	            var year = d.getFullYear();
-	            var newD;
-	            switch (this.timeRange) {
-	                case '0':
-	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 1);
-	                    break;
-	                case '1':
-	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 7);
-	                    break;
-	                case '2':
-	                    newD = year + "-" + this.getTwo(month - 1) + "-" + this.getTwo(day);
-	                    break;
-	                case '3':
-	                    newD = year + "-" + this.getTwo(month - 3) + "-" + this.getTwo(day);
-	                    break;
-	                case '4':
-	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-	                    break;
-	            }
-	            var endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-	            this.startDate = newD;
-	            this.endDate = endD;
-	        }
-	    },
+	    watch: {},
 	    components: {
 	        'datepicker': _datepicker2.default,
 	        'dialog': _dialog2.default
@@ -4069,10 +4034,10 @@ webpackJsonp([8],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 132 */
+/* 145 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <index title=\"补贴退税\" ptitle=\"备付金支出\"  isshow=\"isshow\">\n        <section class=\"content\" slot=\"content\">\n            <div class=\"row\">\n                <div class=\"col-xs-12\">\n                    <div class=\"box\">\n                        <div class=\"box-header\">\n                            <form class=\"form-inline manage-form\">\n                                <br/>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                    <option value=\"\">请选择分公司</option>\n                                        <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"cityID\">\n                                    <option value=\"\">请选择城市</option>\n                                        <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"timeRange\">\n                                        <option value=\"\">请选择日期</option>\n                                        <option value=\"0\">昨天</option>\n                                        <option value=\"1\">最近一周</option>\n                                        <option value=\"2\">最近一个月</option>\n                                        <option value=\"3\">最近三个月</option>\n                                        <option value=\"4\">自定义时间</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\" v-show=\"timeRange==4\">\n                                    <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                    <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                                </div>\n                                <br/>\n                                <br/>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"merchantID\" placeholder=\"商户ID\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"商户名、收款账户名、帐号\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"createType\">\n                                        <option value=\"\">请选择生成方式</option>\n                                        <option value=\"1\">系统生成</option>\n                                        <option value=\"2\">手工录入</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"status\">\n                                        <option value=\"\">请选择状态</option>\n                                        <option value=\"1\">等待审核</option>\n                                        <option value=\"2\">等待划付</option>\n                                        <option value=\"3\">等待对账</option>\n                                        <option value=\"4\">对账成功</option>\n                                        <option value=\"5\">划付失败</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"remark\" placeholder=\"备注\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                                </div>\n                            </form> \n                        </div>\n                        <div class=\"box-body box-tbl\">\n                            <table id=\"table1\" class=\"table table-bordered table-hover\">\n                                <thead>\n                                    <tr>\n                                        <th>ID</th>\n                                        <th>生成日期</th>\n                                        <th>分公司</th>\n                                        <th>城市</th>\n                                        <th>付款账户</th>\n                                        <th>商户ID</th>\n                                        <th>商户名称</th>\n                                        <th>收款账户信息</th>\n                                        <th>生成方式</th>\n                                        <th>退税金额</th>\n                                        <th>交易</th>\n                                        <th>状态</th>\n                                        <th>付款流水</th>\n                                        <th>备注</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    <tr v-if=\"!!subsidyTaxRebateDetailList.length\" v-for=\"strd in subsidyTaxRebateDetailList\">\n                                        <td>{{strd.id}}</td>\n                                        <td>{{strd.createTime | datetime}}</td>\n                                        <td>{{strd.subCompanyName}}</td>\n                                        <td>{{strd.cityName}}</td>\n                                        <td>{{strd.payAccount}}</td>\n                                        <td>{{strd.merchantOperationID}}</td>\n                                        <td>{{strd.merchantName}}</td>\n                                        <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>\n                                        <td>\n                                            <template v-if=\"strd.createType==1\">系统生成</template>\n                                            <template v-if=\"strd.createType==2\">手工录入</template>\n                                        </td>\n                                        <td>{{strd.taxRebateAmount}}</td>\n                                        <td><a :href=\"strd.id\">明细</a> </td>\n                                        <td>\n                                            <template v-if=\"strd.status==1\">等待对账</template>\n                                            <template v-if=\"strd.status==2\">划付失败</template>\n                                        </td>\n                                        <td><a :href=\"strd.id\">申请划付</a></td>\n                                        <td>{{strd.remarks}}</td>\n                                    </tr>\n                                </tbody>\n                            </table>\n                        </div>\n                        <div class=\"box-footer\">\n                            <page :all=\"pageall\"\n                                  :cur.sync=\"pagecur\"\n                                  :page_size.sync=\"page_size\">\n                            </page>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </index>\n</template>";
+	module.exports = "\n<index title=\"员工管理\" ptitle=\"系统配置\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"用户名、手机号、姓名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>序号</th>\n                                <th>分公司</th>\n                                <th>用户名</th>\n                                <th>手机号</th>\n                                <th>姓名</th>\n                                <th>最后登录时间</th>\n                                <th>操作</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!userList.length\" v-for=\"(index,user) in userList\">\n                                <td>{{index+1}}</td>\n                                <td>{{user.subCompanyName}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.phone}}</td>\n                                <td>{{user.name}}</td>\n                                <td>{{user.loginTime | datetime}}</td>\n                                <td>\n                                    <a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal_ControlSpan\" v-on:click=\"showCS(user.id)\">管辖范围</a>                                        \n                                </td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div id=\"modal_ControlSpan\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>管辖范围</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                     <input type=\"button\" id=\"All\" value=\"全选\" v-on:click=\"checkAll()\"/>\n                                     <input type=\"button\" id=\"othercheck\" value=\"反选\" v-on:click=\"othercheck()\"/>\n                                     <hr/>\n                                     <div class=\"controlSpan\" v-for=\"controlSpan in controlSpanList\">\n                                         <input type=\"checkbox\" :id=\"controlSpan.subCompanyID\" name=\"ckbox\"  :checked=\"controlSpan.selected\"/>\n                                         <label :for=\"controlSpan.subCompanyID\">{{controlSpan.name}}</label>   \n                                     </div>\n                                     <hr/>\n                                 </div>\n                                 <div class=\"modal-foot\">\n                                    <input type=\"button\" class=\"btn btn-primary\" v-on:click=\"submit\" value=\"提交\">\n                                    <input type=\"button\" class=\"btn btn-gray\" v-on:click=\"cancel\" data-dismiss=\"modal\" value=\"取消\">\n                                    <br/>\n                                 </div>\n                            </div>\n                        </div>\n                       \n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
 
 /***/ }
 ]));
