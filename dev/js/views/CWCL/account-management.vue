@@ -3,7 +3,7 @@
            :ptitle="'财务处理'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content managenment" slot="content">
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <form class="form-inline manage-form">
@@ -216,48 +216,48 @@
     </index>
 </template>
 <style>
-    .validation-error-label{
+    .managenment .validation-error-label{
         margin-left: 20%;
     }
-    .timeerror,.suberror,.suberror1{
+    .managenment .timeerror,.suberror,.suberror1{
         display: none;
     }
-    .suberror,.suberror1{
+    .managenment .suberror,.suberror1{
         padding-top: 3px;
     }
-    .form-group{
+    .managenment  .form-group{
         text-align: left;
     }
-    .form-group.tc{
+    .managenment  .form-group.tc{
         text-align: center;
     }
-    .modal-body .form-control{
+    .managenment .modal-body .form-control{
         text-align: left;
         width:67%;
         display: inline-block;
     }
-    .modal-body label{
+    .managenment .modal-body label{
         width:20%;
         display: inline-block;
     }
-    .modal-body label i{
+    .managenment .modal-body label i{
         color:red;
     }
-    .modal-body .waring{
+    .managenment  .modal-body .waring{
         color: red;
         margin-left: 5px;
     }
-    .modal-body button{
+    .managenment  .modal-body button{
         width:35%;
     }
-    td span{
+    .managenment td span{
         cursor: pointer;
         color: #3c8dbc;
     }
-    td span:hover{
+    .managenment td span:hover{
         opacity: 80;
     }
-    .page-bar{
+    .managenment .page-bar{
         margin: 25px auto;
         text-align: center;
     }
@@ -339,6 +339,7 @@
                 this.getZlists(this.defaultData);
             },
             rewrite(_list){
+                this.errorHide();
                 this.accountId=_list.id;
                 $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
@@ -353,6 +354,7 @@
             },
             personDialog(a,b){
                 this.errorHide();
+                this.fire=false;
                 this.accountId=b;
                 this.$http.post('./chargeperson/query/'+a)
                         .then(function (response) {

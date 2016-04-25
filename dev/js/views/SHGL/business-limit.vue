@@ -1,9 +1,9 @@
 <template>
-    <index :title="'商户列表'"
+    <index :title="'额度采购'"
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content blists" slot="content">
+        <div class="content blimit" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -99,6 +99,7 @@
                                     <a data-toggle="modal" data-target="#modal_update" href="javascript:void(0)" @click="setAcc()">编辑</a>
                                     <a href="javascript:void(0)" @click="setAcc()">明细</a>
                                     <a href="javascript:void(0)" @click="setAcc()">停用</a>
+                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management'}">账户</a>
                                 </td>
                                 <td><a data-toggle="modal"  data-target="#modal_see" href="javascript:void(0)">查看</a></td>
                                 <td>邹里堃</td>
@@ -169,27 +170,49 @@
                             <div class="modal-body">
                                 <div class="modal-body member_rules_modal-body">
                                     <div class="form-group">
-                                        <label class="w28" ><i>*</i>抵扣方式：</label>
-                                        <select class="form-control" v-model="defaultData.city">
-                                            <option value="0">全单</option>
-                                            <option value="1">可打折</option>
-                                        </select>
-                                        <label class="w28" ><i>*</i>自动划付：</label>
-                                        <input type="radio" value="one" v-model="zdhf">
-                                        <label class="w28" for="one">开启</label>
-                                        <input type="radio" value="two" v-model="zdhf">
-                                        <label class="w28" for="two">关闭</label>
+                                        <div class="pull-left">
+                                            <label class="w28" ><i>*</i>抵扣方式：</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" v-model="defaultData.city">
+                                                <option value="0">全单</option>
+                                                <option value="1">可打折</option>
+                                            </select>
+                                        </div>
+                                        <div class="pull-left">
+                                            <label class="w28" ><i>*</i>自动划付：</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="radio" value="one" v-model="zdhf">
+                                            <label class="w28" for="one">开启</label>
+                                            <input type="radio" value="two" v-model="zdhf">
+                                            <label class="w28" for="two">关闭</label>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="w28" ><i>*</i>单笔采购额度：</label>
-                                        <input class="form-control" type="text" placeholder="10000">元
-                                        <label class="w28" ><i>*</i>单笔采购本金：</label>
-                                        <input class="form-control" type="text" placeholder="10000">元
+                                        <div class="pull-left">
+                                            <label class="w28" ><i>*</i>单笔采购额度：</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                             <input class="form-control" type="text" placeholder="10000">
+                                        </div>
+                                        <div class="col-md-1">
+                                            元
+                                        </div>
+                                        <div class="pull-left">
+                                            <label class="w28" ><i>*</i>单笔采购本金：</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control" type="text" placeholder="10000">
+                                        </div>
+                                        <div class="pull-left">
+                                            元
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" @click="personTrue(person.id)" class="btn">添加消化账户</button>
+                                        <button type="button" data-toggle="modal" data-target="#modal_add"  @click="addUser2" class="btn">添加消化账户</button>
                                     </div>
-                                    <table v-show="bthf" class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                    <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
                                         <thead>
                                         <tr role="row">
                                             <th>商户ID</th>
@@ -211,12 +234,20 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="w28"><i>*</i>上传凭证：</label>
+                                    <div class="form-group">
+                                        <div class="pull-left">
+                                            <label class="w28" ><i>*</i>上传凭证：</label>
+                                        </div>
+                                        <div class="pull-left">
                                             <input type="file">
+                                        </div>
+                                        <div class="pull-left">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
+                                        </div>
+                                        <div class="col-md-3">
                                             <textarea class="form-control" width="70%" cols="20" rows="3"></textarea>
+                                        </div>
+                                        <div class="col-md-3">
                                             <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
                                         </div>
                                     </div>
@@ -256,85 +287,95 @@
                 </div>
                 </div>
 
-                <!--添加账户dialog-->
+                <!--添加商户dialog-->
                 <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">划款账户</h5>
+                                <h5 class="modal-title" v-text="addTitle"></h5>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <span>商户id：4392</span>
-                                    <span>商户名：南昌玩聚恒茂店</span>
+                                <div class="addtop">
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="defaultData.companyId">
+                                            <option value="">请选择分公司</option>
+                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="defaultData.city">
+                                            <option value="">请选择城市</option>
+                                            <option v-for="(index,n) in city" v-text="n.cityName" :value="n.cityId"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" v-model="defaultData.id" placeholder="商户ID">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="商户名">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="button" class="btn btn-info" @click="checkAccount" value="查询">
+                                    </div>
                                 </div>
-                                <div>
-                                    <div><span @click="bthfShow(0)">补贴划付</span><span @click="bthfShow(1)">额度采购</span></div>
-                                    <div><span>账户名：魏璇</span><span>账  号：6214837910896095</span></div>
-                                    <div><span>开户行：招商银行股份有限公司南昌营业部</span><span>提入行号：308421022022</span></div>
-                                    <a data-toggle="modal"  data-target="#modal_updata" href="javascript:void(0);">更新</a>
+                                <div class="addbottom">
+                                    <div style="text-indent: 68%">已选择：</div>
+                                    <div class="col-md-6">
+                                        <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                            <thead>
+                                            <tr role="row">
+                                                <th><label><input v-model="addId" type="checkbox">全选</label></th>
+                                                <th>分公司</th>
+                                                <th>城市</th>
+                                                <th>商户名</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr role="row">
+                                                <td>
+                                                    <label>
+                                                        <input v-model="addId" value="1" type="checkbox">1
+                                                    </label>
+                                                </td>
+                                                <td>南昌卡说</td>
+                                                <td>南昌</td>
+                                                <td>南宁汉斯自酿啤酒城</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td>
+                                                    <label>
+                                                        <input v-model="addId" value="2" type="checkbox">2
+                                                    </label>
+                                                </td>
+                                                <td>南昌卡说</td>
+                                                <td>南昌</td>
+                                                <td>南宁汉斯自酿啤酒城</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td>
+                                                    <label>
+                                                        <input v-model="addId" value="3" type="checkbox">3
+                                                    </label>
+                                                </td>
+                                                <td>南昌卡说</td>
+                                                <td>南昌</td>
+                                                <td>南宁汉斯自酿啤酒城</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                        <input type="button" class="btn btn-info" @click="checkAccount" value="删除">
+                                        <input type="button" class="btn btn-info" @click="checkAccount" value="确认">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul>
+                                            <li v-for="n in liLists" track-by="$index" @click="checkLi($event)">{{n}}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <table v-show="bthf" class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>ID</th>
-                                        <th>账户信息</th>
-                                        <th>更新时间</th>
-                                        <th>更新人</th>
-                                        <th>变更凭证</th>
-                                        <th>更新备注</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr role="row">
-                                        <td>1</td>
-                                        <td>昌玩聚和他(她)朋友们</td>
-                                        <td>2013-06-03 13:26:19</td>
-                                        <td>贾燕</td>
-                                        <td><a href="javascript:void(0)">下载</a></td>
-                                        <td>总店额度采购</td>
-                                    </tr>
-                                    <!--<tr role="row"  v-for="n in checkLists">-->
-                                    <!--<td>{{n.certificate}}</td>-->
-                                    <!--<td>{{n.collectionName}}</td>-->
-                                    <!--<td>{{n.tradeTime || datetime}}</td>-->
-                                    <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
-                                    <!--<td><a href="javascript:void(0)">下载</a></td>-->
-                                    <!--<td>{{n.remarks}}</td>-->
-                                    <!--</tr>-->
-                                    </tbody>
-                                </table>
-                                <table v-else class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>ID</th>
-                                        <th>账户信息1</th>
-                                        <th>更新时间1</th>
-                                        <th>更新人1</th>
-                                        <th>变更凭证1</th>
-                                        <th>更新备注1</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr role="row">
-                                        <td>1</td>
-                                        <td>昌玩聚和他(她)朋友们</td>
-                                        <td>2013-06-03 13:26:19</td>
-                                        <td>贾燕</td>
-                                        <td><a href="javascript:void(0)">下载</a></td>
-                                        <td>总店额度采购</td>
-                                    </tr>
-                                    <!--<tr role="row"  v-for="n in checkLists">-->
-                                    <!--<td>{{n.certificate}}</td>-->
-                                    <!--<td>{{n.collectionName}}</td>-->
-                                    <!--<td>{{n.tradeTime || datetime}}</td>-->
-                                    <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
-                                    <!--<td><a href="javascript:void(0)">下载</a></td>-->
-                                    <!--<td>{{n.remarks}}</td>-->
-                                    <!--</tr>-->
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -342,83 +383,62 @@
 
                 <!--查看账户dialog-->
                 <div data-backdrop="static"  id="modal_see" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">划款账户</h5>
+                                <h5 class="modal-title">查看消化商户</h5>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <span>商户id：4392</span>
-                                    <span>商户名：南昌玩聚恒茂店</span>
+                                <div class="addtop">
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="defaultData.companyId">
+                                            <option value="">请选择分公司</option>
+                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="defaultData.city">
+                                            <option value="">请选择城市</option>
+                                            <option v-for="(index,n) in city" v-text="n.cityName" :value="n.cityId"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" v-model="defaultData.id" placeholder="商户ID">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="商户名">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="button" class="btn btn-info" @click="checkAccount" value="查询">
+                                    </div>
                                 </div>
-                                <div>
-                                    <div><span @click="bthfShow(0)">补贴划付</span><span @click="bthfShow(1)">额度采购</span></div>
-                                    <div><span>账户名：魏璇</span><span>账  号：6214837910896095</span></div>
-                                    <div><span>开户行：招商银行股份有限公司南昌营业部</span><span>提入行号：308421022022</span></div>
-                                    <a data-toggle="modal"  data-target="#modal_updata" href="javascript:void(0);">更新</a>
+                                <div class="addbottom">
+                                    <div class="col-md-12">
+                                        <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>商户ID</th>
+                                                <th>分公司</th>
+                                                <th>城市</th>
+                                                <th>商户名</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr role="row">
+                                                <td>1</td>
+                                                <td>南昌卡说</td>
+                                                <td>南昌</td>
+                                                <td>南宁汉斯自酿啤酒城</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tc">
+                                        <input type="button" class="btn btn-gray" data-dismiss="modal" value="关闭">
+                                        <input type="button" class="btn btn-gray" data-dismiss="modal" data-toggle="modal" data-target="#modal_update" value="调整消化商户">
+                                    </div>
                                 </div>
-                                <table v-show="bthf" class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>ID</th>
-                                        <th>账户信息</th>
-                                        <th>更新时间</th>
-                                        <th>更新人</th>
-                                        <th>变更凭证</th>
-                                        <th>更新备注</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr role="row">
-                                        <td>1</td>
-                                        <td>昌玩聚和他(她)朋友们</td>
-                                        <td>2013-06-03 13:26:19</td>
-                                        <td>贾燕</td>
-                                        <td><a href="javascript:void(0)">下载</a></td>
-                                        <td>总店额度采购</td>
-                                    </tr>
-                                    <!--<tr role="row"  v-for="n in checkLists">-->
-                                    <!--<td>{{n.certificate}}</td>-->
-                                    <!--<td>{{n.collectionName}}</td>-->
-                                    <!--<td>{{n.tradeTime || datetime}}</td>-->
-                                    <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
-                                    <!--<td><a href="javascript:void(0)">下载</a></td>-->
-                                    <!--<td>{{n.remarks}}</td>-->
-                                    <!--</tr>-->
-                                    </tbody>
-                                </table>
-                                <table v-else class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>ID</th>
-                                        <th>账户信息1</th>
-                                        <th>更新时间1</th>
-                                        <th>更新人1</th>
-                                        <th>变更凭证1</th>
-                                        <th>更新备注1</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr role="row">
-                                        <td>1</td>
-                                        <td>昌玩聚和他(她)朋友们</td>
-                                        <td>2013-06-03 13:26:19</td>
-                                        <td>贾燕</td>
-                                        <td><a href="javascript:void(0)">下载</a></td>
-                                        <td>总店额度采购</td>
-                                    </tr>
-                                    <!--<tr role="row"  v-for="n in checkLists">-->
-                                    <!--<td>{{n.certificate}}</td>-->
-                                    <!--<td>{{n.collectionName}}</td>-->
-                                    <!--<td>{{n.tradeTime || datetime}}</td>-->
-                                    <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
-                                    <!--<td><a href="javascript:void(0)">下载</a></td>-->
-                                    <!--<td>{{n.remarks}}</td>-->
-                                    <!--</tr>-->
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -429,48 +449,58 @@
     </index>
 </template>
 <style>
-     .blists .form-group{
-        text-align: left;
+    .blimit .addtop,.blimit  .addbottom{
+        overflow: hidden;
     }
-     .blists .form-group.tc{
+    .blimit  .addbottom{
+        margin-top: 15px;
+    }
+    .blimit  .addbottom  .col-md-2{
         text-align: center;
     }
-     .blists .modal-body .form-control{
-        text-align: left;
-        width:67%;
-        display: inline-block;
+    .blimit  .addbottom  .col-md-2 input{
+        margin-bottom: 10px;
     }
-     .blists .modal-body label{
-        width:20%;
-        display: inline-block;
+    .blimit .addtop  .form-control,.blimit  .addbottom .form-control{
+        padding: 7px;
     }
-     .blists .modal-body label i{
-        color:red;
+    .blimit .addbottom table tr td, .blimit .addbottom table tr th{
+        padding: 2px;
     }
-     .blists .modal-body .waring{
-        color: red;
-        margin-left: 5px;
+    .blimit .addbottom ul{
+        list-style: none;
+        border: 1px solid #ccc;
+        padding:10px;
     }
-     .blists .modal-body button{
-        width:35%;
+    .blimit .addbottom ul li{
+        margin:5px 0;
+        cursor: pointer;
+        padding-left:3px;
     }
-     .blists table tr td, .blists table tr th{
+    .blimit .addbottom ul li.check-li{
+        background: #ccc;
+    }
+     .blimit table tr td, .blimit table tr th{
          padding: 20px 2px;
          text-align: center;
          text-overflow: ellipsis;
          overflow: hidden;
          white-space: nowrap;
      }
-     .blists td span{
+     .blimit td span{
         cursor: pointer;
         color: #3c8dbc;
     }
-     .blists td span:hover{
+     .blimit td span:hover{
         opacity: 80;
     }
-     .blists  .page-bar{
+     .blimit  .page-bar{
         margin: 25px auto;
         text-align: center;
+    }
+    .blimit  #modal_update .form-group{
+        overflow: hidden;
+        line-height: 36px;
     }
 </style>
 <script>
@@ -485,25 +515,12 @@
                 loginList:{},
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
-                relist:{
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
-                },
-                companylists:[],
-                typelists:[],
-                params:{},
-                tSelect:'',
-                cSelect:'',
+                addId:[],
                 uText:'',
-                addtitle:'',
-                waring:'',
-                fire:false,
-                person:{
-                    name:'',
-                    phone:'',
-                    email:''
-                },
                 accountId:'',
                 bthf:true,
+                liLists:[],
+                addTitle:''
             }
         },
         methods:{
@@ -536,8 +553,27 @@
                 $(".modal").modal("hide");
                 this.getZlists(this.defaultData);
             },
-            setAcc(){
-
+            addUser(){
+              this.addTitle='添加商户';
+            },
+            addUser2(){
+                this.addTitle='添加消化商户';
+            },
+            appendLi(a){
+                let _tr=$("input[value='" + a + "']").closest('tr');
+                let _html=_tr.children('td:last').html();
+                this.liLists.push(_html);
+                _tr.remove();
+            },
+            addTrue(e){
+                let a=this.addId;
+                for(let i=0;i<a.length;i++){
+                    this.appendLi(a[i]);
+                }
+                this.addId=[];
+            },
+            checkLi(e){
+                $(e.target).toggleClass('check-li');
             },
             bthfShow(type){
                 switch (type){
@@ -564,6 +600,11 @@
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             this.initList();
             this.getClist();
+            $('#modal_add').on('hidden.bs.modal',function(){
+                if(!$('#modal_update').is(':hidden')){
+                    $('#app').addClass('modal-open');
+                }
+            })
         },
         components:{
             'datepicker': datepicker,

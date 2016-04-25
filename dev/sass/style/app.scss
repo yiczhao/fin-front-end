@@ -1,10 +1,6 @@
-.wrapper{
-  position: relative;
-  .content-wrapper{
-    min-height: 720px;
-  }
-  .footer{
-    position: absolute;
-    bottom:0;
-  }
+.breadcrumb-line,.content{
+  min-width: 1280px;
+}
+.navbar{
+  min-width: 1540px;
 }
