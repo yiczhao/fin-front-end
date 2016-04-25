@@ -114,6 +114,14 @@ export default function(router){
                 require(['./views/SHGL/business-limit.vue'],resolve);
             }
         },
+        /* 商户管理-预付款 */
+        '/prepayment-lists/':{
+            name:'prepayment-lists',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/SHGL/prepayment-lists.vue'],resolve);
+            }
+        },
         // 转到登录页
         '*':{
             component:function () {

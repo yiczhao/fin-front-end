@@ -21,7 +21,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="box-body box-tbl">
+                        <div v-cloak v-show="!!userList.length" class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -35,7 +35,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-if="!!userList.length" v-for="(index,user) in userList">
+                                <tr v-for="(index,user) in userList">
                                     <td>{{index+1}}</td>
                                     <td>{{user.subCompanyName}}</td>
                                     <td>{{user.name}}</td>
@@ -48,6 +48,9 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到员工数据信息！
                         </div>
                         <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog">
@@ -90,6 +93,9 @@
 <style>
     body{
         background-color:#fff;
+    }
+    [v-cloak]{
+        display: none;
     }
     .box-tbl{
         overflow:auto;
@@ -195,7 +201,7 @@
                 }
                 this.$http.post('./user/saveUserControlSpans',data)
                     .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        // *** 判断请求是否成功如若
                         if (response.data.code==0)
                         {
                             alert("保存成功！");

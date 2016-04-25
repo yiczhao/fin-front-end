@@ -8,7 +8,7 @@
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
+                                    <input type="text" class="form-control" v-model="keywords" placeholder="用户名、姓名、描述">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" >

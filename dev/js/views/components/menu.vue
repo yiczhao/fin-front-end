@@ -58,7 +58,7 @@
                                     <ul class="hidden-ul">
                                         <li><a v-link="{'name':'business-lists'}">商户管理</a></li>
                                         <li><a v-link="{'name':'business-limit'}">额度采购</a></li>
-                                        <li><a href="#">预付款</a></li>
+                                        <li><a v-link="{'name':'prepayment-lists'}">预付款</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">代理商管理</a></li>
