@@ -114,6 +114,14 @@ export default function(router){
                 require(['./views/SHGL/business-limit.vue'],resolve);
             }
         },
+        /* 商户管理-额度采购账户列表 */
+        '/limitaccount-management/':{
+            name:'limitaccount-management',
+            router_type:'deposit',
+            component: function(resolve){
+                require(['./views/SHGL/limitaccount-management.vue'],resolve);
+            }
+        },
         // 转到登录页
         '*':{
             component:function () {
@@ -122,6 +130,7 @@ export default function(router){
         }
     })
     router.beforeEach(transition =>{
+        $(".modal").modal("hide");
         transition.next();
     });
 }

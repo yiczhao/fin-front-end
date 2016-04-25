@@ -93,10 +93,10 @@
         },
         watch:{
           username(){
-              if(this.username==''){this.usererror='请输入用户名';this.usershow=true;}else{this.usererror='';this.usershow=false;}
+              if(this.username!=''){this.usererror='';this.usershow=false;}
           },
           password(){
-              if(this.password==''){this.passerror='请输入密码';this.passshow=true;}else{this.passerror='';this.passshow=false;}
+              if(this.password!=''){this.passerror='';this.passshow=false;}
           }
         },
         ready(){

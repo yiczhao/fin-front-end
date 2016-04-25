@@ -142,7 +142,7 @@
                                 <div>
                                     <span>商户id：4392</span>
                                     <span>商户名：南昌玩聚恒茂店</span>
-                                    <span class="pull-right">额度采购消化账户：<a href="">南昌玩聚和他(她)朋友的咖啡馆</a></span>
+                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit'}">南昌玩聚和他(她)朋友的咖啡馆</a></span>
                                 </div>
                                 <div>历史记录：</div>
                                 <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">

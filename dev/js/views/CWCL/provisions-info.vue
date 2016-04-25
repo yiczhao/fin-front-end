@@ -164,9 +164,9 @@
                                         <input type="radio" id="two" value="two" v-model="glradio">
                                         <label class="w28" for="two">手工对账</label>
                                     </div>
-                                    <div class="form-group tc" v-show="glradio=='one'">
-                                        <button class="btn" @click="dzOne">选择付款流水</button>
-                                    </div>
+                                        <div class="form-group tc" v-show="glradio=='one'">
+                                            <button class="btn" @click="dzOne">选择付款流水</button>
+                                        </div>
                                     <div class="table2" v-show="checkOne&&glradio=='one'">
                                         <div class="box-body">
                                             <table id="table2" class="table table-bordered table-hover">
