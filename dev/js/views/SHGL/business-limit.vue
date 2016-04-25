@@ -3,7 +3,7 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content blists" slot="content">
+        <div class="content blimit" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -210,7 +210,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" @click="personTrue(person.id)" class="btn">添加消化账户</button>
+                                        <button type="button" data-toggle="modal" data-target="#modal_add"  @click="addUser2" class="btn">添加消化账户</button>
                                     </div>
                                     <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
                                         <thead>
@@ -293,7 +293,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">添加商户</h5>
+                                <h5 class="modal-title" v-text="addTitle"></h5>
                             </div>
                             <div class="modal-body">
                                 <div class="addtop">
@@ -325,7 +325,7 @@
                                         <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
                                             <thead>
                                             <tr role="row">
-                                                <th><label><input type="checkbox">全选</label></th>
+                                                <th><label><input v-model="addId" type="checkbox">全选</label></th>
                                                 <th>分公司</th>
                                                 <th>城市</th>
                                                 <th>商户名</th>
@@ -335,7 +335,27 @@
                                             <tr role="row">
                                                 <td>
                                                     <label>
-                                                        <input type="checkbox">1
+                                                        <input v-model="addId" value="1" type="checkbox">1
+                                                    </label>
+                                                </td>
+                                                <td>南昌卡说</td>
+                                                <td>南昌</td>
+                                                <td>南宁汉斯自酿啤酒城</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td>
+                                                    <label>
+                                                        <input v-model="addId" value="2" type="checkbox">2
+                                                    </label>
+                                                </td>
+                                                <td>南昌卡说</td>
+                                                <td>南昌</td>
+                                                <td>南宁汉斯自酿啤酒城</td>
+                                            </tr>
+                                            <tr role="row">
+                                                <td>
+                                                    <label>
+                                                        <input v-model="addId" value="3" type="checkbox">3
                                                     </label>
                                                 </td>
                                                 <td>南昌卡说</td>
@@ -346,14 +366,13 @@
                                         </table>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="button" class="btn btn-info" @click="checkAccount" value="添加">
+                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
                                         <input type="button" class="btn btn-info" @click="checkAccount" value="删除">
                                         <input type="button" class="btn btn-info" @click="checkAccount" value="确认">
                                     </div>
                                     <div class="col-md-4">
                                         <ul>
-                                            <li>南宁汉斯自酿啤酒城</li>
-                                            <li>南宁汉斯自酿啤酒城</li>
+                                            <li v-for="n in liLists" track-by="$index" @click="checkLi($event)">{{n}}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -399,7 +418,7 @@
                                         <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
                                             <thead>
                                             <tr role="row">
-                                                <th><label><input type="checkbox">全选</label></th>
+                                                <th>商户ID</th>
                                                 <th>分公司</th>
                                                 <th>城市</th>
                                                 <th>商户名</th>
@@ -407,11 +426,7 @@
                                             </thead>
                                             <tbody>
                                             <tr role="row">
-                                                <td>
-                                                    <label>
-                                                        <input type="checkbox">1
-                                                    </label>
-                                                </td>
+                                                <td>1</td>
                                                 <td>南昌卡说</td>
                                                 <td>南昌</td>
                                                 <td>南宁汉斯自酿啤酒城</td>
@@ -434,51 +449,56 @@
     </index>
 </template>
 <style>
-    .blists .addtop,.blists  .addbottom{
+    .blimit .addtop,.blimit  .addbottom{
         overflow: hidden;
     }
-    .blists  .addbottom{
+    .blimit  .addbottom{
         margin-top: 15px;
     }
-    .blists  .addbottom  .col-md-2{
+    .blimit  .addbottom  .col-md-2{
         text-align: center;
     }
-    .blists  .addbottom  .col-md-2 input{
+    .blimit  .addbottom  .col-md-2 input{
         margin-bottom: 10px;
     }
-    .blists .addtop  .form-control,.blists  .addbottom .form-control{
+    .blimit .addtop  .form-control,.blimit  .addbottom .form-control{
         padding: 7px;
     }
-    .blists .addbottom table tr td, .blists .addbottom table tr th{
+    .blimit .addbottom table tr td, .blimit .addbottom table tr th{
         padding: 2px;
     }
-    .blists .addbottom ul{
+    .blimit .addbottom ul{
         list-style: none;
         border: 1px solid #ccc;
         padding:10px;
     }
-    .blists .addbottom ul li{
+    .blimit .addbottom ul li{
         margin:5px 0;
+        cursor: pointer;
+        padding-left:3px;
     }
-     .blists table tr td, .blists table tr th{
+    .blimit .addbottom ul li.check-li{
+        background: #ccc;
+    }
+     .blimit table tr td, .blimit table tr th{
          padding: 20px 2px;
          text-align: center;
          text-overflow: ellipsis;
          overflow: hidden;
          white-space: nowrap;
      }
-     .blists td span{
+     .blimit td span{
         cursor: pointer;
         color: #3c8dbc;
     }
-     .blists td span:hover{
+     .blimit td span:hover{
         opacity: 80;
     }
-     .blists  .page-bar{
+     .blimit  .page-bar{
         margin: 25px auto;
         text-align: center;
     }
-    .blists  #modal_update .form-group{
+    .blimit  #modal_update .form-group{
         overflow: hidden;
         line-height: 36px;
     }
@@ -495,25 +515,12 @@
                 loginList:{},
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
-                relist:{
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
-                },
-                companylists:[],
-                typelists:[],
-                params:{},
-                tSelect:'',
-                cSelect:'',
+                addId:[],
                 uText:'',
-                addtitle:'',
-                waring:'',
-                fire:false,
-                person:{
-                    name:'',
-                    phone:'',
-                    email:''
-                },
                 accountId:'',
                 bthf:true,
+                liLists:[],
+                addTitle:''
             }
         },
         methods:{
@@ -546,8 +553,27 @@
                 $(".modal").modal("hide");
                 this.getZlists(this.defaultData);
             },
-            setAcc(){
-
+            addUser(){
+              this.addTitle='添加商户';
+            },
+            addUser2(){
+                this.addTitle='添加消化商户';
+            },
+            appendLi(a){
+                let _tr=$("input[value='" + a + "']").closest('tr');
+                let _html=_tr.children('td:last').html();
+                this.liLists.push(_html);
+                _tr.remove();
+            },
+            addTrue(e){
+                let a=this.addId;
+                for(let i=0;i<a.length;i++){
+                    this.appendLi(a[i]);
+                }
+                this.addId=[];
+            },
+            checkLi(e){
+                $(e.target).toggleClass('check-li');
             },
             bthfShow(type){
                 switch (type){
@@ -574,6 +600,11 @@
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             this.initList();
             this.getClist();
+            $('#modal_add').on('hidden.bs.modal',function(){
+                if(!$('#modal_update').is(':hidden')){
+                    $('#app').addClass('modal-open');
+                }
+            })
         },
         components:{
             'datepicker': datepicker,
