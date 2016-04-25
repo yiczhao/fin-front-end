@@ -186,16 +186,12 @@ webpackJsonp([1],{
 	    },
 	    watch: {
 	        username: function username() {
-	            if (this.username == '') {
-	                this.usererror = '请输入用户名';this.usershow = true;
-	            } else {
+	            if (this.username != '') {
 	                this.usererror = '';this.usershow = false;
 	            }
 	        },
 	        password: function password() {
-	            if (this.password == '') {
-	                this.passerror = '请输入密码';this.passshow = true;
-	            } else {
+	            if (this.password != '') {
 	                this.passerror = '';this.passshow = false;
 	            }
 	        }

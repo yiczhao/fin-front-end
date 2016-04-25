@@ -3763,7 +3763,7 @@ webpackJsonp([4],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\n", ""]);
+	exports.push([module.id, "\nbody{\n    background-color:#fff;\n}\n[v-cloak]{\n    display: none;\n}\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n.box-body #table1 th{\n    min-width: 85px;\n}\nlabel i{\n    color: red;\n}\n.btns{\n    text-align: center;\n}\n", ""]);
 
 	// exports
 
@@ -3797,6 +3797,9 @@ webpackJsonp([4],Array(61).concat([
 	//                         <div class="box-header">
 	//                             <form class="form-inline manage-form">
 	//                                 <br/>
+	//                                <div class="form-group">
+	//                                     <input type="button" class="btn btn-info"  data-toggle="modal"  data-target="#modal_trade_info" v-on:click="addTradeInfo" value="添加交易">
+	//                                 </div>
 	//                                 <div class="form-group">
 	//                                     <select class="form-control" v-model="subCompanID" >
 	//                                     <option value="">请选择分公司</option>
@@ -3859,7 +3862,7 @@ webpackJsonp([4],Array(61).concat([
 	//                                 </div>
 	//                             </form>
 	//                         </div>
-	//                         <div class="box-body box-tbl">
+	//                         <div v-cloak v-show="!!tradeList.length" class="box-body box-tbl">
 	//                             <table id="table1" class="table table-bordered table-hover">
 	//                                 <thead>
 	//                                 <tr>
@@ -3892,7 +3895,7 @@ webpackJsonp([4],Array(61).concat([
 	//                                 </tr>
 	//                                 </thead>
 	//                                 <tbody>
-	//                                 <tr v-if="!!tradeList.length" v-for="trlist in tradeList">
+	//                                 <tr  v-for="trlist in tradeList">
 	//                                     <td>{{trlist.id}}</td>
 	//                                     <td>{{trlist.serialNumber}}</td>
 	//                                     <td>{{trlist.subCompanyName}}</td>
@@ -3933,12 +3936,76 @@ webpackJsonp([4],Array(61).concat([
 	//                                 </tr>
 	//                                 </tbody>
 	//                             </table>
+	//                             <div class="box-footer">
+	//                                 <page :all="pageall"
+	//                                       :cur.sync="pagecur"
+	//                                       :page_size.sync="page_size">
+	//                                 </page>
+	//                             </div>
 	//                         </div>
-	//                         <div class="box-footer">
-	//                             <page :all="pageall"
-	//                                   :cur.sync="pagecur"
-	//                                   :page_size.sync="page_size">
-	//                             </page>
+	//                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+	//                             未查询到交易明细数据！
+	//                         </div>
+	//                         <div id="modal_trade_info" data-backdrop="static" class="modal fade" style="display: none;">
+	//                             <div class="modal-dialog">
+	//                                 <div class="modal-content">
+	//                                      <div class="modal-header">
+	//                                         <h3>添加交易</h3>
+	//                                         <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                      </div>
+	//                                      <div class="modal-body">
+	//                                          <label>
+	//                                             <i>*</i>商户名称：
+	//                                          </label>
+	//                                          <div class="form-group">
+	//                                             <select class="form-control" v-model="tradeInfo.merchantId">
+	//                                             <option value="0">请选择商户</option>
+	//                                                 <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
+	//                                             </select>
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>参与活动：</label>
+	//                                              <select class="form-control" v-model="tradeInfo.activityId">
+	//                                                 <option value="0">请选择参与活动</option>
+	//                                                 <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
+	//                                              </select>
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>消费金额：</label>
+	//                                              <input type="text" class="form-control" id="consumptionAmount" v-model="tradeInfo.consumptionAmount" >
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>折扣金额：</label>
+	//                                              <input type="text" class="form-control" id="discountAmount" v-model="tradeInfo.discountAmount" >
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>实付金额：</label>
+	//                                              <input type="text" class="form-control" id="paAmount" v-model="tradeInfo.paAmount" >
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>三方应收：</label>
+	//                                              <input type="text" class="form-control" id="thirdPartyReceivable" v-model="tradeInfo.thirdPartyReceivable" >
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>暂扣税金：</label>
+	//                                              <input type="text" class="form-control" id="suspensionTax" v-model="tradeInfo.suspensionTax" >
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label><i>*</i>商户实补：</label>
+	//                                              <input type="text" class="form-control" id="merchantSubsidyShould" v-model="tradeInfo.merchantSubsidyShould" >
+	//                                          </div>
+	//                                          <div class="form-group">
+	//                                              <label>备注</label>
+	//                                              <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
+	//                                          </div>
+	//                                      </div>
+	//                                      <div class="modal-foot btns">
+	//                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+	//                                         <button type="button" @click="saveTradeInfo" class="btn btn-primary">添加交易</button>
+	//                                         <br/>
+	//                                      </div>
+	//                                 </div>
+	//                             </div>
 	//                         </div>
 	//                     </div>
 	//                 </div>
@@ -3950,6 +4017,9 @@ webpackJsonp([4],Array(61).concat([
 	//     body{
 	//         background-color:#fff;
 	//     }
+	//     [v-cloak]{
+	//         display: none;
+	//     }
 	//     .box-tbl{
 	//         overflow:auto;
 	//     }
@@ -3959,6 +4029,12 @@ webpackJsonp([4],Array(61).concat([
 	//     }
 	//     .box-body #table1 th{
 	//         min-width: 85px;
+	//     }
+	//     label i{
+	//         color: red;
+	//     }
+	//     .btns{
+	//         text-align: center;
 	//     }
 	// </style>
 	// <script>
@@ -3982,9 +4058,22 @@ webpackJsonp([4],Array(61).concat([
 	            pageall: 1,
 	            pagecur: 1,
 	            page_size: 15,
+	            tradeInfo: {
+	                merchantId: 0,
+	                activityId: 0,
+	                consumptionAmount: 0,
+	                discountAmount: 0,
+	                paAmount: 0,
+	                thirdPartyReceivable: 0,
+	                suspensionTax: 0,
+	                merchantSubsidyShould: 0,
+	                certificates: '',
+	                remarks: ''
+	            },
 	            tradeList: [],
 	            cityList: [],
-	            activityList: []
+	            activityList: [],
+	            merchantList: []
 	        };
 	    },
 
@@ -4032,6 +4121,27 @@ webpackJsonp([4],Array(61).concat([
 	            for (var i = num.toString().length; i < 2; i++) {
 	                str += "0";
 	            }return str + num.toString();
+	        },
+	        addTradeInfo: function addTradeInfo() {
+	            //获取所有商户信息
+	            this.$http.post('./merchant/list', {}).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                response.data.code == 0 ? this.$set('merchantList', response.data.data) : null;
+	            }, function (response) {
+	                console.log(response);
+	            });
+	        },
+	        saveTradeInfo: function saveTradeInfo() {
+	            this.$http.post('./tradedetail/add', this.tradeInfo).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                if (response.data.code == 0) {
+	                    this.query();
+	                }
+	            }, function (response) {
+	                console.log(response);
+	            });
+
+	            $(".modal").modal("hide");
 	        },
 	        query: function query() {
 	            // let data=this.data;
@@ -4098,7 +4208,7 @@ webpackJsonp([4],Array(61).concat([
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<index title=\"交易明细\" ptitle=\"财务处理\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"cityID\">\n                                <option value=\"\">请选择城市</option>\n                                    <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"type\">\n                                <option value=\"\">请选择交易类型</option>\n                                <option value=\"1\">正常交易</option>\n                                <option value=\"2\">手工单</option>\n                                    <option v-for=\"(index,n) in typelists\" v-text=\"n.value\" :value=\"n.accountType\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"timeRange\">\n                                    <option value=\"\">请选择日期</option>\n                                    <option value=\"0\">昨天</option>\n                                    <option value=\"1\">最近一周</option>\n                                    <option value=\"2\">最近一个月</option>\n                                    <option value=\"3\">最近三个月</option>\n                                    <option value=\"4\">自定义时间</option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\" v-show=\"timeRange==4\">\n                                <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                            </div>\n                            <br/>\n                            <br/>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"merchantID\" placeholder=\"商户ID\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"merchantName\" placeholder=\"商户名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"id\" placeholder=\"交易ID\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"seriesNumber\" placeholder=\"交易流水号\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"phone\" placeholder=\"手机号\">\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"activityID\">\n                                <option value=\"0\">请选择参与活动</option>\n                                    <option v-for=\"n in activityList\" v-text=\"n.name\" :value=\"n.activityID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>交易ID</th>\n                                <th>交易流水号</th>\n                                <th>分公司</th>\n                                <th>城市</th>\n                                <th>商户ID</th>\n                                <th>商户名称</th>\n                                <th>消费金额</th>\n                                <th>折扣金额</th>\n                                <th>实付金额</th>\n                                <th>额度抵扣</th>\n                                <th>本金抵扣</th>\n                                <th>三方应收</th>\n                                <th>商户应补</th>\n                                <th>暂扣税金</th>\n                                <th>商户实补</th>\n                                <th>折扣差</th>\n                                <th>扣收金额</th>\n                                <th>33211佣</th>\n                                <th>入账金额</th>\n                                <th>交易时间</th>\n                                <th>手机号</th>\n                                <th>卡号</th>\n                                <th>参与活动</th>\n                                <th>交易类型</th>\n                                <th>操作</th>\n                                <th>备注</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr v-if=\"!!tradeList.length\" v-for=\"trlist in tradeList\">\n                                <td>{{trlist.id}}</td>\n                                <td>{{trlist.serialNumber}}</td>\n                                <td>{{trlist.subCompanyName}}</td>\n                                <td>{{trlist.cityName}}</td>\n                                <td>{{trlist.merchantID}}</td> \n                                <td>{{trlist.merchantName}}</td>\n                                <td>{{trlist.consumptionAmount}}</td>\n                                <td>{{trlist.discountAmount}}</td>\n                                <td>{{trlist.payAmount}}</td>\n                                <td>{{trlist.limitDeduct}}</td>\n                                <td>{{trlist.principalDeduct}}</td>\n                                <td>{{trlist.thirdpartyReceivable}}</td>\n                                <td>{{trlist.merchantSubsidyShould}}</td>\n                                <td>{{trlist.suspensionTax}}</td>\n                                <td>{{trlist.merchantSubsidyActual}}</td>\n                                <td>{{trlist.discountDiff}}</td>\n                                <td>{{trlist.collectionAmount}}</td>\n                                <td>{{trlist.commission33211}}</td>\n                                <td>{{trlist.entryAmount}}</td>\n                                <td>{{trlist.tradeTime}}</td>\n                                <td>{{trlist.consumptionPhone}}</td>\n                                <td>{{trlist.consumptionAccountNumber}}</td>\n                                <td>{{trlist.activityID}}</td>\n                                <td>\n                                    <template v-if=\"trlist.type==1\">\n                                        正常交易\n                                    </template>\n                                    <template v-if=\"trlist.type==2\">\n                                        手工单\n                                    </template>\n                                </td>\n                                <td>\n                                    <template v-if=\"trlist.type==2\">\n                                        <a href=\"#\">详情</a>\n                                    </template>\n                                </td>\n                                <td>{{trlist.remarks}}</td>\n                            </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div class=\"box-footer\">\n                        <page :all=\"pageall\"\n                              :cur.sync=\"pagecur\"\n                              :page_size.sync=\"page_size\">\n                        </page>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
+	module.exports = "\n<index title=\"交易明细\" ptitle=\"财务处理\"  isshow=\"isshow\">\n    <section class=\"content\" slot=\"content\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <div class=\"box\">\n                    <div class=\"box-header\">\n                        <form class=\"form-inline manage-form\">\n                            <br/>\n                           <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\"  data-toggle=\"modal\"  data-target=\"#modal_trade_info\" v-on:click=\"addTradeInfo\" value=\"添加交易\">\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"subCompanID\" >\n                                <option value=\"\">请选择分公司</option>\n                                    <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"cityID\">\n                                <option value=\"\">请选择城市</option>\n                                    <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"type\">\n                                <option value=\"\">请选择交易类型</option>\n                                <option value=\"1\">正常交易</option>\n                                <option value=\"2\">手工单</option>\n                                    <option v-for=\"(index,n) in typelists\" v-text=\"n.value\" :value=\"n.accountType\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"timeRange\">\n                                    <option value=\"\">请选择日期</option>\n                                    <option value=\"0\">昨天</option>\n                                    <option value=\"1\">最近一周</option>\n                                    <option value=\"2\">最近一个月</option>\n                                    <option value=\"3\">最近三个月</option>\n                                    <option value=\"4\">自定义时间</option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\" v-show=\"timeRange==4\">\n                                <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                            </div>\n                            <br/>\n                            <br/>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"merchantID\" placeholder=\"商户ID\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"merchantName\" placeholder=\"商户名\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"id\" placeholder=\"交易ID\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"seriesNumber\" placeholder=\"交易流水号\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" class=\"form-control\" v-model=\"phone\" placeholder=\"手机号\">\n                            </div>\n                            <div class=\"form-group\">\n                                <select class=\"form-control\" v-model=\"activityID\">\n                                <option value=\"0\">请选择参与活动</option>\n                                    <option v-for=\"n in activityList\" v-text=\"n.name\" :value=\"n.activityID\"></option>\n                                </select>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                            </div>\n                        </form>\n                    </div>\n                    <div v-cloak v-show=\"!!tradeList.length\" class=\"box-body box-tbl\">\n                        <table id=\"table1\" class=\"table table-bordered table-hover\">\n                            <thead>\n                            <tr>\n                                <th>交易ID</th>\n                                <th>交易流水号</th>\n                                <th>分公司</th>\n                                <th>城市</th>\n                                <th>商户ID</th>\n                                <th>商户名称</th>\n                                <th>消费金额</th>\n                                <th>折扣金额</th>\n                                <th>实付金额</th>\n                                <th>额度抵扣</th>\n                                <th>本金抵扣</th>\n                                <th>三方应收</th>\n                                <th>商户应补</th>\n                                <th>暂扣税金</th>\n                                <th>商户实补</th>\n                                <th>折扣差</th>\n                                <th>扣收金额</th>\n                                <th>33211佣</th>\n                                <th>入账金额</th>\n                                <th>交易时间</th>\n                                <th>手机号</th>\n                                <th>卡号</th>\n                                <th>参与活动</th>\n                                <th>交易类型</th>\n                                <th>操作</th>\n                                <th>备注</th>\n                            </tr>\n                            </thead>\n                            <tbody>\n                            <tr  v-for=\"trlist in tradeList\">\n                                <td>{{trlist.id}}</td>\n                                <td>{{trlist.serialNumber}}</td>\n                                <td>{{trlist.subCompanyName}}</td>\n                                <td>{{trlist.cityName}}</td>\n                                <td>{{trlist.merchantID}}</td> \n                                <td>{{trlist.merchantName}}</td>\n                                <td>{{trlist.consumptionAmount}}</td>\n                                <td>{{trlist.discountAmount}}</td>\n                                <td>{{trlist.payAmount}}</td>\n                                <td>{{trlist.limitDeduct}}</td>\n                                <td>{{trlist.principalDeduct}}</td>\n                                <td>{{trlist.thirdpartyReceivable}}</td>\n                                <td>{{trlist.merchantSubsidyShould}}</td>\n                                <td>{{trlist.suspensionTax}}</td>\n                                <td>{{trlist.merchantSubsidyActual}}</td>\n                                <td>{{trlist.discountDiff}}</td>\n                                <td>{{trlist.collectionAmount}}</td>\n                                <td>{{trlist.commission33211}}</td>\n                                <td>{{trlist.entryAmount}}</td>\n                                <td>{{trlist.tradeTime}}</td>\n                                <td>{{trlist.consumptionPhone}}</td>\n                                <td>{{trlist.consumptionAccountNumber}}</td>\n                                <td>{{trlist.activityID}}</td>\n                                <td>\n                                    <template v-if=\"trlist.type==1\">\n                                        正常交易\n                                    </template>\n                                    <template v-if=\"trlist.type==2\">\n                                        手工单\n                                    </template>\n                                </td>\n                                <td>\n                                    <template v-if=\"trlist.type==2\">\n                                        <a href=\"#\">详情</a>\n                                    </template>\n                                </td>\n                                <td>{{trlist.remarks}}</td>\n                            </tr>\n                            </tbody>\n                        </table>\n                        <div class=\"box-footer\">\n                            <page :all=\"pageall\"\n                                  :cur.sync=\"pagecur\"\n                                  :page_size.sync=\"page_size\">\n                            </page>\n                        </div>\n                    </div>\n                    <div style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n                        未查询到交易明细数据！\n                    </div>\n                    <div id=\"modal_trade_info\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                 <div class=\"modal-header\">\n                                    <h3>添加交易</h3>\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                 </div>\n                                 <div class=\"modal-body\">\n                                     <label>\n                                        <i>*</i>商户名称：\n                                     </label>\n                                     <div class=\"form-group\">\n                                        <select class=\"form-control\" v-model=\"tradeInfo.merchantId\">\n                                        <option value=\"0\">请选择商户</option>\n                                            <option v-for=\"n in merchantList\" v-text=\"n.merchantName\" :value=\"n.merchantID\"></option>\n                                        </select>\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>参与活动：</label>\n                                         <select class=\"form-control\" v-model=\"tradeInfo.activityId\">\n                                            <option value=\"0\">请选择参与活动</option>\n                                            <option v-for=\"n in activityList\" v-text=\"n.name\" :value=\"n.activityID\"></option>\n                                         </select>\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>消费金额：</label>\n                                         <input type=\"text\" class=\"form-control\" id=\"consumptionAmount\" v-model=\"tradeInfo.consumptionAmount\" >\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>折扣金额：</label>\n                                         <input type=\"text\" class=\"form-control\" id=\"discountAmount\" v-model=\"tradeInfo.discountAmount\" >\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>实付金额：</label>\n                                         <input type=\"text\" class=\"form-control\" id=\"paAmount\" v-model=\"tradeInfo.paAmount\" >\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>三方应收：</label>\n                                         <input type=\"text\" class=\"form-control\" id=\"thirdPartyReceivable\" v-model=\"tradeInfo.thirdPartyReceivable\" >\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>暂扣税金：</label>\n                                         <input type=\"text\" class=\"form-control\" id=\"suspensionTax\" v-model=\"tradeInfo.suspensionTax\" >\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label><i>*</i>商户实补：</label>\n                                         <input type=\"text\" class=\"form-control\" id=\"merchantSubsidyShould\" v-model=\"tradeInfo.merchantSubsidyShould\" >\n                                     </div>\n                                     <div class=\"form-group\">\n                                         <label>备注</label>\n                                         <textarea class=\"form-control\"  id=\"remarks\" v-model=\"tradeInfo.remarks\"></textarea>\n                                     </div>\n                                 </div>\n                                 <div class=\"modal-foot btns\">\n                                    <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                    <button type=\"button\" @click=\"saveTradeInfo\" class=\"btn btn-primary\">添加交易</button>\n                                    <br/>\n                                 </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </section>\n</index>\n";
 
 /***/ }
 ]));

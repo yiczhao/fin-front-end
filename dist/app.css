@@ -38358,10 +38358,8 @@ label.display-block {
   height: 0;
   overflow: hidden; }
 
-.wrapper {
-  position: relative; }
-  .wrapper .content-wrapper {
-    min-height: 720px; }
-  .wrapper .footer {
-    position: absolute;
-    bottom: 0; }
+.breadcrumb-line, .content {
+  min-width: 1280px; }
+
+.navbar {
+  min-width: 1540px; }
