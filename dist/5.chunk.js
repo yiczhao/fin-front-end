@@ -3714,7 +3714,7 @@ webpackJsonp([5],Array(61).concat([
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\BFJZC\\subsidy-appropriation.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] dev\\js\\views\\BFJZC\\limit-purchase-detail.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(117)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -3725,7 +3725,7 @@ webpackJsonp([5],Array(61).concat([
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\BFJZC\\subsidy-appropriation.vue"
+	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\BFJZC\\limit-purchase-detail.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -3749,8 +3749,8 @@ webpackJsonp([5],Array(61).concat([
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./subsidy-appropriation.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./subsidy-appropriation.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./limit-purchase-detail.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./limit-purchase-detail.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -3794,7 +3794,7 @@ webpackJsonp([5],Array(61).concat([
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// <template>
-	//     <index title="补贴划付" ptitle="备付金支出"  isshow="isshow">
+	//     <index title="额度采购" ptitle="备付金支出"  isshow="isshow">
 	//         <section class="content" slot="content">
 	//             <div class="row">
 	//                 <div class="col-xs-12">
@@ -3803,7 +3803,7 @@ webpackJsonp([5],Array(61).concat([
 	//                             <form class="form-inline manage-form">
 	//                                 <br/>
 	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="subCompanID" >
+	//                                     <select class="form-control" v-model="subCompanyID" >
 	//                                     <option value="">请选择分公司</option>
 	//                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
 	//                                     </select>
@@ -3814,7 +3814,7 @@ webpackJsonp([5],Array(61).concat([
 	//                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
 	//                                     </select>
 	//                                 </div>
-	//                                  <div class="form-group">
+	//                                 <div class="form-group">
 	//                                     <select class="form-control" v-model="timeRange">
 	//                                         <option value="">请选择日期</option>
 	//                                         <option value="0">昨天</option>
@@ -3834,20 +3834,7 @@ webpackJsonp([5],Array(61).concat([
 	//                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
 	//                                 </div>
 	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="merchantName" placeholder="商户名、收款账户名、帐号">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="createType">
-	//                                         <option value="">请选择生成方式</option>
-	//                                         <option value="1">系统生成</option>
-	//                                         <option value="2">手工录入</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="activityID">
-	//                                     <option value="0">请选择参与活动</option>
-	//                                         <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-	//                                     </select>
+	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
 	//                                 </div>
 	//                                 <div class="form-group">
 	//                                     <select class="form-control" v-model="status">
@@ -3863,7 +3850,7 @@ webpackJsonp([5],Array(61).concat([
 	//                                     <input type="text" class="form-control" v-model="remark" placeholder="备注">
 	//                                 </div>
 	//                                 <div class="form-group">
-	//                                     <input type="button" class="btn btn-info" v-on:click="" value="查询">
+	//                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
 	//                                 </div>
 	//                             </form>
 	//                         </div>
@@ -3871,63 +3858,50 @@ webpackJsonp([5],Array(61).concat([
 	//                             <table id="table1" class="table table-bordered table-hover">
 	//                                 <thead>
 	//                                     <tr>
-	//                                         <th>ID</th>
-	//                                         <th>生成日期</th>
+	//                                         <th>编号</th>
+	//                                         <th>采购时间</th>
 	//                                         <th>分公司</th>
 	//                                         <th>城市</th>
 	//                                         <th>付款账户</th>
 	//                                         <th>商户ID</th>
 	//                                         <th>商户名称</th>
 	//                                         <th>收款账户信息</th>
-	//                                         <th>生成方式</th>
-	//                                         <th>三方应补</th>
-	//                                         <th>划付金额</th>
-	//                                         <th>交易</th>
+	//                                         <th>采购额度</th>
+	//                                         <th>采购成本</th>
+	//                                         <th>账户详情</th>
 	//                                         <th>状态</th>
-	//                                         <th>操作</th>
-	//                                         <th>活动名称</th>
+	//                                         <th>付款方式</th>
+	//                                         <th>付款流水</th>
 	//                                         <th>备注</th>
 	//                                     </tr>
 	//                                 </thead>
 	//                                 <tbody>
-	//                                     <tr v-if="!!subsidyAppropriationList.length" v-for="sa in subsidyAppropriationList">
-	//                                         <td>{{sa.ID}}</td>
-	//                                         <td>{{sa.createAT}}</td>
-	//                                         <td>{{sa.subCompanyName}}</td>
-	//                                         <td>{{sa.cityName}}</td>
-	//                                         <td>{{sa.paymentAccount}}</td>
-	//                                         <td>{{sa.merchantID}}</td>
-	//                                         <td>{{sa.merchantName}}</td>
-	//                                         <td>{{sa.proceedsPerson}}{{sa.proceedsAccount}}</td>
+	//                                     <tr v-if="!!limitPurchaseDetailList.length" v-for="(index,lpd) in limitPurchaseDetailList">
+	//                                         <td>{{index+1}}</td>
+	//                                         <td>{{lpd.purchaseTime | datetime}}</td>
+	//                                         <td>{{lpd.subCompanyName}}</td>
+	//                                         <td>{{lpd.cityName}}</td>
+	//                                         <td>{{lpd.payAccount}}</td>
+	//                                         <td>{{lpd.merchantOperationID}}</td>
+	//                                         <td>{{lpd.merchantName}}</td>
+	//                                         <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
+	//                                         <td>{{lpd.purchaseLimit}}</td>
+	//                                         <td>{{lpd.purchaseCost}}</td>
+	//                                         <td><a :href="lpd.limitPurchaseAccountID">查看</a></td>
 	//                                         <td>
-	//                                             <template v-if="sa.createType==1">
-	//                                                 系统生成
-	//                                             </template>
-	//                                             <template v-if="sa.createType==2">
-	//                                                 手工录入
-	//                                             </template>
-	//                                         </td>
-	//                                         <td>{{sa.thirdpartySubsidyShould}}</td>
-	//                                         <td>{{sa.payAmount}}</td>
-	//                                         <td>{{sa.status}}
-	//                                             <template v-if="sa.status==1">
-	//                                                 等待审核
-	//                                             </template>
-	//                                             <template v-if="sa.status==2">
-	//                                                 等待划付
-	//                                             </template>
-	//                                             <template v-if="sa.status==3">
-	//                                                 等待对账
-	//                                             </template>
-	//                                             <template v-if="sa.status==4">
+	//                                             <template v-if="lpd.status==1">
 	//                                                 对账成功
 	//                                             </template>
-	//                                             <template v-if="sa.status==5">
-	//                                                 划付失败
+	//                                             <template v-if="lpd.status==2">
+	//                                                 对账失败
 	//                                             </template>
 	//                                         </td>
-	//                                         <td>{{sa.activityName}}</td>
-	//                                         <td>{{sa.remarks}}</td>
+	//                                         <td>
+	//                                             <template v-if="lpd.payType==1">现金购买</template>
+	//                                             <template v-if="lpd.payType==2">刷卡购买</template>
+	//                                         </td>
+	//                                         <td><a :href="lpd.id">查看</a></td>
+	//                                         <td>{{lpd.remarks}}</td>
 	//                                     </tr>
 	//                                 </tbody>
 	//                             </table>
@@ -3960,7 +3934,7 @@ webpackJsonp([5],Array(61).concat([
 	exports.default = {
 	    data: function data() {
 	        return {
-	            subCompanID: "",
+	            subCompanyID: "",
 	            cityID: "",
 	            createType: "",
 	            status: "",
@@ -3969,6 +3943,7 @@ webpackJsonp([5],Array(61).concat([
 	            endDate: "",
 	            merchantID: "",
 	            merchantName: "",
+	            keywords: "",
 	            id: "",
 	            seriesNumber: "",
 	            activityID: 0,
@@ -3977,16 +3952,16 @@ webpackJsonp([5],Array(61).concat([
 	            pagecur: 1,
 	            page_size: 15,
 	            cityList: [],
-	            subsidyAppropriationList: []
+	            limitPurchaseDetailList: []
 	        };
 	    },
 
 	    methods: {
 	        //获取补贴划付数据
-	        getSubsidyAppropriationList: function getSubsidyAppropriationList(data) {
-	            this.$http.post('./tradedetail/list', data).then(function (response) {
+	        getlimitPurchaseDetailList: function getlimitPurchaseDetailList(data) {
+	            this.$http.post('./limitPurchaseDetail/list', data).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('subsidyAppropriationList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('limitPurchaseDetailList', response.data.data) : null;
 	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
 	            }, function (response) {
 	                console.log(response);
@@ -4020,22 +3995,21 @@ webpackJsonp([5],Array(61).concat([
 	        query: function query() {
 	            // let data=this.data;
 	            var data = {
-	                subCompanID: this.subCompanID,
+	                subCompanyID: this.subCompanyID,
 	                cityID: this.cityID,
-	                type: this.type,
 	                timeRange: this.timeRange,
 	                merchantID: this.merchantID,
 	                merchantName: this.merchantName,
+	                keywords: this.keywords,
 	                id: this.id,
 	                seriesNumber: this.seriesNumber,
-	                phone: this.phone,
-	                activityID: this.activityID
+	                phone: this.phone
 	            };
-	            this.getTradeList(data);
+	            this.getlimitPurchaseDetailList(data);
 	        }
 	    },
 	    ready: function ready() {
-	        this.getSubsidyAppropriationList({});
+	        this.getlimitPurchaseDetailList({});
 	        this.getSubcompany({});
 	        this.getCity({});
 	    },
@@ -4080,7 +4054,7 @@ webpackJsonp([5],Array(61).concat([
 /* 117 */
 /***/ function(module, exports) {
 
-	module.exports = "\n    <index title=\"补贴划付\" ptitle=\"备付金支出\"  isshow=\"isshow\">\n        <section class=\"content\" slot=\"content\">\n            <div class=\"row\">\n                <div class=\"col-xs-12\">\n                    <div class=\"box\">\n                        <div class=\"box-header\">\n                            <form class=\"form-inline manage-form\">\n                                <br/>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"subCompanID\" >\n                                    <option value=\"\">请选择分公司</option>\n                                        <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"cityID\">\n                                    <option value=\"\">请选择城市</option>\n                                        <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                    </select>\n                                </div>\n                                 <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"timeRange\">\n                                        <option value=\"\">请选择日期</option>\n                                        <option value=\"0\">昨天</option>\n                                        <option value=\"1\">最近一周</option>\n                                        <option value=\"2\">最近一个月</option>\n                                        <option value=\"3\">最近三个月</option>\n                                        <option value=\"4\">自定义时间</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\" v-show=\"timeRange==4\">\n                                    <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                    <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                                </div>\n                                <br/>\n                                <br/>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"merchantID\" placeholder=\"商户ID\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"merchantName\" placeholder=\"商户名、收款账户名、帐号\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"createType\">\n                                        <option value=\"\">请选择生成方式</option>\n                                        <option value=\"1\">系统生成</option>\n                                        <option value=\"2\">手工录入</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"activityID\">\n                                    <option value=\"0\">请选择参与活动</option>\n                                        <option v-for=\"(index,n) in typelists\" v-text=\"n.value\" :value=\"n.accountType\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"status\">\n                                        <option value=\"\">请选择状态</option>\n                                        <option value=\"1\">等待审核</option>\n                                        <option value=\"2\">等待划付</option>\n                                        <option value=\"3\">等待对账</option>\n                                        <option value=\"4\">对账成功</option>\n                                        <option value=\"5\">划付失败</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"remark\" placeholder=\"备注\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"button\" class=\"btn btn-info\" v-on:click=\"\" value=\"查询\">\n                                </div>\n                            </form> \n                        </div>\n                        <div class=\"box-body box-tbl\">\n                            <table id=\"table1\" class=\"table table-bordered table-hover\">\n                                <thead>\n                                    <tr>\n                                        <th>ID</th>\n                                        <th>生成日期</th>\n                                        <th>分公司</th>\n                                        <th>城市</th>\n                                        <th>付款账户</th>\n                                        <th>商户ID</th>\n                                        <th>商户名称</th>\n                                        <th>收款账户信息</th>\n                                        <th>生成方式</th>\n                                        <th>三方应补</th>\n                                        <th>划付金额</th>\n                                        <th>交易</th>\n                                        <th>状态</th>\n                                        <th>操作</th>\n                                        <th>活动名称</th>\n                                        <th>备注</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    <tr v-if=\"!!subsidyAppropriationList.length\" v-for=\"sa in subsidyAppropriationList\">\n                                        <td>{{sa.ID}}</td>\n                                        <td>{{sa.createAT}}</td>\n                                        <td>{{sa.subCompanyName}}</td>\n                                        <td>{{sa.cityName}}</td>\n                                        <td>{{sa.paymentAccount}}</td>\n                                        <td>{{sa.merchantID}}</td>\n                                        <td>{{sa.merchantName}}</td>\n                                        <td>{{sa.proceedsPerson}}{{sa.proceedsAccount}}</td>\n                                        <td>\n                                            <template v-if=\"sa.createType==1\">\n                                                系统生成\n                                            </template>\n                                            <template v-if=\"sa.createType==2\">\n                                                手工录入\n                                            </template>\n                                        </td>\n                                        <td>{{sa.thirdpartySubsidyShould}}</td>\n                                        <td>{{sa.payAmount}}</td>\n                                        <td>{{sa.status}}\n                                            <template v-if=\"sa.status==1\">\n                                                等待审核\n                                            </template>\n                                            <template v-if=\"sa.status==2\">\n                                                等待划付\n                                            </template>\n                                            <template v-if=\"sa.status==3\">\n                                                等待对账\n                                            </template>\n                                            <template v-if=\"sa.status==4\">\n                                                对账成功\n                                            </template>\n                                            <template v-if=\"sa.status==5\">\n                                                划付失败\n                                            </template>\n                                        </td>\n                                        <td>{{sa.activityName}}</td>\n                                        <td>{{sa.remarks}}</td>\n                                    </tr>\n                                </tbody>\n                            </table>\n                        </div>\n                        <div class=\"box-footer\">\n                            <page :all=\"pageall\"\n                                  :cur.sync=\"pagecur\"\n                                  :page_size.sync=\"page_size\">\n                            </page>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </index>\n</template>";
+	module.exports = "\n    <index title=\"额度采购\" ptitle=\"备付金支出\"  isshow=\"isshow\">\n        <section class=\"content\" slot=\"content\">\n            <div class=\"row\">\n                <div class=\"col-xs-12\">\n                    <div class=\"box\">\n                        <div class=\"box-header\">\n                            <form class=\"form-inline manage-form\">\n                                <br/>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                    <option value=\"\">请选择分公司</option>\n                                        <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"cityID\">\n                                    <option value=\"\">请选择城市</option>\n                                        <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"timeRange\">\n                                        <option value=\"\">请选择日期</option>\n                                        <option value=\"0\">昨天</option>\n                                        <option value=\"1\">最近一周</option>\n                                        <option value=\"2\">最近一个月</option>\n                                        <option value=\"3\">最近三个月</option>\n                                        <option value=\"4\">自定义时间</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\" v-show=\"timeRange==4\">\n                                    <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                    <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                                </div>\n                                <br/>\n                                <br/>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"merchantID\" placeholder=\"商户ID\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"商户名、收款账户名、帐号\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"status\">\n                                        <option value=\"\">请选择状态</option>\n                                        <option value=\"1\">等待审核</option>\n                                        <option value=\"2\">等待划付</option>\n                                        <option value=\"3\">等待对账</option>\n                                        <option value=\"4\">对账成功</option>\n                                        <option value=\"5\">划付失败</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"remark\" placeholder=\"备注\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                                </div>\n                            </form> \n                        </div>\n                        <div class=\"box-body box-tbl\">\n                            <table id=\"table1\" class=\"table table-bordered table-hover\">\n                                <thead>\n                                    <tr>\n                                        <th>编号</th>\n                                        <th>采购时间</th>\n                                        <th>分公司</th>\n                                        <th>城市</th>\n                                        <th>付款账户</th>\n                                        <th>商户ID</th>\n                                        <th>商户名称</th>\n                                        <th>收款账户信息</th>\n                                        <th>采购额度</th>\n                                        <th>采购成本</th>\n                                        <th>账户详情</th>\n                                        <th>状态</th>\n                                        <th>付款方式</th>\n                                        <th>付款流水</th>\n                                        <th>备注</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    <tr v-if=\"!!limitPurchaseDetailList.length\" v-for=\"(index,lpd) in limitPurchaseDetailList\">\n                                        <td>{{index+1}}</td>\n                                        <td>{{lpd.purchaseTime | datetime}}</td>\n                                        <td>{{lpd.subCompanyName}}</td>\n                                        <td>{{lpd.cityName}}</td>\n                                        <td>{{lpd.payAccount}}</td>\n                                        <td>{{lpd.merchantOperationID}}</td>\n                                        <td>{{lpd.merchantName}}</td>\n                                        <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>\n                                        <td>{{lpd.purchaseLimit}}</td>\n                                        <td>{{lpd.purchaseCost}}</td>\n                                        <td><a :href=\"lpd.limitPurchaseAccountID\">查看</a></td>\n                                        <td>\n                                            <template v-if=\"lpd.status==1\">\n                                                对账成功\n                                            </template>\n                                            <template v-if=\"lpd.status==2\">\n                                                对账失败\n                                            </template>\n                                        </td>\n                                        <td>\n                                            <template v-if=\"lpd.payType==1\">现金购买</template>\n                                            <template v-if=\"lpd.payType==2\">刷卡购买</template>\n                                        </td>\n                                        <td><a :href=\"lpd.id\">查看</a></td>\n                                        <td>{{lpd.remarks}}</td>\n                                    </tr>\n                                </tbody>\n                            </table>\n                        </div>\n                        <div class=\"box-footer\">\n                            <page :all=\"pageall\"\n                                  :cur.sync=\"pagecur\"\n                                  :page_size.sync=\"page_size\">\n                            </page>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </index>\n</template>";
 
 /***/ }
 ]));

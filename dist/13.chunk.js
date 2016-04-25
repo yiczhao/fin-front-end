@@ -1,11 +1,13 @@
-webpackJsonp([8],Array(61).concat([
-/* 61 */
+webpackJsonp([13],{
+
+/***/ 61:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = { "default": __webpack_require__(62), __esModule: true };
 
 /***/ },
-/* 62 */
+
+/***/ 62:
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(9);
@@ -14,12 +16,8 @@ webpackJsonp([8],Array(61).concat([
 	};
 
 /***/ },
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */
+
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -48,7 +46,8 @@ webpackJsonp([8],Array(61).concat([
 	})()}
 
 /***/ },
-/* 69 */
+
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -74,7 +73,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 70 */
+
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -88,7 +88,8 @@ webpackJsonp([8],Array(61).concat([
 
 
 /***/ },
-/* 71 */
+
+/***/ 71:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -384,13 +385,15 @@ webpackJsonp([8],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 72 */
+
+/***/ 72:
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"datetime-picker\" :style=\"{ width: width }\" _v-471eaf71=\"\">\n    <input type=\"text\" :style=\"styleObj\" :readonly=\"readonly\" :value=\"value\" @click=\"show = !show\" _v-471eaf71=\"\">\n        <span class=\"fa fa-close close\" v-show=\"value\" @click=\"clear()\" _v-471eaf71=\"\"></span>\n    <div class=\"picker-wrap\" v-show=\"show\" _v-471eaf71=\"\">\n        <table class=\"date-picker\" _v-471eaf71=\"\">\n            <thead _v-471eaf71=\"\">\n                <tr class=\"date-head\" _v-471eaf71=\"\">\n                    <th colspan=\"4\" _v-471eaf71=\"\">\n                        <span class=\"btn-prev\" @click=\"yearClick(-1)\" _v-471eaf71=\"\">&lt;</span>\n                        <span class=\"show-year\" _v-471eaf71=\"\">{{now.getFullYear()}}</span>\n                        <span class=\"btn-next\" @click=\"yearClick(1)\" _v-471eaf71=\"\">&gt;</span>\n                    </th>\n                    <th colspan=\"3\" _v-471eaf71=\"\">\n                        <span class=\"btn-prev\" @click=\"monthClick(-1)\" _v-471eaf71=\"\">&lt;</span>\n                        <span class=\"show-month\" _v-471eaf71=\"\">{{months[now.getMonth()]}}</span>\n                        <span class=\"btn-next\" @click=\"monthClick(1)\" _v-471eaf71=\"\">&gt;</span>\n                    </th>\n                </tr>\n                <tr class=\"date-days\" _v-471eaf71=\"\">\n                    <th v-for=\"day in days\" _v-471eaf71=\"\">{{day}}</th>\n                </tr>\n            </thead>\n            <tbody _v-471eaf71=\"\">\n                <tr v-for=\"i in 6\" _v-471eaf71=\"\">\n                    <td v-for=\"j in 7\" :class=\"date[i * 7 + j] &amp;&amp; date[i * 7 + j].status\" :date=\"date[i * 7 + j] &amp;&amp; date[i * 7 + j].date\" @click=\"pickDate(i * 7 + j)\" _v-471eaf71=\"\">{{date[i * 7 + j] &amp;&amp; date[i * 7 + j].text}}</td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n";
 
 /***/ },
-/* 73 */
+
+/***/ 73:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -419,7 +422,8 @@ webpackJsonp([8],Array(61).concat([
 	})()}
 
 /***/ },
-/* 74 */
+
+/***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -445,7 +449,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 75 */
+
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -459,7 +464,8 @@ webpackJsonp([8],Array(61).concat([
 
 
 /***/ },
-/* 76 */
+
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -591,7 +597,8 @@ webpackJsonp([8],Array(61).concat([
 	// <script type="text/javascript">
 
 /***/ },
-/* 77 */
+
+/***/ 77:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -619,7 +626,8 @@ webpackJsonp([8],Array(61).concat([
 	})()}
 
 /***/ },
-/* 78 */
+
+/***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -770,7 +778,8 @@ webpackJsonp([8],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 79 */
+
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -952,7 +961,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 80 */
+
+/***/ 80:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1022,7 +1032,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 81 */
+
+/***/ 81:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1036,7 +1047,8 @@ webpackJsonp([8],Array(61).concat([
 	var isIE9 = exports.isIE9 = inBrowser && navigator.userAgent.toLowerCase().indexOf('msie 9.0') > 0;
 
 /***/ },
-/* 82 */
+
+/***/ 82:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1160,7 +1172,8 @@ webpackJsonp([8],Array(61).concat([
 	var scrollIntoView = exports.scrollIntoView = _domScrollIntoView2.default;
 
 /***/ },
-/* 83 */
+
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1168,7 +1181,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = __webpack_require__(84);
 
 /***/ },
-/* 84 */
+
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1302,7 +1316,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = scrollIntoView;
 
 /***/ },
-/* 85 */
+
+/***/ 85:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1746,7 +1761,8 @@ webpackJsonp([8],Array(61).concat([
 	}, domUtils);
 
 /***/ },
-/* 86 */
+
+/***/ 86:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1860,7 +1876,8 @@ webpackJsonp([8],Array(61).concat([
 	};
 
 /***/ },
-/* 87 */
+
+/***/ 87:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1976,7 +1993,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 88 */
+
+/***/ 88:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1992,7 +2010,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 89 */
+
+/***/ 89:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2046,7 +2065,8 @@ webpackJsonp([8],Array(61).concat([
 
 
 /***/ },
-/* 90 */
+
+/***/ 90:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2574,7 +2594,8 @@ webpackJsonp([8],Array(61).concat([
 	exports.default = KeyCode;
 
 /***/ },
-/* 91 */
+
+/***/ 91:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2635,7 +2656,8 @@ webpackJsonp([8],Array(61).concat([
 	};
 
 /***/ },
-/* 92 */
+
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2858,7 +2880,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 93 */
+
+/***/ 93:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3356,7 +3379,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 94 */
+
+/***/ 94:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3414,7 +3438,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 95 */
+
+/***/ 95:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3495,7 +3520,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 96 */
+
+/***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3555,7 +3581,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 97 */
+
+/***/ 97:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3596,7 +3623,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 98 */
+
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3637,7 +3665,8 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 99 */
+
+/***/ 99:
 /***/ function(module, exports) {
 
 	/**
@@ -3682,55 +3711,32 @@ webpackJsonp([8],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 100 */
+
+/***/ 100:
 /***/ function(module, exports) {
 
 	module.exports = "\r\n<slot></slot>\r\n";
 
 /***/ },
-/* 101 */
+
+/***/ 101:
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div class=\"dialog\" v-show=\"show\">\n    <align\n            :align=\"align\"\n            :visible=\"show\"\n            :monitor-buffer-time=\"80\">\n        <div class=\"content\" :style=\"{width:width+'px'}\">\n            <div class=\"box-header\">\n                <h3 class=\"box-title\" v-text=\"title\"></h3>\n                <!-- tools box -->\n                <div class=\"close\">\n                    <button class=\"btn-style\" @click=\"cbClose('cancel')\">×</button>\n                </div><!-- /. tools -->\n            </div><!-- /.box-header -->\n            <div class=\"box-body\">\n                <slot></slot>\n            </div>\n        </div>\n    </align>\n    <div class=\"dialog-mask\"></div>\n</div>\n";
 
 /***/ },
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */
+
+/***/ 151:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(129)
-	__vue_script__ = __webpack_require__(131)
+	__webpack_require__(152)
+	__vue_script__ = __webpack_require__(154)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\BFJZC\\subsidy-tax-rebate.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(132)
+	  console.warn("[vue-loader] dev\\js\\views\\SHGL\\business-lists.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(155)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -3740,7 +3746,7 @@ webpackJsonp([8],Array(61).concat([
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\BFJZC\\subsidy-tax-rebate.vue"
+	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\SHGL\\business-lists.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -3749,13 +3755,14 @@ webpackJsonp([8],Array(61).concat([
 	})()}
 
 /***/ },
-/* 129 */
+
+/***/ 152:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(130);
+	var content = __webpack_require__(153);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -3764,8 +3771,8 @@ webpackJsonp([8],Array(61).concat([
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./subsidy-tax-rebate.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./subsidy-tax-rebate.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./business-lists.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./business-lists.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -3775,7 +3782,8 @@ webpackJsonp([8],Array(61).concat([
 	}
 
 /***/ },
-/* 130 */
+
+/***/ 153:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -3783,13 +3791,14 @@ webpackJsonp([8],Array(61).concat([
 
 
 	// module
-	exports.push([module.id, "\n.box-tbl{\n    overflow:auto;\n}\n.page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\nth{\n    min-width: 85px;\n}\n", ""]);
+	exports.push([module.id, "\n .blists .form-group{\n    text-align: left;\n}\n .blists .form-group.tc{\n    text-align: center;\n}\n .blists .modal-body .form-control{\n    text-align: left;\n    width:67%;\n    display: inline-block;\n}\n .blists .modal-body label{\n    width:20%;\n    display: inline-block;\n}\n .blists .modal-body label i{\n    color:red;\n}\n .blists .modal-body .waring{\n    color: red;\n    margin-left: 5px;\n}\n .blists .modal-body button{\n    width:35%;\n}\n .blists table tr td, .blists table tr th{\n     padding: 20px 2px;\n     text-align: center;\n     text-overflow: ellipsis;\n     overflow: hidden;\n     white-space: nowrap;\n }\n .blists td span{\n    cursor: pointer;\n    color: #3c8dbc;\n}\n .blists td span:hover{\n    opacity: 80;\n}\n .blists  .page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 131 */
+
+/***/ 154:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3809,270 +3818,483 @@ webpackJsonp([8],Array(61).concat([
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// <template>
-	//     <index title="补贴退税" ptitle="备付金支出"  isshow="isshow">
-	//         <section class="content" slot="content">
-	//             <div class="row">
-	//                 <div class="col-xs-12">
-	//                     <div class="box">
-	//                         <div class="box-header">
-	//                             <form class="form-inline manage-form">
-	//                                 <br/>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="subCompanyID" >
-	//                                     <option value="">请选择分公司</option>
-	//                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="cityID">
-	//                                     <option value="">请选择城市</option>
-	//                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="timeRange">
-	//                                         <option value="">请选择日期</option>
-	//                                         <option value="0">昨天</option>
-	//                                         <option value="1">最近一周</option>
-	//                                         <option value="2">最近一个月</option>
-	//                                         <option value="3">最近三个月</option>
-	//                                         <option value="4">自定义时间</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group" v-show="timeRange==4">
-	//                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-	//                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
-	//                                 </div>
-	//                                 <br/>
-	//                                 <br/>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="createType">
-	//                                         <option value="">请选择生成方式</option>
-	//                                         <option value="1">系统生成</option>
-	//                                         <option value="2">手工录入</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <select class="form-control" v-model="status">
-	//                                         <option value="">请选择状态</option>
-	//                                         <option value="1">等待审核</option>
-	//                                         <option value="2">等待划付</option>
-	//                                         <option value="3">等待对账</option>
-	//                                         <option value="4">对账成功</option>
-	//                                         <option value="5">划付失败</option>
-	//                                     </select>
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="text" class="form-control" v-model="remark" placeholder="备注">
-	//                                 </div>
-	//                                 <div class="form-group">
-	//                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
-	//                                 </div>
-	//                             </form>
+	//     <index :title="'商户列表'"
+	//            :ptitle="'商户管理'"
+	//            :hname="'business-lists'"
+	//            :isshow="'isshow'">
+	//         <div class="content blists" slot="content">
+	//             <div class="panel panel-flat">
+	//                 <div class="panel-heading">
+	//                     <form class="form-inline manage-form">
+	//                         <div class="form-group">
+	//                             <input type="text" class="form-control" v-model="defaultData.id" placeholder="商户ID">
 	//                         </div>
-	//                         <div class="box-body box-tbl">
-	//                             <table id="table1" class="table table-bordered table-hover">
-	//                                 <thead>
-	//                                     <tr>
+	//                         <div class="form-group">
+	//                             <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="商户名">
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <select class="form-control" v-model="defaultData.companyId">
+	//                                 <option value="">请选择分公司</option>
+	//                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+	//                             </select>
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <select class="form-control" v-model="defaultData.city">
+	//                                 <option value="">请选择城市</option>
+	//                                 <option v-for="(index,n) in city" v-text="n.cityName" :value="n.cityId"></option>
+	//                             </select>
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <input type="text" class="form-control" v-model="defaultData.startNum" placeholder="佣金值">
+	//                             -
+	//                             <input type="text" class="form-control" v-model="defaultData.endNum" placeholder="佣金值">
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+	//                         </div>
+	//                     </form>
+	//                 </div>
+	//                 <div v-if="!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+	//                     <div class="datatable-scroll">
+	//                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
+	//                             <thead>
+	//                                 <tr role="row">
+	//                                     <th>商户ID</th>
+	//                                     <th>商户名称</th>
+	//                                     <th>分公司</th>
+	//                                     <th>城市</th>
+	//                                     <th>消费总笔数</th>
+	//                                     <th>消费总金额</th>
+	//                                     <th>实付总金额</th>
+	//                                     <th>33211总佣金 </th>
+	//                                     <th>三方折扣差</th>
+	//                                     <th>额采折扣差</th>
+	//                                     <th>交易</th>
+	//                                     <th>佣金值</th>
+	//                                     <th>额度采购消化账户</th>
+	//                                     <th>划款账户</th>
+	//                                     <th>联系人</th>
+	//                                     <th>电话 </th>
+	//                                     <th>客情人员</th>
+	//                                 </tr>
+	//                             </thead>
+	//                         <tbody>
+	//                             <tr role="row">
+	//                                 <td>2587</td>
+	//                                 <td>南昌玩聚和他(她)朋友</td>
+	//                                 <td>南昌卡说</td>
+	//                                 <td>南昌</td>
+	//                                 <td>196</td>
+	//                                 <td>{{ 38122121/100 | currency '' }}</td>
+	//                                 <td>{{ 38122/100 | currency '' }}</td>
+	//                                 <td>{{ 381/100 | currency '' }}</td>
+	//                                 <td>{{ 0/100 | currency '' }}</td>
+	//                                 <td>{{ 3811/100 | currency '' }}</td>
+	//                                 <td><a href="#">明细</a></td>
+	//                                 <td>{{ 300/100 | currency '' }}</td>
+	//                                 <td><a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)" @click="setAcc()">南昌玩聚和他(她)朋友</a></td>
+	//                                 <td><a data-toggle="modal"  data-target="#modal_control" href="javascript:void(0)">管理</a></td>
+	//                                 <td>魏璇</td>
+	//                                 <td>13079101524</td>
+	//                                 <td>邹里堃</td>
+	//                             </tr>
+	//                             <!--<tr role="row" v-for="(index,trlist) in zdlists">-->
+	//                                 <!--<td>{{trlist.companyName}}</td>-->
+	//                                 <!--<td>{{trlist.shortName}}</td>-->
+	//                                 <!--<td>{{trlist.accountName}}</td>-->
+	//                                 <!--<td>{{trlist.accountNumber}}</td>-->
+	//                                 <!--<td>{{trlist.bankName}}</td>-->
+	//                                 <!--<td></td>-->
+	//                                 <!--<td>{{trlist.startDate}}</td>-->
+	//                                 <!--<td><a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a></td>-->
+	//                                 <!--<td>{{trlist.companyName}}</td>-->
+	//                                 <!--<td>{{trlist.shortName}}</td>-->
+	//                                 <!--<td>{{trlist.accountName}}</td>-->
+	//                                 <!--<td>{{trlist.accountNumber}}</td>-->
+	//                                 <!--<td>{{trlist.bankName}}</td>-->
+	//                                 <!--<td></td>-->
+	//                                 <!--<td>{{trlist.startDate}}</td>-->
+	//                                 <!--<td></td>-->
+	//                                 <!--<td></td>-->
+	//                             <!--</tr>-->
+	//                              <tr>
+	//                                  <td></td>
+	//                                  <td>合计</td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                                  <td>196</td>
+	//                                  <td>{{ 38122121/100 | currency '' }}</td>
+	//                                  <td>{{ 38122/100 | currency '' }}</td>
+	//                                  <td>{{ 381/100 | currency '' }}</td>
+	//                                  <td>{{ 0/100 | currency '' }}</td>
+	//                                  <td>{{ 3811/100 | currency '' }}</td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                                  <td></td>
+	//                              </tr>
+	//                         </tbody>
+	//                     </table>
+	//                     </div>
+	//                     <div class="datatable-footer">
+	//                         <page :all="pageall"
+	//                               :cur.sync="pagecur"
+	//                               :page_size.sync="page_size">
+	//                         </page>
+	//                     </div>
+	//                 </div>
+	//                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+	//                     未找到您要查询的账户
+	//                 </div>
+	//
+	//                 <div data-backdrop="static"  id="modal_checking" class="modal fade" style="display: none;">
+	//                     <div class="modal-dialog modal-lg">
+	//                         <div class="modal-content">
+	//                             <div class="modal-header">
+	//                                 <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                 <h5 class="modal-title">额度采购消化账户</h5>
+	//                             </div>
+	//                             <div class="modal-body">
+	//                                 <div>
+	//                                     <span>商户id：4392</span>
+	//                                     <span>商户名：南昌玩聚恒茂店</span>
+	//                                     <span class="pull-right">额度采购消化账户：<a href="">南昌玩聚和他(她)朋友的咖啡馆</a></span>
+	//                                 </div>
+	//                                 <div>历史记录：</div>
+	//                                 <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+	//                                     <thead>
+	//                                     <tr role="row">
 	//                                         <th>ID</th>
-	//                                         <th>生成日期</th>
-	//                                         <th>分公司</th>
-	//                                         <th>城市</th>
-	//                                         <th>付款账户</th>
-	//                                         <th>商户ID</th>
-	//                                         <th>商户名称</th>
-	//                                         <th>收款账户信息</th>
-	//                                         <th>生成方式</th>
-	//                                         <th>退税金额</th>
-	//                                         <th>交易</th>
-	//                                         <th>状态</th>
-	//                                         <th>付款流水</th>
-	//                                         <th>备注</th>
+	//                                         <th>账户名</th>
+	//                                         <th>更新时间</th>
+	//                                         <th>更新人</th>
+	//                                         <th>变更凭证</th>
+	//                                         <th>更新备注</th>
 	//                                     </tr>
-	//                                 </thead>
-	//                                 <tbody>
-	//                                     <tr v-if="!!subsidyTaxRebateDetailList.length" v-for="strd in subsidyTaxRebateDetailList">
-	//                                         <td>{{strd.id}}</td>
-	//                                         <td>{{strd.createTime | datetime}}</td>
-	//                                         <td>{{strd.subCompanyName}}</td>
-	//                                         <td>{{strd.cityName}}</td>
-	//                                         <td>{{strd.payAccount}}</td>
-	//                                         <td>{{strd.merchantOperationID}}</td>
-	//                                         <td>{{strd.merchantName}}</td>
-	//                                         <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>
-	//                                         <td>
-	//                                             <template v-if="strd.createType==1">系统生成</template>
-	//                                             <template v-if="strd.createType==2">手工录入</template>
-	//                                         </td>
-	//                                         <td>{{strd.taxRebateAmount}}</td>
-	//                                         <td><a :href="strd.id">明细</a> </td>
-	//                                         <td>
-	//                                             <template v-if="strd.status==1">等待对账</template>
-	//                                             <template v-if="strd.status==2">划付失败</template>
-	//                                         </td>
-	//                                         <td><a :href="strd.id">申请划付</a></td>
-	//                                         <td>{{strd.remarks}}</td>
+	//                                     </thead>
+	//                                     <tbody>
+	//                                     <tr role="row">
+	//                                         <td>1</td>
+	//                                         <td>昌玩聚和他(她)朋友们</td>
+	//                                         <td>2013-06-03 13:26:19</td>
+	//                                         <td>贾燕</td>
+	//                                         <td><a href="javascript:void(0)">下载</a></td>
+	//                                         <td>总店额度采购</td>
 	//                                     </tr>
-	//                                 </tbody>
-	//                             </table>
-	//                         </div>
-	//                         <div class="box-footer">
-	//                             <page :all="pageall"
-	//                                   :cur.sync="pagecur"
-	//                                   :page_size.sync="page_size">
-	//                             </page>
+	//                                     <!--<tr role="row"  v-for="n in checkLists">-->
+	//                                         <!--<td>{{n.certificate}}</td>-->
+	//                                         <!--<td>{{n.collectionName}}</td>-->
+	//                                         <!--<td>{{n.tradeTime || datetime}}</td>-->
+	//                                         <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
+	//                                         <!--<td><a href="javascript:void(0)">下载</a></td>-->
+	//                                         <!--<td>{{n.remarks}}</td>-->
+	//                                     <!--</tr>-->
+	//                                     </tbody>
+	//                                 </table>
+	//                             </div>
 	//                         </div>
 	//                     </div>
 	//                 </div>
+	//
+	//
+	//                 <div data-backdrop="static"  id="modal_control" class="modal fade" style="display: none;">
+	//                     <div class="modal-dialog modal-lg">
+	//                         <div class="modal-content">
+	//                             <div class="modal-header">
+	//                                 <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                 <h5 class="modal-title">划款账户</h5>
+	//                             </div>
+	//                             <div class="modal-body">
+	//                                 <div>
+	//                                     <span>商户id：4392</span>
+	//                                     <span>商户名：南昌玩聚恒茂店</span>
+	//                                 </div>
+	//                                 <div>
+	//                                     <div><span @click="bthfShow(0)">补贴划付</span><span @click="bthfShow(1)">额度采购</span></div>
+	//                                     <div><span>账户名：魏璇</span><span>账  号：6214837910896095</span></div>
+	//                                     <div><span>开户行：招商银行股份有限公司南昌营业部</span><span>提入行号：308421022022</span></div>
+	//                                     <a data-toggle="modal"  data-target="#modal_updata" href="javascript:void(0);">更新</a>
+	//                                 </div>
+	//                                 <table v-show="bthf" class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+	//                                     <thead>
+	//                                     <tr role="row">
+	//                                         <th>ID</th>
+	//                                         <th>账户信息</th>
+	//                                         <th>更新时间</th>
+	//                                         <th>更新人</th>
+	//                                         <th>变更凭证</th>
+	//                                         <th>更新备注</th>
+	//                                     </tr>
+	//                                     </thead>
+	//                                     <tbody>
+	//                                     <tr role="row">
+	//                                         <td>1</td>
+	//                                         <td>昌玩聚和他(她)朋友们</td>
+	//                                         <td>2013-06-03 13:26:19</td>
+	//                                         <td>贾燕</td>
+	//                                         <td><a href="javascript:void(0)">下载</a></td>
+	//                                         <td>总店额度采购</td>
+	//                                     </tr>
+	//                                     <!--<tr role="row"  v-for="n in checkLists">-->
+	//                                     <!--<td>{{n.certificate}}</td>-->
+	//                                     <!--<td>{{n.collectionName}}</td>-->
+	//                                     <!--<td>{{n.tradeTime || datetime}}</td>-->
+	//                                     <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
+	//                                     <!--<td><a href="javascript:void(0)">下载</a></td>-->
+	//                                     <!--<td>{{n.remarks}}</td>-->
+	//                                     <!--</tr>-->
+	//                                     </tbody>
+	//                                 </table>
+	//                                 <table v-else class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+	//                                     <thead>
+	//                                     <tr role="row">
+	//                                         <th>ID</th>
+	//                                         <th>账户信息1</th>
+	//                                         <th>更新时间1</th>
+	//                                         <th>更新人1</th>
+	//                                         <th>变更凭证1</th>
+	//                                         <th>更新备注1</th>
+	//                                     </tr>
+	//                                     </thead>
+	//                                     <tbody>
+	//                                     <tr role="row">
+	//                                         <td>1</td>
+	//                                         <td>昌玩聚和他(她)朋友们</td>
+	//                                         <td>2013-06-03 13:26:19</td>
+	//                                         <td>贾燕</td>
+	//                                         <td><a href="javascript:void(0)">下载</a></td>
+	//                                         <td>总店额度采购</td>
+	//                                     </tr>
+	//                                     <!--<tr role="row"  v-for="n in checkLists">-->
+	//                                     <!--<td>{{n.certificate}}</td>-->
+	//                                     <!--<td>{{n.collectionName}}</td>-->
+	//                                     <!--<td>{{n.tradeTime || datetime}}</td>-->
+	//                                     <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
+	//                                     <!--<td><a href="javascript:void(0)">下载</a></td>-->
+	//                                     <!--<td>{{n.remarks}}</td>-->
+	//                                     <!--</tr>-->
+	//                                     </tbody>
+	//                                 </table>
+	//                             </div>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//
+	//                 <div data-backdrop="static"  id="modal_updata" class="modal fade" style="display: none;">
+	//                     <div class="modal-dialog modal-sm">
+	//                         <div class="modal-content">
+	//                             <div class="modal-header">
+	//                                 <button type="button" class="close" data-dismiss="modal">×</button>
+	//                                 <h5 class="modal-title">更新账户</h5>
+	//                             </div>
+	//                             <div class="modal-body">
+	//                                 <div class="modal-body member_rules_modal-body">
+	//                                     <div class="form-group">
+	//                                         <label class="w28" ><i>*</i>账户名：</label>
+	//                                         <input class="form-control" type="text" placeholder="账户名">
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label class="w28" ><i>*</i>账 号：</label>
+	//                                         <input class="form-control" type="text" placeholder="账 号">
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label class="w28" ><i>*</i>提入行号：</label>
+	//                                         <input class="form-control" type="text" placeholder="提入行号">
+	//                                         <button type="button" @click="personTrue(person.id)" class="btn">查询行号</button>
+	//                                     </div>
+	//                                     <div class="form-group">
+	//                                         <label class="w28" ><i>*</i>建行否：</label>
+	//                                         <input type="radio" id="one" value="one" v-model="glradio">
+	//                                         <label class="w28" for="one">是</label>
+	//                                         <input type="radio" id="two" value="two" v-model="glradio">
+	//                                         <label class="w28" for="two">否</label>
+	//                                     </div>
+	//                                     <div>
+	//                                         <div class="form-group">
+	//                                             <label class="w28"><i>*</i>上传凭证：</label>
+	//                                             <input type="file">
+	//                                         </div>
+	//                                         <div class="form-group" >
+	//                                             <label class="w28">收款方：</label>
+	//                                             <input class="form-control" type="text" v-model="skf" placeholder="五十字以内">
+	//                                         </div>
+	//                                         <div class="form-group">
+	//                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
+	//                                             <textarea class="form-control" id="tarea" width="70%" cols="20" rows="3"></textarea>
+	//                                         </div>
+	//                                     </div>
+	//                                 </div>
+	//                             </div>
+	//                             <div class="modal-footer">
+	//                                 <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
+	//                             </div>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//
 	//             </div>
 	//         </div>
 	//     </index>
 	// </template>
 	// <style>
-	//     .box-tbl{
-	//         overflow:auto;
+	//      .blists .form-group{
+	//         text-align: left;
 	//     }
-	//     .page-bar{
-	//         margin: 25px auto;
+	//      .blists .form-group.tc{
 	//         text-align: center;
 	//     }
-	//     th{
-	//         min-width: 85px;
+	//      .blists .modal-body .form-control{
+	//         text-align: left;
+	//         width:67%;
+	//         display: inline-block;
+	//     }
+	//      .blists .modal-body label{
+	//         width:20%;
+	//         display: inline-block;
+	//     }
+	//      .blists .modal-body label i{
+	//         color:red;
+	//     }
+	//      .blists .modal-body .waring{
+	//         color: red;
+	//         margin-left: 5px;
+	//     }
+	//      .blists .modal-body button{
+	//         width:35%;
+	//     }
+	//      .blists table tr td, .blists table tr th{
+	//          padding: 20px 2px;
+	//          text-align: center;
+	//          text-overflow: ellipsis;
+	//          overflow: hidden;
+	//          white-space: nowrap;
+	//      }
+	//      .blists td span{
+	//         cursor: pointer;
+	//         color: #3c8dbc;
+	//     }
+	//      .blists td span:hover{
+	//         opacity: 80;
+	//     }
+	//      .blists  .page-bar{
+	//         margin: 25px auto;
+	//         text-align: center;
 	//     }
 	// </style>
 	// <script>
 	exports.default = {
 	    data: function data() {
 	        return {
-	            subCompanyID: "",
-	            cityID: "",
-	            createType: "",
-	            status: "",
-	            timeRange: '',
-	            startDate: "",
-	            endDate: "",
-	            merchantID: "",
-	            merchantName: "",
-	            keywords: "",
-	            id: "",
-	            seriesNumber: "",
-	            activityID: 0,
-	            subcompanyList: [],
-	            pageall: 1,
 	            pagecur: 1,
 	            page_size: 15,
-	            cityList: [],
-	            subsidyTaxRebateDetailList: []
+	            pageall: 1,
+	            loginList: {},
+	            defaultData: { "companyId": "", "accountType": "", "accountNumber": "", "pageIndex": 1, "pageSize": 15 },
+	            zdlists: [],
+	            relist: {
+	                startDate: '', companyId: '', accountType: '', shortName: '', accountName: '', accountNumber: '', bankName: ''
+	            },
+	            companylists: [],
+	            typelists: [],
+	            params: {},
+	            tSelect: '',
+	            cSelect: '',
+	            uText: '',
+	            addtitle: '',
+	            waring: '',
+	            fire: false,
+	            person: {
+	                name: '',
+	                phone: '',
+	                email: ''
+	            },
+	            accountId: '',
+	            bthf: true
 	        };
 	    },
 
 	    methods: {
-	        //获取补贴划付数据
-	        getsubsidyTaxRebateDetailList: function getsubsidyTaxRebateDetailList(data) {
-	            this.$http.post('./subsidyTaxRebateDetail/list', data).then(function (response) {
+	        // *** 请求账户列表数据
+
+	        getZlists: function getZlists(data) {
+	            return;
+	            this.$http.post('./bankaccount/list', data).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('zdlists', response.data.data) : null;
 	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
 	            }, function (response) {
 	                console.log(response);
 	            });
 	        },
-	        //获取分公司数据
-	        getSubcompany: function getSubcompany(data) {
-	            this.$http.post('./subcompany/list', data).then(function (response) {
+	        getClist: function getClist() {
+	            // *** 请求公司数据
+	            this.$http.post('./subcompany/list', {}).then(function (response) {
 	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('subcompanyList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('companylists', response.data.data) : null;
 	            }, function (response) {
 	                console.log(response);
 	            });
 	        },
-	        //获取城市数据
-	        getCity: function getCity(data) {
-	            this.$http.post('./city/list', data).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('cityList', response.data.data) : null;
-	            }, function (response) {
-	                console.log(response);
-	            });
+	        checkNew: function checkNew() {
+	            this.initList();
 	        },
-	        getTwo: function getTwo(num) {
-	            if (num.toString().length >= 2) return num;
-	            var str = "";
-	            for (var i = num.toString().length; i < 2; i++) {
-	                str += "0";
-	            }return str + num.toString();
+	        initList: function initList() {
+	            $(".modal").modal("hide");
+	            this.getZlists(this.defaultData);
 	        },
-	        query: function query() {
-	            // let data=this.data;
-	            var data = {
-	                subCompanyID: this.subCompanyID,
-	                cityID: this.cityID,
-	                createType: this.createType,
-	                timeRange: this.timeRange,
-	                merchantID: this.merchantID,
-	                merchantName: this.merchantName,
-	                keywords: this.keywords,
-	                id: this.id,
-	                seriesNumber: this.seriesNumber,
-	                phone: this.phone,
-	                activityID: this.activityID
-	            };
-	            this.getsubsidyTaxRebateDetailList(data);
+	        setAcc: function setAcc() {},
+	        bthfShow: function bthfShow(type) {
+	            switch (type) {
+	                case 0:
+	                    if (this.bthf) {
+	                        return;
+	                    } else {
+	                        this.bthf = true;
+	                    }
+	                    break;
+	                case 1:
+	                    if (!this.bthf) {
+	                        return;
+	                    } else {
+	                        this.bthf = false;
+	                    }
+	                    break;
+	            }
 	        }
 	    },
 	    ready: function ready() {
-	        this.getsubsidyTaxRebateDetailList({});
-	        this.getSubcompany({});
-	        this.getCity({});
+	        !!sessionStorage.getItem('userData') ? this.$set('loginList', JSON.parse(sessionStorage.getItem('userData'))) : null;
+	        this.initList();
+	        this.getClist();
 	    },
-	    watch: {
-	        timeRange: function timeRange() {
-	            console.log();
-	            var d = new Date();
-	            var day = d.getDate();
-	            var month = d.getMonth() + 1;
-	            var year = d.getFullYear();
-	            var newD;
-	            switch (this.timeRange) {
-	                case '0':
-	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 1);
-	                    break;
-	                case '1':
-	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day - 7);
-	                    break;
-	                case '2':
-	                    newD = year + "-" + this.getTwo(month - 1) + "-" + this.getTwo(day);
-	                    break;
-	                case '3':
-	                    newD = year + "-" + this.getTwo(month - 3) + "-" + this.getTwo(day);
-	                    break;
-	                case '4':
-	                    newD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-	                    break;
-	            }
-	            var endD = year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-	            this.startDate = newD;
-	            this.endDate = endD;
-	        }
-	    },
+
 	    components: {
 	        'datepicker': _datepicker2.default,
 	        'dialog': _dialog2.default
+	    },
+	    watch: {
+	        pagecur: function pagecur() {
+	            this.defaultData.pageIndex = this.pagecur;
+	            this.initList();
+	        },
+	        page_size: function page_size() {
+	            this.defaultData.pageSize = this.page_size;
+	            this.initList();
+	        }
 	    }
 	};
 	// </script>
 
 /***/ },
-/* 132 */
+
+/***/ 155:
 /***/ function(module, exports) {
 
-	module.exports = "\n    <index title=\"补贴退税\" ptitle=\"备付金支出\"  isshow=\"isshow\">\n        <section class=\"content\" slot=\"content\">\n            <div class=\"row\">\n                <div class=\"col-xs-12\">\n                    <div class=\"box\">\n                        <div class=\"box-header\">\n                            <form class=\"form-inline manage-form\">\n                                <br/>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                    <option value=\"\">请选择分公司</option>\n                                        <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"cityID\">\n                                    <option value=\"\">请选择城市</option>\n                                        <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"timeRange\">\n                                        <option value=\"\">请选择日期</option>\n                                        <option value=\"0\">昨天</option>\n                                        <option value=\"1\">最近一周</option>\n                                        <option value=\"2\">最近一个月</option>\n                                        <option value=\"3\">最近三个月</option>\n                                        <option value=\"4\">自定义时间</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\" v-show=\"timeRange==4\">\n                                    <datepicker  :readonly=\"true\" :value.sync=\"startDate\" format=\"YYYY-MM-DD\"></datepicker>至\n                                    <datepicker  :readonly=\"true\" :value.sync=\"endDate\" format=\"YYYY-MM-DD\"></datepicker>\n                                </div>\n                                <br/>\n                                <br/>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"merchantID\" placeholder=\"商户ID\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"keywords\" placeholder=\"商户名、收款账户名、帐号\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"createType\">\n                                        <option value=\"\">请选择生成方式</option>\n                                        <option value=\"1\">系统生成</option>\n                                        <option value=\"2\">手工录入</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <select class=\"form-control\" v-model=\"status\">\n                                        <option value=\"\">请选择状态</option>\n                                        <option value=\"1\">等待审核</option>\n                                        <option value=\"2\">等待划付</option>\n                                        <option value=\"3\">等待对账</option>\n                                        <option value=\"4\">对账成功</option>\n                                        <option value=\"5\">划付失败</option>\n                                    </select>\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"text\" class=\"form-control\" v-model=\"remark\" placeholder=\"备注\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input type=\"button\" class=\"btn btn-info\" v-on:click=\"query\" value=\"查询\">\n                                </div>\n                            </form> \n                        </div>\n                        <div class=\"box-body box-tbl\">\n                            <table id=\"table1\" class=\"table table-bordered table-hover\">\n                                <thead>\n                                    <tr>\n                                        <th>ID</th>\n                                        <th>生成日期</th>\n                                        <th>分公司</th>\n                                        <th>城市</th>\n                                        <th>付款账户</th>\n                                        <th>商户ID</th>\n                                        <th>商户名称</th>\n                                        <th>收款账户信息</th>\n                                        <th>生成方式</th>\n                                        <th>退税金额</th>\n                                        <th>交易</th>\n                                        <th>状态</th>\n                                        <th>付款流水</th>\n                                        <th>备注</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    <tr v-if=\"!!subsidyTaxRebateDetailList.length\" v-for=\"strd in subsidyTaxRebateDetailList\">\n                                        <td>{{strd.id}}</td>\n                                        <td>{{strd.createTime | datetime}}</td>\n                                        <td>{{strd.subCompanyName}}</td>\n                                        <td>{{strd.cityName}}</td>\n                                        <td>{{strd.payAccount}}</td>\n                                        <td>{{strd.merchantOperationID}}</td>\n                                        <td>{{strd.merchantName}}</td>\n                                        <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>\n                                        <td>\n                                            <template v-if=\"strd.createType==1\">系统生成</template>\n                                            <template v-if=\"strd.createType==2\">手工录入</template>\n                                        </td>\n                                        <td>{{strd.taxRebateAmount}}</td>\n                                        <td><a :href=\"strd.id\">明细</a> </td>\n                                        <td>\n                                            <template v-if=\"strd.status==1\">等待对账</template>\n                                            <template v-if=\"strd.status==2\">划付失败</template>\n                                        </td>\n                                        <td><a :href=\"strd.id\">申请划付</a></td>\n                                        <td>{{strd.remarks}}</td>\n                                    </tr>\n                                </tbody>\n                            </table>\n                        </div>\n                        <div class=\"box-footer\">\n                            <page :all=\"pageall\"\n                                  :cur.sync=\"pagecur\"\n                                  :page_size.sync=\"page_size\">\n                            </page>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </index>\n</template>";
+	module.exports = "\n<index :title=\"'商户列表'\"\n       :ptitle=\"'商户管理'\"\n       :hname=\"'business-lists'\"\n       :isshow=\"'isshow'\">\n    <div class=\"content blists\" slot=\"content\">\n        <div class=\"panel panel-flat\">\n            <div class=\"panel-heading\">\n                <form class=\"form-inline manage-form\">\n                    <div class=\"form-group\">\n                        <input type=\"text\" class=\"form-control\" v-model=\"defaultData.id\" placeholder=\"商户ID\">\n                    </div>\n                    <div class=\"form-group\">\n                        <input type=\"text\" class=\"form-control\" v-model=\"defaultData.accountName\" placeholder=\"商户名\">\n                    </div>\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" v-model=\"defaultData.companyId\">\n                            <option value=\"\">请选择分公司</option>\n                            <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                        </select>\n                    </div>\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" v-model=\"defaultData.city\">\n                            <option value=\"\">请选择城市</option>\n                            <option v-for=\"(index,n) in city\" v-text=\"n.cityName\" :value=\"n.cityId\"></option>\n                        </select>\n                    </div>\n                    <div class=\"form-group\">\n                        <input type=\"text\" class=\"form-control\" v-model=\"defaultData.startNum\" placeholder=\"佣金值\">\n                        -\n                        <input type=\"text\" class=\"form-control\" v-model=\"defaultData.endNum\" placeholder=\"佣金值\">\n                    </div>\n                    <div class=\"form-group\">\n                        <input type=\"button\" class=\"btn btn-info\" @click=\"checkNew\" value=\"查询\">\n                    </div>\n                </form>\n            </div>\n            <div v-if=\"!zdlists.length\" id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper no-footer\">\n                <div class=\"datatable-scroll\">\n                    <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                        <thead>\n                            <tr role=\"row\">\n                                <th>商户ID</th>\n                                <th>商户名称</th>\n                                <th>分公司</th>\n                                <th>城市</th>\n                                <th>消费总笔数</th>\n                                <th>消费总金额</th>\n                                <th>实付总金额</th>\n                                <th>33211总佣金 </th>\n                                <th>三方折扣差</th>\n                                <th>额采折扣差</th>\n                                <th>交易</th>\n                                <th>佣金值</th>\n                                <th>额度采购消化账户</th>\n                                <th>划款账户</th>\n                                <th>联系人</th>\n                                <th>电话 </th>\n                                <th>客情人员</th>\n                            </tr>\n                        </thead>\n                    <tbody>\n                        <tr role=\"row\">\n                            <td>2587</td>\n                            <td>南昌玩聚和他(她)朋友</td>\n                            <td>南昌卡说</td>\n                            <td>南昌</td>\n                            <td>196</td>\n                            <td>{{ 38122121/100 | currency '' }}</td>\n                            <td>{{ 38122/100 | currency '' }}</td>\n                            <td>{{ 381/100 | currency '' }}</td>\n                            <td>{{ 0/100 | currency '' }}</td>\n                            <td>{{ 3811/100 | currency '' }}</td>\n                            <td><a href=\"#\">明细</a></td>\n                            <td>{{ 300/100 | currency '' }}</td>\n                            <td><a data-toggle=\"modal\" data-target=\"#modal_checking\" href=\"javascript:void(0)\" @click=\"setAcc()\">南昌玩聚和他(她)朋友</a></td>\n                            <td><a data-toggle=\"modal\"  data-target=\"#modal_control\" href=\"javascript:void(0)\">管理</a></td>\n                            <td>魏璇</td>\n                            <td>13079101524</td>\n                            <td>邹里堃</td>\n                        </tr>\n                        <!--<tr role=\"row\" v-for=\"(index,trlist) in zdlists\">-->\n                            <!--<td>{{trlist.companyName}}</td>-->\n                            <!--<td>{{trlist.shortName}}</td>-->\n                            <!--<td>{{trlist.accountName}}</td>-->\n                            <!--<td>{{trlist.accountNumber}}</td>-->\n                            <!--<td>{{trlist.bankName}}</td>-->\n                            <!--<td></td>-->\n                            <!--<td>{{trlist.startDate}}</td>-->\n                            <!--<td><a v-link=\"{name:'provisions-info',params:{accountId:trlist.id}}\">{{ trlist.balanceAmount/100 | currency '' }} </a></td>-->\n                            <!--<td>{{trlist.companyName}}</td>-->\n                            <!--<td>{{trlist.shortName}}</td>-->\n                            <!--<td>{{trlist.accountName}}</td>-->\n                            <!--<td>{{trlist.accountNumber}}</td>-->\n                            <!--<td>{{trlist.bankName}}</td>-->\n                            <!--<td></td>-->\n                            <!--<td>{{trlist.startDate}}</td>-->\n                            <!--<td></td>-->\n                            <!--<td></td>-->\n                        <!--</tr>-->\n                         <tr>\n                             <td></td>\n                             <td>合计</td>\n                             <td></td>\n                             <td></td>\n                             <td>196</td>\n                             <td>{{ 38122121/100 | currency '' }}</td>\n                             <td>{{ 38122/100 | currency '' }}</td>\n                             <td>{{ 381/100 | currency '' }}</td>\n                             <td>{{ 0/100 | currency '' }}</td>\n                             <td>{{ 3811/100 | currency '' }}</td>\n                             <td></td>\n                             <td></td>\n                             <td></td>\n                             <td></td>\n                             <td></td>\n                             <td></td>\n                             <td></td>\n                         </tr>\n                    </tbody>\n                </table>\n                </div>\n                <div class=\"datatable-footer\">\n                    <page :all=\"pageall\"\n                          :cur.sync=\"pagecur\"\n                          :page_size.sync=\"page_size\">\n                    </page>\n                </div>\n            </div>\n            <div style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n                未找到您要查询的账户\n            </div>\n\n            <div data-backdrop=\"static\"  id=\"modal_checking\" class=\"modal fade\" style=\"display: none;\">\n                <div class=\"modal-dialog modal-lg\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                            <h5 class=\"modal-title\">额度采购消化账户</h5>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div>\n                                <span>商户id：4392</span>\n                                <span>商户名：南昌玩聚恒茂店</span>\n                                <span class=\"pull-right\">额度采购消化账户：<a href=\"\">南昌玩聚和他(她)朋友的咖啡馆</a></span>\n                            </div>\n                            <div>历史记录：</div>\n                            <table class=\"table datatable-selection-single dataTable no-footer\" style=\"border: 1px solid #ccc;\">\n                                <thead>\n                                <tr role=\"row\">\n                                    <th>ID</th>\n                                    <th>账户名</th>\n                                    <th>更新时间</th>\n                                    <th>更新人</th>\n                                    <th>变更凭证</th>\n                                    <th>更新备注</th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                <tr role=\"row\">\n                                    <td>1</td>\n                                    <td>昌玩聚和他(她)朋友们</td>\n                                    <td>2013-06-03 13:26:19</td>\n                                    <td>贾燕</td>\n                                    <td><a href=\"javascript:void(0)\">下载</a></td>\n                                    <td>总店额度采购</td>\n                                </tr>\n                                <!--<tr role=\"row\"  v-for=\"n in checkLists\">-->\n                                    <!--<td>{{n.certificate}}</td>-->\n                                    <!--<td>{{n.collectionName}}</td>-->\n                                    <!--<td>{{n.tradeTime || datetime}}</td>-->\n                                    <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->\n                                    <!--<td><a href=\"javascript:void(0)\">下载</a></td>-->\n                                    <!--<td>{{n.remarks}}</td>-->\n                                <!--</tr>-->\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n\n            <div data-backdrop=\"static\"  id=\"modal_control\" class=\"modal fade\" style=\"display: none;\">\n                <div class=\"modal-dialog modal-lg\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                            <h5 class=\"modal-title\">划款账户</h5>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div>\n                                <span>商户id：4392</span>\n                                <span>商户名：南昌玩聚恒茂店</span>\n                            </div>\n                            <div>\n                                <div><span @click=\"bthfShow(0)\">补贴划付</span><span @click=\"bthfShow(1)\">额度采购</span></div>\n                                <div><span>账户名：魏璇</span><span>账  号：6214837910896095</span></div>\n                                <div><span>开户行：招商银行股份有限公司南昌营业部</span><span>提入行号：308421022022</span></div>\n                                <a data-toggle=\"modal\"  data-target=\"#modal_updata\" href=\"javascript:void(0);\">更新</a>\n                            </div>\n                            <table v-show=\"bthf\" class=\"table datatable-selection-single dataTable no-footer\" style=\"border: 1px solid #ccc;\">\n                                <thead>\n                                <tr role=\"row\">\n                                    <th>ID</th>\n                                    <th>账户信息</th>\n                                    <th>更新时间</th>\n                                    <th>更新人</th>\n                                    <th>变更凭证</th>\n                                    <th>更新备注</th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                <tr role=\"row\">\n                                    <td>1</td>\n                                    <td>昌玩聚和他(她)朋友们</td>\n                                    <td>2013-06-03 13:26:19</td>\n                                    <td>贾燕</td>\n                                    <td><a href=\"javascript:void(0)\">下载</a></td>\n                                    <td>总店额度采购</td>\n                                </tr>\n                                <!--<tr role=\"row\"  v-for=\"n in checkLists\">-->\n                                <!--<td>{{n.certificate}}</td>-->\n                                <!--<td>{{n.collectionName}}</td>-->\n                                <!--<td>{{n.tradeTime || datetime}}</td>-->\n                                <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->\n                                <!--<td><a href=\"javascript:void(0)\">下载</a></td>-->\n                                <!--<td>{{n.remarks}}</td>-->\n                                <!--</tr>-->\n                                </tbody>\n                            </table>\n                            <table v-else class=\"table datatable-selection-single dataTable no-footer\" style=\"border: 1px solid #ccc;\">\n                                <thead>\n                                <tr role=\"row\">\n                                    <th>ID</th>\n                                    <th>账户信息1</th>\n                                    <th>更新时间1</th>\n                                    <th>更新人1</th>\n                                    <th>变更凭证1</th>\n                                    <th>更新备注1</th>\n                                </tr>\n                                </thead>\n                                <tbody>\n                                <tr role=\"row\">\n                                    <td>1</td>\n                                    <td>昌玩聚和他(她)朋友们</td>\n                                    <td>2013-06-03 13:26:19</td>\n                                    <td>贾燕</td>\n                                    <td><a href=\"javascript:void(0)\">下载</a></td>\n                                    <td>总店额度采购</td>\n                                </tr>\n                                <!--<tr role=\"row\"  v-for=\"n in checkLists\">-->\n                                <!--<td>{{n.certificate}}</td>-->\n                                <!--<td>{{n.collectionName}}</td>-->\n                                <!--<td>{{n.tradeTime || datetime}}</td>-->\n                                <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->\n                                <!--<td><a href=\"javascript:void(0)\">下载</a></td>-->\n                                <!--<td>{{n.remarks}}</td>-->\n                                <!--</tr>-->\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div data-backdrop=\"static\"  id=\"modal_updata\" class=\"modal fade\" style=\"display: none;\">\n                <div class=\"modal-dialog modal-sm\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                            <h5 class=\"modal-title\">更新账户</h5>\n                        </div>\n                        <div class=\"modal-body\">\n                            <div class=\"modal-body member_rules_modal-body\">\n                                <div class=\"form-group\">\n                                    <label class=\"w28\" ><i>*</i>账户名：</label>\n                                    <input class=\"form-control\" type=\"text\" placeholder=\"账户名\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"w28\" ><i>*</i>账 号：</label>\n                                    <input class=\"form-control\" type=\"text\" placeholder=\"账 号\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"w28\" ><i>*</i>提入行号：</label>\n                                    <input class=\"form-control\" type=\"text\" placeholder=\"提入行号\">\n                                    <button type=\"button\" @click=\"personTrue(person.id)\" class=\"btn\">查询行号</button>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label class=\"w28\" ><i>*</i>建行否：</label>\n                                    <input type=\"radio\" id=\"one\" value=\"one\" v-model=\"glradio\">\n                                    <label class=\"w28\" for=\"one\">是</label>\n                                    <input type=\"radio\" id=\"two\" value=\"two\" v-model=\"glradio\">\n                                    <label class=\"w28\" for=\"two\">否</label>\n                                </div>\n                                <div>\n                                    <div class=\"form-group\">\n                                        <label class=\"w28\"><i>*</i>上传凭证：</label>\n                                        <input type=\"file\">\n                                    </div>\n                                    <div class=\"form-group\" >\n                                        <label class=\"w28\">收款方：</label>\n                                        <input class=\"form-control\" type=\"text\" v-model=\"skf\" placeholder=\"五十字以内\">\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label for=\"tarea\" class=\"w28\"><i>*</i>备注：</label>\n                                        <textarea class=\"form-control\" id=\"tarea\" width=\"70%\" cols=\"20\" rows=\"3\"></textarea>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"modal-footer\">\n                            <button type=\"button\" @click=\"personTrue(person.id)\" class=\"btn btn-primary\">保存</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</index>\n";
 
 /***/ }
-]));
+
+});
