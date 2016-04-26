@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="activityID">
-                                    <option value="0">请选择参与活动</option>
+                                    <option value="">请选择参与活动</option>
                                         <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
                                     </select>
                                 </div>
