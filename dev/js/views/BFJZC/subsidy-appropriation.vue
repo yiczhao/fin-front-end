@@ -244,7 +244,7 @@
                         phone:this.phone,      
                         activityID:this.activityID
                     };
-                this.getTradeList(data);
+                this.getSubsidyAppropriationList(data);
             },
         },
         ready: function () {

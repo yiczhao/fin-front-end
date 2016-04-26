@@ -44,7 +44,7 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">等待审核</option>
+                                        <option value="1">已关闭</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">等待对账</option>
                                         <option value="4">对账成功</option>
@@ -52,14 +52,14 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remark" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
                             </form> 
                         </div>
-                        <div class="box-body box-tbl">
+                        <div v-show="!!advancePaymentDetailList.length" class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="!!advancePaymentDetailList.length" v-for="(index,apd) in advancePaymentDetailList">
+                                    <tr v-for="(index,apd) in advancePaymentDetailList">
                                         <td>{{index+1}}</td>
                                         <td>{{apd.applyTime | datetime}}</td>
                                         <td>{{apd.subCompanyName}}</td>
@@ -99,12 +99,15 @@
                                     </tr>
                                 </tbody>
                             </table>
+                             <div class="box-footer">
+                                <page :all="pageall"
+                                      :cur.sync="pagecur"
+                                      :page_size.sync="page_size">
+                                </page>
+                            </div>
                         </div>
-                        <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到预付款划付数据！
                         </div>
                     </div>
                 </div>
@@ -134,6 +137,7 @@
                 cityID:"",
                 createType:"",
                 status:"",
+                remarks:"",
                 timeRange:'',
                 startDate:"",
                 endDate:"",
@@ -195,13 +199,13 @@
                 let data={
                         subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
+                        startDate:this.startDate,
+                        endDate:this.endDate,
                         timeRange:this.timeRange,
-                        merchantID:this.merchantID,
-                        merchantName:this.merchantName,
+                        merchantOperationID:this.merchantID,
                         keywords:this.keywords,
-                        id:this.id,
-                        seriesNumber:this.seriesNumber,        
-                        phone:this.phone,      
+                        status:this.status,
+                        remarks:this.remarks
                     };
                 this.getadvancePaymentDetailList(data);
             },

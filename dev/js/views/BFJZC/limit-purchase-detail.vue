@@ -44,7 +44,7 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">等待审核</option>
+                                        <option value="1">已关闭</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">等待对账</option>
                                         <option value="4">对账成功</option>
@@ -52,14 +52,14 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remark" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
                             </form> 
                         </div>
-                        <div class="box-body box-tbl">
+                        <div v-show="!!limitPurchaseDetailList.length" class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -81,7 +81,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="!!limitPurchaseDetailList.length" v-for="(index,lpd) in limitPurchaseDetailList">
+                                    <tr v-for="(index,lpd) in limitPurchaseDetailList">
                                         <td>{{index+1}}</td>
                                         <td>{{lpd.purchaseTime | datetime}}</td>
                                         <td>{{lpd.subCompanyName}}</td>
@@ -95,9 +95,18 @@
                                         <td><a :href="lpd.limitPurchaseAccountID">查看</a></td>
                                         <td>
                                             <template v-if="lpd.status==1">
-                                                对账成功
+                                                已关闭
                                             </template>
                                             <template v-if="lpd.status==2">
+                                                等待划付
+                                            </template>
+                                            <template v-if="lpd.status==3">
+                                                等待对账
+                                            </template>
+                                            <template v-if="lpd.status==4">
+                                                对账成功
+                                            </template>
+                                            <template v-if="lpd.status==5">
                                                 对账失败
                                             </template>
                                         </td>
@@ -110,6 +119,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到额度采购数据！
                         </div>
                         <div class="box-footer">
                             <page :all="pageall"
@@ -145,19 +157,17 @@
                 cityID:"",
                 createType:"",
                 status:"",
+                remarks:"",
                 timeRange:'',
                 startDate:"",
                 endDate:"",
-                merchantID:"",      
+                merchantID:"",
                 merchantName:"",
-                keywords:"",   
-                id:"",   
-                seriesNumber:"",        
-                activityID:0,
-                subcompanyList:[],
+                keywords:"",
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                subcompanyList:[],
                 cityList:[],
                 limitPurchaseDetailList:[]
             }
@@ -206,13 +216,12 @@
                 let data={
                         subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
-                        timeRange:this.timeRange,
-                        merchantID:this.merchantID,
-                        merchantName:this.merchantName,
+                        startDate:this.startDate,
+                        endDate:this.endDate,
+                        merchantOperationID:this.merchantID,
                         keywords:this.keywords,
-                        id:this.id,
-                        seriesNumber:this.seriesNumber,        
-                        phone:this.phone,      
+                        status:this.status,
+                        remarks:this.remarks        
                     };
                 this.getlimitPurchaseDetailList(data);
             },
