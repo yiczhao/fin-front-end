@@ -202,7 +202,7 @@
                                          </div>
                                          <div class="form-group">
                                              <label><i>*</i>商户实补：</label>
-                                             <input type="text" class="form-control" id="merchantSubsidyShould" v-model="tradeInfo.merchantSubsidyShould" >
+                                             <input type="text" class="form-control" id="merchantSubsidyActual" v-model="tradeInfo.merchantSubsidyActual" >
                                          </div>
                                          <div class="form-group">
                                              <label>备注</label>
@@ -268,11 +268,13 @@
                 id:"",   
                 seriesNumber:"",        
                 phone:"",      
-                activityID:0,
+                activityID:'',
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 tradeInfo:{
                     merchantId:0,
                     activityId:0,
@@ -281,7 +283,7 @@
                     paAmount:0,  
                     thirdPartyReceivable:0,      
                     suspensionTax:0, 
-                    merchantSubsidyShould:0,
+                    merchantSubsidyActual:0,
                     certificates:'',     
                     remarks:''
                 },
@@ -341,7 +343,7 @@
                 return str + num.toString();
             },
             addTradeInfo:function(){
-                //获取所有商户信息
+                //初始化获取所有商户信息
                 this.$http.post('./merchant/list',{})
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -367,17 +369,18 @@
             query: function () {
                 // let data=this.data;
                 let data={
-                        subCompanID:this.subCompanID,
+                        subCompanyID:this.subCompanID,
                         cityID:this.cityID,
                         type:this.type,
                         merchantID:this.merchantID,
                         merchantName:this.merchantName,
-                        id:this.id,
-                        seriesNumber:this.seriesNumber,        
+                        tradeDetailID:this.id,
+                        serialNumber:this.seriesNumber,        
                         phone:this.phone,      
                         activityID:this.activityID,
                         startDate:this.startDate,
-                        endDate:this.endDate
+                        endDate:this.endDate,
+
                     };
                 this.getTradeList(data);
             },
@@ -416,11 +419,24 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+            pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{
            'datepicker': datepicker,
            'dialog': dialog,
+        },
+        validators: {
+            numeric: function (val) {
+                return /^[-+]?[0-9]+$/.test(val)
+            }
         }
     }
 </script>
