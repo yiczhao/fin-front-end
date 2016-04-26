@@ -32,7 +32,6 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.status">
-                                    <option value="">请选择对账状态</option>
                                     <option value="1">成功</option>
                                     <option value="0">待对账</option>
                                 </select>
@@ -40,11 +39,11 @@
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.purpose">
                                     <option value="">请选择用途</option>
-                                    <option value="1">佣金划付</option>
-                                    <option value="2">往来款</option>
-                                    <option value="3">转账退款</option>
-                                    <option value="4">账户费用</option>
-                                    <option value="5">其它</option>
+                                    <option value="1">补贴划付</option>
+                                    <option value="2">额度采购</option>
+                                    <option value="3">退税划付</option>
+                                    <option value="4">预付款</option>
+                                    <option value="5">供货商划付</option>
                                     <option value="6">往来款</option>
                                     <option value="7">转账退款</option>
                                     <option value="8">账户费用</option>
@@ -63,7 +62,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="dataTables_wrapper no-footer">
+                <div v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                     <div style="margin: 0 0 20px 20px;font-size: 20px;">
                         <span>总收入：</span><span>{{shouru}}</span>
                         <span>总支出：</span><span>{{zhichu}}</span>
@@ -88,7 +87,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr role="row" v-if="!!zdlists.length" v-for="(index,trlist) in zdlists">
+                                <tr role="row" v-for="(index,trlist) in zdlists">
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.certificate}}</td>
                                     <td>{{trlist.collectionName}}</td>
@@ -129,12 +128,15 @@
                         </page>
                     </div>
                 </div>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                    未找到您要查询的账户
+                </div>
                 <div data-backdrop="static"  id="modal_fzr" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">负责人</h5>
+                                <h5 class="modal-title">交易对账</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="modal-body member_rules_modal-body">
@@ -165,9 +167,9 @@
                                         <label class="w28" for="two">手工对账</label>
                                     </div>
                                         <div class="form-group tc" v-show="glradio=='one'">
-                                            <button class="btn" @click="dzOne">选择付款流水</button>
+                                            <button class="btn" @click="dzOne(dzList.id)">选择付款流水</button>
                                         </div>
-                                    <div class="table2" v-show="checkOne&&glradio=='one'">
+                                    <div class="table2" v-show="checkOne&&glradio=='one' && !!gllists.length" v-cloak>
                                         <div class="box-body">
                                             <table id="table2" class="table table-bordered table-hover">
                                                 <thead>
@@ -183,15 +185,25 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <td>20150418105038252</td>
-                                                    <td>2015-04-18</td>
-                                                    <td>张青</td>
-                                                    <td>张青
-                                                        36001050307052501764</td>
-                                                    <td>{{377/100 | currency '' }}</td>
-                                                    <td>佣金划付</td>
-                                                    <td>2015年3月份商户返佣</td>
+                                                <tr v-for="n in gllists">
+                                                    <td>{{n.reserveCashId}}</td>
+                                                    <td>{{n.tradeTime | datetime}}</td>
+                                                    <td>{{n.collectionName}}</td>
+                                                    <td>{{n.accountName}}
+                                                        {{n.accountNumber}}</td>
+                                                    <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                                    <td>
+                                                        <template v-if="n.purpose==1"> 补贴划付</template>
+                                                        <template v-if="n.purpose==2"> 额度采购</template>
+                                                        <template v-if="n.purpose==3"> 退税划付</template>
+                                                        <template v-if="n.purpose==4"> 预付款</template>
+                                                        <template v-if="n.purpose==5"> 供货商划付</template>
+                                                        <template v-if="n.purpose==6"> 往来款</template>
+                                                        <template v-if="n.purpose==7"> 转账退款</template>
+                                                        <template v-if="n.purpose==8"> 账户费用</template>
+                                                        <template v-if="n.purpose==9"> 其它</template>
+                                                    </td>
+                                                    <td>{{n.remarks}}</td>
                                                     <td><a href="">选择</a></td>
                                                 </tr>
                                                 </tbody>
@@ -201,13 +213,13 @@
                                     <div  v-show="glradio=='two'">
                                         <div class="form-group">
                                             <label class="w28"><i>*</i>用途：</label>
-                                            <select  v-model="checkForm.purpose">
+                                            <select class="form-control"  v-model="checkForm.purpose">
                                                 <option value="">请选择用途</option>
-                                                <option value="1">佣金划付</option>
-                                                <option value="2">往来款</option>
-                                                <option value="3">转账退款</option>
-                                                <option value="4">账户费用</option>
-                                                <option value="5">其它</option>
+                                                <option value="1">补贴划付</option>
+                                                <option value="2">额度采购</option>
+                                                <option value="3">退税划付</option>
+                                                <option value="4">预付款</option>
+                                                <option value="5">供货商划付</option>
                                                 <option value="6">往来款</option>
                                                 <option value="7">转账退款</option>
                                                 <option value="8">账户费用</option>
@@ -216,11 +228,11 @@
                                         </div>
                                         <div class="form-group" >
                                             <label class="w28">收款方：</label>
-                                            <input type="text" v-model="skf" placeholder="五十字以内">
+                                            <input type="text" class="form-control" v-model="skf" placeholder="五十字以内">
                                         </div>
                                         <div class="form-group">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
-                                            <textarea id="tarea" width="70%" cols="20" rows="3"></textarea>
+                                            <textarea class="form-control" id="tarea" width="70%" cols="20" rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -288,6 +300,12 @@
         margin: 25px auto;
         text-align: center;
     }
+    .info .datatable-scroll{
+        overflow:auto;
+    }
+    .info .modal-header{
+        margin-bottom: 20px;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -308,11 +326,12 @@
                 dateS:'1',
                 shouru:0,
                 zhichu:0,
+                gllists:[],
                 checkForm:{
                     accountId:'',
                     certificate:'',
                     keyword:'',
-                    status:'',
+                    status:'0',
                     purpose:'',
                     remarks:'',
                     startDate:'',
@@ -321,7 +340,7 @@
                     pageSize:15
                 },
                 glradio:'one',
-                shm:''
+                skf:''
             }
         },
         methods:{
@@ -357,11 +376,16 @@
                 $(".modal").modal("hide");
                 this.getZlists(this.checkForm);
             },
-            dzOne(){
-                console.log(222);
-                var model=$('.info .modal-sm');
-                (this.checkOne)?this.checkOne=false:this.checkOne=true;
-                (model.hasClass('modal-lg'))?model.removeClass('modal-lg'):model.addClass('modal-lg')
+            dzOne(id){
+                // *** 请求公司数据
+                this.$http.post('./reservecash/order/checklist/'+id)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('gllists', response.data.data) : null;
+                            (this.checkOne)?this.checkOne=false:this.checkOne=true;
+                        }, function (response) {
+                            console.log(response);
+                        });
             },
             getTwo(num){
                 if(num.toString().length>=2) return num;

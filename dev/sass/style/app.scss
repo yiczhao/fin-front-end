@@ -4,3 +4,13 @@
 .navbar{
   min-width: 1540px;
 }
+[v-cloak]{
+  display: none;
+}
+table{
+  td,th{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

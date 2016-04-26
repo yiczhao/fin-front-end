@@ -69,7 +69,7 @@
                     </form>
                 </div>
             </div>
-            <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed" v-for="(index,n) in zdlists">
+            <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed"   v-for="(index,n) in zdlists">
                 <div class="panel-heading bgddd">
                     <div class="panel-title">
                         <p>
@@ -105,50 +105,46 @@
                         </p>
                         <p>备注:{{n.remarks}}</p>
                     </div>
-                    <div class="pull-right" @click="getInfo(index)">
+                    <div class="pull-right" @click="getInfo(n,index)">
                         <span class="pull-left">查看详情</span>
                         <ul class="icons-list pull-left" >
                             <li><a data-action="collapse"></a></li>
                         </ul>
                     </div>
                 </div>
-                <div  v-show="!!zdlists.length" class="dataTables_wrapper no-footer">
+                <div v-show="listinfos[index]!=''" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
-                            <tr  role="row">
-                                <th>生成日期</th>
-                                <th>商户名称</th>
-                                <th>划付金额</th>
-                                <th>用途</th>
-                                <th>操作</th>
-                                <th>状态</th>
-                                <th>备注</th>
-                            </tr>
+                                <tr role="row">
+                                    <th>生成日期{{$index}}</th>
+                                    <th>商户名称</th>
+                                    <th>划付金额</th>
+                                    <th>用途</th>
+                                    <th>操作</th>
+                                    <th>状态</th>
+                                    <th>备注</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr role="row"  v-for="trlist in n.listinfo">
-                                <td>{{trlist.createAt | datetime}}</td>
-                                <td>{{trlist.merchantName}}</td>
-                                <td>{{trlist.amount/100 | currency '' }}</td>
-                                <td>
-                                    <template v-if="n.purpose==1"> 补贴划付</template>
-                                    <template v-if="n.purpose==2"> 额度采购</template>
-                                    <template v-if="n.purpose==3"> 退税划付</template>
-                                    <template v-if="n.purpose==4"> 预付款</template>
-                                    <template v-if="n.purpose==5"> 供货商划付</template>
-                                </td>
-                                <td><a href="">详情</a></td>
-                                <td>
-                                    <template v-if="trlist.status==1"> 等待审核</template>
-                                    <template v-if="trlist.status==2"> 等待划付</template>
-                                    <template v-if="trlist.status==3"> 等待对账</template>
-                                    <template v-if="trlist.status==4"> 对账成功</template>
-                                    <template v-if="trlist.status==5"> 划付失败</template>
-                                    <template v-if="trlist.status==6"> 已关闭</template>
-                                </td>
-                                <td>{{trlist.remarks/100}}</td>
-                            </tr>
+                                <tr role="row" v-for="trlist in listinfos[index]">
+                                    <td>{{trlist.createAt | datetime}}</td>
+                                    <td>{{trlist.merchantName}}</td>
+                                    <td>{{trlist.amount/100 | currency '' }}</td>
+                                    <td>
+                                        {{trlist.purpose}}
+                                    </td>
+                                    <td><a href="">详情</a></td>
+                                    <td>
+                                        <template v-if="trlist.status==1"> 等待审核</template>
+                                        <template v-if="trlist.status==2"> 等待划付</template>
+                                        <template v-if="trlist.status==3"> 等待对账</template>
+                                        <template v-if="trlist.status==4"> 对账成功</template>
+                                        <template v-if="trlist.status==5"> 划付失败</template>
+                                        <template v-if="trlist.status==6"> 已关闭</template>
+                                    </td>
+                                    <td>{{trlist.remarks}}</td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="pull-right">
@@ -364,7 +360,19 @@
                     pageIndex:1,
                     pageSize:15
                 },
+                listinfos:[],
                 zdlists:[
+                    {
+                        listinfo:[{
+                            "id": 123,
+                            "createAt": "2016-04-12 08:32:00",
+                            "merchantName": "3898|深圳探鱼海岸城店",
+                            "amount": "17095",
+                            "purpose": 58000,
+                            "remarks": "",
+                            "status": 0}
+                        ]
+                    }
                 ],
                 checkLists:[]
             }
@@ -372,67 +380,6 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
-//                this.zdlists=[
-//                    {
-//                        id:1,
-//                        "orderNumber": "20150802105038252",
-//                        "payoutAccount": "深圳备付金",
-//                        "payoutAccountNumber": "36001050307052502264",
-//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-//                        "payoutAmount": 58000,
-//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-//                        "incomeAccountNumber": "626606960",
-//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-//                        "incomeBankName": "民生银行海岸城支行",
-//                        "certificate": "",
-//                        "purpose": "1",
-//                        "paymentTime": "2015-08-02 10:50:38",
-//                        "applyTime": "2015-08-02 10:50:38",
-//                        "applyCompany": "深圳卡说",
-//                        "remarks": "",
-//                        "status": 3,
-//                        listinfo:[]
-//                    },
-//                    {
-//                        id:2,
-//                        "orderNumber": "20150802105038252",
-//                        "payoutAccount": "深圳备付金",
-//                        "payoutAccountNumber": "36001050307052502264",
-//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-//                        "payoutAmount": 58000,
-//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-//                        "incomeAccountNumber": "626606960",
-//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-//                        "incomeBankName": "民生银行海岸城支行",
-//                        "certificate": "",
-//                        "purpose": "1",
-//                        "paymentTime": "2015-08-02 10:50:38",
-//                        "applyTime": "2015-08-02 10:50:38",
-//                        "applyCompany": "深圳卡说",
-//                        "remarks": "",
-//                        "status": 2,
-//                        listinfo:[]
-//                    },
-//                    {
-//                        id:3,
-//                        "orderNumber": "20150802105038252",
-//                        "payoutAccount": "深圳备付金",
-//                        "payoutAccountNumber": "36001050307052502264",
-//                        "payoutAccountName": "深圳探鱼餐饮管理有限公司",
-//                        "payoutAmount": 58000,
-//                        "incomeAccount": "深圳探鱼餐饮管理有限公司",
-//                        "incomeAccountNumber": "626606960",
-//                        "incomeAccountName": "深圳探鱼餐饮管理有限公司",
-//                        "incomeBankName": "民生银行海岸城支行",
-//                        "certificate": "",
-//                        "purpose": "1",
-//                        "paymentTime": "2015-08-02 10:50:38",
-//                        "applyTime": "2015-08-02 10:50:38",
-//                        "applyCompany": "深圳卡说",
-//                        "remarks": "",
-//                        "status": 5,
-//                        listinfo:[]
-//                    },];
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -456,27 +403,19 @@
             checkNew(){
                 this.getZlists(this.checkForm);
             },
-            getInfo(a){
-                if(this.zdlists[a].listinfo!='')return;
-                this.zdlists[a].listinfo=[
-                    {
-                    "id": 123,
-                    "createAt": "2016-04-12 08:32:00",
-                    "merchantName": "3898|深圳探鱼海岸城店",
-                    "amount": "17095",
-                    "purpose": 58000,
-                    "remarks": "",
-                    "status": 1
-                },
-                    {
-                    "id": 123,
-                    "createAt": "2016-04-12 08:32:00",
-                    "merchantName": "3898|深圳探鱼海岸城店",
-                    "amount": "17095",
-                    "purpose": 58000,
-                    "remarks": "",
-                    "status": 2
-                }];
+            getInfo(a,index){
+//                this.zdlists[index].listinfo = []
+                if(this.listinfos[index] !='' && typeof(this.listinfos[index])!='undefined')return;
+                this.$http.post('./reservecash/order/getpart/'+a.id)
+                        .then( (response)=> {
+
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            //  this.zdlists.$set( index,info)
+                            (response.data.code==0) ? this.listinfos.$set(index,response.data.data): null;
+                console.log(JSON.stringify(this.listinfos))
+                        }, function (response) {
+                            console.log(response);
+                        });
             },
             back(a){
                 this.subtitle = '退回重审';

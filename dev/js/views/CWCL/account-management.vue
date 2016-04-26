@@ -32,7 +32,7 @@
                     </div>
                 </form>
             </div>
-            <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+            <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
                     <table id="table1" class="table datatable-selection-single dataTable no-footer">
                         <thead>
@@ -204,7 +204,7 @@
                                         <button type="button" @click="addBtn" class="btn btn-primary">保存</button>
                                     </div>
                                     <div class="form-group">
-                                        <span class="suberror validation-error-label">你的信息未填写完整</span>
+                                        <span v-show="$vali.valid" class="suberror validation-error-label">你的信息未填写完整</span>
                                     </div>
                                 </div>
                             </div>
@@ -341,7 +341,7 @@
             rewrite(_list){
                 this.errorHide();
                 this.accountId=_list.id;
-                $.extend(true, this.relist, _list);
+                    $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
             },
             start(a){
