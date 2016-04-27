@@ -43,7 +43,7 @@
                                     <td>{{user.name}}</td>
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" v-on:click="showCS(user.id)">管辖范围</a>                                        
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)">管辖范围</a>                                        
                                     </td>
                                 </tr>
                                 </tbody>
@@ -53,7 +53,7 @@
                             未查询到员工数据信息！
                         </div>
                         <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog mg">
                                 <div class="modal-content">
                                      <div class="modal-header">
                                         <h3>管辖范围</h3>

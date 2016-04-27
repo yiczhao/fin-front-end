@@ -1,108 +1,108 @@
 <template>
-    <index title="交易明细" ptitle="财务处理"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <form class="form-inline manage-form">
-                                <br/>
-                               <div class="form-group">
-                                    <input type="button" class="btn btn-info"  data-toggle="modal"  data-target="#modal_trade_info" v-on:click="addTradeInfo" value="添加交易">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="subCompanID" >
-                                    <option value="">请选择分公司</option>
-                                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="cityID">
-                                    <option value="">请选择城市</option>
-                                        <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="type">
-                                    <option value="">请选择交易类型</option>
-                                    <option value="1">正常交易</option>
-                                    <option value="2">手工单</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="timeRange">
-                                        <option value="">请选择日期</option>
-                                        <option value="0">昨天</option>
-                                        <option value="1">最近一周</option>
-                                        <option value="2">最近一个月</option>
-                                        <option value="3">最近三个月</option>
-                                        <option value="4">自定义时间</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
-                                </div>
-                                <br/>
-                                <br/>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="id" placeholder="交易ID">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="seriesNumber" placeholder="交易流水号">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="phone" placeholder="手机号">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="activityID">
-                                    <option value="">请选择参与活动</option>
-                                        <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
-                                </div>
-                            </form>
+    <index :title="'交易明细'" 
+           :ptitle="'财务处理'"
+           :hname="'trade-info'"  
+           :isshow="'isshow'">
+        <div class="content blists" slot="content">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <form class="form-inline manage-form">
+                       <div class="form-group">
+                            <input type="button" class="btn btn-info"  data-toggle="modal"  data-target="#modal_trade_info" v-on:click="addTradeInfo" value="添加交易">
                         </div>
-                        <div v-cloak v-show="!!tradeList.length" class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div class="form-group">
+                            <select class="form-control" v-model="subCompanID" >
+                            <option value="">请选择分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="cityID">
+                            <option value="">请选择城市</option>
+                                <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="type">
+                            <option value="">请选择交易类型</option>
+                            <option value="1">正常交易</option>
+                            <option value="2">手工单</option>
+                                <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="timeRange">
+                                <option value="">请选择日期</option>
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+                        </div>
+                        <div class="form-group" v-show="timeRange==4">
+                            <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
+                            <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="id" placeholder="交易ID">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="seriesNumber" placeholder="交易流水号">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="phone" placeholder="手机号">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="activityID">
+                            <option value="">请选择参与活动</option>
+                                <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                        </div>
+                    </form>
+                    <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                        <div class="datatable-scroll">
+                            <table id="table1" class="table datatable-selection-single dataTable no-footer">
                                 <thead>
-                                <tr>
-                                    <th>交易ID</th>
-                                    <th>交易流水号</th>
-                                    <th>分公司</th>
-                                    <th>城市</th>
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
-                                    <th>消费金额</th>
-                                    <th>折扣金额</th>
-                                    <th>实付金额</th>
-                                    <th>额度抵扣</th>
-                                    <th>本金抵扣</th>
-                                    <th>三方应收</th>
-                                    <th>商户应补</th>
-                                    <th>暂扣税金</th>
-                                    <th>商户实补</th>
-                                    <th>折扣差</th>
-                                    <th>扣收金额</th>
-                                    <th>33211佣</th>
-                                    <th>入账金额</th>
-                                    <th>交易时间</th>
-                                    <th>手机号</th>
-                                    <th>卡号</th>
-                                    <th>参与活动</th>
-                                    <th>交易类型</th>
-                                    <th>操作</th>
-                                    <th>备注</th>
-                                </tr>
+                                    <tr role="row">
+                                        <th>交易ID</th>
+                                        <th>交易流水号</th>
+                                        <th>分公司</th>
+                                        <th>城市</th>
+                                        <th>商户ID</th>
+                                        <th>商户名称</th>
+                                        <th>消费金额</th>
+                                        <th>折扣金额</th>
+                                        <th>实付金额</th>
+                                        <th>额度抵扣</th>
+                                        <th>本金抵扣</th>
+                                        <th>三方应收</th>
+                                        <th>商户应补</th>
+                                        <th>暂扣税金</th>
+                                        <th>商户实补</th>
+                                        <th>折扣差</th>
+                                        <th>扣收金额</th>
+                                        <th>33211佣</th>
+                                        <th>入账金额</th>
+                                        <th>交易时间</th>
+                                        <th>手机号</th>
+                                        <th>卡号</th>
+                                        <th>参与活动</th>
+                                        <th>交易类型</th>
+                                        <th>操作</th>
+                                        <th>备注</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <tr  v-for="trlist in tradeList">
@@ -125,7 +125,7 @@
                                     <td>{{trlist.collectionAmount}}</td>
                                     <td>{{trlist.commission33211}}</td>
                                     <td>{{trlist.entryAmount}}</td>
-                                    <td>{{trlist.tradeTime}}</td>
+                                    <td>{{trlist.tradeTime | datetime}}</td>
                                     <td>{{trlist.consumptionPhone}}</td>
                                     <td>{{trlist.consumptionAccountNumber}}</td>
                                     <td>{{trlist.activityID}}</td>
@@ -145,17 +145,48 @@
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 </tbody>
+                                <tr role="row">
+                                        <th></th>
+                                        <th><h5><b>合计</b><h5></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th><b>{{count_consumptionAmount}}</b></th>
+                                        <th><b>{{count_discountAmount}}</b></th>
+                                        <th><b>{{count_payAmount}}</b></th>
+                                        <th><b>{{count_limitDeduct}}</b></th>
+                                        <th><b>{{count_principalDeduct}}</b></th>
+                                        <th>
+                                            <b><template v-if="count_thirdpartyReceivable==NaN">0</template></b>
+                                        </th>
+                                        <th><b>{{count_merchantSubsidyShould}}</b></th>
+                                        <th><b>{{count_suspensionTax}}</b></th>
+                                        <th><b>{{count_merchantSubsidyActual}}</b></th>
+                                        <th><b>{{count_discountDiff}}</b></th>
+                                        <th><b>{{count_collectionAmount}}</b></th>
+                                        <th><b>{{count_commission33211}}</b></th>
+                                        <th><b>{{count_entryAmount}}</b></td>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
                             </table>
-                            <div class="box-footer">
-                                <page :all="pageall"
-                                      :cur.sync="pagecur"
-                                      :page_size.sync="page_size">
-                                </page>
-                            </div>
+                        </div>    
+                        <div class="box-footer">
+                            <page :all="pageall"
+                                  :cur.sync="pagecur"
+                                  :page_size.sync="page_size">
+                            </page>
                         </div>
-                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                            未查询到交易明细数据！
-                        </div>
+                    </div>
+                    <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                        未查询到交易明细数据！
+                    </div>
                         <div id="modal_trade_info" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -169,14 +200,14 @@
                                          </label>
                                          <div class="form-group">
                                             <select class="form-control" v-model="tradeInfo.merchantId">
-                                            <option>请选择商户</option>
+                                            <option value="">请选择商户</option>
                                                 <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
                                             </select>
                                          </div>
                                          <div class="form-group">
                                              <label><i>*</i>参与活动：</label>
                                              <select class="form-control" v-model="tradeInfo.activityId">
-                                                <option>请选择参与活动</option>
+                                                <option value="">请选择参与活动</option>
                                                 <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
                                              </select>
                                          </div>
@@ -217,28 +248,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
-        </section>
+        </div>
     </index>
 </template>
 <style>
-    body{
-        background-color:#fff;
-    }
-    [v-cloak]{
-        display: none;
-    }
-    .box-tbl{
-        overflow:auto;
-    }
-    .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
-    .box-body #table1 th{
+    /*.box-body #table1 th{
         min-width: 85px;
+    }*/
+    .datatable-scroll{
+        overflow: auto;
     }
     label i{
         color: red;
@@ -276,21 +296,25 @@
                 pageIndex:1,
                 pageSize:15,
                 tradeInfo:{
-                    merchantId:0,
-                    activityId:0,
-                    consumptionAmount:0,         
-                    discountAmount:0,    
-                    paAmount:0,  
-                    thirdPartyReceivable:0,      
-                    suspensionTax:0, 
-                    merchantSubsidyActual:0,
+                    merchantId:'',
+                    activityId:'',
+                    consumptionAmount:'',         
+                    discountAmount:'',    
+                    paAmount:'',  
+                    thirdPartyReceivable:'',    
+                    suspensionTax:'', 
+                    merchantSubsidyActual:'',
                     certificates:'',     
                     remarks:''
                 },
                 tradeList:[],
                 cityList:[],
                 activityList:[],
-                merchantList:[]
+                merchantList:[],
+                count_consumptionAmount:0,count_discountAmount:0,count_payAmount:0,count_limitDeduct:0,
+                count_principalDeduct:0,count_thirdpartyReceivable:0,count_merchantSubsidyShould:0,
+                count_suspensionTax:0,count_merchantSubsidyActual:0,
+                count_discountDiff:0,count_collectionAmount:0,count_commission33211:0,count_entryAmount:0
             }
         },
         methods:{
@@ -353,6 +377,12 @@
                     });
             },
             saveTradeInfo:function(){
+                this.tradeInfo.consumptionAmount= this.tradeInfo.consumptionAmount*100;         
+                this.tradeInfo.discountAmount=this.tradeInfo.discountAmount*100;
+                this.tradeInfo.paAmount=this.tradeInfo.paAmount*100;
+                this.tradeInfo.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;    
+                this.tradeInfo.suspensionTax=this.tradeInfo.suspensionTax*100;
+                this.tradeInfo.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
                 this.$http.post('./tradedetail/add',this.tradeInfo)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -363,10 +393,11 @@
                     }, function (response) {
                         console.log(response);
                 });
-
                 $(".modal").modal("hide");
             },
             query: function () {
+                //初始化
+                this.clear();
                 // let data=this.data;
                 let data={
                         subCompanyID:this.subCompanID,
@@ -380,12 +411,34 @@
                         activityID:this.activityID,
                         startDate:this.startDate,
                         endDate:this.endDate,
-
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize
                     };
                 this.getTradeList(data);
             },
+            //初始化
+            clear:function(){
+                this.tradeInfo={
+                    merchantId:'',
+                    activityId:'',
+                    consumptionAmount:'',         
+                    discountAmount:'',    
+                    paAmount:'',  
+                    thirdPartyReceivable:'',    
+                    suspensionTax:'', 
+                    merchantSubsidyActual:'',
+                    certificates:'',     
+                    remarks:''
+                },
+                this.count_consumptionAmount=0;this.count_discountAmount=0;this.count_payAmount=0;this.count_limitDeduct=0;
+                this.count_principalDeduct=0;this.count_thirdpartyReceivable=0;this.count_merchantSubsidyShould=0;
+                this.count_suspensionTax=0;this.count_merchantSubsidyActual=0;
+                this.count_discountDiff=0;this.count_collectionAmount=0;this.count_commission33211=0;this.count_entryAmount=0;
+            },
         },
+        
         ready: function () {
+            this.clear();
             this.getTradeList({});
             this.getSubcompany({});
             this.getCity({});
@@ -419,6 +472,26 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+            tradeList(){
+                var _this=this;
+                this.tradeList.forEach(function(e){
+                     _this.count_consumptionAmount+=e.consumptionAmount;
+                     _this.count_discountAmount+=e.discountAmount;
+                     _this.count_payAmount+=e.payAmount;
+                     _this.count_limitDeduct+=e.limitDeduct;
+                     _this.count_principalDeduct+=e.principalDeduct;
+                     _this.count_thirdpartyReceivable+=e.thirdpartyReceivable;
+                     _this.count_merchantSubsidyShould+=e.merchantSubsidyShould;
+                     _this.count_suspensionTax+=e.suspensionTax;
+                     _this.count_merchantSubsidyActual+=e.suspensionTax;
+                     _this.count_discountDiff+=e.discountDiff;
+                     _this.count_collectionAmount+=e.collectionAmount;
+                     _this.count_commission33211+=e.commission33211;
+                     _this.count_entryAmount+=e.entryAmount;
+                });
+                // this.shouru=(sr/100).toFixed(2);
+                // this.zhichu=(zc/100).toFixed(2);
             },
             pagecur(){
                 this.pageIndex=this.pagecur;

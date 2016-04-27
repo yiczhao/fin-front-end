@@ -72,7 +72,7 @@
                             </page>
                         </div>
                         <div id="modal_logInfo" data-backdrop="static" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog mg">
                                 <div class="modal-content">
                                      <div class="modal-header">
                                         <h3>日志详情</h3>
