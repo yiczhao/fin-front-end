@@ -32,15 +32,6 @@
                             <ul class="hidden-ul">
                                 <li><a v-link="{'name':'account-management'}">账户管理</a></li>
                                 <li><a v-link="{'name':'trade-info'}">交易明细</a></li>
-                                <li><a href="#">3211佣金明细</a></li>
-                                <li>
-                                    <a href="javascript:void(0);" class="has-ul">本金收入</a>
-                                    <ul class="hidden-ul">
-                                        <li><a href="#">入账明细</a></li>
-                                        <li><a href="#">交易入账</a></li>
-                                        <li><a href="#">商户退款</a></li>
-                                    </ul>
-                                </li>
                                 <li>
                                     <a href="javascript:void(0);" class="has-ul">备付金支出</a>
                                     <ul class="hidden-ul">
@@ -49,10 +40,8 @@
                                         <li><a v-link="{'name':'subsidy-tax-rebate'}">补贴退税</a></li>
                                         <li><a v-link="{'name':'limit-purchase-detail'}">额度采购</a></li>
                                         <li><a v-link="{'name':'advance-payment-detail'}">预付款划付</a></li>
-                                        <li><a href="#">供货商划付</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">三方管理</a></li>
                                 <li>
                                     <a href="javascript:void(0);" class="has-ul">商户管理</a>
                                     <ul class="hidden-ul">
@@ -61,26 +50,6 @@
                                         <li><a v-link="{'name':'prepayment-lists'}">预付款</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">代理商管理</a></li>
-                                <li><a href="#">会员管理</a></li>
-                                <li><a href="#">供货商管理</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="has-ul">
-                                <span>活动管理</span>
-                            </a>
-                            <ul class="hidden-ul">
-                                <li><a href="#">活动列表</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="has-ul">
-                                <span>佣金管理</span>
-                            </a>
-                            <ul class="hidden-ul">
-                                <li><a href="#">概况</a></li>
-                                <li><a href="#">自定义统计</a></li>
                             </ul>
                         </li>
                         <li>
@@ -88,8 +57,6 @@
                                 <span>系统配置</span>
                             </a>
                             <ul class="hidden-ul">
-                                <li><a href="#"></i>通道管理</a></li>
-                                <li><a href="#"></i>角色管理</a></li>
                                 <li><a v-link="{'name':'user-managerment'}"></i>员工管理</a></li>
                                 <li><a v-link="{'name':'log-management'}"></i>系统日志</a></li>
                             </ul>
