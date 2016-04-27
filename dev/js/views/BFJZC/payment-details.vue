@@ -48,11 +48,11 @@
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.purpose">
                                     <option value="">请选择用途</option>
-                                    <option value="1">佣金划付</option>
-                                    <option value="2">往来款</option>
-                                    <option value="3">转账退款</option>
-                                    <option value="4">账户费用</option>
-                                    <option value="5">其它</option>
+                                    <option value="1">补贴划付</option>
+                                    <option value="2">额度采购</option>
+                                    <option value="3">退税划付</option>
+                                    <option value="4">预付款</option>
+                                    <option value="5">供货商划付</option>
                                     <option value="6">往来款</option>
                                     <option value="7">转账退款</option>
                                     <option value="8">账户费用</option>
@@ -202,12 +202,18 @@
                                 <label class="col-lg-3 control-label" v-if="subtitle=='退回重审'"><i>*</i>退回原因</label>
                                 <label class="col-lg-3 control-label" v-if="subtitle=='申请划付'"><i>*</i>备注</label>
                                 <div class="col-lg-9">
-                                    <textarea rows="5" cols="5" class="form-control" placeholder=""></textarea>
+                                    <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
                                 </div>
                             </div>
                             <div class="form-group tc">
                                 <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
                                 <button  v-if="subtitle=='申请划付'" type="button" @click="applyTrue" class="btn btn-primary">申请</button>
+                            </div>
+                            <div class="form-group">
+                                <span v-show="!remarks" class="validation-error-label">
+                                    <template v-if="subtitle=='退回重审'">请填写退回原因</template>
+                                    <template v-else>请填写备注</template>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -239,7 +245,7 @@
                                                 </tr>
                                             </thead>
                                         <tbody>
-                                            <tr role="row"  v-for="n in checkLists">
+                                            <tr v-if="!!checkLists.length&&checkLists != ''" role="row"  v-for="n in checkLists">
                                                 <td>{{n.certificate}}</td>
                                                 <td>{{n.tradeTime || datetime}}</td>
                                                 <td>{{n.collectionName}}</td>
@@ -254,6 +260,9 @@
                                                 </td>
                                                 <td>{{n.remarks}}</td>
                                                 <td><a href="javascript:void(0)" @click="checking(n.reserveCashId)">选择</a></td>
+                                            </tr>
+                                            <tr v-else>
+                                                <td colspan="8">未找到对账数据</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -270,6 +279,7 @@
         font-weight: bolder;
     }
    .details .form-group{
+       overflow: hidden;
     }
     .details   .modal-body label i{
         color:red;
@@ -282,10 +292,6 @@
     }
     .details  .mt0{
         margin-top: 0
-    }
-    .details .page-bar{
-        margin: 25px auto;
-        text-align: center;
     }
     .details .panel-title p span{
         width: 24%;
@@ -334,6 +340,9 @@
     .details div.datatable-footer.pd15 span{
         color:red;
     }
+    .details .modal-body tr td,.details .modal-body tr th{
+        padding: 10px;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -361,20 +370,9 @@
                     pageSize:15
                 },
                 listinfos:[],
-                zdlists:[
-                    {
-                        listinfo:[{
-                            "id": 123,
-                            "createAt": "2016-04-12 08:32:00",
-                            "merchantName": "3898|深圳探鱼海岸城店",
-                            "amount": "17095",
-                            "purpose": 58000,
-                            "remarks": "",
-                            "status": 0}
-                        ]
-                    }
-                ],
-                checkLists:[]
+                zdlists:[],
+                checkLists:[],
+                remarks:''
             }
         },
         methods:{
@@ -408,11 +406,9 @@
                 if(this.listinfos[index] !='' && typeof(this.listinfos[index])!='undefined')return;
                 this.$http.post('./reservecash/order/getpart/'+a.id)
                         .then( (response)=> {
-
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             //  this.zdlists.$set( index,info)
                             (response.data.code==0) ? this.listinfos.$set(index,response.data.data): null;
-                console.log(JSON.stringify(this.listinfos))
                         }, function (response) {
                             console.log(response);
                         });
@@ -439,43 +435,60 @@
             },
             checking(a){
                 console.log(a);
-                this.checkLists=[{
-                    "reserveCashId": "20150802105038252",
-                    "certificate": "深圳备付金",
-                    "tradeTime": "2015-04-01 10:50:38",
-                    "collectionName": "南昌新开味馆豫章",
-                    "accountName": "张三",
-                    "accountNumber": "36001050307052501764",
-                    "payoutAmount": "407830",
-                    "purpose": "1",
-                    "remarks": "补贴划付"
-                },
-                {
-                    "reserveCashId": "20150802105038252",
-                    "certificate": "深圳备付金",
-                    "tradeTime": "2015-04-01 10:50:38",
-                    "collectionName": "南昌新开味馆豫章",
-                    "accountName": "张三",
-                    "accountNumber": "36001050307052501764",
-                    "payoutAmount": "407830",
-                    "purpose": "1",
-                    "remarks": "补贴划付"
-                }];
+                this.$http.post('./reservecash/order/checklist/'+a)
+                        .then( (response)=> {
+                             (response.data.code==0)?this.checkLists.$set(response.data.data):null;
+                        })
             },
             updateTrue(){
-                console.log(this.accountId);
+                this.$http.post('./reservecash/order/update/'+this.accountId)
+                    .then( (response)=> {
+                        if(response.data.code==0){
+                            this.initList();
+                        }
+                    })
             },
             payTrue(){
-                console.log(this.accountId);
+                this.$http.post('./reservecash/order/allow/'+this.accountId)
+                        .then( (response)=> {
+                            if(response.data.code==0){
+                            this.initList();
+                        }
+                    })
             },
             closeTrue(){
-                console.log(this.accountId);
+                this.$http.post('./reservecash/order/close/'+this.accountId)
+                        .then( (response)=> {
+                            if(response.data.code==0){
+                            this.initList();
+                        }
+                    })
             },
             backTrue(){
-                console.log(this.accountId);
+                if(this.remarks=='')return;
+                let data={
+                    'id':this.accountId,
+                    'remarks':this.remarks,
+                }
+                this.$http.post('./reservecash/order/retrial',data)
+                        .then( (response)=> {
+                                if(response.data.code==0){
+                                this.initList();
+                            }
+                        })
             },
             applyTrue(){
-                console.log(this.accountId);
+                if(this.remarks=='')return;
+                let data={
+                    'id':this.accountId,
+                    'remarks':this.remarks,
+                }
+                this.$http.post('./ reservecash/order/applypay',data)
+                        .then( (response)=> {
+                                if(response.data.code==0){
+                                this.initList();
+                            }
+                        })
             },
             checkingTrue(a){
                 console.log(a);

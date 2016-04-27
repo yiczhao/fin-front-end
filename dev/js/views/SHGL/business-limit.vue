@@ -11,10 +11,10 @@
                             <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.id" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="defaultData.merchantId" placeholder="商户ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="商户名">
+                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.companyId">
@@ -23,36 +23,36 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.city">
+                            <select class="form-control" v-model="defaultData.cityId">
                                 <option value="">请选择城市</option>
                                 <option v-for="(index,n) in city" v-text="n.cityName" :value="n.cityId"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.city">
+                            <select class="form-control" v-model="defaultData.isAutoPay">
                                 <option value="">自动划付状态</option>
                                 <option value="0">开启</option>
                                 <option value="1">关闭</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.city">
+                            <select class="form-control" v-model="defaultData.status">
                                 <option value="">账户状态</option>
                                 <option value="0">正常</option>
                                 <option value="1">停用</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.startNum" placeholder="循环次数">
+                            <input type="text" class="form-control" v-model="defaultData.startValue" placeholder="循环次数">
                             -
-                            <input type="text" class="form-control" v-model="defaultData.endNum" placeholder="循环次数">
+                            <input type="text" class="form-control" v-model="defaultData.endValue" placeholder="循环次数">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" @click="checkNew" value="查询">
                         </div>
                     </form>
                 </div>
-                <div v-if="!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -79,61 +79,51 @@
                                 </tr>
                             </thead>
                         <tbody>
-                            <tr role="row">
-                                <td>2587</td>
-                                <td>南昌玩聚和他(她)朋友</td>
-                                <td>南昌卡说</td>
-                                <td>南昌</td>
-                                <td>{{ 38122121/100 | currency '' }}</td>
-                                <td>{{ 38122121/100 | currency '' }}</td>
-                                <td>{{ 38122/100 | currency '' }}</td>
-                                <td>22%</td>
-                                <td>{{ 646546/100 | currency '' }}</td>
-                                <td>66</td>
-                                <td>2015-06-15 16:34:47</td>
-                                <td>{{ 300/100 | currency '' }}</td>
-                                <td>全单</td>
-                                <td>开启</td>
-                                <td>正常</td>
+                            <tr role="row" v-for="(index,trlist) in zdlists">
+                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.name}}</td>
+                                <td>{{trlist.company}}</td>
+                                <td>{{trlist.city}}</td>
+                                <td>{{trlist.totalLimit/100 | currency ''}}</td>
+                                <td>{{trlist.totalPrincipal/100 | currency '' }} </td>
+                                <td>{{trlist.usedLimit/100 | currency '' }} </td>
+                                <td>{{trlist.usedPercent}}</td>
+                                <td>{{trlist.balanceLimit/100 | currency ''}}</td>
+                                <td>{{trlist.loopNumber}}</td>
+                                <td>{{trlist.firstTime | datetime}}</td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal_update" href="javascript:void(0)" @click="setAcc()">编辑</a>
-                                    <a href="javascript:void(0)" @click="setAcc()">明细</a>
-                                    <a href="javascript:void(0)" @click="setAcc()">停用</a>
+                                    <template v-if="trlist.discountType==1">全单</template>
+                                    <template v-if="trlist.discountType==0">可打折</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.discountType==0">关闭</template>
+                                    <template v-if="trlist.discountType==1">开启</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.discountType==0">已过期</template>
+                                    <template v-if="trlist.discountType==1">正常</template>
+                                </td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#modal_update" href="javascript:void(0)" @click="updateNew(trlist)">编辑</a>
+                                    <a href="javascript:void(0)">明细</a>
+                                    <a href="javascript:void(0)">停用</a>
                                     <a href="javascript:void(0)" v-link="{'name':'limitaccount-management'}">账户</a>
                                 </td>
                                 <td><a data-toggle="modal"  data-target="#modal_see" href="javascript:void(0)">查看</a></td>
-                                <td>邹里堃</td>
-                                <td>13079101524</td>
+                                <td>{{trlist.contactsPerson}}</td>
+                                <td>{{trlist.contactsPhone}}</td>
+                                <td>{{trlist.servicePerson}}</td>
                             </tr>
-                            <!--<tr role="row" v-for="(index,trlist) in zdlists">-->
-                                <!--<td>{{trlist.companyName}}</td>-->
-                                <!--<td>{{trlist.shortName}}</td>-->
-                                <!--<td>{{trlist.accountName}}</td>-->
-                                <!--<td>{{trlist.accountNumber}}</td>-->
-                                <!--<td>{{trlist.bankName}}</td>-->
-                                <!--<td></td>-->
-                                <!--<td>{{trlist.startDate}}</td>-->
-                                <!--<td><a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a></td>-->
-                                <!--<td>{{trlist.companyName}}</td>-->
-                                <!--<td>{{trlist.shortName}}</td>-->
-                                <!--<td>{{trlist.accountName}}</td>-->
-                                <!--<td>{{trlist.accountNumber}}</td>-->
-                                <!--<td>{{trlist.bankName}}</td>-->
-                                <!--<td></td>-->
-                                <!--<td>{{trlist.startDate}}</td>-->
-                                <!--<td></td>-->
-                                <!--<td></td>-->
-                            <!--</tr>-->
                              <tr>
                                  <td></td>
                                  <td></td>
                                  <td>合计</td>
                                  <td></td>
-                                 <td>{{ 381/100 | currency '' }}</td>
-                                 <td>{{ 38122121/100 | currency '' }}</td>
-                                 <td>{{ 38122/100 | currency '' }}</td>
+                                 <td>{{nums.totalLimit}}</td>
+                                 <td>{{nums.totalPrincipal}}</td>
+                                 <td>{{nums.usedLimit}}</td>
                                  <td></td>
-                                 <td>{{ 3811/100 | currency '' }}</td>
+                                 <td>{{nums.balanceLimit}}</td>
                                  <td></td>
                                  <td></td>
                                  <td></td>
@@ -494,10 +484,6 @@
      .blimit td span:hover{
         opacity: 80;
     }
-     .blimit  .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
     .blimit  #modal_update .form-group{
         overflow: hidden;
         line-height: 36px;
@@ -513,21 +499,77 @@
                 page_size:15,
                 pageall:1,
                 loginList:{},
-                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{
+                    "merchantId": "",
+                    "merchantName": "",
+                    "companyId": "",
+                    "cityId": "",
+                    "isAutoPay": "",
+                    "status": "",
+                    "startValue": "",
+                    "endValue": "",
+                    "pageIndex": 1,
+                    "pageSize": 15
+                },
                 zdlists:[],
-                addId:[],
-                uText:'',
+                companylists:[],
                 accountId:'',
-                bthf:true,
                 liLists:[],
-                addTitle:''
+                nums:{
+                    totalLimit:0,
+                    totalPrincipal:0,
+                    usedLimit:0,
+                    balanceLimit:0
+                }
             }
         },
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
-                return;
-                    this.$http.post('./bankaccount/list',data)
+//                this.$set('zdlists',[
+//                    {
+//                        "id": 3874,
+//                        "name": "武汉麦格芬经开万达店",
+//                        "company": "武汉卡说",
+//                        "city": "武汉",
+//                        "totalLimit": 744,
+//                        "totalPrincipal": 58000,
+//                        "usedLimit": 26451,
+//                        "usedPercent": 39652,
+//                        "balanceLimit": 4562,
+//                        "loopNumber": 3,
+//                        "firstTime": "2016-04-20 15:42:30",
+//                        "discountType": 1,
+//                        "isAutoPay": 1,
+//                        "status": 0,
+//                        "contactsPerson": "刘楠",
+//                        "contactsPhone": "13437169531",
+//                        "servicePerson": "胡俊",
+//                        "isLimitPurchase": "1",
+//                    },
+//                    {
+//                        "id": 3874,
+//                        "name": "武汉麦格芬经开万达店",
+//                        "company": "武汉卡说",
+//                        "city": "武汉",
+//                        "totalLimit": 744,
+//                        "totalPrincipal": 58000,
+//                        "usedLimit": 26451,
+//                        "usedPercent": 39652,
+//                        "balanceLimit": 4562,
+//                        "loopNumber": 3,
+//                        "firstTime": "2016-04-20 15:42:30",
+//                        "discountType": 1,
+//                        "isAutoPay": 1,
+//                        "status": 0,
+//                        "contactsPerson": "刘楠",
+//                        "contactsPhone": "13437169531",
+//                        "servicePerson": "胡俊",
+//                        "isLimitPurchase": "1",
+//                    }
+//                ])
+//                return;
+                    this.$http.post('./reservecash/limitPurchaseMerchant/list',data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -548,6 +590,9 @@
             },
             checkNew(){
                 this.initList();
+            },
+            checkAccount(){
+
             },
             initList(){
                 $(".modal").modal("hide");
@@ -574,26 +619,6 @@
             },
             checkLi(e){
                 $(e.target).toggleClass('check-li');
-            },
-            bthfShow(type){
-                switch (type){
-                    case 0:
-                        if(this.bthf){
-                            return
-                        }
-                        else{
-                            this.bthf=true;
-                        }
-                        break;
-                    case 1:
-                        if(!this.bthf){
-                            return
-                        }
-                        else{
-                            this.bthf=false;
-                        }
-                        break;
-                }
             }
         },
         ready() {
@@ -611,6 +636,19 @@
             'dialog': dialog,
         },
         watch:{
+            zdlists(){
+                var a=0,b=0,c=0,d=0;
+                this.zdlists.forEach(function(e){
+                    a+=e.totalLimit;
+                    b+=e.totalPrincipal;
+                    c+=e.usedLimit;
+                    d+=e.balanceLimit;
+                });
+                this.nums.totalLimit=(a/100).toFixed(2);
+                this.nums.totalPrincipal=(b/100).toFixed(2);
+                this.nums.usedLimit=(c/100).toFixed(2);
+                this.nums.balanceLimit=(d/100).toFixed(2);
+            },
             pagecur:function(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();

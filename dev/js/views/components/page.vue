@@ -3,6 +3,10 @@
         margin: 0px;
         padding: 0px;
     }
+    .page-bar {
+        margin: 25px auto;
+        text-align: center;
+    }
     .page-bar li{
         list-style: none;
         display: inline-block;
