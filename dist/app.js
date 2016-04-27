@@ -133,15 +133,15 @@
 
 	var _routers2 = _interopRequireDefault(_routers);
 
-	var _interceptor = __webpack_require__(166);
+	var _interceptor = __webpack_require__(171);
 
 	var _interceptor2 = _interopRequireDefault(_interceptor);
 
-	var _index = __webpack_require__(172);
+	var _index = __webpack_require__(177);
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _page = __webpack_require__(188);
+	var _page = __webpack_require__(193);
 
 	var _page2 = _interopRequireDefault(_page);
 
@@ -151,7 +151,7 @@
 	 * 入口文件
 	 * @author cwxtDesigner
 	 */
-	__webpack_require__(193);
+	__webpack_require__(198);
 	// *** 公共组件
 
 	_vue2.default.component('index', _index2.default);
@@ -17553,12 +17553,20 @@
 	                __webpack_require__.e/* require */(14, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(156)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this));
 	            }
 	        },
+	        /* 商户管理-额度采购账户列表 */
+	        '/limitaccount-management/': {
+	            name: 'limitaccount-management',
+	            router_type: 'deposit',
+	            component: function component(resolve) {
+	                __webpack_require__.e/* require */(15, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(161)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this));
+	            }
+	        },
 	        /* 商户管理-预付款 */
 	        '/prepayment-lists/': {
 	            name: 'prepayment-lists',
 	            router_type: 'deposit',
 	            component: function component(resolve) {
-	                __webpack_require__.e/* require */(15, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(161)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this));
+	                __webpack_require__.e/* require */(16, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(166)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this));
 	            }
 	        },
 	        // 转到登录页
@@ -17569,6 +17577,8 @@
 	        }
 	    });
 	    router.beforeEach(function (transition) {
+	        $(".modal").modal("hide");
+	        $("body").scrollTop(0);
 	        transition.next();
 	    });
 	};
@@ -17961,7 +17971,12 @@
 /* 163 */,
 /* 164 */,
 /* 165 */,
-/* 166 */
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17971,11 +17986,11 @@
 	});
 	exports.default = install;
 
-	var _md = __webpack_require__(167);
+	var _md = __webpack_require__(172);
 
 	var _md2 = _interopRequireDefault(_md);
 
-	var _dateFormatLite = __webpack_require__(171);
+	var _dateFormatLite = __webpack_require__(176);
 
 	var _dateFormatLite2 = _interopRequireDefault(_dateFormatLite);
 
@@ -18009,14 +18024,14 @@
 	}
 
 /***/ },
-/* 167 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(){
-	  var crypt = __webpack_require__(168),
-	      utf8 = __webpack_require__(169).utf8,
-	      isBuffer = __webpack_require__(170),
-	      bin = __webpack_require__(169).bin,
+	  var crypt = __webpack_require__(173),
+	      utf8 = __webpack_require__(174).utf8,
+	      isBuffer = __webpack_require__(175),
+	      bin = __webpack_require__(174).bin,
 
 	  // The core
 	  md5 = function (message, options) {
@@ -18175,7 +18190,7 @@
 
 
 /***/ },
-/* 168 */
+/* 173 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -18277,7 +18292,7 @@
 
 
 /***/ },
-/* 169 */
+/* 174 */
 /***/ function(module, exports) {
 
 	var charenc = {
@@ -18316,7 +18331,7 @@
 
 
 /***/ },
-/* 170 */
+/* 175 */
 /***/ function(module, exports) {
 
 	/**
@@ -18339,7 +18354,7 @@
 
 
 /***/ },
-/* 171 */
+/* 176 */
 /***/ function(module, exports) {
 
 	
@@ -18484,16 +18499,16 @@
 
 
 /***/ },
-/* 172 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(173)
+	__vue_script__ = __webpack_require__(178)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(187)
+	__vue_template__ = __webpack_require__(192)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18512,7 +18527,7 @@
 	})()}
 
 /***/ },
-/* 173 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18521,19 +18536,19 @@
 	    value: true
 	});
 
-	var _header = __webpack_require__(174);
+	var _header = __webpack_require__(179);
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _menu = __webpack_require__(177);
+	var _menu = __webpack_require__(182);
 
 	var _menu2 = _interopRequireDefault(_menu);
 
-	var _breadcrumb = __webpack_require__(180);
+	var _breadcrumb = __webpack_require__(185);
 
 	var _breadcrumb2 = _interopRequireDefault(_breadcrumb);
 
-	var _footer = __webpack_require__(185);
+	var _footer = __webpack_require__(190);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
@@ -18588,16 +18603,16 @@
 	// </script>
 
 /***/ },
-/* 174 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(175)
+	__vue_script__ = __webpack_require__(180)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\header.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(176)
+	__vue_template__ = __webpack_require__(181)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18616,7 +18631,7 @@
 	})()}
 
 /***/ },
-/* 175 */
+/* 180 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -18675,22 +18690,22 @@
 	//
 
 /***/ },
-/* 176 */
+/* 181 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"navbar navbar-inverse\">\n    <div class=\"navbar-header\">\n        <a class=\"navbar-brand\" v-link=\"{name:'default'}\">\n            <!--<img src=\"\" alt=\"\">-->\n        </a>\n    </div>\n    <div class=\"navbar-collapse collapse\" id=\"navbar-mobile\">\n        <div class=\"navbar-right\" style=\"margin: 13px;\">\n            您好，<span v-text=\"uname\"></span> <a href=\"javascript:void(0);\" v-on:click=\"loginout\" class=\"\">退出</a>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 177 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(178)
+	__vue_script__ = __webpack_require__(183)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\menu.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(179)
+	__vue_template__ = __webpack_require__(184)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18709,7 +18724,7 @@
 	})()}
 
 /***/ },
-/* 178 */
+/* 183 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -18871,23 +18886,23 @@
 	// </script>
 
 /***/ },
-/* 179 */
+/* 184 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"sidebar sidebar-main\">\n    <div class=\"sidebar-content\" style=\"min-height: 750px\">\n        <!-- User menu -->\n        <div class=\"sidebar-user\">\n            <div class=\"category-content\">\n                <div class=\"media\">\n                    <!--<a href=\"#\" class=\"media-left\"><img src=\"\" class=\"img-circle img-sm\" alt=\"\"></a>-->\n                    <div class=\"media-body\">\n                        <span class=\"media-heading text-semibold\">财务管理系统</span>\n                        <div class=\"text-size-mini text-muted\">\n                            <i class=\"icon-pin text-size-small\">功能导航</i>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <!-- /user menu -->\n        <!-- Main navigation -->\n        <div class=\"sidebar-category sidebar-category-visible\">\n            <div class=\"category-content no-padding\">\n                <ul class=\"navigation navigation-main navigation-accordion\">\n                    <li>\n                        <a v-link=\"{'name':'default'}\">\n                            <span>首页</span></i>\n                        </a>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>财务处理</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a v-link=\"{'name':'account-management'}\">账户管理</a></li>\n                            <li><a v-link=\"{'name':'trade-info'}\">交易明细</a></li>\n                            <li><a href=\"#\">3211佣金明细</a></li>\n                            <li>\n                                <a href=\"javascript:void(0);\" class=\"has-ul\">本金收入</a>\n                                <ul class=\"hidden-ul\">\n                                    <li><a href=\"#\">入账明细</a></li>\n                                    <li><a href=\"#\">交易入账</a></li>\n                                    <li><a href=\"#\">商户退款</a></li>\n                                </ul>\n                            </li>\n                            <li>\n                                <a href=\"javascript:void(0);\" class=\"has-ul\">备付金支出</a>\n                                <ul class=\"hidden-ul\">\n                                    <li><a v-link=\"{'name':'payment-details'}\">付款明细</a></li>\n                                    <li><a v-link=\"{'name':'subsidy-appropriation'}\">补贴划付</a></li>\n                                    <li><a v-link=\"{'name':'subsidy-tax-rebate'}\">补贴退税</a></li>\n                                    <li><a v-link=\"{'name':'limit-purchase-detail'}\">额度采购</a></li>\n                                    <li><a v-link=\"{'name':'advance-payment-detail'}\">预付款划付</a></li>\n                                    <li><a href=\"#\">供货商划付</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">三方管理</a></li>\n                            <li>\n                                <a href=\"javascript:void(0);\" class=\"has-ul\">商户管理</a>\n                                <ul class=\"hidden-ul\">\n                                    <li><a v-link=\"{'name':'business-lists'}\">商户管理</a></li>\n                                    <li><a v-link=\"{'name':'business-limit'}\">额度采购</a></li>\n                                    <li><a v-link=\"{'name':'prepayment-lists'}\">预付款</a></li>\n                                </ul>\n                            </li>\n                            <li><a href=\"#\">代理商管理</a></li>\n                            <li><a href=\"#\">会员管理</a></li>\n                            <li><a href=\"#\">供货商管理</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>活动管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a href=\"#\">活动列表</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>佣金管理</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a href=\"#\">概况</a></li>\n                            <li><a href=\"#\">自定义统计</a></li>\n                        </ul>\n                    </li>\n                    <li>\n                        <a href=\"javascript:void(0);\" class=\"has-ul\">\n                            <span>系统配置</span>\n                        </a>\n                        <ul class=\"hidden-ul\">\n                            <li><a href=\"#\"></i>通道管理</a></li>\n                            <li><a href=\"#\"></i>角色管理</a></li>\n                            <li><a v-link=\"{'name':'user-managerment'}\"></i>员工管理</a></li>\n                            <li><a v-link=\"{'name':'log-management'}\"></i>系统日志</a></li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n        </div>\n        <!-- /main navigation -->\n    </div>\n</div>\n";
 
 /***/ },
-/* 180 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(181)
-	__vue_script__ = __webpack_require__(183)
+	__webpack_require__(186)
+	__vue_script__ = __webpack_require__(188)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\breadcrumb.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(184)
+	__vue_template__ = __webpack_require__(189)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -18906,13 +18921,13 @@
 	})()}
 
 /***/ },
-/* 181 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(182);
+	var content = __webpack_require__(187);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -18932,7 +18947,7 @@
 	}
 
 /***/ },
-/* 182 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -18946,7 +18961,7 @@
 
 
 /***/ },
-/* 183 */
+/* 188 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -18994,17 +19009,17 @@
 	//
 
 /***/ },
-/* 184 */
+/* 189 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div v-show=\"isshow=='isshow'\" class=\"page-header page-header-default\">\n    <div class=\"breadcrumb-line\">\n        <ul class=\"breadcrumb\">\n            <li><a v-link=\"{'name':'default'}\"><i class=\"icon-home2 position-left\"></i> 首页</a></li>\n            <li><a v-link=\"{'name':hname}\" v-text=\"ptitle\"></a></li>\n            <li v-if=\"!p2title==''\"><a v-link=\"{'name':hname}\" v-text=\"p2title\"></a></li>\n            <li class=\"active\" v-text=\"title\"></li>\n        </ul>\n    </div>\n</div>\n";
 
 /***/ },
-/* 185 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_template__ = __webpack_require__(186)
+	__vue_template__ = __webpack_require__(191)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -19023,29 +19038,29 @@
 	})()}
 
 /***/ },
-/* 186 */
+/* 191 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"navbar navbar-default\">\n    <div class=\"navbar-collapse collapse\" id=\"navbar-second\">\n        <div class=\"navbar-right\" style=\"margin-top: 13px;color: #ccc;\">财务管理系统 v2.0 @上海新卡说信息技术有限公司</div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 187 */
+/* 192 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<nv-header keep-alive></nv-header>\n<div class=\"page-container\">\n    <div class=\"page-content\">\n        <nv-menu keep-alive></nv-menu>\n        <breadcrumb\n                :isshow=\"isshow\"\n                :ptitle=\"ptitle\"\n                :title=\"title\"\n                :p2title=\"p2title\"\n                :hname=\"hname\"\n                keep-alive></breadcrumb>\n        <slot name=\"content\" slot=\"content\"></slot>\n    </div>\n</div>\n<nv-footer keep-alive></nv-footer>\n";
 
 /***/ },
-/* 188 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(189)
-	__vue_script__ = __webpack_require__(191)
+	__webpack_require__(194)
+	__vue_script__ = __webpack_require__(196)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] dev\\js\\views\\components\\page.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(192)
+	__vue_template__ = __webpack_require__(197)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -19064,13 +19079,13 @@
 	})()}
 
 /***/ },
-/* 189 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(190);
+	var content = __webpack_require__(195);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(59)(content, {});
@@ -19090,7 +19105,7 @@
 	}
 
 /***/ },
-/* 190 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -19104,7 +19119,7 @@
 
 
 /***/ },
-/* 191 */
+/* 196 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -19310,13 +19325,13 @@
 	// </script>
 
 /***/ },
-/* 192 */
+/* 197 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"page-bar\" v-show=\"all>0\">\n    <ul>\n        <li v-show=\"islength\">\n            每页展示\n            <select v-model=\"page_size\" class=\"page_length\">\n                <option v-for=\"n in pageSizeList\" :value=\"+n\" v-text=\"n\"></option>\n            </select>条\n            &nbsp;&nbsp;&nbsp;&nbsp;\n            共<i v-text=\"all\"></i>条\n            &nbsp;&nbsp;&nbsp;&nbsp;\n        </li>\n        <li v-show=\"page_total>1\"><a v-on:click=\"jump('first')\">首页</a></li>\n        <li v-if=\"page_total>1 && showFirst\"><a v-on:click=\"curs('prev')\">上一页</a></li>\n        <li v-for=\"index in indexs\"  v-bind:class=\"{ 'active': cur == index}\">\n            <a v-on:click=\"btn_click(index)\">{{ index }}</a>\n        </li>\n        <li v-if=\"page_total>1 && show_last\"><a v-on:click=\"curs('next')\">下一页</a></li>\n        <li v-show=\"page_total>1\"><a v-on:click=\"jump('last')\">尾页</a></li>\n        <li>共<i v-text=\"page_total\"></i>页</li>\n        <li v-show=\"page_total>page_size\">&nbsp;&nbsp;&nbsp;&nbsp;第<input type=\"text\" class=\"jump-input form-control\" v-model=\"jump_val | filter_number 1 \">页 <input type=\"button\" value=\"确定\" class=\"jump-button\" @click=\"jump()\" vaule=\"确定\"></li>\n\n    </ul>\n</div>\n";
 
 /***/ },
-/* 193 */
+/* 198 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

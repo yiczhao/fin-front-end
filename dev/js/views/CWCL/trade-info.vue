@@ -169,14 +169,14 @@
                                          </label>
                                          <div class="form-group">
                                             <select class="form-control" v-model="tradeInfo.merchantId">
-                                            <option value="0">请选择商户</option>
+                                            <option>请选择商户</option>
                                                 <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
                                             </select>
                                          </div>
                                          <div class="form-group">
                                              <label><i>*</i>参与活动：</label>
                                              <select class="form-control" v-model="tradeInfo.activityId">
-                                                <option value="0">请选择参与活动</option>
+                                                <option>请选择参与活动</option>
                                                 <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
                                              </select>
                                          </div>

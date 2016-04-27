@@ -38363,3 +38363,11 @@ label.display-block {
 
 .navbar {
   min-width: 1540px; }
+
+[v-cloak] {
+  display: none; }
+
+table td, table th {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; }

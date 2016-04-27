@@ -1,11 +1,13 @@
-webpackJsonp([2],Array(61).concat([
-/* 61 */
+webpackJsonp([16],{
+
+/***/ 61:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = { "default": __webpack_require__(62), __esModule: true };
 
 /***/ },
-/* 62 */
+
+/***/ 62:
 /***/ function(module, exports, __webpack_require__) {
 
 	var core = __webpack_require__(9);
@@ -14,560 +16,8 @@ webpackJsonp([2],Array(61).concat([
 	};
 
 /***/ },
-/* 63 */,
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
 
-	var __vue_script__, __vue_template__
-	__webpack_require__(65)
-	__vue_script__ = __webpack_require__(67)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] dev\\js\\views\\CWCL\\account-management.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(102)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\CWCL\\account-management.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(66);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(59)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./account-management.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./account-management.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 66 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(58)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n.managenment .validation-error-label{\n    margin-left: 20%;\n}\n.managenment .timeerror,.suberror,.suberror1{\n    display: none;\n}\n.managenment .suberror,.suberror1{\n    padding-top: 3px;\n}\n.managenment  .form-group{\n    text-align: left;\n}\n.managenment  .form-group.tc{\n    text-align: center;\n}\n.managenment .modal-body .form-control{\n    text-align: left;\n    width:67%;\n    display: inline-block;\n}\n.managenment .modal-body label{\n    width:20%;\n    display: inline-block;\n}\n.managenment .modal-body label i{\n    color:red;\n}\n.managenment  .modal-body .waring{\n    color: red;\n    margin-left: 5px;\n}\n.managenment  .modal-body button{\n    width:35%;\n}\n.managenment td span{\n    cursor: pointer;\n    color: #3c8dbc;\n}\n.managenment td span:hover{\n    opacity: 80;\n}\n.managenment .page-bar{\n    margin: 25px auto;\n    text-align: center;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 67 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _datepicker = __webpack_require__(68);
-
-	var _datepicker2 = _interopRequireDefault(_datepicker);
-
-	var _dialog = __webpack_require__(73);
-
-	var _dialog2 = _interopRequireDefault(_dialog);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// <template>
-	//     <index :title="'账户列表'"
-	//            :ptitle="'财务处理'"
-	//            :hname="'account-management'"
-	//            :isshow="'isshow'">
-	//         <div class="content managenment" slot="content">
-	//         <div class="panel panel-flat">
-	//             <div class="panel-heading">
-	//                 <form class="form-inline manage-form">
-	//                     <div class="form-group">
-	//                         <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加账户">
-	//                     </div>
-	//                     <div class="form-group">
-	//                         <select class="form-control" v-model="defaultData.companyId">
-	//                             <option value="">请选择分公司</option>
-	//                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-	//                         </select>
-	//                     </div>
-	//                     <div class="form-group">
-	//                         <select class="form-control" v-model="defaultData.accountType">
-	//                             <option value="">请选择类型</option>
-	//                             <option value="1">备付金</option>
-	//                             <option value="2">本金</option>
-	//                             <option value="3">佣金</option>
-	//                         </select>
-	//                     </div>
-	//                     <div class="form-group">
-	//                         <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号">
-	//                     </div>
-	//                     <div class="form-group">
-	//                         <input type="button" class="btn btn-info" @click="checkNew" value="查询">
-	//                     </div>
-	//                 </form>
-	//             </div>
-	//             <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
-	//                 <div class="datatable-scroll">
-	//                     <table id="table1" class="table datatable-selection-single dataTable no-footer">
-	//                         <thead>
-	//                             <tr role="row">
-	//                                 <th>分公司</th>
-	//                                 <th>简称</th>
-	//                                 <th>账户名</th>
-	//                                 <th>账号</th>
-	//                                 <th>开户行</th>
-	//                                 <th>类型</th>
-	//                                 <th>起始日期</th>
-	//                                 <th>余额 </th>
-	//                                 <th>操作</th>
-	//                             </tr>
-	//                         </thead>
-	//                     <tbody>
-	//                         <tr role="row" v-for="(index,trlist) in zdlists">
-	//                             <td>{{trlist.companyName}}</td>
-	//                             <td>{{trlist.shortName}}</td>
-	//                             <td>{{trlist.accountName}}</td>
-	//                             <td>{{trlist.accountNumber}}</td>
-	//                             <td>{{trlist.bankName}}</td>
-	//                             <td>
-	//                                 <template v-if="trlist.accountType==1">
-	//                                     备付金
-	//                                 </template>
-	//                                 <template v-if="trlist.accountType==2">
-	//                                     本金
-	//                                 </template>
-	//                                 <template v-if="trlist.accountType==3">
-	//                                     佣金
-	//                                 </template>
-	//                             </td>
-	//                             <td>{{trlist.startDate}}</td>
-	//                             <td>
-	//                                 <a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
-	//                             </td>
-	//                             <td v-if="trlist.status==0">
-	//                                 <span data-toggle="modal" data-target="#modal_add"  @click="rewrite(trlist)">编辑</span>
-	//                                 <span data-toggle="modal" data-target="#modal_waring" @click="start(trlist.id)">启用</span>
-	//                                 <span data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id)">删除</span>
-	//                             </td>
-	//                             <td v-else>
-	//                                 <span data-toggle="modal" data-target="#modal_fzr" chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
-	//                             </td>
-	//                         </tr>
-	//                     </tbody>
-	//                 </table>
-	//                 </div>
-	//                 <div class="datatable-footer">
-	//                     <page :all="pageall"
-	//                           :cur.sync="pagecur"
-	//                           :page_size.sync="page_size">
-	//                     </page>
-	//                 </div>
-	//             </div>
-	//             <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-	//                 未找到您要查询的账户
-	//             </div>
-	//         </div>
-	//             <validator name="vali2">
-	//                 <form novalidate>
-	//                         <!-- Promotion Modal -->
-	//                         <div id="modal_fzr" data-backdrop="static"  class="modal fade" style="display: none;">
-	//                             <div class="modal-dialog">
-	//                                 <div class="modal-content">
-	//                                     <div class="modal-header">
-	//                                         <button type="button" class="close" data-dismiss="modal">×</button>
-	//                                         <h5 class="modal-title">负责人</h5>
-	//                                     </div>
-	//                                     <div class="modal-body">
-	//                                         <div class="form-group">
-	//                                             <label><i>*</i>负责人</label>
-	//                                             <input type="text" class="form-control" id="uname" v-validate:uname="['required']" v-model="person.name" value.sync="person.name">
-	//                                             <span v-if="$vali2.uname.required && fire" class="validation-error-label">请输入负责人姓名</span>
-	//                                         </div>
-	//                                         <div class="form-group">
-	//                                             <label><i>*</i>手机号</label>
-	//                                             <input type="text" class="form-control" id="phone"  v-validate:phone="['required']" v-model="person.phone" value.sync="person.phone">
-	//                                             <span v-if="$vali2.phone.required && fire" class="validation-error-label">请输入负责人电话</span>
-	//                                         </div>
-	//                                         <div class="form-group">
-	//                                             <label><i>*</i>邮箱</label>
-	//                                             <input type="text" class="form-control" id="email" v-validate:email="['required']" v-model="person.email" value.sync="person.email">
-	//                                             <span v-if="$vali2.email.required && fire" class="validation-error-label">请输入负责人邮箱</span>
-	//                                         </div>
-	//                                         <div class="form-group tc">
-	//                                             <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-	//                                             <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
-	//                                         </div>
-	//                                     </div>
-	//                                 </div>
-	//                             </div>
-	//                         </div>
-	//                     </form>
-	//                 </validator>
-	//             <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-	//                 <div class="modal-dialog">
-	//                     <div class="modal-content">
-	//                         <div class="modal-header">
-	//                             <button type="button" class="close" data-dismiss="modal">×</button>
-	//                             <h5 class="modal-title" v-text="waring"></h5>
-	//                         </div>
-	//                         <div class="modal-body">
-	//                             <div class="form-group tc">
-	//                                 <button v-show="waring=='你确认启用该账户？'" type="button" @click="startTrue" class="btn btn-primary">确认</button>
-	//                                 <button v-show="waring=='你确认删除该账户？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
-	//                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-	//                             </div>
-	//                         </div>
-	//                     </div>
-	//                 </div>
-	//             </div>
-	//             <validator name="vali">
-	//                 <form novalidate>
-	//                     <div id="modal_add" data-backdrop="static"  class="modal fade" style="display: none;">
-	//                         <div class="modal-dialog modal-sm">
-	//                             <div class="modal-content">
-	//                                 <div class="modal-header">
-	//                                     <button type="button" class="close" data-dismiss="modal">×</button>
-	//                                     <h5 class="modal-title" v-text="addtitle"></h5>
-	//                                 </div>
-	//                                 <div class="modal-body">
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>分公司</label>
-	//                                         <select class="form-control" v-model="relist.companyId" id="val1" v-validate:val1="['required']">
-	//                                             <option value="">请选择分公司</option>
-	//                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-	//                                         </select>
-	//                                         <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请选择分公司</span>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>简称</label>
-	//                                         <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value.sync="relist.shortName" maxlength="15" placeholder="15字以内">
-	//                                         <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>账户名</label>
-	//                                         <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value.sync="relist.accountName" v-model="relist.accountName">
-	//                                         <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>账号</label>
-	//                                         <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value.sync="relist.accountNumber" v-model="relist.accountNumber">
-	//                                         <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>开户行</label>
-	//                                         <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value.sync="relist.bankName" v-model="relist.bankName">
-	//                                         <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>起始日期</label>
-	//                                         <datepicker :width="'67%'" :readonly="true" :value.sync="relist.startDate" format="YYYY-MM-DD"></datepicker>
-	//                                         <span class="timeerror validation-error-label">请选择起始日期</span>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <label><i>*</i>类型</label>
-	//                                         <select class="form-control"  id="val7" v-validate:val7="['required']" v-model="relist.accountType">
-	//                                             <option value="">请选择类型</option>
-	//                                             <option value="1">备付金</option>
-	//                                             <option value="2">本金</option>
-	//                                             <option value="3">佣金</option>
-	//                                         </select>
-	//                                         <span v-if="$vali.val7.required && $vali.val7.dirty" class="validation-error-label">请选择类型</span>
-	//                                     </div>
-	//                                     <div class="form-group tc">
-	//                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-	//                                         <button type="button" @click="addBtn" class="btn btn-primary">保存</button>
-	//                                     </div>
-	//                                     <div class="form-group">
-	//                                         <span v-show="$vali.valid" class="suberror validation-error-label">你的信息未填写完整</span>
-	//                                     </div>
-	//                                 </div>
-	//                             </div>
-	//                         </div>
-	//                     </div>
-	//                 </form>
-	//                 </validator>
-	//         </div>
-	//     </index>
-	// </template>
-	// <style>
-	//     .managenment .validation-error-label{
-	//         margin-left: 20%;
-	//     }
-	//     .managenment .timeerror,.suberror,.suberror1{
-	//         display: none;
-	//     }
-	//     .managenment .suberror,.suberror1{
-	//         padding-top: 3px;
-	//     }
-	//     .managenment  .form-group{
-	//         text-align: left;
-	//     }
-	//     .managenment  .form-group.tc{
-	//         text-align: center;
-	//     }
-	//     .managenment .modal-body .form-control{
-	//         text-align: left;
-	//         width:67%;
-	//         display: inline-block;
-	//     }
-	//     .managenment .modal-body label{
-	//         width:20%;
-	//         display: inline-block;
-	//     }
-	//     .managenment .modal-body label i{
-	//         color:red;
-	//     }
-	//     .managenment  .modal-body .waring{
-	//         color: red;
-	//         margin-left: 5px;
-	//     }
-	//     .managenment  .modal-body button{
-	//         width:35%;
-	//     }
-	//     .managenment td span{
-	//         cursor: pointer;
-	//         color: #3c8dbc;
-	//     }
-	//     .managenment td span:hover{
-	//         opacity: 80;
-	//     }
-	//     .managenment .page-bar{
-	//         margin: 25px auto;
-	//         text-align: center;
-	//     }
-	// </style>
-	// <script>
-	exports.default = {
-	    data: function data() {
-	        return {
-	            pagecur: 1,
-	            page_size: 15,
-	            pageall: 1,
-	            loginList: {},
-	            defaultData: { "companyId": "", "accountType": "", "accountNumber": "", "pageIndex": 1, "pageSize": 15 },
-	            zdlists: [],
-	            relist: {
-	                startDate: '', companyId: '', accountType: '', shortName: '', accountName: '', accountNumber: '', bankName: ''
-	            },
-	            companylists: [],
-	            typelists: [],
-	            params: {},
-	            tSelect: '',
-	            cSelect: '',
-	            uText: '',
-	            addtitle: '',
-	            waring: '',
-	            fire: false,
-	            person: {
-	                name: '',
-	                phone: '',
-	                email: ''
-	            },
-	            accountId: ''
-	        };
-	    },
-
-	    methods: {
-	        // http://192.168.1.123:80/dist/data-member-rules.json
-	        // 'http://localhost:9000/dist/data-member-rules.json'
-	        // +'/level_setting/list'
-
-	        // *** 请求账户列表数据
-
-	        errorHide: function errorHide() {
-	            $('.suberror,.timeerror').hide();
-	        },
-	        getZlists: function getZlists(data) {
-	            this.$http.post('./bankaccount/list', data).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('zdlists', response.data.data) : null;
-	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        getClist: function getClist() {
-	            // *** 请求公司数据
-	            this.$http.post('./subcompany/list', {}).then(function (response) {
-	                // *** 判断请求是否成功如若成功则填充数据到模型
-	                response.data.code == 0 ? this.$set('companylists', response.data.data) : null;
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        checkNew: function checkNew() {
-	            this.initList();
-	        },
-	        addUser: function addUser() {
-	            this.errorHide();
-	            this.relist = {
-	                startDate: '', companyId: '', accountType: '', shortName: '', accountName: '', accountNumber: '', bankName: ''
-	            }, this.accountId = '';
-	            this.addtitle = '添加账户';
-	        },
-	        initList: function initList() {
-	            $(".modal").modal("hide");
-	            this.getZlists(this.defaultData);
-	        },
-	        rewrite: function rewrite(_list) {
-	            this.errorHide();
-	            this.accountId = _list.id;
-	            $.extend(true, this.relist, _list);
-	            this.addtitle = '编辑账户';
-	        },
-	        start: function start(a) {
-	            this.waring = '你确认启用该账户？';
-	            this.accountId = a;
-	        },
-	        delBtn: function delBtn(a) {
-	            this.waring = '你确认删除该账户？';
-	            this.accountId = a;
-	        },
-	        personDialog: function personDialog(a, b) {
-	            this.errorHide();
-	            this.fire = false;
-	            this.accountId = b;
-	            this.$http.post('./chargeperson/query/' + a).then(function (response) {
-	                // *** 判断请求是否成功如若成功则启用该数据
-	                var newperson = {
-	                    name: '',
-	                    phone: '',
-	                    email: ''
-	                };
-	                if (response.data.data) {
-	                    this.$set('person', response.data.data);
-	                } else {
-	                    this.$set('person', newperson);
-	                }
-	            }, function (response) {});
-	        },
-	        personTrue: function personTrue(a) {
-	            if (!this.$vali2.valid) {
-	                this.fire = true;return;
-	            }
-	            var data = {
-	                "id": a,
-	                "accountId": this.accountId,
-	                "name": this.person.name,
-	                "phone": this.person.phone,
-	                "email": this.person.email
-	            };
-	            this.$http.post('./chargeperson/save', data).then(function (response) {
-	                this.initList();
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        startTrue: function startTrue() {
-	            // *** 启用提交
-	            this.$http.get('./bankaccount/change/' + this.accountId).then(function (response) {
-	                // *** 判断请求是否成功如若成功则启用该数据
-	                this.initList();
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        delTrue: function delTrue() {
-	            // *** 删除提交
-	            this.$http.get('./bankaccount/delete/' + this.accountId).then(function (response) {
-	                // *** 判断请求是否成功如若成功则删除该条数据
-	                this.initList();
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        },
-	        addBtn: function addBtn() {
-	            this.errorHide();
-	            if (!this.$vali.valid) {
-	                $('.suberror').show();return;
-	            }
-	            if (this.relist.startDate == '') {
-	                $('.timeerror').show();return;
-	            }
-	            // *** 新增修改保存
-	            var data = {
-	                "id": this.accountId,
-	                "companyId": this.relist.companyId,
-	                "shortName": this.relist.shortName,
-	                "accountName": this.relist.accountName,
-	                "accountNumber": this.relist.accountNumber,
-	                "bankName": this.relist.bankName,
-	                "accountType": this.relist.accountType,
-	                "startDate": this.relist.startDate
-	            };
-	            this.$http.post('./bankaccount/save', data).then(function (response) {
-	                this.initList();
-	            }, function (response) {
-	                console.log(response);
-	            });
-	        }
-	    },
-	    ready: function ready() {
-	        !!sessionStorage.getItem('userData') ? this.$set('loginList', JSON.parse(sessionStorage.getItem('userData'))) : null;
-	        this.initList();
-	        this.getClist();
-	        var vm = this;
-	        $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
-	            this.fire = false;
-	            vm.$resetValidation();
-	        });
-	    },
-	    components: {
-	        'datepicker': _datepicker2.default,
-	        'dialog': _dialog2.default
-	    },
-	    watch: {
-	        pagecur: function pagecur() {
-	            this.defaultData.pageIndex = this.pagecur;
-	            this.initList();
-	        },
-	        page_size: function page_size() {
-	            this.defaultData.pageSize = this.page_size;
-	            this.initList();
-	        }
-	    },
-	    validators: {
-	        numeric: function numeric(val) {
-	            return (/^[-+]?[0-9]+$/.test(val)
-	            );
-	        }
-	    }
-	};
-	// </script>
-
-/***/ },
-/* 68 */
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -596,7 +46,8 @@ webpackJsonp([2],Array(61).concat([
 	})()}
 
 /***/ },
-/* 69 */
+
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -622,7 +73,8 @@ webpackJsonp([2],Array(61).concat([
 	}
 
 /***/ },
-/* 70 */
+
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -636,7 +88,8 @@ webpackJsonp([2],Array(61).concat([
 
 
 /***/ },
-/* 71 */
+
+/***/ 71:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -932,13 +385,15 @@ webpackJsonp([2],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 72 */
+
+/***/ 72:
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"datetime-picker\" :style=\"{ width: width }\" _v-471eaf71=\"\">\n    <input type=\"text\" :style=\"styleObj\" :readonly=\"readonly\" :value=\"value\" @click=\"show = !show\" _v-471eaf71=\"\">\n        <span class=\"fa fa-close close\" v-show=\"value\" @click=\"clear()\" _v-471eaf71=\"\"></span>\n    <div class=\"picker-wrap\" v-show=\"show\" _v-471eaf71=\"\">\n        <table class=\"date-picker\" _v-471eaf71=\"\">\n            <thead _v-471eaf71=\"\">\n                <tr class=\"date-head\" _v-471eaf71=\"\">\n                    <th colspan=\"4\" _v-471eaf71=\"\">\n                        <span class=\"btn-prev\" @click=\"yearClick(-1)\" _v-471eaf71=\"\">&lt;</span>\n                        <span class=\"show-year\" _v-471eaf71=\"\">{{now.getFullYear()}}</span>\n                        <span class=\"btn-next\" @click=\"yearClick(1)\" _v-471eaf71=\"\">&gt;</span>\n                    </th>\n                    <th colspan=\"3\" _v-471eaf71=\"\">\n                        <span class=\"btn-prev\" @click=\"monthClick(-1)\" _v-471eaf71=\"\">&lt;</span>\n                        <span class=\"show-month\" _v-471eaf71=\"\">{{months[now.getMonth()]}}</span>\n                        <span class=\"btn-next\" @click=\"monthClick(1)\" _v-471eaf71=\"\">&gt;</span>\n                    </th>\n                </tr>\n                <tr class=\"date-days\" _v-471eaf71=\"\">\n                    <th v-for=\"day in days\" _v-471eaf71=\"\">{{day}}</th>\n                </tr>\n            </thead>\n            <tbody _v-471eaf71=\"\">\n                <tr v-for=\"i in 6\" _v-471eaf71=\"\">\n                    <td v-for=\"j in 7\" :class=\"date[i * 7 + j] &amp;&amp; date[i * 7 + j].status\" :date=\"date[i * 7 + j] &amp;&amp; date[i * 7 + j].date\" @click=\"pickDate(i * 7 + j)\" _v-471eaf71=\"\">{{date[i * 7 + j] &amp;&amp; date[i * 7 + j].text}}</td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n";
 
 /***/ },
-/* 73 */
+
+/***/ 73:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -967,7 +422,8 @@ webpackJsonp([2],Array(61).concat([
 	})()}
 
 /***/ },
-/* 74 */
+
+/***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -993,7 +449,8 @@ webpackJsonp([2],Array(61).concat([
 	}
 
 /***/ },
-/* 75 */
+
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(58)();
@@ -1007,7 +464,8 @@ webpackJsonp([2],Array(61).concat([
 
 
 /***/ },
-/* 76 */
+
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1139,7 +597,8 @@ webpackJsonp([2],Array(61).concat([
 	// <script type="text/javascript">
 
 /***/ },
-/* 77 */
+
+/***/ 77:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
@@ -1167,7 +626,8 @@ webpackJsonp([2],Array(61).concat([
 	})()}
 
 /***/ },
-/* 78 */
+
+/***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1318,7 +778,8 @@ webpackJsonp([2],Array(61).concat([
 	// </script>
 
 /***/ },
-/* 79 */
+
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1500,7 +961,8 @@ webpackJsonp([2],Array(61).concat([
 	}
 
 /***/ },
-/* 80 */
+
+/***/ 80:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1570,7 +1032,8 @@ webpackJsonp([2],Array(61).concat([
 	}
 
 /***/ },
-/* 81 */
+
+/***/ 81:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1584,7 +1047,8 @@ webpackJsonp([2],Array(61).concat([
 	var isIE9 = exports.isIE9 = inBrowser && navigator.userAgent.toLowerCase().indexOf('msie 9.0') > 0;
 
 /***/ },
-/* 82 */
+
+/***/ 82:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1708,7 +1172,8 @@ webpackJsonp([2],Array(61).concat([
 	var scrollIntoView = exports.scrollIntoView = _domScrollIntoView2.default;
 
 /***/ },
-/* 83 */
+
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1716,7 +1181,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = __webpack_require__(84);
 
 /***/ },
-/* 84 */
+
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1850,7 +1316,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = scrollIntoView;
 
 /***/ },
-/* 85 */
+
+/***/ 85:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2294,7 +1761,8 @@ webpackJsonp([2],Array(61).concat([
 	}, domUtils);
 
 /***/ },
-/* 86 */
+
+/***/ 86:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2408,7 +1876,8 @@ webpackJsonp([2],Array(61).concat([
 	};
 
 /***/ },
-/* 87 */
+
+/***/ 87:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2524,7 +1993,8 @@ webpackJsonp([2],Array(61).concat([
 	}
 
 /***/ },
-/* 88 */
+
+/***/ 88:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2540,7 +2010,8 @@ webpackJsonp([2],Array(61).concat([
 	}
 
 /***/ },
-/* 89 */
+
+/***/ 89:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2594,7 +2065,8 @@ webpackJsonp([2],Array(61).concat([
 
 
 /***/ },
-/* 90 */
+
+/***/ 90:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3122,7 +2594,8 @@ webpackJsonp([2],Array(61).concat([
 	exports.default = KeyCode;
 
 /***/ },
-/* 91 */
+
+/***/ 91:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3183,7 +2656,8 @@ webpackJsonp([2],Array(61).concat([
 	};
 
 /***/ },
-/* 92 */
+
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3406,7 +2880,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 93 */
+
+/***/ 93:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3904,7 +3379,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 94 */
+
+/***/ 94:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3962,7 +3438,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 95 */
+
+/***/ 95:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4043,7 +3520,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 96 */
+
+/***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4103,7 +3581,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 97 */
+
+/***/ 97:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4144,7 +3623,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 98 */
+
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4185,7 +3665,8 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 99 */
+
+/***/ 99:
 /***/ function(module, exports) {
 
 	/**
@@ -4230,22 +3711,437 @@ webpackJsonp([2],Array(61).concat([
 	module.exports = exports['default'];
 
 /***/ },
-/* 100 */
+
+/***/ 100:
 /***/ function(module, exports) {
 
 	module.exports = "\r\n<slot></slot>\r\n";
 
 /***/ },
-/* 101 */
+
+/***/ 101:
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div class=\"dialog\" v-show=\"show\">\n    <align\n            :align=\"align\"\n            :visible=\"show\"\n            :monitor-buffer-time=\"80\">\n        <div class=\"content\" :style=\"{width:width+'px'}\">\n            <div class=\"box-header\">\n                <h3 class=\"box-title\" v-text=\"title\"></h3>\n                <!-- tools box -->\n                <div class=\"close\">\n                    <button class=\"btn-style\" @click=\"cbClose('cancel')\">×</button>\n                </div><!-- /. tools -->\n            </div><!-- /.box-header -->\n            <div class=\"box-body\">\n                <slot></slot>\n            </div>\n        </div>\n    </align>\n    <div class=\"dialog-mask\"></div>\n</div>\n";
 
 /***/ },
-/* 102 */
+
+/***/ 166:
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__webpack_require__(167)
+	__vue_script__ = __webpack_require__(169)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] dev\\js\\views\\SHGL\\prepayment-lists.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(170)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "C:\\Users\\Edgar\\Documents\\fin-front-end\\dev\\js\\views\\SHGL\\prepayment-lists.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+
+/***/ 167:
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(168);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(59)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./prepayment-lists.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./prepayment-lists.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+
+/***/ 168:
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(58)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n.datatable-width{\n    max-width: 500px;\n}\n.prepayment-modal-btns{\n   text-align: center;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+
+/***/ 169:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _datepicker = __webpack_require__(68);
+
+	var _datepicker2 = _interopRequireDefault(_datepicker);
+
+	var _dialog = __webpack_require__(73);
+
+	var _dialog2 = _interopRequireDefault(_dialog);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// <template>
+	//     <index :title="'预付款商户'"
+	//            :ptitle="'商户管理'"
+	//            :hname="'prepayment-lists'"
+	//            :isshow="'isshow'">
+	//         <div class="content blists" slot="content">
+	//             <div class="panel panel-flat">
+	//                 <div class="panel-heading">
+	//                     <form class="form-inline manage-form">
+	//                         <div class="form-group">
+	//                             <input type="button" class="btn btn-info"  data-toggle="modal"  data-target="#modal_prepayment_info" @click="queryForMerchantList" value="添加">
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID">
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <select class="form-control" v-model="subCompanyID" >
+	//                             <option value="">请选择分公司</option>
+	//                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+	//                             </select>
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <select class="form-control" v-model="cityID">
+	//                             <option value="">请选择城市</option>
+	//                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+	//                             </select>
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <select class="form-control" v-model="status">
+	//                             <option value="">账户状态</option>
+	//                             <option value="0">停用</option>
+	//                             <option value="1">正常</option>
+	//                                 <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+	//                             </select>
+	//                         </div>
+	//                         <div class="form-group">
+	//                             <input type="button" class="btn btn-info" @click="query" value="查询">
+	//                         </div>
+	//                     </form>
+	//                 </div>
+	//                 <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+	//                     <div class="datatable-scroll">
+	//                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
+	//                             <thead>
+	//                                 <tr role="row">
+	//                                     <th>商户ID</th>
+	//                                     <th>商户名称</th>
+	//                                     <th>分公司</th>
+	//                                     <th>城市</th>
+	//                                     <th>余额</th>
+	//                                     <th>状态</th>
+	//                                     <th>操作</th>
+	//                                     <th>开通时间</th>
+	//                                     <th>联系人</th>
+	//                                     <th>电话</th>
+	//                                     <th>客情人员</th>
+	//                                 </tr>
+	//                             </thead>
+	//                         <tbody>
+	//                             <tr v-for="(index,prepayment) in prepaymentList">
+	//                                 <td>{{prepayment.merchantOperationID}}</td>
+	//                                 <td>{{prepayment.merchantName}}</td>
+	//                                 <td>{{prepayment.subCompanyName}}</td>
+	//                                 <td>{{prepayment.cityName}}</td>
+	//                                 <td>{{prepayment.balanceAmount}}</td>
+	//                                 <td>
+	//                                      <template v-if="prepayment.status==0" style="color:red">
+	//                                         停用
+	//                                      </template>
+	//                                      <template v-if="prepayment.status==1">
+	//                                         启用
+	//                                      </template>
+	//                                 </td>
+	//                                 <td>
+	//                                     <a href="#">预付</a>
+	//                                     <a href="#">门店</a>
+	//                                     <a href="#">退款</a>
+	//                                     <a href="#">明细</a>
+	//                                     <a href="#">停用</a>
+	//                                 </td>
+	//                                 <td>{{prepayment.startTime | datetime}}</td>
+	//                                 <td>{{prepayment.connectionPerson}}</td>
+	//                                 <td>{{prepayment.connectionPhone}}</td>
+	//                                 <td>{{prepayment.servicePerson}}</td>
+	//                             </tr>
+	//                         </tbody>
+	//                     </table>
+	//                     </div>
+	//                     <div class="datatable-footer">
+	//                         <page :all="pageall"
+	//                               :cur.sync="pagecur"
+	//                               :page_size.sync="page_size">
+	//                         </page>
+	//                     </div>
+	//                 </div>
+	//                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+	//                     未查询到预付款商户信息！
+	//                 </div>
+	//                 <div id="modal_prepayment_info" data-backdrop="static" class="modal fade" style="display: none;">
+	//                     <div class="modal-dialog modal-lg">
+	//                         <div class="modal-content">
+	//                              <div class="modal-header">
+	//                                 <h3>添加商户</h3>
+	//                                 <button type="button" class="close" data-dismiss="modal">×</button>
+	//                              </div>
+	//                              <div class="modal-body">
+	//                                  <div class="panel-heading">
+	//                                      <form class="form-inline manage-form">
+	//                                         <div class="form-group">
+	//                                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID">
+	//                                         </div>
+	//                                         <div class="form-group">
+	//                                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
+	//                                         </div>
+	//                                         <div class="form-group">
+	//                                             <select class="form-control" v-model="subCompanyID" >
+	//                                             <option value="">请选择分公司</option>
+	//                                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+	//                                             </select>
+	//                                         </div>
+	//                                         <div class="form-group">
+	//                                             <select class="form-control" v-model="cityID">
+	//                                             <option value="">请选择城市</option>
+	//                                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+	//                                             </select>
+	//                                         </div>
+	//                                         <div class="form-group">
+	//                                             <input type="button" class="btn btn-info" @click="" value="查询">
+	//                                         </div>
+	//                                      </form>
+	//                                  </div>
+	//                                 <div v-show="!!merchantList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+	//                                     <div class="datatable-scroll datatable-width">
+	//                                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
+	//                                             <thead>
+	//                                                 <tr role="row">
+	//                                                     <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
+	//                                                     <th>分公司</th>
+	//                                                     <th>城市</th>
+	//                                                     <th>商户名</th>
+	//                                                 </tr>
+	//                                             </thead>
+	//                                         <tbody>
+	//                                             <tr v-for="(index,merchant) in merchantList">
+	//                                                 <td>
+	//                                                     <input type="checkbox" :id="merchant.merchantID" name="ckbox" />
+	//                                                     {{index+1}}
+	//                                                 </td>
+	//                                                 <td>{{merchant.subCompanyName}}</td>
+	//                                                 <td>{{merchant.cityName}}</td>
+	//                                                 <td>{{merchant.merchantName}}</td>
+	//                                             </tr>
+	//                                         </tbody>
+	//                                     </table>
+	//                                     </div>
+	//                                     <div class="prepayment-modal-btns">
+	//                                         <button type="button" @click="submit()" class="btn btn-primary">添加商户</button>
+	//                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+	//                                     </div>
+	//                                 </div>
+	//                              </div>
+	//                              <div class="modal-foot btns">
+	//
+	//                                 <br/>
+	//                              </div>
+	//                         </div>
+	//                     </div>
+	//                 </div>
+	//             </div>
+	//         </div>
+	//     </index>
+	// </template>
+	// <style>
+	//     .datatable-width{
+	//         max-width: 500px;
+	//     }
+	//     .prepayment-modal-btns{
+	//        text-align: center;
+	//     }
+	// </style>
+	// <script>
+	exports.default = {
+	    data: function data() {
+	        return {
+	            pagecur: 1,
+	            page_size: 15,
+	            pageall: 1,
+	            subCompanyID: "",
+	            cityID: "",
+	            merchantOperationID: "",
+	            merchantName: "",
+	            status: "",
+	            subcompanyList: [],
+	            cityList: [],
+	            prepaymentList: [],
+	            merchantList: []
+	        };
+	    },
+
+	    methods: {
+	        //获取预付款商户数据
+	        getPrepaymentList: function getPrepaymentList(data) {
+	            this.$http.post('./advancePaymentMerchant/list', data).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                response.data.code == 0 ? this.$set('prepaymentList', response.data.data) : null;
+	                response.data.code == 0 ? this.$set('pageall', response.data.total) : null;
+	            }, function (response) {
+	                console.log(response);
+	            });
+	        },
+	        //获取商户数据
+	        getMerchantList: function getMerchantList(data) {
+	            this.$http.post('./merchant/list', data).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                response.data.code == 0 ? this.$set('merchantList', response.data.data) : null;
+	            }, function (response) {
+	                console.log(response);
+	            });
+	        },
+	        //获取分公司数据
+	        getSubcompany: function getSubcompany(data) {
+	            this.$http.post('./subcompany/list', data).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                response.data.code == 0 ? this.$set('subcompanyList', response.data.data) : null;
+	            }, function (response) {
+	                console.log(response);
+	            });
+	        },
+	        //获取城市数据
+	        getCity: function getCity(data) {
+	            this.$http.post('./city/list', data).then(function (response) {
+	                // *** 判断请求是否成功如若成功则填充数据到模型
+	                response.data.code == 0 ? this.$set('cityList', response.data.data) : null;
+	            }, function (response) {
+	                console.log(response);
+	            });
+	        },
+	        getTwo: function getTwo(num) {
+	            if (num.toString().length >= 2) return num;
+	            var str = "";
+	            for (var i = num.toString().length; i < 2; i++) {
+	                str += "0";
+	            }return str + num.toString();
+	        },
+	        checkAll: function checkAll(ck) {
+	            if (ck.target.checked) {
+	                $("input[name='ckbox']").prop({ 'checked': true });
+	            } else {
+	                $("input[name='ckbox']").prop({ 'checked': false });
+	            }
+	        },
+	        queryForMerchantList: function queryForMerchantList() {
+	            //设置全选属性
+	            var data = {
+	                isAdvancePayment: 0
+	                // subCompanyID:this.
+	                // cityID :"",   
+	                // merchantOperationID :"",   
+	                // merchantName:"",
+	            };
+	            this.getMerchantList(data);
+	        },
+	        submit: function submit() {
+	            var arrays = [];
+	            $("input[name='ckbox']:checked").each(function () {
+	                arrays.push($(this).prop("id"));
+	            });
+	            var data = {
+	                merchantIDs: arrays
+	            };
+	            this.$http.post('./advancePaymentMerchant/insertBatch', data).then(function (response) {
+	                // *** 判断请求是否成功如若
+	                if (response.data.code == 0) {
+	                    alert("保存成功！");
+	                }
+	            }, function (response) {
+	                console.log(response);
+	            });
+	            //关闭弹出层
+	            $(".modal").modal("hide");
+	        },
+	        query: function query() {
+	            // let data=this.data;
+	            var data = {
+	                subCompanyID: this.subCompanyID,
+	                cityID: this.cityID,
+	                merchantOperationID: this.merchantOperationID,
+	                merchantName: this.merchantName,
+	                status: this.status
+	            };
+	            this.getPrepaymentList(data);
+	        }
+	    },
+	    ready: function ready() {
+	        this.getPrepaymentList({});
+	        this.getSubcompany({});
+	        this.getCity({});
+	    },
+	    components: {
+	        'datepicker': _datepicker2.default,
+	        'dialog': _dialog2.default
+	    },
+	    watch: {
+	        pagecur: function pagecur() {
+	            this.defaultData.pageIndex = this.pagecur;
+	            this.initList();
+	        },
+	        page_size: function page_size() {
+	            this.defaultData.pageSize = this.page_size;
+	            this.initList();
+	        }
+	    }
+	};
+	// </script>
+
+/***/ },
+
+/***/ 170:
 /***/ function(module, exports) {
 
-	module.exports = "\n<index :title=\"'账户列表'\"\n       :ptitle=\"'财务处理'\"\n       :hname=\"'account-management'\"\n       :isshow=\"'isshow'\">\n    <div class=\"content managenment\" slot=\"content\">\n    <div class=\"panel panel-flat\">\n        <div class=\"panel-heading\">\n            <form class=\"form-inline manage-form\">\n                <div class=\"form-group\">\n                    <input type=\"button\" data-toggle=\"modal\" data-target=\"#modal_add\"  class=\"btn btn-info\" @click=\"addUser\" value=\"添加账户\">\n                </div>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" v-model=\"defaultData.companyId\">\n                        <option value=\"\">请选择分公司</option>\n                        <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                    </select>\n                </div>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" v-model=\"defaultData.accountType\">\n                        <option value=\"\">请选择类型</option>\n                        <option value=\"1\">备付金</option>\n                        <option value=\"2\">本金</option>\n                        <option value=\"3\">佣金</option>\n                    </select>\n                </div>\n                <div class=\"form-group\">\n                    <input type=\"text\" class=\"form-control\" v-model=\"defaultData.accountNumber\" placeholder=\"账号\">\n                </div>\n                <div class=\"form-group\">\n                    <input type=\"button\" class=\"btn btn-info\" @click=\"checkNew\" value=\"查询\">\n                </div>\n            </form>\n        </div>\n        <div v-show=\"!!zdlists.length\" id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper no-footer\" v-cloak>\n            <div class=\"datatable-scroll\">\n                <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                    <thead>\n                        <tr role=\"row\">\n                            <th>分公司</th>\n                            <th>简称</th>\n                            <th>账户名</th>\n                            <th>账号</th>\n                            <th>开户行</th>\n                            <th>类型</th>\n                            <th>起始日期</th>\n                            <th>余额 </th>\n                            <th>操作</th>\n                        </tr>\n                    </thead>\n                <tbody>\n                    <tr role=\"row\" v-for=\"(index,trlist) in zdlists\">\n                        <td>{{trlist.companyName}}</td>\n                        <td>{{trlist.shortName}}</td>\n                        <td>{{trlist.accountName}}</td>\n                        <td>{{trlist.accountNumber}}</td>\n                        <td>{{trlist.bankName}}</td>\n                        <td>\n                            <template v-if=\"trlist.accountType==1\">\n                                备付金\n                            </template>\n                            <template v-if=\"trlist.accountType==2\">\n                                本金\n                            </template>\n                            <template v-if=\"trlist.accountType==3\">\n                                佣金\n                            </template>\n                        </td>\n                        <td>{{trlist.startDate}}</td>\n                        <td>\n                            <a v-link=\"{name:'provisions-info',params:{accountId:trlist.id}}\">{{ trlist.balanceAmount/100 | currency '' }} </a>\n                        </td>\n                        <td v-if=\"trlist.status==0\">\n                            <span data-toggle=\"modal\" data-target=\"#modal_add\"  @click=\"rewrite(trlist)\">编辑</span>\n                            <span data-toggle=\"modal\" data-target=\"#modal_waring\" @click=\"start(trlist.id)\">启用</span>\n                            <span data-toggle=\"modal\" data-target=\"#modal_waring\" @click=\"delBtn(trlist.id)\">删除</span>\n                        </td>\n                        <td v-else>\n                            <span data-toggle=\"modal\" data-target=\"#modal_fzr\" chargePerson=\"{{trlist.chargePerson}}\" @click.self=\"personDialog(trlist.chargePerson,trlist.id)\">负责人</span>\n                        </td>\n                    </tr>\n                </tbody>\n            </table>\n            </div>\n            <div class=\"datatable-footer\">\n                <page :all=\"pageall\"\n                      :cur.sync=\"pagecur\"\n                      :page_size.sync=\"page_size\">\n                </page>\n            </div>\n        </div>\n        <div style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n            未找到您要查询的账户\n        </div>\n    </div>\n        <validator name=\"vali2\">\n            <form novalidate>\n                    <!-- Promotion Modal -->\n                    <div id=\"modal_fzr\" data-backdrop=\"static\"  class=\"modal fade\" style=\"display: none;\">\n                        <div class=\"modal-dialog\">\n                            <div class=\"modal-content\">\n                                <div class=\"modal-header\">\n                                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                    <h5 class=\"modal-title\">负责人</h5>\n                                </div>\n                                <div class=\"modal-body\">\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>负责人</label>\n                                        <input type=\"text\" class=\"form-control\" id=\"uname\" v-validate:uname=\"['required']\" v-model=\"person.name\" value.sync=\"person.name\">\n                                        <span v-if=\"$vali2.uname.required && fire\" class=\"validation-error-label\">请输入负责人姓名</span>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>手机号</label>\n                                        <input type=\"text\" class=\"form-control\" id=\"phone\"  v-validate:phone=\"['required']\" v-model=\"person.phone\" value.sync=\"person.phone\">\n                                        <span v-if=\"$vali2.phone.required && fire\" class=\"validation-error-label\">请输入负责人电话</span>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <label><i>*</i>邮箱</label>\n                                        <input type=\"text\" class=\"form-control\" id=\"email\" v-validate:email=\"['required']\" v-model=\"person.email\" value.sync=\"person.email\">\n                                        <span v-if=\"$vali2.email.required && fire\" class=\"validation-error-label\">请输入负责人邮箱</span>\n                                    </div>\n                                    <div class=\"form-group tc\">\n                                        <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                        <button type=\"button\" @click=\"personTrue(person.id)\" class=\"btn btn-primary\">保存</button>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </form>\n            </validator>\n        <div id=\"modal_waring\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n            <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                        <h5 class=\"modal-title\" v-text=\"waring\"></h5>\n                    </div>\n                    <div class=\"modal-body\">\n                        <div class=\"form-group tc\">\n                            <button v-show=\"waring=='你确认启用该账户？'\" type=\"button\" @click=\"startTrue\" class=\"btn btn-primary\">确认</button>\n                            <button v-show=\"waring=='你确认删除该账户？'\" type=\"button\" @click=\"delTrue\" class=\"btn btn-primary\">确认</button>\n                            <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <validator name=\"vali\">\n            <form novalidate>\n                <div id=\"modal_add\" data-backdrop=\"static\"  class=\"modal fade\" style=\"display: none;\">\n                    <div class=\"modal-dialog modal-sm\">\n                        <div class=\"modal-content\">\n                            <div class=\"modal-header\">\n                                <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                                <h5 class=\"modal-title\" v-text=\"addtitle\"></h5>\n                            </div>\n                            <div class=\"modal-body\">\n                                <div class=\"form-group\">\n                                    <label><i>*</i>分公司</label>\n                                    <select class=\"form-control\" v-model=\"relist.companyId\" id=\"val1\" v-validate:val1=\"['required']\">\n                                        <option value=\"\">请选择分公司</option>\n                                        <option v-for=\"(index,n) in companylists\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                    </select>\n                                    <span v-if=\"$vali.val1.required && $vali.val1.dirty\" class=\"validation-error-label\">请选择分公司</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>简称</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val2\" v-validate:val2=\"['required']\" v-model=\"relist.shortName\" :value.sync=\"relist.shortName\" maxlength=\"15\" placeholder=\"15字以内\">\n                                    <span v-if=\"$vali.val2.required && $vali.val2.dirty\" class=\"validation-error-label\">请输入简称</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>账户名</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val3\" v-validate:val3=\"['required']\"  :value.sync=\"relist.accountName\" v-model=\"relist.accountName\">\n                                    <span v-if=\"$vali.val3.required && $vali.val3.dirty\" class=\"validation-error-label\">请输入账户名</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>账号</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val4\" v-validate:val4=\"['required']\"  :value.sync=\"relist.accountNumber\" v-model=\"relist.accountNumber\">\n                                    <span v-if=\"$vali.val4.required && $vali.val4.dirty\" class=\"validation-error-label\">请输入账号</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>开户行</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"val5\" v-validate:val5=\"['required']\" :value.sync=\"relist.bankName\" v-model=\"relist.bankName\">\n                                    <span v-if=\"$vali.val5.required && $vali.val5.dirty\" class=\"validation-error-label\">请输入开户行</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>起始日期</label>\n                                    <datepicker :width=\"'67%'\" :readonly=\"true\" :value.sync=\"relist.startDate\" format=\"YYYY-MM-DD\"></datepicker>\n                                    <span class=\"timeerror validation-error-label\">请选择起始日期</span>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label><i>*</i>类型</label>\n                                    <select class=\"form-control\"  id=\"val7\" v-validate:val7=\"['required']\" v-model=\"relist.accountType\">\n                                        <option value=\"\">请选择类型</option>\n                                        <option value=\"1\">备付金</option>\n                                        <option value=\"2\">本金</option>\n                                        <option value=\"3\">佣金</option>\n                                    </select>\n                                    <span v-if=\"$vali.val7.required && $vali.val7.dirty\" class=\"validation-error-label\">请选择类型</span>\n                                </div>\n                                <div class=\"form-group tc\">\n                                    <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                    <button type=\"button\" @click=\"addBtn\" class=\"btn btn-primary\">保存</button>\n                                </div>\n                                <div class=\"form-group\">\n                                    <span v-show=\"$vali.valid\" class=\"suberror validation-error-label\">你的信息未填写完整</span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </form>\n            </validator>\n    </div>\n</index>\n";
+	module.exports = "\n<index :title=\"'预付款商户'\"\n       :ptitle=\"'商户管理'\"\n       :hname=\"'prepayment-lists'\"\n       :isshow=\"'isshow'\">\n    <div class=\"content blists\" slot=\"content\">\n        <div class=\"panel panel-flat\">\n            <div class=\"panel-heading\">\n                <form class=\"form-inline manage-form\">\n                    <div class=\"form-group\">\n                        <input type=\"button\" class=\"btn btn-info\"  data-toggle=\"modal\"  data-target=\"#modal_prepayment_info\" @click=\"queryForMerchantList\" value=\"添加\">\n                    </div>\n                    <div class=\"form-group\">\n                        <input type=\"text\" class=\"form-control\" v-model=\"merchantOperationID\" placeholder=\"商户ID\">\n                    </div>\n                    <div class=\"form-group\">\n                        <input type=\"text\" class=\"form-control\" v-model=\"merchantName\" placeholder=\"商户名\">\n                    </div>\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" v-model=\"subCompanyID\" >\n                        <option value=\"\">请选择分公司</option>\n                            <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                        </select>\n                    </div>\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" v-model=\"cityID\">\n                        <option value=\"\">请选择城市</option>\n                            <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                        </select>\n                    </div>\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" v-model=\"status\">\n                        <option value=\"\">账户状态</option>\n                        <option value=\"0\">停用</option>\n                        <option value=\"1\">正常</option>\n                            <option v-for=\"(index,n) in typelists\" v-text=\"n.value\" :value=\"n.accountType\"></option>\n                        </select>\n                    </div>\n                    <div class=\"form-group\">\n                        <input type=\"button\" class=\"btn btn-info\" @click=\"query\" value=\"查询\">\n                    </div>\n                </form>\n            </div>\n            <div v-show=\"!!prepaymentList.length\" id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper no-footer\">\n                <div class=\"datatable-scroll\">\n                    <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                        <thead>\n                            <tr role=\"row\">\n                                <th>商户ID</th>\n                                <th>商户名称</th>\n                                <th>分公司</th>\n                                <th>城市</th>\n                                <th>余额</th>\n                                <th>状态</th>\n                                <th>操作</th>\n                                <th>开通时间</th>\n                                <th>联系人</th>\n                                <th>电话</th>\n                                <th>客情人员</th>\n                            </tr>\n                        </thead>\n                    <tbody>\n                        <tr v-for=\"(index,prepayment) in prepaymentList\">\n                            <td>{{prepayment.merchantOperationID}}</td>\n                            <td>{{prepayment.merchantName}}</td>\n                            <td>{{prepayment.subCompanyName}}</td>\n                            <td>{{prepayment.cityName}}</td>\n                            <td>{{prepayment.balanceAmount}}</td>\n                            <td>\n                                 <template v-if=\"prepayment.status==0\" style=\"color:red\">\n                                    停用\n                                 </template>\n                                 <template v-if=\"prepayment.status==1\">\n                                    启用\n                                 </template>\n                            </td>\n                            <td>\n                                <a href=\"#\">预付</a>\n                                <a href=\"#\">门店</a>\n                                <a href=\"#\">退款</a>\n                                <a href=\"#\">明细</a>\n                                <a href=\"#\">停用</a>\n                            </td>\n                            <td>{{prepayment.startTime | datetime}}</td>\n                            <td>{{prepayment.connectionPerson}}</td>\n                            <td>{{prepayment.connectionPhone}}</td>\n                            <td>{{prepayment.servicePerson}}</td>\n                        </tr>\n                    </tbody>\n                </table>\n                </div>\n                <div class=\"datatable-footer\">\n                    <page :all=\"pageall\"\n                          :cur.sync=\"pagecur\"\n                          :page_size.sync=\"page_size\">\n                    </page>\n                </div>\n            </div>\n            <div style=\"padding: 30px;font-size: 16px;text-align: center\" v-else>\n                未查询到预付款商户信息！\n            </div>\n            <div id=\"modal_prepayment_info\" data-backdrop=\"static\" class=\"modal fade\" style=\"display: none;\">\n                <div class=\"modal-dialog modal-lg\">\n                    <div class=\"modal-content\">\n                         <div class=\"modal-header\">\n                            <h3>添加商户</h3>\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>\n                         </div>\n                         <div class=\"modal-body\">\n                             <div class=\"panel-heading\">\n                                 <form class=\"form-inline manage-form\">\n                                    <div class=\"form-group\">\n                                        <input type=\"text\" class=\"form-control\" v-model=\"merchantOperationID\" placeholder=\"商户ID\">\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <input type=\"text\" class=\"form-control\" v-model=\"merchantName\" placeholder=\"商户名\">\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <select class=\"form-control\" v-model=\"subCompanyID\" >\n                                        <option value=\"\">请选择分公司</option>\n                                            <option v-for=\"n in subcompanyList\" v-text=\"n.name\" :value=\"n.subCompanyID\"></option>\n                                        </select>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <select class=\"form-control\" v-model=\"cityID\">\n                                        <option value=\"\">请选择城市</option>\n                                            <option v-for=\"n in cityList\" v-text=\"n.name\" :value=\"n.cityID\"></option>\n                                        </select>\n                                    </div>\n                                    <div class=\"form-group\">\n                                        <input type=\"button\" class=\"btn btn-info\" @click=\"\" value=\"查询\">\n                                    </div>\n                                 </form>\n                             </div>\n                            <div v-show=\"!!merchantList.length\" id=\"DataTables_Table_0_wrapper\" class=\"dataTables_wrapper no-footer\">\n                                <div class=\"datatable-scroll datatable-width\">\n                                    <table id=\"table1\" class=\"table datatable-selection-single dataTable no-footer\">\n                                        <thead>\n                                            <tr role=\"row\">\n                                                <th><input id=\"ckAll\" type=\"checkbox\" @click=\"checkAll($event)\"/>全选</th>\n                                                <th>分公司</th>\n                                                <th>城市</th>\n                                                <th>商户名</th>\n                                            </tr>\n                                        </thead>\n                                    <tbody>\n                                        <tr v-for=\"(index,merchant) in merchantList\">\n                                            <td>\n                                                <input type=\"checkbox\" :id=\"merchant.merchantID\" name=\"ckbox\" />\n                                                {{index+1}}\n                                            </td>\n                                            <td>{{merchant.subCompanyName}}</td>\n                                            <td>{{merchant.cityName}}</td>\n                                            <td>{{merchant.merchantName}}</td>\n                                        </tr>\n                                    </tbody>\n                                </table>\n                                </div>\n                                <div class=\"prepayment-modal-btns\">\n                                    <button type=\"button\" @click=\"submit()\" class=\"btn btn-primary\">添加商户</button>\n                                    <button type=\"button\" class=\"btn btn-gray\" data-dismiss=\"modal\">取消</button>\n                                </div>\n                            </div>\n                         </div>\n                         <div class=\"modal-foot btns\">\n                            \n                            <br/>\n                         </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</index>\n";
 
 /***/ }
-]));
+
+});
