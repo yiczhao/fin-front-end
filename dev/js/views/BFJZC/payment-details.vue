@@ -48,11 +48,11 @@
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.purpose">
                                     <option value="">请选择用途</option>
-                                    <option value="1">佣金划付</option>
-                                    <option value="2">往来款</option>
-                                    <option value="3">转账退款</option>
-                                    <option value="4">账户费用</option>
-                                    <option value="5">其它</option>
+                                    <option value="1">补贴划付</option>
+                                    <option value="2">额度采购</option>
+                                    <option value="3">退税划付</option>
+                                    <option value="4">预付款</option>
+                                    <option value="5">供货商划付</option>
                                     <option value="6">往来款</option>
                                     <option value="7">转账退款</option>
                                     <option value="8">账户费用</option>
@@ -292,10 +292,6 @@
     }
     .details  .mt0{
         margin-top: 0
-    }
-    .details .page-bar{
-        margin: 25px auto;
-        text-align: center;
     }
     .details .panel-title p span{
         width: 24%;

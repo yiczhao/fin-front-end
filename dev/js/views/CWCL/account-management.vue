@@ -257,10 +257,6 @@
     .managenment td span:hover{
         opacity: 80;
     }
-    .managenment .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -341,7 +337,7 @@
             rewrite(_list){
                 this.errorHide();
                 this.accountId=_list.id;
-                    $.extend(true, this.relist, _list);
+                $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
             },
             start(a){
