@@ -44,6 +44,7 @@ Vue.set(app, '_userData', {});
 Vue.use(interceptor,router);
 Vue.config.debug = true;
 Vue.filter('datetime', function (value) {
+	if(value==null || value=='')return '';
 	var time = new Date(value);
 	var y = time.getFullYear();
 	var m = time.getMonth()+1;
