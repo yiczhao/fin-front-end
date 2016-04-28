@@ -335,17 +335,15 @@
                         if(response.data.code==0){
                             this.$set('entity', response.data.data);
                             console.log(this.entity);
-                            this.applyAdvancePay.merchantID=this.entity.merchantID;
-                            this.applyAdvancePay.advancePaymentMerchantId=this.entity.merchantAccountID;
-                            this.applyAdvancePay.subCompanyID=this.entity.subCompanyID;
-                            
+                            this.applyAdvancePay.advancePaymentMerchantId=this.entity.id;
                             this.applyAdvancePay.merchantName=this.entity.merchantName;//1
                             this.applyAdvancePay.balanceAmount=this.entity.balanceAmount;//2
                             this.applyAdvancePay.payAccount=this.entity.payAccount;//  付款账户    String  --5         
                             this.applyAdvancePay.collectionAccountName=this.entity.collectionAccountName;//   收款账户    String   --6-1        
                             this.applyAdvancePay.collectionAccountNumber=this.entity.collectionAccountNumber;// 收款账号    String   --6-2 
                             this.applyAdvancePay.collectionBankName=this.entity.collectionBankName;//  开户行 String            --6-3    
-                            this.applyAdvancePay.collectionBankNumber=this.entity.collectionBankNumber;//    提入行号    String    --6-4    
+                            this.applyAdvancePay.collectionBankNumber=this.entity.collectionBankNumber;//    提入行号    String    --6-4   
+
                             this.applyAdvancePay.advancePaymentAmount="";//    预付金额    Integer   --3       
                             this.applyAdvancePay.remarks="";// 备注  String           --4
                         }
@@ -402,7 +400,12 @@
                 this.getMerchantList(this.merchantInfo);
             },
             subApplyAdvancePay:function(){
-                this.$http.post('./advancePaymentMerchant/insertBatch',this.applyAdvancePay)
+                let entity={
+                   advancePaymentMerchantId:this.applyAdvancePay.advancePaymentMerchantId,
+                   advancePaymentAmount:this.applyAdvancePay.advancePaymentAmount*100,     
+                   remarks:this.applyAdvancePay.remarks,
+                }
+                this.$http.post('./advancePaymentMerchant/applyAdvancePay',entity)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)

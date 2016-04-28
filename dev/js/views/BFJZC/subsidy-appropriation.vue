@@ -50,8 +50,8 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="activityID">
-                                    <option value="0">请选择参与活动</option>
-                                        <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                    <option value="">请选择参与活动</option>
+                                        <option v-for="(index,n) in activityList" v-text="n.name" :value="n.activityID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -65,7 +65,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remark" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -115,7 +115,7 @@
                                         <td>{{sa.thirdPartySubsidyShould}}</td>
                                         <td>{{sa.payAmount}}</td>
                                         <td><a href="#">明细</a></td>
-                                        <td>{{sa.status}}
+                                        <td>
                                             <template v-if="sa.status==1">
                                                 等待审核
                                             </template>
@@ -159,9 +159,7 @@
         margin: 25px auto;
         text-align: center;
     }
-    th{
-        min-width: 85px;
-    }
+    
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -179,13 +177,17 @@
                 merchantID:"",      
                 merchantName:"",
                 keywords:"",  
-                id:"",   
+                id:"",
+                remarks:"",   
                 seriesNumber:"",        
-                activityID:0,
+                activityID:"",
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
+                activityList:[],
                 cityList:[],
                 subsidyAppropriationList:[]
             }
@@ -222,6 +224,16 @@
                         console.log(response);
                     });
             },
+            //获取活动数据
+            getactivitys:function(data){
+                 this.$http.post('./activity/list',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('activityList', response.data.data) : null;
+                    }, function (response) {
+                        console.log(response);
+                    });
+            },
             getTwo:function(num){
                 if(num.toString().length>=2) return num;
                 var str="";
@@ -232,17 +244,18 @@
             query: function () {
                 // let data=this.data;
                 let data={
-                        subCompanyID:this.subCompanyID,
-                        cityID:this.cityID,
-                        type:this.type,
-                        timeRange:this.timeRange,
-                        merchantID:this.merchantID,
-                        merchantName:this.merchantName,
-                        keywords:this.keywords,
-                        id:this.id,
-                        seriesNumber:this.seriesNumber,        
-                        phone:this.phone,      
-                        activityID:this.activityID
+                    subCompanyID:this.subCompanyID,
+                    cityID:this.cityID,
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    merchantID:this.merchantID,
+                    createType:this.createType,
+                    status:this.status,
+                    activityID:this.activityID,
+                    remarks:this.remarks,
+                    pageIndex:this.pageIndex,
+                    pageSize:this.pageSize,
+                    keywords:this.keywords 
                     };
                 this.getSubsidyAppropriationList(data);
             },
@@ -251,6 +264,7 @@
             this.getSubsidyAppropriationList({});
             this.getSubcompany({});
             this.getCity({});
+            this.getactivitys({});
         },
          watch:{
             timeRange:function(){
@@ -280,6 +294,14 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+            pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{

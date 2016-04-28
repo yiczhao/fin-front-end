@@ -123,9 +123,6 @@
         margin: 25px auto;
         text-align: center;
     }
-    th{
-        min-width: 85px;
-    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -144,13 +141,13 @@
                 merchantID:"",      
                 merchantName:"",
                 keywords:"", 
-                id:"",   
                 seriesNumber:"",        
-                activityID:0,
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 cityList:[],
                 advancePaymentDetailList:[]
             }
@@ -197,15 +194,16 @@
             query: function () {
                 // let data=this.data;
                 let data={
-                        subCompanyID:this.subCompanyID,
-                        cityID:this.cityID,
-                        startDate:this.startDate,
-                        endDate:this.endDate,
-                        timeRange:this.timeRange,
-                        merchantOperationID:this.merchantID,
-                        keywords:this.keywords,
-                        status:this.status,
-                        remarks:this.remarks
+                    subCompanyID:this.subCompanyID,
+                    cityID:this.cityID,
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    merchantOperationID:this.merchantID,
+                    keywords:this.keywords,
+                    status:this.status,
+                    remarks:this.remarks,
+                    pageIndex: this.pageIndex, 
+                    pageSize: this.pageSize
                     };
                 this.getadvancePaymentDetailList(data);
             },
@@ -243,6 +241,14 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+            pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{

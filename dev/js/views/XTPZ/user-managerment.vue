@@ -135,6 +135,8 @@
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 userList:[],
                 controlSpanArray:[]
             }
@@ -164,7 +166,9 @@
             query: function () {
                 let data={
                         subCompanyID:this.subCompanyID,
-                        keywords:this.keywords
+                        keywords:this.keywords,
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize
                     };
                 this.getUserList(data);
             },
@@ -221,7 +225,14 @@
             this.getSubcompany({});
         },
        watch:{
-           
+           pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
+            }
        },
         components:{
            'datepicker': datepicker,

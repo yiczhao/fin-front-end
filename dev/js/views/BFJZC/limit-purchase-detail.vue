@@ -143,9 +143,6 @@
         margin: 25px auto;
         text-align: center;
     }
-    th{
-        min-width: 85px;
-    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -167,6 +164,8 @@
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 subcompanyList:[],
                 cityList:[],
                 limitPurchaseDetailList:[]
@@ -221,7 +220,9 @@
                         merchantOperationID:this.merchantID,
                         keywords:this.keywords,
                         status:this.status,
-                        remarks:this.remarks        
+                        remarks:this.remarks,
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize        
                     };
                 this.getlimitPurchaseDetailList(data);
             },
@@ -259,6 +260,14 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+            pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{

@@ -367,6 +367,16 @@
                 return str + num.toString();
             },
             addTradeInfo:function(){
+                this.tradeInfo.merchantId='';
+                this.tradeInfo.activityId='';
+                this.tradeInfo.consumptionAmount='';         
+                this.tradeInfo.discountAmount='';    
+                this.tradeInfo.paAmount='';  
+                this.tradeInfo.thirdPartyReceivable='';    
+                this.tradeInfo.suspensionTax=''; 
+                this.tradeInfo.merchantSubsidyActual='';
+                this.tradeInfo.certificates='';     
+                this.tradeInfo.remarks='';
                 //初始化获取所有商户信息
                 this.$http.post('./merchant/list',{})
                     .then(function (response) {

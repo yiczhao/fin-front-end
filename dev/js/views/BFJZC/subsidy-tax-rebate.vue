@@ -51,7 +51,7 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">等待审核</option>
+                                        <option value="1">已关闭</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">等待对账</option>
                                         <option value="4">对账成功</option>
@@ -103,8 +103,11 @@
                                         <td>{{strd.taxRebateAmount}}</td>
                                         <td><a :href="strd.id">明细</a> </td>
                                         <td>
-                                            <template v-if="strd.status==1">等待对账</template>
-                                            <template v-if="strd.status==2">划付失败</template>
+                                            <template v-if="strd.status==1">已关闭</template>
+                                            <template v-if="strd.status==2">等待划付</template>
+                                            <template v-if="strd.status==3">等待对账</template>
+                                            <template v-if="strd.status==4">对账成功</template>
+                                            <template v-if="strd.status==5">划付失败</template>
                                         </td>
                                         <td><a :href="strd.id">申请划付</a></td>
                                         <td>{{strd.remarks}}</td>
@@ -132,9 +135,6 @@
         margin: 25px auto;
         text-align: center;
     }
-    th{
-        min-width: 85px;
-    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -150,15 +150,13 @@
                 startDate:"",
                 endDate:"",
                 merchantID:"",      
-                merchantName:"", 
                 keywords:"",
-                id:"",   
-                seriesNumber:"",        
-                activityID:0,
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 cityList:[],
                 subsidyTaxRebateDetailList:[]
             }
@@ -206,16 +204,17 @@
                 // let data=this.data;
                 let data={
                         subCompanyID:this.subCompanyID,
+                        merchantOperationID:this.merchantID,
                         cityID:this.cityID,
                         createType:this.createType,
                         timeRange:this.timeRange,
-                        merchantID:this.merchantID,
-                        merchantName:this.merchantName,
                         keywords:this.keywords,
-                        id:this.id,
-                        seriesNumber:this.seriesNumber,        
-                        phone:this.phone,      
-                        activityID:this.activityID
+                        status:this.status,
+                        remarks:this.remarks,
+                        startDate:this.startDate,
+                        endDate:this.endDate,
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize
                     };
                 this.getsubsidyTaxRebateDetailList(data);
             },
@@ -253,6 +252,14 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+            pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{

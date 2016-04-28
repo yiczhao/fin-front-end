@@ -35,7 +35,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="box-body box-tbl">
+                        <div v-show="!!logList.length" class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -64,13 +64,17 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="box-footer">
+                            <div class="box-footer">
                             <page :all="pageall"
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
                             </page>
                         </div>
+                        </div>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到日志数据！
+                        </div>
+                        
                         <div id="modal_logInfo" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog mg">
                                 <div class="modal-content">
@@ -91,7 +95,7 @@
                                             <div><label>详情：</label>
                                                 <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
                                             </div>
-                                            <div><label>创建IP：</label>{{log.userName}}</div>
+                                            <div><label>创建IP：</label>{{log.createIp}}</div>
                                             <div><label>创建时间：</label>{{log.createTime | datetime}}</div>
                                         </div>
                                      </div>
@@ -144,6 +148,8 @@
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 logList:[],
                 log:{}
             }
@@ -192,7 +198,9 @@
                         subCompanyID:this.subCompanyID,
                         keywords:this.keywords,
                         startDate:this.startDate,
-                        endDate:this.endDate
+                        endDate:this.endDate,
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize
                     };
                 this.getLogList(data);
             },
@@ -229,6 +237,14 @@
                 var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 this.startDate=newD;
                 this.endDate=endD;
+            },
+             pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{
