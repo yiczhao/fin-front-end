@@ -11,7 +11,7 @@
                             <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantId" placeholder="商户ID">
+                            <input type="number" class="form-control" v-model="defaultData.merchantId" placeholder="商户ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -43,16 +43,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.startValue" placeholder="循环次数">
+                            <input type="number" class="form-control" v-model="defaultData.startValue" placeholder="循环次数">
                             -
-                            <input type="text" class="form-control" v-model="defaultData.endValue" placeholder="循环次数">
+                            <input type="number" class="form-control" v-model="defaultData.endValue" placeholder="循环次数">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" @click="checkNew" value="查询">
                         </div>
                     </form>
                 </div>
-                <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -80,7 +80,7 @@
                             </thead>
                         <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.operationId}}</td>
                                 <td>{{trlist.name}}</td>
                                 <td>{{trlist.company}}</td>
                                 <td>{{trlist.city}}</td>
@@ -93,20 +93,20 @@
                                 <td>{{trlist.firstTime | datetime}}</td>
                                 <td>
                                     <template v-if="trlist.discountType==1">全单</template>
-                                    <template v-if="trlist.discountType==0">可打折</template>
+                                    <template v-else>可打折</template>
                                 </td>
                                 <td>
-                                    <template v-if="trlist.discountType==0">关闭</template>
-                                    <template v-if="trlist.discountType==1">开启</template>
+                                    <template v-if="trlist.isAutoPay==0">关闭</template>
+                                    <template v-else>开启</template>
                                 </td>
                                 <td>
-                                    <template v-if="trlist.discountType==0">停用</template>
+                                    <template v-if="trlist.status==0">停用</template>
                                     <template v-else>正常</template>
                                 </td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal_update" href="javascript:void(0)" @click="updateNew(trlist)">编辑</a>
                                     <a href="javascript:void(0)">明细</a>
-                                    <template v-if="trlist.discountType==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
+                                    <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
                                     <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
                                     <a href="javascript:void(0)" v-link="{'name':'limitaccount-management'}">账户</a>
                                 </td>
@@ -165,18 +165,18 @@
                                             <label class="w28" ><i>*</i>抵扣方式：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <select class="form-control" v-model="defaultData.city">
-                                                <option value="0">全单</option>
-                                                <option value="1">可打折</option>
+                                            <select class="form-control" v-model="updateList.discountType">
+                                                <option value="1">全单</option>
+                                                <option value="2">可打折</option>
                                             </select>
                                         </div>
                                         <div class="pull-left">
                                             <label class="w28" ><i>*</i>自动划付：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="radio" value="one" v-model="zdhf">
+                                            <input type="radio" id="one" value="1" v-model="updateList.isAutoPay">
                                             <label class="w28" for="one">开启</label>
-                                            <input type="radio" value="two" v-model="zdhf">
+                                            <input type="radio" id="two" value="0" v-model="updateList.isAutoPay">
                                             <label class="w28" for="two">关闭</label>
                                         </div>
                                     </div>
@@ -185,7 +185,7 @@
                                             <label class="w28" ><i>*</i>单笔采购额度：</label>
                                         </div>
                                         <div class="col-md-3">
-                                             <input class="form-control" type="text" placeholder="10000">
+                                             <input class="form-control" type="text" :value="updateList.singlePurchaseLimit">
                                         </div>
                                         <div class="col-md-1">
                                             元
@@ -194,38 +194,39 @@
                                             <label class="w28" ><i>*</i>单笔采购本金：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input class="form-control" type="text" placeholder="10000">
+                                            <input class="form-control" type="text" :value="updateList.singlePurchasePrincipal">
                                         </div>
                                         <div class="pull-left">
                                             元
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" data-toggle="modal" data-target="#modal_add"  @click="addUser2" class="btn">添加消化账户</button>
+                                        <button type="button" data-toggle="modal" data-target="#modal_add"  data-dismiss="modal" @click="addUser2" class="btn">添加消化账户</button>
                                     </div>
-                                    <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                    <table class="table" style="border: 1px solid #ccc;">
                                         <thead>
                                         <tr role="row">
                                             <th>商户ID</th>
-                                            <th>商户名称</th>
                                             <th>分公司</th>
                                             <th>城市</th>
-                                            <th>开始时间</th>
+                                            <th>商户名</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr role="row">
-                                                <td>1</td>
-                                                <td>昌玩聚和他(她)朋友们</td>
-                                                <td>南昌卡说</td>
-                                                <td>南昌</td>
-                                                <td>2013-06-03 13:26:19</td>
-                                                <td><a href="javascript:void(0)">删除</a></td>
-                                            </tr>
+                                        <tr v-if="seexhList.length>0" v-for="n in seexhList" role="row">
+                                            <td>{{n.merchantId}}</td>
+                                            <td>{{n.companyName}}</td>
+                                            <td>{{n.cityName}}</td>
+                                            <td>{{n.merchantName}}</td>
+                                            <th><a href="javascript:void(0)" @click="delxh(2)" data-toggle="modal" data-target="#modal_waring">删除</a></th>
+                                        </tr>
+                                        <tr v-else>
+                                            <td colspan="5" valign="center">该账户没有消化商户</td>
+                                        </tr>
                                         </tbody>
                                     </table>
-                                    <div class="form-group">
+                                    <div class="form-group" style="padding-top: 25px;">
                                         <div class="pull-left">
                                             <label class="w28" ><i>*</i>上传凭证：</label>
                                         </div>
@@ -236,14 +237,14 @@
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <textarea class="form-control" width="70%" cols="20" rows="3"></textarea>
+                                            <textarea class="form-control" width="70%" v-model="updateList.remarks"></textarea>
                                         </div>
                                         <div class="col-md-3">
                                             <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
                                         </div>
                                     </div>
                                     <div>历史记录：</div>
-                                    <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                    <table class="table" style="border: 1px solid #ccc;">
                                         <thead>
                                         <tr role="row">
                                             <th>ID</th>
@@ -256,19 +257,24 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr role="row">
-                                            <td>1</td>
-                                            <td>
-                                                <p>抵扣方式：全单</p>
-                                                <p>自动划付：开启</p>
-                                                <p>单笔采购额度：10,000.00元</p>
-                                                <p>单笔采购额度：7,500.00元</p>
-                                            </td>
-                                            <td><a href="javascript:void(0)">查看</a></td>
-                                            <td>2013-06-03 13:26:19</td>
-                                            <td>贾燕</td>
-                                            <td><a href="javascript:void(0)">下载</a></td>
-                                            <td>总店额度采购</td>
+                                        <tr v-if="historyList.length>1" role="row" v-for="n in historyList">
+                                            <template v-if="$index!=0">
+                                                <td>{{$index}}</td>
+                                                <td>
+                                                    <p>抵扣方式：{{n.discountType}}</p>
+                                                    <p>自动划付：{{n.discountType}}</p>
+                                                    <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
+                                                    <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
+                                                </td>
+                                                <td><a href="javascript:void(0)">查看</a></td>
+                                                <td>{{n.updateAt | datetime}}</td>
+                                                <td>{{n.updateAt}}</td>
+                                                <td><a href="{{n.certificates}}">下载</a></td>
+                                                <td>{{n.remark}}</td>
+                                            </template>
+                                        </tr>
+                                        <tr v-if="historyList.length<1">
+                                            <td colspan="7" valign="center">无历史记录</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -313,7 +319,7 @@
                                 <div class="addbottom">
                                     <div style="text-indent: 68%">已选择：</div>
                                     <div class="col-md-7">
-                                        <table v-if="!!xhlist.length" class="table datatable-selection-single dataTable no-footer">
+                                        <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
                                             <thead>
                                             <tr role="row">
                                                 <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
@@ -358,13 +364,15 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 v-show="isEnable==1" class="modal-title">你确定启用该账户？</h5>
-                                <h5 v-else class="modal-title">你确定停用该账户？</h5>
+                                <h5 v-if="isEnable==1" class="modal-title">你确定启用该账户？</h5>
+                                <h5 v-if="isEnable==0" class="modal-title">你确定停用该账户？</h5>
+                                <h5 v-if="isEnable==2" class="modal-title">你确定删除该消化账户？</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group tc">
                                     <button v-if="isEnable==1" type="button" @click="changeTrue" class="btn btn-primary">确认</button>
-                                    <button v-else type="button" @click="changeTrue" class="btn btn-primary">确认</button>
+                                    <button v-if="isEnable==2" type="button" @click="delxhTrue" class="btn btn-primary">确认</button>
+                                    <button v-if="isEnable==0" type="button" @click="changeTrue" class="btn btn-primary">确认</button>
                                     <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                 </div>
                             </div>
@@ -382,7 +390,7 @@
                             <div class="modal-body">
                                 <div class="addbottom">
                                     <div class="col-md-12">
-                                        <table v-if="!!seexhlist.length" class="table" style="border: 1px solid #ccc;">
+                                        <table v-if="seexhList.length>0" class="table" style="border: 1px solid #ccc;">
                                             <thead>
                                             <tr role="row">
                                                 <th>商户ID</th>
@@ -486,6 +494,9 @@
         top: 2px;
         left: -2px;
     }
+    .blimit .pull-left label i{
+        color:red;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -498,24 +509,24 @@
                 pageall:1,
                 loginList:{},
                 defaultData:{
-                    "merchantId": "",
-                    "merchantName": "",
-                    "companyId": "",
-                    "cityId": "",
-                    "isAutoPay": "",
-                    "status": "",
-                    "startValue": "",
-                    "endValue": "",
-                    "pageIndex": 1,
-                    "pageSize": 15
+                    'merchantId': '',
+                    'merchantName': '',
+                    'companyId': '',
+                    'cityId': '',
+                    'isAutoPay': '',
+                    'status': '',
+                    'startValue': '',
+                    'endValue': '',
+                    'pageIndex': 1,
+                    'pageSize': 15
                 },
                 shdata:{
-                    "companyId":'',
-                    "cityId":'',
-                    "merchantOperationID":'',
-                    "merchantName":'',
-                    "isLimitPurchase":0,
-                    "isDigest":0,
+                    'companyId':'',
+                    'cityId':'',
+                    'merchantOperationID':'',
+                    'merchantName':'',
+                    'isLimitPurchase':0,
+                    'isDigest':0,
                 },
                 isEnable:0,
                 zdlists:[],
@@ -525,11 +536,11 @@
                 addId:[],
                 seexhList:[
                     {
-                        "merchantId": 135,
-                        "merchantName": "南昌玩聚恒茂店",
-                        "companyName": "南昌卡说",
-                        "cityName": "南昌",
-                        "beginTime": "2016-04-25 08:06:52"
+                        'merchantId':'',
+                        'merchantName': '',
+                        'companyName': '',
+                        'cityName': '',
+                        'beginTime': ''
                     }
                 ],
                 xhlist:[
@@ -540,6 +551,29 @@
                         merchantID:''
                     }
                 ],
+                updateList:{
+                    'id': 3874,
+                    'merchantId': 1565,
+                    'operationId': 5823,
+                    'name': '武汉麦格芬经开万达店',
+                    'company': '武汉卡说',
+                    'city': '武汉',
+                    'totalLimit': 744,
+                    'totalPrincipal': 58000,
+                    'usedLimit': 26451,
+                    'usedPercent': 39652,
+                    'balanceLimit': 4562,
+                    'loopNumber': 3,
+                    'firstTime': '2016-04-20 15:42:30',
+                    'discountType': 1,
+                    'isAutoPay': 1,
+                    'status': 0,
+                    'contactsPerson': '刘楠',
+                    'contactsPhone': '13437169531',
+                    'servicePerson': '胡俊',
+                    'isLimitPurchase': '1',
+                },
+                historyList:[],
                 accountId:'',
                 nums:{
                     totalLimit:0,
@@ -578,11 +612,24 @@
 
             },
             initList(){
-                $(".modal").modal("hide");
+                $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
             },
             updateNew(_list){
                 this.accountId=_list.id;
+                this.seexh(this.accountId);
+                this.$http.post('./limitPurchaseMerchant/history/'+_list.merchantId)
+                        .then((response)=>{
+                                (response.data.code==0) ? this.$set('updateList', response.data.data[0]) : null;
+                                (response.data.code==0) ? this.$set('historyList', response.data.data) : null;
+                        })
+
+            },
+            delxh(_isenb){
+                this.isEnable=_isenb;
+            },
+            delxhTrue(){
+
             },
             changeDiscount(_id,_isenb){
                 this.accountId=_id;
@@ -590,8 +637,8 @@
             },
             changeTrue(){
                 let data={
-                    "merchantId": this.accountId,
-                    "isEnable": this.isEnable
+                    'id': this.accountId,
+                    'isEnable': this.isEnable
                 }
                 this.$http.post('./limitPurchaseMerchant/change',data)
                         .then((response)=>{
@@ -600,12 +647,14 @@
             },
             seexh(_id){
                 this.accountId=_id;
-                this.$http.post('./limitPurchaseMerchant/viewDigest/'+this.accountId)
+                this.$http.get('./limitPurchaseMerchant/viewDigest/'+this.accountId)
                         .then((response)=>{
-                    (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
-                })
+                                (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
+                        })
             },
             searchDigest(){
+                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
+                $('.addbottom .col-md-4').children('ul').html('');
                 this.$http.post('./merchant/list',this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
@@ -615,15 +664,13 @@
             addUser(){
                 this.addTitle='添加商户';
                 this.shdata={
-                    "companyId":'',
-                    "cityId":'',
-                    "merchantOperationID":'',
-                    "merchantName":'',
-                    "isLimitPurchase":0,
-                    "isDigest":null,
+                    'companyId':'',
+                    'cityId':'',
+                    'merchantOperationID':'',
+                    'merchantName':'',
+                    'isLimitPurchase':0,
+                    'isDigest':null,
                 };
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
-                $('.addbottom .col-md-4').children('ul').html('');
                 this.searchDigest();
             },
             addUser2(){
@@ -631,12 +678,12 @@
                 $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
                 $('.addbottom .col-md-4').children('ul').html('');
                 this.shdata={
-                    "companyId":'',
-                    "cityId":'',
-                    "merchantOperationID":'',
-                    "merchantName":'',
-                    "isLimitPurchase":null,
-                    "isDigest":0,
+                    'companyId':'',
+                    'cityId':'',
+                    'merchantOperationID':'',
+                    'merchantName':'',
+                    'isLimitPurchase':null,
+                    'isDigest':0,
                 };
                 this.searchDigest();
             },
@@ -699,7 +746,7 @@
                     $('#app').addClass('modal-open');
                 }
             })
-            $('#modal_update').on('hidden.bs.modal', function () {
+            $('#modal_update,#modal_add,#modal_waring,#modal_see').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
             })
             $(document).on('click','.addbottom .col-md-4 ul li',function(){
