@@ -215,11 +215,11 @@
                                         </thead>
                                         <tbody>
                                         <tr v-if="seexhList.length>0" v-for="n in seexhList" role="row">
-                                            <td>{{n.merchantId}}</td>
+                                            <td class="merchantIds">{{n.merchantId}}</td>
                                             <td>{{n.companyName}}</td>
                                             <td>{{n.cityName}}</td>
                                             <td>{{n.merchantName}}</td>
-                                            <th><a href="javascript:void(0)" @click="delxh(2)" data-toggle="modal" data-target="#modal_waring">删除</a></th>
+                                            <th><a href="javascript:void(0)" @click="delxh(2,$event)">删除</a></th>
                                         </tr>
                                         <tr v-else>
                                             <td colspan="5" valign="center">该账户没有消化商户</td>
@@ -240,7 +240,7 @@
                                             <textarea class="form-control" width="70%" v-model="updateList.remarks"></textarea>
                                         </div>
                                         <div class="col-md-3">
-                                            <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                                            <button type="button" @click="submitUpdate" class="btn btn-primary">保存</button>
                                         </div>
                                     </div>
                                     <div>历史记录：</div>
@@ -261,8 +261,14 @@
                                             <template v-if="$index!=0">
                                                 <td>{{$index}}</td>
                                                 <td>
-                                                    <p>抵扣方式：{{n.discountType}}</p>
-                                                    <p>自动划付：{{n.discountType}}</p>
+                                                    <p>抵扣方式：
+                                                        <template v-if="n.discountType==1">全单</template>
+                                                        <template v-else>可打折</template>
+                                                    </p>
+                                                    <p>自动划付：
+                                                        <template v-if="n.isAutoPay==0">关闭</template>
+                                                        <template v-else>开启</template>
+                                                    </p>
                                                     <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                     <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
                                                 </td>
@@ -366,12 +372,10 @@
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                                 <h5 v-if="isEnable==1" class="modal-title">你确定启用该账户？</h5>
                                 <h5 v-if="isEnable==0" class="modal-title">你确定停用该账户？</h5>
-                                <h5 v-if="isEnable==2" class="modal-title">你确定删除该消化账户？</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group tc">
                                     <button v-if="isEnable==1" type="button" @click="changeTrue" class="btn btn-primary">确认</button>
-                                    <button v-if="isEnable==2" type="button" @click="delxhTrue" class="btn btn-primary">确认</button>
                                     <button v-if="isEnable==0" type="button" @click="changeTrue" class="btn btn-primary">确认</button>
                                     <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                 </div>
@@ -625,11 +629,17 @@
                         })
 
             },
-            delxh(_isenb){
+            delxh(_isenb,e){
                 this.isEnable=_isenb;
+                $(e.target).closest('tr').hide().find('.merchantIds').removeClass('merchantIds');
             },
-            delxhTrue(){
-
+            submitUpdate(){
+                let datas = Array.from($(".merchantIds"), i => parseInt(i.innerHTML));
+                this.updateList.digestMerchants=datas;
+                this.$http.post('./ limitPurchaseMerchant/editDigest',this.updateList)
+                        .then((response)=>{
+                                this.initList();
+                        })
             },
             changeDiscount(_id,_isenb){
                 this.accountId=_id;
