@@ -48,7 +48,7 @@
                             <input type="number" class="form-control" v-model="defaultData.endValue" placeholder="循环次数">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                            <input type="button" class="btn btn-info" @click="initList" value="查询">
                         </div>
                     </form>
                 </div>
@@ -237,14 +237,15 @@
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <textarea class="form-control" width="70%" v-model="updateList.remarks"></textarea>
+                                            <textarea class="form-control" width="70%" v-model="updateList.remarks" value=""></textarea>
                                         </div>
                                         <div class="col-md-3">
                                             <button type="button" @click="submitUpdate" class="btn btn-primary">保存</button>
                                         </div>
                                     </div>
                                     <div>历史记录：</div>
-                                    <table class="table" style="border: 1px solid #ccc;">
+                                    <div style="height:200px;overflow: auto;border: 1px solid #ccc;">
+                                         <table class="table">
                                         <thead>
                                         <tr role="row">
                                             <th>ID</th>
@@ -276,7 +277,7 @@
                                                 <td>{{n.updateAt | datetime}}</td>
                                                 <td>{{n.updateAt}}</td>
                                                 <td><a href="{{n.certificates}}">下载</a></td>
-                                                <td>{{n.remark}}</td>
+                                                <td>{{n.remarks}}</td>
                                             </template>
                                         </tr>
                                         <tr v-if="historyList.length<1">
@@ -284,6 +285,7 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                     </div>
@@ -556,26 +558,6 @@
                     }
                 ],
                 updateList:{
-                    'id': 3874,
-                    'merchantId': 1565,
-                    'operationId': 5823,
-                    'name': '武汉麦格芬经开万达店',
-                    'company': '武汉卡说',
-                    'city': '武汉',
-                    'totalLimit': 744,
-                    'totalPrincipal': 58000,
-                    'usedLimit': 26451,
-                    'usedPercent': 39652,
-                    'balanceLimit': 4562,
-                    'loopNumber': 3,
-                    'firstTime': '2016-04-20 15:42:30',
-                    'discountType': 1,
-                    'isAutoPay': 1,
-                    'status': 0,
-                    'contactsPerson': '刘楠',
-                    'contactsPhone': '13437169531',
-                    'servicePerson': '胡俊',
-                    'isLimitPurchase': '1',
                 },
                 historyList:[],
                 accountId:'',
@@ -608,12 +590,6 @@
                         }, function (response) {
                             console.log(response);
                         });
-            },
-            checkNew(){
-                this.initList();
-            },
-            checkAccount(){
-
             },
             initList(){
                 $('.modal').modal('hide');
