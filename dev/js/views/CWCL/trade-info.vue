@@ -56,7 +56,7 @@
                             <input type="text" class="form-control" v-model="id" placeholder="交易ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="seriesNumber" placeholder="交易流水号">
+                            <input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="phone" placeholder="手机号">
@@ -286,7 +286,7 @@
                 merchantID:"",      
                 merchantName:"",   
                 id:"",   
-                seriesNumber:"",        
+                serialNumber:"",        
                 phone:"",      
                 activityID:'',
                 subcompanyList:[],
@@ -416,7 +416,7 @@
                         merchantID:this.merchantID,
                         merchantName:this.merchantName,
                         tradeDetailID:this.id,
-                        serialNumber:this.seriesNumber,        
+                        serialNumber:this.serialNumber,        
                         phone:this.phone,      
                         activityID:this.activityID,
                         startDate:this.startDate,
