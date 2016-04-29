@@ -419,6 +419,13 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(data.endValue<data.startValue){
+                    let a=data.endValue,b=data.startValue;
+                    this.defaultData.startValue=a;
+                    this.defaultData.endValue=b;
+                    data.startValue=a;
+                    data.endValue=b;
+                }
                     this.$http.post('./merchant/pages',data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型

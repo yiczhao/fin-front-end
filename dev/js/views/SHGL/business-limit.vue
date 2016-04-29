@@ -110,7 +110,7 @@
                                     <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
                                     <a href="javascript:void(0)" v-link="{'name':'limitaccount-management'}">账户</a>
                                 </td>
-                                <td><a data-toggle="modal"  data-target="#modal_see" @click="seexh(trlist.id)" href="javascript:void(0)">查看</a></td>
+                                <td><a data-toggle="modal"  data-target="#modal_see" @click="seexh(trlist.id,false)" href="javascript:void(0)">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
@@ -273,7 +273,7 @@
                                                     <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                     <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
                                                 </td>
-                                                <td><a href="javascript:void(0)">查看</a></td>
+                                                <td><a href="javascript:void(0)" @click="seexh(n.id,true)" data-toggle="modal"  data-target="#modal_see">查看</a></td>
                                                 <td>{{n.updateAt | datetime}}</td>
                                                 <td>{{n.updateAt}}</td>
                                                 <td><a href="{{n.certificates}}">下载</a></td>
@@ -418,7 +418,7 @@
                                             该账户没有消化商户
                                         </span>
                                     </div>
-                                    <div class="tc" style="float: left;width: 100%;margin-top: 20px;">
+                                    <div v-if="!isTrue" class="tc" style="float: left;width: 100%;margin-top: 20px;">
                                         <input type="button" class="btn btn-gray" data-dismiss="modal" value="关闭">
                                         <input type="button" class="btn btn-gray" data-dismiss="modal" data-toggle="modal" data-target="#modal_update" value="调整消化商户">
                                     </div>
@@ -503,6 +503,9 @@
     .blimit .pull-left label i{
         color:red;
     }
+    .blimit #modal_update table tr td{
+        padding: 10px 2px;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -540,6 +543,7 @@
                 seexhlist:[],
                 addTitle:'',
                 addId:[],
+                isTrue:false,
                 seexhList:[
                     {
                         'merchantId':'',
@@ -572,6 +576,13 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(data.endValue<data.startValue){
+                    let a=data.endValue,b=data.startValue;
+                    this.defaultData.startValue=a;
+                    this.defaultData.endValue=b;
+                    data.startValue=a;
+                    data.endValue=b;
+                }
                     this.$http.post('./limitPurchaseMerchant/list',data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
@@ -597,7 +608,7 @@
             },
             updateNew(_list){
                 this.accountId=_list.id;
-                this.seexh(this.accountId);
+                this.seexh(this.accountId,false);
                 this.$http.post('./limitPurchaseMerchant/history/'+_list.merchantId)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('updateList', response.data.data[0]) : null;
@@ -631,8 +642,9 @@
                                 this.initList();
                         })
             },
-            seexh(_id){
+            seexh(_id,isTrue){
                 this.accountId=_id;
+                this.isTrue=isTrue;
                 this.$http.get('./limitPurchaseMerchant/viewDigest/'+this.accountId)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
@@ -727,7 +739,7 @@
             this.initList();
             this.getClist();
             var vm=this;
-            $('#modal_add').on('hidden.bs.modal',function(){
+            $('#modal_add,#modal_see').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');
                 }
