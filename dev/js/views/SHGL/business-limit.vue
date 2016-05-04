@@ -3,7 +3,7 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content blimit" slot="content">
+        <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityId">
                                 <option value="">请选择城市</option>
-                                <option v-for="(index,n) in city" v-text="n.cityName" :value="n.cityId"></option>
+                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -105,10 +105,10 @@
                                 </td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal_update" href="javascript:void(0)" @click="updateNew(trlist)">编辑</a>
-                                    <a href="javascript:void(0)">明细</a>
+                                    <a v-link="{'name':'limitaccount-info',params:{merchantID:trlist.limitPurchaseMerchantId}}">明细</a>
                                     <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
                                     <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
-                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management'}">账户</a>
+                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{merchantID:trlist.limitPurchaseMerchantId}}">账户</a>
                                 </td>
                                 <td><a data-toggle="modal"  data-target="#modal_see" @click="seexh(trlist.id,false)" href="javascript:void(0)">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
@@ -311,7 +311,7 @@
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.cityId">
                                             <option value="">请选择城市</option>
-                                            <option v-for="(index,n) in city" v-text="n.cityName" :value="n.cityId"></option>
+                                            <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -432,79 +432,83 @@
         </div>
     </index>
 </template>
-<style>
-    .blimit .addtop,.blimit  .addbottom{
+<style lang="sass" scoped>
+    .addtop,  .addbottom{
         overflow: hidden;
+        .form-control{
+              adding: 7px;
+        }
     }
-    .blimit  .addbottom{
+    .addbottom{
         margin-top: 15px;
+        .col-md-2{
+            text-align: center;
+            input{
+                margin-bottom: 10px;
+            }
+        }
+        .col-md-7{
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+        .col-md-1{
+            padding-top: 40px;
+            input{
+                margin:15px 0;
+            }
+        }
+        ul{
+            list-style: none;
+            border: 1px solid #ccc;
+            padding:10px;
+            height: 300px;
+            overflow: auto;
+            li{
+                margin:5px 0;
+                cursor: pointer;
+                padding-left:3px;
+            }
+            li.check-li{
+                background: #ccc;
+            }
+        }
     }
-    .blimit  .addbottom  .col-md-2{
-        text-align: center;
+    table tr{
+        td,th{
+            padding: 20px 2px;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            span{
+                cursor: pointer;
+                color: #3c8dbc;
+                &:hover{
+                     opacity: 80;
+                 }
+            }
+        }
+        input[type="checkbox"]{
+            position: relative;
+            top: 2px;
+            left: -2px;
+        }
     }
-    .blimit  .addbottom  .col-md-2 input{
-        margin-bottom: 10px;
-    }
-    .blimit .addtop  .form-control,.blimit  .addbottom .form-control{
-        padding: 7px;
-    }
-    .blimit .addbottom table tr td, .blimit .addbottom table tr th{
+     .addbottom table tr td,  .addbottom table tr th{
         padding: 2px;
     }
-    .blimit .addbottom .col-md-7{
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
+    #modal_update{
+        table tr td{
+            padding: 10px 2px;
+        }
+        .form-group{
+            overflow: hidden;
+            line-height: 36px;
+        }
     }
-    .blimit .addbottom .col-md-1{
-        padding-top: 40px;
-    }
-     .blimit .addbottom .col-md-1 input{
-        margin:15px 0;
-    }
-    .blimit .addbottom ul{
-        list-style: none;
-        border: 1px solid #ccc;
-        padding:10px;
-        height: 300px;
-        overflow: auto;
-    }
-    .blimit .addbottom ul li{
-        margin:5px 0;
-        cursor: pointer;
-        padding-left:3px;
-    }
-    .blimit .addbottom ul li.check-li{
-        background: #ccc;
-    }
-     .blimit table tr td, .blimit table tr th{
-         padding: 20px 2px;
-         text-align: center;
-         text-overflow: ellipsis;
-         overflow: hidden;
-         white-space: nowrap;
-     }
-     .blimit td span{
-        cursor: pointer;
-        color: #3c8dbc;
-    }
-     .blimit td span:hover{
-        opacity: 80;
-    }
-    .blimit  #modal_update .form-group{
-        overflow: hidden;
-        line-height: 36px;
-    }
-    .blimit .addbottom table input[type="checkbox"]{
-        position: relative;
-        top: 2px;
-        left: -2px;
-    }
-    .blimit .pull-left label i{
+    .pull-left label i{
         color:red;
-    }
-    .blimit #modal_update table tr td{
-        padding: 10px 2px;
     }
 </style>
 <script>
@@ -543,6 +547,7 @@
                 seexhlist:[],
                 addTitle:'',
                 addId:[],
+                city:[],
                 isTrue:false,
                 seexhList:[
                     {
@@ -598,6 +603,16 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                        }, function (response) {
+                            console.log(response);
+                        });
+            },
+            //获取城市数据
+            getCity:function(data){
+                this.$http.post('./city/list',data)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
                         }, function (response) {
                             console.log(response);
                         });
@@ -735,10 +750,11 @@
             },
         },
         ready() {
-            (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
-            this.initList();
-            this.getClist();
             var vm=this;
+            (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            vm.initList();
+            vm.getClist();
+            vm.getCity();
             $('#modal_add,#modal_see').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');
