@@ -45,7 +45,7 @@
     </div>
     </div>
 </template>
-<style>
+<style lang="sass" scoped>
     .pd50{
         padding: 50px;
     }
@@ -55,6 +55,9 @@
     .pd50 .box-footer .btn{
         width:20%;
         margin-top: 20px;
+    }
+    .page-container{
+        min-height:auto!important;
     }
 </style>
 <script>

@@ -3,29 +3,33 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content limitmanage" slot="content">
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-                <div>
-                    <span style="margin:0 20px 10px 0;display: inline-block">商户名：南昌玩聚和他(她)朋友们咖啡馆</span>
-                    <span style="margin:0 20px 10px 0;display: inline-block">累计总额度：70,000.00</span>
-                    <span style="margin:0 20px 10px 0;display: inline-block">累计使用：65,461.0</span>
-                    <span style="margin:0 20px 10px 0;display: inline-block">使用比：93.51%</span>
-                    <span style="margin:0 20px 10px 0;display: inline-block">剩余额度：4,539.00</span>
-                </div>
-                <form class="form-inline manage-form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账户名">
-                    </div>
-                    <div class="form-group">
-                        <input type="button" class="btn btn-info" @click="checkNew" value="查询">
-                    </div>
-                </form>
+        <div class="content" slot="content">
+            <div class="check-panel">
+                <span>账户列表</span>
+                <a v-link="{}">账户明细</a>
             </div>
-            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                <div class="datatable-scroll">
-                    <table id="table1" class="table datatable-selection-single dataTable no-footer">
-                        <thead>
+         <div class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <span>商户名：南昌玩聚和他(她)朋友们咖啡馆</span>
+                        <span>累计总额度：{{nums.val1}}</span>
+                        <span>累计使用：{{nums.val2}}</span>
+                        <span>使用比：{{nums.val3}}%</span>
+                        <span>剩余额度：{{nums.val4}}</span>
+                    </div>
+                    <form class="form-inline manage-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.keyword" placeholder="账户名">
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                        </div>
+                    </form>
+                </div>
+                <div class="dataTables_wrapper no-footer">
+                    <div v-if="zdlists.length>0"  class="datatable-scroll">
+                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                            <thead>
                             <tr role="row">
                                 <th>账户ID</th>
                                 <th>账户名</th>
@@ -41,51 +45,32 @@
                                 <th>操作 </th>
                                 <th>备注</th>
                             </tr>
-                        </thead>
-                    <tbody>
-                        <tr role="row">
-                            <td>1</td>
-                            <td>卡说账户</td>
-                            <td>{{ 400000/100 | currency '' }}</td>
-                            <td>{{ 400000/100 | currency '' }}</td>
-                            <td>{{ 400000/100 | currency '' }}</td>
-                            <td>{{ 400000/100 | currency '' }}</td>
-                            <td>80%</td>
-                            <td>2015-06-15 16:34:47</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td><a href="">江西广播电台</a></td>
-                            <td><a data-toggle="modal" data-target="#modal_pay" href="javascript:void(0)">充值</a></td>
-                            <td>餐饮软件置换</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-                <div class="datatable-footer">
-                    <page :all="pageall"
-                          :cur.sync="pagecur"
-                          :page_size.sync="page_size">
-                    </page>
-                </div>
-            </div>
-            <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                未找到您要查询的账户
-            </div>
-        </div>
-            <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title" v-text="waring"></h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group tc">
-                                <button v-show="waring=='你确认启用该账户？'" type="button" @click="startTrue" class="btn btn-primary">确认</button>
-                                <button v-show="waring=='你确认删除该账户？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
-                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                            </div>
-                        </div>
+                            </thead>
+                            <tbody>
+                            <tr role="row" v-for="trlist in zdlists">
+                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.accountName}}</td>
+                                <td>{{ trlist.totalLimit/100 | currency '' }}</td>
+                                <td>{{ trlist.totalPrincipal/100 | currency '' }}</td>
+                                <td>{{ trlist.balanceLimit/100 | currency '' }}</td>
+                                <td>{{ trlist.balancePrincipal/100 | currency '' }}</td>
+                                <td>{{trlist.currentDiscount}}%</td>
+                                <td>{{trlist.firstRechargeTime |datetime}}</td>
+                                <td>{{trlist.recycleCount}}</td>
+                                <td>{{trlist.priorLevel}}</td>
+                                <td><a href="">{{trlist.supplyMerchant}}</a></td>
+                                <td><a data-toggle="modal" data-target="#modal_pay" href="javascript:void(0)">充值</a></td>
+                                <td>{{trlist.remarks}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <page :all="pageall"
+                              :cur.sync="pagecur"
+                              :page_size.sync="page_size">
+                        </page>
+                    </div>
+                    <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                        未找到您要查询的账户
                     </div>
                 </div>
             </div>
@@ -113,27 +98,27 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>额度：</label>
-                                        <input type="text" class="form-control" id="val1" v-validate:val1="['required']" placeholder="">
+                                        <input type="text" class="form-control" v-validate:val1="['required']">
                                         <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请输入额度</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>本金：</label>
-                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" placeholder="">
+                                        <input type="text" class="form-control" v-validate:val2="['required']">
                                         <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简额度</span>
                                     </div>
                                     <div class="form-group">
-                                        <label><i>*</i>折扣</label>
-                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']">
+                                        <label><i>*</i>折扣：</label>
+                                        <input type="text" class="form-control" v-validate:val3="['required']">
                                         <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入折扣</span>
                                     </div>
                                     <div class="form-group">
-                                        <label><i>*</i>方式</label>
+                                        <label><i>*</i>方式：</label>
                                         <label><input type="radio" value="one" v-model="payType">
                                         现金转账</label>
                                         <label><input type="radio" value="two" v-model="payType">
                                         资源置换</label>
                                     </div>
-                                    <templete v-show="payType=='one'">
+                                    <template v-show="payType=='one'">
                                         <div class="form-group">
                                             <label>付款账户：</label>
                                             <span>南昌备付金</span>
@@ -145,13 +130,13 @@
                                             <p>开户行：招商银行股份有限公司南昌营业部</p>
                                             <p>提入行号：308421022022</p>
                                         </div>
-                                    </templete>
+                                    </template>
                                     <div class="form-group" v-else>
-                                        <label><i>*</i>上传凭证</label>
+                                        <label><i>*</i>上传凭证：</label>
                                         <input type="file">
                                     </div>
                                     <div class="form-group">
-                                        <label><i>*</i>类型</label>
+                                        <label><i>*</i>类型：</label>
                                         <label><input type="radio" v-model="zdhf" value="one">
                                         循环充值</label>
                                         <label><input type="radio" v-model="zdhf" value="two">
@@ -176,49 +161,68 @@
         </div>
     </index>
 </template>
-<style>
-    .limitmanage .validation-error-label{
+<style lang="sass" scoped>
+     .validation-error-label{
         margin-left: 20%;
     }
-    .limitmanage .timeerror,.suberror,.suberror1{
+     .timeerror,.suberror,.suberror1{
         display: none;
     }
-    .limitmanage .suberror,.suberror1{
+     .suberror,.suberror1{
         padding-top: 3px;
     }
-    .limitmanage  .form-group{
-        text-align: left;
-    }
-    .limitmanage  .form-group.tc{
-        text-align: center;
-    }
-    .limitmanage .modal-body .form-control{
-        text-align: left;
-        width:67%;
-        display: inline-block;
-    }
-    .limitmanage .modal-body label{
-        width:20%;
-        display: inline-block;
-    }
-    .limitmanage .modal-body label i{
-        color:red;
-    }
-    .limitmanage  .modal-body .waring{
-        color: red;
-        margin-left: 5px;
-    }
-    .limitmanage  .modal-body button{
-        width:35%;
-    }
-    .limitmanage td span{
-        cursor: pointer;
-        color: #3c8dbc;
-    }
-    .limitmanage td span:hover{
-        opacity: 80;
-    }
-    .limitmanage .page-bar{
+     .panel-heading{
+         div{
+             span{
+                 margin:0 20px 10px 0;display: inline-block
+             }
+         }
+     }
+     th,td{
+         text-align: center;
+     }
+     .modal-body {
+         .form-group{
+             margin-bottom: 0;
+            text-align: left;
+             width: 100%;
+            display: inline-block;
+             input[type="file"],.form-control{
+                 width: 75%;
+                 display: inline-block;
+                 margin-bottom: 10px;
+             }
+             label{
+                 display: inline-block;
+                 i{
+                     color:red;
+                 }
+             }
+             .waring{
+                 color: red;
+                 margin-left: 5px;
+             }
+             button{
+                 width:35%;
+             }
+             td span{
+                 cursor: pointer;
+                 color: #3c8dbc;
+                 &:hover{
+                      opacity: 80;
+                  }
+             }
+            p{
+                width: 80%;
+                margin: 0 auto;
+                padding: 5px 0;
+            }
+         }
+         .tc{
+             text-align: center;
+         }
+     }
+     .page-bar{
         margin: 25px auto;
         text-align: center;
     }
@@ -231,16 +235,22 @@
                 page_size:15,
                 pageall:1,
                 loginList:{},
-                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{"id": "","keyword": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
                 accountId:'',
                 zdhf:'one',
-                payType:'one'
+                payType:'one',
+                nums:{
+                    'val1':0,
+                    'val2':0,
+                    'val3':0,
+                    'val4':0,
+                }
             }
         },
         methods:{
             getZlists(data){
-                    this.$http.post('./bankaccount/list',data)
+                    this.$http.post('./limitPurchaseAccount/list',data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -249,44 +259,18 @@
                                 console.log(response);
                             });
             },
-            addUser(){
-                this.errorHide();
-                this.relist={
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
-                },
-                this.accountId='';
-                this.addtitle = '添加账户';
-            },
             initList(){
                 $(".modal").modal("hide");
                 this.getZlists(this.defaultData);
             },
             addBtn(){
-                this.errorHide();
-                if(!this.$vali.valid){$('.suberror').show();return;}
-                if(this.relist.startDate==''){$('.timeerror').show();return;}
-                // *** 新增修改保存
-                let data={
-                    "id": this.accountId,
-                    "companyId": this.relist.companyId,
-                    "shortName": this.relist.shortName,
-                    "accountName": this.relist.accountName,
-                    "accountNumber": this.relist.accountNumber,
-                    "bankName": this.relist.bankName,
-                    "accountType": this.relist.accountType,
-                    "startDate": this.relist.startDate
-                };
-                this.$http.post('./bankaccount/save',data)
-                        .then(function (response) {
-                            this.initList();
-                        }, function (response) {
-                            console.log(response);
-                        })
+
             }
         },
         ready: function () {
-            (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             let vm=this;
+            vm.accountId=vm.defaultData.id=vm.$route.params.merchantID;
+            vm.initList();
             $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
                 this.fire=false;
                 vm.$resetValidation();
@@ -295,6 +279,18 @@
         components:{
         },
         watch:{
+            zdlists(){
+                var a=0,b=0,c=0,d=0;
+                this.zdlists.forEach(function(e){
+                    a+=e.totalLimit;
+                    b+=e.balanceLimit;
+                });
+                this.nums.val1=(a/100).toFixed(2);
+                this.nums.val4=(b/100).toFixed(2);
+                this.nums.val2=this.nums.val1-this.nums.val2;
+                this.nums.val3=(this.nums.val2/this.nums.val1).toFixed(2);
+
+            },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();

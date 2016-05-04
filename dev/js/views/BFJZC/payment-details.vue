@@ -3,7 +3,7 @@
            :ptitle="'备付金支出'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content details" slot="content">
+        <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -273,27 +273,27 @@
         </div>
     </index>
 </template>
-<style>
-    .details .f20{
+<style lang="sass" scoped>
+     .f20{
         font-size: 20px;
         font-weight: bolder;
     }
-   .details .form-group{
+    .form-group{
        overflow: hidden;
     }
-    .details   .modal-body label i{
+       .modal-body label i{
         color:red;
     }
-    .details  .modal-body button{
+      .modal-body button{
         width:35%;
     }
-    .details  .m20{
+      .m20{
         margin-bottom:20px;
     }
-    .details  .mt0{
+      .mt0{
         margin-top: 0
     }
-    .details .panel-title p span{
+     .panel-title p span{
         width: 24%;
         margin-bottom: 3px;
         display: inline-block;
@@ -302,45 +302,45 @@
         white-space: nowrap;
         font-size: 13px;
     }
-    .details .panel-heading .pull-right{
+     .panel-heading .pull-right{
         position: absolute;
         right: 10px;
         bottom: 30px;
        cursor: pointer;
         background: #ECECEC;
     }
-    .details .datatable-scroll{
+     .datatable-scroll{
        overflow: hidden;
        padding-bottom: 20px;
        padding-top: 20px;
    }
-    .details .dataTables_wrapper{
+     .dataTables_wrapper{
         display: none;
     }
-    .details .datatable-scroll table{
+     .datatable-scroll table{
         float: left;
         width: 80%;
         border: 1px solid #ccc;
         margin-left: 20px;
     }
-    .details .datatable-scroll .pull-right{
+     .datatable-scroll .pull-right{
         width: 15%;
     }
-    .details  .pull-right input{
+      .pull-right input{
         width: 80%;
         margin-bottom: 15px;
     }
-    .details  .panel-flat > .panel-heading.bgddd{
+      .panel-flat > .panel-heading.bgddd{
         background: #ECECEC;
     }
-    .details div.datatable-footer.pd15{
+     div.datatable-footer.pd15{
         padding: 15px 20px;
         font-weight: bolder;
     }
-    .details div.datatable-footer.pd15 span{
+     div.datatable-footer.pd15 span{
         color:red;
     }
-    .details .modal-body tr td,.details .modal-body tr th{
+     .modal-body tr td, .modal-body tr th{
         padding: 10px;
     }
 </style>

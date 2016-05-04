@@ -1,14 +1,23 @@
 <template>
-    <index :title="'备付金明细'"
-           :ptitle="'财务处理'"
-           :p2title="'账户列表'"
+    <index :title="'额度采购账户明细'"
+           :ptitle="'商户管理'"
            :hname="'account-management'"
            :isshow="'isshow'">
+        <div class="content" slot="content">
+            <div class="check-panel">
+                <a v-link="{}">账户列表</a>
+                <span>账户明细</span>
+            </div>
         <div class="content " slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="m20">
+                            <div class="form-group">
+                                <select class="form-control" v-model="dateS">
+                                    <option value="">请选择账户</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
                                     <option value="0">昨天</option>
@@ -25,20 +34,24 @@
                         </div>
                         <div  class="">
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="商户ID">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
+                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="订单号/交易流水号">
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.status">
+                                    <option value="">请选择类型</option>
                                     <option value="1">成功</option>
                                     <option value="0">待对账</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.purpose">
-                                    <option value="">请选择用途</option>
+                                    <option value="">请选择付款方式</option>
                                     <option value="1">补贴划付</option>
                                     <option value="2">额度采购</option>
                                     <option value="3">退税划付</option>
@@ -51,10 +64,17 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <select class="form-control" v-model="checkForm.status">
+                                    <option value="">请选择状态</option>
+                                    <option value="1">成功</option>
+                                    <option value="0">待对账</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                                <input type="button" class="btn btn-info" @click="initList" value="查询">
                             </div>
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
@@ -62,26 +82,21 @@
                         </div>
                     </form>
                 </div>
-                <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
-                    <div style="margin: 0 0 20px 20px;font-size: 20px;">
-                        <span>总收入：</span><span>{{shouru}}元</span>
-                        <span>总支出：</span><span>{{zhichu}}元</span>
-                    </div>
+                <div v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                                 <tr  role="row">
-                                    <th>编号</th>
-                                    <th>凭证号</th>
-                                    <th>收款方</th>
-                                    <th>账户名</th>
-                                    <th>账号</th>
-                                    <th>借(收入)</th>
-                                    <th>贷(支出)</th>
-                                    <th>余额 </th>
+                                    <th>订单号/交易流水号</th>
+                                    <th>商户ID</th>
+                                    <th>商户名称</th>
+                                    <th>额度</th>
+                                    <th>本金</th>
+                                    <th>操作账户</th>
+                                    <th>流水类型</th>
+                                    <th>状态 </th>
+                                    <th>付款方式</th>
                                     <th>交易时间</th>
-                                    <th>用途 </th>
-                                    <th>对账状态</th>
                                     <th>操作</th>
                                     <th>备注</th>
                                 </tr>
@@ -95,7 +110,6 @@
                                     <td>{{trlist.accountNumber}}</td>
                                     <td>{{trlist.incomeAmount/100 | currency '' }}</td>
                                     <td>{{trlist.payoutAmount/100 | currency '' }}</td>
-                                    <td>{{trlist.balanceAmount/100 | currency '' }}</td>
                                     <td>{{trlist.tradeTime | datetime}} </td>
                                     <td>
                                         <template v-if="trlist.purpose==1"> 补贴划付</template>
@@ -118,6 +132,20 @@
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>合计</td>
+                                    <td></td>
+                                    <td>{{}}</td>
+                                    <td>{{}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -128,7 +156,7 @@
                         </page>
                     </div>
                 </div>
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else v-cloak>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到您要查询的账户
                 </div>
                 <div data-backdrop="static"  id="modal_fzr" class="modal fade" style="display: none;">
@@ -362,30 +390,9 @@
                             console.log(response);
                         });
             },
-            duizhang(a){
-                this.$set('dzList', a);
-                this.dz_show=true;
-            },
-            checkNew(){
-                this.getZlists(this.checkForm);
-            },
-            close_dialog() {
-                this.dz_show = false;
-            },
             initList(){
                 $(".modal").modal("hide");
                 this.getZlists(this.checkForm);
-            },
-            dzOne(id){
-                // *** 请求公司数据
-                this.$http.post('./reservecash/order/checklist/'+id)
-                        .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('gllists', response.data.data) : null;
-                            (this.checkOne)?this.checkOne=false:this.checkOne=true;
-                        }, function (response) {
-                            console.log(response);
-                        });
             },
             getTwo(num){
                 if(num.toString().length>=2) return num;
@@ -440,13 +447,6 @@
         },
         watch:{
             zdlists(){
-                var sr=0,zc=0;
-                this.zdlists.forEach(function(e){
-                    sr+=e.incomeAmount;
-                    zc+=e.payoutAmount;
-                });
-                this.shouru=(sr/100).toFixed(2);
-                this.zhichu=(zc/100).toFixed(2);
             },
             pagecur(){
                 this.checkForm.pageIndex=this.pagecur;
