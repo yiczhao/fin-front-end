@@ -3,7 +3,7 @@
            :ptitle="'财务处理'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content managenment" slot="content">
+        <div class="content" slot="content">
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <form class="form-inline manage-form">
@@ -158,30 +158,30 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label><i>*</i>分公司</label>
-                                        <select class="form-control" v-model="relist.companyId" id="val1" v-validate:val1="['required']">
+                                        <select class="form-control" v-model="relist.companyId" v-validate:val1="['required']">
                                             <option value="">请选择分公司</option>
-                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                            <option v-for="(index,n) in companylists" v-text="n.name" value="n.subCompanyID"></option>
                                         </select>
                                         <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请选择分公司</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>简称</label>
-                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value.sync="relist.shortName" maxlength="15" placeholder="15字以内">
+                                        <input type="text" class="form-control" v-validate:val2="['required']" v-model="relist.shortName" value="relist.shortName" maxlength="15" placeholder="15字以内">
                                         <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账户名</label>
-                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value.sync="relist.accountName" v-model="relist.accountName">
+                                        <input type="text" class="form-control" v-validate:val3="['required']" value="relist.accountName" v-model="relist.accountName">
                                         <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
-                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value.sync="relist.accountNumber" v-model="relist.accountNumber">
+                                        <input type="text" class="form-control" v-validate:val4="['required']"  value="relist.accountNumber" v-model="relist.accountNumber">
                                         <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>开户行</label>
-                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value.sync="relist.bankName" v-model="relist.bankName">
+                                        <input type="text" class="form-control" v-validate:val5="['required']" value="relist.bankName" v-model="relist.bankName">
                                         <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
                                     </div>
                                     <div class="form-group">
@@ -191,7 +191,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>类型</label>
-                                        <select class="form-control"  id="val7" v-validate:val7="['required']" v-model="relist.accountType">
+                                        <select class="form-control" v-validate:val7="['required']" v-model="relist.accountType">
                                             <option value="">请选择类型</option>
                                             <option value="1">备付金</option>
                                             <option value="2">本金</option>
@@ -215,46 +215,46 @@
         </div>
     </index>
 </template>
-<style>
-    .managenment .validation-error-label{
+<style lang="sass" scoped>
+     .validation-error-label{
         margin-left: 20%;
     }
-    .managenment .timeerror,.suberror,.suberror1{
+     .timeerror,.suberror,.suberror1{
         display: none;
     }
-    .managenment .suberror,.suberror1{
+     .suberror,.suberror1{
         padding-top: 3px;
     }
-    .managenment  .form-group{
+      .form-group{
         text-align: left;
     }
-    .managenment  .form-group.tc{
+      .form-group.tc{
         text-align: center;
     }
-    .managenment .modal-body .form-control{
+     .modal-body .form-control{
         text-align: left;
         width:67%;
         display: inline-block;
     }
-    .managenment .modal-body label{
+     .modal-body label{
         width:20%;
         display: inline-block;
     }
-    .managenment .modal-body label i{
+     .modal-body label i{
         color:red;
     }
-    .managenment  .modal-body .waring{
+      .modal-body .waring{
         color: red;
         margin-left: 5px;
     }
-    .managenment  .modal-body button{
+      .modal-body button{
         width:35%;
     }
-    .managenment td span{
+     td span{
         cursor: pointer;
         color: #3c8dbc;
     }
-    .managenment td span:hover{
+     td span:hover{
         opacity: 80;
     }
 </style>
