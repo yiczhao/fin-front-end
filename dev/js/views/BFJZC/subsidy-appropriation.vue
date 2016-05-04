@@ -70,13 +70,16 @@
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="批量划付">
+                                </div>
                             </form> 
                         </div>
-                        <div class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-show="!!subsidyAppropriationList.length" class="box-body box-tbl">
+                            <table   id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th><input type="checkbox" id="All" @click="checkAll($event)"/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
@@ -95,8 +98,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="!!subsidyAppropriationList.length" v-for="sa in subsidyAppropriationList">
-                                        <td>{{sa.id}}</td>
+                                    <tr id="All" v-for="sa in subsidyAppropriationList">
+                                        <td>
+                                            <template v-if="sa.status!=1">
+                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="sa.id"/>{{sa.id}}</td>
+                                            </template>
+                                            <template v-else>
+                                                <input type="checkbox" name="ckbox" :id="sa.id"/>{{sa.id}}</td>
+                                            </template>
+                                        </td>
                                         <td>{{sa.createAT}}</td>
                                         <td>{{sa.subCompanyName}}</td>
                                         <td>{{sa.cityName}}</td>
@@ -132,32 +142,94 @@
                                                 划付失败
                                             </template>
                                         </td>
-                                        <td><a href="#">申请划付</a></td>
+                                        <td>
+                                            <template v-if="sa.status==1">
+                                                <a href="#">申请划付</a></td>&nbsp;
+                                                <a href="#">更新</a></td>
+                                            </template>
+                                            <template v-else>
+                                                <a href="#">查看</a></td>
+                                            </template>
+                                        
                                         <td>{{sa.activityName}}</td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="box-footer">
+                            <div class="box-footer">
                             <page :all="pageall"
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
                             </page>
                         </div>
+                        </div>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到员工数据信息！
+                        </div>
+
+                        <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
+                            <div class="modal-dialog mg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3>合并付款</h3>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                    </div>
+                                     <div class="modal-body">
+                                         <div class="form-group">
+                                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount}}</span>  元
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                             <select v-model="">
+                                                 <option value="">备付金账户</option>
+                                                 <option value="2">商户预付款账户</option>
+                                             </select>
+                                             <label>付款账户：</label>
+                                             <span>南宁卡说信息技术有限公司</span>
+                                         </div>
+                                         <div class="form-group">
+                                             <label>收款方：</label><span>{{applyPayInfo.displayName}}</span>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="remarks">备  注：</label>
+                                             <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
+                                         </div>
+                                     </div>
+                                     <div class="modal-foot">
+                                        <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                                        <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
+                                     </div>
+                                </div>
+                            </div>
+                        </div> 
+
                     </div>
                 </div>
             </div>
         </div>
     </index>
 </template>
-<style>
+<style scoped>
+
     .box-tbl{
         overflow:auto;
     }
     .page-bar{
         margin: 25px auto;
         text-align: center;
+    }
+    .payment-method {
+        float: left;
+    }
+    .remarks{
+        float: left;
+    }
+    .remarks-form-control{
+        width: 92%;
+    }
+    .modal-foot{
+        text-align: center;
+        height: 60px;
     }
     
 </style>
@@ -189,7 +261,10 @@
                 pageSize:15,
                 activityList:[],
                 cityList:[],
-                subsidyAppropriationList:[]
+                subsidyAppropriationList:[],
+                applyPayInfo:{},
+                applyPayRemarks:''
+
             }
         },
         methods:{
@@ -233,6 +308,64 @@
                     }, function (response) {
                         console.log(response);
                     });
+            },
+            checkAll:function(ck){
+                if(ck.target.checked){
+                    $("input[name='ckbox']").prop({'checked':true});
+                }else{
+                    $("input[name='ckbox']").prop({'checked':false});
+                }
+            },
+            clear:function(){
+                this.applyPayInfo={};
+            },
+            showModalApplyPay:function(){
+                this.clear();
+                var array = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  array.push($(this).prop("id"));  
+                });
+                if (array.length<=0) {
+                    alert("请选择一条或多条记录，进行申请划付！");
+                    return false
+                }
+                let data={
+                    ids:array
+                }
+                this.$http.post('./subsidypaydetail/selectApplyPayInfoByIDs',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若
+                        (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
+                        $('#modal_applyPay').modal('show');
+                        console.log(this.applyPayInfo);
+                    }, function (response) {
+                        console.log(response);
+                    });
+
+                
+            },
+            submit:function(){
+                var array = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  array.push($(this).prop("id"));  
+                });
+                let data={
+                    ids:array,
+                    remarks:this.applyPayRemarks,
+                    displayName:this.applyPayInfo.displayName,
+                }
+               this.$http.post('./subsidypaydetail/applyPay',data).then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if (response.data.code==0)
+                        {
+                            alert("保存成功！");
+                            this.query();
+                        }
+                    }, function (response) {
+                        console.log(response);
+                    });
+                     //关闭弹出层
+                    $(".modal").modal("hide");
             },
             getTwo:function(num){
                 if(num.toString().length>=2) return num;
