@@ -3,7 +3,7 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content blists" slot="content">
+        <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -171,12 +171,12 @@
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <span>商户id：{{controllist.merchantID}}</span>
+                                    <span>商户ID：{{controllist.merchantID}}</span>
                                     <span>商户名：{{controllist.merchantName}}</span>
                                 </div>
                                 <div class="mt35">
                                     <span v-bind:class="{ 'active': bthf}" class="togglebtn" @click="bthfShow(0,controllist.merchantID)">补贴划付</span>
-                                    <span v-bind:class="{ 'active': !bthf}" class="togglebtn" @click="bthfShow(1,controllist.merchantID)" style="left: 78px;">额度采购</span>
+                                    <span v-bind:class="{ 'active': !bthf}" class="togglebtn" @click="bthfShow(1,controllist.merchantID)" style="left: 78px;">额采划付</span>
                                     <a  v-if="relist!=''" class="updatebtn"  data-toggle="modal"  data-target="#modal_updata" href="javascript:void(0);">更新</a>
                                     <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
                                     <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
@@ -268,56 +268,56 @@
         </div>
     </index>
 </template>
-<style>
-     .blists .form-group{
+<style lang="sass" scoped>
+      .form-group{
         text-align: left;
     }
-     .blists .form-group.tc{
+      .form-group.tc{
         text-align: center;
     }
-     .blists .modal-body .form-control{
+      .modal-body .form-control{
         text-align: left;
         width:67%;
         display: inline-block;
     }
-     .blists .modal-body label{
+      .modal-body label{
         width:20%;
         display: inline-block;
     }
-     .blists .modal-body label i{
+      .modal-body label i{
         color:red;
     }
-     .blists .modal-body .waring{
+      .modal-body .waring{
         color: red;
         margin-left: 5px;
     }
-     .blists .modal-body button{
+      .modal-body button{
         width:35%;
     }
-     .blists table tr td, .blists table tr th{
+      table tr td,  table tr th{
          padding: 20px 2px;
          text-align: center;
          text-overflow: ellipsis;
          overflow: hidden;
          white-space: nowrap;
      }
-     .blists td span{
+      td span{
         cursor: pointer;
         color: #3c8dbc;
     }
-     .blists td span:hover{
+      td span:hover{
         opacity: 80;
     }
-     .blists .modal-body .mt35{
+      .modal-body .mt35{
          border: 1px solid #ddd;
          margin-top: 35px;
          position: relative;
          padding-top: 15px;
     }
-     .blists .modal-body .mt35 table{
+      .modal-body .mt35 table{
          border-top: 1px solid #ddd;
      }
-     .blists .modal-body .mt35 .togglebtn{
+      .modal-body .mt35 .togglebtn{
          display: block;
          position: absolute;
          width: 80px;
@@ -331,19 +331,19 @@
          border-radius: 15px 15px 0 0;
          cursor: pointer;
      }
-     .blists .modal-body .mt35 .active{
+      .modal-body .mt35 .active{
         color:#1E88E5;
          top: -30px;
          height: 30px;
          line-height: 30px;
     }
-     .blists .modal-body .mt35 div{
+      .modal-body .mt35 div{
          margin-bottom: 10px;
      }
-     .blists .modal-body .mt35 div span{
+      .modal-body .mt35 div span{
          margin: 0 30px 0 15px;
      }
-     .blists .modal-body .mt35 .updatebtn{
+      .modal-body .mt35 .updatebtn{
          position: absolute;
          right: 20px;
          top: 45px;
@@ -511,7 +511,6 @@
             updateTrue(data){
                 console.log(data)
                 if(!this.$vali.valid){
-                    this.updataerror=true;
                     return;}
                 this.updataerror=false;
                 this.$http.post('./merchant/update',data)
