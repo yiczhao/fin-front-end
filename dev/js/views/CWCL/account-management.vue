@@ -11,7 +11,7 @@
                         <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加账户">
                     </div>
                     <div class="form-group">
-                        <select class="form-control" v-model="defaultData.companyId">
+                        <select class="form-control" v-model="defaultData.companyID">
                             <option value="">请选择分公司</option>
                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
@@ -158,31 +158,31 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label><i>*</i>分公司</label>
-                                        <select class="form-control" v-model="relist.companyId" v-validate:val1="['required']">
+                                        <select class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
                                             <option value="">请选择分公司</option>
-                                            <option v-for="(index,n) in companylists" v-text="n.name" value="n.subCompanyID"></option>
+                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
-                                        <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请选择分公司</span>
+                                        <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>简称</label>
                                         <input type="text" class="form-control" v-validate:val2="['required']" v-model="relist.shortName" value="relist.shortName" maxlength="15" placeholder="15字以内">
-                                        <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
+                                        <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入简称</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账户名</label>
                                         <input type="text" class="form-control" v-validate:val3="['required']" value="relist.accountName" v-model="relist.accountName">
-                                        <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
+                                        <span v-if="$vali.val3.required && fire1" class="validation-error-label">请输入账户名</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
                                         <input type="text" class="form-control" v-validate:val4="['required']"  value="relist.accountNumber" v-model="relist.accountNumber">
-                                        <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
+                                        <span v-if="$vali.val4.required && fire1" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>开户行</label>
                                         <input type="text" class="form-control" v-validate:val5="['required']" value="relist.bankName" v-model="relist.bankName">
-                                        <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
+                                        <span v-if="$vali.val5.required && fire1" class="validation-error-label">请输入开户行</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>起始日期</label>
@@ -197,14 +197,11 @@
                                             <option value="2">本金</option>
                                             <option value="3">佣金</option>
                                         </select>
-                                        <span v-if="$vali.val7.required && $vali.val7.dirty" class="validation-error-label">请选择类型</span>
+                                        <span v-if="$vali.val7.required && fire1" class="validation-error-label">请选择类型</span>
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                         <button type="button" @click="addBtn" class="btn btn-primary">保存</button>
-                                    </div>
-                                    <div class="form-group">
-                                        <span v-show="$vali.valid" class="suberror validation-error-label">你的信息未填写完整</span>
                                     </div>
                                 </div>
                             </div>
@@ -268,10 +265,10 @@
                 page_size:15,
                 pageall:1,
                 loginList:{},
-                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{"companyID": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
                 relist:{
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
+                    startDate:'',subCompanyID:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
                 },
                 companylists:[],
                 typelists:[],
@@ -282,6 +279,7 @@
                 addtitle:'',
                 waring:'',
                 fire:false,
+                fire1:false,
                 person:{
                     name:'',
                     phone:'',
@@ -324,8 +322,9 @@
             },
             addUser(){
                 this.errorHide();
+                this.fire1=false;
                 this.relist={
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
+                    startDate:'',subCompanyID:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
                 },
                 this.accountId='';
                 this.addtitle = '添加账户';
@@ -336,6 +335,7 @@
             },
             rewrite(_list){
                 this.errorHide();
+                this.fire1=false;
                 this.accountId=_list.id;
                 $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
@@ -405,12 +405,12 @@
             },
             addBtn(){
                 this.errorHide();
-                if(!this.$vali.valid){$('.suberror').show();return;}
+                if(!this.$vali.valid){this.fire1=true;return;}
                 if(this.relist.startDate==''){$('.timeerror').show();return;}
                 // *** 新增修改保存
                 let data={
                     "id": this.accountId,
-                    "companyId": this.relist.companyId,
+                    "companyID": this.relist.subCompanyID,
                     "shortName": this.relist.shortName,
                     "accountName": this.relist.accountName,
                     "accountNumber": this.relist.accountNumber,
