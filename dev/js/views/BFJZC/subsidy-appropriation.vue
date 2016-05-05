@@ -147,8 +147,8 @@
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">
-                                                <a href="#">申请划付</a></td>&nbsp;
-                                                <a href="#">更新</a></td>
+                                                <a href="#" @click="">申请划付</a></td>&nbsp;
+                                                <a href="#" @click="">更新</a></td>
                                             </template>
                                             <template v-else>
                                                 <a href="#">查看</a></td>
@@ -183,18 +183,20 @@
                                          </div>
                                          <div class="form-group">
                                              <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                             <select v-model="">
-                                                 <option value="">备付金账户</option>
+                                             <select v-model="payType">
+                                                 <option value="1">备付金账户</option>
                                                  <option value="2">商户预付款账户</option>
                                              </select>
                                              <label>付款账户：</label>
-                                             <span>南宁卡说信息技术有限公司</span>
+                                             <span v-show="payType==1">{{applyPayInfo.payType["1"]}}</span>
+                                             <span v-else>{{applyPayInfo.payType["2"]}}</span>
                                          </div>
                                          <div class="form-group">
-                                             <label>收款方：</label><span>{{applyPayInfo.displayName}}</span>
+                                             <label>收款方：</label>
+                                             <input type="text" style="width:89%" v-model="applyPayInfo.displayName"></input>
                                          </div>
                                          <div class="form-group">
-                                             <label class="remarks">备  注：</label>
+                                             <label class="remarks">备&nbsp;&nbsp;  注：</label>
                                              <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
                                          </div>
                                      </div>
@@ -228,7 +230,7 @@
         float: left;
     }
     .remarks-form-control{
-        width: 92%;
+        width: 90%;
     }
     .modal-foot{
         text-align: center;
@@ -265,7 +267,13 @@
                 activityList:[],
                 cityList:[],
                 subsidyAppropriationList:[],
-                applyPayInfo:{},
+                payType:1,
+                applyPayInfo:{
+                    payType:{
+                       1:"",
+                       2:""
+                    }
+                },
                 applyPayRemarks:''
 
             }
@@ -320,7 +328,10 @@
                 }
             },
             clear:function(){
-                this.applyPayInfo={};
+                this.applyPayInfo={payType:{
+                       1:"",
+                       2:""
+                    }};
             },
             showModalApplyPay:function(){
                 this.clear();
