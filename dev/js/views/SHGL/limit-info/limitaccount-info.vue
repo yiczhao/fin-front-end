@@ -5,7 +5,7 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="check-panel">
-                <a v-link="{}">账户列表</a>
+                <a v-link="{name:'limitaccount-management'}">账户列表</a>
                 <span>账户明细</span>
             </div>
         <div class="content " slot="content">
@@ -336,11 +336,13 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
+    import model from './model.js'
+    import datepicker from '../../components/datepicker.vue'
     export default{
         props:{
         },
         data(){
+            this.model=model(this.$http);
             return{
                 loginList:{},
                 zdlists:[],
@@ -381,11 +383,13 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-                this.$http.post('./reservecash/detail',data)
+                this.model.post_point_exchange_list(data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            this.$set('zdlists', response.data.data)
+                            this.$set('pageall', response.data.total)
+//                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+//                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         }, function (response) {
                             console.log(response);
                         });

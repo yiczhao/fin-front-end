@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加">
+                            <input type="button" class="btn btn-info" @click="addUser" value="添加">
                         </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.merchantId" placeholder="商户ID">
@@ -104,13 +104,13 @@
                                     <template v-else>正常</template>
                                 </td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal_update" href="javascript:void(0)" @click="updateNew(trlist)">编辑</a>
+                                    <a href="javascript:void(0)" @click="updateNew(trlist)">编辑</a>
                                     <a v-link="{'name':'limitaccount-info',params:{merchantID:trlist.limitPurchaseMerchantId}}">明细</a>
                                     <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
                                     <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
                                     <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{merchantID:trlist.limitPurchaseMerchantId}}">账户</a>
                                 </td>
-                                <td><a data-toggle="modal"  data-target="#modal_see" @click="seexh(trlist.id,false)" href="javascript:void(0)">查看</a></td>
+                                <td><a @click="seexh(trlist.id,true)" href="javascript:void(0)">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
@@ -201,7 +201,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" data-toggle="modal" data-target="#modal_add"  data-dismiss="modal" @click="addUser2" class="btn">添加消化账户</button>
+                                        <button type="button" data-dismiss="modal" @click="addUser2" class="btn">添加消化账户</button>
                                     </div>
                                     <table class="table" style="border: 1px solid #ccc;">
                                         <thead>
@@ -273,7 +273,7 @@
                                                     <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                     <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
                                                 </td>
-                                                <td><a href="javascript:void(0)" @click="seexh(n.id,true)" data-toggle="modal"  data-target="#modal_see">查看</a></td>
+                                                <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
                                                 <td>{{n.updateAt | datetime}}</td>
                                                 <td>{{n.updateAt}}</td>
                                                 <td><a href="{{n.certificates}}">下载</a></td>
@@ -628,6 +628,7 @@
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('updateList', response.data.data[0]) : null;
                                 (response.data.code==0) ? this.$set('historyList', response.data.data) : null;
+                                $('#modal_update').modal('show');
                         })
 
             },
@@ -663,6 +664,7 @@
                 this.$http.get('./limitPurchaseMerchant/viewDigest/'+this.accountId)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
+                                if(isTrue){$('#modal_see').modal('show');}
                         })
             },
             searchDigest(){
@@ -671,6 +673,7 @@
                 this.$http.post('./merchant/list',this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
+                                $('#modal_add').modal('show');
                             }
                         )
             },

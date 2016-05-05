@@ -71,12 +71,12 @@
                                 <a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                             </td>
                             <td v-if="trlist.status==0">
-                                <span data-toggle="modal" data-target="#modal_add"  @click="rewrite(trlist)">编辑</span>
+                                <span @click="rewrite(trlist)">编辑</span>
                                 <span data-toggle="modal" data-target="#modal_waring" @click="start(trlist.id)">启用</span>
                                 <span data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id)">删除</span>
                             </td>
                             <td v-else>
-                                <span data-toggle="modal" data-target="#modal_fzr" chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
+                                <span chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
                             </td>
                         </tr>
                     </tbody>
@@ -339,6 +339,7 @@
                 this.accountId=_list.id;
                 $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
+                $('#modal_add').modal('show');
             },
             start(a){
                 this.waring = '你确认启用该账户？';
@@ -365,6 +366,7 @@
                             }else{
                                 this.$set('person',newperson)
                             }
+                            $('#modal_fzr').modal('show');
                         }, function (response) {})
             },
             personTrue(a){

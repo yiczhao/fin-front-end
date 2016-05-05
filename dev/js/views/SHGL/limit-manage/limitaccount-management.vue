@@ -6,7 +6,7 @@
         <div class="content" slot="content">
             <div class="check-panel">
                 <span>账户列表</span>
-                <a v-link="{}">账户明细</a>
+                <a v-link="{name:'limitaccount-info'}">账户明细</a>
             </div>
          <div class="panel">
                 <div class="panel-heading">
@@ -228,8 +228,10 @@
     }
 </style>
 <script>
+    import model from './model.js'
     export default{
         data(){
+            this.model=model(this.$http);
             return{
                 pagecur:1,
                 page_size:15,
@@ -250,11 +252,13 @@
         },
         methods:{
             getZlists(data){
-                    this.$http.post('./limitPurchaseAccount/list',data)
+                this.model.post_point_exchange_list(data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+//                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+//                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                             }, function (response) {
                                 console.log(response);
                             });
@@ -287,8 +291,8 @@
                 });
                 this.nums.val1=(a/100).toFixed(2);
                 this.nums.val4=(b/100).toFixed(2);
-                this.nums.val2=this.nums.val1-this.nums.val2;
-                this.nums.val3=(this.nums.val2/this.nums.val1).toFixed(2);
+                this.nums.val2=this.nums.val1-this.nums.val4;
+                this.nums.val3=(this.nums.val2/this.nums.val1)*100;
 
             },
             pagecur(){

@@ -7,14 +7,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import validator from 'vue-validator'
+import config from  './config'
 import store from './store.js'
 import filters from './filters'
 import directives from './directives'
 import routers from './routers.js'
 import interceptor from './interceptor.js'
+
 // *** 公共组件
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
+import notify_instance from './views/components/notify'
 Vue.component('index', Index);
 Vue.component('page', page);
 // *** 引入filter
@@ -27,7 +30,6 @@ Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
 
-// console.log(validator);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,
@@ -42,6 +44,13 @@ router.start(app, "#app");
 
 Vue.set(app, '_userData', {});
 Vue.use(interceptor,router);
+
+// 配置
+config.mock(Vue,false)
+config.proxy(Vue,false)
+// config.mock(Vue,true)
+// config.proxy(Vue,true)
+
 Vue.config.debug = true;
 Vue.filter('datetime', function (value) {
 	if(value==null || value=='')return '';

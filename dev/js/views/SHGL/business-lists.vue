@@ -76,7 +76,7 @@
                                 <td><!--<a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>-->
                                     <a v-link="{'name':'business-limit'}">额度消化商户</a>
                                 </td>
-                                <td><a data-toggle="modal"  data-target="#modal_control" href="javascript:void(0)" @click="control(trlist)">管理</a></td>
+                                <td><a href="javascript:void(0)" @click="control(trlist)">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
@@ -477,6 +477,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('relist', response.data.data) : null;
+                            $('#modal_control').modal('show');
                         }, function (response) {
                             console.log(response);
                         });
