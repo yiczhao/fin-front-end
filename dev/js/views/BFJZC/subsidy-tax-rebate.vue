@@ -70,7 +70,7 @@
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                    <th><input type="checkbox" id="All" @click="checkAll($event)"/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
@@ -103,13 +103,34 @@
                                         <td>{{strd.taxRebateAmount}}</td>
                                         <td><a :href="strd.id">明细</a> </td>
                                         <td>
-                                            <template v-if="strd.status==1">已关闭</template>
-                                            <template v-if="strd.status==2">等待划付</template>
-                                            <template v-if="strd.status==3">等待对账</template>
-                                            <template v-if="strd.status==4">对账成功</template>
-                                            <template v-if="strd.status==5">划付失败</template>
+                                            <template v-if="strd.status==0">
+                                                已关闭
+                                            </template>
+                                            <template v-if="strd.status==1">
+                                                等待审核
+                                            </template>
+                                            <template v-if="strd.status==2">
+                                                等待划付
+                                            </template>
+                                            <template v-if="strd.status==3">
+                                                等待对账
+                                            </template>
+                                            <template v-if="strd.status==4">
+                                                对账成功
+                                            </template>
+                                            <template v-if="strd.status==5">
+                                                划付失败
+                                            </template>
                                         </td>
-                                        <td><a :href="strd.id">申请划付</a></td>
+                                        <td>
+                                            <template v-if="strd.status==1">
+                                                <a href="#">申请划付</a>&nbsp;
+                                                <a href="#">更新</a>
+                                            </template>
+                                            <template v-else>
+                                                <a href="#">查看</a>
+                                            </template>
+                                        </td>
                                         <td>{{strd.remarks}}</td>
                                     </tr>
                                 </tbody>

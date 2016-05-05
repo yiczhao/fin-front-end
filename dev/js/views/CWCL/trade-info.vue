@@ -112,19 +112,19 @@
                                     <td>{{trlist.cityName}}</td>
                                     <td>{{trlist.merchantID}}</td> 
                                     <td>{{trlist.merchantName}}</td>
-                                    <td>{{trlist.consumptionAmount}}</td>
-                                    <td>{{trlist.discountAmount}}</td>
-                                    <td>{{trlist.payAmount}}</td>
-                                    <td>{{trlist.limitDeduct}}</td>
-                                    <td>{{trlist.principalDeduct}}</td>
-                                    <td>{{trlist.thirdpartyReceivable}}</td>
-                                    <td>{{trlist.merchantSubsidyShould}}</td>
-                                    <td>{{trlist.suspensionTax}}</td>
-                                    <td>{{trlist.merchantSubsidyActual}}</td>
-                                    <td>{{trlist.discountDiff}}</td>
-                                    <td>{{trlist.collectionAmount}}</td>
-                                    <td>{{trlist.commission33211}}</td>
-                                    <td>{{trlist.entryAmount}}</td>
+                                    <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.discountAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.payAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.limitDeduct/100 | currency ''}}</td>
+                                    <td>{{trlist.principalDeduct/100 | currency ''}}</td>
+                                    <td>{{trlist.thirdpartyReceivable/100 | currency ''}}</td>
+                                    <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                    <td>{{trlist.suspensionTax/100 | currency ''}}</td>
+                                    <td>{{trlist.merchantSubsidyActual/100 | currency ''}}</td>
+                                    <td>{{trlist.discountDiff/100 | currency ''}}</td>
+                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.commission33211/100 | currency ''}}</td>
+                                    <td>{{trlist.entryAmount/100 | currency ''}}</td>
                                     <td>{{trlist.tradeTime | datetime}}</td>
                                     <td>{{trlist.consumptionPhone}}</td>
                                     <td>{{trlist.consumptionAccountNumber}}</td>
@@ -152,21 +152,21 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th><b>{{count_consumptionAmount}}</b></th>
-                                        <th><b>{{count_discountAmount}}</b></th>
-                                        <th><b>{{count_payAmount}}</b></th>
-                                        <th><b>{{count_limitDeduct}}</b></th>
-                                        <th><b>{{count_principalDeduct}}</b></th>
+                                        <th><b>{{count_consumptionAmount/100 | currency ''}}</b></th>
+                                        <th><b>{{count_discountAmount/100 | currency ''}}</b></th>
+                                        <th><b>{{count_payAmount/100 | currency ''}}</b></th>
+                                        <th><b>{{count_limitDeduct/100 | currency ''}}</b></th>
+                                        <th><b>{{count_principalDeduct/100 | currency ''}}</b></th>
                                         <th>
                                             <b><template v-if="count_thirdpartyReceivable==NaN">0</template></b>
                                         </th>
-                                        <th><b>{{count_merchantSubsidyShould}}</b></th>
-                                        <th><b>{{count_suspensionTax}}</b></th>
-                                        <th><b>{{count_merchantSubsidyActual}}</b></th>
-                                        <th><b>{{count_discountDiff}}</b></th>
-                                        <th><b>{{count_collectionAmount}}</b></th>
-                                        <th><b>{{count_commission33211}}</b></th>
-                                        <th><b>{{count_entryAmount}}</b></td>
+                                        <th><b>{{count_merchantSubsidyShould/100 | currency ''}}</b></th>
+                                        <th><b>{{count_suspensionTax/100 | currency ''}}</b></th>
+                                        <th><b>{{count_merchantSubsidyActual/100 | currency ''}}</b></th>
+                                        <th><b>{{count_discountDiff/100 | currency ''}}</b></th>
+                                        <th><b>{{count_collectionAmount/100 | currency ''}}</b></th>
+                                        <th><b>{{count_commission33211/100 | currency ''}}</b></th>
+                                        <th><b>{{count_entryAmount/100 | currency ''}}</b></td>
                                         <th></th>
                                         <th></th>
                                         <th></th>

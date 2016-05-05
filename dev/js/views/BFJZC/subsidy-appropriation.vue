@@ -104,7 +104,7 @@
                                                 <input type="checkbox" disabled="true" name="ckbox-disabled" :id="sa.id"/>{{sa.id}}</td>
                                             </template>
                                             <template v-else>
-                                                <input type="checkbox" name="ckbox" :id="sa.id"/>{{sa.id}}</td>
+                                                <input type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}</td>
                                             </template>
                                         </td>
                                         <td>{{sa.createAT}}</td>
@@ -122,10 +122,13 @@
                                                 手工录入
                                             </template>
                                         </td>
-                                        <td>{{sa.thirdPartySubsidyShould}}</td>
+                                        <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount}}</td>
                                         <td><a href="#">明细</a></td>
                                         <td>
+                                            <template v-if="sa.status==0">
+                                                已关闭
+                                            </template>
                                             <template v-if="sa.status==1">
                                                 等待审核
                                             </template>
@@ -321,14 +324,27 @@
             },
             showModalApplyPay:function(){
                 this.clear();
+                //批量划付判断首款信息是否一致
+                var AccountS = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  AccountS.push($(this).prop("class"));  
+                });
+                if(AccountS.length<=0){
+                   alert("请选择一条或多条记录，进行申请划付！");
+                   return false
+                }
+                for (var i = 1; i < AccountS.length; i++) {
+                   if (AccountS[i] != AccountS[0]) {  // 遇到了不等于x[0]的元素，设置 flag = 1，然后跳出循环
+                        alert("选择的划付记录收款账户要一致！");
+                        return false
+                   }
+                }
+
+                
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
                 });
-                if (array.length<=0) {
-                    alert("请选择一条或多条记录，进行申请划付！");
-                    return false
-                }
                 let data={
                     ids:array
                 }
