@@ -31,6 +31,9 @@
                             <div class="form-group">
                                 <span @click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
                             </div>
+                            <div class="form-group">
+                                <label v-show="suberror" class="validation-error-label suberror" v-text="errortext"></label>
+                            </div>
                         </div>
                     </form>
                     <!-- /simple login form -->
@@ -59,6 +62,9 @@
     .page-container{
         min-height:auto!important;
     }
+    .suberror{
+        left: 75px;
+    }
 </style>
 <script>
     export default{
@@ -69,13 +75,16 @@
                 usererror:'',
                 passerror:'',
                 usershow:false,
-                passshow:false
+                passshow:false,
+                suberror:false,
+                errortext:''
             }
         },
         components:{
         },
         methods:{
             login(){
+                this.suberror=false;
                 if(this.username==''){this.usererror='请输入用户名';this.usershow=true;return;}
                 if(this.password==''){this.passerror='请输入密码';this.passshow=true;return;}
                 if(this.usershow||this.passshow){return false;}
@@ -87,7 +96,8 @@
                                 this.$router.go({name:'default'});
                             }
                             else{
-                                alert(response.data.message);
+                                this.suberror=true;
+                                this.errortext=response.data.message;
                             }
                         }, function (response) {
                             console.log(response);
@@ -96,10 +106,10 @@
         },
         watch:{
           username(){
-              if(this.username!=''){this.usererror='';this.usershow=false;}
+              if(this.username!=''){this.usererror='';this.usershow=false;this.suberror=false;}
           },
           password(){
-              if(this.password!=''){this.passerror='';this.passshow=false;}
+              if(this.password!=''){this.passerror='';this.passshow=false;this.suberror=false;}
           }
         },
         ready(){
