@@ -11,7 +11,7 @@
                         <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加账户">
                     </div>
                     <div class="form-group">
-                        <select class="form-control" v-model="defaultData.companyID">
+                        <select class="form-control" v-model="defaultData.companyId">
                             <option value="">请选择分公司</option>
                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
@@ -265,7 +265,7 @@
                 page_size:15,
                 pageall:1,
                 loginList:{},
-                defaultData:{"companyID": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
                 relist:{
                     startDate:'',subCompanyID:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
@@ -412,7 +412,7 @@
                 // *** 新增修改保存
                 let data={
                     "id": this.accountId,
-                    "companyID": this.relist.subCompanyID,
+                    "companyId": this.relist.subCompanyID,
                     "shortName": this.relist.shortName,
                     "accountName": this.relist.accountName,
                     "accountNumber": this.relist.accountNumber,
@@ -422,7 +422,12 @@
                 };
                 this.$http.post('./bankaccount/save',data)
                         .then(function (response) {
-                            this.initList();
+                            if(response.data.code==-1){
+                                alert(response.data.message);
+                            }
+                            else{
+                                this.initList();
+                            }
                         }, function (response) {
                             console.log(response);
                         })
