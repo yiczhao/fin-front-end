@@ -231,7 +231,7 @@
                                             <label class="w28" ><i>*</i>上传凭证：</label>
                                         </div>
                                         <div class="pull-left">
-                                            <input type="file">
+                                            <input type="file" @change="upload($event)">
                                         </div>
                                         <div class="pull-left">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
@@ -751,6 +751,22 @@
                             this.initList();
                 })
             },
+            upload(e){
+                console.log(e.target);
+                let files=e.target.files[0];
+                let vm=this;
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function(e){
+                    let datas={
+                        name:files.name,
+                        data:this.result
+                    }
+                    vm.$http.post('./file/upload',datas)
+                            .then((response)=>{
+                            })
+                }
+            }
         },
         ready() {
             var vm=this;
