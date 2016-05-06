@@ -231,7 +231,7 @@
                                             <label class="w28" ><i>*</i>上传凭证：</label>
                                         </div>
                                         <div class="pull-left">
-                                            <input type="file" v-model="updateList.certificates" @change="upload($event)">
+                                            <input type="file" @change="uploads($event)" lazy>
                                         </div>
                                         <div class="pull-left">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
@@ -276,7 +276,7 @@
                                                 <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
                                                 <td>{{n.updateAt | datetime}}</td>
                                                 <td>{{n.updateAt}}</td>
-                                                <td><a href="{{n.certificates}}">下载</a></td>
+                                                <td><a href="{{origin}}/file/download/{{n.certificates}}" >下载</a></td>
                                                 <td>{{n.remarks}}</td>
                                             </template>
                                         </tr>
@@ -517,6 +517,7 @@
     export default{
         data(){
             return{
+                origin:window.origin,
                 pagecur:1,
                 page_size:15,
                 pageall:1,
@@ -751,7 +752,7 @@
                             this.initList();
                 })
             },
-            upload(e){
+            uploads(e){
                 console.log(e.target);
                 let files=e.target.files[0];
                 let vm=this;
@@ -767,7 +768,7 @@
                                 vm.updateList.certificates=response.data.data;
                             })
                 }
-            }
+            },
         },
         ready() {
             var vm=this;
