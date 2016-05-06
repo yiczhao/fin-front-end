@@ -115,12 +115,20 @@
                                     <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
                                     <td>{{trlist.discountAmount/100 | currency ''}}</td>
                                     <td>{{trlist.payAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.limitDeduct/100 | currency ''}}</td>
-                                    <td>{{trlist.principalDeduct/100 | currency ''}}</td>
+                                    <td>
+                                        <a v-link="{name:'limitaccount-info'}">{{trlist.limitDeduct/100 | currency ''}}</a>
+                                    </td>
+                                    <td>
+                                        <a v-link="{name:'limitaccount-info'}">{{trlist.principalDeduct/100 | currency ''}}</a>
+                                    </td>
                                     <td>{{trlist.thirdpartyReceivable/100 | currency ''}}</td>
                                     <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
-                                    <td>{{trlist.suspensionTax/100 | currency ''}}</td>
-                                    <td>{{trlist.merchantSubsidyActual/100 | currency ''}}</td>
+                                    <td>
+                                        <a v-link="{name:'subsidy-tax-rebate'}">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    </td>
+                                    <td>
+                                        <a v-link="{name:'subsidy-appropriation'}">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    </td>
                                     <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                     <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                     <td>{{trlist.commission33211/100 | currency ''}}</td>
