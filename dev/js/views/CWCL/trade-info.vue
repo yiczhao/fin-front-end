@@ -207,7 +207,7 @@
                                             <i>*</i>商户名称：
                                          </label>
                                          <div class="form-group">
-                                            <select class="form-control" v-model="tradeInfo.merchantId">
+                                            <select class="form-control" id="tradeInfo_merchantId" v-model="select_merchantId">
                                             <option value="">请选择商户</option>
                                                 <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
                                             </select>
@@ -303,6 +303,7 @@
                 page_size:15,
                 pageIndex:1,
                 pageSize:15,
+                select_merchantId:'',
                 tradeInfo:{
                     merchantId:'',
                     activityId:'',
@@ -395,12 +396,14 @@
                     });
             },
             saveTradeInfo:function(){
+                this.tradeInfo.merchantId=this.select_merchantId;
                 this.tradeInfo.consumptionAmount= this.tradeInfo.consumptionAmount*100;         
                 this.tradeInfo.discountAmount=this.tradeInfo.discountAmount*100;
                 this.tradeInfo.paAmount=this.tradeInfo.paAmount*100;
                 this.tradeInfo.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;    
                 this.tradeInfo.suspensionTax=this.tradeInfo.suspensionTax*100;
                 this.tradeInfo.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
+
                 this.$http.post('./tradedetail/add',this.tradeInfo)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -463,6 +466,21 @@
             this.getactivitys({});
         },
        watch:{
+            select_merchantId:function(){
+                let id=$('#tradeInfo_merchantId').val();
+                let data = {
+                    cityID:''
+                };
+                for(var i in this.merchantList){
+                    if(id == this.merchantList[i].merchantID){
+                        data={
+                            cityID:this.merchantList[i].cityID
+                        }
+                    }
+                }
+
+               this.getactivitys(data);
+            },
             timeRange:function(){
                 console.log();
                 var d=new Date()
