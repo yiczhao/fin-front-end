@@ -231,7 +231,7 @@
                                             <label class="w28" ><i>*</i>上传凭证：</label>
                                         </div>
                                         <div class="pull-left">
-                                            <input type="file" @change="upload($event)">
+                                            <input type="file" v-model="updateList.certificates" @change="upload($event)">
                                         </div>
                                         <div class="pull-left">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
@@ -760,10 +760,11 @@
                 reader.onload = function(e){
                     let datas={
                         name:files.name,
-                        data:this.result
+                        data:this.result.split(',')[1]
                     }
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
+                                vm.updateList.certificates=response.data.data;
                             })
                 }
             }
