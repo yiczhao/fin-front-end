@@ -66,7 +66,7 @@
                                 </div>
                             </form> 
                         </div>
-                        <div class="box-body box-tbl">
+                        <div v-show="!!subsidyTaxRebateDetailList.length"  class="box-body box-tbl">
                             <table id="table1" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -87,7 +87,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-if="!!subsidyTaxRebateDetailList.length" v-for="strd in subsidyTaxRebateDetailList">
+                                    <tr v-for="strd in subsidyTaxRebateDetailList">
                                         <td>{{strd.id}}</td>
                                         <td>{{strd.createTime | datetime}}</td>
                                         <td>{{strd.subCompanyName}}</td>
@@ -141,6 +141,9 @@
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
                             </page>
+                        </div>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到补贴退税信息！
                         </div>
                     </div>
                 </div>

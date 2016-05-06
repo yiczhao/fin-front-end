@@ -147,8 +147,8 @@
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">
-                                                <a href="#" @click="">申请划付</a></td>&nbsp;
-                                                <a href="#" @click="">更新</a></td>
+                                                <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)">申请划付</a></td>&nbsp;
+                                                <a href="javascript:void(0);" @click="">更新</a></td>
                                             </template>
                                             <template v-else>
                                                 <a href="#">查看</a></td>
@@ -193,7 +193,7 @@
                                          </div>
                                          <div class="form-group">
                                              <label>收款方：</label>
-                                             <input type="text" style="width:89%" v-model="applyPayInfo.displayName"></input>
+                                             <input type="text" id="displayName" class="" style="width:89%" v-model="applyPayInfo.displayName"></input>
                                          </div>
                                          <div class="form-group">
                                              <label class="remarks">备&nbsp;&nbsp;  注：</label>
@@ -267,7 +267,7 @@
                 activityList:[],
                 cityList:[],
                 subsidyAppropriationList:[],
-                payType:1,
+                payType:"1",
                 applyPayInfo:{
                     payType:{
                        1:"",
@@ -328,6 +328,8 @@
                 }
             },
             clear:function(){
+                $('#displayName').attr("readonly",false);
+                this.applyPayRemarks="", 
                 this.applyPayInfo={payType:{
                        1:"",
                        2:""
@@ -350,14 +352,23 @@
                         return false
                    }
                 }
-
-                
-                var array = [];
+                let array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
                 });
+                this.getApplyPayInfoByIDs(array);
+            },
+            showModalApplyPayById:function(id){
+                let array=[];
+                array.push(id);
+                this.getApplyPayInfoByIDs(array);
+                $('#displayName').attr("readonly",true);
+                $('#displayName').attr("class",id);
+            },
+            getApplyPayInfoByIDs:function(idArray){
+                console.log(idArray);
                 let data={
-                    ids:array
+                    ids:idArray
                 }
                 this.$http.post('./subsidypaydetail/selectApplyPayInfoByIDs',data)
                     .then(function (response) {
@@ -368,18 +379,22 @@
                     }, function (response) {
                         console.log(response);
                     });
-
-                
             },
             submit:function(){
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
                 });
+
+                if ($('#displayName').prop("readonly")) {
+                    array.push($('#displayName').prop("class"));
+                 }
                 let data={
                     ids:array,
                     remarks:this.applyPayRemarks,
-                    displayName:this.applyPayInfo.displayName,
+                    payType:this.payType,
+                    displayName:this.applyPayInfo.displayName
+                    
                 }
                this.$http.post('./subsidypaydetail/applyPay',data).then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
