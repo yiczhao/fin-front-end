@@ -75,12 +75,15 @@
                         <p>
                             <span>订单号:{{n.orderNumber}}</span>
                             <span>付款金额:{{n.payoutAmount/100 | currency '' }}</span>
-                            <span>付款账户:{{n.payoutAccount}}</span>
+                            <span>付款账户:
+                                <template v-if="payType==1">{{n.payoutAccount}}</template>
+                                <template v-else>商户预付款账户</template>
+                            </span>
                             <span>收款方:{{n.payoutAccountName}}</span>
                             <span>付款账户名:{{n.payoutAccountName}}</span>
                             <span>付款账号:{{n.payoutAccountNumber}}</span>
-                            <span>收款账户名:{{n.incomeAccountName}}</span>
-                            <span>收款账号:{{n.incomeAccountNumber}}</span>
+                            <span v-if="payType==1">收款账户名:{{n.incomeAccountName}}</span>
+                            <span v-if="payType==1">收款账号:{{n.incomeAccountNumber}}</span>
                             <span>银行凭证号:{{n.certificate}}</span>
                             <span>付款时间:{{n.paymentTime | datetime}}</span>
                             <span>用途:
@@ -90,7 +93,7 @@
                                  <template v-if="n.purpose==4"> 预付款</template>
                                  <template v-if="n.purpose==5"> 供货商划付</template>
                             </span>
-                            <span>收款开户行:{{n.incomeBankName}}</span>
+                            <span v-if="payType==1">收款开户行:{{n.incomeBankName}}</span>
                             <span>申请分公司:{{n.applyCompany}}</span>
                             <span>申请时间:{{n.applyTime | datetime}}</span>
                             <span>

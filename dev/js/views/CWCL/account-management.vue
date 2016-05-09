@@ -203,6 +203,9 @@
                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                         <button type="button" @click="addBtn" class="btn btn-primary">保存</button>
                                     </div>
+                                    <div class="form-group">
+                                        <span v-show="saveerror!=''" class="validation-error-label" v-text="saveerror"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -286,6 +289,7 @@
                     email:''
                 },
                 accountId:'',
+                saveerror:'',
             }
         },
         methods:{
@@ -296,6 +300,7 @@
             // *** 请求账户列表数据
             errorHide(){
                 $('.suberror,.timeerror').hide();
+                this.saveerror='';
             },
             getZlists(data){
                     this.$http.post('./bankaccount/list',data)
@@ -423,7 +428,7 @@
                 this.$http.post('./bankaccount/save',data)
                         .then(function (response) {
                             if(response.data.code==-1){
-                                alert(response.data.message);
+                                this.$set('saveerror', response.data.message)
                             }
                             else{
                                 this.initList();
