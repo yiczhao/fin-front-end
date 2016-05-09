@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                        <div class="form-group">
-                            <input type="button" class="btn btn-info"  data-toggle="modal"  data-target="#modal_trade_info" v-on:click="addTradeInfo" value="添加交易">
+                            <input type="button" class="btn btn-info" v-on:click="addTradeInfo" value="添加交易">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="subCompanID" >
@@ -244,6 +244,10 @@
                                              <input type="text" class="form-control" id="merchantSubsidyActual" v-model="tradeInfo.merchantSubsidyActual" >
                                          </div>
                                          <div class="form-group">
+                                             <label><i>*</i>上传凭证：</label>
+                                             <input type="file" @change="uploads($event)" class="form-control">
+                                         </div>
+                                         <div class="form-group">
                                              <label>备注</label>
                                              <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
                                          </div>
@@ -391,6 +395,7 @@
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
+                        $('#modal_trade_info').modal('show');
                     }, function (response) {
                         console.log(response);
                     });
@@ -455,6 +460,23 @@
                 this.count_principalDeduct=0;this.count_thirdpartyReceivable=0;this.count_merchantSubsidyShould=0;
                 this.count_suspensionTax=0;this.count_merchantSubsidyActual=0;
                 this.count_discountDiff=0;this.count_collectionAmount=0;this.count_commission33211=0;this.count_entryAmount=0;
+            },
+            uploads(e){
+                console.log(e.target);
+                let files=e.target.files[0];
+                let vm=this;
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function(e){
+                    let datas={
+                        name:files.name,
+                        data:this.result.split(',')[1]
+                    }
+                    vm.$http.post('./file/upload',datas)
+                            .then((response)=>{
+                        vm.tradeInfo.certificates=response.data.data;
+                })
+                }
             },
         },
         
