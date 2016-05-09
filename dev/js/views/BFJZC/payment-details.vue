@@ -63,7 +63,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                                <input type="button" class="btn btn-info" @click="initList" value="查询">
                             </div>
                         </div>
                     </form>
@@ -399,9 +399,7 @@
             },
             initList(){
                 $(".modal").modal("hide");
-                this.getZlists(this.checkForm);
-            },
-            checkNew(){
+                this.listinfos=[];
                 this.getZlists(this.checkForm);
             },
             getInfo(a,index){

@@ -386,6 +386,7 @@
                 this.$http.post('./chargeperson/save',data)
                         .then(function (response) {
                             this.initList();
+                            alertify.success("已修改");
                         }, function (response) {
                             console.log(response);
                         })
@@ -396,6 +397,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
                             this.initList();
+                            alertify.success("已启用");
                         }, function (response) {
                             console.log(response);
                         })
@@ -405,6 +407,7 @@
                 this.$http.get('./bankaccount/delete/'+this.accountId)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则删除该条数据
+                            alertify.success("已删除");
                             this.initList();
                         }, function (response) {
                             console.log(response);
@@ -432,6 +435,7 @@
                             }
                             else{
                                 this.initList();
+                                alertify.success("新增成功");
                             }
                         }, function (response) {
                             console.log(response);
