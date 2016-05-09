@@ -145,7 +145,7 @@
                                         <!--<td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>-->
                                         <!--<td>2013-06-03 13:26:19</td>-->
                                         <!--<td>贾燕</td>-->
-                                        <!--<td><a href="javascript:void(0)">下载</a></td>-->
+                                        <!--<td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>-->
                                         <!--<td>总店额度采购</td>-->
                                     <!--</tr>-->
                                     <!--&lt;!&ndash;<tr role="row"  v-for="n in checkLists">&ndash;&gt;-->
@@ -153,7 +153,7 @@
                                         <!--&lt;!&ndash;<td>{{n.collectionName}}</td>&ndash;&gt;-->
                                         <!--&lt;!&ndash;<td>{{n.tradeTime || datetime}}</td>&ndash;&gt;-->
                                         <!--&lt;!&ndash;<td>{{n.payoutAmount/100 | currency '' }}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td><a href="javascript:void(0)">下载</a></td>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>&ndash;&gt;-->
                                         <!--&lt;!&ndash;<td>{{n.remarks}}</td>&ndash;&gt;-->
                                     <!--&lt;!&ndash;</tr>&ndash;&gt;-->
                                     <!--</tbody>-->
@@ -201,7 +201,7 @@
                                                 </td>
                                                 <td>{{n.createAt | datetime}}</td>
                                                 <td>{{n.createBy}}</td>
-                                                <td><a href="{{n.certificates}}">下载</a></td>
+                                                <td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>
                                                 <td>{{n.remarks}}</td>
                                             </template>
                                         </tr>
@@ -245,7 +245,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="w28"><i>*</i>上传凭证：</label>
-                                        <input style="display: inline-block" type="file">
+                                        <input style="display: inline-block" type="file" @change="uploads($event)">
                                     </div>
                                     <div class="form-group">
                                         <label for="tarea" class="w28"><i>*</i>备注：</label>
@@ -532,7 +532,24 @@
                         }, function (response) {
                             console.log(response);
                         });
-            }
+            },
+            uploads(e){
+                console.log(e.target);
+                let files=e.target.files[0];
+                let vm=this;
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function(e){
+                    let datas={
+                        name:files.name,
+                        data:this.result.split(',')[1]
+                    }
+                    vm.$http.post('./file/upload',datas)
+                            .then((response)=>{
+                        vm.updateList.certificates=response.data.data;
+                })
+                }
+            },
         },
         ready() {
             let vm=this;
