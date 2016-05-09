@@ -446,6 +446,7 @@
                     .then( (response)=> {
                         if(response.data.code==0){
                             this.initList();
+                            alertify.success("已更新");
                         }
                     })
             },
@@ -453,17 +454,19 @@
                 this.$http.post('./reservecash/order/allow/'+this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
-                            this.initList();
-                        }
-                    })
+                                this.initList();
+                                alertify.success("划付成功");
+                            }
+                        })
             },
             closeTrue(){
                 this.$http.post('./reservecash/order/close/'+this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
-                            this.initList();
-                        }
-                    })
+                                this.initList();
+                                alertify.success("已关闭");
+                            }
+                        })
             },
             backTrue(){
                 if(this.remarks=='')return;
@@ -474,9 +477,10 @@
                 this.$http.post('./reservecash/order/retrial',data)
                         .then( (response)=> {
                                 if(response.data.code==0){
-                                this.initList();
-                            }
-                        })
+                                    this.initList();
+                                    alertify.success("已退回");
+                                }
+                            })
             },
             applyTrue(){
                 if(this.remarks=='')return;
@@ -487,7 +491,8 @@
                 this.$http.post('./ reservecash/order/applypay',data)
                         .then( (response)=> {
                                 if(response.data.code==0){
-                                this.initList();
+                                    this.initList();
+                                    alertify.success("已划付");
                             }
                         })
             },

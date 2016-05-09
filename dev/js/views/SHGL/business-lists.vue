@@ -529,6 +529,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             $(".modal").modal("hide");
+                            alertify.success("已修改");
                         }, function (response) {
                             console.log(response);
                         });
@@ -546,8 +547,9 @@
                     }
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
-                        vm.updateList.certificates=response.data.data;
-                })
+                                    vm.updateList.certificates=response.data.data;
+                                    alertify.success("上传成功");
+                            })
                 }
             },
         },
