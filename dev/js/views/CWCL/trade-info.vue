@@ -203,10 +203,10 @@
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                      </div>
                                      <div class="modal-body">
-                                         <label>
-                                            <i>*</i>商户名称：
-                                         </label>
                                          <div class="form-group">
+                                            <label>
+                                                <i>*</i>商户名称：
+                                             </label>
                                             <select class="form-control" id="tradeInfo_merchantId" v-model="select_merchantId">
                                             <option value="">请选择商户</option>
                                                 <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
@@ -245,17 +245,16 @@
                                          </div>
                                          <div class="form-group">
                                              <label><i>*</i>上传凭证：</label>
-                                             <input type="file" @change="uploads($event)" class="form-control">
+                                             <input type="file" style="display: inline-block;" @change="uploads($event)">
                                          </div>
                                          <div class="form-group">
                                              <label>备注</label>
                                              <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
                                          </div>
                                      </div>
-                                     <div class="modal-foot btns">
+                                     <div class="form-group tc">
                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                        <button type="button" @click="saveTradeInfo" class="btn btn-primary">添加交易</button>
-                                        <br/>
+                                        <button type="button" @click="saveTradeInfo" class="btn btn-primary">保存</button>
                                      </div>
                                 </div>
                             </div>
@@ -265,10 +264,7 @@
         </div>
     </index>
 </template>
-<style>
-    /*.box-body #table1 th{
-        min-width: 85px;
-    }*/
+<style lang="sass" scoped>
     .datatable-scroll{
         overflow: auto;
     }
@@ -278,6 +274,29 @@
     .btns{
         text-align: center;
     }
+
+    .form-group{
+        text-align: left;
+    }
+      .form-group.tc{
+        text-align: center;
+    }
+     .modal-body .form-control{
+        text-align: left;
+        width:83%;
+        display: inline-block;
+    }
+     .modal-body label{
+        width:15%;
+        display: inline-block;
+    }
+     .modal-body label i{
+        color:red;
+    }
+    .modal-body button{
+        width:35%;
+    }
+
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -399,6 +418,15 @@
                     }, function (response) {
                         console.log(response);
                     });
+            },
+            checkInfo:function(){
+                this.select_merchantId;
+                this.tradeInfo.consumptionAmount       
+                this.tradeInfo.discountAmount
+                this.tradeInfo.paAmount
+                this.tradeInfo.thirdPartyReceivable 
+                this.tradeInfo.suspensionTax
+                this.tradeInfo.merchantSubsidyActual
             },
             saveTradeInfo:function(){
                 this.tradeInfo.merchantId=this.select_merchantId;
