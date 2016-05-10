@@ -388,6 +388,7 @@
                             this.initList();
                             swal({
                                 title: "已修改！",
+                                type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
                         }, function (response) {
@@ -402,6 +403,7 @@
                             this.initList();
                             swal({
                                 title: "已启用！",
+                                type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
                         }, function (response) {
@@ -416,6 +418,7 @@
                             this.initList();
                             swal({
                                 title: "已删除！",
+                                type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
                         }, function (response) {
@@ -446,6 +449,7 @@
                                 this.initList();
                                 swal({
                                     title: "新增成功！",
+                                    type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })
                             }

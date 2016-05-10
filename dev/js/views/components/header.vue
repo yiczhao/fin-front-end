@@ -1,9 +1,7 @@
 <template>
     <div class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" v-link="{name:'default'}">
-                <!--<img src="" alt="">-->
-            </a>
+        <div class="navbar-header" style="font-size: 24px;line-height: 24px;padding: 10px 18px;">
+            财务管理系统
         </div>
         <div class="navbar-collapse collapse" id="navbar-mobile">
             <div class="navbar-right" style="margin: 13px;">

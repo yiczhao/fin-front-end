@@ -448,6 +448,7 @@
                             this.initList();
                             swal({
                                 title: "已更新！",
+                                type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
                         }
@@ -460,6 +461,7 @@
                                 this.initList();
                                 swal({
                                     title: "划付成功！",
+                                    type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })
                             }
@@ -472,6 +474,7 @@
                                 this.initList();
                                 swal({
                                     title: "已关闭！",
+                                    type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })
                             }
@@ -489,6 +492,7 @@
                                     this.initList();
                                     swal({
                                         title: "已退回！",
+                                        type: "success",
                                         confirmButtonColor: "#2196F3"
                                     })
                                 }
@@ -506,6 +510,7 @@
                                     this.initList();
                                     swal({
                                         title: "已划付！",
+                                        type: "success",
                                         confirmButtonColor: "#2196F3"
                                     })
                             }

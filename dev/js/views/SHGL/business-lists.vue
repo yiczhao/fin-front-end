@@ -71,7 +71,7 @@
                                 <td>{{trlist.value01/100 | currency '' }} </td>
                                 <td>{{trlist.value02/100 | currency '' }} </td>
                                 <td>{{trlist.value03/100 | currency '' }} </td>
-                                <td><a href="javascript:void(0);">明细</a></td>
+                                <td><a v-link="{name:'limitaccount-info'}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>
@@ -448,7 +448,7 @@
                         });
             },
             //获取城市数据
-            getCity:function(data){
+            getCity(data){
                 this.$http.post('./city/list',data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -532,6 +532,7 @@
                             $(".modal").modal("hide");
                             swal({
                                 title: "已修改！",
+                                type:"success",
                                 confirmButtonColor: "#2196F3"
                             })
                         }, function (response) {
@@ -554,6 +555,7 @@
                                     vm.updateList.certificates=response.data.data;
                                     swal({
                                         title: "上传成功！",
+                                        type:"success",
                                         confirmButtonColor: "#2196F3"
                                     })
                             })
@@ -600,11 +602,11 @@
                 this.nums.value02=(f/100).toFixed(2);
                 this.nums.value03=(g/100).toFixed(2);
             },
-            pagecur:function(){
+            pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();
             },
-            page_size:function(){
+            page_size(){
                 this.defaultData.pageSize=this.page_size;
                 this.initList();
             }

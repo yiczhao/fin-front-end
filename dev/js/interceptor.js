@@ -10,7 +10,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 		request (request) {
-			Message.show('loading','加载中...')
+			Message.show('loading','loading...')
 			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
 			request.headers['X-Auth-Token']=token;
 			config.mock_get(Vue,request)

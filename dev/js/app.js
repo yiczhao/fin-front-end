@@ -7,13 +7,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import validator from 'vue-validator'
-import confirm from './assets/js/plugins/notifications/bootbox.min.js'
 import config from  './config'
 import store from './store.js'
 import filters from './filters'
 import directives from './directives'
 import routers from './routers.js'
 import interceptor from './interceptor.js'
+import swal from './assets/js/plugins/notifications/sweet_alert.min.js'
 
 // *** 公共组件
 import Index from './views/components/index.vue'
@@ -30,7 +30,7 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
-
+Vue.use(swal);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,

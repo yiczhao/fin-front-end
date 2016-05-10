@@ -645,6 +645,7 @@
                                 this.initList();
                                 swal({
                                     title: "已修改！",
+                                    type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })
                         })
@@ -747,6 +748,7 @@
                             this.initList();
                             swal({
                                 title: "已添加！",
+                                type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
                         })
@@ -760,6 +762,7 @@
                             this.initList();
                             swal({
                                 title: "已添加！",
+                                type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
                 })
@@ -780,6 +783,7 @@
                                 vm.updateList.certificates=response.data.data;
                                 swal({
                                     title: "上传成功！",
+                                    type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })
                             })
@@ -822,11 +826,11 @@
                 this.nums.usedLimit=(c/100).toFixed(2);
                 this.nums.balanceLimit=(d/100).toFixed(2);
             },
-            pagecur:function(){
+            pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();
             },
-            page_size:function(){
+            page_size(){
                 this.defaultData.pageSize=this.page_size;
                 this.initList();
             }

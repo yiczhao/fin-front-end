@@ -29,7 +29,7 @@
                                 <label v-show="passshow" class="validation-error-label" v-text="passerror"></label>
                             </div>
                             <div class="form-group">
-                                <span @click="login" class="btn btn-primary btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
+                                <span @click="login" v-bind:class="{ 'btn-default': isD,'btn-primary':!isD}" class="btn btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
                             </div>
                             <div class="form-group">
                                 <label v-show="suberror" class="validation-error-label suberror" v-text="errortext"></label>
@@ -48,22 +48,39 @@
     </div>
     </div>
 </template>
-<style lang="sass" scoped>
-    .pd50{
+<style lang="sass">
+    .login{
+        min-width: 1280px;
+    }
+    .login-container .pd50{
         padding: 50px;
     }
-    .pd50 .box-footer{
+    .login-container .pd50 .box-footer{
         text-align: center;
     }
-    .pd50 .box-footer .btn{
+    .login-container .pd50 .box-footer .btn{
         width:20%;
         margin-top: 20px;
     }
-    .page-container{
+    .login-container .page-container{
         min-height:auto!important;
     }
-    .suberror{
+    .login-container .suberror{
         left: 75px;
+    }
+    .login .message-notify .message-notify-content{
+        border:0;
+        background:none;
+        box-shadow: none;
+        i{
+            font-size: 20px;
+        }
+        a{
+            display: none;
+        }
+    }
+    .login .message-notify.show{
+        top:400px;
     }
 </style>
 <script>
@@ -77,7 +94,8 @@
                 usershow:false,
                 passshow:false,
                 suberror:false,
-                errortext:''
+                errortext:'',
+                isD:false
             }
         },
         components:{
@@ -87,11 +105,13 @@
                 this.suberror=false;
                 if(this.username==''){this.usererror='请输入用户名';this.usershow=true;return;}
                 if(this.password==''){this.passerror='请输入密码';this.passshow=true;return;}
-                if(this.usershow||this.passshow){return false;}
+                if(this.usershow||this.passshow||this.isD){return false;}
+                this.isD=true;
                 let data={'username':this.username,'password':this.password};
                 this.$http.post('./passport/login',data)
                         .then(function (response) {
                             if(response.data.code===0){
+                                $('body').removeClass('login');
                                 sessionStorage.setItem('userData',JSON.stringify(response.data.data));
                                 this.$router.go({name:'default'});
                             }
@@ -99,6 +119,7 @@
                                 this.suberror=true;
                                 this.errortext=response.data.message;
                             }
+                            this.isD=false;
                         }, function (response) {
                             console.log(response);
                         });
@@ -114,6 +135,7 @@
         },
         ready(){
             $('.userName').focus();
+            $('body').addClass('login').removeClass('stop-scrolling');
         }
     }
 </script>

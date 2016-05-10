@@ -19,7 +19,7 @@ function member_model(http) {
                 }],
                 total: 25
             }
-            return http.post('./limitPurchaseAccount/list',data)
+            return http.post('./reservecash/detail',data)
         }
     }
 }

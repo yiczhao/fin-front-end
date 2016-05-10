@@ -1,7 +1,7 @@
 <template>
 	<div :class="wrapClasses" :style="style">
   		<div :class="componentClass + '-content'" v-el:content>
-			<span :class="icon" v-show="icon"></span><span class="" v-text="content"></span>&nbsp;&nbsp;<a href="javascript:;" @click="close('force')">x</a>
+			<i class="icon-spinner2 spinner"></i><span class="" v-text="content"></span>&nbsp;&nbsp;<a href="javascript:;" @click="close('force')">x</a>
 		</div>
 	</div>	
 </template>

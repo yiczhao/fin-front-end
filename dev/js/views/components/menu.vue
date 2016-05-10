@@ -7,10 +7,7 @@
                     <div class="media">
                         <!--<a href="#" class="media-left"><img src="" class="img-circle img-sm" alt=""></a>-->
                         <div class="media-body">
-                            <span class="media-heading text-semibold">财务管理系统</span>
-                            <div class="text-size-mini text-muted">
-                                <i class="icon-pin text-size-small">功能导航</i>
-                            </div>
+                            <span class="media-heading text-semibold">功能导航</span>
                         </div>
                     </div>
                 </div>
@@ -68,6 +65,16 @@
         </div>
     </div>
 </template>
+<style lang="sass" scoped>
+    .category-content{
+        padding: 0 20px;
+        .media-heading {
+            margin: 5px 0 0 0;
+            display: block;
+            font-size: 20px;
+        }
+    }
+</style>
 <script>
     export default {
         data(){

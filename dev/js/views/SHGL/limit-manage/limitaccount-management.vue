@@ -28,7 +28,7 @@
                 </div>
                 <div class="dataTables_wrapper no-footer">
                     <div v-if="zdlists.length>0"  class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>账户ID</th>
@@ -271,9 +271,9 @@
 
             }
         },
-        ready: function () {
+        ready() {
             let vm=this;
-            vm.accountId=vm.defaultData.id=vm.$route.params.merchantID;
+//            vm.accountId=vm.defaultData.id=vm.$route.params.merchantID;
             vm.initList();
             $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
                 this.fire=false;
@@ -291,8 +291,8 @@
                 });
                 this.nums.val1=(a/100).toFixed(2);
                 this.nums.val4=(b/100).toFixed(2);
-                this.nums.val2=this.nums.val1-this.nums.val4;
-                this.nums.val3=(this.nums.val2/this.nums.val1)*100;
+                this.nums.val2=(this.nums.val1-this.nums.val4).toFixed(2);
+                this.nums.val3=((this.nums.val2/this.nums.val1)*100).toFixed(2);
 
             },
             pagecur(){
@@ -305,7 +305,7 @@
             }
         },
         validators: {
-            numeric: function (val) {
+            numeric(val){
                 return /^[-+]?[0-9]+$/.test(val)
             }
         }

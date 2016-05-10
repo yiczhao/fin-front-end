@@ -18187,12 +18187,6 @@ thead .htCollapseButton:after {
 .login-container .page-container .registration-form {
   margin: 0 auto 20px auto;
 }
-@media (max-width: 480px) {
-  .login-container .page-container .login-form,
-  .login-container .page-container .registration-form {
-    width: 100%;
-  }
-}
 .login-container .page-container .nav-tabs.nav-justified {
   margin-bottom: 0;
 }
@@ -18213,28 +18207,9 @@ thead .htCollapseButton:after {
 .login-container .page-container .nav-tabs.nav-justified > li.active > a {
   background-color: transparent;
 }
-@media (max-width: 768px) {
-  .login-container .page-container .nav-tabs.nav-justified {
-    padding: 0;
-    border-width: 0 0 1px 0;
-    border-radius: 0;
-  }
-  .login-container .page-container .nav-tabs.nav-justified:before {
-    content: none;
-  }
-  .login-container .page-container .nav-tabs.nav-justified > li > a {
-    border-width: 0!important;
-  }
-}
 .login-container .footer {
   left: 0;
   right: 0;
-}
-@media (max-width: 768px) {
-  .login-options,
-  .login-options .text-right {
-    text-align: center;
-  }
 }
 /* ------------------------------------------------------------------------------
  *
