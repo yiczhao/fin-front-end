@@ -148,7 +148,7 @@
                                         <td>
                                             <template v-if="sa.status==1">
                                                 <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)">申请划付</a></td>&nbsp;
-                                                <a href="javascript:void(0);" @click="">更新</a></td>
+                                                <a href="javascript:void(0);" @click="updateById(sa.id)">更新</a>
                                             </template>
                                             <template v-else>
                                                 <a href="#">查看</a></td>
@@ -357,6 +357,26 @@
                   array.push($(this).prop("id"));  
                 });
                 this.getApplyPayInfoByIDs(array);
+            },
+            updateById:function(id){
+                this.$http.post('./subsidypaydetail/update/'+id).then(function(response){
+                    if(response.data.code==0){
+                        //刷新数据
+                        this.query();
+                        //提示成功
+                        swal({
+                            title: "已更新成功！",
+                            type:"success",
+                            confirmButtonColor: "#2196F3"
+                        })
+                    }else{
+                        swal({
+                            title: "更新失败！",
+                            type:"error",
+                            confirmButtonColor: "rgb(244,​ 67,​ 54)"
+                        }) 
+                    }
+                });
             },
             showModalApplyPayById:function(id){
                 let array=[];
