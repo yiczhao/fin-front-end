@@ -89,12 +89,12 @@
                                         <td>{{apd.merchantName}}</td>
                                         <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                         <td>{{apd.advancePaymentAmount}}</td>
-                                        <td><a :href="apd.advancePaymentMerchantId">查看</a></td>
+                                        <td><a v-link="{name:'limitaccount-info'}">查看</a></td>
                                         <td>
                                             <template v-if="apd.status==1">对账成功</template>
                                             <template v-if="apd.status==2">对账失败</template>
                                         </td>
-                                        <td><a :href="apd.id">查看</a></td>
+                                        <td><a v-link="{name:'payment-details'}">查看</a></td>
                                         <td>{{apd.remarks}}</td>
                                     </tr>
                                 </tbody>

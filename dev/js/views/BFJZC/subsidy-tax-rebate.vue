@@ -64,6 +64,9 @@
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="批量划付">
+                                </div>
                             </form> 
                         </div>
                         <div v-show="!!subsidyTaxRebateDetailList.length"  class="box-body box-tbl">
@@ -88,7 +91,14 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="strd in subsidyTaxRebateDetailList">
-                                        <td>{{strd.id}}</td>
+                                        <td>
+                                            <template v-if="strd.status!=1">
+                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="strd.id"/>{{strd.id}}</td>
+                                            </template>
+                                            <template v-else>
+                                                <input type="checkbox" name="ckbox" :id="strd.id" :class="strd.collectionAccountName+strd.collectionAccountNumber"/>{{strd.id}}</td>
+                                            </template>
+                                        </td>
                                         <td>{{strd.createTime | datetime}}</td>
                                         <td>{{strd.subCompanyName}}</td>
                                         <td>{{strd.cityName}}</td>
@@ -124,8 +134,8 @@
                                         </td>
                                         <td>
                                             <template v-if="strd.status==1">
-                                                <a href="#">申请划付</a>&nbsp;
-                                                <a href="#">更新</a>
+                                                <a href="javascript:void(0);" @click="showModalApplyPayById(strd.id)">申请划付</a>&nbsp;
+                                                <a href="javascript:void(0);" @click="">更新</a>
                                             </template>
                                             <template v-else>
                                                 <a href="#">查看</a>
@@ -136,29 +146,78 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="box-footer">
+                        <div  v-else style="padding: 30px;font-size: 16px;text-align: center" >
+                            未查询到补贴退税信息！
+                        </div>
+                        <div v-show="!!subsidyTaxRebateDetailList.length" class="box-footer">
                             <page :all="pageall"
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
                             </page>
                         </div>
-                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                            未查询到补贴退税信息！
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
+            <div class="modal-dialog mg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>合并付款</h3>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                     <div class="modal-body">
+                         <div class="form-group">
+                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount}}</span>  元
+                         </div>
+                         <div class="form-group">
+                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                             <select id="payType" v-model="payType">
+                                 <option v-for="n in payTypes" v-text="n.name" :value="n.type"></option>
+                             </select>
+                             <label>付款账户：</label>
+                             <span >{{showPayAccount}}</span>
+                         </div>
+                         <div class="form-group">
+                             <label>收款方：</label>
+                             <input type="text" id="displayName" class="" style="width:89%" v-model="applyPayInfo.displayName"></input>
+                         </div>
+                         <div class="form-group">
+                             <label class="remarks">备&nbsp;&nbsp;  注：</label>
+                             <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
+                         </div>
+                     </div>
+                     <div class="modal-foot">
+                        <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                        <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
+                     </div>
+                </div>
+            </div>
+        </div> 
     </index>
 </template>
 <style>
-    .box-tbl{
+     .box-tbl{
         overflow:auto;
     }
     .page-bar{
         margin: 25px auto;
         text-align: center;
     }
+    .payment-method {
+        float: left;
+    }
+    .remarks{
+        float: left;
+    }
+    .remarks-form-control{
+        width: 90%;
+    }
+    .modal-foot{
+        text-align: center;
+        height: 60px;
+    }
+    
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -182,7 +241,17 @@
                 pageIndex:1,
                 pageSize:15,
                 cityList:[],
-                subsidyTaxRebateDetailList:[]
+                subsidyTaxRebateDetailList:[],
+                payTypes:[],
+                showPayAccount:'',
+                payType:"1",
+                applyPayInfo:{
+                    payType:{
+                       1:"",
+                       2:""
+                    }
+                },
+                applyPayRemarks:''
             }
         },
         methods:{
@@ -224,6 +293,102 @@
                     str +="0";
                 return str + num.toString();
             },
+             checkAll:function(ck){
+                if(ck.target.checked){
+                    $("input[name='ckbox']").prop({'checked':true});
+                }else{
+                    $("input[name='ckbox']").prop({'checked':false});
+                }
+            },
+            clear:function(){
+                $('#displayName').attr("readonly",false);
+                this.applyPayRemarks="", 
+                this.applyPayInfo={payType:{
+                       1:"",
+                       2:""
+                    }};
+            },
+            showModalApplyPay:function(){
+                this.clear();
+                //批量划付判断首款信息是否一致
+                var AccountS = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  AccountS.push($(this).prop("class"));  
+                });
+                if(AccountS.length<=0){
+                   alert("请选择一条或多条记录，进行申请划付！");
+                   return false
+                }
+                for (var i = 1; i < AccountS.length; i++) {
+                   if (AccountS[i] != AccountS[0]) {  // 遇到了不等于x[0]的元素，设置 flag = 1，然后跳出循环
+                        alert("选择的划付记录收款账户要一致！");
+                        return false
+                   }
+                }
+                let array = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  array.push($(this).prop("id"));  
+                });
+                this.getApplyPayInfoByIDs(array);
+            },
+            showModalApplyPayById:function(id){
+                let array=[];
+                array.push(id);
+                this.getApplyPayInfoByIDs(array);
+                $('#displayName').attr("readonly",true);
+                $('#displayName').attr("class",id);
+            },
+             getApplyPayInfoByIDs:function(idArray){
+                console.log(idArray);
+                let data={
+                    ids:idArray
+                }
+                this.$http.post('./subsidyTaxRebateDetail/selectApplyPayInfoByIDs',data)
+                    .then(function (response) {
+                        // *** 判断请求是否成功如若
+                        (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
+                        this.payTypes=this.applyPayInfo.payType;
+                        for(var i in this.payTypes){
+                            if(this.payType == this.payTypes[i].type){
+                                this.showPayAccount=this.payTypes[i].value
+                            }
+                        }
+                        // this.showPayAccount=this.payTypes[0].value;
+                        $('#modal_applyPay').modal('show');
+                        console.log(this.applyPayInfo);
+                    }, function (response) {
+                        console.log(response);
+                    });
+            },
+            submit:function(){
+                var array = [];
+                $("input[name='ckbox']:checked").each(function(){
+                  array.push($(this).prop("id"));  
+                });
+
+                if ($('#displayName').prop("readonly")) {
+                    array.push($('#displayName').prop("class"));
+                 }
+                let data={
+                    ids:array,
+                    remarks:this.applyPayRemarks,
+                    payType:this.payType,
+                    displayName:this.applyPayInfo.displayName
+                    
+                }
+               this.$http.post('./subsidyTaxRebateDetail/applyPay',data).then(function (response) {
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if (response.data.code==0)
+                        {
+                            alert("保存成功！");
+                            this.query();
+                        }
+                    }, function (response) {
+                        console.log(response);
+                    });
+                     //关闭弹出层
+                    $(".modal").modal("hide");
+            },
             query: function () {
                 // let data=this.data;
                 let data={
@@ -249,6 +414,14 @@
             this.getCity({});
         },
          watch:{
+            payType:function(){
+                let type=$("#payType").val()
+                for(var i in this.payTypes){
+                    if(type == this.payTypes[i].type){
+                        this.showPayAccount=this.payTypes[i].value
+                    }
+                }
+            },
             timeRange:function(){
                 console.log();
                 var d=new Date()

@@ -110,7 +110,7 @@
                                     <td>{{trlist.serialNumber}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
                                     <td>{{trlist.cityName}}</td>
-                                    <td>{{trlist.merchantID}}</td> 
+                                    <td>{{trlist.merchantOperationID}}</td> 
                                     <td>{{trlist.merchantName}}</td>
                                     <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
                                     <td>{{trlist.discountAmount/100 | currency ''}}</td>
@@ -429,7 +429,7 @@
                         subCompanyID:this.subCompanID,
                         cityID:this.cityID,
                         type:this.type,
-                        merchantID:this.merchantID,
+                        merchantOperationID:this.merchantID,
                         merchantName:this.merchantName,
                         tradeDetailID:this.id,
                         serialNumber:this.serialNumber,        

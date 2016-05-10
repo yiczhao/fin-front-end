@@ -183,13 +183,11 @@
                                          </div>
                                          <div class="form-group">
                                              <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                             <select v-model="payType">
-                                                 <option value="1">备付金账户</option>
-                                                 <option value="2">商户预付款账户</option>
+                                             <select id="payType" v-model="payType">
+                                                 <option v-for="n in payTypes" v-text="n.name" :value="n.type"></option>
                                              </select>
                                              <label>付款账户：</label>
-                                             <span v-show="payType==1">{{applyPayInfo.payType["1"]}}</span>
-                                             <span v-else>{{applyPayInfo.payType["2"]}}</span>
+                                             <span >{{showPayAccount}}</span>
                                          </div>
                                          <div class="form-group">
                                              <label>收款方：</label>
@@ -266,6 +264,8 @@
                 pageSize:15,
                 activityList:[],
                 cityList:[],
+                payTypes:[],
+                showPayAccount:'',
                 subsidyAppropriationList:[],
                 payType:"1",
                 applyPayInfo:{
@@ -366,7 +366,6 @@
                 $('#displayName').attr("class",id);
             },
             getApplyPayInfoByIDs:function(idArray){
-                console.log(idArray);
                 let data={
                     ids:idArray
                 }
@@ -374,6 +373,13 @@
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
+                        this.payTypes=this.applyPayInfo.payType;
+                        for(var i in this.payTypes){
+                            if(this.payType == this.payTypes[i].type){
+                                this.showPayAccount=this.payTypes[i].value
+                            }
+                        }
+                        // this.showPayAccount=this.payTypes[0].value;
                         $('#modal_applyPay').modal('show');
                         console.log(this.applyPayInfo);
                     }, function (response) {
@@ -442,8 +448,15 @@
             this.getactivitys({});
         },
          watch:{
+            payType:function(){
+                let type=$("#payType").val()
+                for(var i in this.payTypes){
+                    if(type == this.payTypes[i].type){
+                        this.showPayAccount=this.payTypes[i].value
+                    }
+                }
+            },
             timeRange:function(){
-                console.log();
                 var d=new Date()
                 var day=d.getDate()
                 var month=d.getMonth() + 1
