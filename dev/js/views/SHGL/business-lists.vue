@@ -73,8 +73,9 @@
                                 <td>{{trlist.value03/100 | currency '' }} </td>
                                 <td><a href="javascript:void(0);">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
-                                <td><!--<a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>-->
-                                    <a v-link="{'name':'business-limit'}">额度消化商户</a>
+                                <td>
+                                    <a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>
+                                    <!--<a v-link="{'name':'business-limit'}">额度消化商户</a>-->
                                 </td>
                                 <td><a href="javascript:void(0)" @click="control(trlist)">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
@@ -114,54 +115,54 @@
                     未找到您要查询的商户
                 </div>
 
-                <!--<div data-backdrop="static"  id="modal_checking" class="modal" style="display: none;">-->
-                    <!--<div class="modal-dialog modal-lg">-->
-                        <!--<div class="modal-content">-->
-                            <!--<div class="modal-header">-->
-                                <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
-                                <!--<h5 class="modal-title">额度采购消化账户</h5>-->
-                            <!--</div>-->
-                            <!--<div class="modal-body">-->
-                                <!--<div>-->
-                                    <!--<span>商户id：4392</span>-->
-                                    <!--<span>商户名：南昌玩聚恒茂店</span>-->
-                                    <!--<span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit'}">南昌玩聚和他(她)朋友的咖啡馆</a></span>-->
-                                <!--</div>-->
-                                <!--<div style="padding: 10px 0;">历史记录：</div>-->
-                                <!--<table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">-->
-                                    <!--<thead>-->
-                                    <!--<tr role="row">-->
-                                        <!--<th>ID</th>-->
-                                        <!--<th>账户名</th>-->
-                                        <!--<th>更新时间</th>-->
-                                        <!--<th>更新人</th>-->
-                                        <!--<th>变更凭证</th>-->
-                                        <!--<th>更新备注</th>-->
-                                    <!--</tr>-->
-                                    <!--</thead>-->
-                                    <!--<tbody>-->
-                                    <!--<tr role="row">-->
-                                        <!--<td>1</td>-->
-                                        <!--<td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>-->
-                                        <!--<td>2013-06-03 13:26:19</td>-->
-                                        <!--<td>贾燕</td>-->
+                <div data-backdrop="static"  id="modal_checking" class="modal" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">额度采购消化账户</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <span>商户id：4392</span>
+                                    <span>商户名：南昌玩聚恒茂店</span>
+                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit'}">南昌玩聚和他(她)朋友的咖啡馆</a></span>
+                                </div>
+                                <div style="padding: 10px 0;">历史记录：</div>
+                                <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>ID</th>
+                                        <th>账户名</th>
+                                        <th>更新时间</th>
+                                        <th>更新人</th>
+                                        <th>变更凭证</th>
+                                        <th>更新备注</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr role="row">
+                                        <td>1</td>
+                                        <td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>
+                                        <td>2013-06-03 13:26:19</td>
+                                        <td>贾燕</td>
+                                        <td><a href="">下载</a></td>
+                                        <td>总店额度采购</td>
+                                    </tr>
+                                    <!--<tr role="row"  v-for="n in checkLists">-->
+                                        <!--<td>{{n.certificate}}</td>-->
+                                        <!--<td>{{n.collectionName}}</td>-->
+                                        <!--<td>{{n.tradeTime || datetime}}</td>-->
+                                        <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
                                         <!--<td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>-->
-                                        <!--<td>总店额度采购</td>-->
+                                        <!--<td>{{n.remarks}}</td>-->
                                     <!--</tr>-->
-                                    <!--&lt;!&ndash;<tr role="row"  v-for="n in checkLists">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td>{{n.certificate}}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td>{{n.collectionName}}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td>{{n.tradeTime || datetime}}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td>{{n.payoutAmount/100 | currency '' }}</td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<td>{{n.remarks}}</td>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-                                    <!--</tbody>-->
-                                <!--</table>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div data-backdrop="static"  id="modal_control" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -529,7 +530,10 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             $(".modal").modal("hide");
-                            alertify.success("已修改");
+                            swal({
+                                title: "已修改！",
+                                confirmButtonColor: "#2196F3"
+                            })
                         }, function (response) {
                             console.log(response);
                         });
@@ -548,7 +552,10 @@
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
                                     vm.updateList.certificates=response.data.data;
-                                    alertify.success("上传成功");
+                                    swal({
+                                        title: "上传成功！",
+                                        confirmButtonColor: "#2196F3"
+                                    })
                             })
                 }
             },

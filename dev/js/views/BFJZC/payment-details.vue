@@ -446,7 +446,10 @@
                     .then( (response)=> {
                         if(response.data.code==0){
                             this.initList();
-                            alertify.success("已更新");
+                            swal({
+                                title: "已更新！",
+                                confirmButtonColor: "#2196F3"
+                            })
                         }
                     })
             },
@@ -455,7 +458,10 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
-                                alertify.success("划付成功");
+                                swal({
+                                    title: "划付成功！",
+                                    confirmButtonColor: "#2196F3"
+                                })
                             }
                         })
             },
@@ -464,7 +470,10 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
-                                alertify.success("已关闭");
+                                swal({
+                                    title: "已关闭！",
+                                    confirmButtonColor: "#2196F3"
+                                })
                             }
                         })
             },
@@ -478,7 +487,10 @@
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
-                                    alertify.success("已退回");
+                                    swal({
+                                        title: "已退回！",
+                                        confirmButtonColor: "#2196F3"
+                                    })
                                 }
                             })
             },
@@ -492,7 +504,10 @@
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
-                                    alertify.success("已划付");
+                                    swal({
+                                        title: "已划付！",
+                                        confirmButtonColor: "#2196F3"
+                                    })
                             }
                         })
             },

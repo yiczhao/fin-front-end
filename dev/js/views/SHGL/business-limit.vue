@@ -643,7 +643,10 @@
                 this.$http.post('./ limitPurchaseMerchant/editDigest',this.updateList)
                         .then((response)=>{
                                 this.initList();
-                            alertify.success("已修改");
+                                swal({
+                                    title: "已修改！",
+                                    confirmButtonColor: "#2196F3"
+                                })
                         })
             },
             changeDiscount(_id,_isenb){
@@ -742,7 +745,10 @@
                 this.$http.post('./limitPurchaseMerchant/add',data)
                         .then((response)=>{
                             this.initList();
-                            alertify.success("已添加");
+                            swal({
+                                title: "已添加！",
+                                confirmButtonColor: "#2196F3"
+                            })
                         })
             },
             submitTrue2(e){
@@ -752,7 +758,10 @@
                 this.$http.post('./limitPurchaseMerchant/addDigest',data)
                         .then((response)=>{
                             this.initList();
-                            alertify.success("已添加");
+                            swal({
+                                title: "已添加！",
+                                confirmButtonColor: "#2196F3"
+                            })
                 })
             },
             uploads(e){
@@ -769,7 +778,10 @@
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
                                 vm.updateList.certificates=response.data.data;
-                                alertify.success("上传成功");
+                                swal({
+                                    title: "上传成功！",
+                                    confirmButtonColor: "#2196F3"
+                                })
                             })
                 }
             },
