@@ -2,17 +2,26 @@
  * webpack 配置
  */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 module.exports = {
+	resolve: {
+		alias: {
+
+		}
+	},
 	entry:{
-		index:__dirname+'/dev/js/app.js',
+		app:__dirname+'/dev/js/app.js',
+		jquery: __dirname+'/dev/js/jQuery.min.js',
+		bootstrap: __dirname+'/dev/js/bootstrap.min.js',
 	},
 	output:{
 		path:__dirname+'/dist',
-		filename:'app.js',
+		filename:'[name].js',
 		chunkFilename: '[name].chunk.js',
 		publicPath: '/dist/'
 	},
 	module:{
+		noParse: [],
 		loaders:[
 			{
                 test: /\.scss$/,
@@ -32,10 +41,7 @@ module.exports = {
 		        // for normal use cases only node_modules is needed.
 		        exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
 		        loader: 'babel'
-	            
 	        },
-	        
-
             // {test: /\.(js|tag)$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?mimetype=image/svg+xml'},

@@ -3,6 +3,7 @@
  * @author cwxtDesigner
  */
 require('../sass/app.scss');
+require('./assets/js/plugins/notifications/sweet_alert.min.js');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
@@ -13,8 +14,6 @@ import filters from './filters'
 import directives from './directives'
 import routers from './routers.js'
 import interceptor from './interceptor.js'
-import swal from './assets/js/plugins/notifications/sweet_alert.min.js'
-
 // *** 公共组件
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
@@ -30,7 +29,6 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
-Vue.use(swal);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,
