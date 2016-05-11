@@ -454,15 +454,18 @@
         }
         .col-md-1{
             padding-top: 40px;
+            text-align: center;
             input{
                 margin:15px 0;
             }
         }
-        ul{
-            list-style: none;
+        .col-md-4{
             border: 1px solid #ccc;
             padding:10px;
-            height: 300px;
+        }
+        ul{
+            list-style: none;
+            height: 278px;
             overflow: auto;
             li{
                 margin:5px 0;

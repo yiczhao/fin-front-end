@@ -10,6 +10,11 @@
         </div>
     </div>
 </template>
+<style>
+    .navbar-inverse{
+        padding: 5px 20px;
+    }
+</style>
 <script>
     export default {
         props:{

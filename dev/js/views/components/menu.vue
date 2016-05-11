@@ -69,9 +69,9 @@
     .category-content{
         padding: 0 20px;
         .media-heading {
-            margin: 5px 0 0 0;
+            margin: 12px 0 5px 0;
             display: block;
-            font-size: 20px;
+            font-size: 16px;
         }
     }
 </style>
@@ -103,6 +103,8 @@
                 this.menus[0].open = true
                 this.menus[0].sub_menu[router_type].open = true
             }
+            var availableHeight = $(window).height() - $('.page-container').offset().top -46;
+            $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
             // Main navigation
             $('.navigation-main').find('li').has('ul').children('a').on('click', function (e) {
                 e.preventDefault();

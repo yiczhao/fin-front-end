@@ -41,8 +41,11 @@
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.status">
                                     <option value="">请选择对账状态</option>
-                                    <option value="1">成功</option>
-                                    <option value="0">待对账</option>
+                                    <option value="2">等待划付</option>
+                                    <option value="3">等待对账</option>
+                                    <option value="4">对账成功</option>
+                                    <option value="5">划付失败</option>
+                                    <option value="6">已关闭</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -53,10 +56,6 @@
                                     <option value="3">退税划付</option>
                                     <option value="4">预付款</option>
                                     <option value="5">供货商划付</option>
-                                    <option value="6">往来款</option>
-                                    <option value="7">转账退款</option>
-                                    <option value="8">账户费用</option>
-                                    <option value="9">其它</option>
                                 </select>
                             </div>
                             <div class="form-group">
