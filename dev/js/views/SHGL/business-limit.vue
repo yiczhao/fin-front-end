@@ -151,6 +151,8 @@
                 </div>
 
                 <!--编辑账户dialog-->
+                <validator name="vali">
+                    <form novalidate>
                 <div data-backdrop="static"  id="modal_update" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -165,7 +167,7 @@
                                             <label class="w28" ><i>*</i>抵扣方式：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <select class="form-control" v-model="updateList.discountType">
+                                            <select class="form-control"  v-validate:discountType="['required']" v-model="updateList.discountType" value="updateList.discountType">
                                                 <option value="1">全单</option>
                                                 <option value="2">可打折</option>
                                             </select>
@@ -174,9 +176,9 @@
                                             <label class="w28" ><i>*</i>自动划付：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="radio" id="one" value="1" v-model="updateList.isAutoPay">
+                                            <input type="radio" id="one" name="fruit" v-validate:val2="['required']" value="1" v-model="updateList.isAutoPay">
                                             <label class="w28" for="one">开启</label>
-                                            <input type="radio" id="two" value="0" v-model="updateList.isAutoPay">
+                                            <input type="radio" id="two" name="fruit" v-validate:val2  value="0" v-model="updateList.isAutoPay">
                                             <label class="w28" for="two">关闭</label>
                                         </div>
                                     </div>
@@ -185,7 +187,7 @@
                                             <label class="w28" ><i>*</i>单笔采购额度：</label>
                                         </div>
                                         <div class="col-md-3">
-                                             <input class="form-control" type="text" :value="updateList.singlePurchaseLimit">
+                                             <input v-validate:val3="['required']" class="form-control" type="text" v-model="updateList.singlePurchaseLimit" value="updateList.singlePurchaseLimit">
                                         </div>
                                         <div class="col-md-1">
                                             元
@@ -194,7 +196,7 @@
                                             <label class="w28" ><i>*</i>单笔采购本金：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input class="form-control" type="text" :value="updateList.singlePurchasePrincipal">
+                                            <input v-validate:val4="['required']" class="form-control" type="text" v-model="updateList.singlePurchasePrincipal"  value="updateList.singlePurchasePrincipal">
                                         </div>
                                         <div class="pull-left">
                                             元
@@ -228,19 +230,22 @@
                                     </table>
                                     <div class="form-group" style="padding-top: 25px;">
                                         <div class="pull-left">
-                                            <label class="w28" ><i>*</i>上传凭证：</label>
+                                            <label class="w28"><i>*</i>上传凭证：</label>
                                         </div>
                                         <div class="pull-left">
-                                            <input type="file" @change="uploads($event)" lazy>
+                                            <input type="file" @change="uploads($event)" value="">
                                         </div>
                                         <div class="pull-left">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <textarea class="form-control" width="70%" v-model="updateList.remarks" value=""></textarea>
+                                            <textarea class="form-control" v-validate:val5="['required']" width="70%" v-model="updateList.remarks" value="updateList.remarks"></textarea>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-1">
                                             <button type="button" @click="submitUpdate" class="btn btn-primary">保存</button>
+                                        </div>
+                                        <div class="pull-left">
+                                            <span v-show="saveerror!=''|| $vali.invalid" class="validation-error-label" v-text="saveerror"></span>
                                         </div>
                                     </div>
                                     <div>历史记录：</div>
@@ -259,8 +264,7 @@
                                         </thead>
                                         <tbody>
                                         <tr v-if="historyList.length>1" role="row" v-for="n in historyList">
-                                            <template v-if="$index!=0">
-                                                <td>{{$index}}</td>
+                                                <td>{{$index+1}}</td>
                                                 <td>
                                                     <p>抵扣方式：
                                                         <template v-if="n.discountType==1">全单</template>
@@ -278,7 +282,6 @@
                                                 <td>{{n.updateAt}}</td>
                                                 <td><a href="{{origin}}/file/download/{{n.certificates}}" >下载</a></td>
                                                 <td>{{n.remarks}}</td>
-                                            </template>
                                         </tr>
                                         <tr v-if="historyList.length<1">
                                             <td colspan="7" valign="center">无历史记录</td>
@@ -291,7 +294,8 @@
                     </div>
                 </div>
                 </div>
-
+                    </form>
+                </validator>
                 <!--添加商户dialog-->
                 <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-lg">
@@ -472,9 +476,6 @@
                 cursor: pointer;
                 padding-left:3px;
             }
-            li.check-li{
-                background: #ccc;
-            }
         }
     }
     table tr{
@@ -512,6 +513,13 @@
     }
     .pull-left label i{
         color:red;
+    }
+    .pull-left{
+        .validation-error-label{
+            line-height: 20px;
+            padding-left: 18px;
+            margin-top: 10px;
+        }
     }
 </style>
 <script>
@@ -571,6 +579,16 @@
                     }
                 ],
                 updateList:{
+                    remarks: '',
+                    isAutoPay: '',
+                    certificates: '',
+                    merchantId: '',
+                    updateBy: '',
+                    singlePurchaseLimit: '',
+                    singlePurchasePrincipal: '',
+                    updateAt: '',
+                    discountType: '',
+                    id:''
                 },
                 historyList:[],
                 accountId:'',
@@ -579,7 +597,8 @@
                     totalPrincipal:0,
                     usedLimit:0,
                     balanceLimit:0
-                }
+                },
+                saveerror:'',
             }
         },
         methods:{
@@ -630,9 +649,13 @@
                 this.seexh(this.accountId,false);
                 this.$http.post('./limitPurchaseMerchant/history/'+_list.merchantId)
                         .then((response)=>{
-                                (response.data.code==0) ? this.$set('updateList', response.data.data[0]) : null;
-                                (response.data.code==0) ? this.$set('historyList', response.data.data) : null;
-                                $('#modal_update').modal('show');
+                                if(response.data.code==0){
+                                    $.extend(true, this.updateList,response.data.data[0]);
+                                    this.$set('historyList', response.data.data)
+                                    this.updateList.certificates='';
+                                    $('input[type="file"]')[0].value=''
+                                    $('#modal_update').modal('show');
+                                }
                         })
 
             },
@@ -641,6 +664,9 @@
                 $(e.target).closest('tr').hide().find('.merchantIds').removeClass('merchantIds');
             },
             submitUpdate(){
+                this.saveerror='';
+                if(!this.$vali.valid){this.$set('saveerror', '您的信息未填写完整');return;}
+                if(this.updateList.certificates==''){this.$set('saveerror', '请上传凭证');return;}
                 let datas = Array.from($(".merchantIds"), i => parseInt(i.innerHTML));
                 this.updateList.digestMerchants=datas;
                 this.$http.post('./ limitPurchaseMerchant/editDigest',this.updateList)
@@ -700,8 +726,6 @@
             },
             addUser2(){
                 this.addTitle='添加消化商户';
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
-                $('.addbottom .col-md-4').children('ul').html('');
                 this.shdata={
                     'companyId':'',
                     'cityId':'',
@@ -731,6 +755,7 @@
                 for(let i=0;i<this.addId.length;i++){
                     this.appendLi(this.addId[i]);
                 }
+                $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
                 this.addId=[];
             },
             delTrue(e){
@@ -743,9 +768,9 @@
                 _li.remove();
             },
             submitTrue(e){
-                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
-                    _li= _ul.find('.check-li');
-                let data={'merchantIds':Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => parseInt(i.value))}
+                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
+                if(!_li.length>0)return;
+                let data={'merchantIds':Array.from(_li, i => parseInt(_li.getAttribute('value')))}
                 this.$http.post('./limitPurchaseMerchant/add',data)
                         .then((response)=>{
                             this.initList();
@@ -757,9 +782,9 @@
                         })
             },
             submitTrue2(e){
-                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
-                        _li= _ul.find('.check-li');
-                let data={'id': this.accountId,'digestMerchants':Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => parseInt(i.value))}
+                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
+                if(!_li.length>0)return;
+                let data={'id': this.accountId,'digestMerchants':Array.from(_li, i => parseInt(_li.getAttribute('value')))}
                 this.$http.post('./limitPurchaseMerchant/addDigest',data)
                         .then((response)=>{
                             this.initList();
@@ -784,6 +809,7 @@
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
                                 vm.updateList.certificates=response.data.data;
+                                vm.saveerror='';
                                 swal({
                                     title: "上传成功！",
                                     type: "success",
@@ -809,6 +835,7 @@
             })
             $(document).on('click','.addbottom .col-md-4 ul li',function(){
                 $(this).toggleClass('check-li');
+                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
             })
         },
         components:{
