@@ -174,11 +174,9 @@
                                 <div>
                                     <span>商户ID：{{controllist.merchantID}}</span>
                                     <span>商户名：{{controllist.merchantName}}</span>
+                                    <a class="updatebtn" @click="modal_updata" href="javascript:void(0);">更新</a>
                                 </div>
                                 <div class="mt35">
-                                    <span v-bind:class="{ 'active': bthf}" class="togglebtn" @click="bthfShow(0,controllist.merchantID)">补贴划付</span>
-                                    <span v-bind:class="{ 'active': !bthf}" class="togglebtn" @click="bthfShow(1,controllist.merchantID)" style="left: 78px;">额采划付</span>
-                                    <a  v-if="relist!=''" class="updatebtn"  data-toggle="modal"  data-target="#modal_updata" href="javascript:void(0);">更新</a>
                                     <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
                                     <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
                                     <table v-if="index!=0&&relist.length>1" class="table dataTable">
@@ -194,8 +192,7 @@
                                         </thead>
                                         <tbody>
                                         <tr role="row" v-for="n in relist">
-                                            <template v-if="$index!=0">
-                                                <td>1</td>
+                                                <td>{{$index+1}}</td>
                                                 <td>
                                                     {{n.accountName}}
                                                     {{n.accountNumber}}
@@ -204,7 +201,6 @@
                                                 <td>{{n.createBy}}</td>
                                                 <td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>
                                                 <td>{{n.remarks}}</td>
-                                            </template>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -256,7 +252,7 @@
                                         <button type="button" @click="updateTrue(updateList)" class="btn btn-primary">保存</button>
                                     </div>
                                     <div class="form-group tc">
-                                        <span v-show="!$vali.valid&&updataerror" class="validation-error-label">你的信息未填写完整</span>
+                                        <span v-show="(!$vali.valid&&updataerro)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                     </div>
                                 </div>
                             </form>
@@ -349,6 +345,9 @@
          right: 20px;
          top: 45px;
      }
+    .validation-error-label{
+        display: inline-block;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -415,7 +414,8 @@
                     isCcb:'',
                     accountType:''
                 },
-                updataerror:false
+                updataerror:false,
+                errortext:''
             }
         },
         methods:{
@@ -515,6 +515,11 @@
                         break;
                 }
             },
+            modal_updata(){
+                this.errortext='';
+                $('input[type="file"]')[0].value='';
+                $('#modal_updata').modal('show');
+            },
             updateBtn(_list){
                 console.log(_list);
                 var a=_list;
@@ -524,9 +529,15 @@
             updateTrue(data){
                 console.log(data)
                 if(!this.$vali.valid){
+                    this.updataerror=true;
+                    this.errortext='您的信息未填写完整！';
+                    return;}
+                if(this.updateList.certificates==''){
+                    this.updataerror=true;
+                    this.errortext='请上传凭证！';
                     return;}
                 this.updataerror=false;
-                this.$http.post('./merchant/update',data)
+                this.$http.post('./merchant/update',this.updateList)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             $(".modal").modal("hide");

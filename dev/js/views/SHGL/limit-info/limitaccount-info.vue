@@ -8,7 +8,6 @@
                 <a v-link="{name:'limitaccount-management'}">账户列表</a>
                 <span>账户明细</span>
             </div>
-        <div class="content " slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -84,7 +83,7 @@
                 </div>
                 <div v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
                                 <tr  role="row">
                                     <th>订单号/交易流水号</th>
@@ -333,6 +332,10 @@
     }
      .modal-header{
         margin-bottom: 20px;
+    }
+    table tr td,table tr th{
+        padding: 10px;
+        text-align: center;
     }
 </style>
 <script>
