@@ -39,12 +39,13 @@
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号" style="width:185px">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">已关闭</option>
+                                        <option value="0">已关闭</option>
+                                        <option value="1">等待审核</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">等待对账</option>
                                         <option value="4">对账成功</option>
@@ -91,8 +92,12 @@
                                         <td>{{apd.advancePaymentAmount}}</td>
                                         <td><a v-link="{name:'limitaccount-info'}">查看</a></td>
                                         <td>
-                                            <template v-if="apd.status==1">对账成功</template>
-                                            <template v-if="apd.status==2">对账失败</template>
+                                            <template v-if="apd.status==0">已关闭</template>
+                                            <template v-if="apd.status==1">等待审核</template>
+                                            <template v-if="apd.status==2">等待划付</template>
+                                            <template v-if="apd.status==3">等待对账</template>
+                                            <template v-if="apd.status==4">对账失败</template>
+                                            <template v-if="apd.status==5">划付失败</template>
                                         </td>
                                         <td><a v-link="{name:'payment-details'}">查看</a></td>
                                         <td>{{apd.remarks}}</td>

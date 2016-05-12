@@ -147,7 +147,7 @@
                                     </td>
                                     <td>
                                         <template v-if="trlist.type==2">
-                                            <a href="#">详情</a>
+                                            <a v-link="{name:''}">详情</a>
                                         </template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>

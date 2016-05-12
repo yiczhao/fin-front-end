@@ -41,6 +41,7 @@
                         </div>
                     </form>
                 </div>
+
                 <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -67,15 +68,15 @@
                                 <td>{{prepayment.cityName}}</td>
                                 <td>{{prepayment.balanceAmount}}</td>
                                 <td>
-                                     <template v-if="prepayment.status==0" style="color:red">
-                                        停用
+                                     <template v-if="prepayment.status==0" >
+                                        <span style="color:rgb(255,​ 0,​ 0);">停用</span>
                                      </template>
-                                     <template v-if="prepayment.status==1">
-                                        启用
+                                     <template v-if="prepayment.status==1" >
+                                        <span style="color:rgb(0,​ 128,​ 0);">正常</span>
                                      </template>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_prepayment_recharge" @click="getRechargeInfo(prepayment.id)">预付</a>
+                                    <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)">预付</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>
                                 <td>{{prepayment.connectionPerson}}</td>
@@ -92,9 +93,10 @@
                         </page>
                     </div>
                 </div>
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div v-else style="padding: 30px;font-size: 16px;text-align: center">
                     未查询到预付款商户信息！
                 </div>
+
                 <div id="modal_prepayment_info" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -112,13 +114,13 @@
                                             <input type="text" class="form-control" v-model="merchantInfo.merchantName" placeholder="商户名">
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control" v-model="merchantInfo.companyid" >
+                                            <select class="form-control" v-model="merchantInfo.companyId" >
                                             <option value="">请选择分公司</option>
                                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control" v-model="merchantInfo.cityid">
+                                            <select class="form-control" v-model="merchantInfo.cityId">
                                             <option value="">请选择城市</option>
                                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                             </select>
@@ -128,39 +130,44 @@
                                         </div>
                                      </form>
                                  </div>
-                                <div v-show="!!merchantList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                    <div class="datatable-scroll datatable-width">
-                                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
-                                                    <th>分公司</th>
-                                                    <th>城市</th>
-                                                    <th>商户名</th>
+
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer addbottom">
+                                    <div style="text-indent: 68%">已选择：</div>
+                                    <div class="col-md-7" style="height:300px;overflow: auto;border: 1px solid #ccc;">
+                                        <table v-if="merchantList.length>0" id="table1" class="table datatable-selection-single dataTable no-footer">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
+                                                        <th>分公司</th>
+                                                        <th>城市</th>
+                                                        <th>商户名</th>
+                                                    </tr>
+                                                </thead>
+                                            <tbody>
+                                                <tr v-for="(index,merchant) in merchantList">
+                                                    <td>
+                                                        <input type="checkbox" :value="merchant.merchantID" :id="merchant.merchantID" name="ckbox" />
+                                                        {{index+1}}
+                                                    </td>
+                                                    <td>{{merchant.subCompanyName}}</td>
+                                                    <td>{{merchant.cityName}}</td>
+                                                    <td>{{merchant.merchantName}}</td>
                                                 </tr>
-                                            </thead>
-                                        <tbody>
-                                            <tr v-for="(index,merchant) in merchantList">
-                                                <td>
-                                                    <input type="checkbox" :id="merchant.merchantID" name="ckbox" />
-                                                    {{index+1}}
-                                                </td>
-                                                <td>{{merchant.subCompanyName}}</td>
-                                                <td>{{merchant.cityName}}</td>
-                                                <td>{{merchant.merchantName}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                        <span v-else>
+                                            未查询到商户数据！
+                                        </span>
                                     </div>
-                                    <div class="prepayment-modal-btns">
-                                        <button type="button" @click="submit" class="btn btn-primary">添加商户</button>
-                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                     <div class="col-md-1">
+                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                        <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
+                                        <input type="button" class="btn btn-info" @click="submit()" value="确认">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul id="IDS"></ul>
                                     </div>
                                 </div>
-                             </div>
-                             <div class="modal-foot btns">
-                                
-                                <br/>
                              </div>
                         </div>
                     </div>
@@ -213,47 +220,17 @@
 
 
 
-                                <div v-show="!!merchantList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                    <div class="datatable-scroll datatable-width">
-                                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
-                                                    <th>分公司</th>
-                                                    <th>城市</th>
-                                                    <th>商户名</th>
-                                                </tr>
-                                            </thead>
-                                        <tbody>
-                                            <tr v-for="(index,merchant) in merchantList">
-                                                <td>
-                                                    <input type="checkbox" :id="merchant.merchantID" name="ckbox" />
-                                                    {{index+1}}
-                                                </td>
-                                                <td>{{merchant.subCompanyName}}</td>
-                                                <td>{{merchant.cityName}}</td>
-                                                <td>{{merchant.merchantName}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                    <div class="prepayment-modal-btns">
-                                        <button type="button" @click="submit" class="btn btn-primary">添加商户</button>
-                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                    </div>
-                                </div>
-                             </div>
+                               
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </index>
 </template>
-<style>
-    .datatable-width{
-        max-width: 500px;
-    }
+<style lang="sass">
     .prepayment-modal-btns{
        text-align: center;
     }
@@ -266,6 +243,44 @@
     }
     .btns{
         text-align: center;
+    }
+    .addbottom{
+        margin-top: 15px;
+        .col-md-2{
+            text-align: center;
+            input{
+                margin-bottom: 10px;
+            }
+        }
+        .col-md-7{
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+        .col-md-1{
+            padding-top: 40px;
+            input{
+                margin:15px 0;
+            }
+        }
+        ul{
+            list-style: none;
+            border: 1px solid #ccc;
+            padding:10px;
+            height: 300px;
+            overflow: auto;
+            li{
+                margin:5px 0;
+                cursor: pointer;
+                padding-left:3px;
+            }
+            li.check-li{
+                background: #ccc;
+            }
+        }
+    }
+    .btn.btn-info {
+        margin: 2px;
     }
 </style>
 <script>
@@ -288,12 +303,13 @@
                 cityList:[],
                 prepaymentList:[],
                 merchantList:[],
+                addId:[],
                 merchantInfo:{
-                    companyid:"",
-                    cityid:"",
+                    companyId:"",
+                    cityId:"",
                     merchantOperationID:"",
                     merchantName:"",
-                    isAdvancePayment:0
+                    isAdvancePayment:"0"
                 },
                 applyAdvancePay:{
                     merchantName:"",//商户名
@@ -347,9 +363,23 @@
                             this.applyAdvancePay.advancePaymentAmount="";//    预付金额    Integer   --3       
                             this.applyAdvancePay.remarks="";// 备注  String           --4
                         }
+
+                        //判断是否有银行卡账号
+                        if(this.applyAdvancePay.collectionAccountNumber== null){
+                            swal({
+                                title: "该商户未设置划款账户，无法充值！",
+                                type: "warning",
+                                confirmButtonColor: "#2196F3"
+                            });
+                            return false;
+                        }else{
+                            //显示窗口
+                            $("#modal_prepayment_recharge").modal('show');
+                        }
                     }, function (response) {
                         console.log(response);
                     });
+
             },
             //获取商户数据
              getMerchantList:function(data){
@@ -397,6 +427,7 @@
             },
             queryForMerchantList:function(){
                 //设置全选属性
+                this.clear();
                 this.getMerchantList(this.merchantInfo);
             },
             subApplyAdvancePay:function(){
@@ -419,21 +450,50 @@
                     //关闭弹出层
                     $(".modal").modal("hide");
             },
-            submit:function(){
-                var arrays = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  arrays.push($(this).prop("id"));  
-                });
-                let data={
-                    merchantIDs:arrays
+            //清除
+            clear:function(){
+                this.addId=[];
+                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
+                $('.addbottom .col-md-4').children('ul').html('');
+            },
+            appendLi:function(a){
+
+                let _tr=$("input[value='" + a + "']").closest('tr');
+                let _ul=$('.addbottom .col-md-4').children('ul');
+                _ul.append('<li value="'+a+'">'+_tr.children('td:last').html()+'</li>');
+                _tr.hide();
+            },
+            addTrue:function(e){
+                this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value);
+                for(let i=0;i<this.addId.length;i++){
+                    this.appendLi(this.addId[i]);
                 }
+                this.addId=[];
+            },
+            delTrue:function(e){
+                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
+                    _table=$(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
+                    _li= _ul.find('.check-li');
+                for(let i=0;i<_li.length;i++){
+                    _table.eq(_li.eq(i).index()).show();
+                }
+                _li.remove();
+            },
+            submit:function(e){
+                let _li=$("#IDS").children('li');
+                if(!_li.length>0)return;
+                let data={'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
                 this.$http.post('./advancePaymentMerchant/insertBatch',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
                         {
-                            alert("保存成功！");
                             this.query();
+                             swal({
+                                title: "保存成功！",
+                                type: "success",
+                                confirmButtonColor: "#2196F3"
+                            });
                         }
                     }, function (response) {
                         console.log(response);
@@ -459,6 +519,9 @@
             this.getPrepaymentList({});
             this.getSubcompany({});
             this.getCity({});
+             $(document).on('click','.addbottom .col-md-4 ul li',function(){
+                $(this).toggleClass('check-li');
+            });
         },
         components:{
             'datepicker': datepicker,
