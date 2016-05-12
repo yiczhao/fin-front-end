@@ -23,6 +23,30 @@ function member_model(http) {
             //     total: 25
             // }
             return http.post('./limitPurchaseAccount/list',data)
+        },
+        selectRechargeInfoByID (data) {
+
+            // data =
+            // {
+            //     "code": 0,
+            //     "message": "success",
+            //     "data": {
+            //         "id": 1,
+            //         "merchantID": 1667,
+            //         "balanceLimit": 850,
+            //         "balancePrincipal": 830,
+            //         "collectionAccountName": "刘楠",
+            //         "collectionAccountNumber": 6217002870014440018,
+            //         "collectionBankName": "中国建设银行股份有限公司武汉神龙支行",
+            //         "collectionBankNumber": 105521001099,
+            //         "merchantName": "北京楚地人家长辛店店",
+            //         "payAccount": "翟敬静"
+            //     }
+            // }
+            return http.post('./limitPurchaseAccount/selectRechargeInfoByID',data)
+        },
+        recharge (data) {
+            return http.post('./limitPurchaseAccount/recharge',data)
         }
     }
 

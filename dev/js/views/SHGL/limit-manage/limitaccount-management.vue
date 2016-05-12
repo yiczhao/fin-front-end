@@ -17,14 +17,6 @@
                         <span>使用比：{{nums.val3}}%</span>
                         <span>剩余额度：{{nums.val4}}</span>
                     </div>
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.keyword" placeholder="账户名">
-                        </div>
-                        <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
-                        </div>
-                    </form>
                 </div>
                 <div class="dataTables_wrapper no-footer">
                     <div v-if="zdlists.length>0"  class="datatable-scroll">
@@ -59,7 +51,7 @@
                                 <td>{{trlist.recycleCount}}</td>
                                 <td>{{trlist.priorLevel}}</td>
                                 <td><a href="">{{trlist.supplyMerchant}}</a></td>
-                                <td><a data-toggle="modal" data-target="#modal_pay" href="javascript:void(0)">充值</a></td>
+                                <td><a @click="selectRecharge(trlist.id)" href="javascript:void(0)">充值</a></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             </tbody>
@@ -86,71 +78,63 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label>商户名：</label>
-                                        <span>南昌玩聚和他(她)朋友们咖啡馆</span>
+                                        <span>{{rechargeInfo.merchantName}}</span>
                                     </div>
                                     <div class="form-group">
                                         <label>额度余额：</label>
-                                        <span>4,539.00</span>
+                                        <span>{{rechargeInfo.balanceLimit/100 | currency '' }}</span>
                                     </div>
                                     <div class="form-group">
                                         <label>本金余额：</label>
-                                        <span>3,631.20</span>
+                                        <span>{{rechargeInfo.balancePrincipal/100 | currency '' }}</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>额度：</label>
-                                        <input type="text" class="form-control" v-validate:val1="['required']">
-                                        <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请输入额度</span>
-                                    </div>
+                                        <input type="text" class="form-control" v-validate:val1="['required']" v-model="addData.purchaseLimit"></div>
                                     <div class="form-group">
                                         <label><i>*</i>本金：</label>
-                                        <input type="text" class="form-control" v-validate:val2="['required']">
-                                        <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简额度</span>
-                                    </div>
+                                        <input type="text" class="form-control" v-validate:val2="['required']" v-model="addData.purchaseCost"></div>
                                     <div class="form-group">
                                         <label><i>*</i>折扣：</label>
-                                        <input type="text" class="form-control" v-validate:val3="['required']">
-                                        <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入折扣</span>
-                                    </div>
+                                        <input type="text" class="form-control" v-validate:val3="['required']" v-model="addData.discount"></div>
                                     <div class="form-group">
                                         <label><i>*</i>方式：</label>
-                                        <label><input type="radio" value="one" v-model="payType">
+                                        <label><input type="radio" value="1" v-model="addData.payType">
                                         现金转账</label>
-                                        <label><input type="radio" value="two" v-model="payType">
+                                        <label><input type="radio" value="2" v-model="addData.payType">
                                         资源置换</label>
                                     </div>
-                                    <template v-show="payType=='one'">
-                                        <div class="form-group">
-                                            <label>付款账户：</label>
-                                            <span>南昌备付金</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>收款信息：</label>
-                                            <p>账户名：魏璇</p>
-                                            <p>账  号：6214837910896095</p>
-                                            <p>开户行：招商银行股份有限公司南昌营业部</p>
-                                            <p>提入行号：308421022022</p>
-                                        </div>
-                                    </template>
+                                    <div class="form-group" v-show="addData.payType=='1'">
+                                        <label>付款账户：</label>
+                                        <span>{{rechargeInfo.payAccount}}</span>
+                                    </div>
+                                    <div class="form-group" v-show="addData.payType=='1'">
+                                        <label>收款信息：</label>
+                                        <p>账户名：{{rechargeInfo.collectionAccountName}}</p>
+                                        <p>账  号：{{rechargeInfo.collectionAccountNumber}}</p>
+                                        <p>开户行：{{rechargeInfo.collectionBankName}}</p>
+                                        <p>提入行号：{{rechargeInfo.collectionBankNumber}}</p>
+                                    </div>
                                     <div class="form-group" v-else>
                                         <label><i>*</i>上传凭证：</label>
-                                        <input type="file">
+                                        <input @change="uploads($event)" type="file">
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>类型：</label>
-                                        <label><input type="radio" v-model="zdhf" value="one">
+                                        <label><input type="radio" v-model="addData.rechargeType" value="1">
                                         循环充值</label>
-                                        <label><input type="radio" v-model="zdhf" value="two">
+                                        <label><input type="radio" v-model="addData.rechargeType" value="2">
                                         结算充值</label>
                                     </div>
                                     <div class="form-group">
                                         <label for="tarea" class="w28"><i>*</i>备注：</label>
-                                        <textarea class="form-control" width="70%" cols="20" rows="3"></textarea>
+                                        <textarea class="form-control" v-validate:val4="['required']" v-model="addData.remarks" width="70%" cols="20" rows="3"></textarea>
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" @click="addBtn" class="btn btn-primary">充值</button>
                                     </div>
-                                    <div class="form-group">
-                                        <span class="suberror validation-error-label">你的信息未填写完整</span>
+                                    <div class="form-group tc">
+                                        <span v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                     </div>
                                 </div>
                             </div>
@@ -163,13 +147,7 @@
 </template>
 <style lang="sass" scoped>
      .validation-error-label{
-        margin-left: 20%;
-    }
-     .timeerror,.suberror,.suberror1{
-        display: none;
-    }
-     .suberror,.suberror1{
-        padding-top: 3px;
+         display: inline-block;
     }
      .panel-heading{
          div{
@@ -213,9 +191,11 @@
                   }
              }
             p{
-                width: 80%;
+                width: 90%;
                 margin: 0 auto;
                 padding: 5px 0;
+                background: #ccc;
+                text-indent: 10px;
             }
          }
          .tc{
@@ -237,17 +217,20 @@
                 page_size:15,
                 pageall:1,
                 loginList:{},
-                defaultData:{"id": "","keyword": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{'id': '','keyword': '','pageIndex': 1, 'pageSize': 15},
                 zdlists:[],
                 accountId:'',
                 zdhf:'one',
-                payType:'one',
+                addData:{},
+                errortext:'',
                 nums:{
                     'val1':0,
                     'val2':0,
                     'val3':0,
                     'val4':0,
-                }
+                },
+                rechargeInfo:{},
+                fire:false
             }
         },
         methods:{
@@ -255,30 +238,84 @@
                 this.model.post_point_exchange_list(data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
-                                this.$set('zdlists', response.data.data)
-                                this.$set('pageall', response.data.total)
-//                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-//                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                             }, function (response) {
                                 console.log(response);
                             });
             },
             initList(){
-                $(".modal").modal("hide");
+                $('.modal').modal('hide');
+                this.addData={
+                    'limitPurchaseAccountID':'',
+                            'purchaseLimit':'',
+                            'purchaseCost':'',
+                            'discount':'',
+                            'payType':'1',
+                            'rechargeType':'1',
+                            'remarks':'',
+                            'certificates_id':''
+                };
                 this.getZlists(this.defaultData);
             },
+            selectRecharge(_id){
+                this.accountId=_id;
+                this.model.selectRechargeInfoByID({'id':_id})
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('rechargeInfo', response.data.data) : null;
+                            $('#modal_pay').modal('show');
+                        }, function (response) {
+                            console.log(response);
+                        });
+            },
+            uploads(e){
+                let files=e.target.files[0];
+                let vm=this;
+                var reader = new FileReader();
+                reader.readAsDataURL(files);
+                reader.onload = function(e){
+                    let datas={
+                        name:files.name,
+                        data:this.result.split(',')[1]
+                    }
+                    vm.$http.post('./file/upload',datas)
+                            .then((response)=>{
+                        vm.addData.certificates_id=response.data.data;
+                    vm.saveerror='';
+                    swal({
+                        title: "上传成功！",
+                        type: "success",
+                        confirmButtonColor: "#2196F3"
+                    })
+                })
+                }
+            },
             addBtn(){
-
+                this.errortext='';
+                if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
+                if(this.addData.certificates_id==''&&this.addData.payType=='2'){this.fire=true;this.errortext='请上传凭证';return;}
+                let data={};this.addData.limitPurchaseAccountID=this.accountId;
+                $.extend(true, data,this.addData);
+                data.purchaseLimit=parseInt(data.purchaseLimit)*100;
+                data.purchaseCost=parseInt(data.purchaseCost)*100;
+                this.model.recharge(data)
+                        .then(function (response) {
+                            this.initList();
+                            swal({
+                                title: "已充值！",
+                                type: "success",
+                                confirmButtonColor: "#2196F3"
+                            });
+                        }, function (response) {
+                            console.log(response);
+                        });
             }
         },
         ready() {
             let vm=this;
 //            vm.accountId=vm.defaultData.id=vm.$route.params.merchantID;
             vm.initList();
-            $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
-                this.fire=false;
-                vm.$resetValidation();
-            })
         },
         components:{
         },
