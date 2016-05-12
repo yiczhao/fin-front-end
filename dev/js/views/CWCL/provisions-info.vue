@@ -114,7 +114,7 @@
                                     </td>
                                     <td>
                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  @click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
-                                        <a v-link="" v-if="trlist.status==1">详情</a>
+                                        <a v-link="{name:'payment-details'}" v-if="trlist.status==1">详情</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
