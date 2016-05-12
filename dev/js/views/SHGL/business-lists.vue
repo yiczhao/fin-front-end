@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityId">
                                 <option value="">请选择城市</option>
-                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
+                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
                         <div class="form-group">
