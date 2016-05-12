@@ -45,7 +45,7 @@
                                     <option value="3">等待对账</option>
                                     <option value="4">对账成功</option>
                                     <option value="5">划付失败</option>
-                                    <option value="6">已关闭</option>
+                                    <option value="0">已关闭</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -102,12 +102,13 @@
                                  <template v-if="n.status==3"> 等待对账</template>
                                  <template v-if="n.status==4"> 对账成功</template>
                                  <template v-if="n.status==5"> 划付失败</template>
+                                 <template v-if="n.status==0"> 已关闭</template>
                             </span>
                             <span>对账时间:</span>
                         </p>
                         <p>备注:{{n.remarks}}</p>
                     </div>
-                    <div class="pull-right" @click="getInfo(n,index)">
+                    <div v-if="n.status!=0" class="pull-right" @click="getInfo(n,index)">
                         <span class="pull-left">查看详情</span>
                         <ul class="icons-list pull-left" >
                             <li><a data-action="collapse"></a></li>
@@ -136,14 +137,19 @@
                                     <td>
                                         {{trlist.purpose}}
                                     </td>
-                                    <td><a href="">详情</a></td>
+                                    <td>
+                                        <template v-if="n.purpose==1"><a v-link="{name:'subsidy-appropriation'}">详情</a></template>
+                                        <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail'}">详情</a></template>
+                                        <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate'}">详情</a></template>
+                                        <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail'}">详情</a></template>
+                                    </td>
                                     <td>
                                         <template v-if="trlist.status==1"> 等待审核</template>
                                         <template v-if="trlist.status==2"> 等待划付</template>
                                         <template v-if="trlist.status==3"> 等待对账</template>
                                         <template v-if="trlist.status==4"> 对账成功</template>
                                         <template v-if="trlist.status==5"> 划付失败</template>
-                                        <template v-if="trlist.status==6"> 已关闭</template>
+                                        <template v-if="trlist.status==0"> 已关闭</template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
@@ -211,8 +217,8 @@
                                 <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
                                 <button  v-if="subtitle=='申请划付'" type="button" @click="applyTrue" class="btn btn-primary">申请</button>
                             </div>
-                            <div class="form-group">
-                                <span v-show="!remarks" class="validation-error-label">
+                            <div class="form-group tc">
+                                <span v-show="!remarks&&fires" class="validation-error-label">
                                     <template v-if="subtitle=='退回重审'">请填写退回原因</template>
                                     <template v-else>请填写备注</template>
                                 </span>
@@ -345,6 +351,9 @@
      .modal-body tr td, .modal-body tr th{
         padding: 10px;
     }
+    .tc .validation-error-label{
+        display: inline-block;
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -374,7 +383,8 @@
                 listinfos:[],
                 zdlists:[],
                 checkLists:[],
-                remarks:''
+                remarks:'',
+                fires:false
             }
         },
         methods:{
@@ -480,7 +490,7 @@
                         })
             },
             backTrue(){
-                if(this.remarks=='')return;
+                if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
                     'remarks':this.remarks,
@@ -498,7 +508,7 @@
                             })
             },
             applyTrue(){
-                if(this.remarks=='')return;
+                if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
                     'remarks':this.remarks,
