@@ -644,6 +644,10 @@
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
             },
+            clearUl(){
+                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
+                $('.addbottom .col-md-4').children('ul').html('');
+            },
             updateNew(_list){
                 this.accountId=_list.id;
                 this.seexh(this.accountId,false);
@@ -703,8 +707,7 @@
                         })
             },
             searchDigest(){
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
-                $('.addbottom .col-md-4').children('ul').html('');
+                this.clearUl();
                 this.$http.post('./merchant/list',this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
@@ -770,7 +773,7 @@
             submitTrue(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'merchantIds':Array.from(_li, i => parseInt(_li.getAttribute('value')))}
+                let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
                 this.$http.post('./limitPurchaseMerchant/add',data)
                         .then((response)=>{
                             this.initList();
@@ -784,7 +787,7 @@
             submitTrue2(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'id': this.accountId,'digestMerchants':Array.from(_li, i => parseInt(_li.getAttribute('value')))}
+                let data={'id': this.accountId,'digestMerchants':Array.from(_li, i => parseInt(i.getAttribute('value')))}
                 this.$http.post('./limitPurchaseMerchant/addDigest',data)
                         .then((response)=>{
                             this.initList();
