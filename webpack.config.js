@@ -4,7 +4,7 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
 	entry:{
-		index:__dirname+'/dev/js/app.js'
+		index:__dirname+'/dev/js/app.js',
 	},
 	output:{
 		path:__dirname+'/dist',
@@ -39,10 +39,10 @@ module.exports = {
             // {test: /\.(js|tag)$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?mimetype=image/svg+xml'},
-            {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
+            {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/woff"},
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/octet-stream"},
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"}
+            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
 		],
 		devtool: 'source-map'
 	},
@@ -50,19 +50,7 @@ module.exports = {
         presets: ['es2015', 'stage-0'],
         plugins: ['transform-runtime']
     },
-
 	plugins:[
-		new ExtractTextPlugin('app.css')
-	],
-	devServer: {
-		hot: true,
-		inline: true,
-		//其实很简单的，只要配置这个参数就可以了
-		proxy: {
-			'/dev/*': {
-				target: 'http://localhost:9000',
-				secure: false
-			}
-		}
-	}
+		new ExtractTextPlugin('app.css'),
+	]
 };

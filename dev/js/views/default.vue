@@ -1,16 +1,10 @@
-<style>
-    .col-xs-12{
-        background: #fff;
-        padding: 30px;
-    }
-</style>
 <template>
-    <index title="首页" isshow="">
-            <section class="content" slot="content">
-                <div class="col-xs-12">
+    <index isshow="">
+            <section class="content-wrapper" slot="content">
+                <div class="col-xs-12" style="background: #fff;padding: 20px;">
                     <p>[财务管理系统]欢迎您!</p>
-                    <p>尊敬的[{{uname}}]您好! 这是您第[{{timenum}}]次登录本系统!</p>
-                    <p>最近一次登录时间：{{utime}} 最近一次登录IP地址：{{uip}}</p>
+                    <p>尊敬的[{{loginList.trueName}}]您好! 这是您第[{{loginList.loginedCount}}]次登录本系统!</p>
+                    <p>最近一次登录时间：{{loginList.lastLoginedTime | datetime}} 最近一次登录IP地址：{{loginList.lastLoginedAddr}}</p>
                 </div>
             </section>
     </index>
@@ -19,19 +13,20 @@
     export default{
         data(){
             return{
-                uname:'123',
-                timenum:123,
-                utime:'2015/7/29 10:19:19',
-                uip:'192.168.1.1'
+                loginList:{}
             }
         },
         components:{
         },
         ready:function(){
-//            console.log(this.$route.params);
+            // *** 请求用户数据
+            if(!!sessionStorage.getItem('userData')) {
+                this.$set('loginList',JSON.parse(sessionStorage.getItem('userData')))
+            }else{
+                this.$router.go('login');
+            }
         },
         props:{
-
         }
     }
 </script>

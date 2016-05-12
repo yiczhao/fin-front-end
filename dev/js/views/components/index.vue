@@ -1,16 +1,17 @@
 <template>
-    <nv-header
-            :name="name"
-    ></nv-header>
-    <nv-menu keep-alive></nv-menu>
-    <div class="content-wrapper">
-        <breadcrumb
-                :isshow="isshow"
-                :ptitle="ptitle"
-                :title="title"
-                :hname="hname"
-        ></breadcrumb>
-        <slot name="content" slot="content"></slot>
+    <nv-header keep-alive></nv-header>
+    <div class="page-container">
+        <div class="page-content">
+            <nv-menu keep-alive></nv-menu>
+            <breadcrumb
+                    :isshow="isshow"
+                    :ptitle="ptitle"
+                    :title="title"
+                    :p2title="p2title"
+                    :hname="hname"
+                    keep-alive></breadcrumb>
+            <slot name="content" slot="content"></slot>
+        </div>
     </div>
     <nv-footer keep-alive></nv-footer>
 </template>
@@ -33,11 +34,11 @@
             }
         },
         props:{
-            name: {type: String,default:'xxxx'},
             isshow: {type: String,default:''},
             title: {type: String,default:'首页'},
             ptitle: {type: String,default:''},
-            hname: {type: String,default:''}
+            p2title: {type: String,default:''},
+            hname: {type: String,default:''},
         },
         components:{
             'nvHeader': nvHeader,

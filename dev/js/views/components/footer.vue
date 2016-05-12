@@ -1,6 +1,7 @@
 <template>
-    <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">卡说信息</a>.</strong> All rights
-        reserved.
-    </footer>
+    <div class="navbar navbar-default">
+        <div class="navbar-collapse collapse" id="navbar-second">
+            <div class="navbar-right" style="margin-top: 13px;color: #ccc;">财务管理系统 v2.0 @上海新卡说信息技术有限公司</div>
+        </div>
+    </div>
 </template>
