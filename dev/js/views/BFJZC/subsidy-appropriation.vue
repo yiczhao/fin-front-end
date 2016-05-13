@@ -124,7 +124,7 @@
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount}}</td>
-                                        <td><a href="#">明细</a></td>
+                                        <td><a v-link="{name:'trade-info'}">明细</a> </td>
                                         <td>
                                             <template v-if="sa.status==0">
                                                 已关闭
@@ -151,7 +151,7 @@
                                                 <a href="javascript:void(0);" @click="updateById(sa.id)">更新</a>
                                             </template>
                                             <template v-else>
-                                                <a href="#">查看</a></td>
+                                                <a v-link="{'name':'payment-details'}">查看</a>
                                             </template>
                                         
                                         <td>{{sa.activityName}}</td>
