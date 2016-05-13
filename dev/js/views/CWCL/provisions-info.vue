@@ -169,51 +169,25 @@
                                         <div class="form-group tc" v-show="glradio=='one'">
                                             <button class="btn" @click="dzOne(dzList.id)">选择付款流水</button>
                                         </div>
-                                    <div class="table2" v-show="checkOne&&glradio=='one' && !!gllists.length" v-cloak>
-                                        <div class="box-body">
-                                            <table id="table2" class="table table-bordered table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>订单号</th>
-                                                    <th>付款日期</th>
-                                                    <th>名称</th>
-                                                    <th>收款信息</th>
-                                                    <th>付款金额</th>
-                                                    <th>用途</th>
-                                                    <th>备注 </th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr v-for="n in gllists">
-                                                    <td>{{n.reserveCashId}}</td>
-                                                    <td>{{n.tradeTime | datetime}}</td>
-                                                    <td>{{n.collectionName}}</td>
-                                                    <td>{{n.accountName}}
-                                                        {{n.accountNumber}}</td>
-                                                    <td>{{n.payoutAmount/100 | currency '' }}</td>
-                                                    <td>
-                                                        <template v-if="n.purpose==1"> 补贴划付</template>
-                                                        <template v-if="n.purpose==2"> 额度采购</template>
-                                                        <template v-if="n.purpose==3"> 退税划付</template>
-                                                        <template v-if="n.purpose==4"> 预付款</template>
-                                                        <template v-if="n.purpose==5"> 供货商划付</template>
-                                                        <template v-if="n.purpose==6"> 往来款</template>
-                                                        <template v-if="n.purpose==7"> 转账退款</template>
-                                                        <template v-if="n.purpose==8"> 账户费用</template>
-                                                        <template v-if="n.purpose==9"> 其它</template>
-                                                    </td>
-                                                    <td>{{n.remarks}}</td>
-                                                    <td><a href="">选择</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                        <div class="form-group" v-show="glradio=='one'&&dzcheckList.purpose!=''">
+                                            <span class="iblock">用途：</span>
+                                            <span v-if="dzcheckList.purpose==1"> 补贴划付</span>
+                                            <span v-if="dzcheckList.purpose==2"> 额度采购</span>
+                                            <span v-if="dzcheckList.purpose==3"> 退税划付</span>
+                                            <span v-if="dzcheckList.purpose==4"> 预付款</span>
+                                            <span v-if="dzcheckList.purpose==5"> 供货商划付</span>
+                                            <span v-if="dzcheckList.purpose==6"> 往来款</span>
+                                            <span v-if="dzcheckList.purpose==7"> 转账退款</span>
+                                            <span v-if="dzcheckList.purpose==8"> 账户费用</span>
+                                            <span v-if="dzcheckList.purpose==9"> 其它</span>
                                         </div>
-                                    </div>
+                                        <div class="form-group" v-show="glradio=='one'&&dzcheckList.purpose!=''">
+                                            <span class="iblock">备注：</span><span>{{dzcheckList.remarks}}</span>
+                                        </div>
                                     <div  v-show="glradio=='two'">
                                         <div class="form-group">
                                             <label class="w28"><i>*</i>用途：</label>
-                                            <select class="form-control"  v-model="checkForm.purpose">
+                                            <select class="form-control"  v-model="manualCheck.purpose">
                                                 <option value="">请选择用途</option>
                                                 <option value="1">补贴划付</option>
                                                 <option value="2">额度采购</option>
@@ -228,22 +202,75 @@
                                         </div>
                                         <div class="form-group" >
                                             <label class="w28">收款方：</label>
-                                            <input type="text" class="form-control" v-model="skf" placeholder="五十字以内">
+                                            <input type="text" class="form-control" v-model="manualCheck.collectionName" placeholder="五十字以内">
                                         </div>
                                         <div class="form-group">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
-                                            <textarea class="form-control" id="tarea" width="70%" cols="20" rows="3"></textarea>
+                                            <textarea class="form-control" v-model="manualCheck.remarks" width="70%" cols="20" rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                <button type="button" @click="personTrue(person.id)" class="btn btn-primary">保存</button>
+                            <div class="modal-footer"  v-show="(glradio=='two'&&manualCheck.remarks!=''&&manualCheck.purpose!='')||dzcheckList.purpose!=''">
+                                <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div data-backdrop="static"  id="modal_dzone" class="modal fade" v-cloak>
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">交易对账</h5>
+                            </div>
+                            <div class="modal-body">
+                        <table v-if="gllists.length>0" id="table2" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th>付款时间</th>
+                                <th>收款方</th>
+                                <th>收款信息</th>
+                                <th>付款金额</th>
+                                <th>用途</th>
+                                <th>备注 </th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="n in gllists">
+                                <td>{{n.orderId}}</td>
+                                <td>{{n.payTime | datetime}}</td>
+                                <td>{{n.displayName}}</td>
+                                <td>{{n.collectionAccountName}}
+                                    {{n.collectionAccountNumber}}</td>
+                                <td>{{n.payAmount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="n.purpose==1"> 补贴划付</template>
+                                    <template v-if="n.purpose==2"> 额度采购</template>
+                                    <template v-if="n.purpose==3"> 退税划付</template>
+                                    <template v-if="n.purpose==4"> 预付款</template>
+                                    <template v-if="n.purpose==5"> 供货商划付</template>
+                                    <template v-if="n.purpose==6"> 往来款</template>
+                                    <template v-if="n.purpose==7"> 转账退款</template>
+                                    <template v-if="n.purpose==8"> 账户费用</template>
+                                    <template v-if="n.purpose==9"> 其它</template>
+                                </td>
+                                <td>{{n.remarks}}</td>
+                                <td><a href="javascript:void(0);" @click="checkDz(n.purpose,n.remarks,n.id)">选择</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            <div v-else>
+                                未查询到对账数据
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </index>
@@ -289,6 +316,14 @@
     }
      .content{
         padding: 0 15px;
+         #table1{
+             tr{
+                 td,th{
+                     padding-left: 5px;
+                     padding-right: 5px;
+                 }
+             }
+         }
     }
       .datetime-picker{
         margin:0 15px;
@@ -305,6 +340,20 @@
     }
      .modal-header{
         margin-bottom: 20px;
+    }
+    #modal_dzone{
+        margin-top: 140px;
+        table{
+            padding: 10px;
+            tr{
+                td,th{
+                    padding: 5px;
+                }
+            }
+        }
+        .modal-body{
+            padding: 0 20px 20px;
+        }
     }
 </style>
 <script>
@@ -339,8 +388,16 @@
                     pageIndex:1,
                     pageSize:15
                 },
+                dzcheckList:{
+                    purpose:'',
+                    remarks:'',
+                },
                 glradio:'one',
-                skf:''
+                associateCheck:{
+                    "orderID":'',
+                    "detailID":''
+                },
+                manualCheck:[]
             }
         },
         methods:{
@@ -362,7 +419,21 @@
                             console.log(response);
                         });
             },
+            cleardz(){
+                this.dzcheckList={
+                    purpose:'',
+                            remarks:'',
+                };
+                this.manualCheck={
+                    "id":'',
+                    "collectionName":'',
+                    "purpose":'',
+                    "remarks":''
+                }
+                this.glradio='one';
+            },
             duizhang(a){
+                this.cleardz();
                 this.$set('dzList', a);
                 this.dz_show=true;
             },
@@ -377,15 +448,50 @@
                 this.getZlists(this.checkForm);
             },
             dzOne(id){
-                // *** 请求公司数据
-                this.$http.post('./reservecash/order/checklist/'+id)
+                // *** 请求对账数据
+                this.$http.post('./reservecash/selectReserveCashOrderListByID',{'id':id})
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('gllists', response.data.data) : null;
                             (this.checkOne)?this.checkOne=false:this.checkOne=true;
+                            $('#modal_dzone').modal('show');
                         }, function (response) {
                             console.log(response);
                         });
+            },
+            checkDz(purpose,remarks,_id){
+                  this.dzcheckList={
+                      purpose:purpose,
+                      remarks:remarks,
+                  }
+                    this.associateCheck.orderID=_id;
+                  $('#modal_dzone').modal('hide');
+            },
+            dzTrue(_id){
+                console.log(_id);
+                if(this.glradio=='one'){
+                    this.associateCheck.detailID=_id;
+                    this.$http.post('./reservecash/associateCheck',this.associateCheck)
+                            .then((response)=>{
+                                this.initList();
+                                swal({
+                                    title: "对账成功！",
+                                    type: "success",
+                                    confirmButtonColor: "#2196F3"
+                                })
+                            })
+                }else{
+                    this.manualCheck.id=_id;
+                    this.$http.post('./reservecash/manualCheck',this.manualCheck)
+                            .then((response)=>{
+                                this.initList();
+                                swal({
+                                    title: "对账成功！",
+                                    type: "success",
+                                    confirmButtonColor: "#2196F3"
+                                })
+                            })
+                }
             },
             getTwo(num){
                 if(num.toString().length>=2) return num;
@@ -434,6 +540,12 @@
             this.accountId=this.checkForm.accountId=this.$route.params.accountId
             this.getTime();
             this.initList();
+            $('#modal_dzone').on('hidden.bs.modal',function(){
+                if(!$('#modal_fzr').is(':hidden')){
+                    $('#app').addClass('modal-open');
+                }
+                $('body').css('padding-right',0);
+            })
         },
         components:{
             'datepicker': datepicker,

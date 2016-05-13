@@ -68,7 +68,7 @@
                     </form>
                 </div>
             </div>
-            <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed"   v-for="(index,n) in zdlists">
+            <div v-if="zdlists.length>0" class="panel panel-flat panel-collapsed"   v-for="(index,n) in zdlists">
                 <div class="panel-heading bgddd">
                     <div class="panel-title">
                         <p>
@@ -239,7 +239,7 @@
                             <div class="tc f20">
                                 请选择备付金银行流水
                             </div>
-                            <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                            <table class="table" style="border: 1px solid #ccc;">
                                             <thead>
                                                 <tr role="row">
                                                     <th>凭证号</th>
