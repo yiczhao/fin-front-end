@@ -172,7 +172,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-else>
+            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-if="zdlists.length!>0" >
                 未找到您要查询的账单
             </div>
             <page :all="pageall"
