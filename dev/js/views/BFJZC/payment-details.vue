@@ -425,10 +425,14 @@
             },
             back(a){
                 this.subtitle = '退回重审';
+                this.remarks='';
+                this.fires=false;
                 this.accountId=a;
             },
             apply(a){
                 this.subtitle = '申请划付';
+                this.remarks='';
+                this.fires=false;
                 this.accountId=a;
             },
             update(a){
