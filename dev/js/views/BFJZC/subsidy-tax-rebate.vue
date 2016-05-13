@@ -111,7 +111,7 @@
                                             <template v-if="strd.createType==2">手工录入</template>
                                         </td>
                                         <td>{{strd.taxRebateAmount}}</td>
-                                        <td><a :href="strd.id">明细</a> </td>
+                                        <td><a v-link="{name:'trade-info'}">明细</a> </td>
                                         <td>
                                             <template v-if="strd.status==0">
                                                 已关闭
@@ -138,7 +138,7 @@
                                                 <a href="javascript:void(0);" @click="updateById(strd.id)">更新</a>
                                             </template>
                                             <template v-else>
-                                                <a href="#">查看</a>
+                                                <a v-link="{'name':'payment-details'}">查看</a>
                                             </template>
                                         </td>
                                         <td>{{strd.remarks}}</td>
