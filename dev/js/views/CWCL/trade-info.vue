@@ -59,7 +59,7 @@
                             <input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="phone" placeholder="手机号">
+                            <input type="number" class="form-control" v-model="phone" placeholder="手机号">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="activityID">
@@ -146,8 +146,8 @@
                                         </template>
                                     </td>
                                     <td>
-                                        <template v-if="trlist.type==2">
-                                            <a v-link="{name:''}">详情</a>
+                                        <template v-if="trlist.type==2"> 
+                                            <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
                                         </template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
@@ -330,6 +330,7 @@
         },
         data(){
             return{
+                origin:window.origin,
                 subCompanID:"",
                 cityID:"",
                 type:"",
@@ -479,6 +480,11 @@
                         if (response.data.code==0)
                         {
                             this.query();
+                            swal({
+                                title: "保存成功！",
+                                type: "success",
+                                confirmButtonColor: "#2196F3"
+                            })
                         }
                     }, function (response) {
                         console.log(response);
@@ -546,7 +552,17 @@
         
         ready: function () {
             this.clear();
-            this.getTradeList({});
+            var d=new Date()
+            var day=d.getDate()
+            var month=d.getMonth() + 1
+            var year=d.getFullYear()
+            var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+            var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+            let data={
+                startDate:newD,
+                endDate:endD
+            }
+            this.getTradeList(data);
             this.getSubcompany({});
             this.getCity({});
             this.getactivitys({});
@@ -568,7 +584,6 @@
                this.getactivitys(data);
             },
             timeRange:function(){
-                console.log();
                 var d=new Date()
                 var day=d.getDate()
                 var month=d.getMonth() + 1
