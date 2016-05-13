@@ -120,7 +120,7 @@
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                                 <tr role="row">
-                                    <th>生成日期{{$index}}</th>
+                                    <th>生成日期</th>
                                     <th>商户名称</th>
                                     <th>划付金额</th>
                                     <th>用途</th>
