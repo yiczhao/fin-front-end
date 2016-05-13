@@ -280,7 +280,7 @@
                                                 <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
                                                 <td>{{n.updateAt | datetime}}</td>
                                                 <td>{{n.updateAt}}</td>
-                                                <td><a href="{{origin}}/file/download/{{n.certificates}}" >下载</a></td>
+                                                <td><a v-if="n.certificates!=''" href="{{origin}}/file/download/{{n.certificates}}" >下载</a></td>
                                                 <td>{{n.remarks}}</td>
                                         </tr>
                                         <tr v-if="historyList.length<1">

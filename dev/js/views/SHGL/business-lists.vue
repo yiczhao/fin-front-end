@@ -146,7 +146,7 @@
                                         <td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>
                                         <td>2013-06-03 13:26:19</td>
                                         <td>贾燕</td>
-                                        <td><a href="">下载</a></td>
+                                        <td><a v-if="n.certificates!=''"  href="">下载</a></td>
                                         <td>总店额度采购</td>
                                     </tr>
                                     <!--<tr role="row"  v-for="n in checkLists">-->
