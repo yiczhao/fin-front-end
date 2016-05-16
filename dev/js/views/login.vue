@@ -8,15 +8,15 @@
                 <!-- Content area -->
                 <div class="content">
                     <!-- Simple login form -->
-                    <form action="index.html" class="form-validate">
+                    <form autocomplete="on">
                         <div class="panel panel-body login-form">
                             <div class="text-center">
                                 <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
                                 <h5 class="content-group">财务管理系统<small class="display-block">登录</small></h5>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
-                                <input @keyup.enter="login" type="text" class="form-control userName" v-model="username" placeholder="用户名">
-                                <div class="form-control-feedback">
+                                <input @keyup.enter="login" type="text" class="form-control userName" name="username" v-model="username" placeholder="用户名">
+                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
                                 <label v-show="usershow" class="validation-error-label" v-text="usererror"></label>
