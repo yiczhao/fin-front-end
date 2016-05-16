@@ -124,7 +124,7 @@
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <span>商户id：4392</span>
+                                    <span>商户ID：4392</span>
                                     <span>商户名：南昌玩聚恒茂店</span>
                                     <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit'}">南昌玩聚和他(她)朋友的咖啡馆</a></span>
                                 </div>
@@ -146,7 +146,7 @@
                                         <td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>
                                         <td>2013-06-03 13:26:19</td>
                                         <td>贾燕</td>
-                                        <td><a v-if="n.certificates!=''"  href="">下载</a></td>
+                                        <td><a href="">下载</a></td>
                                         <td>总店额度采购</td>
                                     </tr>
                                     <!--<tr role="row"  v-for="n in checkLists">-->
@@ -245,7 +245,7 @@
                                         <input style="display: inline-block" type="file" @change="uploads($event)">
                                     </div>
                                     <div class="form-group">
-                                        <label for="tarea" class="w28"><i>*</i>备注：</label>
+                                        <label for="tarea" class="w28" style="position: relative;top: -40px;"><i>*</i>备注：</label>
                                         <textarea v-validate:remarks="['required']" class="form-control" v-model="updateList.remarks" :value="updateList.remarks" ></textarea>
                                     </div>
                                     <div class="form-group tc">
@@ -355,6 +355,7 @@
     export default{
         data(){
             return{
+                origin:window.origin,
                 pagecur:1,
                 page_size:15,
                 pageall:1,
@@ -517,13 +518,14 @@
             },
             modal_updata(){
                 this.errortext='';
-                $('input[type="file"]')[0].value='';
                 $('#modal_updata').modal('show');
             },
             updateBtn(_list){
                 console.log(_list);
                 var a=_list;
                 $.extend(true, this.updateList, a);
+                $('input[type="file"]')[0].value='';
+                this.updateList.certificates='';
                 this.updateList.accountType=this.accountType;
             },
             updateTrue(data){
@@ -584,6 +586,8 @@
             })
             $('#modal_control').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
+                $('input[type="file"]')[0].value='';
+                vm.updateList.certificates='';
             })
             $('#modal_updata').on('hidden.bs.modal',function(){
                 if(!$('#modal_control').is(':hidden')){

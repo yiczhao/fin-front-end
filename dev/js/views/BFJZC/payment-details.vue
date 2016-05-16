@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <div class="datatable-scroll">
+            <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
                 <table class="table main-table">
                     <thead>
                         <tr role="row">
@@ -201,7 +201,7 @@
             </div>
 
 
-            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" >
+            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                 未找到您要查询的账单
             </div>
             <page :all="pageall"
