@@ -111,7 +111,7 @@
                                 <template v-if="n.payType==1">{{n.payoutAccount}}</template>
                                 <template v-else>商户预付款账户</template>
                             </td>
-                            <td>{{n.payoutAccountName}}</td>
+                            <td>{{n.incomeAccount}}</td>
                             <td>{{n.payoutAccountName}}</td>
                             <td>{{n.payoutAccountNumber}}</td>
                             <td>
