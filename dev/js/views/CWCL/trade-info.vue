@@ -32,7 +32,6 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="timeRange">
-                                <option value="">请选择日期</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -334,7 +333,7 @@
                 subCompanID:"",
                 cityID:"",
                 type:"",
-                timeRange:'',
+                timeRange:'1',
                 startDate:"",
                 endDate:"",
                 merchantID:"",      
@@ -494,7 +493,15 @@
             query: function () {
                 //初始化
                 this.clear();
-                // let data=this.data;
+                if (this.startDate=="" && this.endDate=="") {
+                    var d=new Date()
+                    var day=d.getDate()
+                    var month=d.getMonth() + 1
+                    var year=d.getFullYear()
+                    this.startDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+                    this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+            
+                }
                 let data={
                         subCompanyID:this.subCompanID,
                         cityID:this.cityID,

@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" class="btn btn-info"  data-toggle="modal"  data-target="#modal_prepayment_info" @click="queryForMerchantList" value="添加">
+                            <input type="button" class="btn btn-info"  data-toggle="modal"  @click="showMerchants()" value="添加">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID">
@@ -424,6 +424,16 @@
                 }else{
                     $("input[name='ckbox']").prop({'checked':false});
                 }
+            },
+            //显示选择商户窗口
+            showMerchants:function(){
+                this.merchantInfo.companyId="",
+                this.merchantInfo.cityId="",
+                this.merchantInfo.merchantOperationID="",
+                this.merchantInfo.merchantName="",
+                this.queryForMerchantList();
+
+                $("#modal_prepayment_info").modal('show');
             },
             queryForMerchantList:function(){
                 //设置全选属性
