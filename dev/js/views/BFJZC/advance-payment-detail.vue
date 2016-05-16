@@ -21,7 +21,6 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="timeRange">
-                                        <option value="">请选择日期</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
                                         <option value="2">最近一个月</option>
@@ -140,7 +139,7 @@
                 createType:"",
                 status:"",
                 remarks:"",
-                timeRange:'',
+                timeRange:'1',
                 startDate:"",
                 endDate:"",
                 merchantID:"",      
@@ -198,6 +197,14 @@
             },
             query: function () {
                 // let data=this.data;
+                if (this.startDate=="" && this.endDate=="") {
+                    var d=new Date()
+                    var day=d.getDate()
+                    var month=d.getMonth() + 1
+                    var year=d.getFullYear()
+                    this.startDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+                    this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                }
                 let data={
                     subCompanyID:this.subCompanyID,
                     cityID:this.cityID,
@@ -214,6 +221,16 @@
             },
         },
         ready: function () {
+            var d=new Date()
+            var day=d.getDate()
+            var month=d.getMonth() + 1
+            var year=d.getFullYear()
+            var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
+            var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+            let data={
+                startDate:newD,
+                endDate:endD
+            }
             this.getadvancePaymentDetailList({});
             this.getSubcompany({});
             this.getCity({});

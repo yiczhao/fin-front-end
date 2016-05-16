@@ -84,6 +84,19 @@
                                 <td>{{prepayment.servicePerson}}</td>
                             </tr>
                         </tbody>
+                        <tr role="row">
+                            <th></th>
+                            <th></th>
+                            <th><h5><b>合计</b></h5></th>
+                            <th></th>
+                            <th><B>{{count_balanceAmount}}</B></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </table>
                     </div>
                     <div class="datatable-footer">
@@ -327,6 +340,7 @@
                     merchantAccountID:""//商户账户ID   Integer   
                 },
                 entity:{},
+                count_balanceAmount:0,
             }
         },
         methods:{
@@ -538,6 +552,12 @@
             'dialog': dialog,
         },
         watch:{
+            prepaymentList(){
+                var _this=this;
+                this.prepaymentList.forEach(function(e){
+                    _this.count_balanceAmount+=e.balanceAmount;
+                });
+            },
             pagecur(){
                 this.pageIndex=this.pagecur;
                 this.query();
