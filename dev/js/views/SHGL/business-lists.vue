@@ -246,7 +246,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="w28"><i>*</i>上传凭证：</label>
-                                        <input style="display: inline-block" type="file" @change="uploads($event)">
+                                        <input style="display:none" type="file" @change="uploads($event)">
+                                        <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                        <span v-text="uploadText" v-show="uploadText!=''"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="tarea" class="w28" style="position: relative;top: -40px;"><i>*</i>备注：</label>
@@ -256,7 +258,7 @@
                                         <button type="button" @click="updateTrue(updateList)" class="btn btn-primary">保存</button>
                                     </div>
                                     <div class="form-group tc">
-                                        <span v-show="(!$vali.valid&&updataerro)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                                        <span v-show="(!$vali.valid&&updataerror)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                     </div>
                                 </div>
                             </form>
@@ -420,6 +422,7 @@
                     accountType:''
                 },
                 updataerror:false,
+                uploadText:'',
                 errortext:''
             }
         },
@@ -524,16 +527,17 @@
                 this.errortext='';
                 $('#modal_updata').modal('show');
             },
+            uploadClick(){
+                $('input[type="file"]').click();
+            },
             updateBtn(_list){
-                console.log(_list);
                 var a=_list;
                 $.extend(true, this.updateList, a);
-                $('input[type="file"]')[0].value='';
+                this.uploadText='';
                 this.updateList.certificates='';
                 this.updateList.accountType=this.accountType;
             },
             updateTrue(data){
-                console.log(data)
                 if(!this.$vali.valid){
                     this.updataerror=true;
                     this.errortext='您的信息未填写完整！';
@@ -557,7 +561,9 @@
                         });
             },
             uploads(e){
-                console.log(e.target);
+                if(e.target.value==''&&this.uploadText!=''){
+                    return;
+                }
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
@@ -570,6 +576,8 @@
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
                                     vm.updateList.certificates=response.data.data;
+                                    vm.uploadText=files.name;
+                                    this.updataerror=false;
                                     swal({
                                         title: "上传成功！",
                                         type:"success",
@@ -590,7 +598,7 @@
             })
             $('#modal_control').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
-                $('input[type="file"]')[0].value='';
+                vm.uploadText='';
                 vm.updateList.certificates='';
             })
             $('#modal_updata').on('hidden.bs.modal',function(){

@@ -206,7 +206,7 @@
                                      <div class="modal-body">
                                          <div class="form-group">
                                             <label>
-                                                <i>*</i>商户名称：
+                                                <i class="aaaa">*</i>商户名称：
                                             </label>
                                             <select class="form-control" id="tradeInfo_merchantId" v-model="select_merchantId" v-validate:val1="['required']">
                                             <option value="">请选择商户</option>
@@ -254,7 +254,9 @@
                                          </div>
                                          <div class="form-group">
                                              <label><i>*</i>上传凭证：</label>
-                                             <input type="file" style="display: inline-block;" @change="uploads($event)" v-validate:val9="['required']">
+                                             <input type="file" style="display: none;" @change="uploads($event)" v-validate:val9="['required']">
+                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
                                              <span v-if="$vali.val9.required && fire" class="validation-error-label">请选择凭证</span>
                                          </div>
                                          <div class="form-group">
@@ -366,6 +368,7 @@
                 cityList:[],
                 activityList:[],
                 merchantList:[],
+                uploadText:'',
                 count_consumptionAmount:0,count_discountAmount:0,count_payAmount:0,count_limitDeduct:0,
                 count_principalDeduct:0,count_thirdpartyReceivable:0,count_merchantSubsidyShould:0,
                 count_suspensionTax:0,count_merchantSubsidyActual:0,
@@ -538,8 +541,13 @@
                 this.count_suspensionTax=0;this.count_merchantSubsidyActual=0;
                 this.count_discountDiff=0;this.count_collectionAmount=0;this.count_commission33211=0;this.count_entryAmount=0;
             },
+            uploadClick(){
+                $('input[type="file"]').click();
+            },
             uploads(e){
-                console.log(e.target);
+                if(e.target.value==''&&this.uploadText!=''){
+                    return;
+                }
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
@@ -552,6 +560,12 @@
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
                         vm.tradeInfo.certificates=response.data.data;
+                        vm.uploadText=files.name;
+                        swal({
+                            title: "上传成功！",
+                            type:"success",
+                            confirmButtonColor: "#2196F3"
+                        })
                 })
                 }
             },

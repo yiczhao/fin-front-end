@@ -117,7 +117,9 @@
                                     </div>
                                     <div class="form-group" v-else>
                                         <label><i>*</i>上传凭证：</label>
-                                        <input @change="uploads($event)" type="file">
+                                        <input  style="display:none" @change="uploads($event)" type="file">
+                                        <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                        <span v-text="uploadText" v-show="uploadText!=''"></span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>类型：</label>
@@ -230,6 +232,7 @@
                     'val4':0,
                 },
                 rechargeInfo:{},
+                uploadText:'',
                 fire:false
             }
         },
@@ -269,7 +272,13 @@
                             console.log(response);
                         });
             },
+            uploadClick(){
+                $('input[type="file"]').click();
+            },
             uploads(e){
+                if(e.target.value==''&&this.uploadText!=''){
+                    return;
+                }
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
@@ -281,14 +290,15 @@
                     }
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
-                        vm.addData.certificates_id=response.data.data;
-                    vm.saveerror='';
-                    swal({
-                        title: "上传成功！",
-                        type: "success",
-                        confirmButtonColor: "#2196F3"
-                    })
-                })
+                                vm.addData.certificates_id=response.data.data;
+                                vm.saveerror='';
+                                vm.uploadText=files.name;
+                                swal({
+                                    title: "上传成功！",
+                                    type: "success",
+                                    confirmButtonColor: "#2196F3"
+                                })
+                     })
                 }
             },
             addBtn(){
@@ -316,6 +326,11 @@
             let vm=this;
 //            vm.accountId=vm.defaultData.id=vm.$route.params.merchantID;
             vm.initList();
+            $('#modal_pay').on('hidden.bs.modal', function () {
+                $('body').css('padding-right',0);
+                vm.uploadText='';
+                vm.addData.certificates_id='';
+            })
         },
         components:{
         },

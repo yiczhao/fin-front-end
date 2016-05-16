@@ -153,7 +153,7 @@
                 <!--编辑账户dialog-->
                 <validator name="vali">
                     <form novalidate>
-                <div data-backdrop="static"  id="modal_update" class="modal fade" style="display: none;">
+                <div data-backdrop="static" id="modal_update" class="modal fade modal_update" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -232,8 +232,10 @@
                                         <div class="pull-left">
                                             <label class="w28"><i>*</i>上传凭证：</label>
                                         </div>
-                                        <div class="pull-left">
-                                            <input type="file" @change="uploads($event)" value="">
+                                        <div class="pull-left" style="margin-right: 10px" >
+                                            <input type="file" style="display: none" @change="uploads($event)" value="">
+                                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                            <span v-text="uploadText" v-show="uploadText!=''"></span>
                                         </div>
                                         <div class="pull-left">
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
@@ -590,6 +592,7 @@
                     discountType: '',
                     id:''
                 },
+                uploadText:'',
                 historyList:[],
                 accountId:'',
                 nums:{
@@ -798,8 +801,13 @@
                             })
                 })
             },
+            uploadClick(){
+                $('input[type="file"]').click();
+            },
             uploads(e){
-                console.log(e.target);
+                if(e.target.value==''&&this.uploadText!=''){
+                    return;
+                }
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
@@ -812,6 +820,7 @@
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
                                 vm.updateList.certificates=response.data.data;
+                                vm.uploadText=files.name;
                                 vm.saveerror='';
                                 swal({
                                     title: "上传成功！",
@@ -835,6 +844,11 @@
             })
             $('#modal_update,#modal_add,#modal_waring,#modal_see').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
+                if($(this).hasClass('modal_update')){
+                    vm.uploadText='';
+                    vm.updateList.certificates='';
+
+                }
             })
             $(document).on('click','.addbottom .col-md-4 ul li',function(){
                 $(this).toggleClass('check-li');
