@@ -229,6 +229,10 @@
                                         <input v-validate:accountNumber="['required']" v-model="updateList.accountNumber" :value="updateList.accountNumber" class="form-control" type="text" placeholder="账 号">
                                     </div>
                                     <div class="form-group">
+                                        <label class="w28" ><i>*</i>开户行：</label>
+                                        <input v-validate:bankName="['required']" v-model="updateList.bankName" :value="updateList.bankName" class="form-control" type="text" placeholder="开户行">
+                                    </div>
+                                    <div class="form-group">
                                         <label class="w28" ><i>*</i>提入行号：</label>
                                         <input v-validate:bankNumber="['required']" v-model="updateList.bankNumber" :value="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
                                         <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
