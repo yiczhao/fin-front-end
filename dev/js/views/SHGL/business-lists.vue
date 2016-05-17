@@ -71,7 +71,7 @@
                                 <td>{{trlist.value01/100 | currency '' }} </td>
                                 <td>{{trlist.value02/100 | currency '' }} </td>
                                 <td>{{trlist.value03/100 | currency '' }} </td>
-                                <td><a v-link="{name:'limitaccount-info'}">明细</a></td>
+                                <td><a v-link="{name:'trade-info'}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>
