@@ -37,7 +37,7 @@
                 </div>
                 <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table id="table1" class="table">
                             <thead>
                                 <tr role="row">
                                     <th>商户ID</th>
@@ -176,7 +176,7 @@
                                     <span>商户名：{{controllist.merchantName}}</span>
                                     <a class="updatebtn" @click="modal_updata" href="javascript:void(0);">更新</a>
                                 </div>
-                                <div class="mt35">
+                                <div  v-if="relist!=''" class="mt35">
                                     <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
                                     <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
                                     <table v-if="index!=0&&relist.length>1" class="table dataTable">
@@ -567,6 +567,9 @@
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
+                if(!check_upload(files.name)){
+                    return;
+                }
                 reader.readAsDataURL(files);
                 reader.onload = function(e){
                     let datas={

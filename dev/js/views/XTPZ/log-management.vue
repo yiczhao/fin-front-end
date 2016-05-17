@@ -1,10 +1,8 @@
 <template>
     <index title="日志管理" ptitle="系统配置"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -35,8 +33,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div v-show="!!logList.length" class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-show="!!logList.length" class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                                <table class="table">
                                 <thead>
                                 <tr>
                                     <th>序号</th>
@@ -64,12 +63,13 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
-                        </div>
+                            </div>
+                            <div class="datatable-footer">
+                                <page :all="pageall"
+                                      :cur.sync="pagecur"
+                                      :page_size.sync="page_size">
+                                </page>
+                            </div>
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                             未查询到日志数据！
@@ -103,13 +103,11 @@
                             </div>
                            
                         </div>
-                    </div>
-                </div>
             </div>
-        </section>
+        </div>
     </index>
 </template>
-<style>
+<style scoped>
     body{
         background-color:#fff;
     }

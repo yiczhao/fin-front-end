@@ -1,10 +1,8 @@
 <template>
     <index title="补贴退税" ptitle="备付金支出"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -38,7 +36,7 @@
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="createType">
@@ -68,8 +66,9 @@
                                 </div>
                             </form> 
                         </div>
-                        <div v-show="!!subsidyTaxRebateDetailList.length"  class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-show="!!subsidyTaxRebateDetailList.length"  class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                            <table id="table1" class="table">
                                 <thead>
                                     <tr>
                                     <th><input type="checkbox" id="All" @click="checkAll($event)"/>ID</th>
@@ -92,10 +91,10 @@
                                     <tr v-for="strd in subsidyTaxRebateDetailList">
                                         <td>
                                             <template v-if="strd.status!=1">
-                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="strd.id"/>{{strd.id}}</td>
+                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="strd.id"/>{{strd.id}}
                                             </template>
                                             <template v-else>
-                                                <input type="checkbox" name="ckbox" :id="strd.id" :class="strd.collectionAccountName+strd.collectionAccountNumber"/>{{strd.id}}</td>
+                                                <input type="checkbox" name="ckbox" :id="strd.id" :class="strd.collectionAccountName+strd.collectionAccountNumber"/>{{strd.id}}
                                             </template>
                                         </td>
                                         <td>{{strd.createTime | datetime}}</td>
@@ -144,20 +143,20 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                         <div  v-else style="padding: 30px;font-size: 16px;text-align: center" >
                             未查询到补贴退税信息！
                         </div>
-                        <div v-show="!!subsidyTaxRebateDetailList.length" class="box-footer">
+                        <div v-show="!!subsidyTaxRebateDetailList.length" class="datatable-footer">
                             <page :all="pageall"
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
                             </page>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
+
         <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
             <div class="modal-dialog mg">
                 <div class="modal-content">

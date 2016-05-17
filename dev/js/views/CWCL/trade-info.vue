@@ -70,210 +70,210 @@
                             <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                         </div>
                     </form>
-                    <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                        <div class="datatable-scroll">
-                            <table id="table1" class="table datatable-selection-single dataTable no-footer">
-                                <thead>
-                                    <tr role="row">
-                                        <th>交易ID</th>
-                                        <th>交易流水号</th>
-                                        <th>分公司</th>
-                                        <th>城市</th>
-                                        <th>商户ID</th>
-                                        <th>商户名称</th>
-                                        <th>消费金额</th>
-                                        <th>折扣金额</th>
-                                        <th>实付金额</th>
-                                        <th>额度抵扣</th>
-                                        <th>本金抵扣</th>
-                                        <th>三方应收</th>
-                                        <th>商户应补</th>
-                                        <th>暂扣税金</th>
-                                        <th>商户实补</th>
-                                        <th>折扣差</th>
-                                        <th>扣收金额</th>
-                                        <th>33211佣</th>
-                                        <th>入账金额</th>
-                                        <th>交易时间</th>
-                                        <th>手机号</th>
-                                        <th>卡号</th>
-                                        <th>参与活动</th>
-                                        <th>交易类型</th>
-                                        <th>操作</th>
-                                        <th>备注</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr  v-for="trlist in tradeList">
-                                    <td>{{trlist.id}}</td>
-                                    <td>{{trlist.serialNumber}}</td>
-                                    <td>{{trlist.subCompanyName}}</td>
-                                    <td>{{trlist.cityName}}</td>
-                                    <td>{{trlist.merchantOperationID}}</td> 
-                                    <td>{{trlist.merchantName}}</td>
-                                    <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.discountAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.payAmount/100 | currency ''}}</td>
-                                    <td>
-                                        <a v-link="{name:'limitaccount-info'}">{{trlist.limitDeduct/100 | currency ''}}</a>
-                                    </td>
-                                    <td>
-                                        <a v-link="{name:'limitaccount-info'}">{{trlist.principalDeduct/100 | currency ''}}</a>
-                                    </td>
-                                    <td>{{trlist.thirdpartyReceivable/100 | currency ''}}</td>
-                                    <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
-                                    <td>
-                                        <a v-link="{name:'subsidy-tax-rebate'}">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    </td>
-                                    <td>
-                                        <a v-link="{name:'subsidy-appropriation'}">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
-                                    </td>
-                                    <td>{{trlist.discountDiff/100 | currency ''}}</td>
-                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.commission33211/100 | currency ''}}</td>
-                                    <td>{{trlist.entryAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.tradeTime | datetime}}</td>
-                                    <td>{{trlist.consumptionPhone}}</td>
-                                    <td>{{trlist.consumptionAccountNumber}}</td>
-                                    <td>{{trlist.activityID}}</td>
-                                    <td>
-                                        <template v-if="trlist.type==1">
-                                            正常交易
-                                        </template>
-                                        <template v-if="trlist.type==2">
-                                            手工单
-                                        </template>
-                                    </td>
-                                    <td>
-                                        <template v-if="trlist.type==2"> 
-                                            <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
-                                        </template>
-                                    </td>
-                                    <td>{{trlist.remarks}}</td>
-                                </tr>
-                                </tbody>
-                                <tr role="row">
-                                        <th></th>
-                                        <th><h5><b>合计</b><h5></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th><b>{{count_consumptionAmount/100 | currency ''}}</b></th>
-                                        <th><b>{{count_discountAmount/100 | currency ''}}</b></th>
-                                        <th><b>{{count_payAmount/100 | currency ''}}</b></th>
-                                        <th><b>{{count_limitDeduct/100 | currency ''}}</b></th>
-                                        <th><b>{{count_principalDeduct/100 | currency ''}}</b></th>
-                                        <th>
-                                            <b><template v-if="count_thirdpartyReceivable==NaN">0</template></b>
-                                        </th>
-                                        <th><b>{{count_merchantSubsidyShould/100 | currency ''}}</b></th>
-                                        <th><b>{{count_suspensionTax/100 | currency ''}}</b></th>
-                                        <th><b>{{count_merchantSubsidyActual/100 | currency ''}}</b></th>
-                                        <th><b>{{count_discountDiff/100 | currency ''}}</b></th>
-                                        <th><b>{{count_collectionAmount/100 | currency ''}}</b></th>
-                                        <th><b>{{count_commission33211/100 | currency ''}}</b></th>
-                                        <th><b>{{count_entryAmount/100 | currency ''}}</b></td>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                            </table>
-                        </div>    
-                        <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
-                        </div>
+                </div>
+                <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="datatable-scroll">
+                        <table id="table1" class="table">
+                            <thead>
+                            <tr role="row">
+                                <th>交易ID</th>
+                                <th>交易流水号</th>
+                                <th>分公司</th>
+                                <th>城市</th>
+                                <th>商户ID</th>
+                                <th>商户名称</th>
+                                <th>消费金额</th>
+                                <th>折扣金额</th>
+                                <th>实付金额</th>
+                                <th>额度抵扣</th>
+                                <th>本金抵扣</th>
+                                <th>三方应收</th>
+                                <th>商户应补</th>
+                                <th>暂扣税金</th>
+                                <th>商户实补</th>
+                                <th>折扣差</th>
+                                <th>扣收金额</th>
+                                <th>33211佣</th>
+                                <th>入账金额</th>
+                                <th>交易时间</th>
+                                <th>手机号</th>
+                                <th>卡号</th>
+                                <th>参与活动</th>
+                                <th>交易类型</th>
+                                <th>操作</th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr  v-for="trlist in tradeList">
+                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.serialNumber}}</td>
+                                <td>{{trlist.subCompanyName}}</td>
+                                <td>{{trlist.cityName}}</td>
+                                <td>{{trlist.merchantOperationID}}</td>
+                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
+                                <td>{{trlist.discountAmount/100 | currency ''}}</td>
+                                <td>{{trlist.payAmount/100 | currency ''}}</td>
+                                <td>
+                                    <a v-link="{name:'limitaccount-info'}">{{trlist.limitDeduct/100 | currency ''}}</a>
+                                </td>
+                                <td>
+                                    <a v-link="{name:'limitaccount-info'}">{{trlist.principalDeduct/100 | currency ''}}</a>
+                                </td>
+                                <td>{{trlist.thirdpartyReceivable/100 | currency ''}}</td>
+                                <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>
+                                    <a v-link="{name:'subsidy-tax-rebate'}">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                </td>
+                                <td>
+                                    <a v-link="{name:'subsidy-appropriation'}">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                </td>
+                                <td>{{trlist.discountDiff/100 | currency ''}}</td>
+                                <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                <td>{{trlist.commission33211/100 | currency ''}}</td>
+                                <td>{{trlist.entryAmount/100 | currency ''}}</td>
+                                <td>{{trlist.tradeTime | datetime}}</td>
+                                <td>{{trlist.consumptionPhone}}</td>
+                                <td>{{trlist.consumptionAccountNumber}}</td>
+                                <td>{{trlist.activityID}}</td>
+                                <td>
+                                    <template v-if="trlist.type==1">
+                                        正常交易
+                                    </template>
+                                    <template v-if="trlist.type==2">
+                                        手工单
+                                    </template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.type==2">
+                                        <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
+                                    </template>
+                                </td>
+                                <td>{{trlist.remarks}}</td>
+                            </tr>
+                            </tbody>
+                            <tr role="row">
+                                <th></th>
+                                <th><h5><b>合计</b><h5></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><b>{{count_consumptionAmount/100 | currency ''}}</b></th>
+                                <th><b>{{count_discountAmount/100 | currency ''}}</b></th>
+                                <th><b>{{count_payAmount/100 | currency ''}}</b></th>
+                                <th><b>{{count_limitDeduct/100 | currency ''}}</b></th>
+                                <th><b>{{count_principalDeduct/100 | currency ''}}</b></th>
+                                <th>
+                                    <b><template v-if="count_thirdpartyReceivable==NaN">0</template></b>
+                                </th>
+                                <th><b>{{count_merchantSubsidyShould/100 | currency ''}}</b></th>
+                                <th><b>{{count_suspensionTax/100 | currency ''}}</b></th>
+                                <th><b>{{count_merchantSubsidyActual/100 | currency ''}}</b></th>
+                                <th><b>{{count_discountDiff/100 | currency ''}}</b></th>
+                                <th><b>{{count_collectionAmount/100 | currency ''}}</b></th>
+                                <th><b>{{count_commission33211/100 | currency ''}}</b></th>
+                                <th><b>{{count_entryAmount/100 | currency ''}}</b></td>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </table>
                     </div>
-                    <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                        未查询到交易明细数据！
+                    <div class="datatable-footer">
+                        <page :all="pageall"
+                              :cur.sync="pagecur"
+                              :page_size.sync="page_size">
+                        </page>
                     </div>
-                    <validator name="vali">
-                        <form novalidate>
+                </div>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                    未查询到交易明细数据！
+                </div>
+                <validator name="vali">
+                    <form novalidate>
                         <div id="modal_trade_info" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                     <div class="modal-header">
+                                    <div class="modal-header">
                                         <h3>添加交易</h3>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
-                                     </div>
-                                     <div class="modal-body">
-                                         <div class="form-group">
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
                                             <label>
                                                 <i class="aaaa">*</i>商户名称：
                                             </label>
                                             <select class="form-control" id="tradeInfo_merchantId" v-model="select_merchantId" v-validate:val1="['required']">
-                                            <option value="">请选择商户</option>
+                                                <option value="">请选择商户</option>
                                                 <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
                                             </select>
                                             <span v-if="$vali.val1.required && fire" class="validation-error-label">请选择商户</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>参与活动：</label>
-                                             <select class="form-control" v-model="tradeInfo.activityId" v-validate:val2="['required']">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>参与活动：</label>
+                                            <select class="form-control" v-model="tradeInfo.activityId" v-validate:val2="['required']">
                                                 <option value="">请选择参与活动</option>
                                                 <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
-                                             </select>
-                                             <span v-if="$vali.val2.required && fire" class="validation-error-label">请选择活动</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>消费金额：</label>
-                                             <input type="number" class="form-control" id="consumptionAmount" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']">
-                                             <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>折扣金额：</label>
-                                             <input type="number" class="form-control" id="discountAmount" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" >
-                                             <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>实付金额：</label>
-                                             <input type="number" class="form-control" id="paAmount" v-model="tradeInfo.paAmount" v-validate:val5="['required']" >
-                                             <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>三方应收：</label>
-                                             <input type="number" class="form-control" id="thirdPartyReceivable" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']">
-                                             <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>暂扣税金：</label>
-                                             <input type="number" class="form-control" id="suspensionTax" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" >
-                                             <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>商户实补：</label>
-                                             <input type="number" class="form-control" id="merchantSubsidyActual" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']">
-                                             <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label><i>*</i>上传凭证：</label>
-                                             <input type="file" style="display: none;" @change="uploads($event)">
-                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                             <span v-if="tradeInfo.certificates=='' && fire" class="validation-error-label">请选择凭证</span>
-                                         </div>
-                                         <div class="form-group">
-                                             <label>备注</label>
-                                             <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
-                                         </div>
-                                     </div>
-                                     <div class="form-group tc">
+                                            </select>
+                                            <span v-if="$vali.val2.required && fire" class="validation-error-label">请选择活动</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>消费金额：</label>
+                                            <input type="number" class="form-control" id="consumptionAmount" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']">
+                                            <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>折扣金额：</label>
+                                            <input type="number" class="form-control" id="discountAmount" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" >
+                                            <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>实付金额：</label>
+                                            <input type="number" class="form-control" id="paAmount" v-model="tradeInfo.paAmount" v-validate:val5="['required']" >
+                                            <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>三方应收：</label>
+                                            <input type="number" class="form-control" id="thirdPartyReceivable" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']">
+                                            <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>暂扣税金：</label>
+                                            <input type="number" class="form-control" id="suspensionTax" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" >
+                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>商户实补：</label>
+                                            <input type="number" class="form-control" id="merchantSubsidyActual" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']">
+                                            <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>上传凭证：</label>
+                                            <input type="file" style="display: none;" @change="uploads($event)">
+                                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                            <span v-text="uploadText" v-show="uploadText!=''"></span>
+                                            <span v-if="tradeInfo.certificates=='' && fire" class="validation-error-label">请选择凭证</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>备注</label>
+                                            <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group tc">
                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                         <button type="button" @click="saveTradeInfo" class="btn btn-primary">保存</button>
-                                     </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </form>
-                    </validator>
-                </div>
+                    </form>
+                </validator>
             </div>
         </div>
     </index>
@@ -552,10 +552,10 @@
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
-                reader.readAsDataURL(files);
                 if(!check_upload(files.name)){
                     return;
                 }
+                reader.readAsDataURL(files);
                 reader.onload = function(e){
                     let datas={
                         name:files.name,

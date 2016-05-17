@@ -282,6 +282,9 @@
                 let files=e.target.files[0];
                 let vm=this;
                 var reader = new FileReader();
+                if(!check_upload(files.name)){
+                    return;
+                }
                 reader.readAsDataURL(files);
                 reader.onload = function(e){
                     let datas={

@@ -1,10 +1,8 @@
 <template>
     <index title="预付款划付" ptitle="备付金支出"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -59,51 +57,53 @@
                                 </div>
                             </form> 
                         </div>
-                        <div v-show="!!advancePaymentDetailList.length" class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>编号</th>
-                                        <th>申请时间</th>
-                                        <th>分公司</th>
-                                        <th>城市</th>
-                                        <th>付款账户</th>
-                                        <th>商户ID</th>
-                                        <th>商户名称</th>
-                                        <th>收款账户信息</th>
-                                        <th>预付金额</th>
-                                        <th>账户详情</th>
-                                        <th>状态</th>
-                                        <th>付款流水</th>
-                                        <th>备注</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(index,apd) in advancePaymentDetailList">
-                                        <td>{{index+1}}</td>
-                                        <td>{{apd.applyTime | datetime}}</td>
-                                        <td>{{apd.subCompanyName}}</td>
-                                        <td>{{apd.cityName}}</td>
-                                        <td>{{apd.payAccount}}</td>
-                                        <td>{{apd.merchantOperationID}}</td>
-                                        <td>{{apd.merchantName}}</td>
-                                        <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
-                                        <td>{{apd.advancePaymentAmount}}</td>
-                                        <td><a v-link="{name:'limitaccount-info'}">查看</a></td>
-                                        <td>
-                                            <template v-if="apd.status==0">已关闭</template>
-                                            <template v-if="apd.status==1">等待审核</template>
-                                            <template v-if="apd.status==2">等待划付</template>
-                                            <template v-if="apd.status==3">等待对账</template>
-                                            <template v-if="apd.status==4">对账失败</template>
-                                            <template v-if="apd.status==5">划付失败</template>
-                                        </td>
-                                        <td><a v-link="{name:'payment-details'}">查看</a></td>
-                                        <td>{{apd.remarks}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                             <div class="box-footer">
+                        <div v-show="!!advancePaymentDetailList.length" class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                                <table id="table1" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>申请时间</th>
+                                            <th>分公司</th>
+                                            <th>城市</th>
+                                            <th>付款账户</th>
+                                            <th>商户ID</th>
+                                            <th>商户名称</th>
+                                            <th>收款账户信息</th>
+                                            <th>预付金额</th>
+                                            <th>账户详情</th>
+                                            <th>状态</th>
+                                            <th>付款流水</th>
+                                            <th>备注</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(index,apd) in advancePaymentDetailList">
+                                            <td>{{index+1}}</td>
+                                            <td>{{apd.applyTime | datetime}}</td>
+                                            <td>{{apd.subCompanyName}}</td>
+                                            <td>{{apd.cityName}}</td>
+                                            <td>{{apd.payAccount}}</td>
+                                            <td>{{apd.merchantOperationID}}</td>
+                                            <td>{{apd.merchantName}}</td>
+                                            <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
+                                            <td>{{apd.advancePaymentAmount}}</td>
+                                            <td><a v-link="{name:'limitaccount-info'}">查看</a></td>
+                                            <td>
+                                                <template v-if="apd.status==0">已关闭</template>
+                                                <template v-if="apd.status==1">等待审核</template>
+                                                <template v-if="apd.status==2">等待划付</template>
+                                                <template v-if="apd.status==3">等待对账</template>
+                                                <template v-if="apd.status==4">对账失败</template>
+                                                <template v-if="apd.status==5">划付失败</template>
+                                            </td>
+                                            <td><a v-link="{name:'payment-details'}">查看</a></td>
+                                            <td>{{apd.remarks}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                             <div class="datatable-footer">
                                 <page :all="pageall"
                                       :cur.sync="pagecur"
                                       :page_size.sync="page_size">
@@ -113,8 +113,6 @@
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                             未查询到预付款划付数据！
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </index>

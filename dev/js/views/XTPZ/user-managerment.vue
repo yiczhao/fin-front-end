@@ -1,10 +1,8 @@
 <template>
     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -21,8 +19,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div v-cloak v-show="!!userList.length" class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-cloak v-show="!!userList.length" class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                                <table id="table1" class="table">
                                 <thead>
                                 <tr>
                                     <th>序号</th>
@@ -48,10 +47,17 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            </div>
+                            <div class="datatable-footer">
+                                <page :all="pageall"
+                                      :cur.sync="pagecur"
+                                      :page_size.sync="page_size">
+                                </page>
+                            </div>
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                            未查询到员工数据信息！
-                        </div>
+                    未查询到员工数据信息！
+                </div>
                         <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog mg">
                                 <div class="modal-content">
@@ -78,19 +84,11 @@
                             </div>
                            
                         </div>
-                        <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
+        </div>
     </index>
 </template>
-<style>
+<style scoped>
     body{
         background-color:#fff;
     }

@@ -1,10 +1,8 @@
 <template>
     <index title="补贴划付" ptitle="备付金支出"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -38,7 +36,7 @@
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="createType">
@@ -74,8 +72,9 @@
                                 </div>
                             </form> 
                         </div>
-                        <div v-show="!!subsidyAppropriationList.length" class="box-body box-tbl">
-                            <table   id="table1" class="table table-bordered table-hover">
+                <div v-show="!!subsidyAppropriationList.length" class="dataTables_wrapper no-footer">
+                    <div class="datatable-scroll">
+                            <table   id="table1" class="table">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" id="All" @click="checkAll($event)"/>ID</th>
@@ -100,10 +99,10 @@
                                     <tr id="All" v-for="sa in subsidyAppropriationList">
                                         <td>
                                             <template v-if="sa.status!=1">
-                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="sa.id"/>{{sa.id}}</td>
+                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="sa.id"/>{{sa.id}}
                                             </template>
                                             <template v-else>
-                                                <input type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}</td>
+                                                <input type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}
                                             </template>
                                         </td>
                                         <td>{{sa.createAT}}</td>
@@ -146,19 +145,19 @@
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">
-                                                <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)">申请划付</a></td>&nbsp;
                                                 <a href="javascript:void(0);" @click="updateById(sa.id)">更新</a>
                                             </template>
                                             <template v-else>
                                                 <a v-link="{'name':'payment-details'}">查看</a>
                                             </template>
-                                        
+                                        </td>
                                         <td>{{sa.activityName}}</td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="box-footer">
+                    </div>
+                            <div class="datatable-footer">
                             <page :all="pageall"
                                   :cur.sync="pagecur"
                                   :page_size.sync="page_size">
@@ -168,7 +167,6 @@
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                             未查询到员工数据信息！
                         </div>
-
                         <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog mg">
                                 <div class="modal-content">
@@ -203,10 +201,7 @@
                                      </div>
                                 </div>
                             </div>
-                        </div> 
-
-                    </div>
-                </div>
+                        </div>
             </div>
         </div>
     </index>

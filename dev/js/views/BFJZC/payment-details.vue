@@ -67,11 +67,9 @@
                         </div>
                     </form>
                 </div>
-            </div>
-
-            <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
-                <table class="table main-table">
-                    <thead>
+                <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
+                    <table class="table main-table">
+                        <thead>
                         <tr role="row">
                             <th></th>
                             <th>订单号</th>
@@ -92,76 +90,76 @@
                             <th>对账时间</th>
                             <th>备注</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                    <template v-for="(index,n) in zdlists">
-                        <tr role="row">
-                            <td>
-                                <div v-if="n.status!=0" class="pull-left morebtn" @click="getInfo(n,index)">
-                                    <ul class="icons-list pull-left" >
-                                        <li><i class="glyphicon glyphicon-plus"></i></li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>
-                                {{n.orderNumber}}
-                            </td>
-                            <td>{{n.payoutAmount/100 | currency '' }}</td>
-                            <td>
-                                <template v-if="n.payType==1">{{n.payoutAccount}}</template>
-                                <template v-else>商户预付款账户</template>
-                            </td>
-                            <td>{{n.incomeAccount}}</td>
-                            <td>{{n.payoutAccountName}}</td>
-                            <td>{{n.payoutAccountNumber}}</td>
-                            <td>
-                                <span v-if="n.payType==1">{{n.incomeAccountName}}</span>
-                            </td>
-                            <td>
-                                <span v-if="n.payType==1">{{n.incomeAccountNumber}}</span>
-                            </td>
-                            <td>{{n.certificate}}</td>
-                            <td>{{n.paymentTime | datetime}}</td>
-                            <td>
-                                <template v-if="n.purpose==1"> 补贴划付</template>
-                                <template v-if="n.purpose==2"> 额度采购</template>
-                                <template v-if="n.purpose==3"> 退税划付</template>
-                                <template v-if="n.purpose==4"> 预付款</template>
-                                <template v-if="n.purpose==5"> 供货商划付</template>
-                            </td>
-                            <td>
-                                <span v-if="n.payType==1">{{n.incomeBankName}}</span>
-                            </td>
-                            <td>{{n.applyCompany}}</td>
-                            <td>{{n.applyTime | datetime}}</td>
-                            <td>
-                                <template v-if="n.status==1"> 等待审核</template>
-                                <template v-if="n.status==2"> 等待划付</template>
-                                <template v-if="n.status==3"> 等待对账</template>
-                                <template v-if="n.status==4"> 对账成功</template>
-                                <template v-if="n.status==5"> 划付失败</template>
-                                <template v-if="n.status==0"> 已关闭</template>
-                            </td>
-                            <td></td>
-                            <td>{{n.remarks}}</td>
-                        </tr>
-                        <tr v-show="listinfos[index]!=null" class="div-table">
-                            <td colspan="18">
-                                <div class="pull-left">
-                                    <div class="title">
-                                        <span>生成日期{{$index}}</span>
-                                        <span>商户名称</span>
-                                        <span>划付金额</span>
-                                        <span>用途</span>
-                                        <span>操作</span>
-                                        <span>状态</span>
-                                        <span>备注</span>
+                        </thead>
+                        <tbody>
+                        <template v-for="(index,n) in zdlists">
+                            <tr role="row">
+                                <td>
+                                    <div v-if="n.status!=0" class="pull-left morebtn" @click="getInfo(n,index)">
+                                        <ul class="icons-list pull-left" >
+                                            <li><i class="glyphicon glyphicon-plus"></i></li>
+                                        </ul>
                                     </div>
-                                    <div class="lists" v-for="trlist in listinfos[index]">
-                                        <span>{{trlist.createAt | datetime}}</span>
-                                        <span>{{trlist.merchantName}}</span>
-                                        <span>{{trlist.amount/100 | currency '' }}</span>
-                                        <span>{{trlist.purpose}}</span>
+                                </td>
+                                <td>
+                                    {{n.orderNumber}}
+                                </td>
+                                <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="n.payType==1">{{n.payoutAccount}}</template>
+                                    <template v-else>商户预付款账户</template>
+                                </td>
+                                <td>{{n.incomeAccount}}</td>
+                                <td>{{n.payoutAccountName}}</td>
+                                <td>{{n.payoutAccountNumber}}</td>
+                                <td>
+                                    <span v-if="n.payType==1">{{n.incomeAccountName}}</span>
+                                </td>
+                                <td>
+                                    <span v-if="n.payType==1">{{n.incomeAccountNumber}}</span>
+                                </td>
+                                <td>{{n.certificate}}</td>
+                                <td>{{n.paymentTime | datetime}}</td>
+                                <td>
+                                    <template v-if="n.purpose==1"> 补贴划付</template>
+                                    <template v-if="n.purpose==2"> 额度采购</template>
+                                    <template v-if="n.purpose==3"> 退税划付</template>
+                                    <template v-if="n.purpose==4"> 预付款</template>
+                                    <template v-if="n.purpose==5"> 供货商划付</template>
+                                </td>
+                                <td>
+                                    <span v-if="n.payType==1">{{n.incomeBankName}}</span>
+                                </td>
+                                <td>{{n.applyCompany}}</td>
+                                <td>{{n.applyTime | datetime}}</td>
+                                <td>
+                                    <template v-if="n.status==1"> 等待审核</template>
+                                    <template v-if="n.status==2"> 等待划付</template>
+                                    <template v-if="n.status==3"> 等待对账</template>
+                                    <template v-if="n.status==4"> 对账成功</template>
+                                    <template v-if="n.status==5"> 划付失败</template>
+                                    <template v-if="n.status==0"> 已关闭</template>
+                                </td>
+                                <td></td>
+                                <td>{{n.remarks}}</td>
+                            </tr>
+                            <tr v-show="listinfos[index]!=null" class="div-table">
+                                <td colspan="18">
+                                    <div class="pull-left">
+                                        <div class="title">
+                                            <span>生成日期</span>
+                                            <span>商户名称</span>
+                                            <span>划付金额</span>
+                                            <span>用途</span>
+                                            <span>操作</span>
+                                            <span>状态</span>
+                                            <span>备注</span>
+                                        </div>
+                                        <div class="lists" v-for="trlist in listinfos[index]">
+                                            <span>{{trlist.createAt | datetime}}</span>
+                                            <span>{{trlist.merchantName}}</span>
+                                            <span>{{trlist.amount/100 | currency '' }}</span>
+                                            <span>{{trlist.purpose}}</span>
                                         <span>
                                              <template v-if="n.purpose==1"><a v-link="{name:'subsidy-appropriation'}">详情</a></template>
                                             <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail'}">详情</a></template>
@@ -176,38 +174,38 @@
                                             <template v-if="n.status==5"> 划付失败</template>
                                             <template v-if="n.status==0"> 已关闭</template>
                                         </span>
-                                        <span>{{trlist.remarks}}</span>
+                                            <span>{{trlist.remarks}}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="pull-left">
-                                    <template v-if="n.status==2">
-                                    <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
-                                    <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
-                                    </template>
-                                    <template v-if="n.status==3">
-                                    <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
-                                    </template>
-                                    <template v-if="n.status==5">
-                                    <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
-                                    <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
-                                    <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
-                                    </template>
-                                </div>
-                            </td>
-                        </tr>
-                    </template>
-                    </tbody>
-                </table>
+                                    <div class="pull-left">
+                                        <template v-if="n.status==2">
+                                            <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
+                                            <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
+                                        </template>
+                                        <template v-if="n.status==3">
+                                            <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
+                                        </template>
+                                        <template v-if="n.status==5">
+                                            <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
+                                            <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
+                                            <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
+                                        </template>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+                    <page :all="pageall"
+                          :cur.sync="pagecur"
+                          :page_size.sync="page_size">
+                    </page>
+                </div>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
+                    未找到您要查询的账单
+                </div>
             </div>
 
-
-            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
-                未找到您要查询的账单
-            </div>
-            <page :all="pageall"
-                  :cur.sync="pagecur"
-                  :page_size.sync="page_size">
-            </page>
             <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">

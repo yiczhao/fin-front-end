@@ -1,10 +1,8 @@
 <template>
     <index title="额度采购" ptitle="备付金支出"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -38,7 +36,7 @@
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;"placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
@@ -58,8 +56,9 @@
                                 </div>
                             </form> 
                         </div>
-                        <div v-show="!!limitPurchaseDetailList.length" class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-show="!!limitPurchaseDetailList.length" class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                                <table id="table1" class="table">
                                 <thead>
                                     <tr>
                                         <th>编号</th>
@@ -118,18 +117,17 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
+                            <div class="datatable-footer">
+                                <page :all="pageall"
+                                      :cur.sync="pagecur"
+                                      :page_size.sync="page_size">
+                                </page>
+                            </div>
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                             未查询到额度采购数据！
                         </div>
-                        <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </index>
