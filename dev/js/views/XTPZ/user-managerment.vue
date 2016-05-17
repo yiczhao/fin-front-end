@@ -95,7 +95,7 @@
     [v-cloak]{
         display: none;
     }
-    .box-tbl{
+    .datatable-scroll{
         overflow:auto;
     }
     .page-bar{

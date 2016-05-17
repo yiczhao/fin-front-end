@@ -46,13 +46,13 @@
                         <br/>
                         <br/>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="merchantID" style="width: 100px" placeholder="商户ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="id" placeholder="交易ID">
+                            <input type="text" class="form-control" v-model="id" style="width: 100px" placeholder="交易ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号">
@@ -261,7 +261,7 @@
                                             <span v-if="tradeInfo.certificates=='' && fire" class="validation-error-label">请选择凭证</span>
                                         </div>
                                         <div class="form-group">
-                                            <label>备注</label>
+                                            <label style="position: relative;top: -40px;">备注:</label>
                                             <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
                                         </div>
                                     </div>

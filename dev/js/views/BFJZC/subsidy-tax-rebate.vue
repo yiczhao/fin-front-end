@@ -195,7 +195,7 @@
     </index>
 </template>
 <style>
-     .box-tbl{
+     .datatable-scroll{
         overflow:auto;
     }
     .page-bar{

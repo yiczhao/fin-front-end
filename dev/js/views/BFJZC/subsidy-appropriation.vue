@@ -33,10 +33,10 @@
                                 <br/>
                                 <br/>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
+                                    <input type="text" class="form-control" v-model="merchantID" style="width: 100px" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" style="width:185px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="createType">
@@ -62,7 +62,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
+                                    <input type="text" class="form-control" style="width: 100px" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -165,7 +165,7 @@
                         </div>
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                            未查询到员工数据信息！
+                            未查询到补贴划付信息！
                         </div>
                         <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog mg">
@@ -208,7 +208,7 @@
 </template>
 <style scoped>
 
-    .box-tbl{
+    .datatable-scroll{
         overflow:auto;
     }
     .page-bar{

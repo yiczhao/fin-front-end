@@ -162,9 +162,10 @@
                                             <span>{{trlist.purpose}}</span>
                                         <span>
                                              <template v-if="n.purpose==1"><a v-link="{name:'subsidy-appropriation'}">详情</a></template>
-                                            <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail'}">详情</a></template>
-                                            <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate'}">详情</a></template>
-                                            <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail'}">详情</a></template>
+                                             <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail'}">详情</a></template>
+                                             <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate'}">详情</a></template>
+                                             <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail'}">详情</a></template>
+                                             <template v-if="n.status==5"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
                                         </span>
                                         <span>
                                              <template v-if="n.status==1"> 等待审核</template>
@@ -218,6 +219,7 @@
                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认划付该账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -367,10 +369,10 @@
                  .title,.lists{
                     overflow:hidden;
                      border-right: 1px solid #ccc;
+                     display: table-row;
                      span{
-                         display: inline-block;
-                        float: left;
-                         min-width: 150px;
+                         display: table-cell;
+                         padding: 0 15px;
                          height: 30px;
                          line-height: 30px;
                          border: 1px solid #ccc;
@@ -426,6 +428,7 @@
                 zdlists:[],
                 checkLists:[],
                 remarks:'',
+                delPurpose:'',
                 fires:false
             }
         },
@@ -489,8 +492,12 @@
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
             },
+            delBtn(a,b){
+                this.waring = '你确认删除该订单流水？';
+                this.accountId=a;
+                this.delPurpose=b;
+            },
             checking(a){
-                console.log(a);
                 this.$http.post('./reservecash/order/checklist/'+a)
                         .then( (response)=> {
                              (response.data.code==0)?this.checkLists.$set(response.data.data):null;
@@ -516,6 +523,23 @@
                                 this.initList();
                                 swal({
                                     title: "划付成功！",
+                                    type: "success",
+                                    confirmButtonColor: "#2196F3"
+                                })
+                            }
+                        })
+            },
+            delTrue(){
+                let data={
+                    'id':this.accountId,
+                    'purpose':this.delPurpose
+                }
+                this.$http.post('reservecash/order/deleteDetail',data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.initList();
+                                swal({
+                                    title: "已删除！",
                                     type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })

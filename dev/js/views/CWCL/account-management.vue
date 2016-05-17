@@ -387,7 +387,7 @@
                         .then(function (response) {
                             this.initList();
                             swal({
-                                title: "已修改！",
+                                title: "保存成功！",
                                 type: "success",
                                 confirmButtonColor: "#2196F3"
                             })
@@ -448,7 +448,7 @@
                             else{
                                 this.initList();
                                 swal({
-                                    title: "新增成功！",
+                                    title: "保存成功！",
                                     type: "success",
                                     confirmButtonColor: "#2196F3"
                                 })

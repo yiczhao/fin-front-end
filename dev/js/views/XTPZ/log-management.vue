@@ -111,7 +111,7 @@
     body{
         background-color:#fff;
     }
-    .box-tbl{
+    .datatable-scroll{
         overflow:auto;
     }
     .page-bar{
