@@ -161,7 +161,7 @@
             <div class="modal-dialog mg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3>合并付款</h3>
+                        <h3>申请付款</h3>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
                      <div class="modal-body">
