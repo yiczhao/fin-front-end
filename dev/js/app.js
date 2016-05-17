@@ -3,7 +3,7 @@
  * @author cwxtDesigner
  */
 require('../sass/app.scss');
-require('./assets/js/plugins/notifications/sweet_alert.min.js');
+require("./assets/js/plugins/notifications/sweet_alert.min.js");
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
@@ -63,4 +63,19 @@ Vue.filter('datetime', function (value) {
 	function add0(m){return m<10?'0'+m:m }
 	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 });
+window.check_upload=((names)=>{
+	var FileName=new String(names);
+	var extension=new String (FileName.substring(FileName.lastIndexOf(".")+1,FileName.length));
+	if(extension=='rar'||extension=='zip'){
+		return true;
+	}
+	else{
+		swal({
+			title: "请上传正确的文件格式(rar,zip)！",
+			type:"error",
+			confirmButtonColor: "#EF5350"
+		});
+		return false;
+	}
+})
 

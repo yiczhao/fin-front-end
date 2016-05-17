@@ -254,10 +254,10 @@
                                          </div>
                                          <div class="form-group">
                                              <label><i>*</i>上传凭证：</label>
-                                             <input type="file" style="display: none;" @change="uploads($event)" v-validate:val9="['required']">
+                                             <input type="file" style="display: none;" @change="uploads($event)">
                                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                              <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                             <span v-if="$vali.val9.required && fire" class="validation-error-label">请选择凭证</span>
+                                             <span v-if="tradeInfo.certificates=='' && fire" class="validation-error-label">请选择凭证</span>
                                          </div>
                                          <div class="form-group">
                                              <label>备注</label>
@@ -464,12 +464,12 @@
                 //隐藏非空提示
                 this.errorHideL();
                 //验证非空
-                if(!this.$vali.valid){
+                if(!this.$vali.valid||this.tradeInfo.certificates==''){
                     this.fire=true;
                     return;
                 }
                 this.tradeInfo.merchantId=this.select_merchantId;
-                this.tradeInfo.consumptionAmount= this.tradeInfo.consumptionAmount*100;         
+                this.tradeInfo.consumptionAmount= this.tradeInfo.consumptionAmount*100;
                 this.tradeInfo.discountAmount=this.tradeInfo.discountAmount*100;
                 this.tradeInfo.paAmount=this.tradeInfo.paAmount*100;
                 this.tradeInfo.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;    
@@ -540,6 +540,7 @@
                 this.count_principalDeduct=0;this.count_thirdpartyReceivable=0;this.count_merchantSubsidyShould=0;
                 this.count_suspensionTax=0;this.count_merchantSubsidyActual=0;
                 this.count_discountDiff=0;this.count_collectionAmount=0;this.count_commission33211=0;this.count_entryAmount=0;
+                this.uploadText='';
             },
             uploadClick(){
                 $('input[type="file"]').click();
@@ -552,6 +553,9 @@
                 let vm=this;
                 var reader = new FileReader();
                 reader.readAsDataURL(files);
+                if(!check_upload(files.name)){
+                    return;
+                }
                 reader.onload = function(e){
                     let datas={
                         name:files.name,

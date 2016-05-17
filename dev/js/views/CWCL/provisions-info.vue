@@ -72,8 +72,8 @@
                             <thead>
                                 <tr  role="row">
                                     <th>编号</th>
-                                    <th>凭证号</th>
                                     <th>收款方</th>
+                                    <th>凭证号</th>
                                     <th>账户名</th>
                                     <th>账号</th>
                                     <th>借(收入)</th>
@@ -89,8 +89,8 @@
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in zdlists">
                                     <td>{{index+1}}</td>
-                                    <td>{{trlist.certificate}}</td>
                                     <td>{{trlist.collectionName}}</td>
+                                    <td>{{trlist.certificate}}</td>
                                     <td>{{trlist.accountName}}</td>
                                     <td>{{trlist.accountNumber}}</td>
                                     <td>{{trlist.incomeAmount/100 | currency '' }}</td>
