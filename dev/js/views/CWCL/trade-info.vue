@@ -437,6 +437,7 @@
                 this.tradeInfo.merchantSubsidyActual='';
                 this.tradeInfo.certificates='';     
                 this.tradeInfo.remarks='';
+                this.uploadText='';
                 //初始化获取所有商户信息
                 this.$http.post('./merchant/list',{})
                     .then(function (response) {
@@ -488,10 +489,17 @@
                                 confirmButtonColor: "#2196F3"
                             })
                         }
+                        else{
+                            swal({
+                                title: response.data.message,
+                                type: "error",
+                                confirmButtonColor: "#EF5350"
+                            })
+                        }
+                        $(".modal").modal("hide");
                     }, function (response) {
                         console.log(response);
                 });
-                $(".modal").modal("hide");
             },
             query: function () {
                 //初始化

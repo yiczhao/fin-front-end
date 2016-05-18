@@ -208,11 +208,14 @@
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
                                             <textarea class="form-control" v-model="manualCheck.remarks" width="70%" cols="20" rows="3"></textarea>
                                         </div>
+                                        <div class="form-group tc">
+                                            <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
+                                        </div>
+                                        <div class="form-group tc">
+                                            <span v-show="errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer"  v-show="(glradio=='two'&&manualCheck.remarks!=''&&manualCheck.purpose!='')||dzcheckList.purpose!=''">
-                                <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
                             </div>
                         </div>
                     </div>
@@ -355,6 +358,9 @@
             padding: 0 20px 20px;
         }
     }
+     .validation-error-label{
+         display: inline-block;
+     }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -397,7 +403,8 @@
                     "orderID":'',
                     "detailID":''
                 },
-                manualCheck:[]
+                manualCheck:[],
+                errortext:'',
             }
         },
         methods:{
@@ -464,7 +471,7 @@
                       purpose:purpose,
                       remarks:remarks,
                   }
-                    this.associateCheck.orderID=_id;
+                  this.associateCheck.orderID=_id;
                   $('#modal_dzone').modal('hide');
             },
             dzTrue(_id){
@@ -481,6 +488,10 @@
                                 })
                             })
                 }else{
+                    if(this.manualCheck.remarks==''||this.manualCheck.purpose==''){
+                        this.errortext='您的信息未填写完整';
+                        return;
+                    }
                     this.manualCheck.id=_id;
                     this.$http.post('./reservecash/manualCheck',this.manualCheck)
                             .then((response)=>{
@@ -537,14 +548,18 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
-            this.accountId=this.checkForm.accountId=this.$route.params.accountId
-            this.getTime();
-            this.initList();
+            var vm=this;
+            vm.accountId=vm.checkForm.accountId=vm.$route.params.accountId
+            vm.getTime();
+            vm.initList();
             $('#modal_dzone').on('hidden.bs.modal',function(){
                 if(!$('#modal_fzr').is(':hidden')){
                     $('#app').addClass('modal-open');
                 }
                 $('body').css('padding-right',0);
+            })
+            $('#modal_fzr').on('show.bs.modal',function(){
+                vm.errortext='';
             })
         },
         components:{

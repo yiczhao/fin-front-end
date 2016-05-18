@@ -245,6 +245,19 @@
                                         <label class="w28" for="two">否</label>
                                     </div>
                                     <div class="form-group">
+                                        <label class="w28" ><i>*</i>划付周期：</label>
+                                        <select class="form-control"  v-model="updateList.settlementCycle"  v-validate:settlementCycle="['required']">
+                                            <option value="0">请选择补贴划付周期</option>
+                                            <option value="1">日结</option>
+                                            <option value="2">周结</option>
+                                            <option value="3">月结</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="w28" ><i>*</i>补贴税率：</label>
+                                        <input v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" :value="updateList.subsidyRate" class="form-control" type="text" placeholder="0~100">%
+                                    </div>
+                                    <div class="form-group">
                                         <label class="w28"><i>*</i>上传凭证：</label>
                                         <input style="display:none" type="file" @change="uploads($event)">
                                         <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
@@ -419,7 +432,9 @@
                     expired: '',
                     remarks: '',
                     isCcb:'',
-                    accountType:''
+                    accountType:'',
+                    settlementCycle:0,
+                    subsidyRate:''
                 },
                 updataerror:false,
                 uploadText:'',
@@ -552,7 +567,7 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             $(".modal").modal("hide");
                             swal({
-                                title: "已修改！",
+                                title: "保存成功！",
                                 type:"success",
                                 confirmButtonColor: "#2196F3"
                             })

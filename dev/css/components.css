@@ -147,12 +147,10 @@ a.badge,
   width: 100%;
   display: none;
 }
-@media (min-width: 769px) {
-  .sidebar {
-    display: table-cell;
-    vertical-align: top;
-    width: 260px;
-  }
+.sidebar {
+  display: table-cell;
+  vertical-align: top;
+  width: 260px;
 }
 .sidebar-main {
   z-index: 99;
@@ -189,6 +187,7 @@ a.badge,
 .sidebar-content {
   position: relative;
   padding-bottom: 8px;
+  width: 260px;
 }
 .sidebar-all-hidden .sidebar-main,
 .sidebar-all-hidden .sidebar-secondary,
@@ -1076,11 +1075,9 @@ a.badge,
     }
   }
 }
-@media (min-width: 769px) {
   .page-content {
     display: table-row;
   }
-}
 .content-wrapper {
   width: 100%;
 }

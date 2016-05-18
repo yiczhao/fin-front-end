@@ -197,11 +197,11 @@
                         </template>
                         </tbody>
                     </table>
-                    <page :all="pageall"
-                          :cur.sync="pagecur"
-                          :page_size.sync="page_size">
-                    </page>
                 </div>
+                <page v-if="zdlists.length>0" :all="pageall"
+                      :cur.sync="pagecur"
+                      :page_size.sync="page_size">
+                </page>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                     未找到您要查询的账单
                 </div>
