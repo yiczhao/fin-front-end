@@ -41,11 +41,12 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">已关闭</option>
+                                        <option value="0">已关闭</option>
                                         <option value="2">等待划付</option>
-                                        <option value="3">等待对账</option>
-                                        <option value="4">对账成功</option>
-                                        <option value="5">划付失败</option>
+                                        <option value="3">转账中</option>
+                                        <option value="4">等待对账</option>
+                                        <option value="5">对账成功</option>
+                                        <option value="6">划付失败</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -99,12 +100,15 @@
                                                 等待划付
                                             </template>
                                             <template v-if="lpd.status==3">
-                                                等待对账
+                                                转账中
                                             </template>
                                             <template v-if="lpd.status==4">
-                                                对账成功
+                                                等待对账
                                             </template>
                                             <template v-if="lpd.status==5">
+                                                对账成功
+                                            </template>
+                                            <template v-if="lpd.status==6">
                                                 对账失败
                                             </template>
                                         </td>

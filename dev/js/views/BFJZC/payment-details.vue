@@ -9,9 +9,9 @@
                     <form class="form-inline manage-form">
                         <div class="m20">
                             <div class="form-group">
-                                <select class="form-control" v-model="checkForm.merchantId">
-                                    <option value="">请选择账户</option>
-                                    <option value="0">南昌备付金</option>
+                                <select class="form-control" v-model="checkForm.payType">
+                                    <option value="1">备付金账户</option>
+                                    <option value="2">商户预付款账户</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -108,7 +108,7 @@
                                 <td>{{n.payoutAmount/100 | currency '' }}</td>
                                 <td>
                                     <template v-if="n.payType==1">{{n.payoutAccount}}</template>
-                                    <template v-else>商户预付款账户</template>
+                                    <template v-else>{{n.payoutAccount}}</template>
                                 </td>
                                 <td>{{n.incomeAccount}}</td>
                                 <td>{{n.payoutAccountName}}</td>
@@ -142,7 +142,7 @@
                                     <template v-if="n.status==6"> 划付失败</template>
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
-                                <td></td>
+                                <td>{{n.successTime | datetime}}</td>
                                 <td>{{n.remarks}}</td>
                             </tr>
                             <tr v-show="listinfos[index]!=null" class="div-table">
@@ -415,7 +415,7 @@
                 waring:'',
                 subtitle:'',
                 checkForm:{
-                    merchantId: '',
+                    payType: '1',
                     orderNumber: '',
                     certificate:'',
                     keyword:'',

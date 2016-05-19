@@ -56,9 +56,10 @@
                                         <option value="">请选择状态</option>
                                         <option value="1">等待审核</option>
                                         <option value="2">等待划付</option>
-                                        <option value="3">等待对账</option>
-                                        <option value="4">对账成功</option>
-                                        <option value="5">划付失败</option>
+                                        <option value="3">转账中</option>
+                                        <option value="4">等待对账</option>
+                                        <option value="5">对账成功</option>
+                                        <option value="6">划付失败</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -121,7 +122,7 @@
                                             </template>
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
-                                        <td>{{sa.payAmount}}</td>
+                                        <td>{{sa.payAmount/100 | currency ''}}</td>
                                         <td><a v-link="{name:'trade-info'}">明细</a> </td>
                                         <td>
                                             <template v-if="sa.status==0">
@@ -134,17 +135,21 @@
                                                 等待划付
                                             </template>
                                             <template v-if="sa.status==3">
-                                                等待对账
+                                                转账中
                                             </template>
                                             <template v-if="sa.status==4">
-                                                对账成功
+                                                等待对账
                                             </template>
                                             <template v-if="sa.status==5">
+                                                对账成功
+                                            </template>
+                                            <template v-if="sa.status==6">
                                                 划付失败
                                             </template>
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">
+                                                <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)">申请划付</a>
                                                 <a href="javascript:void(0);" @click="updateById(sa.id)">更新</a>
                                             </template>
                                             <template v-else>
@@ -176,7 +181,7 @@
                                     </div>
                                      <div class="modal-body">
                                          <div class="form-group">
-                                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount}}</span>  元
+                                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元
                                          </div>
                                          <div class="form-group">
                                              <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
@@ -337,12 +342,12 @@
                   AccountS.push($(this).prop("class"));  
                 });
                 if(AccountS.length<=0){
-                   alert("请选择一条或多条记录，进行申请划付！");
+                   dialogs("error","请选择一条或多条记录，进行申请划付！");
                    return false
                 }
                 for (var i = 1; i < AccountS.length; i++) {
                    if (AccountS[i] != AccountS[0]) {  // 遇到了不等于x[0]的元素，设置 flag = 1，然后跳出循环
-                        alert("选择的划付记录收款账户要一致！");
+                       dialogs("error","选择的划付记录收款账户要一致！");
                         return false
                    }
                 }
@@ -412,7 +417,7 @@
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if (response.data.code==0)
                         {
-                            alert("保存成功！");
+                            dialogs();
                             this.query();
                         }
                     }, function (response) {

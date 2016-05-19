@@ -158,7 +158,7 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label><i>*</i>分公司</label>
-                                        <select class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
+                                        <select class="form-control" v-model="relist.companyId" v-validate:val1="['required']">
                                             <option value="">请选择分公司</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
@@ -271,7 +271,7 @@
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
                 zdlists:[],
                 relist:{
-                    startDate:'',subCompanyID:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
+                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
                 },
                 companylists:[],
                 typelists:[],
@@ -329,7 +329,7 @@
                 this.errorHide();
                 this.fire1=false;
                 this.relist={
-                    startDate:'',subCompanyID:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
+                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
                 },
                 this.accountId='';
                 this.addtitle = '添加账户';
@@ -420,7 +420,7 @@
                 // *** 新增修改保存
                 let data={
                     "id": this.accountId,
-                    "companyId": this.relist.subCompanyID,
+                    "companyId": this.relist.companyId,
                     "shortName": this.relist.shortName,
                     "accountName": this.relist.accountName,
                     "accountNumber": this.relist.accountNumber,

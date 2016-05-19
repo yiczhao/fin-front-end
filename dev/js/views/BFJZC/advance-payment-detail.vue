@@ -44,9 +44,10 @@
                                         <option value="0">已关闭</option>
                                         <option value="1">等待审核</option>
                                         <option value="2">等待划付</option>
-                                        <option value="3">等待对账</option>
-                                        <option value="4">对账成功</option>
-                                        <option value="5">划付失败</option>
+                                        <option value="3">转账中</option>
+                                        <option value="4">等待对账</option>
+                                        <option value="5">对账成功</option>
+                                        <option value="6">划付失败</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -93,9 +94,10 @@
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==1">等待审核</template>
                                                 <template v-if="apd.status==2">等待划付</template>
-                                                <template v-if="apd.status==3">等待对账</template>
-                                                <template v-if="apd.status==4">对账失败</template>
-                                                <template v-if="apd.status==5">划付失败</template>
+                                                <template v-if="apd.status==3">转账中</template>
+                                                <template v-if="apd.status==4">等待对账</template>
+                                                <template v-if="apd.status==5">对账成功</template>
+                                                <template v-if="apd.status==6">划付失败</template>
                                             </td>
                                             <td><a v-link="{name:'payment-details'}">查看</a></td>
                                             <td>{{apd.remarks}}</td>
@@ -128,7 +130,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -272,8 +273,7 @@
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         }
     }
 </script>

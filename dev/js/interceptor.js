@@ -28,7 +28,6 @@ export default function install(Vue,router_proto) {
 			else if(!response.ok&&conut===0){
 				dialogs('error','系统繁忙！');
 				conut++;
-				return;
 			}
 			else if(response.data.code !== 0){
 				dialogs('error',response.data.message);

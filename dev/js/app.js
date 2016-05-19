@@ -44,7 +44,6 @@ router.start(app, "#app");
 
 Vue.set(app, '_userData', {});
 Vue.use(interceptor,router);
-
 // 配置
 config.mock(Vue,false)
 config.proxy(Vue,false)
