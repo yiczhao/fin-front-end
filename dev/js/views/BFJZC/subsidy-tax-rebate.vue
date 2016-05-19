@@ -333,17 +333,9 @@
                 this.$http.post('./subsidyTaxRebateDetail/update/'+id).then(function(response){
                     if(response.data.code==0){
                         this.query();
-                        swal({
-                            title: "更新成功！",
-                            type:"success",
-                            confirmButtonColor: "#2196F3"
-                        }) 
+                        dialogs('success','更新成功！');
                     }else{
-                        swal({
-                            title: "更新失败！",
-                            type:"error",
-                            confirmButtonColor: "rgb(244,​ 67,​ 54)"
-                        }) 
+                        dialogs('error','更新失败！');
                     }
                 });
             },

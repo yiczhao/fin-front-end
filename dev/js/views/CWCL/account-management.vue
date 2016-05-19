@@ -386,11 +386,7 @@
                 this.$http.post('./chargeperson/save',data)
                         .then(function (response) {
                             this.initList();
-                            swal({
-                                title: "保存成功！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs();
                         }, function (response) {
                             console.log(response);
                         })
@@ -401,11 +397,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
                             this.initList();
-                            swal({
-                                title: "已启用！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs('success','已启用！');
                         }, function (response) {
                             console.log(response);
                         })
@@ -416,11 +408,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则删除该条数据
                             this.initList();
-                            swal({
-                                title: "已删除！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs('success','已删除！');
                         }, function (response) {
                             console.log(response);
                         })
@@ -447,11 +435,7 @@
                             }
                             else{
                                 this.initList();
-                                swal({
-                                    title: "保存成功！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs();
                             }
                         }, function (response) {
                             console.log(response);

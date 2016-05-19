@@ -358,17 +358,9 @@
                         //刷新数据
                         this.query();
                         //提示成功
-                        swal({
-                            title: "已更新成功！",
-                            type:"success",
-                            confirmButtonColor: "#2196F3"
-                        })
+                        dialogs('success','更新成功！');
                     }else{
-                        swal({
-                            title: "更新失败！",
-                            type:"error",
-                            confirmButtonColor: "rgb(244,​ 67,​ 54)"
-                        }) 
+                        dialogs('error','更新失败！');
                     }
                 });
             },

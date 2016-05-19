@@ -370,7 +370,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -566,11 +565,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             $(".modal").modal("hide");
-                            swal({
-                                title: "保存成功！",
-                                type:"success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs();
                         }, function (response) {
                             console.log(response);
                         });
@@ -596,11 +591,7 @@
                                     vm.updateList.certificates=response.data.data;
                                     vm.uploadText=files.name;
                                     this.updataerror=false;
-                                    swal({
-                                        title: "上传成功！",
-                                        type:"success",
-                                        confirmButtonColor: "#2196F3"
-                                    })
+                                    dialogs('success','上传成功！');
                             })
                 }
             },
@@ -626,8 +617,7 @@
             })
         },
         components:{
-            'datepicker': datepicker,
-            'dialog': dialog,
+            'datepicker': datepicker
         },
         watch:{
             zdlists(){

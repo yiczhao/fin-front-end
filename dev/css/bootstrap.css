@@ -2916,7 +2916,6 @@ select[multiple].input-lg {
   margin-bottom: 10px;
   color: #737373;
 }
-@media (min-width: 769px) {
   .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -2965,7 +2964,6 @@ select[multiple].input-lg {
   .form-inline .has-feedback .form-control-feedback {
     top: 0;
   }
-}
 .form-horizontal .radio,
 .form-horizontal .checkbox,
 .form-horizontal .radio-inline,
@@ -4168,16 +4166,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
-@media (min-width: 769px) {
   .navbar {
     border-radius: 0;
   }
-}
-@media (min-width: 769px) {
+
   .navbar-header {
     float: left;
   }
-}
+
 .navbar-collapse {
   overflow-x: visible;
   padding-right: 20px;
@@ -4189,7 +4185,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-collapse.in {
   overflow-y: auto;
 }
-@media (min-width: 769px) {
   .navbar-collapse {
     width: auto;
     border-top: 0;
@@ -4210,7 +4205,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     padding-left: 0;
     padding-right: 0;
   }
-}
+
 .navbar-fixed-top .navbar-collapse,
 .navbar-fixed-bottom .navbar-collapse {
   max-height: 340px;
@@ -4476,18 +4471,15 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-right: 20px;
   }
 }
-@media (min-width: 769px) {
   .navbar-left {
     float: left !important;
   }
   .navbar-right {
     float: right !important;
-    margin-right: -20px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
   }
-}
 .navbar-default {
   background-color: #fff;
   border-color: #ddd;

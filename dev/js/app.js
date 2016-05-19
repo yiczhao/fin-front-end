@@ -9,6 +9,7 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import validator from 'vue-validator'
 import config from  './config'
+import common from  './common'
 import store from './store.js'
 import filters from './filters'
 import directives from './directives'
@@ -49,33 +50,8 @@ config.mock(Vue,false)
 config.proxy(Vue,false)
 // config.mock(Vue,true)
 // config.proxy(Vue,true)
-
+window.check_upload=common.check_upload;
+window.dialogs=common.dialogs;
+Vue.filter('datetime',common.datetime);
 Vue.config.debug = true;
-Vue.filter('datetime', function (value) {
-	if(value==null || value=='')return '';
-	var time = new Date(value);
-	var y = time.getFullYear();
-	var m = time.getMonth()+1;
-	var d = time.getDate();
-	var h = time.getHours();
-	var mm = time.getMinutes();
-	var s = time.getSeconds();
-	function add0(m){return m<10?'0'+m:m }
-	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
-});
-window.check_upload=((names)=>{
-	var FileName=new String(names);
-	var extension=new String (FileName.substring(FileName.lastIndexOf(".")+1,FileName.length));
-	if(extension=='rar'||extension=='zip'){
-		return true;
-	}
-	else{
-		swal({
-			title: "请上传正确的文件格式(rar,zip)！",
-			type:"error",
-			confirmButtonColor: "#EF5350"
-		});
-		return false;
-	}
-})
 

@@ -483,18 +483,10 @@
                         if (response.data.code==0)
                         {
                             this.query();
-                            swal({
-                                title: "保存成功！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs();
                         }
                         else{
-                            swal({
-                                title: response.data.message,
-                                type: "error",
-                                confirmButtonColor: "#EF5350"
-                            })
+//                            dialogs(response.data.message);
                         }
                         $(".modal").modal("hide");
                     }, function (response) {
@@ -571,14 +563,10 @@
                     }
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
-                        vm.tradeInfo.certificates=response.data.data;
-                        vm.uploadText=files.name;
-                        swal({
-                            title: "上传成功！",
-                            type:"success",
-                            confirmButtonColor: "#2196F3"
-                        })
-                })
+                                    vm.tradeInfo.certificates=response.data.data;
+                                    vm.uploadText=files.name;
+                                    dialogs('success','上传成功！');
+                            })
                 }
             },
         },

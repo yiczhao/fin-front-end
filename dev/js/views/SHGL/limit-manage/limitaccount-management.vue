@@ -296,11 +296,7 @@
                                 vm.addData.certificates_id=response.data.data;
                                 vm.saveerror='';
                                 vm.uploadText=files.name;
-                                swal({
-                                    title: "上传成功！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','上传成功！');
                      })
                 }
             },
@@ -315,11 +311,7 @@
                 this.model.recharge(data)
                         .then(function (response) {
                             this.initList();
-                            swal({
-                                title: "已充值！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            });
+                            dialogs('success','已充值！');
                         }, function (response) {
                             console.log(response);
                         });

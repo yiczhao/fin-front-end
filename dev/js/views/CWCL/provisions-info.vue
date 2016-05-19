@@ -481,11 +481,7 @@
                     this.$http.post('./reservecash/associateCheck',this.associateCheck)
                             .then((response)=>{
                                 this.initList();
-                                swal({
-                                    title: "对账成功！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','对账成功！');
                             })
                 }else{
                     if(this.manualCheck.remarks==''||this.manualCheck.purpose==''){
@@ -496,11 +492,7 @@
                     this.$http.post('./reservecash/manualCheck',this.manualCheck)
                             .then((response)=>{
                                 this.initList();
-                                swal({
-                                    title: "对账成功！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','对账成功！');
                             })
                 }
             },

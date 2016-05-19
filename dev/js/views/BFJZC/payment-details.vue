@@ -42,9 +42,10 @@
                                 <select class="form-control" v-model="checkForm.status">
                                     <option value="">请选择对账状态</option>
                                     <option value="2">等待划付</option>
-                                    <option value="3">等待对账</option>
-                                    <option value="4">对账成功</option>
-                                    <option value="5">划付失败</option>
+                                    <option value="3">转账中</option>
+                                    <option value="4">等待对账</option>
+                                    <option value="5">对账成功</option>
+                                    <option value="6">划付失败</option>
                                     <option value="0">已关闭</option>
                                 </select>
                             </div>
@@ -135,9 +136,10 @@
                                 <td>
                                     <template v-if="n.status==1"> 等待审核</template>
                                     <template v-if="n.status==2"> 等待划付</template>
-                                    <template v-if="n.status==3"> 等待对账</template>
-                                    <template v-if="n.status==4"> 对账成功</template>
-                                    <template v-if="n.status==5"> 划付失败</template>
+                                    <template v-if="n.status==3"> 转账中</template>
+                                    <template v-if="n.status==4"> 等待对账</template>
+                                    <template v-if="n.status==5"> 对账成功</template>
+                                    <template v-if="n.status==6"> 划付失败</template>
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td></td>
@@ -165,14 +167,15 @@
                                              <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail'}">详情</a></template>
                                              <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate'}">详情</a></template>
                                              <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail'}">详情</a></template>
-                                             <template v-if="n.status==5"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
+                                             <template v-if="n.status==6"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
                                         </span>
                                         <span>
-                                             <template v-if="n.status==1"> 等待审核</template>
+                                            <template v-if="n.status==1"> 等待审核</template>
                                             <template v-if="n.status==2"> 等待划付</template>
-                                            <template v-if="n.status==3"> 等待对账</template>
-                                            <template v-if="n.status==4"> 对账成功</template>
-                                            <template v-if="n.status==5"> 划付失败</template>
+                                            <template v-if="n.status==3"> 转账中</template>
+                                            <template v-if="n.status==4"> 等待对账</template>
+                                            <template v-if="n.status==5"> 对账成功</template>
+                                            <template v-if="n.status==6"> 划付失败</template>
                                             <template v-if="n.status==0"> 已关闭</template>
                                         </span>
                                             <span>{{trlist.remarks}}</span>
@@ -183,10 +186,10 @@
                                             <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
                                             <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
                                         </template>
-                                        <template v-if="n.status==3">
+                                        <template v-if="n.status==4">
                                             <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
                                         </template>
-                                        <template v-if="n.status==5">
+                                        <template v-if="n.status==6">
                                             <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
                                             <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
                                             <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
@@ -296,7 +299,7 @@
                                             <template v-if="n.purpose==5"> 供货商划付</template>
                                         </td>
                                         <td>{{n.remarks}}</td>
-                                        <td><a href="javascript:void(0)" @click="checking(n.reserveCashId)">选择</a></td>
+                                        <td><a href="javascript:void(0)" @click="checkTrue(n.reserveCashId)">选择</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -498,21 +501,31 @@
                 this.delPurpose=b;
             },
             checking(a){
+                this.accountId=a;
                 this.$http.post('./reservecash/order/checklist/'+a)
                         .then( (response)=> {
-                             (response.data.code==0)?this.checkLists.$set(response.data.data):null;
+                             (response.data.code==0)?this.$set('checkLists',response.data.data):null;
+                        })
+            },
+            checkTrue(_id){
+                let data={
+                    'orderId':this.accountId,
+                    'reserveCashId':_id
+                }
+                this.$http.post('./reservecash/order/checking',data)
+                        .then( (response)=> {
+                                if(response.data.code==0){
+                                    this.initList()
+                                    dialogs('success','对账成功！');
+                                }
                         })
             },
             updateTrue(){
                 this.$http.post('./reservecash/order/update/'+this.accountId)
                     .then( (response)=> {
                         if(response.data.code==0){
-                            this.initList();
-                            swal({
-                                title: "已更新！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            this.initList()
+                            dialogs('success','已更新！');
                         }
                     })
             },
@@ -521,11 +534,7 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
-                                swal({
-                                    title: "划付成功！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','划付成功！');
                             }
                         })
             },
@@ -538,11 +547,7 @@
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.initList();
-                                swal({
-                                    title: "已删除！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','已删除！');
                             }
                         })
             },
@@ -551,11 +556,7 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
-                                swal({
-                                    title: "已关闭！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','已关闭！');
                             }
                         })
             },
@@ -569,11 +570,7 @@
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
-                                    swal({
-                                        title: "已退回！",
-                                        type: "success",
-                                        confirmButtonColor: "#2196F3"
-                                    })
+                                    dialogs('success','已退回！');
                                 }
                             })
             },
@@ -587,11 +584,7 @@
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
-                                    swal({
-                                        title: "已划付！",
-                                        type: "success",
-                                        confirmButtonColor: "#2196F3"
-                                    })
+                                    dialogs('success','已划付！');
                             }
                         })
             },

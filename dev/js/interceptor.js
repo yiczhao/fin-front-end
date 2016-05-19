@@ -5,12 +5,13 @@
 import config from './config'
 
 export default function install(Vue,router_proto) {
-
+	var conut;
 	window.origin && (Vue.http.options.root = window.origin );
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 		request (request) {
-			Message.show('loading','loading...')
+			Message.show('loading','loading...');
+			conut=0;
 			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
 			request.headers['X-Auth-Token']=token;
 			config.mock_get(Vue,request)
@@ -23,6 +24,16 @@ export default function install(Vue,router_proto) {
 			  setTimeout(()=>{
 				  router_proto.go('login');
 			  })
+			}
+			else if(!response.ok&&conut===0){
+				dialogs('error','系统繁忙！');
+				conut++;
+				return;
+			}
+			else if(response.data.code !== 0){
+				dialogs('error',response.data.message);
+				conut++;
+				return;
 			}
 			return response;
 		}

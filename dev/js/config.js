@@ -51,11 +51,7 @@ var proxy = (Vue,isproxy)=>{
         Vue.http.options.root = window.origin || 'http://172.16.10.188:8080'
         Vue.http.options.emulateJSON = false
     }
-
 }
-
-
-
 /**
  * 鉴权配置
  */

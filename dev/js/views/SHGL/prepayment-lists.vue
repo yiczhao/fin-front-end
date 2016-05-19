@@ -380,11 +380,7 @@
 
                         //判断是否有银行卡账号
                         if(this.applyAdvancePay.collectionAccountNumber== null){
-                            swal({
-                                title: "该商户未设置划款账户，无法充值！",
-                                type: "warning",
-                                confirmButtonColor: "#2196F3"
-                            });
+                            dialogs('success','该商户未设置划款账户，无法充值！');
                             return false;
                         }else{
                             //显示窗口
@@ -513,11 +509,7 @@
                         if (response.data.code==0)
                         {
                             this.query();
-                             swal({
-                                title: "保存成功！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            });
+                            dialogs();
                         }
                     }, function (response) {
                         console.log(response);

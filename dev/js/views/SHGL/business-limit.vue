@@ -679,11 +679,7 @@
                 this.$http.post('./ limitPurchaseMerchant/editDigest',this.updateList)
                         .then((response)=>{
                                 this.initList();
-                                swal({
-                                    title: "已修改！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','已修改！');
                         })
             },
             changeDiscount(_id,_isenb){
@@ -780,11 +776,7 @@
                 this.$http.post('./limitPurchaseMerchant/add',data)
                         .then((response)=>{
                             this.initList();
-                            swal({
-                                title: "已添加！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs('success','已添加！');
                         })
             },
             submitTrue2(e){
@@ -794,11 +786,7 @@
                 this.$http.post('./limitPurchaseMerchant/addDigest',data)
                         .then((response)=>{
                             this.initList();
-                            swal({
-                                title: "已添加！",
-                                type: "success",
-                                confirmButtonColor: "#2196F3"
-                            })
+                            dialogs('success','已添加！');
                 })
             },
             uploadClick(){
@@ -825,11 +813,7 @@
                                 vm.updateList.certificates=response.data.data;
                                 vm.uploadText=files.name;
                                 vm.saveerror='';
-                                swal({
-                                    title: "上传成功！",
-                                    type: "success",
-                                    confirmButtonColor: "#2196F3"
-                                })
+                                dialogs('success','上传成功！');
                             })
                 }
             },
