@@ -121,7 +121,7 @@
                                 <td>
                                     <a v-link="{name:'limitaccount-info'}">{{trlist.principalDeduct/100 | currency ''}}</a>
                                 </td>
-                                <td>{{trlist.thirdpartyReceivable/100 | currency ''}}</td>
+                                <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
                                     <a v-link="{name:'subsidy-tax-rebate'}">{{trlist.suspensionTax/100 | currency ''}}</a>
@@ -166,7 +166,10 @@
                                 <th><b>{{count_limitDeduct/100 | currency ''}}</b></th>
                                 <th><b>{{count_principalDeduct/100 | currency ''}}</b></th>
                                 <th>
-                                    <b><template v-if="count_thirdpartyReceivable==NaN">0</template></b>
+                                    <b>
+                                        <template v-if="count_thirdpartyReceivable==NaN">0</template>
+                                        <template v-else>{{count_thirdpartyReceivable/100 | currency ''}}</template>
+                                    </b>
                                 </th>
                                 <th><b>{{count_merchantSubsidyShould/100 | currency ''}}</b></th>
                                 <th><b>{{count_suspensionTax/100 | currency ''}}</b></th>
@@ -639,7 +642,7 @@
                      _this.count_payAmount+=e.payAmount;
                      _this.count_limitDeduct+=e.limitDeduct;
                      _this.count_principalDeduct+=e.principalDeduct;
-                     _this.count_thirdpartyReceivable+=e.thirdpartyReceivable;
+                     _this.count_thirdpartyReceivable+=e.thirdPartyReceivable;
                      _this.count_merchantSubsidyShould+=e.merchantSubsidyShould;
                      _this.count_suspensionTax+=e.suspensionTax;
                      _this.count_merchantSubsidyActual+=e.suspensionTax;
