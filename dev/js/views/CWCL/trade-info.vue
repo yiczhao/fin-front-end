@@ -258,7 +258,7 @@
                                             <input type="file" style="display: none;" @change="uploads($event)">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                            <span v-if="tradeInfo.certificates=='' && fire" class="validation-error-label">请选择凭证</span>
+                                            <span v-if="tradeInfo.certificateId=='' && fire" class="validation-error-label">请选择凭证</span>
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -40px;">备注:</label>
@@ -361,7 +361,7 @@
                     thirdPartyReceivable:'',    
                     suspensionTax:'', 
                     merchantSubsidyActual:'',
-                    certificates:'',     
+                    certificateId:'',
                     remarks:''
                 },
                 tradeList:[],
@@ -435,7 +435,7 @@
                 this.tradeInfo.thirdPartyReceivable='';    
                 this.tradeInfo.suspensionTax=''; 
                 this.tradeInfo.merchantSubsidyActual='';
-                this.tradeInfo.certificates='';     
+                this.tradeInfo.certificateId='';
                 this.tradeInfo.remarks='';
                 this.uploadText='';
                 //初始化获取所有商户信息
@@ -465,7 +465,7 @@
                 //隐藏非空提示
                 this.errorHideL();
                 //验证非空
-                if(!this.$vali.valid||this.tradeInfo.certificates==''){
+                if(!this.$vali.valid||this.tradeInfo.certificateId==''){
                     this.fire=true;
                     return;
                 }
@@ -533,7 +533,7 @@
                     thirdPartyReceivable:'',    
                     suspensionTax:'', 
                     merchantSubsidyActual:'',
-                    certificates:'',     
+                    certificateId:'',
                     remarks:''
                 },
                 this.count_consumptionAmount=0;this.count_discountAmount=0;this.count_payAmount=0;this.count_limitDeduct=0;
@@ -563,7 +563,7 @@
                     }
                     vm.$http.post('./file/upload',datas)
                             .then((response)=>{
-                                    vm.tradeInfo.certificates=response.data.data;
+                                    vm.tradeInfo.certificateId=response.data.data;
                                     vm.uploadText=files.name;
                                     dialogs('success','上传成功！');
                             })

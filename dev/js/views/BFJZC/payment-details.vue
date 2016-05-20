@@ -110,7 +110,9 @@
                                     <template v-if="n.payType==1">{{n.payoutAccount}}</template>
                                     <template v-else>{{n.payoutAccount}}</template>
                                 </td>
-                                <td>{{n.incomeAccount}}</td>
+                                <td>
+                                    {{n.incomeAccount}}
+                                </td>
                                 <td>{{n.payoutAccountName}}</td>
                                 <td>{{n.payoutAccountNumber}}</td>
                                 <td>
