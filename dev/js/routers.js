@@ -17,8 +17,9 @@ export default function(router){
             }
         },
         //账户明细
-        '/provisions-info/:accountId':{
+        '/provisions-info/':{
             name:'provisions-info',
+            accountId:'',
             component: function(resolve){
                 require(['./views/CWCL/provisions-info.vue'],resolve);
             }

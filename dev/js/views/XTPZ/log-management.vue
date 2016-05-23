@@ -55,10 +55,12 @@
                                     <td>{{log.name}}</td>
                                     <td>{{log.subCompanyName}}</td>
                                     <td>{{log.URL}}</td>
-                                    <td>{{log.description}}</td>
+                                    <td>{{log.description}}
+                                        {{log.URL | geturl descriptions}}
+                                    </td>
                                     <td>{{log.createTime | datetime}}</td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>                     
+                                        <a data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -90,7 +92,7 @@
                                                 <textarea class="textarea-w">{{log.URL}}</textarea>
                                             </div>
                                             <div><label>描述：</label>
-                                                <textarea class="textarea-w">{{log.description}}</textarea>
+                                                <textarea  v-if="log.URL!=''" class="textarea-w">{{log.URL | geturl descriptions}}</textarea>
                                             </div>
                                             <div><label>详情：</label>
                                                 <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
@@ -149,7 +151,16 @@
                 pageIndex:1,
                 pageSize:15,
                 logList:[],
-                log:{}
+                log:{
+                    "userName":"",
+                    "name":"",
+                    "URL":"",
+                    "description":"",
+                    "logInfo":"",
+                    "createIP":"",
+                    "createTiome":""
+                },
+                descriptions:[],
             }
         },
         methods:{
@@ -174,6 +185,12 @@
                         console.log(response);
                     });
             },
+            getdescription(){
+                this.$http.post('./log/description')
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('descriptions',response.data.data):null
+                        })
+            },
             getTwo:function(num){
                 if(num.toString().length>=2) return num;
                 var str="";
@@ -181,15 +198,12 @@
                     str +="0";
                 return str + num.toString();
             },
-            showLog:function(id){
+            showLog(id){
                 this.$http.post('./log/info/'+id)
-                    .then(function (response) {
+                    .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
-                        },
-                         function (response) {
-                            console.log(response);
-                        });
+                        })
             },
             query: function () {
                 let data={
@@ -204,6 +218,7 @@
             },
         },
         ready: function () {
+            this.getdescription();
             this.getLogList({});
             this.getSubcompany({});
         },

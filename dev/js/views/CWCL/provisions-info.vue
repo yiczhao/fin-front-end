@@ -22,10 +22,13 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="付款账号">
+                            </div>
                         </div>
                         <div  class="">
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+                                <input type="text" class="form-control" v-model="checkForm.payAccountNumber" placeholder="凭证号">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
@@ -384,7 +387,7 @@
                 zhichu:0,
                 gllists:[],
                 checkForm:{
-                    accountId:'',
+                    payAccountNumber:'',
                     certificate:'',
                     keyword:'',
                     status:'0',
@@ -542,7 +545,7 @@
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             var vm=this;
-            vm.accountId=vm.checkForm.accountId=vm.$route.params.accountId
+            vm.accountId=vm.checkForm.payAccountNumber=vm.$route.params.accountId
             vm.getTime();
             vm.initList();
             $('#modal_dzone').on('hidden.bs.modal',function(){

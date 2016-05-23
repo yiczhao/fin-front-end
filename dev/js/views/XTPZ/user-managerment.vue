@@ -338,6 +338,7 @@
             },
             addUser(){
                 $('#modal_add').modal('show');
+                this.addUser();
             },
             clearUl(){
                 $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
