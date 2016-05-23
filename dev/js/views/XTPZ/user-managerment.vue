@@ -338,11 +338,15 @@
             },
             addUser(){
                 $('#modal_add').modal('show');
-                this.addUser();
+                this.clearUl();
             },
             clearUl(){
                 $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
                 $('.addbottom .col-md-4').children('ul').html('');
+                this.userdata={
+                    subCompanyID:'',
+                            keyWord:''
+                }
             },
             queryUser(){
                 if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;
