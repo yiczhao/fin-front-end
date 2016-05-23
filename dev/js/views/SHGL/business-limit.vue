@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                    未找到您要查询的账户
+                    未找到数据
                 </div>
 
                 <!--编辑账户dialog-->
@@ -442,7 +442,7 @@
     .addtop,  .addbottom{
         overflow: hidden;
         .form-control{
-              adding: 7px;
+              padding: 7px;
         }
     }
     .addbottom{

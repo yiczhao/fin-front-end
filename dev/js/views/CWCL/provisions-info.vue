@@ -32,6 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.status">
+                                    <option value="">请选择状态</option>
                                     <option value="1">成功</option>
                                     <option value="0">待对账</option>
                                 </select>
@@ -129,7 +130,7 @@
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else v-cloak>
-                    未找到您要查询的账户
+                    未找到数据
                 </div>
                 <div data-backdrop="static"  id="modal_fzr" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-sm">

@@ -208,7 +208,7 @@
                       :page_size.sync="page_size">
                 </page>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
-                    未找到您要查询的账单
+                    未找到数据
                 </div>
             </div>
 

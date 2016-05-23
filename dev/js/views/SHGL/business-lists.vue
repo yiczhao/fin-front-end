@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                    未找到您要查询的商户
+                    未找到数据
                 </div>
 
                 <div data-backdrop="static"  id="modal_checking" class="modal" style="display: none;">

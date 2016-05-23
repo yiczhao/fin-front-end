@@ -62,7 +62,7 @@
                         </page>
                     </div>
                     <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                        未找到您要查询的账户
+                        未找到数据
                     </div>
                 </div>
             </div>

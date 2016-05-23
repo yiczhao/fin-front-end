@@ -46,10 +46,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="activityID">
-                                    <option value="">请选择参与活动</option>
-                                        <option v-for="(index,n) in activityList" v-text="n.name" :value="n.activityID"></option>
-                                    </select>
+                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" v-model="activityID">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
@@ -106,7 +103,7 @@
                                                 <input type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}
                                             </template>
                                         </td>
-                                        <td>{{sa.createAT}}</td>
+                                        <td>{{sa.createAT | datetime}}</td>
                                         <td>{{sa.subCompanyName}}</td>
                                         <td>{{sa.cityName}}</td>
                                         <td>{{sa.paymentAccountShortName}}</td>
@@ -193,7 +190,7 @@
                                          </div>
                                          <div class="form-group">
                                              <label>收款方：</label>
-                                             <input type="text" id="displayName" class="" style="width:89%" v-model="applyPayInfo.displayName"></input>
+                                             <span v-text="applyPayInfo.displayName"></span>
                                          </div>
                                          <div class="form-group">
                                              <label class="remarks">备&nbsp;&nbsp;  注：</label>
@@ -261,7 +258,6 @@
                 page_size:15,
                 pageIndex:1,
                 pageSize:15,
-                activityList:[],
                 cityList:[],
                 payTypes:[],
                 showPayAccount:'',
@@ -305,16 +301,6 @@
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
-                    });
-            },
-            //获取活动数据
-            getactivitys:function(data){
-                 this.$http.post('./activity/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('activityList', response.data.data) : null;
                     }, function (response) {
                         console.log(response);
                     });
@@ -473,7 +459,6 @@
             this.getSubsidyAppropriationList(data);
             this.getSubcompany({});
             this.getCity({});
-            this.getactivitys({});
         },
          watch:{
             payType:function(){

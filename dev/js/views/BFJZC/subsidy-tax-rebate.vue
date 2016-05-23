@@ -159,43 +159,43 @@
                             </page>
                         </div>
             </div>
-        </div>
 
-        <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
-            <div class="modal-dialog mg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>申请付款</h3>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
+            <div id="modal_applyPay" data-backdrop="static" class="modal fade">
+                <div class="modal-dialog mg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>申请付款</h3>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount}}</span>  元
+                            </div>
+                            <div class="form-group">
+                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                <select id="payType" v-model="payType">
+                                    <option v-for="n in payTypes" v-text="n.name" :value="n.type"></option>
+                                </select>
+                                <label>付款账户：</label>
+                                <span >{{showPayAccount}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>收款方：</label>
+                                <span v-text="applyPayInfo.displayName"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="remarks">备&nbsp;&nbsp;  注：</label>
+                                <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-foot">
+                            <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                            <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
+                        </div>
                     </div>
-                     <div class="modal-body">
-                         <div class="form-group">
-                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount}}</span>  元
-                         </div>
-                         <div class="form-group">
-                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                             <select id="payType" v-model="payType">
-                                 <option v-for="n in payTypes" v-text="n.name" :value="n.type"></option>
-                             </select>
-                             <label>付款账户：</label>
-                             <span >{{showPayAccount}}</span>
-                         </div>
-                         <div class="form-group">
-                             <label>收款方：</label>
-                             <input type="text" id="displayName" class="" style="width:89%" v-model="applyPayInfo.displayName"></input>
-                         </div>
-                         <div class="form-group">
-                             <label class="remarks">备&nbsp;&nbsp;  注：</label>
-                             <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
-                         </div>
-                     </div>
-                     <div class="modal-foot">
-                        <input type="button" class="btn btn-primary" @click="submit()" value="提交">
-                        <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
-                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </index>
 </template>
 <style>

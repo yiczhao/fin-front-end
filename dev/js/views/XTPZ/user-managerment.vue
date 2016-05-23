@@ -4,7 +4,9 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" v-on:click="addUser" value="导入员工">
+                                </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" >
                                     <option value="">请选择分公司</option>
@@ -73,22 +75,93 @@
                                              <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
                                              <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
                                          </div>
-                                         <hr/>
                                      </div>
                                      <div class="modal-foot">
                                         <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
-                                        <input type="button" class="btn btn-gray" v-on:click="cancel" data-dismiss="modal" value="取消">
-                                        <br/>
+                                        <input type="button" class="btn btn-gray" data-dismiss="modal" value="取消">
                                      </div>
                                 </div>
                             </div>
-                           
                         </div>
+
+                <!--导入员工dialog-->
+                <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title" v-text="addTitle"></h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="addtop">
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="userdata.subCompanyID">
+                                            <option value="">请选择分公司</option>
+                                            <option v-for="(index,n) in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" v-model="userdata.keyWord" placeholder="用户名、姓名、手机号">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="button" class="btn btn-info" @click="queryUser" value="查询">
+                                    </div>
+                                </div>
+                                <div class="addbottom">
+                                    <div style="text-indent: 68%">已选择：</div>
+                                    <div class="col-md-7">
+                                        <table v-if="userlists.length>0" class="table">
+                                            <thead>
+                                            <tr role="row">
+                                                <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
+                                                <th>分公司</th>
+                                                <th>用户名</th>
+                                                <th>手机号</th>
+                                                <th>姓名</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr role="row" v-for="n in userlists">
+                                                <td>
+                                                    <label>
+                                                        <input :value="n.operationID"
+                                                               type="checkbox"
+                                                               :subCompanyId="n.subCompanyId"
+                                                               :userName="n.userName"
+                                                               :phone="n.phone"
+                                                               :empName="n.empName"
+                                                        >{{$index+1}}
+                                                    </label>
+                                                </td>
+                                                <td>{{n.subCompanyName}}</td>
+                                                <td>{{n.userName}}</td>
+                                                <td>{{n.phone}}</td>
+                                                <td>{{n.empName}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <span v-else>
+                                            无可添加数据
+                                        </span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                        <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
+                                        <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </index>
 </template>
-<style scoped>
+<style lang="sass" scoped>
     body{
         background-color:#fff;
     }
@@ -106,12 +179,57 @@
         min-width: 85px;
     }
     .controlSpan{
-        float: left;
+        display: inline-block;
         margin-right: 10px;
     }
     .modal-foot{
+        margin-bottom: 30px;
         clear:both;
         text-align: center;
+    }
+    .addbottom{
+        margin-top: 15px;
+        .col-md-2{
+            text-align: center;
+            input{
+                margin-bottom: 10px;
+            }
+        }
+        .col-md-7{
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+        .col-md-1{
+            padding-top: 40px;
+            text-align: center;
+            input{
+                margin:15px 0;
+            }
+        }
+        .col-md-4{
+            border: 1px solid #ccc;
+            padding:10px;
+        }
+        ul{
+            list-style: none;
+            height: 278px;
+            overflow: auto;
+            li{
+                margin:5px 0;
+                cursor: pointer;
+                padding-left:3px;
+            }
+        }
+    }
+    .addbottom table tr td,  .addbottom table tr th{
+        padding: 2px;
+    }
+    .addtop,  .addbottom{
+        overflow: hidden;
+        .form-control{
+            padding: 7px;
+        }
     }
 </style>
 <script>
@@ -136,12 +254,18 @@
                 pageIndex:1,
                 pageSize:15,
                 userList:[],
-                controlSpanArray:[]
+                controlSpanArray:[],
+                userlists:[],
+                userdata:{
+                    subCompanyID:'',
+                    keyWord:''
+                },
+                addId:[]
             }
         },
         methods:{
             //获取员工数据
-             getUserList:function(data){
+             getUserList(data){
                 this.$http.post('./user/list',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -152,7 +276,7 @@
                     });
             },
             //获取分公司数据
-            getSubcompany:function(data){
+            getSubcompany(data){
                  this.$http.post('./subcompany/list',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -161,7 +285,7 @@
                         console.log(response);
                     });
             },
-            query: function () {
+            query() {
                 let data={
                         subCompanyID:this.subCompanyID,
                         keywords:this.keywords,
@@ -170,9 +294,8 @@
                     };
                 this.getUserList(data);
             },
-            
             //显示员工管辖
-            showCS: function (userId) {
+            showCS(userId) {
                 this.userID=userId
                 this.$http.post('./user/userControlSpanList/'+userId)
                     .then(function (response) {
@@ -183,20 +306,19 @@
                             console.log(response);
                         });
             },
-            checkAll:function(){
+            checkAll(){
                 $("input[name='ckbox']").prop({'checked':true});
             },
-            othercheck:function(){
+            othercheck(){
                 $("input[name='ckbox']").each(function(){
                   $(this).prop({'checked': !$(this).prop("checked")});  
                 })
             },
-            submit:function(){
+            submit(){
                 var arrays = [];
                 $("input[name='ckbox']:checked").each(function(){
                   arrays.push($(this).prop("id"));  
                 });
-
                 let data={
                     userID:this.userID,
                     subCompanyIDs:arrays
@@ -206,7 +328,7 @@
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
                         {
-                            alert("保存成功！");
+                            dialogs("保存成功！");
                         }
                     }, function (response) {
                         console.log(response);
@@ -214,13 +336,93 @@
                     //关闭弹出层
                     $(".modal").modal("hide");
             },
-            cancel:function(){
+            addUser(){
+                $('#modal_add').modal('show');
+            },
+            clearUl(){
+                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
+                $('.addbottom .col-md-4').children('ul').html('');
+            },
+            queryUser(){
+                if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;
+                this.$http.post('./user/readyImportUser',this.userdata)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('userlists',response.data.data):null;
+                            this.clearUl();
+                        })
+            },
+            allCkb(e){
+                if(e.target.checked){
+                    $('.col-md-7 td input[type="checkbox"]').prop('checked',true);
+                }else{
+                    $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
+                    this.addId=[];
+                }
+            },
+            appendLi(a){
+                let _this=$("input[value='" + a + "']");
+                let _tr=_this.closest('tr');
+                let _ul=$('.addbottom .col-md-4').children('ul');
+                let subCompanyId=_this.attr('subCompanyId');
+                let userName=_this.attr('userName');
+                let phone=_this.attr('phone');
+                let empName=_this.attr('empName');
+                _ul.append('<li subCompanyId="'+subCompanyId+'" userName="'+userName+'" phone="'+phone+'" empName="'+empName+'" operationID="'+a+'">'+userName+'</li>');
+                _tr.hide();
+            },
+            addTrue(e){
+                this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value);
+                for(let i=0;i<this.addId.length;i++){
+                    this.appendLi(this.addId[i]);
+                }
+                $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
+                this.addId=[];
+            },
+            delTrue(e){
+                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
+                        _table=$(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
+                        _li= _ul.find('.check-li');
+                for(let i=0;i<_li.length;i++){
+                    _table.eq(_li.eq(i).index()).show();
+                }
+                _li.remove();
+            },
+            submitTrue(e){
+                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
+                if(!_li.length>0)return;
+                var data={data:[]};
+                _li.each(function(index){
+                    let _this=$(this);
+                    let operationIDs=_this.attr('operationID');
+                    let subCompanyIds=_this.attr('subCompanyId');
+                    let userNames=_this.attr('empName');
+                    let phones=_this.attr('phone');
+                    let names=_this.attr('empName');
+                    data.data[index]=
+                            {
+                                operationID:operationIDs,
+                                subCompanyId:subCompanyIds,
+                                userName:userNames,
+                                phone:phones,
+                                empName:names
+                            }
 
-            }
+                })
+                this.$http.post('./user/importUser',data)
+                        .then((response)=>{
+                            this.query();
+                            $('#modal_add').modal('hide');
+                            dialogs('success','已添加！');
+                        })
+            },
         },
         ready: function () {
             this.getUserList({});
             this.getSubcompany({});
+            $(document).on('click','.addbottom .col-md-4 ul li',function(){
+                $(this).toggleClass('check-li');
+                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
+            })
         },
        watch:{
            pagecur(){

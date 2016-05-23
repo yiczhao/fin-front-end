@@ -61,10 +61,9 @@
                             <input type="number" class="form-control" v-model="phone" placeholder="手机号">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="activityID">
-                            <option value="">请选择参与活动</option>
-                                <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
-                            </select>
+                            <div class="form-group">
+                                <input type="text" class="form-control" style="width: 100px"  placeholder="活动ID" v-model="activityID">
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -220,11 +219,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>参与活动：</label>
-                                            <select class="form-control" v-model="tradeInfo.activityId" v-validate:val2="['required']">
-                                                <option value="">请选择参与活动</option>
-                                                <option v-for="n in activityList" v-text="n.name" :value="n.activityID"></option>
-                                            </select>
-                                            <span v-if="$vali.val2.required && fire" class="validation-error-label">请选择活动</span>
+                                            <input type="text" class="form-control" style="width: 100px" placeholder="活动ID" v-model="tradeInfo.activityId" v-validate:val2="['required']">
+                                            <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>消费金额：</label>
@@ -369,7 +365,6 @@
                 },
                 tradeList:[],
                 cityList:[],
-                activityList:[],
                 merchantList:[],
                 uploadText:'',
                 count_consumptionAmount:0,count_discountAmount:0,count_payAmount:0,count_limitDeduct:0,
@@ -406,16 +401,6 @@
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
-                    });
-            },
-            //获取活动数据
-            getactivitys:function(data){
-                 this.$http.post('./activity/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('activityList', response.data.data) : null;
                     }, function (response) {
                         console.log(response);
                     });
@@ -473,14 +458,15 @@
                     return;
                 }
                 this.tradeInfo.merchantId=this.select_merchantId;
-                this.tradeInfo.consumptionAmount= this.tradeInfo.consumptionAmount*100;
-                this.tradeInfo.discountAmount=this.tradeInfo.discountAmount*100;
-                this.tradeInfo.paAmount=this.tradeInfo.paAmount*100;
-                this.tradeInfo.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;    
-                this.tradeInfo.suspensionTax=this.tradeInfo.suspensionTax*100;
-                this.tradeInfo.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
-
-                this.$http.post('./tradedetail/add',this.tradeInfo)
+                let data={};
+                $.extend(true,data,this.tradeInfo);
+                data.consumptionAmount= this.tradeInfo.consumptionAmount*100;
+                data.discountAmount=this.tradeInfo.discountAmount*100;
+                data.paAmount=this.tradeInfo.paAmount*100;
+                data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
+                data.suspensionTax=this.tradeInfo.suspensionTax*100;
+                data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
+                this.$http.post('./tradedetail/add',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if (response.data.code==0)
@@ -494,7 +480,7 @@
                         $(".modal").modal("hide");
                     }, function (response) {
                         console.log(response);
-                });
+                    });
             },
             query: function () {
                 //初始化
@@ -589,7 +575,6 @@
             this.getTradeList(data);
             this.getSubcompany({});
             this.getCity({});
-            this.getactivitys({});
         },
        watch:{
             select_merchantId:function(){
