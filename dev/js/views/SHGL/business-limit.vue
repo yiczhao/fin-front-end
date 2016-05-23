@@ -75,7 +75,7 @@
                                     <th>消化商户 </th>
                                     <th>联系人</th>
                                     <th>电话</th>
-                                    <th>客情人员</th>
+                                    <th>工作人员</th>
                                 </tr>
                             </thead>
                         <tbody>
