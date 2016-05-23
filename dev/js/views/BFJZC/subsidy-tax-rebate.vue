@@ -164,7 +164,7 @@
                 <div class="modal-dialog mg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3>申请付款</h3>
+                            <h3>{{dialogTitle}}</h3>
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
                         <div class="modal-body">
@@ -253,7 +253,8 @@
                        2:""
                     }
                 },
-                applyPayRemarks:''
+                applyPayRemarks:'',
+                dialogTitle:''
             }
         },
         methods:{
@@ -331,6 +332,7 @@
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
                 });
+                this.dialogTitle='合并付款';
                 this.getApplyPayInfoByIDs(array);
             },
             updateById:function(id){
@@ -346,6 +348,7 @@
             showModalApplyPayById:function(id){
                 let array=[];
                 array.push(id);
+                this.dialogTitle='申请付款';
                 this.getApplyPayInfoByIDs(array);
                 $('#displayName').attr("readonly",true);
                 $('#displayName').attr("class",id);

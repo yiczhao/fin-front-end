@@ -209,17 +209,14 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label>
-                                                <i class="aaaa">*</i>商户名称：
+                                                <i class="aaaa">*</i>商户ID：
                                             </label>
-                                            <select class="form-control" id="tradeInfo_merchantId" v-model="select_merchantId" v-validate:val1="['required']">
-                                                <option value="">请选择商户</option>
-                                                <option v-for="n in merchantList" v-text="n.merchantName" :value="n.merchantID"></option>
-                                            </select>
-                                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请选择商户</span>
+                                            <input type="text" class="form-control" placeholder="商户ID" v-model="select_merchantId" v-validate:val1="['required']">
+                                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>参与活动：</label>
-                                            <input type="text" class="form-control" style="width: 100px" placeholder="活动ID" v-model="tradeInfo.activityId" v-validate:val2="['required']">
+                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityId" v-validate:val2="['required']">
                                             <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
                                         </div>
                                         <div class="form-group">
@@ -577,21 +574,6 @@
             this.getCity({});
         },
        watch:{
-            select_merchantId:function(){
-                let id=$('#tradeInfo_merchantId').val();
-                let data = {
-                    cityID:''
-                };
-                for(var i in this.merchantList){
-                    if(id == this.merchantList[i].merchantID){
-                        data={
-                            cityID:this.merchantList[i].cityID
-                        }
-                    }
-                }
-
-               this.getactivitys(data);
-            },
             timeRange:function(){
                 var d=new Date()
                 var day=d.getDate()
