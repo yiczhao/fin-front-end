@@ -211,12 +211,12 @@
                                             <label>
                                                 <i class="aaaa">*</i>商户ID：
                                             </label>
-                                            <input type="text" class="form-control" placeholder="商户ID" v-model="select_merchantId" v-validate:val1="['required']">
+                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']">
                                             <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>参与活动：</label>
-                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityId" v-validate:val2="['required']">
+                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityOperationID" v-validate:val2="['required']">
                                             <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
                                         </div>
                                         <div class="form-group">
@@ -338,7 +338,7 @@
                 merchantName:"",   
                 id:"",   
                 serialNumber:"",        
-                phone:"",      
+                phone:"",
                 activityID:'',
                 subcompanyList:[],
                 pageall:1,
@@ -349,8 +349,8 @@
                 select_merchantId:'',
                 fire:false,
                 tradeInfo:{
-                    merchantId:'',
-                    activityId:'',
+                    merchantOperationID:'',
+                    activityOperationID:'',
                     consumptionAmount:'',         
                     discountAmount:'',    
                     paAmount:'',  
@@ -412,8 +412,8 @@
             addTradeInfo:function(){
                 this.errorHideL();
                 this.select_merchantId='';
-                this.tradeInfo.merchantId='';
-                this.tradeInfo.activityId='';
+                this.tradeInfo.merchantOperationID='';
+                this.tradeInfo.activityOperationID='';
                 this.tradeInfo.consumptionAmount='';         
                 this.tradeInfo.discountAmount='';    
                 this.tradeInfo.paAmount='';  
@@ -454,7 +454,6 @@
                     this.fire=true;
                     return;
                 }
-                this.tradeInfo.merchantId=this.select_merchantId;
                 let data={};
                 $.extend(true,data,this.tradeInfo);
                 data.consumptionAmount= this.tradeInfo.consumptionAmount*100;
@@ -495,12 +494,12 @@
                         subCompanyID:this.subCompanID,
                         cityID:this.cityID,
                         type:this.type,
-                        merchantOperationID:this.merchantID,
+                        merchantID:this.merchantID,
                         merchantName:this.merchantName,
                         tradeDetailID:this.id,
                         serialNumber:this.serialNumber,        
-                        phone:this.phone,      
-                        activityID:this.activityID,
+                        phone:this.phone,
+                        activityOperationID:this.activityOperationID,
                         startDate:this.startDate,
                         endDate:this.endDate,
                         pageIndex: this.pageIndex, 
@@ -511,8 +510,8 @@
             //初始化
             clear:function(){
                 this.tradeInfo={
-                    merchantId:'',
-                    activityId:'',
+                    merchantOperationID:'',
+                    activityOperationID:'',
                     consumptionAmount:'',         
                     discountAmount:'',    
                     paAmount:'',  
