@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">已关闭</option>
+                                        <option value="1">等待审核</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">转账中</option>
                                         <option value="4">等待对账</option>
@@ -57,7 +57,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remark" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -109,7 +109,7 @@
                                             <template v-if="strd.createType==1">系统生成</template>
                                             <template v-if="strd.createType==2">手工录入</template>
                                         </td>
-                                        <td>{{strd.taxRebateAmount}}</td>
+                                        <td>{{strd.taxRebateAmount/100 | currency ''}}</td>
                                         <td><a v-link="{name:'trade-info'}">明细</a> </td>
                                         <td>
                                             <template v-if="strd.status==0">
@@ -181,7 +181,8 @@
                             </div>
                             <div class="form-group">
                                 <label>收款方：</label>
-                                <span v-text="applyPayInfo.displayName"></span>
+                                <span v-if="dialogTitle=='申请付款'" v-text="applyPayInfo.displayName"></span>
+                                <input v-else type="text" style="width: 70%;display: inline-block;" v-model="applyPayInfo.displayName" class="form-control" placeholder="收款方">
                             </div>
                             <div class="form-group">
                                 <label class="remarks">备&nbsp;&nbsp;  注：</label>
@@ -189,7 +190,8 @@
                             </div>
                         </div>
                         <div class="modal-foot">
-                            <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                            <input v-if="dialogTitle=='申请付款'" type="button" class="btn btn-primary" @click="submitOne()" value="提交">
+                            <input v-else type="button" class="btn btn-primary" @click="submit()" value="提交">
                             <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
                         </div>
                     </div>
@@ -233,6 +235,7 @@
                 status:"",
                 timeRange:'1',
                 startDate:"",
+                remarks:'',
                 endDate:"",
                 merchantID:"",      
                 keywords:"",
@@ -254,7 +257,8 @@
                     }
                 },
                 applyPayRemarks:'',
-                dialogTitle:''
+                dialogTitle:'',
+                submitId:''
             }
         },
         methods:{
@@ -304,7 +308,6 @@
                 }
             },
             clear:function(){
-                $('#displayName').attr("readonly",false);
                 this.applyPayRemarks="", 
                 this.applyPayInfo={payType:{
                        1:"",
@@ -312,19 +315,18 @@
                     }};
             },
             showModalApplyPay:function(){
-                this.clear();
                 //批量划付判断首款信息是否一致
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
                   AccountS.push($(this).prop("class"));  
                 });
                 if(AccountS.length<=0){
-                   alert("请选择一条或多条记录，进行申请划付！");
+                    dialogs("请选择一条或多条记录，进行申请划付！");
                    return false
                 }
                 for (var i = 1; i < AccountS.length; i++) {
                    if (AccountS[i] != AccountS[0]) {  // 遇到了不等于x[0]的元素，设置 flag = 1，然后跳出循环
-                        alert("选择的划付记录收款账户要一致！");
+                        dialogs("选择的划付记录收款账户要一致！");
                         return false
                    }
                 }
@@ -358,6 +360,10 @@
                 let data={
                     ids:idArray
                 }
+                 if(idArray.length<=1){
+                     this.submitId=[idArray.toString()];
+                 }
+                 this.clear();
                 this.$http.post('./subsidyTaxRebateDetail/selectApplyPayInfoByIDs',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
@@ -374,6 +380,26 @@
                     }, function (response) {
                         console.log(response);
                     });
+            },
+            submitOne(){
+                let data={
+                    ids:this.submitId,
+                    remarks:this.applyPayRemarks,
+                    payType:this.payType,
+                    displayName:this.applyPayInfo.displayName
+                }
+                this.$http.post('./subsidyTaxRebateDetail/applyPay',data).then(function (response) {
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if (response.data.code==0)
+                    {
+                        dialogs();
+                        this.query();
+                    }
+                }, function (response) {
+                    console.log(response);
+                });
+                //关闭弹出层
+                $(".modal").modal("hide");
             },
             submit:function(){
                 var array = [];
@@ -395,7 +421,7 @@
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if (response.data.code==0)
                         {
-                            alert("保存成功！");
+                            dialogs;
                             this.query();
                         }
                     }, function (response) {

@@ -316,14 +316,13 @@
                 }
             },
             clear:function(){
-                this.applyPayRemarks="", 
+                this.applyPayRemarks="",
                 this.applyPayInfo={payType:{
                        1:"",
                        2:""
                     }};
             },
             showModalApplyPay:function(){
-                this.clear();
                 //批量划付判断首款信息是否一致
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
@@ -370,8 +369,9 @@
                     ids:idArray
                 }
                 if(idArray.length<=1){
-                    this.submitId=idArray;
+                    this.submitId=[idArray.toString()];
                 }
+                this.clear();
                 this.$http.post('./subsidypaydetail/selectApplyPayInfoByIDs',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
@@ -383,7 +383,6 @@
                             }
                         }
                         // this.showPayAccount=this.payTypes[0].value;
-                        this.applyPayRemarks='';
                         $('#modal_applyPay').modal('show');
                         console.log(this.applyPayInfo);
                     }, function (response) {
