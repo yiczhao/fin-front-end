@@ -26,9 +26,8 @@ var datetime=((value)=>{
     return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 })
 var geturl=((url,lists)=>{
-    var a='v1'+url.split('v1')[1];
     for(let i=0;i<lists.length;i++){
-        if(a==lists[i].url){
+        if(url==lists[i].url){
             return lists[i].description;
             break;
         }

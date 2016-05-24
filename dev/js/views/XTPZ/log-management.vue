@@ -54,9 +54,9 @@
                                     <td>{{log.userName}}</td>
                                     <td>{{log.name}}</td>
                                     <td>{{log.subCompanyName}}</td>
-                                    <td>{{log.URL}}</td>
-                                    <td>{{log.description}}
-                                        {{log.URL | geturl descriptions}}
+                                    <td>{{log.website}}{{log.uri}}</td>
+                                    <td>
+                                        {{log.uri | geturl descriptions}}
                                     </td>
                                     <td>{{log.createTime | datetime}}</td>
                                     <td>
@@ -89,10 +89,10 @@
                                             <div><label>用户名：</label>{{log.userName}}</div>
                                             <div><label>姓名：</label>{{log.name}}</div>
                                             <div><label>URL：</label>
-                                                <textarea class="textarea-w">{{log.URL}}</textarea>
+                                                <textarea class="textarea-w">{{log.website}}{{log.uri}}</textarea>
                                             </div>
                                             <div><label>描述：</label>
-                                                <textarea  v-if="log.URL!=''" class="textarea-w">{{log.URL | geturl descriptions}}</textarea>
+                                                <textarea  v-if="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
                                             </div>
                                             <div><label>详情：</label>
                                                 <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
@@ -154,11 +154,12 @@
                 log:{
                     "userName":"",
                     "name":"",
-                    "URL":"",
+                    "uri":"",
                     "description":"",
                     "logInfo":"",
                     "createIP":"",
-                    "createTiome":""
+                    "createTiome":"",
+                    "website":""
                 },
                 descriptions:[],
             }
