@@ -68,7 +68,7 @@
                             </td>
                             <td>{{trlist.startDate}}</td>
                             <td>
-                                <a v-link="{name:'provisions-info',params:{accountId:trlist.accountNumber}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                <a v-link="{name:'provisions-info',params:{accountId:trlist.accountNumber,certificate:0}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                             </td>
                             <td v-if="trlist.status==0">
                                 <span @click="rewrite(trlist)">编辑</span>

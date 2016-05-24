@@ -43,6 +43,14 @@
                             <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
+                        <div class="form-group">
+                            <span>补贴划付ID:</span>
+                            <input type="text" class="form-control" v-model="subsidyPayId" style="width: 100px" placeholder="补贴划付ID">
+                        </div>
+                        <div class="form-group">
+                            <span>补贴退税ID:</span>
+                            <input type="text" class="form-control" v-model="subsidyTaxRebateId" style="width: 100px" placeholder="补贴退税ID">
+                        </div>
                         <br/>
                         <br/>
                         <div class="form-group">
@@ -123,10 +131,10 @@
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'subsidy-tax-rebate'}">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}">{{trlist.suspensionTax/100 | currency ''}}</a>
                                 </td>
                                 <td>
-                                    <a v-link="{name:'subsidy-appropriation'}">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -328,6 +336,8 @@
         data(){
             return{
                 origin:window.origin,
+                subsidyPayId:"",
+                subsidyTaxRebateId:"",
                 subCompanID:"",
                 cityID:"",
                 type:"",
@@ -491,6 +501,8 @@
             
                 }
                 let data={
+                    subsidyPayId:this.subsidyPayId,
+                    subsidyTaxRebateId:this.subsidyTaxRebateId,
                         subCompanyID:this.subCompanID,
                         cityID:this.cityID,
                         type:this.type,
@@ -555,7 +567,6 @@
                 }
             },
         },
-        
         ready: function () {
             this.clear();
             var d=new Date()
@@ -564,11 +575,9 @@
             var year=d.getFullYear()
             var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
             var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-            let data={
-                startDate:newD,
-                endDate:endD
-            }
-            this.getTradeList(data);
+            (this.$route.params.subsidyPayId==0)?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
+            (this.$route.params.subsidyTaxRebateId==0)? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
+            this.query();
             this.getSubcompany({});
             this.getCity({});
         },

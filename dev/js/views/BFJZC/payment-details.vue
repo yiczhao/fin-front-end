@@ -121,7 +121,9 @@
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeAccountNumber}}</span>
                                 </td>
-                                <td>{{n.certificate}}</td>
+                                <td>
+                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,certificate:n.certificate}}">{{n.certificate}}</a></template>
+                                </td>
                                 <td>{{n.paymentTime | datetime}}</td>
                                 <td>
                                     <template v-if="n.purpose==1"> 补贴划付</template>
@@ -165,9 +167,9 @@
                                             <span>{{trlist.amount/100 | currency '' }}</span>
                                             <span>{{trlist.purpose}}</span>
                                         <span>
-                                             <template v-if="n.purpose==1"><a v-link="{name:'subsidy-appropriation'}">详情</a></template>
+                                             <template v-if="n.purpose==1"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
                                              <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail'}">详情</a></template>
-                                             <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate'}">详情</a></template>
+                                             <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                              <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail'}">详情</a></template>
                                              <template v-if="n.status==6"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
                                         </span>
@@ -652,6 +654,7 @@
             'datepicker': datepicker,
         },
         ready(){
+            (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;
             this.getTime();
             this.initList();
         }

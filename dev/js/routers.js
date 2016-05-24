@@ -17,14 +17,14 @@ export default function(router){
             }
         },
         //账户明细
-        '/provisions-info/:accountId':{
+        '/provisions-info/:accountId/:certificate':{
             name:'provisions-info',
             component: function(resolve){
                 require(['./views/CWCL/provisions-info.vue'],resolve);
             }
         },
         //交易明细
-        '/trade-info':{
+        '/trade-info/:subsidyPayId/:subsidyTaxRebateId':{
             name:'trade-info',
             component: function(resolve){
                 require(['./views/CWCL/trade-info.vue'],resolve);
@@ -45,21 +45,21 @@ export default function(router){
             }
         },
         //补贴划付
-        '/subsidy-appropriation':{
+        '/subsidy-appropriation/:subsidyPayID':{
             name:'subsidy-appropriation',
             component: function(resolve){
                 require(['./views/BFJZC/subsidy-appropriation.vue'],resolve);
             }
         },
-        //补贴划付
-        '/subsidy-tax-rebate':{
+        //补贴退税
+        '/subsidy-tax-rebate/:subsidyTaxRebateID':{
             name:'subsidy-tax-rebate',
             component: function(resolve){
                 require(['./views/BFJZC/subsidy-tax-rebate.vue'],resolve);
             }
         },
         //备付金支出交易明细
-        '/payment-details':{
+        '/payment-details/:reserveCashOrderNumber':{
             name:'payment-details',
             component: function(resolve){
                 require(['./views/BFJZC/payment-details.vue'],resolve);

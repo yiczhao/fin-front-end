@@ -30,6 +30,10 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
+                                <div class="form-group">
+                                    <span>ID:</span>
+                                    <input type="text" class="form-control" v-model="subsidyTaxRebateID">
+                                </div>
                                 <br/>
                                 <br/>
                                 <div class="form-group">
@@ -110,7 +114,7 @@
                                             <template v-if="strd.createType==2">手工录入</template>
                                         </td>
                                         <td>{{strd.taxRebateAmount/100 | currency ''}}</td>
-                                        <td><a v-link="{name:'trade-info'}">明细</a> </td>
+                                        <td><a v-link="{name:'trade-info',params:{subsidyPayId:0,subsidyTaxRebateId:strd.id}}">明细</a> </td>
                                         <td>
                                             <template v-if="strd.status==0">
                                                 已关闭
@@ -229,6 +233,7 @@
     export default{
         data(){
             return{
+                subsidyTaxRebateID:"",
                 subCompanyID:"",
                 cityID:"",
                 createType:"",
@@ -441,6 +446,7 @@
                     this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 }
                 let data={
+                        id:this.subsidyTaxRebateID,
                         subCompanyID:this.subCompanyID,
                         merchantOperationID:this.merchantID,
                         cityID:this.cityID,
@@ -464,11 +470,8 @@
             var year=d.getFullYear()
             var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
             var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-            let data={
-                startDate:newD,
-                endDate:endD
-            }
-            this.getsubsidyTaxRebateDetailList(data);
+            (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.subsidyTaxRebateID='':this.subsidyTaxRebateID=this.$route.params.subsidyTaxRebateID;
+            this.query();
             this.getSubcompany({});
             this.getCity({});
         },
