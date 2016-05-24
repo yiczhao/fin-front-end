@@ -173,7 +173,7 @@
                             <div class="modal-dialog mg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3>dialogTitle</h3>
+                                        <h3>{{dialogTitle}}</h3>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
                                      <div class="modal-body">
@@ -190,7 +190,8 @@
                                          </div>
                                          <div class="form-group">
                                              <label>收款方：</label>
-                                             <span v-text="applyPayInfo.displayName"></span>
+                                             <span v-if="dialogTitle=='申请划付'" v-text="applyPayInfo.displayName"></span>
+                                             <input v-else type="text" style="width: 70%;display: inline-block;" v-model="applyPayInfo.displayName" class="form-control" placeholder="收款方">
                                          </div>
                                          <div class="form-group">
                                              <label class="remarks">备&nbsp;&nbsp;  注：</label>
@@ -198,7 +199,8 @@
                                          </div>
                                      </div>
                                      <div class="modal-foot">
-                                        <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                                        <input v-if="dialogTitle=='申请划付'" type="button" class="btn btn-primary" @click="submitOne()" value="提交">
+                                         <input v-else type="button" class="btn btn-primary" @click="submit()" value="提交">
                                         <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
                                      </div>
                                 </div>
@@ -270,7 +272,8 @@
                     }
                 },
                 applyPayRemarks:'',
-                dialogTitle:''
+                dialogTitle:'',
+                submitId:''
             }
         },
         methods:{
@@ -313,7 +316,6 @@
                 }
             },
             clear:function(){
-                $('#displayName').attr("readonly",false);
                 this.applyPayRemarks="", 
                 this.applyPayInfo={payType:{
                        1:"",
@@ -361,12 +363,14 @@
                 array.push(id);
                 this.getApplyPayInfoByIDs(array);
                 this.dialogTitle='申请划付';
-                $('#displayName').attr("readonly",true);
                 $('#displayName').attr("class",id);
             },
             getApplyPayInfoByIDs:function(idArray){
                 let data={
                     ids:idArray
+                }
+                if(idArray.length<=1){
+                    this.submitId=idArray;
                 }
                 this.$http.post('./subsidypaydetail/selectApplyPayInfoByIDs',data)
                     .then(function (response) {
@@ -379,11 +383,32 @@
                             }
                         }
                         // this.showPayAccount=this.payTypes[0].value;
+                        this.applyPayRemarks='';
                         $('#modal_applyPay').modal('show');
                         console.log(this.applyPayInfo);
                     }, function (response) {
                         console.log(response);
                     });
+            },
+            submitOne(){
+                let data={
+                    ids:this.submitId,
+                    remarks:this.applyPayRemarks,
+                    payType:this.payType,
+                    displayName:this.applyPayInfo.displayName
+                }
+                this.$http.post('./subsidypaydetail/applyPay',data).then(function (response) {
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if (response.data.code==0)
+                    {
+                        dialogs();
+                        this.query();
+                    }
+                }, function (response) {
+                    console.log(response);
+                });
+                //关闭弹出层
+                $(".modal").modal("hide");
             },
             submit:function(){
                 var array = [];
