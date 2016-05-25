@@ -69,8 +69,8 @@
                 </div>
                 <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
                     <div style="margin: 0 0 20px 20px;font-size: 20px;">
-                        <span>总收入：</span><span>{{shouru}}元</span>
-                        <span>总支出：</span><span>{{zhichu}}元</span>
+                        <span>总收入：</span><span>{{shouru/100 | currency ''}}元</span>
+                        <span>总支出：</span><span>{{zhichu/100 | currency ''}}元</span>
                     </div>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -384,8 +384,8 @@
                 accountId:'',
                 checkOne:false,
                 dateS:'1',
-                shouru:0,
-                zhichu:0,
+                shouru:'',
+                zhichu:'',
                 gllists:[],
                 checkForm:{
                     payAccountNumber:'',
@@ -565,13 +565,13 @@
         },
         watch:{
             zdlists(){
-                var sr=0,zc=0;
-                this.zdlists.forEach(function(e){
-                    sr+=e.incomeAmount;
-                    zc+=e.payoutAmount;
-                });
-                this.shouru=(sr/100).toFixed(2);
-                this.zhichu=(zc/100).toFixed(2);
+                this.$http.post('./reservecash/incomeAndPayoutAmount',this.checkForm)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.shouru=response.data.data[0].incomeAmount;
+                                this.zhichu=response.data.data[0].payoutAmount;
+                            }
+                        })
             },
             pagecur(){
                 this.checkForm.pageIndex=this.pagecur;
