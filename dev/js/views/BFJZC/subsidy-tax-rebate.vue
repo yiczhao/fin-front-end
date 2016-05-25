@@ -470,7 +470,7 @@
                 this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
                         .then((response)=>{
                                 if(response.data.code==0){
-                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderID}});
+                    this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
                         })
             }

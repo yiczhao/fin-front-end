@@ -59,7 +59,7 @@ export default function(router){
             }
         },
         //备付金支出交易明细
-        '/payment-details/:reserveCashOrderNumber':{
+        '/payment-details/:reserveCashOrderNumber/:payType':{
             name:'payment-details',
             component: function(resolve){
                 require(['./views/BFJZC/payment-details.vue'],resolve);
