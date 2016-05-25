@@ -37,7 +37,6 @@ let router = new VueRouter({
 	saveScrollPosition: true,
 	transitionOnLoad: true
 });
-
 let app = Vue.extend({});
 routers(router);
 router.start(app, "#app");
@@ -53,6 +52,5 @@ window.check_upload=common.check_upload;
 window.dialogs=common.dialogs;
 Vue.filter('datetime',common.datetime);
 Vue.filter('geturl',common.geturl);
-
 Vue.config.debug = true;
 
