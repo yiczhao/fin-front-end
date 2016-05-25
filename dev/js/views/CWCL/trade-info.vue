@@ -575,8 +575,8 @@
             var year=d.getFullYear()
             var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
             var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-            (this.$route.params.subsidyPayId==0)?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
-            (this.$route.params.subsidyTaxRebateId==0)? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
+            (this.$route.params.subsidyPayId==0||this.$route.params.subsidyPayId==':subsidyPayId')?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
+            (this.$route.params.subsidyTaxRebateId==0||this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
             this.query();
             this.getSubcompany({});
             this.getCity({});
