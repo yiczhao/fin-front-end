@@ -488,6 +488,7 @@
             control(_list){
                 this.$set('controllist',_list);
                 this.updateList.merchantID=_list.merchantID;
+                this.accountId=_list.merchantID;
                 this.bthf=true;
                 this.accountType=1;
                 this.checkcontrol({
@@ -563,7 +564,7 @@
                         accountType:'',
                         settlementCycle:0,
                         subsidyRate:'',
-                        merchantID:''
+                        merchantID:this.accountId
                     }
                 }else{
                     $.extend(true, this.updateList, a);
