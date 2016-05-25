@@ -547,7 +547,27 @@
             },
             updateBtn(_list){
                 var a=_list;
-                $.extend(true, this.updateList, a);
+                if(typeof _list=='undefined'){
+                    this.updateList={
+                        id: '',
+                        accountName:'',
+                        accountNumber:'',
+                        bankName: '',
+                        bankNumber: '',
+                        createBy:'',
+                        createAt: '',
+                        certificates: '',
+                        expired: '',
+                        remarks: '',
+                        isCcb:'',
+                        accountType:'',
+                        settlementCycle:0,
+                        subsidyRate:'',
+                        merchantID:''
+                    }
+                }else{
+                    $.extend(true, this.updateList, a);
+                }
                 this.uploadText='';
                 this.updateList.certificates='';
                 this.updateList.accountType=this.accountType;
