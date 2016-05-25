@@ -30,6 +30,10 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
+                                <span>ID:</span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="id" placeholder="ID">
+                                </div>
                                 <br/>
                                 <br/>
                                 <div class="form-group">
@@ -151,6 +155,7 @@
     export default{
         data(){
             return{
+                id:'',
                 subCompanyID:"",
                 cityID:"",
                 createType:"",
@@ -222,6 +227,7 @@
                     this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 }
                 let data={
+                        id:this.id,
                         subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
                         startDate:this.startDate,
@@ -243,7 +249,7 @@
                 this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
                         .then((response)=>{
                             if(response.data.code==0){
-                    this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                         }
                     })
             }
@@ -255,11 +261,8 @@
             var year=d.getFullYear()
             var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
             var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-            let data={
-                startDate:newD,
-                endDate:endD
-            }
-            this.getlimitPurchaseDetailList({});
+            (this.$route.params.id==':id')? this.id='' :this.id=this.$route.params.id;
+            this.query();
             this.getSubcompany({});
             this.getCity({});
         },

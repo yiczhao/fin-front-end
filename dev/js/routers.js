@@ -31,7 +31,7 @@ export default function(router){
             }
         },
         //额度采购
-        '/limit-purchase-detail':{
+        '/limit-purchase-detail/:id':{
             name:'limit-purchase-detail',
             component: function(resolve){
                 require(['./views/BFJZC/limit-purchase-detail.vue'],resolve);
