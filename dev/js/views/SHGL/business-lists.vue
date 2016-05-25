@@ -26,9 +26,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.startValue" placeholder="佣金值">
+                            <input type="text" debounce="300" class="form-control" v-model="defaultData.startValue" placeholder="佣金值">
                             -
-                            <input type="text" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
+                            <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" @click="checkNew" value="查询">
@@ -222,19 +222,19 @@
                             <div class="modal-body member_rules_modal-body">
                                     <div class="form-group">
                                         <label class="w28"><i>*</i>账户名：</label>
-                                        <input v-validate:accountName="['required']" v-model="updateList.accountName" :value="updateList.accountName" class="form-control" type="text" placeholder="账户名">
+                                        <input v-validate:accountName="['required']" v-model="updateList.accountName" class="form-control" type="text" placeholder="账户名">
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>账 号：</label>
-                                        <input v-validate:accountNumber="['required']" v-model="updateList.accountNumber" :value="updateList.accountNumber" class="form-control" type="text" placeholder="账 号">
+                                        <input v-validate:accountNumber="['required']" v-model="updateList.accountNumber" class="form-control" type="text" placeholder="账 号">
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>开户行：</label>
-                                        <input v-validate:bankName="['required']" v-model="updateList.bankName" :value="updateList.bankName" class="form-control" type="text" placeholder="开户行">
+                                        <input v-validate:bankName="['required']" v-model="updateList.bankName" class="form-control" type="text" placeholder="开户行">
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>提入行号：</label>
-                                        <input v-validate:bankNumber="['required']" v-model="updateList.bankNumber" :value="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                        <input v-validate:bankNumber="['required']" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
                                         <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
                                     </div>
                                     <div class="form-group">
@@ -255,7 +255,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>补贴税率：</label>
-                                        <input v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" :value="updateList.subsidyRate" class="form-control" type="text" placeholder="0~100">%
+                                        <input debounce="300" @keyup="numberMax($event)" v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" class="form-control" type="number" placeholder="0~100">%
                                     </div>
                                     <div class="form-group">
                                         <label class="w28"><i>*</i>上传凭证：</label>
@@ -264,8 +264,8 @@
                                         <span v-text="uploadText" v-show="uploadText!=''"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tarea" class="w28" style="position: relative;top: -40px;"><i>*</i>备注：</label>
-                                        <textarea v-validate:remarks="['required']" class="form-control" v-model="updateList.remarks" :value="updateList.remarks" ></textarea>
+                                        <label for="tarea" class="w28" style="position: relative;top: -40px;">备注：</label>
+                                        <textarea class="form-control" v-model="updateList.remarks"></textarea>
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" @click="updateTrue(updateList)" class="btn btn-primary">保存</button>
@@ -433,7 +433,8 @@
                     isCcb:'',
                     accountType:'',
                     settlementCycle:0,
-                    subsidyRate:''
+                    subsidyRate:'',
+                    merchantID:''
                 },
                 updataerror:false,
                 uploadText:'',
@@ -486,6 +487,7 @@
             },
             control(_list){
                 this.$set('controllist',_list);
+                this.updateList.merchantID=_list.merchantID;
                 this.bthf=true;
                 this.accountType=1;
                 this.checkcontrol({
@@ -594,6 +596,20 @@
                             })
                 }
             },
+            numberMax(e){
+                if(e.target.value>100){
+                    return e.target.value=100;
+                }
+                else if(e.target.value<0){
+                    return e.target.value=0;
+                }
+                else if(e.target.value>=0&&e.target.value<=100){
+                    return e.target.value;
+                }
+                else{
+                    return  e.target.value='';
+                }
+            }
         },
         ready() {
             let vm=this;

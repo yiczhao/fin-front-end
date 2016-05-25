@@ -116,7 +116,7 @@
                                             <template v-if="lpd.payType==1">现金购买</template>
                                             <template v-if="lpd.payType==2">刷卡购买</template>
                                         </td>
-                                        <td><a :href="lpd.id">查看</a></td>
+                                        <td><a @click="gopayment(lpd.id,2)">查看</a></td>
                                         <td>{{lpd.remarks}}</td>
                                     </tr>
                                 </tbody>
@@ -235,6 +235,18 @@
                     };
                 this.getlimitPurchaseDetailList(data);
             },
+            gopayment(a,b){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                            this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderID}});
+                        }
+                    })
+            }
         },
         ready: function () {
             var d=new Date()

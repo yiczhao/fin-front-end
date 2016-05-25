@@ -54,7 +54,7 @@
                         <br/>
                         <br/>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantID" style="width: 100px" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group">
-                                <input type="text" class="form-control" style="width: 100px"  placeholder="活动ID" v-model="activityID">
+                                <input type="text" class="form-control" style="width: 100px"  placeholder="活动ID" v-model="activityOperationID">
                             </div>
                         </div>
                         <div class="form-group">
@@ -143,7 +143,7 @@
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>{{trlist.consumptionPhone}}</td>
                                 <td>{{trlist.consumptionAccountNumber}}</td>
-                                <td>{{trlist.activityID}}</td>
+                                <td>{{trlist.activityOperationID}}:{{trlist.activityName}}</td>
                                 <td>
                                     <template v-if="trlist.type==1">
                                         正常交易
@@ -344,12 +344,12 @@
                 timeRange:'1',
                 startDate:"",
                 endDate:"",
-                merchantID:"",      
+                merchantOperationID:"",
                 merchantName:"",   
                 id:"",   
                 serialNumber:"",        
                 phone:"",
-                activityID:'',
+                activityOperationID:'',
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
@@ -433,15 +433,7 @@
                 this.tradeInfo.certificateId='';
                 this.tradeInfo.remarks='';
                 this.uploadText='';
-                //初始化获取所有商户信息
-                this.$http.post('./merchant/list',{})
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
-                        $('#modal_trade_info').modal('show');
-                    }, function (response) {
-                        console.log(response);
-                    });
+                $('#modal_trade_info').modal('show');
             },
             checkInfo:function(){
                 this.select_merchantId;
@@ -506,7 +498,7 @@
                         subCompanyID:this.subCompanID,
                         cityID:this.cityID,
                         type:this.type,
-                        merchantID:this.merchantID,
+                        merchantOperationID:this.merchantOperationID,
                         merchantName:this.merchantName,
                         tradeDetailID:this.id,
                         serialNumber:this.serialNumber,        
@@ -578,7 +570,7 @@
             var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
             (this.$route.params.subsidyPayId==':subsidyPayId')?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
             (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
-            (this.$route.params.merchantOperationID==':merchantOperationID')?this.merchantID='' : this.merchantID=this.$route.params.merchantOperationID;
+            (this.$route.params.merchantOperationID==':merchantOperationID')?this.merchantOperationID='' : this.merchantOperationID=this.$route.params.merchantOperationID;
             (this.$route.params.merchantName==':merchantName')? this.merchantName='' : this.merchantName=this.$route.params.merchantName;
             this.query();
             this.getSubcompany({});

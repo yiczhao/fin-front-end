@@ -154,7 +154,7 @@
                                                 <a href="javascript:void(0);" @click="updateById(sa.id)">更新</a>
                                             </template>
                                             <template v-else>
-                                                <a v-link="{'name':'payment-details'}">查看</a>
+                                                <a @click="gopayment(sa.id,1)">查看</a>
                                             </template>
                                         </td>
                                         <td>{{sa.activityName}}</td>
@@ -475,6 +475,18 @@
                     };
                 this.getSubsidyAppropriationList(data);
             },
+            gopayment(a,b){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderID}});
+                            }
+                        })
+            }
         },
         ready:function () {
             var d=new Date()

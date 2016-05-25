@@ -835,6 +835,7 @@
                 if($(this).hasClass('modal_update')){
                     vm.uploadText='';
                     vm.updateList.certificates='';
+
                 }
             })
             $(document).on('click','.addbottom .col-md-4 ul li',function(){

@@ -57,7 +57,6 @@ var dialog=((types,mes)=>{
             })
             break;
     }
-
 })
 module.exports = {
     check_upload:check_upload,

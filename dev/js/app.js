@@ -53,5 +53,6 @@ window.check_upload=common.check_upload;
 window.dialogs=common.dialogs;
 Vue.filter('datetime',common.datetime);
 Vue.filter('geturl',common.geturl);
+
 Vue.config.debug = true;
 

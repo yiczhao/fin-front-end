@@ -101,7 +101,7 @@
                                                 <template v-if="apd.status==5">对账成功</template>
                                                 <template v-if="apd.status==6">划付失败</template>
                                             </td>
-                                            <td><a v-link="{name:'payment-details'}">查看</a></td>
+                                            <td><a @click="gopayment(apd.id,4)">查看</a></td>
                                             <td>{{apd.remarks}}</td>
                                         </tr>
                                     </tbody>
@@ -222,6 +222,18 @@
                     };
                 this.getadvancePaymentDetailList(data);
             },
+            gopayment(a,b){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderID}});
+                            }
+                    })
+            }
         },
         ready: function () {
             var d=new Date()
