@@ -114,7 +114,7 @@
                                             <template v-if="strd.createType==2">手工录入</template>
                                         </td>
                                         <td>{{strd.taxRebateAmount/100 | currency ''}}</td>
-                                        <td><a v-link="{name:'trade-info',params:{subsidyPayId:0,subsidyTaxRebateId:strd.id}}">明细</a> </td>
+                                        <td><a v-link="{name:'trade-info',params:{subsidyTaxRebateId:strd.id}}">明细</a> </td>
                                         <td>
                                             <template v-if="strd.status==0">
                                                 已关闭

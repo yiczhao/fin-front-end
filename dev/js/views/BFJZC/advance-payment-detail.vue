@@ -30,6 +30,8 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
+                                <span>ID:</span>
+                                <input type="text" class="form-control" v-model="advanceId" placeholder="ID">
                                 <br/>
                                 <br/>
                                 <div class="form-group">
@@ -133,6 +135,7 @@
     export default{
         data(){
             return{
+                advanceId:"",
                 subCompanyID:"",
                 cityID:"",
                 createType:"",
@@ -205,6 +208,7 @@
                     this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
                 }
                 let data={
+                    id:this.advanceId,
                     subCompanyID:this.subCompanyID,
                     cityID:this.cityID,
                     startDate:this.startDate,
@@ -226,11 +230,8 @@
             var year=d.getFullYear()
             var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
             var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-            let data={
-                startDate:newD,
-                endDate:endD
-            }
-            this.getadvancePaymentDetailList({});
+            (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
+            this.query({});
             this.getSubcompany({});
             this.getCity({});
         },

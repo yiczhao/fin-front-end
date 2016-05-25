@@ -24,7 +24,7 @@ export default function(router){
             }
         },
         //交易明细
-        '/trade-info/:subsidyPayId/:subsidyTaxRebateId':{
+        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName':{
             name:'trade-info',
             component: function(resolve){
                 require(['./views/CWCL/trade-info.vue'],resolve);
@@ -38,7 +38,7 @@ export default function(router){
             }
         },
         //预付款划付
-        '/advance-payment-detail':{
+        '/advance-payment-detail/:advanceId':{
             name:'advance-payment-detail',
             component: function(resolve){
                 require(['./views/BFJZC/advance-payment-detail.vue'],resolve);

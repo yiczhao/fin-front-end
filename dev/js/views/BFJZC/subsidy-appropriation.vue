@@ -124,7 +124,7 @@
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount/100 | currency ''}}</td>
-                                        <td><a v-link="{name:'trade-info',params:{subsidyPayId:sa.id,subsidyTaxRebateId:0}}">明细</a> </td>
+                                        <td><a v-link="{name:'trade-info',params:{subsidyPayId:sa.id}}">明细</a> </td>
                                         <td>
                                             <template v-if="sa.status==0">
                                                 已关闭

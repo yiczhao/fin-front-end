@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantId" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -61,7 +61,7 @@
                             </thead>
                         <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.merchantID}}</td>
+                                <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
@@ -71,7 +71,7 @@
                                 <td>{{trlist.value01/100 | currency '' }} </td>
                                 <td>{{trlist.value02/100 | currency '' }} </td>
                                 <td>{{trlist.value03/100 | currency '' }} </td>
-                                <td><a v-link="{name:'trade-info'}">明细</a></td>
+                                <td><a v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>
@@ -172,7 +172,7 @@
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <span>商户ID：{{controllist.merchantID}}</span>
+                                    <span>商户ID：{{controllist.merchantOperationID}}</span>
                                     <span>商户名：{{controllist.merchantName}}</span>
                                     <a class="updatebtn" @click="modal_updata" href="javascript:void(0);">更新</a>
                                 </div>
@@ -379,7 +379,7 @@
                 pageall:1,
                 loginList:{},
                 defaultData:{
-                    "merchantId": "",
+                    "merchantOperationID": "",
                     "merchantName": "",
                     "companyId": "",
                     "cityId": "",
@@ -444,8 +444,6 @@
             // *** 请求账户列表数据
             getZlists(data){
                 if(data.endValue<data.startValue){
-                    let a=data.endValue,b=data.startValue;
-                    this.defaultData.startValue=a;
                     this.defaultData.endValue=b;
                     data.startValue=a;
                     data.endValue=b;
@@ -542,6 +540,7 @@
                 $('#modal_updata').modal('show');
             },
             uploadClick(){
+                $('input[type="file"]').val('');
                 $('input[type="file"]').click();
             },
             updateBtn(_list){

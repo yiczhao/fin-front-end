@@ -273,6 +273,7 @@
                         });
             },
             uploadClick(){
+                $('input[type="file"]').val('');
                 $('input[type="file"]').click();
             },
             uploads(e){
