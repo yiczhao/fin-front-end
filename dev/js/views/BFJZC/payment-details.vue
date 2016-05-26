@@ -402,6 +402,11 @@
     .tc .validation-error-label{
         display: inline-block;
     }
+    .modal-body{
+        .form-group{
+            overflow: hidden;
+        }
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
