@@ -88,13 +88,13 @@
                                         <div>
                                             <div><label>用户名：</label>{{log.userName}}</div>
                                             <div><label>姓名：</label>{{log.name}}</div>
-                                            <div><label>URL：</label>
+                                            <div><label style="position: relative;top: -25px;">URL：</label>
                                                 <textarea class="textarea-w">{{log.website}}{{log.uri}}</textarea>
                                             </div>
-                                            <div><label>描述：</label>
+                                            <div><label style="position: relative;top: -25px;">描述：</label>
                                                 <textarea  v-if="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
                                             </div>
-                                            <div><label>详情：</label>
+                                            <div><label style="position: relative;top: -80px;">详情：</label>
                                                 <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
                                             </div>
                                             <div><label>创建IP：</label>{{log.createIp}}</div>
@@ -103,7 +103,6 @@
                                      </div>
                                 </div>
                             </div>
-                           
                         </div>
             </div>
         </div>
