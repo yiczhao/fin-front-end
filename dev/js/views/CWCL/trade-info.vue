@@ -167,24 +167,19 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th><b>{{count_consumptionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{count_discountAmount/100 | currency ''}}</b></th>
-                                <th><b>{{count_payAmount/100 | currency ''}}</b></th>
-                                <th><b>{{count_limitDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{count_principalDeduct/100 | currency ''}}</b></th>
-                                <th>
-                                    <b>
-                                        <template v-if="count_thirdpartyReceivable==NaN">0</template>
-                                        <template v-else>{{count_thirdpartyReceivable/100 | currency ''}}</template>
-                                    </b>
-                                </th>
-                                <th><b>{{count_merchantSubsidyShould/100 | currency ''}}</b></th>
-                                <th><b>{{count_suspensionTax/100 | currency ''}}</b></th>
-                                <th><b>{{count_merchantSubsidyActual/100 | currency ''}}</b></th>
-                                <th><b>{{count_discountDiff/100 | currency ''}}</b></th>
-                                <th><b>{{count_collectionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{count_commission33211/100 | currency ''}}</b></th>
-                                <th><b>{{count_entryAmount/100 | currency ''}}</b></td>
+                                <th><b>{{nums.consumptionAmount/100 | currency ''}}</b></th>
+                                <th><b>{{nums.discountAmount/100 | currency ''}}</b></th>
+                                <th><b>{{nums.payAmount/100 | currency ''}}</b></th>
+                                <th><b>{{nums.limitDeduct/100 | currency ''}}</b></th>
+                                <th><b>{{nums.principalDeduct/100 | currency ''}}</b></th>
+                                <th><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></th>
+                                <th><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></th>
+                                <th><b>{{nums.suspensionTax/100 | currency ''}}</b></th>
+                                <th><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></th>
+                                <th><b>{{nums.discountDiff/100 | currency ''}}</b></th>
+                                <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
+                                <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
+                                <th><b>{{nums.entryAmount/100 | currency ''}}</b></td>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -374,10 +369,21 @@
                 cityList:[],
                 merchantList:[],
                 uploadText:'',
-                count_consumptionAmount:0,count_discountAmount:0,count_payAmount:0,count_limitDeduct:0,
-                count_principalDeduct:0,count_thirdpartyReceivable:0,count_merchantSubsidyShould:0,
-                count_suspensionTax:0,count_merchantSubsidyActual:0,
-                count_discountDiff:0,count_collectionAmount:0,count_commission33211:0,count_entryAmount:0
+                nums:{
+                    "consumptionAmount":"",
+                    "discountAmount":"",
+                    "payAmount":"",
+                    "limitDeduct":"",
+                    "principalDeduct":"",
+                    "thirdPartyReceivable":"",
+                    "merchantSubsidyShould":"",
+                    "suspensionTax":"",
+                    "merchantSubsidyActual":"",
+                    "discountDiff":"",
+                    "collectionAmount":"",
+                    "commission33211":"",
+                    "entryAmount":""
+                }
             }
         },
         methods:{
@@ -508,7 +514,7 @@
                         endDate:this.endDate,
                         pageIndex: this.pageIndex, 
                         pageSize: this.pageSize
-                    };
+                };
                 this.getTradeList(data);
             },
             //初始化
@@ -525,10 +531,6 @@
                     certificateId:'',
                     remarks:''
                 },
-                this.count_consumptionAmount=0;this.count_discountAmount=0;this.count_payAmount=0;this.count_limitDeduct=0;
-                this.count_principalDeduct=0;this.count_thirdpartyReceivable=0;this.count_merchantSubsidyShould=0;
-                this.count_suspensionTax=0;this.count_merchantSubsidyActual=0;
-                this.count_discountDiff=0;this.count_collectionAmount=0;this.count_commission33211=0;this.count_entryAmount=0;
                 this.uploadText='';
             },
             uploadClick(){
@@ -605,24 +607,27 @@
                 this.endDate=endD;
             },
             tradeList(){
-                var _this=this;
-                this.tradeList.forEach(function(e){
-                     _this.count_consumptionAmount+=e.consumptionAmount;
-                     _this.count_discountAmount+=e.discountAmount;
-                     _this.count_payAmount+=e.payAmount;
-                     _this.count_limitDeduct+=e.limitDeduct;
-                     _this.count_principalDeduct+=e.principalDeduct;
-                     _this.count_thirdpartyReceivable+=e.thirdPartyReceivable;
-                     _this.count_merchantSubsidyShould+=e.merchantSubsidyShould;
-                     _this.count_suspensionTax+=e.suspensionTax;
-                     _this.count_merchantSubsidyActual+=e.suspensionTax;
-                     _this.count_discountDiff+=e.discountDiff;
-                     _this.count_collectionAmount+=e.collectionAmount;
-                     _this.count_commission33211+=e.commission33211;
-                     _this.count_entryAmount+=e.entryAmount;
-                });
-                // this.shouru=(sr/100).toFixed(2);
-                // this.zhichu=(zc/100).toFixed(2);
+                let data={
+                    subsidyPayId:this.subsidyPayId,
+                    subsidyTaxRebateId:this.subsidyTaxRebateId,
+                    subCompanyID:this.subCompanID,
+                    cityID:this.cityID,
+                    type:this.type,
+                    merchantOperationID:this.merchantOperationID,
+                    merchantName:this.merchantName,
+                    tradeDetailID:this.id,
+                    serialNumber:this.serialNumber,
+                    phone:this.phone,
+                    activityOperationID:this.activityOperationID,
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    pageIndex: this.pageIndex,
+                    pageSize: this.pageSize
+                };
+                this.$http.post('./tradedetail/sum',data)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('nums',response.data.data[0]):null;
+                        })
             },
             pagecur(){
                 this.pageIndex=this.pagecur;
