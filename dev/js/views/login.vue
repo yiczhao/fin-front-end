@@ -10,9 +10,9 @@
                     <!-- Simple login form -->
                     <form autocomplete="on">
                         <div class="panel panel-body login-form">
-                            <div class="text-center">
-                                <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
-                                <h5 class="content-group">财务管理系统<small class="display-block">登录</small></h5>
+                            <div class="t200">财务管理系统</div>
+                            <div class="form-group">
+                                <span class="f18">请登录</span>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
                                 <input @keyup.enter="login" type="text" class="form-control userName" name="username" v-model="username" placeholder="用户名">
@@ -29,7 +29,7 @@
                                 <label v-show="passshow" class="validation-error-label" v-text="passerror"></label>
                             </div>
                             <div class="form-group">
-                                <span @click="login" v-bind:class="{ 'btn-default': isD,'btn-primary':!isD}" class="btn btn-block">登录 <i class="icon-circle-right2 position-right"></i></span>
+                                <span @click="login" v-bind:class="{ 'btn-default': isD,'btn-primary':!isD}" class="btn btn-block">登录</span>
                             </div>
                             <div class="form-group">
                                 <label v-show="suberror" class="validation-error-label suberror" v-text="errortext"></label>
@@ -49,38 +49,82 @@
     </div>
 </template>
 <style lang="sass">
-    .login{
-        min-width: 1280px;
-    }
-    .login-container .pd50{
-        padding: 50px;
-    }
-    .login-container .pd50 .box-footer{
-        text-align: center;
-    }
-    .login-container .pd50 .box-footer .btn{
-        width:20%;
-        margin-top: 20px;
-    }
-    .login-container .page-container{
-        min-height:auto!important;
-    }
-    .login-container .suberror{
-        left: 75px;
-    }
-    .login .message-notify .message-notify-content{
-        border:0;
-        background:none;
-        box-shadow: none;
-        i{
-            font-size: 20px;
+    .login-container {
+        .pd50{
+            padding: 50px;
+            .box-footer{
+                text-align: center;
+                .btn{
+                    width:20%;
+                    margin-top: 20px;
+                }
+            }
         }
-        a{
-            display: none;
+        .page-container{
+            min-height:auto!important;
+            .login-form{
+                position: relative;
+                width: 870px;
+                padding: 40px 80px 0 460px;
+                height:360px;
+                background: url("../../images/login_bg.png") no-repeat;
+                .form-group{
+                    margin-bottom: 30px;
+                    .form-control-feedback{
+                        top:3px;
+                    }
+                    .f18{
+                        display: inline-block;
+                        padding-bottom: 5px;
+                        font-size: 18px;
+                        color:#b0b0b0;
+                    }
+                    .form-control{
+                        height: 42px;
+                        border-color:#c8c8c8;
+                    }
+                    .btn-primary{
+                        height: 42px;
+                        line-height: 25px;
+                        font-size: 16px;
+                        background: #ee7839;
+                        color:#fff;
+                        border-color:#ee7839;
+                    }
+                }
+                .t200{
+                    position: absolute;
+                    top:200px;
+                    left: 130px;
+                    font-size: 20px;
+                    color:#fff;
+                    font-weight: bold;
+                    line-height: 100%;
+                }
+            }
+        }
+        .suberror{
+            left: 75px;
         }
     }
-    .login .message-notify.show{
-        top:400px;
+    .login {
+        .message-notify {
+            .message-notify-content{
+                border:0;
+                background:none;
+                box-shadow: none;
+                i{
+                    font-size: 20px;
+                }
+                a{
+                    display: none;
+                }
+            }
+        }
+        .message-notify.show{
+            top: 375px;
+            left: 190px;
+        }
     }
 </style>
 <script>
