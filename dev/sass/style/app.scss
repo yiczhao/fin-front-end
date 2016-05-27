@@ -26,6 +26,12 @@ input[type="number"]{-moz-appearance:textfield;}
     font-weight: bold;
     color: #fff;
   }
+  .breadcrumb{
+    .v-link-active{
+      font-weight:normal;
+      color: #333333;
+    }
+  }
 }
 /**
  * notify 通知组件
