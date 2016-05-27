@@ -49,6 +49,11 @@
     </div>
 </template>
 <style lang="sass">
+    #app{
+        .form-group{
+            margin:0 0 30px;
+        }
+    }
     .login-container {
         .pd50{
             padding: 50px;
@@ -69,13 +74,11 @@
                 height:360px;
                 background: url("../../images/login_bg.png") no-repeat;
                 .form-group{
-                    margin-bottom: 30px;
                     .form-control-feedback{
                         top:3px;
                     }
                     .f18{
                         display: inline-block;
-                        padding-bottom: 5px;
                         font-size: 18px;
                         color:#b0b0b0;
                     }
