@@ -176,11 +176,19 @@
           },
           password(){
               if(this.password!=''){this.passerror='';this.passshow=false;this.suberror=false;}
+          },
+          isD(){
+               if(this.isD){
+                   let pd=($('body').height()-$('.login-form').height())/2-80;
+                   $('.message-notify.show').css('top',pd+335);
+               }
           }
         },
         ready(){
             $('.userName').focus();
             $('body').addClass('login').removeClass('stop-scrolling');
+            let pd=($('body').height()-$('.login-form').height())/2-80;
+            $('.page-container').css('padding-top',pd);
         }
     }
 </script>

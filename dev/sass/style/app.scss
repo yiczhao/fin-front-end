@@ -1,9 +1,3 @@
-.breadcrumb-line,.content{
-  min-width: 1280px;
-}
-.navbar{
-  min-width: 1540px;
-}
 [v-cloak]{
   display: none;
 }
@@ -20,7 +14,19 @@ input::-webkit-inner-spin-button{
   margin: 0;
 }
 input[type="number"]{-moz-appearance:textfield;}
-
+#app{
+  overflow-x: hidden;
+  .datatable-scroll{
+    overflow: auto;
+  }
+  .form-group{
+    margin: 5px 10px 5px 0;
+  }
+  .v-link-active{
+    font-weight: bold;
+    color: #fff;
+  }
+}
 /**
  * notify 通知组件
  */

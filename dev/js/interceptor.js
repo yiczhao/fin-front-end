@@ -23,7 +23,7 @@ export default function install(Vue,router_proto) {
 			if(response.data.code === 50000){
 			  setTimeout(()=>{
 				  router_proto.go({name:'login'});
-			  })	
+			  })
 			}
 			else if(!response.ok&&conut===0){
 				dialogs('error','系统错误,请及时联系开发人员解决！');
