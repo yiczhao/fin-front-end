@@ -389,7 +389,7 @@
         methods:{
             //获取交易记录
              getTradeList:function(data){
-                this.$http.post('./tradedetail/list',data)
+                this.$http.get('./tradeDetail/list?' + decodeURIComponent($.param(data)))
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
@@ -470,7 +470,7 @@
                 data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
                 data.suspensionTax=this.tradeInfo.suspensionTax*100;
                 data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
-                this.$http.post('./tradedetail/add',data)
+                this.$http.post('./tradeDetail/add',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if (response.data.code==0)
@@ -624,7 +624,7 @@
                     pageIndex: this.pageIndex,
                     pageSize: this.pageSize
                 };
-                this.$http.post('./tradedetail/sum',data)
+                this.$http.get('./tradeDetail/sum?' + decodeURIComponent($.param(data)))
                         .then((response)=>{
                             (response.data.code==0)?this.$set('nums',response.data.data[0]):null;
                         })
