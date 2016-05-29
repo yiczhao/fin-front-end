@@ -277,7 +277,7 @@
             },
             //获取分公司数据
             getSubcompany(data){
-                 this.$http.post('./subcompany/list',data)
+                 this.$http.get('./subCompany/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;

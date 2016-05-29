@@ -314,7 +314,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
+                this.$http.get('./subCompany/list')
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -358,7 +358,7 @@
                 this.errorHide();
                 this.fire=false;
                 this.accountId=b;
-                this.$http.post('./chargeperson/query/'+a)
+                this.$http.get('./chargePerson/query/'+a)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
                             var newperson={
@@ -383,7 +383,7 @@
                     "phone": this.person.phone,
                     "email": this.person.email,
                 }
-                this.$http.post('./chargeperson/save',data)
+                this.$http.post('./chargePerson/save',data)
                         .then(function (response) {
                             this.initList();
                             dialogs();

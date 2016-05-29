@@ -614,7 +614,7 @@
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.$http.post('./limitPurchaseMerchant/list',data)
+                    this.$http.get('./limitPurchaseMerchant/list?' + decodeURIComponent($.param(data)))
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -625,7 +625,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
+                this.$http.get('./subCompany/list')
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -635,7 +635,7 @@
             },
             //获取城市数据
             getCity:function(data){
-                this.$http.post('./city/list',data)
+                this.$http.get('./city/list')
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -654,7 +654,7 @@
             updateNew(_list){
                 this.accountId=_list.id;
                 this.seexh(this.accountId,false);
-                this.$http.post('./limitPurchaseMerchant/history/'+_list.merchantId)
+                this.$http.get('./limitPurchaseMerchant/history/'+_list.merchantId)
                         .then((response)=>{
                                 if(response.data.code==0){
                                     $.extend(true, this.updateList,response.data.data[0]);
@@ -707,7 +707,7 @@
             },
             searchDigest(){
                 this.clearUl();
-                this.$http.post('./merchant/list',this.shdata)
+                this.$http.get('./merchant/list?' + decodeURIComponent($.param(this.shdata)))
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
                                 $('#modal_add').modal('show');

@@ -449,7 +449,7 @@
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.$http.post('./merchant/pages',data)
+                    this.$http.get('./merchant/pages?' + decodeURIComponent($.param(data)))
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -460,7 +460,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
+                this.$http.get('./subCompany/list')
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -470,7 +470,7 @@
             },
             //获取城市数据
             getCity(data){
-                this.$http.post('./city/list',data)
+                this.$http.get('./city/list')
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -497,7 +497,7 @@
                 })
             },
             checkcontrol(data){
-                this.$http.post('./merchant/account',data)
+                this.$http.get('./merchant/account?' + decodeURIComponent($.param(data)))
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('relist', response.data.data) : null;

@@ -400,7 +400,7 @@
             },
             //获取分公司数据
             getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
+                 this.$http.get('./subCompany/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -410,7 +410,7 @@
             },
             //获取城市数据
             getCity:function(data){
-                 this.$http.post('./city/list',data)
+                 this.$http.get('./city/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;

@@ -22,7 +22,7 @@ function member_model(http) {
             //     }],
             //     total: 25
             // }
-            return http.post('./limitPurchaseAccount/list',data)
+            return http.get('./limitPurchaseAccount/list?' + decodeURIComponent($.param(data)))
         },
         selectRechargeInfoByID (data) {
 
@@ -43,10 +43,10 @@ function member_model(http) {
             //         "payAccount": "翟敬静"
             //     }
             // }
-            return http.post('./limitPurchaseAccount/selectRechargeInfoByID',data)
+            return http.get('./limitPurchaseAccount/chargeInfo?' + decodeURIComponent($.param(data)))
         },
         recharge (data) {
-            return http.post('./limitPurchaseAccount/recharge',data)
+            return http.post('./limitPurchaseAccount/charge',data)
         }
     }
 

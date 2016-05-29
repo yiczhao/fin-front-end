@@ -346,7 +346,7 @@
         methods:{
             //获取预付款商户数据
              getPrepaymentList:function(data){
-                this.$http.post('./advancePaymentMerchant/list',data)
+                this.$http.get('./advancePaymentMerchant/list?' + decodeURIComponent($.param(data)))
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('prepaymentList', response.data.data) : null;
@@ -360,7 +360,7 @@
                 let data={
                     id:prepaymentId
                 }                 
-                this.$http.post('./ advancePaymentMerchant/selectRechargeInfoByID',data)
+                this.$http.get('./advancePaymentMerchant/chargeInfo?' + decodeURIComponent($.param(data)))
                     .then(function (response) {
                         if(response.data.code==0){
                             this.$set('entity', response.data.data);
@@ -393,7 +393,7 @@
             },
             //获取商户数据
              getMerchantList:function(data){
-                this.$http.post('./merchant/list',data)
+                this.$http.get('./merchant/list?' + decodeURIComponent($.param(data)))
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
@@ -403,7 +403,7 @@
             },
             //获取分公司数据
             getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
+                 this.$http.get('./subCompany/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -413,7 +413,7 @@
             },
             //获取城市数据
             getCity:function(data){
-                 this.$http.post('./city/list',data)
+                 this.$http.get('./city/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
@@ -456,7 +456,7 @@
                    advancePaymentAmount:this.applyAdvancePay.advancePaymentAmount*100,     
                    remarks:this.applyAdvancePay.remarks,
                 }
-                this.$http.post('./advancePaymentMerchant/applyAdvancePay',entity)
+                this.$http.post('./advancePaymentMerchant/applyPayment',entity)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
@@ -503,7 +503,7 @@
                 let _li=$("#IDS").children('li');
                 if(!_li.length>0)return;
                 let data={'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
-                this.$http.post('./advancePaymentMerchant/insertBatch',data)
+                this.$http.post('./advancePaymentMerchant/create',data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
