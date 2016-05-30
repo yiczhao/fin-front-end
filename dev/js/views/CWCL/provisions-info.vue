@@ -398,7 +398,7 @@
                     payAccountNumber:'',
                     certificate:'',
                     keyword:'',
-                    status:'0',
+                    status:'',
                     purpose:'',
                     remarks:'',
                     startDate:'',
