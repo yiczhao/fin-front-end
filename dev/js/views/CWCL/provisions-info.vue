@@ -191,7 +191,7 @@
                                         </div>
                                     <div  v-show="glradio=='two'">
                                         <div class="form-group">
-                                            <label class="w28"><i>*</i>用途：</label>
+                                            <label class="w20"><i>*</i>用途：</label>
                                             <select class="form-control"  v-model="manualCheck.purpose">
                                                 <option value="">请选择用途</option>
                                                 <option value="1">补贴划付</option>
@@ -206,11 +206,11 @@
                                             </select>
                                         </div>
                                         <div class="form-group" >
-                                            <label class="w28">收款方：</label>
+                                            <label class="w20">收款方：</label>
                                             <input type="text" class="form-control" v-model="manualCheck.collectionName" placeholder="五十字以内">
                                         </div>
                                         <div class="form-group">
-                                            <label for="tarea" class="w28"><i>*</i>备注：</label>
+                                            <label for="tarea" class="w20" style="position: relative;top: -59px;"><i>*</i>备注：</label>
                                             <textarea class="form-control" v-model="manualCheck.remarks" width="70%" cols="20" rows="3"></textarea>
                                         </div>
                                         <div class="form-group tc">
@@ -225,7 +225,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div data-backdrop="static"  id="modal_dzone" class="modal fade" v-cloak>
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -338,6 +337,14 @@
     }
      .modal-body{
         padding: 0 15px;
+         .form-control{
+             width: 80%;
+             display: inline-block;
+         }
+         .w20{
+             width: 18%;
+             i{color: red}
+         }
     }
      .page-bar{
         margin: 25px auto;

@@ -49,7 +49,7 @@
     </div>
 </template>
 <style lang="sass">
-    #app{
+    #app .login-container{
         .form-group{
             margin:0 0 30px;
         }
