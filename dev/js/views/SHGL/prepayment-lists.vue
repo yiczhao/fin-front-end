@@ -322,7 +322,9 @@
                     cityId:"",
                     merchantOperationID:"",
                     merchantName:"",
-                    isAdvancePayment:"0"
+                    isAdvancePayment:"0",
+                    isStore:"0",
+
                 },
                 applyAdvancePay:{
                     merchantName:"",//商户名
