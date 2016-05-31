@@ -3,14 +3,12 @@
  * @author cwxtDesigner
  */
 require('../sass/app.scss');
-require("./assets/js/plugins/notifications/sweet_alert.min.js");
+require("./assets/sweet_alert.min.js");
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import validator from 'vue-validator'
 import config from  './config'
-import common from  './common'
-import store from './store.js'
 import filters from './filters'
 import directives from './directives'
 import routers from './routers.js'
@@ -18,6 +16,9 @@ import interceptor from './interceptor.js'
 // *** 公共组件
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
+import common from  './utils/common'
+import store from './utils/store.js'
+import API from './ajax/api.js'
 import notify_instance from './views/components/notify'
 Vue.component('index', Index);
 Vue.component('page', page);
@@ -30,6 +31,7 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
+Vue.use(API);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,
@@ -53,4 +55,3 @@ window.dialogs=common.dialogs;
 Vue.filter('datetime',common.datetime);
 Vue.filter('geturl',common.geturl);
 Vue.config.debug = true;
-

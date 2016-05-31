@@ -125,7 +125,6 @@
             }
         }
         .message-notify.show{
-            top: 375px;
             left: 190px;
         }
     }
@@ -155,11 +154,12 @@
                 if(this.usershow||this.passshow||this.isD){return false;}
                 this.isD=true;
                 let data={'username':this.username,'password':this.password};
-                this.$http.post('./passport/login',data)
+                this.$http.post(this.$API.login,data)
                         .then(function (response) {
                             if(response.data.code===0){
                                 $('body').removeClass('login');
                                 sessionStorage.setItem('userData',JSON.stringify(response.data.data));
+                                $('.message-notify.show,.message-notify').css('top','6px');
                                 this.$router.go({name:'default'});
                             }
                             else{
@@ -183,7 +183,7 @@
           isD(){
                if(this.isD){
                    let pd=($('body').height()-$('.login-form').height())/2-80;
-                   $('.message-notify.show').css('top',pd+335);
+                   $('.message-notify.show,.message-notify').css('top',pd+335);
                }
           }
         },

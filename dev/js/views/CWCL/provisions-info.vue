@@ -213,12 +213,12 @@
                                             <label for="tarea" class="w28"><i>*</i>备注：</label>
                                             <textarea class="form-control" v-model="manualCheck.remarks" width="70%" cols="20" rows="3"></textarea>
                                         </div>
-                                        <div class="form-group tc">
-                                            <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
-                                        </div>
-                                        <div class="form-group tc">
-                                            <span v-show="errortext!=''" class="validation-error-label" v-text="errortext"></span>
-                                        </div>
+                                    </div>
+                                    <div class="form-group tc"  v-show="glradio=='one'&&dzcheckList.purpose!=''||glradio=='two'">
+                                        <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
+                                    </div>
+                                    <div class="form-group tc">
+                                        <span v-show="errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                     </div>
                                 </div>
                             </div>
@@ -369,10 +369,13 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/CWCL/provisions_model'
+    import common_model from '../../ajax/components/model'
     export default{
         props:{
         },
         data(){
+            this.model=model(this);
             return{
                 loginList:{},
                 zdlists:[],
@@ -422,7 +425,7 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-                this.$http.post('./reservecash/detail',data)
+                this.model.detail(data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -461,7 +464,7 @@
             },
             dzOne(id){
                 // *** 请求对账数据
-                this.$http.post('./reservecash/selectReserveCashOrderListByID',{'id':id})
+                this.model.selectReserveCashOrderListByID({'id':id})
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('gllists', response.data.data) : null;
@@ -480,10 +483,9 @@
                   $('#modal_dzone').modal('hide');
             },
             dzTrue(_id){
-                console.log(_id);
                 if(this.glradio=='one'){
                     this.associateCheck.detailID=_id;
-                    this.$http.post('./reservecash/associateCheck',this.associateCheck)
+                    this.model.associateCheck(this.associateCheck)
                             .then((response)=>{
                                 this.initList();
                                 dialogs('success','对账成功！');
@@ -494,7 +496,7 @@
                         return;
                     }
                     this.manualCheck.id=_id;
-                    this.$http.post('./reservecash/manualCheck',this.manualCheck)
+                    this.model.manualCheck(this.manualCheck)
                             .then((response)=>{
                                 this.initList();
                                 dialogs('success','对账成功！');
@@ -565,7 +567,7 @@
         },
         watch:{
             zdlists(){
-                this.$http.post('./reservecash/incomeAndPayoutAmount',this.checkForm)
+                this.model.incomeAndPayoutAmount(this.checkForm)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.shouru=response.data.data[0].incomeAmount;

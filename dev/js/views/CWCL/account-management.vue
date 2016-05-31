@@ -260,9 +260,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
+    import model from '../../ajax/CWCL/account_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 pagecur:1,
                 page_size:15,
@@ -303,7 +306,7 @@
                 this.saveerror='';
             },
             getZlists(data){
-                    this.$http.post('./bankaccount/list',data)
+                    this.model.getbanklist(data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -314,7 +317,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
+                this.common_model.getcompany({})
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -358,8 +361,8 @@
                 this.errorHide();
                 this.fire=false;
                 this.accountId=b;
-                this.$http.post('./chargeperson/query/'+a)
-                        .then(function (response) {
+                this.model.queryperson(a)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则启用该数据
                             var newperson={
                                 name:'',
@@ -372,7 +375,7 @@
                                 this.$set('person',newperson)
                             }
                             $('#modal_fzr').modal('show');
-                        }, function (response) {})
+                        })
             },
             personTrue(a){
                 if(!this.$vali2.valid){this.fire=true;return;}
@@ -383,7 +386,7 @@
                     "phone": this.person.phone,
                     "email": this.person.email,
                 }
-                this.$http.post('./chargeperson/save',data)
+                this.model.saveperson(data)
                         .then(function (response) {
                             this.initList();
                             dialogs();
@@ -393,7 +396,7 @@
             },
             startTrue(){
                 // *** 启用提交
-                this.$http.get('./bankaccount/change/'+this.accountId)
+                this.model.startaccount(this.accountId)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
                             this.initList();
@@ -404,7 +407,7 @@
             },
             delTrue(){
                 // *** 删除提交
-                this.$http.get('./bankaccount/delete/'+this.accountId)
+                this.model.deleteaccount(this.accountId)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则删除该条数据
                             this.initList();
@@ -428,7 +431,7 @@
                     "accountType": this.relist.accountType,
                     "startDate": this.relist.startDate
                 };
-                this.$http.post('./bankaccount/save',data)
+                this.model.changeaccount(data)
                         .then(function (response) {
                             if(response.data.code==-1){
                                 this.$set('saveerror', response.data.message)
@@ -453,8 +456,7 @@
             })
         },
         components:{
-            'datepicker': datepicker,
-            'dialog': dialog,
+            'datepicker': datepicker
         },
         watch:{
             pagecur(){
