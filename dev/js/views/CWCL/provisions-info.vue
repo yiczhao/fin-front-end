@@ -213,12 +213,12 @@
                                             <label for="tarea" class="w20" style="position: relative;top: -59px;"><i>*</i>备注：</label>
                                             <textarea class="form-control" v-model="manualCheck.remarks" width="70%" cols="20" rows="3"></textarea>
                                         </div>
-                                        <div class="form-group tc">
-                                            <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
-                                        </div>
-                                        <div class="form-group tc">
-                                            <span v-show="errortext!=''" class="validation-error-label" v-text="errortext"></span>
-                                        </div>
+                                    </div>
+                                    <div class="form-group tc" v-show="glradio=='one'&&dzcheckList.purpose!=''||glradio=='two'">
+                                        <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
+                                    </div>
+                                    <div class="form-group tc">
+                                        <span v-show="errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                     </div>
                                 </div>
                             </div>
