@@ -4,10 +4,23 @@ export default function install(Vue) {
     //- todo 公用
     /**
      * @description 获取分公司接口地址
-     * @author 冷艳君
+     * @author 洪钢
      * @method POST
      */
     _o.subcompany = './subcompany/list';
+    /**
+     * @description 获取分公司接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.city = './city/list';
+    /**
+     * @description 上传接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.upload = './file/upload';
+
 
     //- todo 登陆 login
     /**
@@ -87,6 +100,25 @@ export default function install(Vue) {
      */
     _o.incomeAndPayoutAmount = './reservecash/incomeAndPayoutAmount';
 
+    //- todo 财务处理-交易明细 trade-info
+    /**
+     * @description 交易明细列表接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.tradedetail = './tradedetail/list';
+    /**
+     * @description 添加交易接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.addtrade = './tradedetail/add';
+    /**
+     * @description 合计接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.tradedetailsum = './tradedetail/sum';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

@@ -52,6 +52,7 @@ config.proxy(Vue,false)
 // config.proxy(Vue,true)
 window.check_upload=common.check_upload;
 window.dialogs=common.dialogs;
+window.init_date=common.init_date;
 Vue.filter('datetime',common.datetime);
 Vue.filter('geturl',common.geturl);
 Vue.config.debug = true;

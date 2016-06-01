@@ -58,9 +58,74 @@ var dialog=((types,mes)=>{
             break;
     }
 })
+var getTwo=((num)=>{
+    if(num.toString().length>=2) return num;
+    var str="";
+    for(var i=num.toString().length;i<2;i++)
+        str +="0";
+    return str + num.toString();
+})
+var getLastDay=(( year, month)=>{
+    var  day = new Date(year,month,0);
+    var lastdate =day.getDate();//获取当月最后一天日期
+    return lastdate;
+})
+var init_date=((type)=>{
+    let d=new Date()
+    let day=d.getDate()
+    let month=d.getMonth()+1;
+    let year=d.getFullYear()
+    let startT;
+    switch (type){
+        case '0':
+            var nmonth=month;
+            var nday=day;
+            if(nday==1){
+                nday=getLastDay(year,month-1)
+                nmonth=month-1
+            }
+            startT=year + "-" + getTwo(nmonth) + "-" + getTwo(nday);
+            break;
+        case '1':
+            var nmonth=month;
+            var nday=day;
+            if(nday==1){
+                nday=getLastDay(year,month-1)
+                nmonth=month-1
+            }
+            startT=year + "-" + getTwo(nmonth) + "-" + getTwo(nday-7);
+            break;
+        case '2':
+            startT=year + "-" + getTwo(month-1) + "-" + getTwo(day);
+            break;
+        case '3':
+            var nmonth,nyear;
+            if(month-3==0){
+                nmonth=12;
+                nyear=year-1;
+            }else if(month-3==-1){
+                nmonth=11
+                nyear=year-1;
+            }else if(month-3==-2){
+                nmonth=10
+                nyear=year-1;
+            }else{
+                nmonth=month-3;
+                nyear=year;
+            }
+            startT=nyear + "-" + getTwo(nmonth) + "-" + getTwo(day);
+            break;
+        case '4':
+            startT=year + "-" + getTwo(month) + "-" + getTwo(day);
+            break;
+    }
+    let endT=year + "-" + getTwo(month) + "-" + getTwo(day);
+    return [startT,endT];
+})
 module.exports = {
     check_upload:check_upload,
     datetime:datetime,
     dialogs:dialog,
-    geturl:geturl
+    geturl:geturl,
+    init_date:init_date,
 }

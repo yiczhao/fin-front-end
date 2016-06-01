@@ -10,8 +10,24 @@ function conmon_model(_this) {
          * @param {}
          * @returns {*}
          */
-        getcompany (data) {
-            return _this.$http.post(_this.$API.subcompany, data)
+        getcompany () {
+            return _this.$http.post(_this.$API.subcompany)
+        },
+        /**
+         * @description 查询城市列表数据
+         * @param {}
+         * @returns {*}
+         */
+        getcity () {
+            return _this.$http.post(_this.$API.city)
+        },
+        /**
+         * @description 上传数据
+         * @param {data}
+         * @returns {*}
+         */
+        upload (data) {
+            return _this.$http.post(_this.$API.upload,data)
         }
     }
 }

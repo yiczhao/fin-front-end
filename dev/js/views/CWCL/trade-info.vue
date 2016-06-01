@@ -322,13 +322,15 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
-    
+    import common_model from '../../ajax/components/model'
+    import model from '../../ajax/CWCL/trade_model'
     export default{
         props:{
 
         },
         data(){
+            this.model=model(this);
+            this.common_model=common_model(this);
             return{
                 origin:window.origin,
                 subsidyPayId:"",
@@ -389,41 +391,25 @@
         methods:{
             //获取交易记录
              getTradeList:function(data){
-                this.$http.post('./tradedetail/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+                 this.model.tradedetail(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+            getSubcompany(){
+                 this.common_model.getcompany()
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取城市数据
-            getCity:function(data){
-                 this.$http.post('./city/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+            getCity(){
+                 this.common_model.getcity()
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
-            },
-            getTwo:function(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
             },
             addTradeInfo:function(){
                 this.errorHideL();
@@ -470,33 +456,21 @@
                 data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
                 data.suspensionTax=this.tradeInfo.suspensionTax*100;
                 data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
-                this.$http.post('./tradedetail/add',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        if (response.data.code==0)
-                        {
+                this.model.addtrade(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
                             this.query();
                             dialogs();
                         }
-                        else{
-//                            dialogs(response.data.message);
-                        }
                         $(".modal").modal("hide");
-                    }, function (response) {
-                        console.log(response);
-                    });
+                    })
             },
             query: function () {
                 //初始化
                 this.clear();
                 if (this.startDate=="" && this.endDate=="") {
-                    var d=new Date()
-                    var day=d.getDate()
-                    var month=d.getMonth() + 1
-                    var year=d.getFullYear()
-                    this.startDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                    this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-            
+                    this.startDate=init_date('1')[0];
+                    this.endDate=init_date('1')[1];
                 }
                 let data={
                     subsidyPayId:this.subsidyPayId,
@@ -553,7 +527,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.$http.post('./file/upload',datas)
+                    vm.common_model.upload(datas)
                             .then((response)=>{
                                     vm.tradeInfo.certificateId=response.data.data;
                                     vm.uploadText=files.name;
@@ -564,12 +538,8 @@
         },
         ready: function () {
             this.clear();
-            var d=new Date()
-            var day=d.getDate()
-            var month=d.getMonth() + 1
-            var year=d.getFullYear()
-            var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-            var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+            var newD=init_date('1')[0];
+            var endD=init_date('1')[1];
             (this.$route.params.subsidyPayId==':subsidyPayId')?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
             (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
             (this.$route.params.merchantOperationID==':merchantOperationID')?this.merchantOperationID='' : this.merchantOperationID=this.$route.params.merchantOperationID;
@@ -580,31 +550,8 @@
         },
        watch:{
             timeRange:function(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.timeRange){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.startDate=newD;
-                this.endDate=endD;
+                this.startDate=init_date(this.timeRange)[0];
+                this.endDate=init_date(this.timeRange)[1];
             },
             tradeList(){
                 let data={
@@ -624,7 +571,7 @@
                     pageIndex: this.pageIndex,
                     pageSize: this.pageSize
                 };
-                this.$http.post('./tradedetail/sum',data)
+                this.model.tradedetailsum(data)
                         .then((response)=>{
                             (response.data.code==0)?this.$set('nums',response.data.data[0]):null;
                         })
@@ -639,8 +586,7 @@
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         },
         validators: {
             numeric: function (val) {
