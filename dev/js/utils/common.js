@@ -79,8 +79,8 @@ var init_date=((type)=>{
     switch (type){
         case '0':
             var nmonth=month;
-            var nday=day;
-            if(nday==1){
+            var nday=day-1;
+            if(nday==0){
                 nday=getLastDay(year,month-1)
                 nmonth=month-1
             }
@@ -88,15 +88,39 @@ var init_date=((type)=>{
             break;
         case '1':
             var nmonth=month;
-            var nday=day;
-            if(nday==1){
+            var nday=day-7;
+            if(nday==-6){
+                nday=getLastDay(year,month-1)-5
+                nmonth=month-1
+            }else if(nday==-5){
+                nday=getLastDay(year,month-1)-4
+                nmonth=month-1
+            }else if(nday==-4){
+                nday=getLastDay(year,month-1)-3
+                nmonth=month-1
+            }else if(nday==-3){
+                nday=getLastDay(year,month-1)-2
+                nmonth=month-1
+            }else if(nday==-2){
+                nday=getLastDay(year,month-1)-1
+                nmonth=month-1
+            }else if(nday==-1){
                 nday=getLastDay(year,month-1)
                 nmonth=month-1
+            }else if(nday==0){
+                nday=1
+                nmonth=month
             }
-            startT=year + "-" + getTwo(nmonth) + "-" + getTwo(nday-7);
+            startT=year + "-" + getTwo(nmonth) + "-" + getTwo(nday);
             break;
         case '2':
-            startT=year + "-" + getTwo(month-1) + "-" + getTwo(day);
+            var nmonth=month-1;
+            var nyear=year;
+            if(nmonth==0){
+                nmonth=12;
+                nyear=year-1;
+            }
+            startT=nyear + "-" + getTwo(nmonth) + "-" + getTwo(day);
             break;
         case '3':
             var nmonth,nyear;
