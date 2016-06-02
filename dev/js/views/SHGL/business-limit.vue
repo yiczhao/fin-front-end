@@ -526,7 +526,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -844,8 +843,7 @@
             })
         },
         components:{
-            'datepicker': datepicker,
-            'dialog': dialog,
+            'datepicker': datepicker
         },
         watch:{
             zdlists(){

@@ -597,46 +597,9 @@
             checkingTrue(a){
                 console.log(a);
             },
-            getTwo(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             getTime(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD,endD;
-                switch (this.dateS){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    default:
-                        newD=endD='';
-                        break;
-                }
-                this.checkForm.startDate=newD;
-                this.checkForm.endDate=endD;
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
             }
         },
         watch:{

@@ -151,7 +151,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -209,22 +208,11 @@
                         console.log(response);
                     });
             },
-            getTwo:function(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             query: function () {
                 // let data=this.data;
                 if (this.startDate=="" && this.endDate=="") {
-                    var d=new Date()
-                    var day=d.getDate()
-                    var month=d.getMonth() + 1
-                    var year=d.getFullYear()
-                    this.startDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                    this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                    this.startDate=init_date(this.timeRange)[0];
+                    this.endDate=init_date(this.timeRange)[1];
                 }
                 let data={
                         id:this.id,
@@ -255,12 +243,6 @@
             }
         },
         ready: function () {
-            var d=new Date()
-            var day=d.getDate()
-            var month=d.getMonth() + 1
-            var year=d.getFullYear()
-            var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-            var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
             (this.$route.params.id==':id')? this.id='' :this.id=this.$route.params.id;
             this.query();
             this.getSubcompany({});
@@ -268,32 +250,8 @@
         },
          watch:{
             timeRange:function(){
-                console.log();
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.timeRange){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.startDate=newD;
-                this.endDate=endD;
+                this.startDate=init_date(this.timeRange)[0];
+                this.endDate=init_date(this.timeRange)[1];
             },
             pagecur(){
                 this.pageIndex=this.pagecur;
@@ -305,8 +263,7 @@
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         }
     }
 </script>
