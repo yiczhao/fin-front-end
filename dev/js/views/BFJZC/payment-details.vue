@@ -410,8 +410,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/BFJZC/payment_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 id:'',
                 pagecur:1,
@@ -451,9 +455,8 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-                this.$http.post('./reservecash/order/list',data)
+                this.model.getlist(data)
                         .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         }, function (response) {
@@ -468,10 +471,8 @@
             getInfo(a,index){
 //                this.zdlists[index].listinfo = []
                 if(this.listinfos[index] !='' && typeof(this.listinfos[index])!='undefined')return;
-                this.$http.post('./reservecash/order/getpart/'+a.id)
+                this.model.getpart(a.id)
                         .then( (response)=> {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            //  this.zdlists.$set( index,info)
                             (response.data.code==0) ? this.listinfos.$set(index,response.data.data): null;
                         }, function (response) {
                             console.log(response);
@@ -508,7 +509,7 @@
             },
             checking(a){
                 this.accountId=a;
-                this.$http.post('./reservecash/order/checklist/'+a)
+                this.model.checklist(a)
                         .then( (response)=> {
                              (response.data.code==0)?this.$set('checkLists',response.data.data):null;
                         })
@@ -518,7 +519,7 @@
                     'orderId':this.accountId,
                     'reserveCashId':_id
                 }
-                this.$http.post('./reservecash/order/checking',data)
+                this.model.checking(data)
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList()
@@ -527,7 +528,7 @@
                         })
             },
             updateTrue(){
-                this.$http.post('./reservecash/order/update/'+this.accountId)
+                this.model.reservecash_update(this.accountId)
                     .then( (response)=> {
                         if(response.data.code==0){
                             this.initList()
@@ -536,7 +537,7 @@
                     })
             },
             payTrue(){
-                this.$http.post('./reservecash/order/allow/'+this.accountId)
+                this.model.reservecash_allow(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
@@ -597,46 +598,9 @@
             checkingTrue(a){
                 console.log(a);
             },
-            getTwo(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             getTime(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD,endD;
-                switch (this.dateS){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    default:
-                        newD=endD='';
-                        break;
-                }
-                this.checkForm.startDate=newD;
-                this.checkForm.endDate=endD;
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
             }
         },
         watch:{

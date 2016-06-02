@@ -240,7 +240,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -442,21 +441,10 @@
                      //关闭弹出层
                     $(".modal").modal("hide");
             },
-            getTwo:function(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             query: function () {
                 if (this.startDate=="" && this.endDate=="") {
-                    var d=new Date()
-                    var day=d.getDate()
-                    var month=d.getMonth() + 1
-                    var year=d.getFullYear()
-                    this.startDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                    this.endDate=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
+                    this.startDate=init_date(this.timeRange)[0];
+                    this.endDate=init_date(this.timeRange)[1];
                 }
                 let data={
                     id:this.id,
@@ -483,18 +471,12 @@
                 this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
                         .then((response)=>{
                             if(response.data.code==0){
-                    this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
                         })
             }
         },
         ready:function () {
-            var d=new Date()
-            var day=d.getDate()
-            var month=d.getMonth() + 1
-            var year=d.getFullYear()
-            var newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-            var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
             (this.$route.params.subsidyPayID==':subsidyPayID')?this.id='':this.id=this.$route.params.subsidyPayID;
             this.query();
             this.getSubcompany({});
@@ -510,31 +492,8 @@
                 }
             },
             timeRange:function(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.timeRange){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.startDate=newD;
-                this.endDate=endD;
+                this.startDate=init_date(this.timeRange)[0];
+                this.endDate=init_date(this.timeRange)[1];
             },
             pagecur(){
                 this.pageIndex=this.pagecur;
@@ -546,8 +505,7 @@
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         }
     }
 </script>

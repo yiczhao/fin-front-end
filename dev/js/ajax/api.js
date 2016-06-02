@@ -120,6 +120,45 @@ export default function install(Vue) {
      */
     _o.tradedetailsum = './tradedetail/sum';
 
+    //- todo  备付金支出-付款明细 payment-details
+    /**
+     * @description 备付金支出明细列表接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_list = './reservecash/order/list';
+    /**
+     * @description 备付金支出明细详情接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.getpart = './reservecash/order/getpart/';
+    /**
+     * @description 查询对账数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.checklist = './reservecash/order/checklist/';
+    /**
+     * @description 确认对账接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.checking = './reservecash/order/checking';
+    /**
+     * @description 更新备付金账单接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_update='./reservecash/order/update/';
+    /**
+     * @description 划付备付金账单接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecashallow='./reservecash/order/allow/';
+
+
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
     })

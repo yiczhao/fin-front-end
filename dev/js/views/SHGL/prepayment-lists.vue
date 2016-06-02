@@ -298,7 +298,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -423,13 +422,6 @@
                         console.log(response);
                     });
             },
-            getTwo:function(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             checkAll:function(ck){
                 if(ck.target.checked){
                     $("input[name='ckbox']").prop({'checked':true});
@@ -542,8 +534,7 @@
             });
         },
         components:{
-            'datepicker': datepicker,
-            'dialog': dialog,
+            'datepicker': datepicker
         },
         watch:{
             prepaymentList(){

@@ -234,7 +234,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     
     export default{
         props:{
@@ -440,8 +439,7 @@
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         }
     }
 </script>

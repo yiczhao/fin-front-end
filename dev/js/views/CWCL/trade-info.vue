@@ -538,8 +538,6 @@
         },
         ready: function () {
             this.clear();
-            var newD=init_date('1')[0];
-            var endD=init_date('1')[1];
             (this.$route.params.subsidyPayId==':subsidyPayId')?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
             (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
             (this.$route.params.merchantOperationID==':merchantOperationID')?this.merchantOperationID='' : this.merchantOperationID=this.$route.params.merchantOperationID;
