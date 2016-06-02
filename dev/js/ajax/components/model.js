@@ -28,6 +28,14 @@ function conmon_model(_this) {
          */
         upload (data) {
             return _this.$http.post(_this.$API.upload,data)
+        },
+        /**
+         * @description 查看当前订单号及付款方式
+         * @param {data}
+         * @returns {*}
+         */
+        skipToOrder(data){
+            return _this.$http.post(_this.$API.skipToOrder,data)
         }
     }
 }

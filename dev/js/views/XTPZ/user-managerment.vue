@@ -234,12 +234,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    
+    import model from '../../ajax/XTPZ/log_model'
+    import common_model from '../../ajax/components/model'
     export default{
-        props:{
-
-        },
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 subCompanyID:"",
                 keywords:"",
@@ -265,23 +265,18 @@
         methods:{
             //获取员工数据
              getUserList(data){
-                this.$http.post('./user/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+                this.model.user_list(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('userList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取分公司数据
-            getSubcompany(data){
-                 this.$http.post('./subcompany/list',data)
-                    .then(function (response) {
+            getSubcompany(){
+                 this.common_model.getcompany()
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             query() {
@@ -296,13 +291,10 @@
             //显示员工管辖
             showCS(userId) {
                 this.userID=userId
-                this.$http.post('./user/userControlSpanList/'+userId)
-                    .then(function (response) {
+                this.model.userControl_list(userId)
+                    .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('controlSpanList', response.data.data) : null;
-                        },
-                         function (response) {
-                            console.log(response);
                         });
             },
             checkAll(){
@@ -322,15 +314,13 @@
                     userID:this.userID,
                     subCompanyIDs:arrays
                 }
-                this.$http.post('./user/saveUserControlSpans',data)
-                    .then(function (response) {
+                this.model.saveUserControlSpans(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
                         {
                             dialogs("保存成功！");
                         }
-                    }, function (response) {
-                        console.log(response);
                     });
                     //关闭弹出层
                     $(".modal").modal("hide");
@@ -349,7 +339,7 @@
             },
             queryUser(){
                 if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;
-                this.$http.post('./user/readyImportUser',this.userdata)
+                this.model.readyImportUser(this.userdata)
                         .then((response)=>{
                             (response.data.code==0)?this.$set('userlists',response.data.data):null;
                             this.clearUl();
@@ -412,7 +402,7 @@
                             }
 
                 })
-                this.$http.post('./user/importUser',data)
+                this.model.importUser(data)
                         .then((response)=>{
                             this.query();
                             $('#modal_add').modal('hide');

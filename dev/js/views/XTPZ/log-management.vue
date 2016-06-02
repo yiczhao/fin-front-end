@@ -132,12 +132,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    
+    import model from '../../ajax/XTPZ/log_model'
+    import common_model from '../../ajax/components/model'
     export default{
-        props:{
-
-        },
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 subCompanyID:"",
                 keywords:"",
@@ -166,36 +166,29 @@
         },
         methods:{
             //获取员工数据
-             getLogList:function(data){
-                this.$http.post('./log/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+             getLogList(data){
+                this.model.log_list(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('logList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+            getSubcompany(){
+                 this.common_model.getcompany()
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             getdescription(){
-                this.$http.post('./log/description')
+                this.model.log_description()
                         .then((response)=>{
                             (response.data.code==0)?this.$set('descriptions',response.data.data):null
                         })
             },
             showLog(id){
-                this.$http.post('./log/info/'+id)
+                this.model.log_info(id)
                     .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
                         })
             },

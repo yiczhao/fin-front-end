@@ -20,6 +20,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.upload = './file/upload';
+    /**
+     * @description 查看当前订单号及付款方式接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.skipToOrder = 'reservecash/order/selectReserveCashOrderByDetails';
 
 
     //- todo 登陆 login
@@ -181,6 +187,204 @@ export default function install(Vue) {
      * @method POST
      */
     _o.reservecash_applypay='./ reservecash/order/applypay';
+
+    //- todo  备付金支出-预付款划付 advance-payment-details
+    /**
+     * @description 预付款划付列表接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.advance_list = './advancePaymentDetail/list';
+
+    //- todo  备付金支出-额度采购 limit-purchase-detail
+    /**
+     * @description 预付款划付列表接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limit_list = './limitPurchaseDetail/list';
+
+    //- todo  备付金支出-补贴划付 subsidy-appropriation
+    /**
+     * @description 补贴划付列表接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.appropriation_list = './subsidypaydetail/list';
+    /**
+     * @description 补贴划付更新接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidy_update = './subsidypaydetail/update/';
+    /**
+     * @description 补贴划付申请划付接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidy_applyPay = './subsidypaydetail/applyPay';
+    /**
+     * @description 申请划付数据查询接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.select_subsidypay = './subsidypaydetail/selectApplyPayInfoByIDs';
+
+    //- todo  备付金支出-补贴退税 subsidy-tax-rebate
+    /**
+     * @description 补贴退税列表接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.rebate_list = './subsidyTaxRebateDetail/list';
+    /**
+     * @description 补贴退税更新接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.rebate_update = './subsidyTaxRebateDetail/update/';
+    /**
+     * @description 补贴退税申请划付接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.rebate_applyPay = './subsidyTaxRebateDetail/applyPay';
+    /**
+     * @description 申请划付数据查询接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.select_rebate = './subsidyTaxRebateDetail/selectApplyPayInfoByIDs';
+
+    //- todo  系统配置-系统日志 log-management
+    /**
+     * @description 系统日志列表接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.log_list = './log/list';
+    /**
+     * @description 系统日志描述及url接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.log_description = './log/description';
+    /**
+     * @description 日志详情
+     * @author 洪钢
+     * @method POST
+     */
+    _o.log_info = './log/info/';
+
+    //- todo  系统配置-系统日志 user-management
+    /**
+     * @description 员工管理接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.user_list = './user/list';
+    /**
+     * @description 员工管辖查询接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.userControl_list = './user/userControlSpanList/';
+    /**
+     * @description 员工管辖保存接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.saveUserControlSpans = './user/saveUserControlSpans';
+    /**
+     * @description 新增员工查询接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.readyImportUser = './user/readyImportUser';
+    /**
+     * @description 新增员工保存接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.importUser = './user/importUser';
+
+    //- todo  商户管理-商户列表 business-lists
+    /**
+     * @description 商户列表数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.merchant_lists = './merchant/pages';
+    /**
+     * @description 划款账户接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.merchant_account = './merchant/account';
+    /**
+     * @description 编辑划款账户接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.merchant_update = './merchant/update';
+
+    //- todo  商户管理-额度采购 business-limit
+    /**
+     * @description 额度采购数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_lists = './limitPurchaseMerchant/list';
+    /**
+     * @description 额度采购编辑查询接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_history = './limitPurchaseMerchant/history/';
+    /**
+     * @description 额度采购编辑保存接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_editDigest = './limitPurchaseMerchant/editDigest';
+    /**
+     * @description 额度采购停用启用接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_change = './limitPurchaseMerchant/change';
+    /**
+     * @description 额度采购消化商户查询接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_viewDigest = './limitPurchaseMerchant/viewDigest/';
+    /**
+     * @description 额度采购添加消化商户查询接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_merchantlist = './merchant/list';
+    /**
+     * @description 额度采购添加商户接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_add = './limitPurchaseMerchant/add';
+    /**
+     * @description 额度采购添加消化商户接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseMerchant_addDigest = './limitPurchaseMerchant/addDigest';
+
+    //- todo  商户管理-预付款 prepayment-lists
+    /**
+     * @description 预付款数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.prepayment_lists = './advancePaymentMerchant/list';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

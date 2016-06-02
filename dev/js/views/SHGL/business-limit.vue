@@ -526,8 +526,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/buslimit_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 origin:window.origin,
                 pagecur:1,
@@ -613,7 +617,7 @@
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.$http.post('./limitPurchaseMerchant/list',data)
+                    this.model.limitPurchaseMerchant_lists(data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -624,7 +628,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
+                this.common_model.getcompany()
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -633,8 +637,8 @@
                         });
             },
             //获取城市数据
-            getCity:function(data){
-                this.$http.post('./city/list',data)
+            getCity:function(){
+                this.common_model.getcity()
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -653,7 +657,7 @@
             updateNew(_list){
                 this.accountId=_list.id;
                 this.seexh(this.accountId,false);
-                this.$http.post('./limitPurchaseMerchant/history/'+_list.merchantId)
+                this.model.limitPurchaseMerchant_history(_list.merchantId)
                         .then((response)=>{
                                 if(response.data.code==0){
                                     $.extend(true, this.updateList,response.data.data[0]);
@@ -675,7 +679,7 @@
                 if(this.updateList.certificates==''){this.$set('saveerror', '请上传凭证');return;}
                 let datas = Array.from($(".merchantIds"), i => parseInt(i.innerHTML));
                 this.updateList.digestMerchants=datas;
-                this.$http.post('./ limitPurchaseMerchant/editDigest',this.updateList)
+                this.model.limitPurchaseMerchant_editDigest(this.updateList)
                         .then((response)=>{
                                 this.initList();
                                 dialogs('success','已修改！');
@@ -690,7 +694,7 @@
                     'id': this.accountId,
                     'isEnable': this.isEnable
                 }
-                this.$http.post('./limitPurchaseMerchant/change',data)
+                this.model.limitPurchaseMerchant_change(data)
                         .then((response)=>{
                                 this.initList();
                         })
@@ -698,7 +702,7 @@
             seexh(_id,isTrue){
                 this.accountId=_id;
                 this.isTrue=isTrue;
-                this.$http.get('./limitPurchaseMerchant/viewDigest/'+this.accountId)
+                this.model.limitPurchaseMerchant_viewDigest(this.accountId)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
                                 if(isTrue){$('#modal_see').modal('show');}
@@ -706,7 +710,7 @@
             },
             searchDigest(){
                 this.clearUl();
-                this.$http.post('./merchant/list',this.shdata)
+                this.model.limitPurchaseMerchant_merchantlist(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
                                 $('#modal_add').modal('show');
@@ -772,7 +776,7 @@
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
-                this.$http.post('./limitPurchaseMerchant/add',data)
+                this.model.limitPurchaseMerchant_add(data)
                         .then((response)=>{
                             this.initList();
                             dialogs('success','已添加！');
@@ -782,7 +786,7 @@
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'id': this.accountId,'digestMerchants':Array.from(_li, i => parseInt(i.getAttribute('value')))}
-                this.$http.post('./limitPurchaseMerchant/addDigest',data)
+                this.model.limitPurchaseMerchant_addDigest(data)
                         .then((response)=>{
                             this.initList();
                             dialogs('success','已添加！');
@@ -808,7 +812,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.$http.post('./file/upload',datas)
+                    vm.common_model.upload(datas)
                             .then((response)=>{
                                 vm.updateList.certificates=response.data.data;
                                 vm.uploadText=files.name;

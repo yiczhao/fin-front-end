@@ -132,8 +132,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/BFJZC/advance_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model=model(this);
+            this.common_model=common_model(this);
             return{
                 advanceId:"",
                 subCompanyID:"",
@@ -160,34 +164,28 @@
         },
         methods:{
             //获取补贴划付数据
-             getadvancePaymentDetailList:function(data){
-                this.$http.post('./advancePaymentDetail/list',data)
-                    .then(function (response) {
+             getadvancePaymentDetailList(data){
+                this.model.advance_list(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('advancePaymentDetailList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
              //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
-                    .then(function (response) {
+            getSubcompany(){
+                 this.common_model.getcompany()
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取城市数据
-            getCity:function(data){
-                 this.$http.post('./city/list',data)
-                    .then(function (response) {
+            getCity(){
+                 this.common_model.getcity()
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             query: function () {
@@ -216,7 +214,7 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                this.common_model.skipToOrder(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
@@ -226,9 +224,9 @@
         },
         ready: function () {
             (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
-            this.query({});
-            this.getSubcompany({});
-            this.getCity({});
+            this.query();
+            this.getSubcompany();
+            this.getCity();
         },
          watch:{
             timeRange:function(){

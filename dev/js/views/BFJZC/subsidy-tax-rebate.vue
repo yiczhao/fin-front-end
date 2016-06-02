@@ -229,8 +229,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/BFJZC/rebate_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 subsidyTaxRebateID:"",
                 subCompanyID:"",
@@ -267,51 +271,42 @@
         },
         methods:{
             //获取补贴划付数据
-             getsubsidyTaxRebateDetailList:function(data){
-                this.$http.post('./subsidyTaxRebateDetail/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+             getsubsidyTaxRebateDetailList(data){
+                this.model.rebate_list(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
              //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+            getSubcompany(){
+                 this.common_model.getcompany()
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取城市数据
-            getCity:function(data){
-                 this.$http.post('./city/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+            getCity(){
+                 this.common_model.getcity()
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
-             checkAll:function(ck){
+             checkAll(ck){
                 if(ck.target.checked){
                     $("input[name='ckbox']").prop({'checked':true});
                 }else{
                     $("input[name='ckbox']").prop({'checked':false});
                 }
             },
-            clear:function(){
+            clear(){
                 this.applyPayRemarks="", 
                 this.applyPayInfo={payType:{
                        1:"",
                        2:""
                     }};
             },
-            showModalApplyPay:function(){
+            showModalApplyPay(){
                 //批量划付判断首款信息是否一致
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
@@ -334,17 +329,18 @@
                 this.dialogTitle='合并付款';
                 this.getApplyPayInfoByIDs(array);
             },
-            updateById:function(id){
-                this.$http.post('./subsidyTaxRebateDetail/update/'+id).then(function(response){
-                    if(response.data.code==0){
-                        this.query();
-                        dialogs('success','更新成功！');
-                    }else{
-                        dialogs('error','更新失败！');
-                    }
-                });
+            updateById(id){
+                this.model.rebate_update(id)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.query();
+                                dialogs('success','更新成功！');
+                            }else{
+                                dialogs('error','更新失败！');
+                            }
+                        });
             },
-            showModalApplyPayById:function(id){
+            showModalApplyPayById(id){
                 let array=[];
                 array.push(id);
                 this.dialogTitle='申请付款';
@@ -352,7 +348,7 @@
                 $('#displayName').attr("readonly",true);
                 $('#displayName').attr("class",id);
             },
-             getApplyPayInfoByIDs:function(idArray){
+             getApplyPayInfoByIDs(idArray){
                 console.log(idArray);
                 let data={
                     ids:idArray
@@ -361,8 +357,8 @@
                      this.submitId=[idArray.toString()];
                  }
                  this.clear();
-                this.$http.post('./subsidyTaxRebateDetail/selectApplyPayInfoByIDs',data)
-                    .then(function (response) {
+                this.model.select_rebate(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若
                         (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
                         this.payTypes=this.applyPayInfo.payType;
@@ -371,11 +367,7 @@
                                 this.showPayAccount=this.payTypes[i].value
                             }
                         }
-                        // this.showPayAccount=this.payTypes[0].value;
                         $('#modal_applyPay').modal('show');
-                        console.log(this.applyPayInfo);
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             submitOne(){
@@ -385,15 +377,13 @@
                     payType:this.payType,
                     displayName:this.applyPayInfo.displayName
                 }
-                this.$http.post('./subsidyTaxRebateDetail/applyPay',data).then(function (response) {
+                this.model.rebate_applyPay(data).then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if (response.data.code==0)
                     {
                         dialogs();
                         this.query();
                     }
-                }, function (response) {
-                    console.log(response);
                 });
                 //关闭弹出层
                 $(".modal").modal("hide");
@@ -414,15 +404,13 @@
                     displayName:this.applyPayInfo.displayName
                     
                 }
-               this.$http.post('./subsidyTaxRebateDetail/applyPay',data).then(function (response) {
+               this.model.rebate_applyPay(data).then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if (response.data.code==0)
                         {
                             dialogs;
                             this.query();
                         }
-                    }, function (response) {
-                        console.log(response);
                     });
                      //关闭弹出层
                     $(".modal").modal("hide");
@@ -455,7 +443,7 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                this.common_model.skipToOrder(data)
                         .then((response)=>{
                                 if(response.data.code==0){
                                     this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});

@@ -240,8 +240,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/BFJZC/appropriation_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 id:"",
                 subCompanyID:"",
@@ -281,34 +285,28 @@
         },
         methods:{
             //获取补贴划付数据
-             getSubsidyAppropriationList:function(data){
-                this.$http.post('./subsidypaydetail/list',data)
-                    .then(function (response) {
+             getSubsidyAppropriationList(data){
+                this.model.appropriation_list(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subsidyAppropriationList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
              //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
-                    .then(function (response) {
+            getSubcompany(){
+                 this.common_model.getcompany()
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取城市数据
-            getCity:function(data){
-                 this.$http.post('./city/list',data)
-                    .then(function (response) {
+            getCity(){
+                 this.common_model.getcity()
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             checkAll:function(ck){
@@ -348,17 +346,18 @@
                 this.dialogTitle='合并付款';
                 this.getApplyPayInfoByIDs(array);
             },
-            updateById:function(id){
-                this.$http.post('./subsidypaydetail/update/'+id).then(function(response){
-                    if(response.data.code==0){
-                        //刷新数据
-                        this.query();
-                        //提示成功
-                        dialogs('success','更新成功！');
-                    }else{
-                        dialogs('error','更新失败！');
-                    }
-                });
+            updateById(id){
+                this.model.subsidy_update(id)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                //刷新数据
+                                this.query();
+                                //提示成功
+                                dialogs('success','更新成功！');
+                            }else{
+                                dialogs('error','更新失败！');
+                            }
+                        });
             },
             showModalApplyPayById:function(id){
                 let array=[];
@@ -367,7 +366,7 @@
                 this.dialogTitle='申请划付';
                 $('#displayName').attr("class",id);
             },
-            getApplyPayInfoByIDs:function(idArray){
+            getApplyPayInfoByIDs(idArray){
                 let data={
                     ids:idArray
                 }
@@ -375,22 +374,18 @@
                     this.submitId=[idArray.toString()];
                 }
                 this.clear();
-                this.$http.post('./subsidypaydetail/selectApplyPayInfoByIDs',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若
-                        (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
-                        this.payTypes=this.applyPayInfo.payType;
-                        for(var i in this.payTypes){
-                            if(this.payType == this.payTypes[i].type){
-                                this.showPayAccount=this.payTypes[i].value
+                this.model.select_subsidypay(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若
+                            (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
+                            this.payTypes=this.applyPayInfo.payType;
+                            for(var i in this.payTypes){
+                                if(this.payType == this.payTypes[i].type){
+                                    this.showPayAccount=this.payTypes[i].value
+                                }
                             }
-                        }
-                        // this.showPayAccount=this.payTypes[0].value;
-                        $('#modal_applyPay').modal('show');
-                        console.log(this.applyPayInfo);
-                    }, function (response) {
-                        console.log(response);
-                    });
+                            $('#modal_applyPay').modal('show');
+                        });
             },
             submitOne(){
                 let data={
@@ -399,16 +394,14 @@
                     payType:this.payType,
                     displayName:this.applyPayInfo.displayName
                 }
-                this.$http.post('./subsidypaydetail/applyPay',data).then(function (response) {
-                    // *** 判断请求是否成功如若成功则填充数据到模型
-                    if (response.data.code==0)
-                    {
-                        dialogs();
-                        this.query();
-                    }
-                }, function (response) {
-                    console.log(response);
-                });
+                this.model.subsidy_applyPay(data)
+                        .then((response)=>{
+                            if (response.data.code==0)
+                            {
+                                dialogs();
+                                this.query();
+                            }
+                        });
                 //关闭弹出层
                 $(".modal").modal("hide");
             },
@@ -428,15 +421,12 @@
                     displayName:this.applyPayInfo.displayName
                     
                 }
-               this.$http.post('./subsidypaydetail/applyPay',data).then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+               this.model.subsidy_applyPay(data).then((response)=>{
                         if (response.data.code==0)
                         {
                             dialogs();
                             this.query();
                         }
-                    }, function (response) {
-                        console.log(response);
                     });
                      //关闭弹出层
                     $(".modal").modal("hide");
@@ -468,7 +458,7 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                this.common_model.skipToOrder(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});

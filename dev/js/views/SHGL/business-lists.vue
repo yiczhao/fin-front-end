@@ -370,8 +370,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/buslists_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 origin:window.origin,
                 pagecur:1,
@@ -449,33 +453,26 @@
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.$http.post('./merchant/pages',data)
-                            .then(function (response) {
-                                // *** 判断请求是否成功如若成功则填充数据到模型
+                    this.model.merchant_lists(data)
+                            .then((response)=>{
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
                             });
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
-                        .then(function (response) {
+                this.common_model.getcompany()
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             //获取城市数据
-            getCity(data){
-                this.$http.post('./city/list',data)
-                        .then(function (response) {
+            getCity(){
+                this.common_model.getcity()
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             checkNew(){
@@ -497,13 +494,11 @@
                 })
             },
             checkcontrol(data){
-                this.$http.post('./merchant/account',data)
-                        .then(function (response) {
+                this.model.merchant_account(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('relist', response.data.data) : null;
                             $('#modal_control').modal('show');
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             bthfShow(type,a){
@@ -583,13 +578,11 @@
                     this.errortext='请上传凭证！';
                     return;}
                 this.updataerror=false;
-                this.$http.post('./merchant/update',this.updateList)
-                        .then(function (response) {
+                this.model.merchant_update(this.updateList)
+                        .then(()=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             $(".modal").modal("hide");
                             dialogs();
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             uploads(e){
@@ -608,7 +601,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.$http.post('./file/upload',datas)
+                    vm.common_model.upload(datas)
                             .then((response)=>{
                                     vm.updateList.certificates=response.data.data;
                                     vm.uploadText=files.name;

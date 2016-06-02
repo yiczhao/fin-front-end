@@ -298,8 +298,12 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/prepayment_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 pageall:1,
                 pagecur:1,
@@ -347,7 +351,7 @@
         methods:{
             //获取预付款商户数据
              getPrepaymentList:function(data){
-                this.$http.post('./advancePaymentMerchant/list',data)
+                this.model.prepayment_lists(data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('prepaymentList', response.data.data) : null;
@@ -403,8 +407,8 @@
                     });
             },
             //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
+            getSubcompany:function(){
+                 this.common_model.getcompany()
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -413,8 +417,8 @@
                     });
             },
             //获取城市数据
-            getCity:function(data){
-                 this.$http.post('./city/list',data)
+            getCity:function(){
+                 this.common_modal.getcity()
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
