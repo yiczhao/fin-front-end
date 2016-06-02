@@ -550,7 +550,7 @@
                     'id':this.accountId,
                     'purpose':this.delPurpose
                 }
-                this.$http.post('reservecash/order/deleteDetail',data)
+                this.model.reservecash_delete(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.initList();
@@ -559,7 +559,7 @@
                         })
             },
             closeTrue(){
-                this.$http.post('./reservecash/order/close/'+this.accountId)
+                this.model.reservecash_close(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
@@ -573,7 +573,7 @@
                     'id':this.accountId,
                     'remarks':this.remarks,
                 }
-                this.$http.post('./reservecash/order/retrial',data)
+                this.model.reservecash_retrial(data)
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
@@ -587,7 +587,7 @@
                     'id':this.accountId,
                     'remarks':this.remarks,
                 }
-                this.$http.post('./ reservecash/order/applypay',data)
+                this.model.reservecash_applypay(data)
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();

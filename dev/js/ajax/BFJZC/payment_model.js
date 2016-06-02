@@ -1,7 +1,7 @@
 /**
  * @description 备付金支出付款明细接口
  * @author 赵俊涵
- * @date 2016.05.31
+ * @date 2016.06.02
  */
 function model(_this) {
     return {
@@ -46,15 +46,45 @@ function model(_this) {
             return _this.$http.post(_this.$API.reservecash_update+_id)
         },
         /**
-         * @description 划付备付金账单数据
+         * @description 申请划付备付金账单数据
          * @param {id}
          * @returns {*}
          */
         reservecash_allow(_id){
             return _this.$http.post(_this.$API.reservecash_allow+_id)
         },
-
-
+        /**
+         * @description 备付金账单详情删除
+         * @param {data}
+         * @returns {*}
+         */
+        reservecash_delete(data){
+            return _this.$http.post(_this.$API.reservecash_delete,data)
+        },
+        /**
+         * @description 备付金账单关闭
+         * @param {_id}
+         * @returns {*}
+         */
+        reservecash_close(_id){
+            return _this.$http.post(_this.$API.reservecash_close+_id)
+        },
+        /**
+         * @description 备付金账单关闭
+         * @param {data}
+         * @returns {*}
+         */
+        reservecash_retrial(data){
+            return _this.$http.post(_this.$API.reservecash_retrial,data)
+        },
+        /**
+         * @description 确认划付备付金账单数据
+         * @param {data}
+         * @returns {*}
+         */
+        reservecash_applypay(data){
+            return _this.$http.post(_this.$API.reservecash_applypay,data)
+        }
     }
 }
 module.exports = model

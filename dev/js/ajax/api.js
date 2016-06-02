@@ -152,12 +152,35 @@ export default function install(Vue) {
      */
     _o.reservecash_update='./reservecash/order/update/';
     /**
-     * @description 划付备付金账单接口地址
+     * @description 申请划付备付金账单接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.reservecashallow='./reservecash/order/allow/';
-
+    _o.reservecash_allow='./reservecash/order/allow/';
+    /**
+     * @description 删除备付金详请接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_delete='reservecash/order/deleteDetail';
+    /**
+     * @description 备付金账单关闭接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_close='./reservecash/order/close/';
+    /**
+     * @description 备付金账单退回接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_retrial='./reservecash/order/retrial';
+    /**
+     * @description 确认划付备付金账单接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_applypay='./ reservecash/order/applypay';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
