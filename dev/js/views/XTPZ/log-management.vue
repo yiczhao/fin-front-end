@@ -141,8 +141,10 @@
             return{
                 subCompanyID:"",
                 keywords:"",
-                timeRange:'',
+                timeRange:'1',
                 subcompanyList:[],
+                startDate:'',
+                endDate:'',
                 pageall:1,
                 pagecur:1,
                 page_size:15,
@@ -210,6 +212,8 @@
             },
         },
         ready: function () {
+            this.startDate=init_date(this.timeRange)[0];
+            this.endDate=init_date(this.timeRange)[1];
             this.getdescription();
             this.getLogList({});
             this.getSubcompany({});
