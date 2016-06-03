@@ -488,13 +488,10 @@
                 this.accountId=_list.merchantID;
                 this.bthf=true;
                 this.accountType=1;
-                this.checkcontrol({
-                    "merchantId": _list.merchantID,
-                    "accountType": 1
-                })
+                this.checkcontrol( _list.merchantID)
             },
-            checkcontrol(data){
-                this.model.merchant_account(data)
+            checkcontrol(_id){
+                this.model.merchant_account(_id)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('relist', response.data.data) : null;
@@ -510,11 +507,7 @@
                         else{
                             this.bthf=true;
                             this.accountType=1;
-                            let updata={
-                                "merchantId": a,
-                                "accountType": 1
-                            }
-                            this.checkcontrol(updata)
+                            this.checkcontrol(a)
                         }
                         break;
                     case 1:
@@ -524,11 +517,7 @@
                         else{
                             this.bthf=false;
                             this.accountType=2;
-                            let updata={
-                                "merchantId": a,
-                                "accountType": 2
-                            }
-                            this.checkcontrol(updata);
+                            this.checkcontrol(a);
                         }
                         break;
                 }

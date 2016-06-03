@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         log_list(data){
-            return _this.$http.post(_this.$API.log_list,data)
+            return _this.$http.get(_this.$API.log_list+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 查询描述及url数据
@@ -27,7 +27,7 @@ function model(_this){
          * @returns {*}
          * */
         log_info(_id){
-            return _this.$http.post(_this.$API.log_info+_id)
+            return _this.$http.get(_this.$API.log_info+_id)
         },
     }
 }

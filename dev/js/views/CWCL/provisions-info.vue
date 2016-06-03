@@ -471,7 +471,7 @@
             },
             dzOne(id){
                 // *** 请求对账数据
-                this.model.selectReserveCashOrderListByID({'id':id})
+                this.model.selectReserveCashOrderListByID(id)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('gllists', response.data.data) : null;

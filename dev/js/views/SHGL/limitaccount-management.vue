@@ -265,7 +265,7 @@
             },
             selectRecharge(_id){
                 this.accountId=_id;
-                this.model.limitPurchase_selectRechargeInfoByID({'id':_id})
+                this.model.limitPurchase_selectRechargeInfoByID(_id)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('rechargeInfo', response.data.data) : null;

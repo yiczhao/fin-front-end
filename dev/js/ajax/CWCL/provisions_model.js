@@ -11,15 +11,15 @@ function model(_this) {
          * @returns {*}
          */
         detail (data) {
-            return _this.$http.post(_this.$API.detail, data)
+            return _this.$http.get(_this.$API.detail+decodeURIComponent($.param(data)))
         },
         /**
          * @description 查询对账数据列表
-         * @param data
+         * @param _id
          * @returns {*}
          */
-        selectReserveCashOrderListByID (data) {
-            return _this.$http.post(_this.$API.selectReserveCashOrderListByID, data)
+        selectReserveCashOrderListByID (_id) {
+            return _this.$http.get(_this.$API.selectReserveCashOrderListByID+_id)
         },
         /**
          * @description 自动对账
@@ -43,7 +43,7 @@ function model(_this) {
          * @returns {*}
          */
         incomeAndPayoutAmount (data) {
-            return _this.$http.post(_this.$API.incomeAndPayoutAmount, data)
+            return _this.$http.get(_this.$API.incomeAndPayoutAmount+decodeURIComponent($.param(data)))
         }
     }
 }

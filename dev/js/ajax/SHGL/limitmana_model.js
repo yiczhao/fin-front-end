@@ -24,7 +24,7 @@ function model(_this) {
             // }
             return _this.$http.get(_this.$API.limitPurchaseAccount + decodeURIComponent($.param(data)))
         },
-        limitPurchase_selectRechargeInfoByID (data) {
+        limitPurchase_selectRechargeInfoByID (_id) {
 
             // data =
             // {
@@ -43,10 +43,10 @@ function model(_this) {
             //         "payAccount": "翟敬静"
             //     }
             // }
-            return _this.$http.post(_this.$API.limitPurchase_selectRechargeInfoByID,data)
+            return _this.$http.get(_this.$API.limitPurchase_selectRechargeInfoByID + _id)
         },
         recharge (data) {
-            return _this.$http.get(_this.$API.recharge + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.recharge,data)
         },
     }
 

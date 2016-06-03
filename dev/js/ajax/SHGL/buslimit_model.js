@@ -43,7 +43,7 @@ function model(_this){
          * @returns {*}
          * */
         limitPurchaseMerchant_viewDigest(_id){
-            return _this.$http.post(_this.$API.limitPurchaseMerchant_viewDigest+_id)
+            return _this.$http.get(_this.$API.limitPurchaseMerchant_viewDigest+_id)
         },
         /**
          * @description 额度采购添加商户

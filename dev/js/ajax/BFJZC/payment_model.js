@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         getlist (data) {
-            return _this.$http.post(_this.$API.reservecash_list,data)
+            return _this.$http.get(_this.$API.reservecash_list+decodeURIComponent($.param(data)))
         },
         /**
          * @description 查询备付金详情数据
@@ -19,7 +19,7 @@ function model(_this) {
          * @returns {*}
          */
         getpart(_id){
-            return _this.$http.post(_this.$API.reservecashlist+_id)
+            return _this.$http.get(_this.$API.getpart+_id)
         },
         /**
          * @description 查询对账数据
@@ -27,7 +27,7 @@ function model(_this) {
          * @returns {*}
          */
         checklist(_id){
-            return _this.$http.post(_this.$API.checklist+_id)
+            return _this.$http.get(_this.$API.checklist+_id)
         },
         /**
          * @description 确认对账
@@ -46,7 +46,7 @@ function model(_this) {
             return _this.$http.post(_this.$API.reservecash_update+_id)
         },
         /**
-         * @description 申请划付备付金账单数据
+         * @description 确认划付
          * @param {id}
          * @returns {*}
          */
@@ -59,7 +59,7 @@ function model(_this) {
          * @returns {*}
          */
         reservecash_delete(data){
-            return _this.$http.post(_this.$API.reservecash_delete,data)
+            return _this.$http.delete(_this.$API.reservecash_delete,data)
         },
         /**
          * @description 备付金账单关闭
@@ -78,7 +78,7 @@ function model(_this) {
             return _this.$http.post(_this.$API.reservecash_retrial,data)
         },
         /**
-         * @description 确认划付备付金账单数据
+         * @description 申请划付
          * @param {data}
          * @returns {*}
          */

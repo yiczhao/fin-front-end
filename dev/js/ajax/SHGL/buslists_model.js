@@ -18,8 +18,8 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        merchant_account(data){
-            return _this.$http.get(_this.$API.merchant_account+ decodeURIComponent($.param(data)))
+        merchant_account(_id){
+            return _this.$http.get(_this.$API.merchant_account+_id)
         },
         /**
          * @description 编辑划款账户数据

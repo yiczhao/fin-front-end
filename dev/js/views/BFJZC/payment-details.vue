@@ -591,7 +591,7 @@
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
-                                    dialogs('success','已划付！');
+                                    dialogs('success','已申请！');
                             }
                         })
             },

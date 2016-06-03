@@ -35,7 +35,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         skipToOrder(data){
-            return _this.$http.post(_this.$API.skipToOrder, data)
+            return _this.$http.get(_this.$API.skipToOrder+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 获取商户数据

@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         rebate_list(data){
-            return _this.$http.post(_this.$API.rebate_list,data)
+            return _this.$http.get(_this.$API.rebate_list+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 更新补贴退税
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         select_rebate(data){
-            return _this.$http.post(_this.$API.select_rebate,data)
+            return _this.$http.post(_this.$API.select_rebate+ decodeURIComponent($.param(data)))
         },
     }
 }

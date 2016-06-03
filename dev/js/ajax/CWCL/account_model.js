@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         getbanklist (data) {
-            return _this.$http.post(_this.$API.banklist, data)
+            return _this.$http.get(_this.$API.banklist+decodeURIComponent($.param(data)))
         },
         /**
          * @description 查询负责人
@@ -43,7 +43,7 @@ function model(_this) {
          * @returns {*}
          */
         deleteaccount(a) {
-            return _this.$http.get(_this.$API.deleteaccount+a)
+            return _this.$http.delete(_this.$API.deleteaccount+a)
         },
         /**
          * @description 新增修改账户信息

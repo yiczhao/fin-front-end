@@ -151,11 +151,8 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-<<<<<<< HEAD
     import model from '../../ajax/BFJZC/limit_model'
     import common_model from '../../ajax/components/model'
-=======
->>>>>>> release/Version_1.1
     export default{
         data(){
             this.model=model(this);
