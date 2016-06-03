@@ -1,4 +1,4 @@
-function member_model(http) {
+function model(_this) {
     return {
         // 额度采购账户明细
         post_point_exchange_list (data) {
@@ -19,8 +19,8 @@ function member_model(http) {
                 }],
                 total: 25
             }
-            return http.post('./reservecash/detail',data)
+            return _this.$http.post('./reservecash/detail',data)
         }
     }
 }
-module.exports = member_model
+module.exports = model

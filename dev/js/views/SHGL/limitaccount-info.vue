@@ -339,13 +339,13 @@
     }
 </style>
 <script>
-    import model from './model.js'
-    import datepicker from '../../components/datepicker.vue'
+    import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/limitinfo_model'
+    import common_model from '../../ajax/components/model'
     export default{
-        props:{
-        },
         data(){
-            this.model=model(this.$http);
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 loginList:{},
                 zdlists:[],

@@ -210,10 +210,12 @@
     }
 </style>
 <script>
-    import model from './model.js'
+    import model from '../../ajax/SHGL/limitmana_model'
+    import common_model from '../../ajax/components/model'
     export default{
         data(){
-            this.model=model(this.$http);
+            this.model =model(this)
+            this.common_model=common_model(this)
             return{
                 pagecur:1,
                 page_size:15,
@@ -238,7 +240,7 @@
         },
         methods:{
             getZlists(data){
-                this.model.post_point_exchange_list(data)
+                this.model.limitPurchaseAccount(data)
                             .then(function (response) {
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
@@ -263,7 +265,7 @@
             },
             selectRecharge(_id){
                 this.accountId=_id;
-                this.model.selectRechargeInfoByID({'id':_id})
+                this.model.limitPurchase_selectRechargeInfoByID({'id':_id})
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('rechargeInfo', response.data.data) : null;
@@ -292,7 +294,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.$http.post('./file/upload',datas)
+                    vm.common_model.upload(datas)
                             .then((response)=>{
                                 vm.addData.certificates_id=response.data.data;
                                 vm.saveerror='';

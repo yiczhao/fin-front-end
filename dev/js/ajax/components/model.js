@@ -36,7 +36,16 @@ function conmon_model(_this) {
          */
         skipToOrder(data){
             return _this.$http.post(_this.$API.skipToOrder,data)
-        }
+        },
+        /**
+         * @description 获取商户数据
+         * @param {data}
+         * @returns {*}
+         */
+        getmerchant_list(data){
+            return _this.$http.post(_this.$API.getmerchant_list,data)
+        },
+
     }
 }
 module.exports = conmon_model

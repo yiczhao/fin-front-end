@@ -26,6 +26,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.skipToOrder = 'reservecash/order/selectReserveCashOrderByDetails';
+    /**
+     * @description 获取商户数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.getmerchant_list ='./merchant/list';
 
 
     //- todo 登陆 login
@@ -360,12 +366,6 @@ export default function install(Vue) {
      */
     _o.limitPurchaseMerchant_viewDigest = './limitPurchaseMerchant/viewDigest/';
     /**
-     * @description 额度采购添加消化商户查询接口地址
-     * @author 冷艳君
-     * @method POST
-     */
-    _o.limitPurchaseMerchant_merchantlist = './merchant/list';
-    /**
      * @description 额度采购添加商户接口地址
      * @author 冷艳君
      * @method POST
@@ -385,6 +385,44 @@ export default function install(Vue) {
      * @method POST
      */
     _o.prepayment_lists = './advancePaymentMerchant/list';
+    /**
+     * @description 获取预付充值数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.advancePaymentMerchant = './ advancePaymentMerchant/selectRechargeInfoByID';
+    /**
+     * @description 预付申请付款接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.applyAdvancePay = './advancePaymentMerchant/applyAdvancePay';
+    /**
+     * @description 预付添加商户接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.insertBatch = './advancePaymentMerchant/insertBatch';
+
+    //- todo  商户管理-额度采购-账户列表 prepayment-lists
+    /**
+     * @description 列表数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchaseAccount = './limitPurchaseAccount/list';
+    /**
+     * @description 充值接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.limitPurchase_selectRechargeInfoByID = './limitPurchaseAccount/selectRechargeInfoByID';
+    /**
+     * @description 确认充值接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.recharge = './limitPurchaseAccount/recharge';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

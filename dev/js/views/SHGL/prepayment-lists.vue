@@ -144,7 +144,7 @@
                                      </form>
                                  </div>
 
-                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer addbottom">
+                                <div class="dataTables_wrapper no-footer addbottom">
                                     <div style="text-indent: 68%">已选择：</div>
                                     <div class="col-md-7" style="height:300px;overflow: auto;border: 1px solid #ccc;">
                                         <table v-if="merchantList.length>0" id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -365,7 +365,7 @@
                 let data={
                     id:prepaymentId
                 }                 
-                this.$http.post('./ advancePaymentMerchant/selectRechargeInfoByID',data)
+                this.model.advancePaymentMerchant(data)
                     .then(function (response) {
                         if(response.data.code==0){
                             this.$set('entity', response.data.data);
@@ -398,7 +398,7 @@
             },
             //获取商户数据
              getMerchantList:function(data){
-                this.$http.post('./merchant/list',data)
+                this.common_model.getmerchant_list(data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
@@ -454,7 +454,7 @@
                    advancePaymentAmount:this.applyAdvancePay.advancePaymentAmount*100,     
                    remarks:this.applyAdvancePay.remarks,
                 }
-                this.$http.post('./advancePaymentMerchant/applyAdvancePay',entity)
+                this.model.applyAdvancePay(entity)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
@@ -501,7 +501,7 @@
                 let _li=$("#IDS").children('li');
                 if(!_li.length>0)return;
                 let data={'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
-                this.$http.post('./advancePaymentMerchant/insertBatch',data)
+                this.model.insertBatch(data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)

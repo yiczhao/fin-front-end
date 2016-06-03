@@ -104,14 +104,14 @@ export default function(router){
         '/limitaccount-management/:merchantID':{
             name:'limitaccount-management',
             component: function(resolve){
-                require(['./views/SHGL/limit-manage/limitaccount-management.vue'],resolve);
+                require(['./views/SHGL/limitaccount-management.vue'],resolve);
             }
         },
         /* 商户管理-额度采购账户明细 */
         '/limitaccount-info/':{
             name:'limitaccount-info',
             component: function(resolve){
-                require(['./views/SHGL/limit-info/limitaccount-info.vue'],resolve);
+                require(['./views/SHGL/limitaccount-info.vue'],resolve);
             }
         },
         /* 商户管理-预付款 */

@@ -13,6 +13,30 @@ function model(_this){
         prepayment_lists(data){
             return _this.$http.post(_this.$API.prepayment_lists,data)
         },
+        /**
+         * @description 获取预付充值数据
+         * @params {data}
+         * @returns {*}
+         * */
+        advancePaymentMerchant(data){
+            return _this.$http.post(_this.$API.advancePaymentMerchant,data)
+        },
+        /**
+         * @description 预付申请付款
+         * @params {data}
+         * @returns {*}
+         * */
+        applyAdvancePay(data){
+            return _this.$http.post(_this.$API.applyAdvancePay,data)
+        },
+        /**
+         * @description 预付添加商户
+         * @params {data}
+         * @returns {*}
+         * */
+        insertBatch(data){
+            return _this.$http.post(_this.$API.insertBatch,data)
+        },
 
     }
 }

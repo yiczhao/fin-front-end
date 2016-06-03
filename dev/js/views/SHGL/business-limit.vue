@@ -710,7 +710,7 @@
             },
             searchDigest(){
                 this.clearUl();
-                this.model.limitPurchaseMerchant_merchantlist(this.shdata)
+                this.common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
                                 $('#modal_add').modal('show');
