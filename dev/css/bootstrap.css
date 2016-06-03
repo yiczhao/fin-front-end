@@ -20,7 +20,7 @@
  * ---------------------------------------------------------------------------- */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: sans-serif;
+  font-family: "Microsoft Yahei";
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -118,7 +118,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: "Microsoft Yahei";
   font-size: 1em;
 }
 button,
@@ -1086,7 +1086,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Roboto", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "Microsoft Yahei", Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.5384616;
   color: #333333;
@@ -1096,7 +1096,7 @@ input,
 button,
 select,
 textarea {
-  font-family: inherit;
+  font-family: "Microsoft Yahei";
   font-size: inherit;
   line-height: inherit;
 }
@@ -1188,7 +1188,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: inherit;
+  font-family: "Microsoft Yahei";
   font-weight: 400;
   line-height: 1.5384616;
   color: inherit;
@@ -1536,7 +1536,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: "Microsoft Yahei";
 }
 code {
   padding: 2px 4px;
@@ -2916,7 +2916,6 @@ select[multiple].input-lg {
   margin-bottom: 10px;
   color: #737373;
 }
-@media (min-width: 769px) {
   .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -2965,7 +2964,6 @@ select[multiple].input-lg {
   .form-inline .has-feedback .form-control-feedback {
     top: 0;
   }
-}
 .form-horizontal .radio,
 .form-horizontal .checkbox,
 .form-horizontal .radio-inline,
@@ -4168,16 +4166,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
-@media (min-width: 769px) {
   .navbar {
     border-radius: 0;
   }
-}
-@media (min-width: 769px) {
+
   .navbar-header {
     float: left;
   }
-}
+
 .navbar-collapse {
   overflow-x: visible;
   padding-right: 20px;
@@ -4189,7 +4185,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-collapse.in {
   overflow-y: auto;
 }
-@media (min-width: 769px) {
   .navbar-collapse {
     width: auto;
     border-top: 0;
@@ -4210,7 +4205,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     padding-left: 0;
     padding-right: 0;
   }
-}
+
 .navbar-fixed-top .navbar-collapse,
 .navbar-fixed-bottom .navbar-collapse {
   max-height: 340px;
@@ -4476,18 +4471,15 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-right: 20px;
   }
 }
-@media (min-width: 769px) {
   .navbar-left {
     float: left !important;
   }
   .navbar-right {
     float: right !important;
-    margin-right: -20px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
   }
-}
 .navbar-default {
   background-color: #fff;
   border-color: #ddd;
@@ -5977,7 +5969,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Roboto", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "Microsoft Yahei", Helvetica Neue, Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -6095,7 +6087,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Roboto", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "Microsoft Yahei", Helvetica Neue, Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -6362,7 +6354,7 @@ button.close {
   width: 20px;
   height: 20px;
   line-height: 1;
-  font-family: serif;
+  font-family: "Microsoft Yahei";
 }
 .carousel-control .icon-prev:before {
   content: '\2039';

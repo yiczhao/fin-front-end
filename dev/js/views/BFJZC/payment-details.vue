@@ -3,15 +3,15 @@
            :ptitle="'备付金支出'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content details" slot="content">
+        <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="m20">
                             <div class="form-group">
-                                <select class="form-control" v-model="checkForm.merchantId">
-                                    <option value="">请选择账户</option>
-                                    <option value="0">南昌备付金</option>
+                                <select class="form-control" v-model="checkForm.payType">
+                                    <option value="1">备付金账户</option>
+                                    <option value="2">商户预付款账户</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -33,7 +33,7 @@
                         </div>
                         <div  class="">
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="银行凭证号">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
@@ -41,8 +41,12 @@
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.status">
                                     <option value="">请选择对账状态</option>
-                                    <option value="1">成功</option>
-                                    <option value="0">待对账</option>
+                                    <option value="2">等待划付</option>
+                                    <option value="3">转账中</option>
+                                    <option value="4">等待对账</option>
+                                    <option value="5">对账成功</option>
+                                    <option value="6">划付失败</option>
+                                    <option value="0">已关闭</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -53,124 +57,163 @@
                                     <option value="3">退税划付</option>
                                     <option value="4">预付款</option>
                                     <option value="5">供货商划付</option>
-                                    <option value="6">往来款</option>
-                                    <option value="7">转账退款</option>
-                                    <option value="8">账户费用</option>
-                                    <option value="9">其它</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                                <input type="button" class="btn btn-info" @click="initList" value="查询">
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-            <div v-if="!!zdlists.length" class="panel panel-flat panel-collapsed"   v-for="(index,n) in zdlists">
-                <div class="panel-heading bgddd">
-                    <div class="panel-title">
-                        <p>
-                            <span>订单号:{{n.orderNumber}}</span>
-                            <span>付款金额:{{n.payoutAmount/100 | currency '' }}</span>
-                            <span>付款账户:{{n.payoutAccount}}</span>
-                            <span>收款方:{{n.payoutAccountName}}</span>
-                            <span>付款账户名:{{n.payoutAccountName}}</span>
-                            <span>付款账号:{{n.payoutAccountNumber}}</span>
-                            <span>收款账户名:{{n.incomeAccountName}}</span>
-                            <span>收款账号:{{n.incomeAccountNumber}}</span>
-                            <span>银行凭证号:{{n.certificate}}</span>
-                            <span>付款时间:{{n.paymentTime | datetime}}</span>
-                            <span>用途:
-                                 <template v-if="n.purpose==1"> 补贴划付</template>
-                                 <template v-if="n.purpose==2"> 额度采购</template>
-                                 <template v-if="n.purpose==3"> 退税划付</template>
-                                 <template v-if="n.purpose==4"> 预付款</template>
-                                 <template v-if="n.purpose==5"> 供货商划付</template>
-                            </span>
-                            <span>收款开户行:{{n.incomeBankName}}</span>
-                            <span>申请分公司:{{n.applyCompany}}</span>
-                            <span>申请时间:{{n.applyTime | datetime}}</span>
-                            <span>
-                                状态:
-                                 <template v-if="n.status==1"> 等待审核</template>
-                                 <template v-if="n.status==2"> 等待划付</template>
-                                 <template v-if="n.status==3"> 等待对账</template>
-                                 <template v-if="n.status==4"> 对账成功</template>
-                                 <template v-if="n.status==5"> 划付失败</template>
-                            </span>
-                            <span>对账时间:</span>
-                        </p>
-                        <p>备注:{{n.remarks}}</p>
-                    </div>
-                    <div class="pull-right" @click="getInfo(n,index)">
-                        <span class="pull-left">查看详情</span>
-                        <ul class="icons-list pull-left" >
-                            <li><a data-action="collapse"></a></li>
-                        </ul>
-                    </div>
+                <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
+                    <table class="table main-table">
+                        <thead>
+                        <tr role="row">
+                            <th></th>
+                            <th>订单号</th>
+                            <th>付款金额</th>
+                            <th>付款账户</th>
+                            <th>收款方</th>
+                            <th>付款账户名</th>
+                            <th>付款账号</th>
+                            <th>收款账户名</th>
+                            <th>收款账号 </th>
+                            <th>银行凭证号</th>
+                            <th>付款时间</th>
+                            <th>用途</th>
+                            <th>收款开户行</th>
+                            <th>申请分公司</th>
+                            <th>申请时间</th>
+                            <th>状态</th>
+                            <th>对账时间</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template v-for="(index,n) in zdlists">
+                            <tr role="row">
+                                <td>
+                                    <div v-if="n.status!=0" class="pull-left morebtn" @click="getInfo(n,index)">
+                                        <ul class="icons-list pull-left" >
+                                            <li><i class="glyphicon glyphicon-plus"></i></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{n.orderNumber}}
+                                </td>
+                                <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="n.payType==1">{{n.payoutAccount}}</template>
+                                    <template v-else>{{n.payoutAccount}}</template>
+                                </td>
+                                <td>
+                                    {{n.incomeAccount}}
+                                </td>
+                                <td>{{n.payoutAccountName}}</td>
+                                <td>{{n.payoutAccountNumber}}</td>
+                                <td>
+                                    <span v-if="n.payType==1">{{n.incomeAccountName}}</span>
+                                </td>
+                                <td>
+                                    <span v-if="n.payType==1">{{n.incomeAccountNumber}}</span>
+                                </td>
+                                <td>
+                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,certificate:n.certificate}}">{{n.certificate}}</a></template>
+                                </td>
+                                <td>{{n.paymentTime | datetime}}</td>
+                                <td>
+                                    <template v-if="n.purpose==1"> 补贴划付</template>
+                                    <template v-if="n.purpose==2"> 额度采购</template>
+                                    <template v-if="n.purpose==3"> 退税划付</template>
+                                    <template v-if="n.purpose==4"> 预付款</template>
+                                    <template v-if="n.purpose==5"> 供货商划付</template>
+                                </td>
+                                <td>
+                                    <span v-if="n.payType==1">{{n.incomeBankName}}</span>
+                                </td>
+                                <td>{{n.applyCompany}}</td>
+                                <td>{{n.applyTime | datetime}}</td>
+                                <td>
+                                    <template v-if="n.status==1"> 等待审核</template>
+                                    <template v-if="n.status==2"> 等待划付</template>
+                                    <template v-if="n.status==3"> 转账中</template>
+                                    <template v-if="n.status==4"> 等待对账</template>
+                                    <template v-if="n.status==5"> 对账成功</template>
+                                    <template v-if="n.status==6"> 划付失败</template>
+                                    <template v-if="n.status==0"> 已关闭</template>
+                                </td>
+                                <td>{{n.successTime | datetime}}</td>
+                                <td>{{n.remarks}}</td>
+                            </tr>
+                            <tr v-show="listinfos[index]!=null" class="div-table">
+                                <td colspan="18">
+                                    <div class="pull-left">
+                                        <div class="title">
+                                            <span>生成日期</span>
+                                            <span>商户名称</span>
+                                            <span>划付金额</span>
+                                            <span>用途</span>
+                                            <span>操作</span>
+                                            <span>状态</span>
+                                            <span>备注</span>
+                                        </div>
+                                        <div class="lists" v-for="trlist in listinfos[index]">
+                                            <span>{{trlist.createAt | datetime}}</span>
+                                            <span>{{trlist.merchantName}}</span>
+                                            <span>{{trlist.amount/100 | currency '' }}</span>
+                                            <span>{{trlist.purpose}}</span>
+                                        <span>
+                                             <template v-if="n.purpose==1"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
+                                             <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
+                                             <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
+                                             <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
+                                             <template v-if="n.status==6"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
+                                        </span>
+                                        <span>
+                                            <template v-if="n.status==1"> 等待审核</template>
+                                            <template v-if="n.status==2"> 等待划付</template>
+                                            <template v-if="n.status==3"> 转账中</template>
+                                            <template v-if="n.status==4"> 等待对账</template>
+                                            <template v-if="n.status==5"> 对账成功</template>
+                                            <template v-if="n.status==6"> 划付失败</template>
+                                            <template v-if="n.status==0"> 已关闭</template>
+                                        </span>
+                                            <span>{{trlist.remarks}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="pull-left">
+                                        <template v-if="n.status==2">
+                                            <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
+                                            <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
+                                        </template>
+                                        <template v-if="n.status==4">
+                                            <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
+                                        </template>
+                                        <template v-if="n.status==6">
+                                            <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
+                                            <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
+                                            <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
+                                        </template>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
                 </div>
-                <div v-show="listinfos[index]!=''" class="dataTables_wrapper no-footer">
-                    <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
-                            <thead>
-                                <tr role="row">
-                                    <th>生成日期{{$index}}</th>
-                                    <th>商户名称</th>
-                                    <th>划付金额</th>
-                                    <th>用途</th>
-                                    <th>操作</th>
-                                    <th>状态</th>
-                                    <th>备注</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr role="row" v-for="trlist in listinfos[index]">
-                                    <td>{{trlist.createAt | datetime}}</td>
-                                    <td>{{trlist.merchantName}}</td>
-                                    <td>{{trlist.amount/100 | currency '' }}</td>
-                                    <td>
-                                        {{trlist.purpose}}
-                                    </td>
-                                    <td><a href="">详情</a></td>
-                                    <td>
-                                        <template v-if="trlist.status==1"> 等待审核</template>
-                                        <template v-if="trlist.status==2"> 等待划付</template>
-                                        <template v-if="trlist.status==3"> 等待对账</template>
-                                        <template v-if="trlist.status==4"> 对账成功</template>
-                                        <template v-if="trlist.status==5"> 划付失败</template>
-                                        <template v-if="trlist.status==6"> 已关闭</template>
-                                    </td>
-                                    <td>{{trlist.remarks}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="pull-right">
-                            <template v-if="n.status==2">
-                                <input data-toggle="modal" data-target="#modal_waring" type="button" @click="pay(n.id)" class="btn btn-gray" value="确认划付">
-                                <input data-toggle="modal" data-target="#modal_submit" type="button" @click="back(n.id)" class="btn btn-gray" value="退回重审">
-                            </template>
-                            <template v-if="n.status==3">
-                                <input data-toggle="modal" data-target="#modal_checking" type="button" @click="checking(n.id)" class="btn btn-gray" value="对账">
-                            </template>
-                            <template v-if="n.status==5">
-                                <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
-                                <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
-                                <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
-                            </template>
-                        </div>
-                    </div>
+                <page v-if="zdlists.length>0" :all="pageall"
+                      :cur.sync="pagecur"
+                      :page_size.sync="page_size">
+                </page>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
+                    未找到数据
                 </div>
             </div>
-            <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                未找到您要查询的账单
-            </div>
-            <page :all="pageall"
-                  :cur.sync="pagecur"
-                  :page_size.sync="page_size">
-            </page>
+
             <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -183,6 +226,7 @@
                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认划付该账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -209,8 +253,8 @@
                                 <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
                                 <button  v-if="subtitle=='申请划付'" type="button" @click="applyTrue" class="btn btn-primary">申请</button>
                             </div>
-                            <div class="form-group">
-                                <span v-show="!remarks" class="validation-error-label">
+                            <div class="form-group tc">
+                                <span v-show="!remarks&&fires" class="validation-error-label">
                                     <template v-if="subtitle=='退回重审'">请填写退回原因</template>
                                     <template v-else>请填写备注</template>
                                 </span>
@@ -227,45 +271,45 @@
                             <button type="button" class="close" data-dismiss="modal">×</button>
                             <h5 class="modal-title">对账</h5>
                         </div>
-                        <div class="modal-body">
+                        <div  v-if="!!checkLists.length&&checkLists != ''" class="modal-body">
                             <div class="tc f20">
                                 请选择备付金银行流水
                             </div>
-                            <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th>凭证号</th>
-                                                    <th>交易时间</th>
-                                                    <th>收款方</th>
-                                                    <th>收款信息</th>
-                                                    <th>付款金额</th>
-                                                    <th>用途</th>
-                                                    <th>备注</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                            </thead>
-                                        <tbody>
-                                            <tr v-if="!!checkLists.length&&checkLists != ''" role="row"  v-for="n in checkLists">
-                                                <td>{{n.certificate}}</td>
-                                                <td>{{n.tradeTime || datetime}}</td>
-                                                <td>{{n.collectionName}}</td>
-                                                <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
-                                                <td>{{n.payoutAmount/100 | currency '' }}</td>
-                                                <td>
-                                                    <template v-if="n.purpose==1"> 补贴划付</template>
-                                                    <template v-if="n.purpose==2"> 额度采购</template>
-                                                    <template v-if="n.purpose==3"> 退税划付</template>
-                                                    <template v-if="n.purpose==4"> 预付款</template>
-                                                    <template v-if="n.purpose==5"> 供货商划付</template>
-                                                </td>
-                                                <td>{{n.remarks}}</td>
-                                                <td><a href="javascript:void(0)" @click="checking(n.reserveCashId)">选择</a></td>
-                                            </tr>
-                                            <tr v-else>
-                                                <td colspan="8">未找到对账数据</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <table class="table" style="border: 1px solid #ccc;">
+                                <thead>
+                                    <tr role="row">
+                                        <th>凭证号</th>
+                                        <th>交易时间</th>
+                                        <th>收款方</th>
+                                        <th>收款信息</th>
+                                        <th>付款金额</th>
+                                        <th>用途</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row"  v-for="n in checkLists">
+                                        <td>{{n.certificate}}</td>
+                                        <td>{{n.tradeTime || datetime}}</td>
+                                        <td>{{n.collectionName}}</td>
+                                        <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
+                                        <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                        <td>
+                                            <template v-if="n.purpose==1"> 补贴划付</template>
+                                            <template v-if="n.purpose==2"> 额度采购</template>
+                                            <template v-if="n.purpose==3"> 退税划付</template>
+                                            <template v-if="n.purpose==4"> 预付款</template>
+                                            <template v-if="n.purpose==5"> 供货商划付</template>
+                                        </td>
+                                        <td>{{n.remarks}}</td>
+                                        <td><a href="javascript:void(0)" @click="checkTrue(n.reserveCashId)">选择</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-body" v-else>
+                            未找到对账数据
                         </div>
                     </div>
                 </div>
@@ -273,27 +317,24 @@
         </div>
     </index>
 </template>
-<style>
-    .details .f20{
+<style lang="sass" scoped>
+     .f20{
         font-size: 20px;
         font-weight: bolder;
     }
-   .details .form-group{
-       overflow: hidden;
-    }
-    .details   .modal-body label i{
+       .modal-body label i{
         color:red;
     }
-    .details  .modal-body button{
+      .modal-body button{
         width:35%;
     }
-    .details  .m20{
+      .m20{
         margin-bottom:20px;
     }
-    .details  .mt0{
+      .mt0{
         margin-top: 0
     }
-    .details .panel-title p span{
+     .panel-title p span{
         width: 24%;
         margin-bottom: 3px;
         display: inline-block;
@@ -302,46 +343,69 @@
         white-space: nowrap;
         font-size: 13px;
     }
-    .details .panel-heading .pull-right{
-        position: absolute;
-        right: 10px;
-        bottom: 30px;
-       cursor: pointer;
-        background: #ECECEC;
-    }
-    .details .datatable-scroll{
-       overflow: hidden;
-       padding-bottom: 20px;
-       padding-top: 20px;
+     .datatable-scroll{
+         overflow: auto;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        background:#fff;
+         .main-table{
+             .bgddd{
+                 background: #ECECEC;
+             }
+            .morebtn{
+                cursor: pointer;
+                line-height: 18px;
+                position: relative;
+                left: 8px;
+                i{
+                    color: rgb(0, 188, 212);
+                    font-size: 14px;
+                }
+            }
+             tr{
+                 td,th{
+                     padding: 15px 10px;
+                     text-align:center;
+                 }
+                 .lists{
+                     border-bottom: 1px solid #ccc;
+                 }
+                 .title,.lists{
+                    overflow:hidden;
+                     border-right: 1px solid #ccc;
+                     display: table-row;
+                     span{
+                         display: table-cell;
+                         padding: 0 15px;
+                         height: 30px;
+                         line-height: 30px;
+                         border: 1px solid #ccc;
+                         border-bottom: 0;
+                         border-right: 0;
+                     }
+                 }
+             }
+         }
    }
-    .details .dataTables_wrapper{
-        display: none;
-    }
-    .details .datatable-scroll table{
-        float: left;
-        width: 80%;
-        border: 1px solid #ccc;
-        margin-left: 20px;
-    }
-    .details .datatable-scroll .pull-right{
-        width: 15%;
-    }
-    .details  .pull-right input{
-        width: 80%;
-        margin-bottom: 15px;
-    }
-    .details  .panel-flat > .panel-heading.bgddd{
-        background: #ECECEC;
-    }
-    .details div.datatable-footer.pd15{
-        padding: 15px 20px;
-        font-weight: bolder;
-    }
-    .details div.datatable-footer.pd15 span{
-        color:red;
-    }
-    .details .modal-body tr td,.details .modal-body tr th{
+     .div-table{
+         td{
+             position: relative;
+             .pull-left{
+                 margin: 10px;
+             }
+
+         }
+     }
+     .modal-body tr td, .modal-body tr th{
         padding: 10px;
+    }
+    .tc .validation-error-label{
+        display: inline-block;
+    }
+    .modal-body{
+        .form-group{
+            overflow: hidden;
+        }
     }
 </style>
 <script>
@@ -357,7 +421,7 @@
                 waring:'',
                 subtitle:'',
                 checkForm:{
-                    merchantId: '',
+                    payType: '1',
                     orderNumber: '',
                     certificate:'',
                     keyword:'',
@@ -372,7 +436,9 @@
                 listinfos:[],
                 zdlists:[],
                 checkLists:[],
-                remarks:''
+                remarks:'',
+                delPurpose:'',
+                fires:false
             }
         },
         methods:{
@@ -396,9 +462,7 @@
             },
             initList(){
                 $(".modal").modal("hide");
-                this.getZlists(this.checkForm);
-            },
-            checkNew(){
+                this.listinfos=[];
                 this.getZlists(this.checkForm);
             },
             getInfo(a,index){
@@ -415,10 +479,14 @@
             },
             back(a){
                 this.subtitle = '退回重审';
+                this.remarks='';
+                this.fires=false;
                 this.accountId=a;
             },
             apply(a){
                 this.subtitle = '申请划付';
+                this.remarks='';
+                this.fires=false;
                 this.accountId=a;
             },
             update(a){
@@ -433,18 +501,37 @@
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
             },
+            delBtn(a,b){
+                this.waring = '你确认删除该订单流水？';
+                this.accountId=a;
+                this.delPurpose=b;
+            },
             checking(a){
-                console.log(a);
+                this.accountId=a;
                 this.$http.post('./reservecash/order/checklist/'+a)
                         .then( (response)=> {
-                             (response.data.code==0)?this.checkLists.$set(response.data.data):null;
+                             (response.data.code==0)?this.$set('checkLists',response.data.data):null;
+                        })
+            },
+            checkTrue(_id){
+                let data={
+                    'orderId':this.accountId,
+                    'reserveCashId':_id
+                }
+                this.$http.post('./reservecash/order/checking',data)
+                        .then( (response)=> {
+                                if(response.data.code==0){
+                                    this.initList()
+                                    dialogs('success','对账成功！');
+                                }
                         })
             },
             updateTrue(){
                 this.$http.post('./reservecash/order/update/'+this.accountId)
                     .then( (response)=> {
                         if(response.data.code==0){
-                            this.initList();
+                            this.initList()
+                            dialogs('success','已更新！');
                         }
                     })
             },
@@ -452,20 +539,35 @@
                 this.$http.post('./reservecash/order/allow/'+this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
-                            this.initList();
-                        }
-                    })
+                                this.initList();
+                                dialogs('success','划付成功！');
+                            }
+                        })
+            },
+            delTrue(){
+                let data={
+                    'id':this.accountId,
+                    'purpose':this.delPurpose
+                }
+                this.$http.post('reservecash/order/deleteDetail',data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs('success','已删除！');
+                            }
+                        })
             },
             closeTrue(){
                 this.$http.post('./reservecash/order/close/'+this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
-                            this.initList();
-                        }
-                    })
+                                this.initList();
+                                dialogs('success','已关闭！');
+                            }
+                        })
             },
             backTrue(){
-                if(this.remarks=='')return;
+                if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
                     'remarks':this.remarks,
@@ -473,12 +575,13 @@
                 this.$http.post('./reservecash/order/retrial',data)
                         .then( (response)=> {
                                 if(response.data.code==0){
-                                this.initList();
-                            }
-                        })
+                                    this.initList();
+                                    dialogs('success','已退回！');
+                                }
+                            })
             },
             applyTrue(){
-                if(this.remarks=='')return;
+                if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
                     'remarks':this.remarks,
@@ -486,53 +589,17 @@
                 this.$http.post('./ reservecash/order/applypay',data)
                         .then( (response)=> {
                                 if(response.data.code==0){
-                                this.initList();
+                                    this.initList();
+                                    dialogs('success','已划付！');
                             }
                         })
             },
             checkingTrue(a){
                 console.log(a);
             },
-            getTwo(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             getTime(){
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD,endD;
-                switch (this.dateS){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                    default:
-                        newD=endD='';
-                        break;
-                }
-                this.checkForm.startDate=newD;
-                this.checkForm.endDate=endD;
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
             }
         },
         watch:{
@@ -552,16 +619,17 @@
             'datepicker': datepicker,
         },
         ready(){
+            (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;
+            (this.$route.params.payType==':payType')?this.checkForm.payType='1' :this.checkForm.payType=this.$route.params.payType;
             this.getTime();
             this.initList();
         }
     }
     // Collapse on click
-    $(document).on('click','.panel-heading .pull-right',function (e) {
+    $(document).on('click','.table .morebtn',function (e) {
         e.preventDefault();
-        var $categoryCollapse = $(this).closest('.panel-heading').nextAll();
-        $(this).find('.icons-list [data-action=collapse]').parents('.category-title').toggleClass('category-collapsed');
-        $(this).find('.icons-list [data-action=collapse]').toggleClass('rotate-180');
+        var $categoryCollapse = $(this).closest('tr').next();
+        $(this).find('i').toggleClass('glyphicon-minus');
         $categoryCollapse.slideToggle(150);
     });
 </script>

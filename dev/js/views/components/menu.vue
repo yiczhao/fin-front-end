@@ -7,10 +7,7 @@
                     <div class="media">
                         <!--<a href="#" class="media-left"><img src="" class="img-circle img-sm" alt=""></a>-->
                         <div class="media-body">
-                            <span class="media-heading text-semibold">财务管理系统</span>
-                            <div class="text-size-mini text-muted">
-                                <i class="icon-pin text-size-small">功能导航</i>
-                            </div>
+                            <span class="media-heading text-semibold">功能导航</span>
                         </div>
                     </div>
                 </div>
@@ -68,6 +65,16 @@
         </div>
     </div>
 </template>
+<style lang="sass" scoped>
+    .category-content{
+        padding: 0 20px;
+        .media-heading {
+            margin: 12px 0 5px 0;
+            display: block;
+            font-size: 16px;
+        }
+    }
+</style>
 <script>
     export default {
         data(){
@@ -96,6 +103,8 @@
                 this.menus[0].open = true
                 this.menus[0].sub_menu[router_type].open = true
             }
+            var availableHeight = $(window).height() - $('.page-container').offset().top -46;
+            $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
             // Main navigation
             $('.navigation-main').find('li').has('ul').children('a').on('click', function (e) {
                 e.preventDefault();

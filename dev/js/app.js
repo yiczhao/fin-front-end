@@ -3,10 +3,13 @@
  * @author cwxtDesigner
  */
 require('../sass/app.scss');
+require("./assets/js/plugins/notifications/sweet_alert.min.js");
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import validator from 'vue-validator'
+import config from  './config'
+import common from  './common'
 import store from './store.js'
 import filters from './filters'
 import directives from './directives'
@@ -15,6 +18,7 @@ import interceptor from './interceptor.js'
 // *** 公共组件
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
+import notify_instance from './views/components/notify'
 Vue.component('index', Index);
 Vue.component('page', page);
 // *** 引入filter
@@ -26,8 +30,6 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
-
-// console.log(validator);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,
@@ -35,23 +37,21 @@ let router = new VueRouter({
 	saveScrollPosition: true,
 	transitionOnLoad: true
 });
-
 let app = Vue.extend({});
 routers(router);
 router.start(app, "#app");
 
 Vue.set(app, '_userData', {});
 Vue.use(interceptor,router);
+// 配置
+config.mock(Vue,false)
+config.proxy(Vue,false)
+// config.mock(Vue,true)
+// config.proxy(Vue,true)
+window.check_upload=common.check_upload;
+window.dialogs=common.dialogs;
+window.init_date=common.init_date;
+Vue.filter('datetime',common.datetime);
+Vue.filter('geturl',common.geturl);
 Vue.config.debug = true;
-Vue.filter('datetime', function (value) {
-	var time = new Date(value);
-	var y = time.getFullYear();
-	var m = time.getMonth()+1;
-	var d = time.getDate();
-	var h = time.getHours();
-	var mm = time.getMinutes();
-	var s = time.getSeconds();
-	function add0(m){return m<10?'0'+m:m }
-	return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
-});
 

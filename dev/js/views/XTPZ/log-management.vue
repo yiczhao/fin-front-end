@@ -1,10 +1,8 @@
 <template>
     <index title="日志管理" ptitle="系统配置"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -35,8 +33,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-show="!!logList.length" class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                                <table class="table">
                                 <thead>
                                 <tr>
                                     <th>序号</th>
@@ -55,22 +54,29 @@
                                     <td>{{log.userName}}</td>
                                     <td>{{log.name}}</td>
                                     <td>{{log.subCompanyName}}</td>
-                                    <td>{{log.URL}}</td>
-                                    <td>{{log.description}}</td>
+                                    <td>{{log.website}}{{log.uri}}</td>
+                                    <td>
+                                        {{log.uri | geturl descriptions}}
+                                    </td>
                                     <td>{{log.createTime | datetime}}</td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>                     
+                                        <a data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+                            </div>
+                            <div class="datatable-footer">
+                                <page :all="pageall"
+                                      :cur.sync="pagecur"
+                                      :page_size.sync="page_size">
+                                </page>
+                            </div>
                         </div>
-                        <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
+                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            未查询到日志数据！
                         </div>
+                        
                         <div id="modal_logInfo" data-backdrop="static" class="modal fade" style="display: none;">
                             <div class="modal-dialog mg">
                                 <div class="modal-content">
@@ -82,34 +88,31 @@
                                         <div>
                                             <div><label>用户名：</label>{{log.userName}}</div>
                                             <div><label>姓名：</label>{{log.name}}</div>
-                                            <div><label>URL：</label>
-                                                <textarea class="textarea-w">{{log.URL}}</textarea>
+                                            <div><label style="position: relative;top: -25px;">URL：</label>
+                                                <textarea class="textarea-w">{{log.website}}{{log.uri}}</textarea>
                                             </div>
-                                            <div><label>描述：</label>
-                                                <textarea class="textarea-w">{{log.description}}</textarea>
+                                            <div><label style="position: relative;top: -25px;">描述：</label>
+                                                <textarea  v-if="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
                                             </div>
-                                            <div><label>详情：</label>
+                                            <div><label style="position: relative;top: -80px;">详情：</label>
                                                 <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
                                             </div>
-                                            <div><label>创建IP：</label>{{log.userName}}</div>
+                                            <div><label>创建IP：</label>{{log.createIp}}</div>
                                             <div><label>创建时间：</label>{{log.createTime | datetime}}</div>
                                         </div>
                                      </div>
                                 </div>
                             </div>
-                           
                         </div>
-                    </div>
-                </div>
             </div>
-        </section>
+        </div>
     </index>
 </template>
-<style>
+<style scoped>
     body{
         background-color:#fff;
     }
-    .box-tbl{
+    .datatable-scroll{
         overflow:auto;
     }
     .page-bar{
@@ -129,7 +132,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     
     export default{
         props:{
@@ -139,13 +141,27 @@
             return{
                 subCompanyID:"",
                 keywords:"",
-                timeRange:'',
+                timeRange:'1',
                 subcompanyList:[],
+                startDate:'',
+                endDate:'',
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 logList:[],
-                log:{}
+                log:{
+                    "userName":"",
+                    "name":"",
+                    "uri":"",
+                    "description":"",
+                    "logInfo":"",
+                    "createIP":"",
+                    "createTiome":"",
+                    "website":""
+                },
+                descriptions:[],
             }
         },
         methods:{
@@ -162,7 +178,7 @@
             },
             //获取分公司数据
             getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
+                 this.$http.get('./subCompany/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -170,70 +186,54 @@
                         console.log(response);
                     });
             },
-            getTwo:function(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
+            getdescription(){
+                this.$http.post('./log/description')
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('descriptions',response.data.data):null
+                        })
             },
-            showLog:function(id){
+            showLog(id){
                 this.$http.post('./log/info/'+id)
-                    .then(function (response) {
+                    .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
-                        },
-                         function (response) {
-                            console.log(response);
-                        });
+                        })
             },
             query: function () {
                 let data={
                         subCompanyID:this.subCompanyID,
                         keywords:this.keywords,
                         startDate:this.startDate,
-                        endDate:this.endDate
+                        endDate:this.endDate,
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize
                     };
                 this.getLogList(data);
             },
         },
         ready: function () {
+            this.startDate=init_date(this.timeRange)[0];
+            this.endDate=init_date(this.timeRange)[1];
+            this.getdescription();
             this.getLogList({});
             this.getSubcompany({});
         },
        watch:{
             timeRange:function(){
-                console.log();
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.timeRange){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.startDate=newD;
-                this.endDate=endD;
+                this.startDate=init_date(this.timeRange)[0];
+                this.endDate=init_date(this.timeRange)[1];
+            },
+             pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         }
     }
 </script>

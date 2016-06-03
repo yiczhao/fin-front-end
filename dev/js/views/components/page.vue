@@ -105,7 +105,7 @@
         data(){
             return {
                 islength:false,
-                jump_val:''
+                jump_val:this.cur
             }
         },
         computed: {
@@ -191,6 +191,9 @@
             }
         },
         watch: {
+            cur(){
+                this.jump_val=this.cur;
+            },
             page_size() {
                 this.cur = 1
             }

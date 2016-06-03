@@ -1,10 +1,8 @@
 <template>
     <index title="额度采购" ptitle="备付金支出"  isshow="isshow">
-        <section class="content" slot="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                        <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <br/>
                                 <div class="form-group">
@@ -21,7 +19,6 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="timeRange">
-                                        <option value="">请选择日期</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
                                         <option value="2">最近一个月</option>
@@ -33,22 +30,27 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
+                                <span>ID:</span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="id" placeholder="ID">
+                                </div>
                                 <br/>
                                 <br/>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
                                         <option value="">请选择状态</option>
-                                        <option value="1">已关闭</option>
+                                        <option value="0">已关闭</option>
                                         <option value="2">等待划付</option>
-                                        <option value="3">等待对账</option>
-                                        <option value="4">对账成功</option>
-                                        <option value="5">划付失败</option>
+                                        <option value="3">转账中</option>
+                                        <option value="4">等待对账</option>
+                                        <option value="5">对账成功</option>
+                                        <option value="6">划付失败</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -59,8 +61,9 @@
                                 </div>
                             </form> 
                         </div>
-                        <div v-show="!!limitPurchaseDetailList.length" class="box-body box-tbl">
-                            <table id="table1" class="table table-bordered table-hover">
+                        <div v-show="!!limitPurchaseDetailList.length" class="dataTables_wrapper no-footer">
+                            <div class="datatable-scroll">
+                                <table id="table1" class="table">
                                 <thead>
                                     <tr>
                                         <th>编号</th>
@@ -101,12 +104,15 @@
                                                 等待划付
                                             </template>
                                             <template v-if="lpd.status==3">
-                                                等待对账
+                                                转账中
                                             </template>
                                             <template v-if="lpd.status==4">
-                                                对账成功
+                                                等待对账
                                             </template>
                                             <template v-if="lpd.status==5">
+                                                对账成功
+                                            </template>
+                                            <template v-if="lpd.status==6">
                                                 对账失败
                                             </template>
                                         </td>
@@ -114,51 +120,47 @@
                                             <template v-if="lpd.payType==1">现金购买</template>
                                             <template v-if="lpd.payType==2">刷卡购买</template>
                                         </td>
-                                        <td><a :href="lpd.id">查看</a></td>
+                                        <td><a @click="gopayment(lpd.id,2)">查看</a></td>
                                         <td>{{lpd.remarks}}</td>
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
+                            <div class="datatable-footer">
+                                <page :all="pageall"
+                                      :cur.sync="pagecur"
+                                      :page_size.sync="page_size">
+                                </page>
+                            </div>
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                             未查询到额度采购数据！
                         </div>
-                        <div class="box-footer">
-                            <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
-                            </page>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </index>
 </template>
 <style>
-    .box-tbl{
+    .datatable-scroll{
         overflow:auto;
     }
     .page-bar{
         margin: 25px auto;
         text-align: center;
     }
-    th{
-        min-width: 85px;
-    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
+                id:'',
                 subCompanyID:"",
                 cityID:"",
                 createType:"",
                 status:"",
                 remarks:"",
-                timeRange:'',
+                timeRange:'1',
                 startDate:"",
                 endDate:"",
                 merchantID:"",
@@ -167,6 +169,8 @@
                 pageall:1,
                 pagecur:1,
                 page_size:15,
+                pageIndex:1,
+                pageSize:15,
                 subcompanyList:[],
                 cityList:[],
                 limitPurchaseDetailList:[]
@@ -175,7 +179,7 @@
         methods:{
             //获取补贴划付数据
              getlimitPurchaseDetailList:function(data){
-                this.$http.post('./limitPurchaseDetail/list',data)
+                this.$http.get('./limitPurchaseDetail/list?' + decodeURIComponent($.param(data)))
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('limitPurchaseDetailList', response.data.data) : null;
@@ -186,7 +190,7 @@
             },
              //获取分公司数据
             getSubcompany:function(data){
-                 this.$http.post('./subcompany/list',data)
+                 this.$http.get('./subCompany/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -196,7 +200,7 @@
             },
             //获取城市数据
             getCity:function(data){
-                 this.$http.post('./city/list',data)
+                 this.$http.get('./city/list')
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
@@ -204,16 +208,14 @@
                         console.log(response);
                     });
             },
-            getTwo:function(num){
-                if(num.toString().length>=2) return num;
-                var str="";
-                for(var i=num.toString().length;i<2;i++)
-                    str +="0";
-                return str + num.toString();
-            },
             query: function () {
                 // let data=this.data;
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date(this.timeRange)[0];
+                    this.endDate=init_date(this.timeRange)[1];
+                }
                 let data={
+                        id:this.id,
                         subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
                         startDate:this.startDate,
@@ -221,49 +223,47 @@
                         merchantOperationID:this.merchantID,
                         keywords:this.keywords,
                         status:this.status,
-                        remarks:this.remarks        
+                        remarks:this.remarks,
+                        pageIndex: this.pageIndex, 
+                        pageSize: this.pageSize        
                     };
                 this.getlimitPurchaseDetailList(data);
             },
+            gopayment(a,b){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                        }
+                    })
+            }
         },
         ready: function () {
-            this.getlimitPurchaseDetailList({});
+            (this.$route.params.id==':id')? this.id='' :this.id=this.$route.params.id;
+            this.query();
             this.getSubcompany({});
             this.getCity({});
         },
          watch:{
             timeRange:function(){
-                console.log();
-                var d=new Date()
-                var day=d.getDate()
-                var month=d.getMonth() + 1
-                var year=d.getFullYear()
-                var newD;
-                switch (this.timeRange){
-                    case '0':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-1);
-                        break;
-                    case '1':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day-7);
-                        break;
-                    case '2':
-                        newD=year + "-" + this.getTwo(month-1) + "-" + this.getTwo(day);
-                        break;
-                    case '3':
-                        newD=year + "-" + this.getTwo(month-3) + "-" + this.getTwo(day);
-                        break;
-                    case '4':
-                        newD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                        break;
-                }
-                var endD=year + "-" + this.getTwo(month) + "-" + this.getTwo(day);
-                this.startDate=newD;
-                this.endDate=endD;
+                this.startDate=init_date(this.timeRange)[0];
+                this.endDate=init_date(this.timeRange)[1];
+            },
+            pagecur(){
+                this.pageIndex=this.pagecur;
+                this.query();
+            },
+            page_size(){
+                this.pageSize=this.page_size;
+                this.query();
             }
        },
         components:{
-           'datepicker': datepicker,
-           'dialog': dialog,
+           'datepicker': datepicker
         }
     }
 </script>

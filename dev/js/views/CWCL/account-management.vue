@@ -3,7 +3,7 @@
            :ptitle="'财务处理'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content managenment" slot="content">
+        <div class="content" slot="content">
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <form class="form-inline manage-form">
@@ -34,7 +34,7 @@
             </div>
             <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
-                    <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                    <table id="table1" class="table ">
                         <thead>
                             <tr role="row">
                                 <th>分公司</th>
@@ -68,15 +68,15 @@
                             </td>
                             <td>{{trlist.startDate}}</td>
                             <td>
-                                <a v-link="{name:'provisions-info',params:{accountId:trlist.id}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                <a v-link="{name:'provisions-info',params:{accountId:trlist.accountNumber,certificate:0}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                             </td>
                             <td v-if="trlist.status==0">
-                                <span data-toggle="modal" data-target="#modal_add"  @click="rewrite(trlist)">编辑</span>
+                                <span @click="rewrite(trlist)">编辑</span>
                                 <span data-toggle="modal" data-target="#modal_waring" @click="start(trlist.id)">启用</span>
                                 <span data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id)">删除</span>
                             </td>
                             <td v-else>
-                                <span data-toggle="modal" data-target="#modal_fzr" chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
+                                <span chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
                             </td>
                         </tr>
                     </tbody>
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                未找到您要查询的账户
+                未找到数据
             </div>
         </div>
             <validator name="vali2">
@@ -158,31 +158,31 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label><i>*</i>分公司</label>
-                                        <select class="form-control" v-model="relist.companyId" id="val1" v-validate:val1="['required']">
+                                        <select class="form-control" v-model="relist.companyId" v-validate:val1="['required']">
                                             <option value="">请选择分公司</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
-                                        <span v-if="$vali.val1.required && $vali.val1.dirty" class="validation-error-label">请选择分公司</span>
+                                        <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>简称</label>
-                                        <input type="text" class="form-control" id="val2" v-validate:val2="['required']" v-model="relist.shortName" :value.sync="relist.shortName" maxlength="15" placeholder="15字以内">
-                                        <span v-if="$vali.val2.required && $vali.val2.dirty" class="validation-error-label">请输入简称</span>
+                                        <input type="text" class="form-control" v-validate:val2="['required']" v-model="relist.shortName" value="relist.shortName" maxlength="15" placeholder="15字以内">
+                                        <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入简称</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账户名</label>
-                                        <input type="text" class="form-control" id="val3" v-validate:val3="['required']"  :value.sync="relist.accountName" v-model="relist.accountName">
-                                        <span v-if="$vali.val3.required && $vali.val3.dirty" class="validation-error-label">请输入账户名</span>
+                                        <input type="text" class="form-control" v-validate:val3="['required']" value="relist.accountName" v-model="relist.accountName">
+                                        <span v-if="$vali.val3.required && fire1" class="validation-error-label">请输入账户名</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
-                                        <input type="text" class="form-control" id="val4" v-validate:val4="['required']"  :value.sync="relist.accountNumber" v-model="relist.accountNumber">
-                                        <span v-if="$vali.val4.required && $vali.val4.dirty" class="validation-error-label">请输入账号</span>
+                                        <input type="text" class="form-control" v-validate:val4="['required']"  value="relist.accountNumber" v-model="relist.accountNumber">
+                                        <span v-if="$vali.val4.required && fire1" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>开户行</label>
-                                        <input type="text" class="form-control" id="val5" v-validate:val5="['required']" :value.sync="relist.bankName" v-model="relist.bankName">
-                                        <span v-if="$vali.val5.required && $vali.val5.dirty" class="validation-error-label">请输入开户行</span>
+                                        <input type="text" class="form-control" v-validate:val5="['required']" value="relist.bankName" v-model="relist.bankName">
+                                        <span v-if="$vali.val5.required && fire1" class="validation-error-label">请输入开户行</span>
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>起始日期</label>
@@ -191,20 +191,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>类型</label>
-                                        <select class="form-control"  id="val7" v-validate:val7="['required']" v-model="relist.accountType">
+                                        <select class="form-control" v-validate:val7="['required']" v-model="relist.accountType">
                                             <option value="">请选择类型</option>
                                             <option value="1">备付金</option>
                                             <option value="2">本金</option>
                                             <option value="3">佣金</option>
                                         </select>
-                                        <span v-if="$vali.val7.required && $vali.val7.dirty" class="validation-error-label">请选择类型</span>
+                                        <span v-if="$vali.val7.required && fire1" class="validation-error-label">请选择类型</span>
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                         <button type="button" @click="addBtn" class="btn btn-primary">保存</button>
                                     </div>
                                     <div class="form-group">
-                                        <span v-show="$vali.valid" class="suberror validation-error-label">你的信息未填写完整</span>
+                                        <span v-show="saveerror!=''" class="validation-error-label" v-text="saveerror"></span>
                                     </div>
                                 </div>
                             </div>
@@ -215,52 +215,51 @@
         </div>
     </index>
 </template>
-<style>
-    .managenment .validation-error-label{
+<style lang="sass" scoped>
+     .validation-error-label{
         margin-left: 20%;
     }
-    .managenment .timeerror,.suberror,.suberror1{
+     .timeerror,.suberror,.suberror1{
         display: none;
     }
-    .managenment .suberror,.suberror1{
+     .suberror,.suberror1{
         padding-top: 3px;
     }
-    .managenment  .form-group{
+      .form-group{
         text-align: left;
     }
-    .managenment  .form-group.tc{
+      .form-group.tc{
         text-align: center;
     }
-    .managenment .modal-body .form-control{
+     .modal-body .form-control{
         text-align: left;
         width:67%;
         display: inline-block;
     }
-    .managenment .modal-body label{
+     .modal-body label{
         width:20%;
         display: inline-block;
     }
-    .managenment .modal-body label i{
+     .modal-body label i{
         color:red;
     }
-    .managenment  .modal-body .waring{
+      .modal-body .waring{
         color: red;
         margin-left: 5px;
     }
-    .managenment  .modal-body button{
+      .modal-body button{
         width:35%;
     }
-    .managenment td span{
+     td span{
         cursor: pointer;
         color: #3c8dbc;
     }
-    .managenment td span:hover{
+     td span:hover{
         opacity: 80;
     }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import dialog from '../components/dialog.vue'
     export default{
         data(){
             return{
@@ -282,12 +281,14 @@
                 addtitle:'',
                 waring:'',
                 fire:false,
+                fire1:false,
                 person:{
                     name:'',
                     phone:'',
                     email:''
                 },
                 accountId:'',
+                saveerror:'',
             }
         },
         methods:{
@@ -298,6 +299,7 @@
             // *** 请求账户列表数据
             errorHide(){
                 $('.suberror,.timeerror').hide();
+                this.saveerror='';
             },
             getZlists(data){
                     this.$http.post('./bankaccount/list',data)
@@ -311,7 +313,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.post('./subcompany/list',{})
+                this.$http.get('./subCompany/list')
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -324,6 +326,7 @@
             },
             addUser(){
                 this.errorHide();
+                this.fire1=false;
                 this.relist={
                     startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
                 },
@@ -336,9 +339,11 @@
             },
             rewrite(_list){
                 this.errorHide();
+                this.fire1=false;
                 this.accountId=_list.id;
                 $.extend(true, this.relist, _list);
                 this.addtitle = '编辑账户';
+                $('#modal_add').modal('show');
             },
             start(a){
                 this.waring = '你确认启用该账户？';
@@ -352,7 +357,7 @@
                 this.errorHide();
                 this.fire=false;
                 this.accountId=b;
-                this.$http.post('./chargeperson/query/'+a)
+                this.$http.get('./chargePerson/query/'+a)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
                             var newperson={
@@ -365,6 +370,7 @@
                             }else{
                                 this.$set('person',newperson)
                             }
+                            $('#modal_fzr').modal('show');
                         }, function (response) {})
             },
             personTrue(a){
@@ -376,9 +382,10 @@
                     "phone": this.person.phone,
                     "email": this.person.email,
                 }
-                this.$http.post('./chargeperson/save',data)
+                this.$http.post('./chargePerson/save',data)
                         .then(function (response) {
                             this.initList();
+                            dialogs();
                         }, function (response) {
                             console.log(response);
                         })
@@ -389,6 +396,7 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则启用该数据
                             this.initList();
+                            dialogs('success','已启用！');
                         }, function (response) {
                             console.log(response);
                         })
@@ -399,13 +407,14 @@
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则删除该条数据
                             this.initList();
+                            dialogs('success','已删除！');
                         }, function (response) {
                             console.log(response);
                         })
             },
             addBtn(){
                 this.errorHide();
-                if(!this.$vali.valid){$('.suberror').show();return;}
+                if(!this.$vali.valid){this.fire1=true;return;}
                 if(this.relist.startDate==''){$('.timeerror').show();return;}
                 // *** 新增修改保存
                 let data={
@@ -420,7 +429,13 @@
                 };
                 this.$http.post('./bankaccount/save',data)
                         .then(function (response) {
-                            this.initList();
+                            if(response.data.code==-1){
+                                this.$set('saveerror', response.data.message)
+                            }
+                            else{
+                                this.initList();
+                                dialogs();
+                            }
                         }, function (response) {
                             console.log(response);
                         })
@@ -437,8 +452,7 @@
             })
         },
         components:{
-            'datepicker': datepicker,
-            'dialog': dialog,
+            'datepicker': datepicker
         },
         watch:{
             pagecur(){
