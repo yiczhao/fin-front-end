@@ -11,7 +11,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         getcompany () {
-            return _this.$http.post(_this.$API.subcompany)
+            return _this.$http.get(_this.$API.subcompany)
         },
         /**
          * @description 查询城市列表数据
@@ -19,7 +19,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         getcity () {
-            return _this.$http.post(_this.$API.city)
+            return _this.$http.get(_this.$API.city)
         },
         /**
          * @description 上传数据
@@ -27,7 +27,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         upload (data) {
-            return _this.$http.post(_this.$API.upload,data)
+            return _this.$http.post(_this.$API.upload, data)
         },
         /**
          * @description 查看当前订单号及付款方式
@@ -35,7 +35,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         skipToOrder(data){
-            return _this.$http.post(_this.$API.skipToOrder,data)
+            return _this.$http.post(_this.$API.skipToOrder, data)
         },
         /**
          * @description 获取商户数据
@@ -43,7 +43,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         getmerchant_list(data){
-            return _this.$http.post(_this.$API.getmerchant_list,data)
+            return _this.$http.get(_this.$API.getmerchant_list + decodeURIComponent($.param(data)))
         },
 
     }

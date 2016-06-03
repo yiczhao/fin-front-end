@@ -179,7 +179,7 @@
                                 <div  v-if="relist!=''" class="mt35">
                                     <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
                                     <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
-                                    <table v-if="index!=0&&relist.length>1" class="table dataTable">
+                                    <table v-if="index!=0&&relist.length>0" class="table dataTable">
                                         <thead>
                                         <tr role="row">
                                             <th>ID</th>

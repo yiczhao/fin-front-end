@@ -22,7 +22,7 @@ function model(_this) {
             //     }],
             //     total: 25
             // }
-            return _this.$http.post(_this.$API.limitPurchaseAccount,data)
+            return _this.$http.get(_this.$API.limitPurchaseAccount + decodeURIComponent($.param(data)))
         },
         limitPurchase_selectRechargeInfoByID (data) {
 
@@ -46,8 +46,8 @@ function model(_this) {
             return _this.$http.post(_this.$API.limitPurchase_selectRechargeInfoByID,data)
         },
         recharge (data) {
-            return _this.$http.post(_this.$API.recharge,data)
-        }
+            return _this.$http.get(_this.$API.recharge + decodeURIComponent($.param(data)))
+        },
     }
 
 }

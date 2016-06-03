@@ -402,7 +402,6 @@
                                 this.query();
                             }
                         });
-                //关闭弹出层
                 $(".modal").modal("hide");
             },
             submit:function(){
@@ -424,7 +423,7 @@
                this.model.subsidy_applyPay(data).then((response)=>{
                         if (response.data.code==0)
                         {
-                            dialogs();
+                            dialogs('success','申请成功！');
                             this.query();
                         }
                     });

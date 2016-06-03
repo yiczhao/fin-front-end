@@ -236,6 +236,7 @@
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/XTPZ/log_model'
     import common_model from '../../ajax/components/model'
+
     export default{
         data(){
             this.model =model(this)
@@ -332,10 +333,6 @@
             clearUl(){
                 $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
                 $('.addbottom .col-md-4').children('ul').html('');
-                this.userdata={
-                    subCompanyID:'',
-                            keyWord:''
-                }
             },
             queryUser(){
                 if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;

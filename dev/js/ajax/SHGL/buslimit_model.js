@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         limitPurchaseMerchant_lists(data){
-            return _this.$http.post(_this.$API.limitPurchaseMerchant_lists,data)
+            return _this.$http.get(_this.$API.limitPurchaseMerchant_lists+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 编辑额度采购查询
@@ -19,7 +19,7 @@ function model(_this){
          * @returns {*}
          * */
         limitPurchaseMerchant_history(_id){
-            return _this.$http.post(_this.$API.limitPurchaseMerchant_history+_id)
+            return _this.$http.get(_this.$API.limitPurchaseMerchant_history+_id)
         },
         /**
          * @description 编辑额度采购保存

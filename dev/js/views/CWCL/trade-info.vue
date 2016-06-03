@@ -131,10 +131,12 @@
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <a @click="errorDialog('本交易暂未生成补贴退税流水')" v-else>{{trlist.suspensionTax/100 | currency ''}}</a>
                                 </td>
                                 <td>
-                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    <a @click="errorDialog('本交易暂未生成补贴划付流水')" v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -535,6 +537,9 @@
                             })
                 }
             },
+            errorDialog(msg){
+                dialogs('error',msg);
+            }
         },
         ready: function () {
             this.clear();

@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         merchant_lists(data){
-            return _this.$http.post(_this.$API.merchant_lists,data)
+            return _this.$http.get(_this.$API.merchant_lists+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 查询划款账户数据
@@ -19,7 +19,7 @@ function model(_this){
          * @returns {*}
          * */
         merchant_account(data){
-            return _this.$http.post(_this.$API.merchant_account,data)
+            return _this.$http.get(_this.$API.merchant_account+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 编辑划款账户数据

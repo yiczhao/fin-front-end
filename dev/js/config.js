@@ -42,7 +42,7 @@ var proxy = (Vue,isproxy)=>{
          * 代理 数据
          */
         Vue.http.options.root = '.'
-        Vue.http.headers.common['DOMAIN'] = 'http://172.16.10.188:8080'
+        Vue.http.headers.common['DOMAIN'] = 'http://fin.qa.kashuo.net/v1/finance'
         // Vue.http.headers.common['DOMAIN'] = 'http://wxhb.kashuo.com/zdcrm-ws-1.0'
         // document.cookie='user=%7b%22uid%22%3a%22TmVTP54HnGY%3d%22%2c%22sid%22%3a%221hmipoAnlhg%3d%22%2c%22mid%22%3a%22eymfLeTkMnn5G5LDBwWA%2fBvIE3Le0OQz%22%2c%22name%22%3a%22%e8%b0%8c%e4%ba%91%e5%b3%b0%22%2c%22phone%22%3a%2213166430721%22%2c%22mname%22%3a%22%e4%b8%87%e8%be%be%e5%95%86%e6%88%b7%22%2c%22uidm%22%3a%22E4DA3B7FBBCE2345D7772B0674A318D5%22%7d; IMPOWER_INFO={"mid":"1607402179315712","appid":"wx28def492d7e39cbc","openid":"6807633251404492"}'
         // document.cookie='user='+encodeURIComponent(JSON.stringify({"uid":"TmVTP54HnGY=","sid":"1hmipoAnlhg=","mid":"m002","name":"谌云峰","phone":"13166430721","mname":"海底捞","uidm":"E4DA3B7FBBCE2345D7772B0674A318D5"}))

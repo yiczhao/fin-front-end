@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         limit_list(data){
-            return _this.$http.post(_this.$API.limit_list,data)
+            return _this.$http.get(_this.$API.limit_list+ decodeURIComponent($.param(data)))
         }
     }
 }

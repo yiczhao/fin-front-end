@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         tradedetail (data) {
-            return _this.$http.post(_this.$API.tradedetail, data)
+            return _this.$http.get(_this.$API.tradedetail + decodeURIComponent($.param(data)))
         },
         /**
          * @description 添加交易
@@ -27,7 +27,7 @@ function model(_this) {
          * @returns {*}
          */
         tradedetailsum(data){
-            return _this.$http.post(_this.$API.tradedetailsum,data);
+            return _this.$http.get(_this.$API.tradedetailsum+ decodeURIComponent($.param(data)));
         }
     }
 }

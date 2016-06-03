@@ -151,8 +151,11 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+<<<<<<< HEAD
     import model from '../../ajax/BFJZC/limit_model'
     import common_model from '../../ajax/components/model'
+=======
+>>>>>>> release/Version_1.1
     export default{
         data(){
             this.model=model(this);
@@ -185,7 +188,6 @@
              getlimitPurchaseDetailList:function(data){
                 this.model.limit_list(data)
                     .then((response)=>{
-                        // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('limitPurchaseDetailList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                     });

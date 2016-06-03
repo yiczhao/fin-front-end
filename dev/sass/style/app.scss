@@ -19,12 +19,15 @@ input[type="number"]{-moz-appearance:textfield;}
   .datatable-scroll{
     overflow: auto;
   }
-  .form-group{
-    margin: 5px 10px 5px 0;
-  }
   .v-link-active{
     font-weight: bold;
     color: #fff;
+  }
+  .breadcrumb{
+    .v-link-active{
+      font-weight:normal;
+      color: #333333;
+    }
   }
 }
 /**

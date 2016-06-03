@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         prepayment_lists(data){
-            return _this.$http.post(_this.$API.prepayment_lists,data)
+            return _this.$http.get(_this.$API.prepayment_lists+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 获取预付充值数据
@@ -19,7 +19,7 @@ function model(_this){
          * @returns {*}
          * */
         advancePaymentMerchant(data){
-            return _this.$http.post(_this.$API.advancePaymentMerchant,data)
+            return _this.$http.get(_this.$API.advancePaymentMerchant+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 预付申请付款

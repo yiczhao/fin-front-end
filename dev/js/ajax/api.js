@@ -7,7 +7,7 @@ export default function install(Vue) {
      * @author 洪钢
      * @method POST
      */
-    _o.subcompany = './subcompany/list';
+    _o.subcompany = './subCompany/list';
     /**
      * @description 获取分公司接口地址
      * @author 洪钢
@@ -31,7 +31,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.getmerchant_list ='./merchant/list';
+    _o.getmerchant_list ='./merchant/list?';
 
 
     //- todo 登陆 login
@@ -54,13 +54,13 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.queryperson = './chargeperson/query/';
+    _o.queryperson = './chargePerson/query/';
     /**
      * @description 修改负责人接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.saveperson = './chargeperson/save';
+    _o.saveperson = './chargePerson/save';
     /**
      * @description 启用账户接口地址
      * @author 冷艳君
@@ -118,19 +118,19 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.tradedetail = './tradedetail/list';
+    _o.tradedetail = './tradeDetail/list?';
     /**
      * @description 添加交易接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.addtrade = './tradedetail/add';
+    _o.addtrade = './tradeDetail/add';
     /**
      * @description 合计接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.tradedetailsum = './tradedetail/sum';
+    _o.tradedetailsum = './tradeDetail/sum?';
 
     //- todo  备付金支出-付款明细 payment-details
     /**
@@ -200,7 +200,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.advance_list = './advancePaymentDetail/list';
+    _o.advance_list = './advancePaymentDetail/list?';
 
     //- todo  备付金支出-额度采购 limit-purchase-detail
     /**
@@ -208,7 +208,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.limit_list = './limitPurchaseDetail/list';
+    _o.limit_list = './limitPurchaseDetail/list?';
 
     //- todo  备付金支出-补贴划付 subsidy-appropriation
     /**
@@ -320,13 +320,13 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.merchant_lists = './merchant/pages';
+    _o.merchant_lists = './merchant/pages?';
     /**
      * @description 划款账户接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.merchant_account = './merchant/account';
+    _o.merchant_account = './merchant/account?';
     /**
      * @description 编辑划款账户接口地址
      * @author 冷艳君
@@ -340,7 +340,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.limitPurchaseMerchant_lists = './limitPurchaseMerchant/list';
+    _o.limitPurchaseMerchant_lists = './limitPurchaseMerchant/list?';
     /**
      * @description 额度采购编辑查询接口地址
      * @author 冷艳君
@@ -384,25 +384,25 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.prepayment_lists = './advancePaymentMerchant/list';
+    _o.prepayment_lists = './advancePaymentMerchant/list?';
     /**
      * @description 获取预付充值数据接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.advancePaymentMerchant = './ advancePaymentMerchant/selectRechargeInfoByID';
+    _o.advancePaymentMerchant = './advancePaymentMerchant/chargeInfo?';
     /**
      * @description 预付申请付款接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.applyAdvancePay = './advancePaymentMerchant/applyAdvancePay';
+    _o.applyAdvancePay = './advancePaymentMerchant/applyPayment';
     /**
      * @description 预付添加商户接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.insertBatch = './advancePaymentMerchant/insertBatch';
+    _o.insertBatch = './advancePaymentMerchant/create';
 
     //- todo  商户管理-额度采购-账户列表 prepayment-lists
     /**
@@ -410,7 +410,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.limitPurchaseAccount = './limitPurchaseAccount/list';
+    _o.limitPurchaseAccount = './limitPurchaseAccount/list?';
     /**
      * @description 充值接口地址
      * @author 冷艳君
@@ -422,7 +422,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.recharge = './limitPurchaseAccount/recharge';
+    _o.recharge = './limitPurchaseAccount/chargeInfo?';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

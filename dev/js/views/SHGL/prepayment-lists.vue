@@ -118,7 +118,6 @@
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                              </div>
                              <div class="modal-body">
-                                 <div class="panel-heading">
                                      <form class="form-inline manage-form">
                                         <div class="form-group"> 
                                             <input type="text" class="form-control" v-model="merchantInfo.merchantOperationID" placeholder="商户ID">
@@ -142,12 +141,11 @@
                                             <input type="button" class="btn btn-info" @click="queryForMerchantList" value="查询">
                                         </div>
                                      </form>
-                                 </div>
 
                                 <div class="dataTables_wrapper no-footer addbottom">
                                     <div style="text-indent: 68%">已选择：</div>
                                     <div class="col-md-7" style="height:300px;overflow: auto;border: 1px solid #ccc;">
-                                        <table v-if="merchantList.length>0" id="table1" class="table datatable-selection-single dataTable no-footer">
+                                        <table v-if="merchantList.length>0" class="table datatable-selection-single dataTable no-footer">
                                                 <thead>
                                                     <tr role="row">
                                                         <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
@@ -195,7 +193,6 @@
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                              </div>
                              <div class="modal-body">
-                                 <div class="panel-heading">
                                     <div class="form-group"> 
                                         <label>商户名：</label>{{applyAdvancePay.merchantName}}
                                     </div>
@@ -223,7 +220,6 @@
                                                <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
                                            </div>
                                     </div>
-                                 </div>
                              <div class="modal-foot btns">
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                 <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款</button>
@@ -364,7 +360,7 @@
             getRechargeInfo:function(prepaymentId){
                 let data={
                     id:prepaymentId
-                }                 
+                }
                 this.model.advancePaymentMerchant(data)
                     .then(function (response) {
                         if(response.data.code==0){
@@ -402,6 +398,7 @@
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
+                        $("#modal_prepayment_info").modal('show');
                     }, function (response) {
                         console.log(response);
                     });
@@ -440,8 +437,6 @@
                 this.merchantInfo.merchantOperationID="",
                 this.merchantInfo.merchantName="",
                 this.queryForMerchantList();
-
-                $("#modal_prepayment_info").modal('show');
             },
             queryForMerchantList:function(){
                 //设置全选属性
@@ -486,6 +481,7 @@
                 for(let i=0;i<this.addId.length;i++){
                     this.appendLi(this.addId[i]);
                 }
+                $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
                 this.addId=[];
             },
             delTrue:function(e){
