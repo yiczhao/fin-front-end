@@ -390,7 +390,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.advancePaymentMerchant = './advancePaymentMerchant/chargeInfo';
+    _o.advancePaymentMerchant = './advancePaymentMerchant/chargeInfo/';
     /**
      * @description 预付申请付款接口地址
      * @author 冷艳君
