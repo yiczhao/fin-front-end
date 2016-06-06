@@ -34,7 +34,7 @@
             </div>
             <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
-                    <table id="table1" class="table ">
+                    <table class="table">
                         <thead>
                             <tr role="row">
                                 <th>分公司</th>

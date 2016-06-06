@@ -18,8 +18,8 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        advancePaymentMerchant(data){
-            return _this.$http.get(_this.$API.advancePaymentMerchant+ decodeURIComponent($.param(data)))
+        advancePaymentMerchant(_id){
+            return _this.$http.get(_this.$API.advancePaymentMerchant+_id)
         },
         /**
          * @description 预付申请付款
@@ -37,7 +37,22 @@ function model(_this){
         insertBatch(data){
             return _this.$http.post(_this.$API.insertBatch,data)
         },
-
+        /**
+         * @description 预付停用启用
+         * @params {data}
+         * @returns {*}
+         * */
+        status(data){
+            return _this.$http.post(_this.$API.advancePaymentMerchant_status,data)
+        },
+        /**
+         * @description 预付合计
+         * @params {data}
+         * @returns {*}
+         * */
+        total(data){
+            return _this.$http.get(_this.$API.advancePaymentMerchant_total+ decodeURIComponent($.param(data)))
+        },
     }
 }
 module.exports=model;

@@ -66,7 +66,7 @@
                                 <td>{{prepayment.merchantName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
                                 <td>{{prepayment.cityName}}</td>
-                                <td>{{prepayment.balanceAmount}}</td>
+                                <td>{{prepayment.balanceAmount/100 | currency ''}}</td>
                                 <td>
                                      <template v-if="prepayment.status==0" >
                                         <span style="color:rgb(255,​ 0,​ 0);">停用</span>
@@ -76,7 +76,11 @@
                                      </template>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)">预付</a>
+                                    <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)" v-if="prepayment.status==1">预付</a>
+                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id}}" v-if="prepayment.status==1">门店</a>
+                                    <a v-link="">明细</a>
+                                    <a  data-toggle="modal" data-target="#modal_waring" @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
+                                    <a  data-toggle="modal" data-target="#modal_waring" @click="show_waring(prepayment.id,1)" v-if="prepayment.status==1">停用</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>
                                 <td>{{prepayment.connectionPerson}}</td>
@@ -89,7 +93,7 @@
                             <th></th>
                             <th><h5><b>合计</b></h5></th>
                             <th></th>
-                            <th><B>{{count_balanceAmount}}</B></th>
+                            <th><B>{{total | currency ''}}</B></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -184,6 +188,23 @@
                     </div>
                 </div>
 
+                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 v-if="isEnable==0" class="modal-title">你确定启用该账户？</h5>
+                                <h5 v-if="isEnable==1" class="modal-title">你确定停用该账户？</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group tc">
+                                    <button type="button" @click="change_status" class="btn btn-primary">确认</button>
+                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-mg">
@@ -223,13 +244,7 @@
                              <div class="modal-foot btns">
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                 <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款</button>
-                                <br/>
                              </div>
-
-
-
-
-                               
                             </div>
                         </div>
                     </div>
@@ -239,7 +254,7 @@
         </div>
     </index>
 </template>
-<style lang="sass">
+<style lang="sass" scoped>
     .prepayment-modal-btns{
        text-align: center;
     }
@@ -342,11 +357,18 @@
                 },
                 entity:{},
                 count_balanceAmount:0,
+                isEnable:0,
+                _id:'',
+                total:[],
             }
         },
         methods:{
             //获取预付款商户数据
              getPrepaymentList:function(data){
+                 this.model.total(data)
+                         .then((res)=>{
+                    (res.data.code==0) ? this.$set('total',res.data.data): null;
+                 })
                 this.model.prepayment_lists(data)
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -358,10 +380,7 @@
             },
             //获取预付充值数据
             getRechargeInfo:function(prepaymentId){
-                let data={
-                    id:prepaymentId
-                }
-                this.model.advancePaymentMerchant(data)
+                this.model.advancePaymentMerchant(prepaymentId)
                     .then(function (response) {
                         if(response.data.code==0){
                             this.$set('entity', response.data.data);
@@ -415,7 +434,7 @@
             },
             //获取城市数据
             getCity:function(){
-                 this.common_modal.getcity()
+                 this.common_model.getcity()
                     .then(function (response) {
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
@@ -512,7 +531,7 @@
                     $(".modal").modal("hide");
             },
             query: function () {
-                // let data=this.data;
+                $('.modal').modal('hide');
                 let data={
                         subCompanyID:this.subCompanyID,
                         cityID:this.cityID,
@@ -524,11 +543,25 @@
                     };
                 this.getPrepaymentList(data);
             },
+            show_waring(_id,status){
+                this._id=_id;
+                this.isEnable=status;
+            },
+            change_status(){
+                let data={
+                    'id':this._id,
+                    'status':this.isEnable
+                }
+                this.model.status(data)
+                        .then((res)=>{
+                            (res.data.code==0)?this.query():null;
+                        })
+            }
         },
         ready: function () {
-            this.getPrepaymentList({});
-            this.getSubcompany({});
-            this.getCity({});
+            this.query();
+            this.getSubcompany();
+            this.getCity();
              $(document).on('click','.addbottom .col-md-4 ul li',function(){
                 $(this).toggleClass('check-li');
             });
@@ -537,12 +570,6 @@
             'datepicker': datepicker
         },
         watch:{
-            prepaymentList(){
-                var _this=this;
-                this.prepaymentList.forEach(function(e){
-                    _this.count_balanceAmount+=e.balanceAmount;
-                });
-            },
             pagecur(){
                 this.pageIndex=this.pagecur;
                 this.query();

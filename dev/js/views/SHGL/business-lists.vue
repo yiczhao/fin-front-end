@@ -393,6 +393,7 @@
                     "pageSize": 15
                 },
                 city:[],
+                companylists:[],
                 zdlists:[],
                 controllist:{},
                 relist:[
@@ -409,7 +410,6 @@
                         "remarks": ""
                     }
                 ],
-                companylists:[],
                 typelists:[],
                 params:{},
                 accountId:'',

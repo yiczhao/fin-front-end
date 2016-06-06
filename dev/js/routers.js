@@ -9,6 +9,13 @@ export default function(router){
                 require(['./views/login.vue'],resolve);
             }
         },
+        /* 首页 */
+        '/default/':{
+            name:'default',
+            component: function(resolve){
+                require(['./views/default.vue'],resolve);
+            }
+        },
         //账户列表
         '/account-management':{
             name:'account-management',
@@ -30,60 +37,39 @@ export default function(router){
                 require(['./views/CWCL/trade-info.vue'],resolve);
             }
         },
-        //额度采购
-        '/limit-purchase-detail/:id':{
-            name:'limit-purchase-detail',
-            component: function(resolve){
-                require(['./views/BFJZC/limit-purchase-detail.vue'],resolve);
-            }
-        },
-        //预付款划付
-        '/advance-payment-detail/:advanceId':{
-            name:'advance-payment-detail',
-            component: function(resolve){
-                require(['./views/BFJZC/advance-payment-detail.vue'],resolve);
-            }
-        },
-        //补贴划付
-        '/subsidy-appropriation/:subsidyPayID':{
-            name:'subsidy-appropriation',
-            component: function(resolve){
-                require(['./views/BFJZC/subsidy-appropriation.vue'],resolve);
-            }
-        },
-        //补贴退税
-        '/subsidy-tax-rebate/:subsidyTaxRebateID':{
-            name:'subsidy-tax-rebate',
-            component: function(resolve){
-                require(['./views/BFJZC/subsidy-tax-rebate.vue'],resolve);
-            }
-        },
-        //备付金支出交易明细
+        //备付金支出-付款明细
         '/payment-details/:reserveCashOrderNumber/:payType':{
             name:'payment-details',
             component: function(resolve){
                 require(['./views/BFJZC/payment-details.vue'],resolve);
             }
         },
-        /* 首页 */
-        '/default/':{
-            name:'default',
+        //备付金支出-额度采购
+        '/limit-purchase-detail/:id':{
+            name:'limit-purchase-detail',
             component: function(resolve){
-                require(['./views/default.vue'],resolve);
+                require(['./views/BFJZC/limit-purchase-detail.vue'],resolve);
             }
         },
-        /* 员工管理 */
-        '/user-managerment/':{
-            name:'user-managerment',
+        //备付金支出-预付款划付
+        '/advance-payment-detail/:advanceId':{
+            name:'advance-payment-detail',
             component: function(resolve){
-                require(['./views/XTPZ/user-managerment.vue'],resolve);
+                require(['./views/BFJZC/advance-payment-detail.vue'],resolve);
             }
         },
-        /* 日志管理 */
-        '/log-management/':{
-            name:'log-management',
+        //备付金支出-补贴划付
+        '/subsidy-appropriation/:subsidyPayID':{
+            name:'subsidy-appropriation',
             component: function(resolve){
-                require(['./views/XTPZ/log-management.vue'],resolve);
+                require(['./views/BFJZC/subsidy-appropriation.vue'],resolve);
+            }
+        },
+        //备付金支出-补贴退税
+        '/subsidy-tax-rebate/:subsidyTaxRebateID':{
+            name:'subsidy-tax-rebate',
+            component: function(resolve){
+                require(['./views/BFJZC/subsidy-tax-rebate.vue'],resolve);
             }
         },
         /* 商户管理-商户列表 */
@@ -119,6 +105,27 @@ export default function(router){
             name:'prepayment-lists',
             component: function(resolve){
                 require(['./views/SHGL/prepayment-lists.vue'],resolve);
+            }
+        },
+        /* 商户管理-预付款门店管理 */
+        '/prepayment-store/:id':{
+            name:'prepayment-store',
+            component: function(resolve){
+                require(['./views/SHGL/prepayment-store.vue'],resolve);
+            }
+        },
+        /* 系统配置-员工管理 */
+        '/user-managerment/':{
+            name:'user-managerment',
+            component: function(resolve){
+                require(['./views/XTPZ/user-managerment.vue'],resolve);
+            }
+        },
+        /* 系统配置-日志管理 */
+        '/log-management/':{
+            name:'log-management',
+            component: function(resolve){
+                require(['./views/XTPZ/log-management.vue'],resolve);
             }
         },
         // 转到登录页
