@@ -1,0 +1,382 @@
+<template>
+    <index :title="'预付款账户明细'"
+           :ptitle="'商户管理'"
+           :hname="'business-lists'"
+           :isshow="'isshow'">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <form class="form-inline manage-form">
+                        <div class="m20">
+                            <div class="form-group">
+                                <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" value="预付充值">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" v-model="dateS">
+                                    <option value="0">昨天</option>
+                                    <option value="1">最近一周</option>
+                                    <option value="2">最近一个月</option>
+                                    <option value="3">最近三个月</option>
+                                    <option value="4">自定义时间</option>
+                                </select>
+                            </div>
+                            <div class="form-group" v-show="dateS==4">
+                                <datepicker  :readonly="true" :value.sync="defaultData.startDate" format="YYYY-MM-DD"></datepicker>至
+                                <datepicker  :readonly="true" :value.sync="defaultData.endDate" format="YYYY-MM-DD"></datepicker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="defaultData.purpose">
+                                <option value="">请选择类型</option>
+                                <option value="1">补贴划付</option>
+                                <option value="3">补贴退税</option>
+                                <option value="4">预付充值</option>
+                                <option value="6">退款冲抵</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="defaultData.payType">
+                                <option value="">请选择付款方式</option>
+                                <option value="1">现金转账</option>
+                                <option value="2">账户抵扣</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="defaultData.status">
+                                <option value="">请选择状态</option>
+                                <option value="0">已关闭</option>
+                                <option value="2">等待划付</option>
+                                <option value="3">转账中</option>
+                                <option value="4">等待对账</option>
+                                <option value="5">对账成功</option>
+                                <option value="6">划付失败</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                        </div>
+                    </form>
+                </div>
+                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                    <div class="datatable-header">
+                        <span>账户名：{{ordername}}</span>
+                        <span>账户余额：{{balance/100 | currency ''}}元</span>
+                    </div>
+                    <div class="datatable-scroll">
+                        <table class="table">
+                            <thead>
+                            <tr role="row">
+                                <th>订单号</th>
+                                <th>商户名称</th>
+                                <th>金额</th>
+                                <th>流水类型</th>
+                                <th>付款方式</th>
+                                <th>状态</th>
+                                <th>交易时间</th>
+                                <th>操作 </th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr role="row" v-for="(index,trlist) in zdlists">
+                                <td>{{trlist.orderNumber}}</td>
+                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.amount/100 | currency ''}}</td>
+                                <td>
+                                    <template v-if="trlist.purpose==1">补贴划付</template>
+                                    <template v-if="trlist.purpose==3">补贴退税</template>
+                                    <template v-if="trlist.purpose==4">预付充值</template>
+                                    <template v-if="trlist.purpose==6">退款冲抵</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.payType==1">现金转账</template>
+                                    <template v-if="trlist.payType==2">账户抵扣</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.status==0">已关闭</template>
+                                    <template v-if="trlist.status==1">等待审核</template>
+                                    <template v-if="trlist.status==2">等待划付</template>
+                                    <template v-if="trlist.status==3">转账中</template>
+                                    <template v-if="trlist.status==4">等待对账</template>
+                                    <template v-if="trlist.status==5">对账成功</template>
+                                    <template v-if="trlist.status==6">划付失败</template>
+                                </td>
+                                <td>{{trlist.payTime | datetime}}</td>
+                                <td>
+                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}" v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
+                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}" v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
+                                </td>
+                                <td>{{trlist.remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td>
+                                <td>{{total}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="datatable-footer">
+                        <page :all="pageall"
+                              :cur.sync="pagecur"
+                              :page_size.sync="page_size">
+                        </page>
+                    </div>
+                </div>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                    未找到数据
+                </div>
+            </div>
+        </div>
+
+        <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
+            <div class="modal-dialog modal-mg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>预付充值</h3>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>商户名：</label>{{applyAdvancePay.merchantName}}
+                        </div>
+                        <div class="form-group">
+                            <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label><i style="color:red">*</i>金额：</label>
+                            <input type="text" class="input-w" name="advancePaymentAmount"
+                                   v-model="applyAdvancePay.advancePaymentAmount"></input>
+                        </div>
+                        <div class="form-group">
+                            <label><i style="color:red">*</i>备注：</label>
+                                    <textarea class="input-w" name="remarks"
+                                              v-model="applyAdvancePay.remarks"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>收款信息：</label>
+                            <br/>
+                            <div class="collectionAccount-bgcolor">
+                                <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
+                                <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
+                                <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
+                                <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
+                            </div>
+                        </div>
+                        <div class="modal-foot btns">
+                            <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </index>
+</template>
+<style lang="sass" scoped>
+    .form-group{
+        text-align: left;
+    }
+    .form-group.tc{
+        text-align: center;
+    }
+    .modal-body .form-control{
+        text-align: left;
+        width:67%;
+        display: inline-block;
+    }
+    .modal-body label{
+        width:20%;
+        display: inline-block;
+    }
+    .modal-body label i{
+        color:red;
+    }
+    .modal-body .waring{
+        color: red;
+        margin-left: 5px;
+    }
+    .modal-body button{
+        width:35%;
+    }
+    td span{
+        cursor: pointer;
+        color: #3c8dbc;
+    }
+    td span:hover{
+        opacity: 80;
+    }
+    .m20{
+        margin-bottom: 20px;
+    }
+    .datatable-header{
+        padding-bottom: 20px;
+        font-size: 16px;
+        span{
+            margin-right: 20px;
+        }
+    }
+</style>
+<script>
+    import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/info_model'
+    import common_model from '../../ajax/components/model'
+    export default{
+        data(){
+            this.model =model(this)
+            this.common_model=common_model(this)
+            return{
+                pagecur:1,
+                page_size:15,
+                pageall:1,
+                balance:'',
+                ordername:'',
+                total:[],
+                defaultData:{
+                    "advancePaymentMerchantID":'',
+                    "orderNumber": '',
+                    "merchantName":'',
+                    "status":'',
+                    "purpose":'',
+                    "payType":'',
+                    "remarks":'',
+                    "startDate":'',
+                    "endDate":''
+                },
+                zdlists:[],
+                dateS:'1',
+                applyAdvancePay: {
+                    merchantName: "",//商户名
+                    balanceAmount: "",//余额
+                    advancePaymentMerchantId: "",//    预付款商户ID Integer
+                    collectionBankName: "",//  开户行 String
+                    collectionBankNumber: "",//    提入行号    String
+                    subCompanyID: "",//    分公司ID   Integer
+                    merchantID: "",//  商户ID    Integer
+                    payAccount: "",//  付款账户    String
+                    collectionAccountName: "",//   收款账户    String
+                    collectionAccountNumber: "",// 收款账号    String
+                    advancePaymentAmount: "",//    预付金额    Integer
+                    remarks: "",// 备注  String
+                    merchantAccountID: ""//商户账户ID   Integer
+                },
+                entity: {},
+            }
+        },
+        methods:{
+            // *** 请求账户列表数据
+            getZlists(data){
+                if(data.endDate<data.startDate){
+                    let a=data.endDate,b=data.startDate;
+                    this.checkForm.startDate=a;
+                    this.checkForm.endDate=b;
+                    data.startDate=a;
+                    data.endDate=b;
+                }
+                this.model.advancePaymentAccount_list(data)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        }, function (response) {
+                            console.log(response);
+                        });
+                this.model.total(data)
+                        .then((res) => {
+                            (res.data.code == 0) ? this.$set('total',res.data.data) : null;
+                        });
+            },
+            initList(){
+                $(".modal").modal("hide");
+                this.getZlists(this.defaultData);
+            },
+            //获取预付充值数据
+            getRechargeInfo(prepaymentId) {
+                this.model.advancePaymentMerchant(prepaymentId)
+                        .then(function (response) {
+                            if (response.data.code == 0) {
+                                this.$set('entity', response.data.data);
+                                this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
+                                this.applyAdvancePay.merchantName = this.entity.merchantName;//1
+                                this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
+                                this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
+                                this.applyAdvancePay.collectionAccountName = this.entity.collectionAccountName;//   收款账户    String   --6-1
+                                this.applyAdvancePay.collectionAccountNumber = this.entity.collectionAccountNumber;// 收款账号    String   --6-2
+                                this.applyAdvancePay.collectionBankName = this.entity.collectionBankName;//  开户行 String            --6-3
+                                this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
+                                this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
+                                this.applyAdvancePay.remarks = "";// 备注  String           --4
+                            }
+                            //判断是否有银行卡账号
+                            if (this.applyAdvancePay.collectionAccountNumber == null) {
+                                dialogs('error', '该商户未设置划款账户，无法充值！');
+                                return false;
+                            } else {
+                                //显示窗口
+                                $("#modal_prepayment_recharge").modal('show');
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
+            },
+            subApplyAdvancePay: function () {
+                let entity = {
+                    advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
+                    advancePaymentAmount: this.applyAdvancePay.advancePaymentAmount * 100,
+                    remarks: this.applyAdvancePay.remarks,
+                }
+                this.model.applyAdvancePay(entity)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若
+                            if (response.data.code == 0) {
+                                dialogs();
+                                this.query();
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
+                //关闭弹出层
+                $(".modal").modal("hide");
+            },
+        },
+        ready: function () {
+            (this.$route.params.id!=':id') ? this.defaultData.advancePaymentMerchantID=this.$route.params.id : null;
+            (this.$route.params.balance!=':balance') ? this.balance=this.$route.params.balance : null;
+            (this.$route.params.ordername!=':ordername') ? this.ordername=this.$route.params.ordername : null;
+            this.initList();
+        },
+        components:{
+            'datepicker': datepicker
+        },
+        watch:{
+            pagecur(){
+                this.defaultData.pageIndex=this.pagecur;
+                this.initList();
+            },
+            page_size(){
+                this.defaultData.pageSize=this.page_size;
+                this.initList();
+            }
+        }
+    }
+</script>

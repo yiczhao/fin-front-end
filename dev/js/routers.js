@@ -114,6 +114,13 @@ export default function(router){
                 require(['./views/SHGL/prepayment-store.vue'],resolve);
             }
         },
+        /* 商户管理-预付款账户明细 */
+        '/prepayment-info/:id/:balance/:ordername':{
+            name:'prepayment-info',
+            component: function(resolve){
+                require(['./views/SHGL/prepayment-info.vue'],resolve);
+            }
+        },
         /* 系统配置-员工管理 */
         '/user-managerment/':{
             name:'user-managerment',

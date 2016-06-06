@@ -82,7 +82,7 @@
                                        v-if="prepayment.status==1">预付</a>
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id}}"
                                        v-if="prepayment.status==1">门店</a>
-                                    <a v-link="">明细</a>
+                                    <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id,'balance':prepayment.balanceAmount,'ordername':prepayment.merchantName}}">明细</a>
                                     <a data-toggle="modal" data-target="#modal_waring"
                                        @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
                                     <a data-toggle="modal" data-target="#modal_waring"
@@ -99,7 +99,7 @@
                                 <th></th>
                                 <th><h5><b>合计</b></h5></th>
                                 <th></th>
-                                <th><B>{{total | currency ''}}</B></th>
+                                <th><B>{{total/100 | currency ''}}</B></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -412,7 +412,6 @@
                         .then(function (response) {
                             if (response.data.code == 0) {
                                 this.$set('entity', response.data.data);
-                                console.log(this.entity);
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
                                 this.applyAdvancePay.merchantName = this.entity.merchantName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2

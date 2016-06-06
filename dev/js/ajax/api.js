@@ -288,7 +288,7 @@ export default function install(Vue) {
      * @author 洪钢
      * @method GET
      */
-    _o.user_list = './passport/login/user/list?';
+    _o.user_list = './user/list?';
     /**
      * @description 员工管辖查询接口地址
      * @author 洪钢
@@ -436,7 +436,19 @@ export default function install(Vue) {
      */
     _o.store_add = './advancePaymentMerchant/store/add';
 
-
+    //- todo  商户管理-预付款-账户明细 prepayment-info
+    /**
+     * @description 预付款门店数据接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.advancePaymentAccount_list = './advancePaymentAccount/list?';
+    /**
+     * @description 预付款门店合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.advancePaymentAccount_total = './advancePaymentAccount/total?';
 
     //- todo  商户管理-额度采购-账户列表 prepayment-lists
     /**

@@ -39,7 +39,7 @@
                             <tr role="row" v-for="(index,trlist) in zdlists">
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
-                                <td><a @click="delstore(trlist.id)">删除</a></td>
+                                <td><a @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring">删除</a></td>
                                 <td>{{trlist.updateAt | datetime}}</td>
                                 <td>{{trlist.connectionPerson}}</td>
                                 <td>{{trlist.connectionPhone}} </td>
@@ -307,6 +307,7 @@
                 this.getZlists(this.defaultData);
             },
             clearUl(){
+                this.xhlist=[];
                 $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
                 $('.addbottom .col-md-4').children('ul').html('');
             },
@@ -319,14 +320,15 @@
                     'isLimitPurchase':0,
                     'isDigest':null,
                 };
-                this.searchDigest();
+                $('#modal_add').modal('show');
+                this.clearUl();
             },
             searchDigest(){
                 this.clearUl();
                 this.common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                         (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-                        $('#modal_add').modal('show');
+
                     })
             },
             allCkb(e){
@@ -363,7 +365,7 @@
             submitTrue(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'id':this.defaultData.id,'merchantIds':Array.from(_li, i => i.getAttribute('value'))}
+                let data={'id':this.defaultData.id,'IDList':Array.from(_li, i => i.getAttribute('value'))}
                 this.model.store_add(data)
                         .then((response)=>{
                             this.initList();
@@ -376,11 +378,11 @@
             del_true(){
                 this.model.delstore(this.id)
                         .then((res)=> {
-                    if(res.data.code==0){
-                        dialog('success','已删除');
-                        this.initList();
-                    }
-                })
+                            if(res.data.code==0){
+                                dialogs('success','已删除');
+                                this.initList();
+                            }
+                        })
             }
         },
         ready() {
