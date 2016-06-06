@@ -13,6 +13,22 @@ function model(_this){
         prepayment_store(data){
             return _this.$http.get(_this.$API.prepayment_store+ decodeURIComponent($.param(data)))
         },
+        /**
+         * @description 删除门店
+         * @params {id}
+         * @returns {*}
+         * */
+        delstore(_id){
+            return _this.$http.delete(_this.$API.delstore+_id)
+        },
+        /**
+         * @description 添加商户
+         * @params {data}
+         * @returns {*}
+         * */
+        store_add(data){
+            return _this.$http.post(_this.$API.store_add,data)
+        },
     }
 }
 module.exports=model;

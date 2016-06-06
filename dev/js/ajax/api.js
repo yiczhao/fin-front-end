@@ -419,10 +419,23 @@ export default function install(Vue) {
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**
      * @description 预付款门店数据接口地址
-     * @author 冷艳君
+     * @author 于凯乐
      * @method GET
      */
     _o.prepayment_store = './advancePaymentMerchant/store/list?';
+    /**
+     * @description 预付款删除门店接口地址
+     * @author 于凯乐
+     * @method DELETE
+     */
+    _o.delstore = './advancePaymentMerchant/store/remove/';
+    /**
+     * @description 添加商户接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.store_add = './advancePaymentMerchant/store/add';
+
 
 
     //- todo  商户管理-额度采购-账户列表 prepayment-lists

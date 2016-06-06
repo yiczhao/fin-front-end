@@ -58,6 +58,23 @@
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
+
+                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">你确定删除该商户？</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group tc">
+                                    <button type="button" @click="del_true" class="btn btn-primary">确认</button>
+                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--添加商户dialog-->
                 <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-lg">
@@ -254,6 +271,7 @@
                 zdlists:[],
                 xhlist:[],
                 addId:[],
+                id:''
             }
         },
         methods:{
@@ -345,14 +363,24 @@
             submitTrue(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
-                this.model.limitPurchaseMerchant_add(data)
+                let data={'id':this.defaultData.id,'merchantIds':Array.from(_li, i => i.getAttribute('value'))}
+                this.model.store_add(data)
                         .then((response)=>{
                             this.initList();
                             dialogs('success','已添加！');
                         })
             },
             delstore(_id){
+                this.id=_id;
+            },
+            del_true(){
+                this.model.delstore(this.id)
+                        .then((res)=> {
+                    if(res.data.code==0){
+                        dialog('success','已删除');
+                        this.initList();
+                    }
+                })
             }
         },
         ready() {
