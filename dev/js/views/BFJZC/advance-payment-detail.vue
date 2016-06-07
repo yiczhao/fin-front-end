@@ -92,7 +92,7 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount}}</td>
-                                            <td><a v-link="{'name':'prepayment-info',params:{'id':apd.id}}">查看</a></td>
+                                            <td><a v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantId}}">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==1">等待审核</template>
