@@ -73,7 +73,7 @@
                 </div>
                 <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
-                    <div class="datatable-header" v-if="!!blanceList.length">
+                    <div class="datatable-header" v-if="!!blanceList">
                         <span>账户名：{{blanceList.merchantName}}</span>
                         <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
