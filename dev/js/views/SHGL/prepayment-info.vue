@@ -90,7 +90,7 @@
                             <tr role="row" v-for="(index,trlist) in zdlists">
                                 <td>{{trlist.orderNumber}}</td>
                                 <td>{{trlist.merchantName}}</td>
-                                <td>{{trlist.amount/100 | currency ''}}</td>
+                                <td><template v-if="trlist.payType==2">-</template>{{trlist.amount/100 | currency ''}}</td>
                                 <td>
                                     <template v-if="trlist.purpose==1">补贴划付</template>
                                     <template v-if="trlist.purpose==3">补贴退税</template>
@@ -120,7 +120,7 @@
                             <tr>
                                 <td></td>
                                 <td>合计：</td>
-                                <td>{{total}}</td>
+                                <td>{{total/100| currency '' }}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

@@ -438,14 +438,14 @@ export default function install(Vue) {
 
     //- todo  商户管理-预付款-账户明细 prepayment-info
     /**
-     * @description 预付款门店数据接口地址
-     * @author 于凯乐
+     * @description 预付款明细数据接口地址
+     * @author 冷艳君
      * @method GET
      */
     _o.advancePaymentAccount_list = './advancePaymentAccount/list?';
     /**
-     * @description 预付款门店合计接口地址
-     * @author 于凯乐
+     * @description 预付款明细合计接口地址
+     * @author 冷艳君
      * @method GET
      */
     _o.advancePaymentAccount_total = './advancePaymentAccount/total?';

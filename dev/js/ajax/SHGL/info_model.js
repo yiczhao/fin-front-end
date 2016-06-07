@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         total(data){
-            return _this.$http.get(_this.$API.advancePaymentMerchant_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.advancePaymentAccount_total+ decodeURIComponent($.param(data)))
         },
     }
 }
