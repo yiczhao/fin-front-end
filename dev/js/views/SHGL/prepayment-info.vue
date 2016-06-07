@@ -9,7 +9,8 @@
                     <form class="form-inline manage-form">
                         <div class="m20">
                             <div class="form-group">
-                                <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" value="预付充值">
+                                <input type="button" data-toggle="modal" data-target="#modal_add" class="btn btn-info"
+                                       @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" value="预付充值">
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
@@ -21,15 +22,19 @@
                                 </select>
                             </div>
                             <div class="form-group" v-show="dateS==4">
-                                <datepicker  :readonly="true" :value.sync="defaultData.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="defaultData.endDate" format="YYYY-MM-DD"></datepicker>
+                                <datepicker :readonly="true" :value.sync="defaultData.startDate"
+                                            format="YYYY-MM-DD"></datepicker>
+                                至
+                                <datepicker :readonly="true" :value.sync="defaultData.endDate"
+                                            format="YYYY-MM-DD"></datepicker>
                             </div>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
+                            <input type="text" class="form-control" v-model="defaultData.merchantName"
+                                   placeholder="商户名">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.purpose">
@@ -66,10 +71,11 @@
                         </div>
                     </form>
                 </div>
-                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
-                    <div class="datatable-header">
-                        <span>账户名：{{ordername}}</span>
-                        <span>账户余额：{{balance/100 | currency ''}}元</span>
+                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
+                     v-cloak>
+                    <div class="datatable-header" v-if="!!blanceList.length">
+                        <span>账户名：{{blanceList.merchantName}}</span>
+                        <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
                     <div class="datatable-scroll">
                         <table class="table">
@@ -82,7 +88,7 @@
                                 <th>付款方式</th>
                                 <th>状态</th>
                                 <th>交易时间</th>
-                                <th>操作 </th>
+                                <th>操作</th>
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -90,7 +96,10 @@
                             <tr role="row" v-for="(index,trlist) in zdlists">
                                 <td>{{trlist.orderNumber}}</td>
                                 <td>{{trlist.merchantName}}</td>
-                                <td><template v-if="trlist.payType==2">-</template>{{trlist.amount/100 | currency ''}}</td>
+                                <td>
+                                    <template v-if="trlist.payType==2">-</template>
+                                    {{trlist.amount/100 | currency ''}}
+                                </td>
                                 <td>
                                     <template v-if="trlist.purpose==1">补贴划付</template>
                                     <template v-if="trlist.purpose==3">补贴退税</template>
@@ -112,8 +121,10 @@
                                 </td>
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>
-                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}" v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
-                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}" v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
+                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
+                                       v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
+                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}"
+                                       v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -196,47 +207,59 @@
     </index>
 </template>
 <style lang="sass" scoped>
-    .form-group{
+    .form-group {
         text-align: left;
     }
-    .form-group.tc{
+
+    .form-group.tc {
         text-align: center;
     }
-    .modal-body .form-control{
+
+    .modal-body .form-control {
         text-align: left;
-        width:80%;
+        width: 80%;
         display: inline-block;
     }
-    .modal-body label{
-        width:13%;
+
+    .modal-body label {
+        width: 13%;
         display: inline-block;
     }
-    .modal-body label i{
-        color:red;
+
+    .modal-body label i {
+        color: red;
     }
-    .modal-body .waring{
+
+    .modal-body .waring {
         color: red;
         margin-left: 5px;
     }
-    .modal-body button{
-        width:35%;
+
+    .modal-body button {
+        width: 35%;
     }
-    td span{
+
+    td span {
         cursor: pointer;
         color: #3c8dbc;
     }
-    td span:hover{
+
+    td span:hover {
         opacity: 80;
     }
-    .m20{
+
+    .m20 {
         margin-bottom: 20px;
     }
-    .datatable-header{
+
+    .datatable-header {
         padding-bottom: 20px;
         font-size: 16px;
-        span{
-            margin-right: 20px;
-        }
+
+    span {
+        margin-right: 20px;
+    }
+
     }
     .prepayment-modal-btns {
         text-align: center;
@@ -305,28 +328,27 @@
     import common_model from '../../ajax/components/model'
     export default{
         data(){
-            this.model =model(this)
-            this.common_model=common_model(this)
-            return{
-                pagecur:1,
-                page_size:15,
-                pageall:1,
-                balance:'',
-                ordername:'',
-                total:[],
-                defaultData:{
-                    "advancePaymentMerchantID":'',
+            this.model = model(this)
+            this.common_model = common_model(this)
+            return {
+                pagecur: 1,
+                page_size: 15,
+                pageall: 1,
+                blanceList:{},
+                total: [],
+                defaultData: {
+                    "advancePaymentMerchantID": '',
                     "orderNumber": '',
-                    "merchantName":'',
-                    "status":'',
-                    "purpose":'',
-                    "payType":'',
-                    "remarks":'',
-                    "startDate":'',
-                    "endDate":''
+                    "merchantName": '',
+                    "status": '',
+                    "purpose": '',
+                    "payType": '',
+                    "remarks": '',
+                    "startDate": '',
+                    "endDate": ''
                 },
-                zdlists:[],
-                dateS:'1',
+                zdlists: [],
+                dateS: '1',
                 applyAdvancePay: {
                     merchantName: "",//商户名
                     balanceAmount: "",//余额
@@ -345,28 +367,29 @@
                 entity: {},
             }
         },
-        methods:{
+        methods: {
             // *** 请求账户列表数据
             getZlists(data){
-                if(data.endDate<data.startDate){
-                    let a=data.endDate,b=data.startDate;
-                    this.checkForm.startDate=a;
-                    this.checkForm.endDate=b;
-                    data.startDate=a;
-                    data.endDate=b;
+                if (data.endDate < data.startDate) {
+                    let a = data.endDate, b = data.startDate;
+                    this.checkForm.startDate = a;
+                    this.checkForm.endDate = b;
+                    data.startDate = a;
+                    data.endDate = b;
                 }
                 this.model.advancePaymentAccount_list(data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            (response.data.code == 0) ? this.$set('zdlists', response.data.data) : null;
+                            (response.data.code == 0) ? this.$set('pageall', response.data.total) : null;
                         }, function (response) {
                             console.log(response);
                         });
                 this.model.total(data)
                         .then((res) => {
-                            (res.data.code == 0) ? this.$set('total',res.data.data) : null;
-                        });
+                (res.data.code == 0) ? this.$set('total', res.data.data) : null;
+            })
+                ;
             },
             initList(){
                 $(".modal").modal("hide");
@@ -421,29 +444,34 @@
                 $(".modal").modal("hide");
             },
             getTime(){
-                this.defaultData.startDate=init_date(this.dateS)[0];
-                this.defaultData.endDate=init_date(this.dateS)[1];
+                this.defaultData.startDate = init_date(this.dateS)[0];
+                this.defaultData.endDate = init_date(this.dateS)[1];
+            },
+            getBlance(){
+                this.model.getBlance(this.defaultData.advancePaymentMerchantID)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
+                        })
             }
         },
         ready: function () {
-            (this.$route.params.id!=':id') ? this.defaultData.advancePaymentMerchantID=this.$route.params.id : null;
-            (this.$route.params.balance!=':balance') ? this.balance=this.$route.params.balance : null;
-            (this.$route.params.ordername!=':ordername') ? this.ordername=this.$route.params.ordername : null;
+            (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
             this.initList();
+            this.getBlance();
         },
-        components:{
+        components: {
             'datepicker': datepicker
         },
-        watch:{
+        watch: {
             dateS(){
                 this.getTime();
             },
             pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
+                this.defaultData.pageIndex = this.pagecur;
                 this.initList();
             },
             page_size(){
-                this.defaultData.pageSize=this.page_size;
+                this.defaultData.pageSize = this.page_size;
                 this.initList();
             }
         }

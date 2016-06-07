@@ -18,14 +18,16 @@
                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="subCompanyID">
-                                <option value="">请选择分公司</option>
+                            <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                                <option value="-1">请选择分公司</option>
+                                <option value="">全部</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="cityID">
-                                <option value="">请选择城市</option>
+                                <option value="-1">请选择城市</option>
+                                <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -82,7 +84,7 @@
                                        v-if="prepayment.status==1">预付</a>
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id}}"
                                        v-if="prepayment.status==1">门店</a>
-                                    <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id,'balance':prepayment.balanceAmount,'ordername':prepayment.merchantName}}">明细</a>
+                                    <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}">明细</a>
                                     <a data-toggle="modal" data-target="#modal_waring"
                                        @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
                                     <a data-toggle="modal" data-target="#modal_waring"
@@ -138,20 +140,22 @@
                                                placeholder="商户名">
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" v-model="merchantInfo.companyId">
-                                            <option value="">请选择分公司</option>
+                                        <select class="form-control" v-model="merchantInfo.companyId" @change="getshCity(merchantInfo.companyId)">
+                                            <option value="-1">请选择分公司</option>
+                                            <option value="">全部</option>
                                             <option v-for="n in subcompanyList" v-text="n.name"
                                                     :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" v-model="merchantInfo.cityId">
-                                            <option value="">请选择城市</option>
-                                            <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                                            <option value="-1">请选择城市</option>
+                                            <option value="" v-if="merchantInfo.companyId!='-1'&&shCity.length>1">全部</option>
+                                            <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <input type="button" class="btn btn-info" @click="queryForMerchantList"
+                                        <input type="button" class="btn btn-info" @click="getMerchantList"
                                                value="查询">
                                     </div>
                                 </form>
@@ -349,24 +353,24 @@
                 page_size: 15,
                 pageIndex: 1,
                 pageSize: 15,
-                subCompanyID: "",
-                cityID: "",
+                subCompanyID: "-1",
+                cityID: "-1",
                 merchantOperationID: "",
                 merchantName: "",
                 status: "",
                 subcompanyList: [],
                 cityList: [],
+                shCity:[],
                 prepaymentList: [],
                 merchantList: [],
                 addId: [],
                 merchantInfo: {
-                    companyId: "",
-                    cityId: "",
+                    companyId: "-1",
+                    cityId: "-1",
                     merchantOperationID: "",
                     merchantName: "",
                     isAdvancePayment: "0",
                     isStore: "0",
-
                 },
                 applyAdvancePay: {
                     merchantName: "",//商户名
@@ -436,18 +440,17 @@
                         });
             },
             //获取商户数据
-            getMerchantList: function (data) {
-                this.common_model.getmerchant_list(data)
+            getMerchantList(){
+                this.common_model.getmerchant_list(this.merchantInfo)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('merchantList', response.data.data) : null;
-                            $("#modal_prepayment_info").modal('show');
                         }, function (response) {
                             console.log(response);
                         });
             },
             //获取分公司数据
-            getSubcompany: function () {
+            getSubcompany(){
                 this.common_model.getcompany()
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -457,11 +460,28 @@
                         });
             },
             //获取城市数据
-            getCity: function () {
-                this.common_model.getcity()
+            getCity(_id) {
+                this.cityID='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.common_model.getcity(data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('cityList', response.data.data) : null;
+                        }, function (response) {
+                            console.log(response);
+                        });
+            },
+            getshCity(_id) {
+                this.merchantInfo.cityId='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.common_model.getcity(data)
+                        .then(function (response) {
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code == 0) ? this.$set('shCity', response.data.data) : null;
                         }, function (response) {
                             console.log(response);
                         });
@@ -475,8 +495,8 @@
             },
             //显示选择商户窗口
             showMerchants: function () {
-                this.merchantInfo.companyId = "",
-                        this.merchantInfo.cityId = "",
+                this.merchantInfo.companyId = "-1",
+                        this.merchantInfo.cityId = "-1",
                         this.merchantInfo.merchantOperationID = "",
                         this.merchantInfo.merchantName = "",
                         this.queryForMerchantList();
@@ -484,7 +504,7 @@
             queryForMerchantList: function () {
                 //设置全选属性
                 this.clear();
-                this.getMerchantList(this.merchantInfo);
+                $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay: function () {
                 let entity = {
@@ -593,7 +613,6 @@
         ready: function () {
             this.query();
             this.getSubcompany();
-            this.getCity();
             $(document).on('click', '.addbottom .col-md-4 ul li', function () {
                 $(this).toggleClass('check-li');
             });

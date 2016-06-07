@@ -13,7 +13,7 @@ export default function install(Vue) {
      * @author 洪钢
      * @method GET
      */
-    _o.city = './city/list';
+    _o.city = './city/list?';
     /**
      * @description 上传接口地址
      * @author 洪钢
@@ -110,7 +110,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.incomeAndPayoutAmount = './reserveCashDetail/total';
+    _o.incomeAndPayoutAmount = './reserveCashDetail/total?';
 
     //- todo 财务处理-交易明细 trade-info
     /**
@@ -435,6 +435,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.store_add = './advancePaymentMerchant/store/add';
+    /**
+     * @description 预付款明细商户名余额接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getBlance = './advancePaymentMerchant/info/';
 
     //- todo  商户管理-预付款-账户明细 prepayment-info
     /**

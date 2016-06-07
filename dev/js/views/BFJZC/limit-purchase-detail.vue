@@ -4,16 +4,17 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
-                                    <option value="">请选择分公司</option>
+                                    <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                                        <option value="-1">请选择分公司</option>
+                                        <option value="">全部</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
-                                    <option value="">请选择城市</option>
+                                        <option value="-1">请选择城市</option>
+                                        <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option></option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
@@ -159,8 +160,8 @@
             this.common_model=common_model(this);
             return{
                 id:'',
-                subCompanyID:"",
-                cityID:"",
+                subCompanyID:"-1",
+                cityID:"-1",
                 createType:"",
                 status:"",
                 remarks:"",
@@ -197,8 +198,12 @@
                     });
             },
             //获取城市数据
-            getCity:function(){
-                 this.common_model.getcity()
+            getCity(_id){
+                this.cityID='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.common_model.getcity(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
                     });
@@ -241,7 +246,6 @@
             (this.$route.params.id==':id')? this.id='' :this.id=this.$route.params.id;
             this.query();
             this.getSubcompany();
-            this.getCity();
         },
          watch:{
             timeRange:function(){

@@ -86,14 +86,16 @@
                             <div class="modal-body">
                                 <div class="addtop">
                                     <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.companyId">
-                                            <option value="">请选择分公司</option>
+                                        <select class="form-control" v-model="shdata.companyId" @change="getCity(shdata.companyId)">
+                                            <option value="-1">请选择分公司</option>
+                                            <option value="">全部</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.cityId">
-                                            <option value="">请选择城市</option>
+                                            <option value="-1">请选择城市</option>
+                                            <option value="" v-if="shdata.companyId!='-1'&&city.length>1">全部</option>
                                             <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
                                         </select>
                                     </div>
@@ -261,8 +263,8 @@
                     'pageSize': 15
                 },
                 shdata:{
-                    'companyId':'',
-                    'cityId':'',
+                    'companyId':'-1',
+                    'cityId':'-1',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
@@ -295,8 +297,12 @@
             });
             },
             //获取城市数据
-            getCity(){
-                this.common_model.getcity()
+            getCity(_id){
+                this.shdata.cityId='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.common_model.getcity(data)
                         .then((response)=>{
                 // *** 判断请求是否成功如若成功则填充数据到模型
                 (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -313,8 +319,8 @@
             },
             addUser(){
                 this.shdata={
-                    'companyId':'',
-                    'cityId':'',
+                    'companyId':'-1',
+                    'cityId':'-1',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
@@ -390,7 +396,6 @@
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
             vm.initList();
             vm.getClist();
-            vm.getCity();
             $(document).on('click','.addbottom .col-md-4 ul li',function(){
                 $(this).toggleClass('check-li');
                 $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');

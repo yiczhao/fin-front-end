@@ -4,16 +4,17 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
-                                    <option value="">请选择分公司</option>
+                                    <select class="form-control" v-model="subCompanyID"  @change="getCity(subCompanyID)">
+                                        <option value="-1">请选择分公司</option>
+                                        <option value="">全部</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
-                                    <option value="">请选择城市</option>
+                                        <option value="-1">请选择城市</option>
+                                        <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
@@ -237,8 +238,8 @@
             this.common_model=common_model(this)
             return{
                 subsidyTaxRebateID:"",
-                subCompanyID:"",
-                cityID:"",
+                subCompanyID:"-1",
+                cityID:"-1",
                 createType:"",
                 status:"",
                 timeRange:'1',
@@ -286,8 +287,12 @@
                     });
             },
             //获取城市数据
-            getCity(){
-                 this.common_model.getcity()
+            getCity(_id){
+                this.cityID='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.common_model.getcity(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
                     });
@@ -349,7 +354,6 @@
                 $('#displayName').attr("class",id);
             },
              getApplyPayInfoByIDs(idArray){
-                console.log(idArray);
                 let data={
                     ids:idArray
                 }
@@ -383,17 +387,16 @@
                     {
                         dialogs();
                         this.query();
+                        //关闭弹出层
+                        $(".modal").modal("hide");
                     }
                 });
-                //关闭弹出层
-                $(".modal").modal("hide");
             },
             submit:function(){
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
                 });
-
                 if ($('#displayName').prop("readonly")) {
                     array.push($('#displayName').prop("class"));
                  }
@@ -402,7 +405,6 @@
                     remarks:this.applyPayRemarks,
                     payType:this.payType,
                     displayName:this.applyPayInfo.displayName
-                    
                 }
                this.model.rebate_applyPay(data).then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -410,10 +412,10 @@
                         {
                             dialogs;
                             this.query();
+                            //关闭弹出层
+                            $(".modal").modal("hide");
                         }
                     });
-                     //关闭弹出层
-                    $(".modal").modal("hide");
             },
             query: function () {
                 // let data=this.data;
@@ -454,8 +456,7 @@
         ready: function () {
             (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.subsidyTaxRebateID='':this.subsidyTaxRebateID=this.$route.params.subsidyTaxRebateID;
             this.query();
-            this.getSubcompany({});
-            this.getCity({});
+            this.getSubcompany();
         },
          watch:{
             payType:function(){

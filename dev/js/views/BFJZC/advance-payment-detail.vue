@@ -4,16 +4,17 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
-                                    <option value="">请选择分公司</option>
+                                    <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                                        <option value="-1">请选择分公司</option>
+                                        <option value="">全部</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
-                                    <option value="">请选择城市</option>
+                                        <option value="-1">请选择城市</option>
+                                        <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
@@ -91,7 +92,7 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount}}</td>
-                                            <td><a v-link="{name:'limitaccount-info'}">查看</a></td>
+                                            <td><a v-link="{'name':'prepayment-info',params:{'id':apd.id}}">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==1">等待审核</template>
@@ -140,8 +141,8 @@
             this.common_model=common_model(this);
             return{
                 advanceId:"",
-                subCompanyID:"",
-                cityID:"",
+                subCompanyID:"-1",
+                cityID:"-1",
                 createType:"",
                 status:"",
                 remarks:"",
@@ -181,8 +182,12 @@
                     });
             },
             //获取城市数据
-            getCity(){
-                 this.common_model.getcity()
+            getCity(_id){
+                this.cityID='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                 this.common_model.getcity(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
@@ -226,7 +231,6 @@
             (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
             this.query();
             this.getSubcompany();
-            this.getCity();
         },
          watch:{
             timeRange:function(){

@@ -37,6 +37,14 @@ function model(_this){
         total(data){
             return _this.$http.get(_this.$API.advancePaymentAccount_total+ decodeURIComponent($.param(data)))
         },
+        /**
+         * @description 预付商户名余额
+         * @params {data}
+         * @returns {*}
+         * */
+        getBlance(_id){
+            return _this.$http.get(_this.$API.getBlance+_id)
+        },
     }
 }
 module.exports=model;

@@ -14,14 +14,16 @@
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.companyId">
-                                <option value="">请选择分公司</option>
+                            <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
+                                <option value="-1">请选择分公司</option>
+                                <option value="">全部</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityId">
-                                <option value="">请选择城市</option>
+                                <option value="-1">请选择城市</option>
+                                <option value="" v-if="defaultData.companyId!='-1'&&city.length>1">全部</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -385,8 +387,8 @@
                 defaultData:{
                     "merchantOperationID": "",
                     "merchantName": "",
-                    "companyId": "",
-                    "cityId": "",
+                    "companyId": "-1",
+                    "cityId": "-1",
                     "startValue": "",
                     "endValue": "",
                     "pageIndex": 1,
@@ -468,8 +470,12 @@
                         });
             },
             //获取城市数据
-            getCity(){
-                this.common_model.getcity()
+            getCity(_id){
+                this.defaultData.cityId='-1';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.common_model.getcity(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -619,7 +625,6 @@
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             vm.initList();
             vm.getClist();
-            vm.getCity();
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })

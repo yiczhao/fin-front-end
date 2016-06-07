@@ -15,11 +15,11 @@ function conmon_model(_this) {
         },
         /**
          * @description 查询城市列表数据
-         * @param {}
+         * @param {data}
          * @returns {*}
          */
-        getcity () {
-            return _this.$http.get(_this.$API.city)
+        getcity (data) {
+            return _this.$http.get(_this.$API.city+ decodeURIComponent($.param(data)))
         },
         /**
          * @description 上传数据
