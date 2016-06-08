@@ -40,6 +40,12 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <a href="javascript:void(0);" class="has-ul">三方管理</a>
+                                    <ul class="hidden-ul">
+                                        <li><a v-link="{'name':'third-party'}">账户列表</a></li>
+                                    </ul>
+                                </li>
+                                <li>
                                     <a href="javascript:void(0);" class="has-ul">商户管理</a>
                                     <ul class="hidden-ul">
                                         <li><a v-link="{'name':'business-lists'}">商户管理</a></li>
@@ -47,6 +53,14 @@
                                         <li><a v-link="{'name':'prepayment-lists'}">预付款</a></li>
                                     </ul>
                                 </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="has-ul">
+                                <span>活动管理</span>
+                            </a>
+                            <ul class="hidden-ul">
+                                <li><a v-link="{'name':'activity-lists'}"></i>活动列表</a></li>
                             </ul>
                         </li>
                         <li>

@@ -31,7 +31,7 @@ export default function(router){
             }
         },
         //交易明细
-        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName':{
+        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID':{
             name:'trade-info',
             component: function(resolve){
                 require(['./views/CWCL/trade-info.vue'],resolve);
@@ -70,6 +70,13 @@ export default function(router){
             name:'subsidy-tax-rebate',
             component: function(resolve){
                 require(['./views/BFJZC/subsidy-tax-rebate.vue'],resolve);
+            }
+        },
+        /* 三方管理-账户列表 */
+        '/third-party/':{
+            name:'third-party',
+            component: function(resolve){
+                require(['./views/SFGL/third-party.vue'],resolve);
             }
         },
         /* 商户管理-商户列表 */
@@ -119,6 +126,13 @@ export default function(router){
             name:'prepayment-info',
             component: function(resolve){
                 require(['./views/SHGL/prepayment-info.vue'],resolve);
+            }
+        },
+        /* 活动管理-活动列表 */
+        '/activity-lists/':{
+            name:'activity-lists',
+            component: function(resolve){
+                require(['./views/HDGL/activity-lists.vue'],resolve);
             }
         },
         /* 系统配置-员工管理 */

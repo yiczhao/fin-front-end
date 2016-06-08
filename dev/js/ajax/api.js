@@ -262,6 +262,32 @@ export default function install(Vue) {
      */
     _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo';
 
+    //- todo  活动管理-活动列表 activity-lists
+    /**
+     * @description 查询活动列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.activity_list = './activity/list?';
+    /**
+     * @description 查询活动列表合计金额接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.activity_total = './activity/total?';
+    /**
+     * @description 查询可配置三方接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.activity_info = './activity/thirdPartyAccount/info?';
+    /**
+     * @description 查询可配置三方接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.activity_save = './activity/thirdPartyAccount/config';
+
     //- todo  系统配置-系统日志 log-management
     /**
      * @description 系统日志列表接口地址
@@ -475,6 +501,15 @@ export default function install(Vue) {
      * @method POST
      */
     _o.recharge = './limitPurchaseAccount/charge';
+
+    //- todo  三方管理-账户列表 thirdParty
+    /**
+     * @description 列表数据接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.thirdParty_list = './thirdParty/list?';
+
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

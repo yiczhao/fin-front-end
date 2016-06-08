@@ -167,7 +167,7 @@
                                 <label>商户名：</label>{{applyAdvancePay.merchantName}}
                             </div>
                             <div class="form-group">
-                                <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount}}</span>
+                                <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
                             </div>
                             <div class="form-group">
                                 <label><i style="color:red">*</i>金额：</label>
