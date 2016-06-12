@@ -502,13 +502,39 @@ export default function install(Vue) {
      */
     _o.recharge = './limitPurchaseAccount/charge';
 
-    //- todo  三方管理-账户列表 thirdParty
+    //- todo  三方管理-账户列表 third-party
     /**
      * @description 列表数据接口地址
-     * @author 冷艳君
-     * @method POST
+     * @author 于凯乐
+     * @method get
      */
     _o.thirdParty_list = './thirdParty/list?';
+    /**
+     * @description 三方停用启用接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.thirdParty_status = './thirdParty/status';
+    /**
+     * @description 三方停用启用接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.thirdParty_recharge = './thirdParty/recharge';
+
+    //- todo  三方管理-账户明细 third-info
+    /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.thirdinfo_list = './thirdParty/account/list?';
+    /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.thirdinfo_Blance = './thirdParty/account/accountBalance?';
 
 
     Object.defineProperties(Vue.prototype, {

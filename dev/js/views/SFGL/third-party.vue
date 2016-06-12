@@ -1,6 +1,6 @@
 <template>
     <index :title="'三方管理'"
-           :ptitle="'账户列表'"
+           :ptitle="'三方管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
         <div class="content" slot="content">
@@ -43,6 +43,9 @@
                     </form>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <div>
+
+                    </div>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -66,16 +69,16 @@
                                 <td>{{trlist.accountName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.subCompanyAddress}}</td>
-                                <td>{{trlist.balanceAmount}}</td>
+                                <td>{{trlist.balanceAmount/100 | currency ''}}</td>
                                 <td>
                                     <template v-if="trlist.status==0">停用</template>
                                     <template v-if="trlist.status==1">启用</template>
                                 </td>
                                 <td>
-                                    <a v-if="trlist.status==1" @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring">回款</a>
-                                    <a @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring">明细</a>
-                                    <a v-if="trlist.status==1" @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring">停用</a>
-                                    <a v-if="trlist.status==0" @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring">启用</a>
+                                    <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit">回款</a>
+                                    <a v-link="{name:'third-info',params:{'id':trlist.id}}">明细</a>
+                                    <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring">停用</a>
+                                    <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring">启用</a>
                                 </td>
                                 <td>{{trlist.openTime | datetime}}</td>
                                 <td>{{trlist.contactName}}</td>
@@ -96,16 +99,56 @@
                     未找到数据
                 </div>
 
+                <validator name="vali">
+                    <form novalidate>
+                <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">回款充值</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="control-label">名称：{{redata.name}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">余  额：{{redata.balanceAmount/100 | currency ''}}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label"><i>*</i>金额：</label>
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money">
+                                </div>
+                                <div class="form-group">
+                                    <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
+                                    <textarea rows="5" cols="5" class="form-control" v-model="redata.remarks" v-validate:val2="['required']"></textarea>
+                                </div>
+                                <div class="form-group tc">
+                                    <button  type="button" @click="rechargeTrue" class="btn btn-primary">确认回款</button>
+                                </div>
+                                <div class="form-group tc">
+                                    <span v-show="$vali.invalid&&saveerror" class="validation-error-label">
+                                        您的信息未填写完整
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </form>
+                </validator>
+
                 <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">你确定删除该商户？</h5>
+                                <h5 v-if="isEnable==0" class="modal-title">你确定启用该账户？</h5>
+                                <h5 v-if="isEnable==1" class="modal-title">你确定停用该账户？</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group tc">
-                                    <button type="button" @click="del_true" class="btn btn-primary">确认</button>
+                                    <button type="button" @click="change_status" class="btn btn-primary">确认</button>
                                     <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                                 </div>
                             </div>
@@ -258,24 +301,27 @@
     .addbottom table tr td,  .addbottom table tr th{
         padding: 2px;
     }
-    #modal_update{
-    table tr td{
-        padding: 10px 2px;
-    }
-    .form-group{
-        overflow: hidden;
-        line-height: 36px;
-    }
+    #modal_submit{
+        label i{
+            color: red;
+        }
+        .form-control{
+            width: 80%;
+            display: inline-block;
+        }
     }
     .pull-left label i{
         color:red;
     }
     .pull-left{
-    .validation-error-label{
-        line-height: 20px;
-        padding-left: 18px;
-        margin-top: 10px;
+        .validation-error-label{
+            line-height: 20px;
+            padding-left: 18px;
+            margin-top: 10px;
+        }
     }
+    .validation-error-label{
+        display: inline;
     }
 </style>
 <script>
@@ -313,7 +359,16 @@
                 zdlists:[],
                 xhlist:[],
                 addId:[],
-                id:''
+                id:'',
+                isEnable: 0,
+                redata:{
+                    id:'',
+                    money:'',
+                    remarks:'',
+                    name:'',
+                    balanceAmount:''
+                },
+                saveerror:false
             }
         },
         methods:{
@@ -436,16 +491,60 @@
             del_true(){
                 this.model.delstore(this.id)
                         .then((res)=> {
-                    if(res.data.code==0){
-                    dialogs('success','已删除');
-                    this.initList();
+                                if(res.data.code==0){
+                                dialogs('success','已删除');
+                                this.initList();
+                            }
+                        })
+            },
+            startParty(_id, status){
+                this._id = _id;
+                this.isEnable = status;
+            },
+            change_status(){
+                let data = {
+                    'id': this._id,
+                    'status': this.isEnable
                 }
-            })
+                this.model.thirdParty_status(data)
+                        .then((res) => {
+                                if(res.data.code == 0&&this.isEnable==1){
+                                    this.initList()
+                                    dialogs('success','已启用！')
+                                }else if(res.data.code == 0&&this.isEnable==0){
+                                    this.initList()
+                                    dialogs('success','已停用！')
+                                }
+                        })
+            },
+            recharge(_id,_name,_money){
+                this.redata={
+                    id:_id,
+                    money:'',
+                    remarks:'',
+                    name:_name,
+                    balanceAmount:_money
+                }
+            },
+            rechargeTrue(){
+                this.saveerror=true;
+                if(this.$vali.invalid)return;
+                let data={
+                    id:this.redata.id,
+                    money:this.redata.money *100,
+                    remarks:this.redata.remarks
+                }
+                this.model.thirdParty_recharge(data)
+                        .then((res) => {
+                                if(res.data.code == 0){
+                                this.initList()
+                                dialogs('success','已充值！')
+                            }
+                        })
             }
         },
         ready() {
             var vm=this;
-            (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
             vm.initList();
             vm.getClist();
             $(document).on('click','.addbottom .col-md-4 ul li',function(){

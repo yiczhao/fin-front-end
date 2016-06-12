@@ -6,20 +6,20 @@
 function model(_this){
     return {
         /**
-         * @description 查询三方数据
+         * @description 查询三方明细数据
          * @params {data}
          * @returns {*}
          * */
-        thirdParty_list(data){
-            return _this.$http.get(_this.$API.thirdParty_list+ decodeURIComponent($.param(data)))
+        thirdinfo_list(data){
+            return _this.$http.get(_this.$API.thirdinfo_list+ decodeURIComponent($.param(data)))
         },
         /**
-         * @description 三方停用启用
+         * @description 三方余额
          * @params {data}
          * @returns {*}
          * */
-        thirdParty_status(data){
-            return _this.$http.post(_this.$API.thirdParty_status,data)
+        thirdinfo_Blance(_id){
+            return _this.$http.post(_this.$API.thirdinfo_Blance+_id)
         },
         /**
          * @description 三方回款充值

@@ -79,6 +79,13 @@ export default function(router){
                 require(['./views/SFGL/third-party.vue'],resolve);
             }
         },
+        /* 三方管理-账户明细 */
+        '/third-info/:id':{
+            name:'third-info',
+            component: function(resolve){
+                require(['./views/SFGL/third-info.vue'],resolve);
+            }
+        },
         /* 商户管理-商户列表 */
         '/business-lists/':{
             name:'business-lists',
