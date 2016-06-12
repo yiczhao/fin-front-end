@@ -221,54 +221,59 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-mg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h3>预付充值</h3>
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>商户名：</label>{{applyAdvancePay.merchantName}}
+                <validator name="vali">
+                    <form novalidate>
+                    <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
+                        <div class="modal-dialog modal-mg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3>预付充值</h3>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
                                 </div>
-                                <div class="form-group">
-                                    <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label><i style="color:red">*</i>金额：</label>
-                                    <input type="text" class="input-w" name="advancePaymentAmount"
-                                           v-model="applyAdvancePay.advancePaymentAmount"></input>
-                                </div>
-                                <div class="form-group">
-                                    <label><i style="color:red">*</i>备注：</label>
-                                    <textarea class="input-w" name="remarks"
-                                              v-model="applyAdvancePay.remarks"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
-                                </div>
-                                <div class="form-group">
-                                    <label>收款信息：</label>
-                                    <br/>
-                                    <div class="collectionAccount-bgcolor">
-                                        <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
-                                        <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
-                                        <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
-                                        <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>商户名：</label>{{applyAdvancePay.merchantName}}
                                     </div>
-                                </div>
-                                <div class="modal-foot btns">
-                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                    <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款
-                                    </button>
+                                    <div class="form-group">
+                                        <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i style="color:red">*</i>金额：</label>
+                                        <input v-validate:val1="['required']"  type="text" class="form-control" name="advancePaymentAmount"
+                                               v-model="applyAdvancePay.advancePaymentAmount"></input>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>
+                                        <textarea v-validate:val2="['required']"  class="form-control" name="remarks"
+                                                  v-model="applyAdvancePay.remarks"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>收款信息：</label>
+                                        <br/>
+                                        <div class="collectionAccount-bgcolor">
+                                            <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
+                                            <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
+                                            <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
+                                            <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
+                                        </div>
+                                    </div>
+                                    <div class="modal-foot btns">
+                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                        <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款
+                                        </button>
+                                    </div>
+                                    <div class="form-group tc">
+                                        <span v-show="$vali.invalid&&saveerror" class="validation-error-label">您的信息未填写完整</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                    </form>
+                </validator>
             </div>
         </div>
     </index>
@@ -283,8 +288,9 @@
         background-color: #c0c0c0;
     }
 
-    .input-w {
+    .form-control {
         width: 86%;
+        display: inline-block;
     }
 
     .btns {
@@ -337,6 +343,12 @@
     }
     .btn.btn-info {
         margin: 2px;
+    }
+    .tc{
+        text-align: center;
+        .validation-error-label{
+            display: inline-block;
+        }
     }
 </style>
 <script>
@@ -392,6 +404,7 @@
                 isEnable: 0,
                 _id: '',
                 total: [],
+                saveerror:false
             }
         },
         methods: {
@@ -507,6 +520,8 @@
                 $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay: function () {
+                this.saveerror=true;
+                if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
                     advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: this.applyAdvancePay.advancePaymentAmount * 100,

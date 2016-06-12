@@ -154,7 +154,8 @@
                 </div>
             </div>
 
-
+            <validator name="vali">
+                <form novalidate>
             <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
                 <div class="modal-dialog modal-mg">
                     <div class="modal-content">
@@ -171,12 +172,12 @@
                             </div>
                             <div class="form-group">
                                 <label><i style="color:red">*</i>金额：</label>
-                                <input type="text" class="form-control" name="advancePaymentAmount"
+                                <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
                                        v-model="applyAdvancePay.advancePaymentAmount"></input>
                             </div>
                             <div class="form-group">
                                 <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
-                                    <textarea class="form-control" name="remarks"
+                                    <textarea v-validate:val2="['required']" class="form-control" name="remarks"
                                               v-model="applyAdvancePay.remarks"></textarea>
                             </div>
                             <div class="form-group">
@@ -197,10 +198,18 @@
                                 <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款
                                 </button>
                             </div>
+                            <div class="form-group tc">
+                                <span v-show="$vali.invalid&&saveerror" class="validation-error-label">您的信息未填写完整</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            </form>
+            </validator>
+
+
         </div>
 
 
@@ -321,6 +330,12 @@
     .btn.btn-info {
         margin: 2px;
     }
+    .tc{
+        text-align: center;
+        .validation-error-label{
+            display: inline-block;
+        }
+    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -365,6 +380,7 @@
                     merchantAccountID: ""//商户账户ID   Integer
                 },
                 entity: {},
+                saveerror:false
             }
         },
         methods: {
@@ -425,6 +441,8 @@
                         });
             },
             subApplyAdvancePay: function () {
+                this.saveerror=true;
+                if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
                     advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: this.applyAdvancePay.advancePaymentAmount * 100,
@@ -435,7 +453,7 @@
                             // *** 判断请求是否成功如若
                             if (response.data.code == 0) {
                                 dialogs();
-                                this.query();
+                                this.initList();
                             }
                         }, function (response) {
                             console.log(response);
