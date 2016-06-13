@@ -20,6 +20,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="timeRange">
+                                        <option value="5">今天</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
                                         <option value="2">最近一个月</option>

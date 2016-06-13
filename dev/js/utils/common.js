@@ -89,8 +89,7 @@ var init_date=((type)=>{
             break;
         case '1':
             var nmonth=month;
-            var nday=day-7;
-            day=day-1;
+            var nday=day-6;
             if(nday==-6){
                 nday=getLastDay(year,month-1)-6
                 nmonth=month-1
@@ -142,6 +141,9 @@ var init_date=((type)=>{
             startT=nyear + "-" + getTwo(nmonth) + "-" + getTwo(day);
             break;
         case '4':
+            startT=year + "-" + getTwo(month) + "-" + getTwo(day);
+            break;
+        case '5':
             startT=year + "-" + getTwo(month) + "-" + getTwo(day);
             break;
     }

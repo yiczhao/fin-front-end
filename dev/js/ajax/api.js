@@ -534,7 +534,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method get
      */
-    _o.thirdinfo_Blance = './thirdParty/account/accountBalance?';
+    _o.thirdinfo_Blance = './thirdParty/account/accountBalance/';
 
 
     Object.defineProperties(Vue.prototype, {

@@ -19,7 +19,7 @@ function model(_this){
          * @returns {*}
          * */
         thirdinfo_Blance(_id){
-            return _this.$http.post(_this.$API.thirdinfo_Blance+_id)
+            return _this.$http.get(_this.$API.thirdinfo_Blance+_id)
         },
         /**
          * @description 三方回款充值

@@ -83,7 +83,7 @@
                                 </td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>
-                                    <a >查看</a>
+                                    <a v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -112,10 +112,10 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label class="control-label">名称：{{redata.name}}</label>
+                                    <label class="control-label">名称：{{blanceList.accountName}}</label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">余  额：{{redata.balanceAmount/100 | currency ''}}</label>
+                                    <label class="control-label">余  额：{{blanceList.balanceAmount/100 | currency ''}}</label>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
@@ -255,7 +255,7 @@
                     accountName:'',
                     balanceAmount:'',
                 },
-                dateS:'',
+                dateS:'1',
                 pagecur:1,
                 page_size:15,
                 pageall:1,
@@ -340,14 +340,13 @@
             initList(){
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
+                this.getBlance();
             },
-            recharge(_id,_name,_money){
+            recharge(){
                 this.redata={
-                    id:_id,
+                    id:this.defaultData.thirdPartyAccountID,
                     money:'',
                     remarks:'',
-                    name:_name,
-                    balanceAmount:_money
                 }
             },
             getTime(){
@@ -379,11 +378,11 @@
         },
         ready() {
             var vm=this;
-            vm.dateS='1';
+            this.defaultData.startDate = init_date(this.dateS)[0];
+            this.defaultData.endDate = init_date(this.dateS)[1];
             (vm.$route.params.id != ':id') ? vm.defaultData.thirdPartyAccountID = vm.$route.params.id : null;
-            vm.initList();
             vm.getClist();
-            vm.getBlance();
+            vm.initList();
         },
         components:{
             'datepicker': datepicker

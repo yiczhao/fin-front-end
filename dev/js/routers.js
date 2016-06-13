@@ -31,7 +31,7 @@ export default function(router){
             }
         },
         //交易明细
-        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID':{
+        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber':{
             name:'trade-info',
             component: function(resolve){
                 require(['./views/CWCL/trade-info.vue'],resolve);

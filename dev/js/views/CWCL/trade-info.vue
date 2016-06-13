@@ -554,6 +554,7 @@
             (this.$route.params.merchantOperationID==':merchantOperationID')?this.merchantOperationID='' : this.merchantOperationID=this.$route.params.merchantOperationID;
             (this.$route.params.merchantName==':merchantName')? this.merchantName='' : this.merchantName=this.$route.params.merchantName;
             (this.$route.params.activityOperationID==':activityOperationID')? this.activityOperationID='' : this.activityOperationID=this.$route.params.activityOperationID;
+            (this.$route.params.serialNumber==':serialNumber')? this.serialNumber='' : this.serialNumber=this.$route.params.serialNumber;
             this.query();
             this.getSubcompany();
         },
