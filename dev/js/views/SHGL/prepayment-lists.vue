@@ -288,7 +288,7 @@
         background-color: #c0c0c0;
     }
 
-    .form-control {
+    #modal_prepayment_recharge .form-control {
         width: 86%;
         display: inline-block;
     }
@@ -630,6 +630,7 @@
             this.getSubcompany();
             $(document).on('click', '.addbottom .col-md-4 ul li', function () {
                 $(this).toggleClass('check-li');
+                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
             });
         },
         components: {

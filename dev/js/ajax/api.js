@@ -7,9 +7,9 @@ export default function install(Vue) {
      * @author 洪钢
      * @method GET
      */
-    _o.subcompany = './subCompany/list';
+    _o.subcompany = './subCompany/list?';
     /**
-     * @description 获取分公司接口地址
+     * @description 获取城市接口地址
      * @author 洪钢
      * @method GET
      */

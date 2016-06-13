@@ -10,8 +10,12 @@ function conmon_model(_this) {
          * @param {}
          * @returns {*}
          */
-        getcompany () {
-            return _this.$http.get(_this.$API.subcompany)
+        getcompany (data) {
+            if(typeof data=='undefined'){
+                return _this.$http.get(_this.$API.subcompany)
+            }else{
+                return _this.$http.get(_this.$API.subcompany + decodeURIComponent($.param(data)));
+            }
         },
         /**
          * @description 查询城市列表数据
@@ -19,7 +23,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         getcity (data) {
-            return _this.$http.get(_this.$API.city+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.city + decodeURIComponent($.param(data)))
         },
         /**
          * @description 上传数据
@@ -35,7 +39,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         skipToOrder(data){
-            return _this.$http.get(_this.$API.skipToOrder+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.skipToOrder + decodeURIComponent($.param(data)))
         },
         /**
          * @description 获取商户数据

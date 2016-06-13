@@ -44,7 +44,7 @@
                                     <td>{{user.name}}</td>
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)">管辖范围</a>                                        
+                                        <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)">管辖范围</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -274,7 +274,10 @@
             },
             //获取分公司数据
             getSubcompany(){
-                 this.common_model.getcompany()
+                let data={
+                    'type':'ImportUser'
+                }
+                 this.common_model.getcompany(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
