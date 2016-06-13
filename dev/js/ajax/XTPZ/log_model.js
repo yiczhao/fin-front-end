@@ -19,7 +19,7 @@ function model(_this){
          * @returns {*}
          * */
         log_description(){
-            return _this.$http.post(_this.$API.log_description)
+            return _this.$http.get(_this.$API.log_description)
         },
         /**
          * @description 查询日志详情
