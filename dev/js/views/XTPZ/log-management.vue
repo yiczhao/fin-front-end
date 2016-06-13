@@ -177,7 +177,10 @@
             },
             //获取分公司数据
             getSubcompany(){
-                 this.common_model.getcompany()
+                let data={
+                    'type':'ImportUser'
+                }
+                 this.common_model.getcompany(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     });
