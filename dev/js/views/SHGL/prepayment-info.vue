@@ -434,6 +434,7 @@
                                 return false;
                             } else {
                                 //显示窗口
+                                this.saveerror=false;
                                 $("#modal_prepayment_recharge").modal('show');
                             }
                         }, function (response) {

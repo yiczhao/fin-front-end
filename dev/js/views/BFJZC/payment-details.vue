@@ -172,7 +172,7 @@
                                              <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                              <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                              <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
-                                             <template v-if="n.status==6"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
+                                             <template v-if="n.status==6&&n.purpose==1||n.status==6&&n.purpose==3"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
                                         </span>
                                         <span>
                                             <template v-if="n.status==1"> 等待审核</template>
