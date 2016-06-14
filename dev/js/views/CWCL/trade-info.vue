@@ -52,7 +52,7 @@
                         <br/>
                         <br/>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
@@ -214,7 +214,7 @@
                                             <label>
                                                 <i class="aaaa">*</i>商户ID：
                                             </label>
-                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
+                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                             <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                                         </div>
                                         <div class="form-group">

@@ -11,7 +11,7 @@
                             <!--<input type="button" class="btn btn-info" @click="addUser" value="添加">-->
                         <!--</div>-->
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="名称">
