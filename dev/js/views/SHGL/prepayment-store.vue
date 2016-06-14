@@ -371,7 +371,7 @@
             submitTrue(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'id':this.defaultData.id,'IDList':Array.from(_li, i => i.getAttribute('value'))}
+                let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
                 this.model.store_add(data)
                         .then((response)=>{
                             this.initList();
