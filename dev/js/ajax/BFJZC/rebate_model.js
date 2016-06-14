@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         select_rebate(data){
-            return _this.$http.post(_this.$API.select_rebate+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.select_rebate+ decodeURIComponent($.param(data)))
         },
     }
 }

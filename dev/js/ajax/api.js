@@ -260,7 +260,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo';
+    _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

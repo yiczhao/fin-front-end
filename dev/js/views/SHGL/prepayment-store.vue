@@ -24,7 +24,7 @@
                     </form>
                 </div>
                 <div style="margin-bottom: 20px;padding-left: 20px;font-size: 16px;">
-                    <span>账户名：{{merchantName}}</span>
+                    <span>预付款账户名：{{merchantName}}</span>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">

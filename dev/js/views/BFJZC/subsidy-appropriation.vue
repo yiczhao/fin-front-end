@@ -6,15 +6,13 @@
                             <form class="form-inline manage-form">
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
-                                        <option value="-1">请选择分公司</option>
-                                        <option value="">全部</option>
+                                        <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
-                                        <option value="-1">请选择城市</option>
-                                        <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option>
+                                        <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
@@ -250,8 +248,8 @@
             this.common_model=common_model(this)
             return{
                 id:"",
-                subCompanyID:"-1",
-                cityID:"-1",
+                subCompanyID:"",
+                cityID:"",
                 createType:"",
                 status:"",
                 timeRange:'1',
@@ -305,7 +303,7 @@
             },
             //获取城市数据
             getCity(_id){
-                this.cityID='-1';
+                this.cityID='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -475,6 +473,7 @@
             (this.$route.params.subsidyPayID==':subsidyPayID')?this.id='':this.id=this.$route.params.subsidyPayID;
             this.query();
             this.getSubcompany();
+            this.getCity();
         },
          watch:{
             payType:function(){
