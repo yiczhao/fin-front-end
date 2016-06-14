@@ -34,7 +34,7 @@
                                 <br/>
                                 <br/>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
+                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号" style="width:185px">

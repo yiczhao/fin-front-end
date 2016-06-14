@@ -12,7 +12,7 @@
                                    value="添加">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
@@ -131,7 +131,7 @@
                                 <form class="form-inline manage-form">
                                     <div class="form-group">
                                         <input type="text" class="form-control"
-                                               v-model="merchantInfo.merchantOperationID" placeholder="商户ID">
+                                               v-model="merchantInfo.merchantOperationID" placeholder="商户ID" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" v-model="merchantInfo.merchantName"

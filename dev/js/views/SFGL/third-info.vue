@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID">
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">

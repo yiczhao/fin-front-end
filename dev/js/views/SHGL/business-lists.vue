@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -623,7 +623,7 @@
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             vm.initList();
             vm.getClist();
-            vm.getCity();
+            vm.getCity()
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })

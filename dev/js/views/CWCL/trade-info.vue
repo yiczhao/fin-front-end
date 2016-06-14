@@ -214,7 +214,7 @@
                                             <label>
                                                 <i class="aaaa">*</i>商户ID：
                                             </label>
-                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']">
+                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
                                             <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                                         </div>
                                         <div class="form-group">
