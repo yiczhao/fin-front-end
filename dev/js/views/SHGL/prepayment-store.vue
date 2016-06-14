@@ -267,8 +267,6 @@
                     'cityId':'-1',
                     'merchantOperationID':'',
                     'merchantName':'',
-                    'isLimitPurchase':0,
-                    'isDigest':0,
                 },
                 zdlists:[],
                 xhlist:[],
@@ -323,8 +321,6 @@
                     'cityId':'-1',
                     'merchantOperationID':'',
                     'merchantName':'',
-                    'isLimitPurchase':0,
-                    'isDigest':null,
                 };
                 $('#modal_add').modal('show');
                 this.clearUl();
