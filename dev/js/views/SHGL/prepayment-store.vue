@@ -96,7 +96,7 @@
                                         <select class="form-control" v-model="shdata.cityId">
                                             <option value="-1">请选择城市</option>
                                             <option value="" v-if="shdata.companyId!='-1'&&city.length>1">全部</option>
-                                            <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
+                                            <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
