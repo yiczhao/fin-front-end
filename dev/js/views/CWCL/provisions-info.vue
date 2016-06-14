@@ -233,7 +233,7 @@
                                 <h5 class="modal-title">交易对账</h5>
                             </div>
                             <div class="modal-body">
-                        <table v-if="gllists.length>0" id="table2" class="table table-bordered table-hover">
+                        <table v-show="gllists.length>0" id="table2" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>订单号</th>

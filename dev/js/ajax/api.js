@@ -92,7 +92,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.selectReserveCashOrderListByID = './reserveCashDetail/info/';
+    _o.selectReserveCashOrderListByID = './reserveCashDetail/check/list/';
     /**
      * @description 自动对账接口地址
      * @author 冷艳君
