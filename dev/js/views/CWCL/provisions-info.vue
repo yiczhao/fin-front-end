@@ -3,6 +3,7 @@
            :ptitle="'财务处理'"
            :p2title="'账户列表'"
            :hname="'account-management'"
+           :h2name="'account-management'"
            :isshow="'isshow'">
         <div class="content " slot="content">
             <div class="panel panel-flat">

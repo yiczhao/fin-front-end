@@ -1,7 +1,9 @@
 <template>
-    <index :title="'预付款商户'"
+    <index :title="'门店管理'"
            :ptitle="'商户管理'"
            :hname="'business-lists'"
+           :p2title="'预付款商户'"
+           :h2name="'prepayment-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
@@ -20,6 +22,9 @@
                             <input type="button" class="btn btn-info" @click="initList" value="查询">
                         </div>
                     </form>
+                </div>
+                <div style="margin-bottom: 20px;padding-left: 20px;font-size: 16px;">
+                    <span>账户名：{{merchantName}}</span>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -253,6 +258,7 @@
                 pagecur:1,
                 page_size:15,
                 pageall:1,
+                merchantName:'',
                 city:[],
                 companylists:[],
                 defaultData:{
@@ -267,6 +273,8 @@
                     'cityId':'-1',
                     'merchantOperationID':'',
                     'merchantName':'',
+                    'isAdvancePayment':'0',
+                    'isStore':'0'
                 },
                 zdlists:[],
                 xhlist:[],
@@ -321,6 +329,8 @@
                     'cityId':'-1',
                     'merchantOperationID':'',
                     'merchantName':'',
+                    'isAdvancePayment':'0',
+                    'isStore':'0'
                 };
                 $('#modal_add').modal('show');
                 this.clearUl();
@@ -390,6 +400,7 @@
         ready() {
             var vm=this;
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
+            (vm.$route.params.merchantName!=':id')?vm.merchantName=vm.$route.params.merchantName:null;
             vm.initList();
             vm.getClist();
             $(document).on('click','.addbottom .col-md-4 ul li',function(){

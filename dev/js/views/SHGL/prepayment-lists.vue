@@ -1,7 +1,7 @@
 <template>
     <index :title="'预付款商户'"
            :ptitle="'商户管理'"
-           :hname="'prepayment-lists'"
+           :hname="'business-lists'"
            :isshow="'isshow'">
         <div class="content blists" slot="content">
             <div class="panel panel-flat">
@@ -82,7 +82,7 @@
                                 <td>
                                     <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)"
                                        v-if="prepayment.status==1">预付</a>
-                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id}}"
+                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'merchantName':prepayment.merchantName}}"
                                        v-if="prepayment.status==1">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}">明细</a>
                                     <a data-toggle="modal" data-target="#modal_waring"

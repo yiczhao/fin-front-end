@@ -2,6 +2,8 @@
     <index :title="'预付款账户明细'"
            :ptitle="'商户管理'"
            :hname="'business-lists'"
+           :p2title="'预付款商户'"
+           :h2name="'prepayment-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
