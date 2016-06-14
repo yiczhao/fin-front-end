@@ -18,15 +18,13 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
-                                <option value="-1">请选择分公司</option>
-                                <option value="">全部</option>
+                                <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityID">
-                                <option value="-1">请选择城市</option>
-                                <option value="" v-if="defaultData.companyId!='-1'&&city.length>1">全部</option>
+                                <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -167,15 +165,13 @@
                                 <div class="addtop">
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.companyId" @change="getshCity(shdata.companyId)">
-                                            <option value="-1">请选择分公司</option>
-                                            <option value="">全部</option>
+                                            <option value="">全部分公司</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.cityId">
-                                            <option value="-1">请选择城市</option>
-                                            <option value="" v-if="shdata.companyId!='-1'&&shcity.length>1">全部</option>
+                                            <option value="">全部城市</option>
                                             <option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>
                                         </select>
                                     </div>
@@ -342,15 +338,15 @@
                 defaultData:{
                     'id': '',
                     'accountName': '',
-                    'subCompanyID': '-1',
-                    'cityID': '-1',
+                    'subCompanyID': '',
+                    'cityID': '',
                     'status': '',
                     'pageIndex': 1,
                     'pageSize': 15
                 },
                 shdata:{
-                    'companyId':'-1',
-                    'cityId':'-1',
+                    'companyId':'',
+                    'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
@@ -393,7 +389,7 @@
             },
             //获取城市数据
             getCity(_id){
-                this.defaultData.cityID='-1';
+                this.defaultData.cityID='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -405,7 +401,7 @@
             },
             //获取城市数据
             getshCity(_id){
-                this.shdata.cityID='-1';
+                this.shdata.cityID='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -433,8 +429,9 @@
                     'isLimitPurchase':0,
                     'isDigest':null,
                 };
-                $('#modal_add').modal('show');
+                this.getshCity();
                 this.clearUl();
+                $('#modal_add').modal('show');
             },
             searchDigest(){
                 this.clearUl();
@@ -547,6 +544,7 @@
             var vm=this;
             vm.initList();
             vm.getClist();
+            vm.getCity();
             $(document).on('click','.addbottom .col-md-4 ul li',function(){
                 $(this).toggleClass('check-li');
                 $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');

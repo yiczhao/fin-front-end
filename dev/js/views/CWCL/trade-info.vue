@@ -12,15 +12,13 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
-                                <option value="-1">请选择分公司</option>
-                                <option value="">全部</option>
+                                <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="cityID">
-                                <option value="-1">请选择城市</option>
-                                <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option>
+                                <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -46,11 +44,9 @@
                             <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <span>补贴划付ID:</span>
                             <input type="text" class="form-control" v-model="subsidyPayId" style="width: 100px" placeholder="补贴划付ID">
                         </div>
                         <div class="form-group">
-                            <span>补贴退税ID:</span>
                             <input type="text" class="form-control" v-model="subsidyTaxRebateId" style="width: 100px" placeholder="补贴退税ID">
                         </div>
                         <br/>
@@ -339,8 +335,8 @@
                 origin:window.origin,
                 subsidyPayId:"",
                 subsidyTaxRebateId:"",
-                subCompanyID:"-1",
-                cityID:"-1",
+                subCompanyID:"",
+                cityID:"",
                 type:"",
                 timeRange:'1',
                 startDate:"",
@@ -410,7 +406,7 @@
             },
             //获取城市数据
             getCity(_id){
-                this.cityID='-1';
+                this.cityID='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -557,6 +553,7 @@
             (this.$route.params.serialNumber==':serialNumber')? this.serialNumber='' : this.serialNumber=this.$route.params.serialNumber;
             this.query();
             this.getSubcompany();
+            this.getCity();
         },
        watch:{
             timeRange:function(){

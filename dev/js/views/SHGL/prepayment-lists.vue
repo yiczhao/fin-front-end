@@ -19,15 +19,13 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
-                                <option value="-1">请选择分公司</option>
-                                <option value="">全部</option>
+                                <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="cityID">
-                                <option value="-1">请选择城市</option>
-                                <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部</option>
+                                <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -142,16 +140,14 @@
                                     <div class="form-group">
                                         <select class="form-control" v-model="merchantInfo.companyId"
                                                 @change="getshCity(merchantInfo.companyId)">
-                                            <option value="-1">请选择分公司</option>
-                                            <option value="">全部</option>
+                                            <option value="">全部分公司</option>
                                             <option v-for="n in subcompanyList" v-text="n.name"
                                                     :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" v-model="merchantInfo.cityId">
-                                            <option value="-1">请选择城市</option>
-                                            <option value="" v-if="merchantInfo.companyId!='-1'&&shCity.length>1">全部
+                                            <option value="">全部城市
                                             </option>
                                             <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
                                         </select>
@@ -373,8 +369,8 @@
                 page_size: 15,
                 pageIndex: 1,
                 pageSize: 15,
-                subCompanyID: "-1",
-                cityID: "-1",
+                subCompanyID: "",
+                cityID: "",
                 merchantOperationID: "",
                 merchantName: "",
                 status: "",
@@ -385,8 +381,8 @@
                 merchantList: [],
                 addId: [],
                 merchantInfo: {
-                    companyId: "-1",
-                    cityId: "-1",
+                    companyId: "",
+                    cityId: "",
                     merchantOperationID: "",
                     merchantName: "",
                     isAdvancePayment: "0",
@@ -484,7 +480,7 @@
             },
             //获取城市数据
             getCity(_id) {
-                this.cityID = '-1';
+                this.cityID = '';
                 let data = {
                     'subCompanyID': _id
                 }
@@ -497,7 +493,7 @@
                         });
             },
             getshCity(_id) {
-                this.merchantInfo.cityId = '-1';
+                this.merchantInfo.cityId = '';
                 let data = {
                     'subCompanyID': _id
                 }
@@ -527,6 +523,7 @@
             queryForMerchantList: function () {
                 //设置全选属性
                 this.clear();
+                this.getshCity();
                 $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay: function () {
@@ -642,6 +639,7 @@
         ready: function () {
             this.query();
             this.getSubcompany();
+            this.getCity();
             $(document).on('click', '.addbottom .col-md-4 ul li', function () {
                 $(this).toggleClass('check-li');
                 $(this).hasClass('check-li') ? $(this).css('background', '#ccc') : $(this).css('background', 'none');

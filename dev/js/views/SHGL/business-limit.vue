@@ -18,15 +18,13 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
-                                <option value="-1">请选择分公司</option>
-                                <option value="">全部</option>
+                                <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityId">
-                                <option value="-1">请选择城市</option>
-                                <option value="" v-if="defaultData.companyId!='-1'&&city.length>1">全部</option>
+                                <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -312,15 +310,13 @@
                                 <div class="addtop">
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.companyId" @change="getxhCity(shdata.companyId)">
-                                            <option value="-1">请选择分公司</option>
-                                            <option value="">全部</option>
+                                            <option value="">全部分公司</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.cityId">
-                                            <option value="-1">请选择城市</option>
-                                            <option value="" v-if="defaultData.companyId!='-1'&&city.length>1">全部</option>
+                                            <option value="">全部城市</option>
                                             <option v-for="(index,n) in xhcity" v-text="n.name" :value="n.cityId"></option>
                                         </select>
                                     </div>
@@ -545,8 +541,8 @@
                 defaultData:{
                     'merchantId': '',
                     'merchantName': '',
-                    'companyId': '-1',
-                    'cityId': '-1',
+                    'companyId': '',
+                    'cityId': '',
                     'isAutoPay': '',
                     'status': '',
                     'startValue': '',
@@ -555,8 +551,8 @@
                     'pageSize': 15
                 },
                 shdata:{
-                    'companyId':'-1',
-                    'cityId':'-1',
+                    'companyId':'',
+                    'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
@@ -636,7 +632,7 @@
             },
             //获取城市数据
             getCity(_id){
-                this.defaultData.cityId='-1';
+                this.defaultData.cityId='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -649,7 +645,7 @@
                         });
             },
             getxhCity(_id){
-                this.shdata.cityId='-1';
+                this.shdata.cityId='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -734,25 +730,27 @@
             addUser(){
                 this.addTitle='添加商户';
                 this.shdata={
-                    'companyId':'-1',
-                    'cityId':'-1',
+                    'companyId':'',
+                    'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
                     'isDigest':null,
                 };
+                this.getxhCity();
                 $('#modal_add').modal('show');
             },
             addUser2(){
                 this.addTitle='添加消化商户';
                 this.shdata={
-                    'companyId':'-1',
-                    'cityId':'-1',
+                    'companyId':'',
+                    'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':null,
                     'isDigest':0,
                 };
+                this.getxhCity();
                 $('#modal_add').modal('show');
             },
             allCkb(e){
@@ -841,6 +839,7 @@
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             vm.initList();
             vm.getClist();
+            vm.getCity();
             $('#modal_add,#modal_see').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');

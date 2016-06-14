@@ -15,15 +15,13 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
-                                <option value="-1">请选择分公司</option>
-                                <option value="">全部</option>
+                                <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityId">
-                                <option value="-1">请选择城市</option>
-                                <option value="" v-if="defaultData.companyId!='-1'&&city.length>1">全部</option>
+                                <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -387,8 +385,8 @@
                 defaultData:{
                     "merchantOperationID": "",
                     "merchantName": "",
-                    "companyId": "-1",
-                    "cityId": "-1",
+                    "companyId": "",
+                    "cityId": "",
                     "startValue": "",
                     "endValue": "",
                     "pageIndex": 1,
@@ -471,7 +469,7 @@
             },
             //获取城市数据
             getCity(_id){
-                this.defaultData.cityId='-1';
+                this.defaultData.cityId='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -625,6 +623,7 @@
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             vm.initList();
             vm.getClist();
+            vm.getCity();
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })

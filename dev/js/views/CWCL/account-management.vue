@@ -12,7 +12,7 @@
                     </div>
                     <div class="form-group">
                         <select class="form-control" v-model="defaultData.companyId">
-                            <option value="">请选择分公司</option>
+                            <option value="">全部分公司</option>
                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
                     </div>

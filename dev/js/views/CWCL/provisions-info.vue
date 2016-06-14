@@ -24,8 +24,7 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <label>付款账号:</label>
-                                <input type="text" class="form-control" v-model="checkForm.payAccountNumber">
+                                <input type="text" class="form-control" v-model="checkForm.payAccountNumber" placeholder="付款账号">
                             </div>
                         </div>
                         <div  class="">

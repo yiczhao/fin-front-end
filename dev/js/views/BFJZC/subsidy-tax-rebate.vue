@@ -12,7 +12,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
-                                        <option value="" v-if="subCompanyID!='-1'&&cityList.length>1">全部城市</option>
+                                        <option value="">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
@@ -31,8 +31,7 @@
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <span>ID:</span>
-                                    <input type="text" class="form-control" v-model="subsidyTaxRebateID">
+                                    <input type="text" class="form-control" v-model="subsidyTaxRebateID"  placeholder="ID">
                                 </div>
                                 <br/>
                                 <br/>
