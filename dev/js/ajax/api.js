@@ -390,7 +390,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.limitPurchaseMerchant_viewDigest = './limitPurchaseMerchant/digest/';
+    _o.limitPurchaseMerchant_viewDigest = './limitPurchaseMerchant/digest?';
     /**
      * @description 额度采购添加商户接口地址
      * @author 冷艳君
