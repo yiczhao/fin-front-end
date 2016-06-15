@@ -11,8 +11,8 @@ module.exports = {
 	},
 	entry:{
 		app:__dirname+'/dev/js/app.js',
-		jquery: __dirname+'/dev/js/jQuery.min.js',
-		bootstrap: __dirname+'/dev/js/bootstrap.min.js',
+		jquery: __dirname+'/dev/js/assets/jQuery.min.js',
+		bootstrap: __dirname+'/dev/js/assets/bootstrap.min.js',
 	},
 	output:{
 		path:__dirname+'/dist',
