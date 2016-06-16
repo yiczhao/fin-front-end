@@ -167,7 +167,7 @@
                                             <label class="w28" ><i>*</i>抵扣方式：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <select class="form-control"  v-validate:discountType="['required']" v-model="updateList.discountType" value="updateList.discountType">
+                                            <select class="form-control"  v-validate:discountType="['required']" v-model="updateList.discountType">
                                                 <option value="1">全单</option>
                                                 <option value="2">可打折</option>
                                             </select>
@@ -187,7 +187,7 @@
                                             <label class="w28" ><i>*</i>单笔采购额度：</label>
                                         </div>
                                         <div class="col-md-3">
-                                             <input v-validate:val3="['required']" class="form-control" type="text" v-model="updateList.singlePurchaseLimit" value="updateList.singlePurchaseLimit">
+                                             <input v-validate:val3="['required']" class="form-control" type="text" v-model="updateList.singlePurchaseLimit">
                                         </div>
                                         <div class="col-md-1">
                                             元
@@ -196,14 +196,14 @@
                                             <label class="w28" ><i>*</i>单笔采购本金：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input v-validate:val4="['required']" class="form-control" type="text" v-model="updateList.singlePurchasePrincipal"  value="updateList.singlePurchasePrincipal">
+                                            <input v-validate:val4="['required']" class="form-control" type="text" v-model="updateList.singlePurchasePrincipal">
                                         </div>
                                         <div class="pull-left">
                                             元
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" data-dismiss="modal" @click="addUser2" class="btn">添加消化账户</button>
+                                        <button type="button" @click="addUser2" class="btn">添加消化账户</button>
                                     </div>
                                     <table class="table" style="border: 1px solid #ccc;">
                                         <thead>
@@ -212,7 +212,6 @@
                                             <th>商户名称</th>
                                             <th>分公司</th>
                                             <th>城市</th>
-                                            <th>商户名</th>
                                             <th>开始时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -224,11 +223,10 @@
                                             <td>{{n.subCompanyName}}</td>
                                             <td>{{n.cityName}}</td>
                                             <td>{{n.startDate|datetime}}</td>
-                                            <td>{{n.merchantName}}</td>
                                             <th><a href="javascript:void(0)" @click="delxh(2,$event)">删除</a></th>
                                         </tr>
                                         <tr v-else>
-                                            <td colspan="5" valign="center">该账户没有消化商户</td>
+                                            <td colspan="7" valign="center">该账户没有消化商户</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -255,45 +253,45 @@
                                         </div>
                                     </div>
                                     <div>历史记录：</div>
-                                    <div style="height:200px;overflow: auto;border: 1px solid #ccc;">
-                                         <table class="table">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>ID</th>
-                                            <th>账户信息</th>
-                                            <th>消化商户</th>
-                                            <th>更新时间</th>
-                                            <th>更新人</th>
-                                            <th>变更凭证</th>
-                                            <th>更新备注</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-if="historyList.length>1" role="row" v-for="n in historyList">
-                                                <td>{{$index+1}}</td>
-                                                <td>
-                                                    <p>抵扣方式：
-                                                        <template v-if="n.discountType==1">全单</template>
-                                                        <template v-else>可打折</template>
-                                                    </p>
-                                                    <p>自动划付：
-                                                        <template v-if="n.isAutoPay==0">关闭</template>
-                                                        <template v-else>开启</template>
-                                                    </p>
-                                                    <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
-                                                    <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
-                                                </td>
-                                                <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
-                                                <td>{{n.updateAt | datetime}}</td>
-                                                <td>{{n.updateAt}}</td>
-                                                <td><a v-if="n.certificates!=''" href="{{origin}}/file/download/{{n.certificates}}" >下载</a></td>
-                                                <td>{{n.remarks}}</td>
-                                        </tr>
-                                        <tr v-if="historyList.length<1">
-                                            <td colspan="7" valign="center">无历史记录</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <div style="max-height:200px;overflow: auto;border: 1px solid #ccc;">
+                                         <table class="table"  v-if="historyList.length>0">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>ID</th>
+                                                    <th>账户信息</th>
+                                                    <th>消化商户</th>
+                                                    <th>生效时间</th>
+                                                    <th>更新人</th>
+                                                    <th>变更凭证</th>
+                                                    <th>更新备注</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr role="row" v-for="n in historyList">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>
+                                                            <p>抵扣方式：
+                                                                <template v-if="n.discountType==1">全单</template>
+                                                                <template v-else>可打折</template>
+                                                            </p>
+                                                            <p>自动划付：
+                                                                <template v-if="n.isAutoPay==0">关闭</template>
+                                                                <template v-else>开启</template>
+                                                            </p>
+                                                            <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
+                                                            <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
+                                                        </td>
+                                                        <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
+                                                        <td>{{n.startDate | datetime}}--{{n.endDate | datetime}}</td>
+                                                        <td>{{n.updateBy}}</td>
+                                                        <td><a v-if="n.certificateID!=''" href="{{origin}}/file/download/{{n.certificateID}}" >下载</a></td>
+                                                        <td>{{n.remarks}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div v-if="!historyList.length>0" style="padding: 15px;font-size: 15px">
+                                            无历史记录
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -350,7 +348,12 @@
                                             <tr role="row" v-for="n in xhlist">
                                                 <td>
                                                     <label>
-                                                        <input :value="n.merchantID" type="checkbox">{{$index+1}}
+                                                        <input :value="n.merchantID"
+                                                               :subCompanyName="n.subCompanyName"
+                                                               :cityName="n.cityName"
+                                                               :merchantName="n.merchantName"
+                                                               :startDate="n.startDate"
+                                                               type="checkbox">{{$index+1}}
                                                     </label>
                                                 </td>
                                                 <td>{{n.subCompanyName}}</td>
@@ -455,7 +458,7 @@
                                     </div>
                                     <div v-if="isTrue" class="tc" style="float: left;width: 100%;margin-top: 20px;">
                                         <input type="button" class="btn btn-gray" data-dismiss="modal" value="关闭">
-                                        <input type="button" class="btn btn-gray" @click="updateXh()" value="调整消化商户">
+                                        <input type="button" class="btn btn-gray" @click="updateXh()" data-dismiss="modal" value="调整消化商户">
                                     </div>
                                 </div>
                             </div>
@@ -603,15 +606,15 @@
                 xhlist:[],
                 updateList:{
                     remarks: '',
-                    isAutoPay: '',
-                    certificates: '',
+                    isAutoPay: '1',
+                    certificateID: '',
                     merchantId: '',
                     updateBy: '',
                     singlePurchaseLimit: '',
                     singlePurchasePrincipal: '',
                     updateAt: '',
                     discountType: '',
-                    id:''
+                    limitPurchaseMerchantInfoID:''
                 },
                 uploadText:'',
                 historyList:[],
@@ -686,25 +689,49 @@
                 this.getZlists(this.defaultData);
             },
             clearUl(){
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
+                this.xhlist=[];
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             updateNew(_id){
                 this.accountId=_id;
+                this.updateList={
+                    remarks: '',
+                    isAutoPay: '1',
+                    certificateID: '',
+                    merchantId: '',
+                    updateBy: '',
+                    singlePurchaseLimit: '',
+                    singlePurchasePrincipal: '',
+                    updateAt: '',
+                    discountType: '',
+                    limitPurchaseMerchantInfoID:''
+                };
                 this.seexh(_id,false);
                 this.model.limitPurchaseMerchant_history(_id)
                         .then((response)=>{
                                 if(response.data.code==0){
                                     $.extend(true, this.updateList,response.data.data[0]);
                                     this.$set('historyList', response.data.data)
-                                    this.updateList.certificates='';
-                                    $('input[type="file"]')[0].value=''
+                                    this.updateList.certificateID='';
+                                    $('input[type="file"]')[0].value='';
+                                    this.clearUl();
                                     $('#modal_update').modal('show');
                                 }
                         })
 
             },
+            seehistoryxh(_id,isTrue){
+                this.seexhList=[];
+                this.accountId=_id;
+                this.isTrue=isTrue;
+                this.model.seehistoryxh(_id)
+                        .then((response)=>{
+                            (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
+                            if(this.isTrue){$('#modal_see').modal('show');}
+                        })
+            },
             updateXh(){
+                $('#modal_see').modal('hide');
                 this.updateNew(this.accountId);
             },
             delxh(_isenb,e){
@@ -714,9 +741,10 @@
             submitUpdate(){
                 this.saveerror='';
                 if(!this.$vali.valid){this.$set('saveerror', '您的信息未填写完整');return;}
-                if(this.updateList.certificates==''){this.$set('saveerror', '请上传凭证');return;}
+                if(this.updateList.certificateID==''){this.$set('saveerror', '请上传凭证');return;}
                 let datas = Array.from($(".merchantIds"), i => parseInt(i.innerHTML));
                 this.updateList.digestMerchants=datas;
+                this.updateList.limitPurchaseMerchantInfoID=this.accountId;
                 this.model.limitPurchaseMerchant_editDigest(this.updateList)
                         .then((response)=>{
                                 this.initList();
@@ -728,11 +756,7 @@
                 this.isEnable=_isenb;
             },
             changeTrue(){
-                let data={
-                    'id': this.accountId,
-                    'isEnable': this.isEnable
-                }
-                this.model.limitPurchaseMerchant_change(data)
+                this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
                                 this.initList();
                         })
@@ -745,7 +769,7 @@
                 this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
-                                if(isTrue){$('#modal_see').modal('show');}
+                                if(this.isTrue){$('#modal_see').modal('show');}
                         })
             },
             searchDigest(){
@@ -780,7 +804,7 @@
                     'isDigest':0,
                 };
                 this.getxhCity();
-                this.clearUl();
+                $('.addbottom .col-md-4').children('ul').html('');
                 $('#modal_add').modal('show');
             },
             allCkb(e){
@@ -792,9 +816,14 @@
                 }
             },
             appendLi(a){
-                let _tr=$("input[value='" + a + "']").closest('tr');
+                let _this=$("input[value='" + a + "']")
+                let _tr=_this.closest('tr');
                 let _ul=$('.addbottom .col-md-4').children('ul');
-                _ul.append('<li value="'+a+'">'+_tr.children('td:last').html()+'</li>');
+                let merchantName=_this.attr('merchantName');
+                let subCompanyName=_this.attr('subCompanyName');
+                let cityName=_this.attr('cityName');
+                let startDate=_this.attr('startDate');
+                _ul.append('<li value="'+a+'" merchantName="'+merchantName+'" subCompanyName="'+subCompanyName+'" cityName="'+cityName+'" startDate="">'+_tr.children('td:last').html()+'</li>');
                 _tr.hide();
             },
             addTrue(e){
@@ -827,12 +856,17 @@
             submitTrue2(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'id': this.accountId,'digestMerchants':Array.from(_li, i => parseInt(i.getAttribute('value')))}
-                this.model.limitPurchaseMerchant_addDigest(data)
-                        .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                _li.each((index)=>{
+                    let data={
+                        merchantID: _li.eq(index).attr('value'),
+                        merchantName:_li.eq(index).attr('merchantName'),
+                        subCompanyName:_li.eq(index).attr('subCompanyName'),
+                        cityName: _li.eq(index).attr('cityName'),
+                        startDate: _li.eq(index).attr('startDate'),
+                    }
+                    this.seexhList.push(data);
                 })
+                $('#modal_add').modal('hide');
             },
             uploadClick(){
                 $('input[type="file"]').val('');
@@ -856,7 +890,7 @@
                     }
                     vm.common_model.upload(datas)
                             .then((response)=>{
-                                vm.updateList.certificates=response.data.data;
+                                vm.updateList.certificateID=response.data.data;
                                 vm.uploadText=files.name;
                                 vm.saveerror='';
                                 dialogs('success','上传成功！');
@@ -867,6 +901,7 @@
         ready() {
             var vm=this;
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            (this.$route.params.id != ':id') ? this.defaultData.merchantOperationID = this.$route.params.id : null;
             vm.initList();
             vm.getClist();
             vm.getCity();
@@ -879,8 +914,7 @@
                 $('body').css('padding-right',0);
                 if($(this).hasClass('modal_update')){
                     vm.uploadText='';
-                    vm.updateList.certificates='';
-
+                    vm.updateList.certificateID='';
                 }
             })
             $(document).on('click','.addbottom .col-md-4 ul li',function(){

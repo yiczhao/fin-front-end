@@ -94,7 +94,7 @@ export default function(router){
             }
         },
         /* 商户管理-额度采购 */
-        '/business-limit/':{
+        '/business-limit/:id':{
             name:'business-limit',
             component: function(resolve){
                 require(['./views/SHGL/business-limit.vue'],resolve);

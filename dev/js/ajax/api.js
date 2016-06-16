@@ -343,7 +343,7 @@ export default function install(Vue) {
     //- todo  商户管理-商户列表 business-lists
     /**
      * @description 商户列表数据接口地址
-     * @author 冷艳君
+     * @author 于凯乐
      * @method GET
      */
     _o.merchant_lists = './merchant/pages?';
@@ -355,10 +355,23 @@ export default function install(Vue) {
     _o.merchant_account = './merchant/account/';
     /**
      * @description 编辑划款账户接口地址
-     * @author 冷艳君
+     * @author 于凯乐
      * @method POST
      */
     _o.merchant_update = './merchant/update';
+    /**
+     * @description 查看消化账户接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.merchant_digest = './merchant/digest/list/';
+    /**
+     * @description 查看消化账户接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.merchant_total = './merchant/sumBalance?';
+
 
     //- todo  商户管理-额度采购 business-limit
     /**
@@ -384,13 +397,19 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.limitPurchaseMerchant_change = './limitPurchaseMerchant/status/update';
+    _o.limitPurchaseMerchant_change = './limitPurchaseMerchant/enable/';
     /**
      * @description 额度采购消化商户查询接口地址
      * @author 冷艳君
      * @method GET
      */
     _o.limitPurchaseMerchant_viewDigest = './limitPurchaseMerchant/digest?';
+    /**
+     * @description 额度采购历史记录消化商户查询接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.seehistoryxh = './limitPurchaseMerchant/digestHistory/';
     /**
      * @description 额度采购添加商户接口地址
      * @author 冷艳君

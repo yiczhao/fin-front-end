@@ -65,19 +65,19 @@
                                 <td>{{trlist.merchantName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.consumeTotal}}</td>
-                                <td>{{trlist.consumeMoney/100 | currency '' }} </td>
-                                <td>{{trlist.realMoney/100 | currency '' }} </td>
-                                <td>{{trlist.value01/100 | currency '' }} </td>
-                                <td>{{trlist.value02/100 | currency '' }} </td>
-                                <td>{{trlist.value03/100 | currency '' }} </td>
+                                <td>{{trlist.consumptionCount}}</td>
+                                <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
+                                <td>{{trlist.payAmount/100 | currency '' }} </td>
+                                <td>{{trlist.commission33211/100 | currency '' }} </td>
+                                <td>{{trlist.thirdpartyDiscountDiff/100 | currency '' }} </td>
+                                <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
                                 <td><a v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>
+                                    <a @click="check_digest(trlist.merchantID,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>
                                     <!--<a v-link="{'name':'business-limit'}">额度消化商户</a>-->
                                 </td>
-                                <td><a href="javascript:void(0)" @click="control(trlist)">管理</a></td>
+                                <td><a @click="control(trlist)">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
@@ -87,12 +87,12 @@
                                  <td>合计</td>
                                  <td></td>
                                  <td></td>
-                                 <td>{{nums.consumeTotal}}</td>
-                                 <td>{{nums.consumeMoney}}</td>
-                                 <td>{{nums.realMoney}}</td>
-                                 <td>{{nums.value01}}</td>
-                                 <td>{{nums.value02}}</td>
-                                 <td>{{nums.value03}}</td>
+                                 <td>{{nums.consumptionCount}}</td>
+                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                 <td>{{nums.payAmount/100 | currency ''}}</td>
+                                 <td>{{nums.commission33211/100 | currency ''}}</td>
+                                 <td>{{nums.thirdpartyDiscountDiff/100 | currency ''}}</td>
+                                 <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
                                  <td></td>
                                  <td></td>
                                  <td></td>
@@ -123,40 +123,37 @@
                                 <h5 class="modal-title">额度采购消化账户</h5>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <span>商户ID：4392</span>
-                                    <span>商户名：南昌玩聚恒茂店</span>
-                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit'}">南昌玩聚和他(她)朋友的咖啡馆</a></span>
+                                <div v-if="checkLists.length>0">
+                                    <span>商户ID：{{id}}</span>
+                                    <span>商户名：{{merchantName}}</span>
+                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>
                                 </div>
                                 <div style="padding: 10px 0;">历史记录：</div>
-                                <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                <div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">
+                                    无历史记录
+                                </div>
+                                <table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">
                                     <thead>
                                     <tr role="row">
                                         <th>ID</th>
                                         <th>账户名</th>
-                                        <th>更新时间</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
                                         <th>更新人</th>
                                         <th>变更凭证</th>
                                         <th>更新备注</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr role="row">
-                                        <td>1</td>
-                                        <td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>
-                                        <td>2013-06-03 13:26:19</td>
-                                        <td>贾燕</td>
-                                        <td><a href="">下载</a></td>
-                                        <td>总店额度采购</td>
+                                    <tr role="row" v-for="n in checkLists">
+                                        <td>{{n.merchantID}}</td>
+                                        <td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>
+                                        <td>{{n.startDate | datetime}}</td>
+                                        <td>{{n.closeTime | datetime}}</td>
+                                        <td>{{n.updateBy}}</td>
+                                        <td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>
+                                        <td>{{n.remarks}}</td>
                                     </tr>
-                                    <!--<tr role="row"  v-for="n in checkLists">-->
-                                        <!--<td>{{n.certificate}}</td>-->
-                                        <!--<td>{{n.collectionName}}</td>-->
-                                        <!--<td>{{n.tradeTime || datetime}}</td>-->
-                                        <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
-                                        <!--<td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>-->
-                                        <!--<td>{{n.remarks}}</td>-->
-                                    <!--</tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -378,6 +375,8 @@
             this.common_model=common_model(this)
             return{
                 origin:window.origin,
+                id:'',
+                merchantName:'',
                 pagecur:1,
                 page_size:15,
                 pageall:1,
@@ -415,12 +414,12 @@
                 accountId:'',
                 bthf:true,
                 nums:{
-                    consumeTotal:0,
-                    consumeMoney:0,
-                    realMoney:0,
-                    value01:0,
-                    value02:0,
-                    value03:0
+                    consumptionCount:0,
+                    consumptionAmount:0,
+                    payAmount:0,
+                    commission33211:0,
+                    thirdpartyDiscountDiff:0,
+                    limitPurchaseDiscountDiff:0
                 },
                 updateList:
                 {
@@ -440,6 +439,16 @@
                     subsidyRate:'',
                     merchantID:''
                 },
+                checkLists:[
+                    {
+                        "id":'',
+                        "name":"",
+                        "updateAt":'',
+                        "updateBy":""    ,
+                        "certificates":"",
+                        "remarks":""
+                    }
+                ],
                 updataerror:false,
                 uploadText:'',
                 errortext:''
@@ -492,7 +501,7 @@
                 this.accountId=_list.merchantID;
                 this.bthf=true;
                 this.accountType=1;
-                this.checkcontrol( _list.merchantID)
+                this.checkcontrol(_list.merchantID)
             },
             checkcontrol(_id){
                 this.model.merchant_account(_id)
@@ -616,6 +625,21 @@
                 else{
                     return  e.target.value='';
                 }
+            },
+            check_digest(_id,_merchantName){
+                this.id=_id;
+                this.merchantName=_merchantName;
+                this.model.merchant_digest(_id)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('checkLists',res.data.data):null;
+                            $('#modal_checking').modal('show');
+                    })
+            },
+            getNums(){
+                this.model.merchant_total(this.defaultData)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('nums',res.data.data):null;
+                        })
             }
         },
         ready() {
@@ -623,7 +647,8 @@
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             vm.initList();
             vm.getClist();
-            vm.getCity()
+            vm.getCity();
+            vm.getNums();
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })
@@ -643,21 +668,7 @@
         },
         watch:{
             zdlists(){
-                var a=0,b=0,c=0,d=0,g=0,f=0;
-                this.zdlists.forEach(function(e){
-                    a+=e.consumeTotal;
-                    b+=e.consumeMoney;
-                    c+=e.realMoney;
-                    d+=e.value01;
-                    f+=e.value02;
-                    g+=e.value03;
-                });
-                this.nums.consumeTotal=(a/100).toFixed(2);
-                this.nums.consumeMoney=(b/100).toFixed(2);
-                this.nums.realMoney=(c/100).toFixed(2);
-                this.nums.value01=(d/100).toFixed(2);
-                this.nums.value02=(f/100).toFixed(2);
-                this.nums.value03=(g/100).toFixed(2);
+                this.getNums()
             },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;

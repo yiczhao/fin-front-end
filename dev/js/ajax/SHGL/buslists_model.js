@@ -12,7 +12,7 @@ function model(_this){
          * */
         merchant_lists(data){
             return _this.$http.get(_this.$API.merchant_lists+ decodeURIComponent($.param(data)))
-        },
+},
         /**
          * @description 查询划款账户数据
          * @params {data}
@@ -29,6 +29,23 @@ function model(_this){
         merchant_update(data){
             return _this.$http.post(_this.$API.merchant_update,data)
         },
+        /**
+         * @description 查看消化账户数据
+         * @params {data}
+         * @returns {*}
+         * */
+        merchant_digest(_id){
+            return _this.$http.get(_this.$API.merchant_digest+_id)
+        },
+        /**
+         * @description 查看合计数据
+         * @params {data}
+         * @returns {*}
+         * */
+        merchant_total(data){
+            return _this.$http.get(_this.$API.merchant_total+ decodeURIComponent($.param(data)))
+        },
+
     }
 }
 module.exports=model;
