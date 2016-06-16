@@ -269,7 +269,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="tarea" class="w28">转账特殊备注：</label>
-                                        <input v-model="updateList.specialRmarks" class="form-control" type="text" placeholder="转账特殊备注">
+                                        <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" @click="updateTrue(updateList)" class="btn btn-primary">保存</button>
@@ -439,7 +439,7 @@
                     settlementCycle:0,
                     subsidyRate:'',
                     merchantID:'',
-                    specialRmarks:''
+                    specialRemarks:''
                 },
                 updataerror:false,
                 uploadText:'',
@@ -569,12 +569,11 @@
                         accountType:'',
                         settlementCycle:0,
                         subsidyRate:'',
-                        specialRmarks:'',
+                        specialRemarks:'',
                         merchantID:this.accountId
                     }
                 }else{
                     $.extend(true, this.updateList, a);
-                    this.updateList.specialRmarks='';
                     this.updateList.updateInfo='';
                 }
                 this.uploadText='';
