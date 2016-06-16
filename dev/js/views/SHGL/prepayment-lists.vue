@@ -514,8 +514,8 @@
             },
             //显示选择商户窗口
             showMerchants: function () {
-                this.merchantInfo.companyId = "-1",
-                        this.merchantInfo.cityId = "-1",
+                this.merchantInfo.companyId = "",
+                        this.merchantInfo.cityId = "",
                         this.merchantInfo.merchantOperationID = "",
                         this.merchantInfo.merchantName = "",
                         this.queryForMerchantList();

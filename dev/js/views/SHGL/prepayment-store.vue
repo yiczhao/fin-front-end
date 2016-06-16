@@ -323,8 +323,8 @@
             },
             addUser(){
                 this.shdata={
-                    'companyId':'-1',
-                    'cityId':'-1',
+                    'companyId':'',
+                    'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isAdvancePayment':'0',
