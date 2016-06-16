@@ -365,7 +365,7 @@
                     "endDate": ''
                 },
                 zdlists: [],
-                dateS: '',
+                dateS: '1',
                 applyAdvancePay: {
                     merchantName: "",//商户名
                     balanceAmount: "",//余额
@@ -477,7 +477,7 @@
         },
         ready: function () {
             (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
-            this.dateS='1';
+            this.getTime();
             this.initList();
             this.getBlance();
         },
