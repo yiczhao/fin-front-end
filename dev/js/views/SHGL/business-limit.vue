@@ -105,10 +105,10 @@
                                 </td>
                                 <td>
                                     <a href="javascript:void(0)" @click="updateNew(trlist.id)">编辑</a>
-                                    <a v-link="{'name':'limitaccount-info',params:{merchantID:trlist.limitPurchaseMerchantId}}">明细</a>
+                                    <a v-link="{'name':'limitaccount-info',params:{id:trlist.id}}">明细</a>
                                     <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
                                     <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
-                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{merchantID:trlist.limitPurchaseMerchantId}}">账户</a>
+                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
                                 </td>
                                 <td><a @click="seexh(trlist.id,true)" href="javascript:void(0)">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
@@ -281,7 +281,7 @@
                                                             <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                             <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
                                                         </td>
-                                                        <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
+                                                        <td><a href="javascript:void(0)" @click="seehistoryxh(n.id,true)">查看</a></td>
                                                         <td>{{n.startDate | datetime}}--{{n.endDate | datetime}}</td>
                                                         <td>{{n.updateBy}}</td>
                                                         <td><a v-if="n.certificateID!=''" href="{{origin}}/file/download/{{n.certificateID}}" >下载</a></td>

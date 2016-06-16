@@ -505,7 +505,7 @@ export default function install(Vue) {
     /**
      * @description 列表数据接口地址
      * @author 冷艳君
-     * @method POST
+     * @method GET
      */
     _o.limitPurchaseAccount = './limitPurchaseAccount/list?';
     /**

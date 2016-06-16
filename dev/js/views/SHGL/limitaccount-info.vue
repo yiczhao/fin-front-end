@@ -4,10 +4,6 @@
            :hname="'account-management'"
            :isshow="'isshow'">
         <div class="content" slot="content">
-            <div class="check-panel">
-                <a v-link="{name:'limitaccount-management'}">账户列表</a>
-                <span>账户明细</span>
-            </div>
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">

@@ -4,18 +4,14 @@
            :hname="'business-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
-            <div class="check-panel">
-                <span>账户列表</span>
-                <a v-link="{name:'limitaccount-info'}">账户明细</a>
-            </div>
          <div class="panel">
                 <div class="panel-heading">
                     <div>
-                        <span>商户名：南昌玩聚和他(她)朋友们咖啡馆</span>
-                        <span>累计总额度：{{nums.val1}}</span>
-                        <span>累计使用：{{nums.val2}}</span>
-                        <span>使用比：{{nums.val3}}%</span>
-                        <span>剩余额度：{{nums.val4}}</span>
+                        <span>商户名：{{accountName}}</span>
+                        <span v-if="zdlists.length>0">累计总额度：{{nums.val1}}</span>
+                        <span v-if="zdlists.length>0">累计使用：{{nums.val2}}</span>
+                        <span v-if="zdlists.length>0">使用比：{{nums.val3}}%</span>
+                        <span v-if="zdlists.length>0">剩余额度：{{nums.val4}}</span>
                     </div>
                 </div>
                 <div class="dataTables_wrapper no-footer">
@@ -129,7 +125,7 @@
                                         结算充值</label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tarea" class="w28"><i>*</i>备注：</label>
+                                        <label for="tarea" class="w28" style="position: relative;top: -70px;"><i>*</i>备注：</label>
                                         <textarea class="form-control" v-validate:val4="['required']" v-model="addData.remarks" width="70%" cols="20" rows="3"></textarea>
                                     </div>
                                     <div class="form-group tc">
@@ -221,7 +217,8 @@
                 page_size:15,
                 pageall:1,
                 loginList:{},
-                defaultData:{'id': '','keyword': '','pageIndex': 1, 'pageSize': 15},
+                accountName:'',
+                defaultData:{'limitPurchaseMerchantInfoID': '','accountName': '','pageIndex': 1, 'pageSize': 15},
                 zdlists:[],
                 accountId:'',
                 zdhf:'one',
@@ -313,8 +310,8 @@
                 data.purchaseCost=parseInt(data.purchaseCost)*100;
                 this.model.recharge(data)
                         .then(function (response) {
-                            this.initList();
                             dialogs('success','已充值！');
+                            this.initList();
                         }, function (response) {
                             console.log(response);
                         });
@@ -322,7 +319,8 @@
         },
         ready() {
             let vm=this;
-//            vm.accountId=vm.defaultData.id=vm.$route.params.merchantID;
+            (this.$route.params.limitPurchaseMerchantInfoID != ':limitPurchaseMerchantInfoID') ? this.defaultData.limitPurchaseMerchantInfoID = this.$route.params.limitPurchaseMerchantInfoID : null;
+            (this.$route.params.accountName != ':accountName') ? this.accountName = this.$route.params.accountName : null;
             vm.initList();
             $('#modal_pay').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
@@ -342,8 +340,7 @@
                 this.nums.val1=(a/100).toFixed(2);
                 this.nums.val4=(b/100).toFixed(2);
                 this.nums.val2=(this.nums.val1-this.nums.val4).toFixed(2);
-                this.nums.val3=((this.nums.val2/this.nums.val1)*100).toFixed(2);
-
+                (this.nums.val1!='0.00')?this.nums.val3=((this.nums.val2/this.nums.val1)*100).toFixed(2):null;
             },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;

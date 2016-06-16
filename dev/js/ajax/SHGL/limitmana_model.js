@@ -46,7 +46,7 @@ function model(_this) {
             return _this.$http.get(_this.$API.limitPurchase_selectRechargeInfoByID + _id)
         },
         recharge (data) {
-            return _this.$http.get(_this.$API.recharge,data)
+            return _this.$http.post(_this.$API.recharge,data)
         },
     }
 
