@@ -521,6 +521,21 @@ export default function install(Vue) {
      */
     _o.recharge = './limitPurchaseAccount/charge';
 
+    //- todo  商户管理-额度采购-账户明细 prepayment-lists
+    /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.limitPurchaseAccount_detail = './limitPurchaseAccount/detail?';
+    /**
+     * @description 列表合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.limitPurchaseAccount_getsumBalance = './limitPurchaseAccount/sumBalance?';
+
+
     //- todo  三方管理-账户列表 third-party
     /**
      * @description 列表数据接口地址
