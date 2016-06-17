@@ -249,14 +249,14 @@
             initList(){
                 $('.modal').modal('hide');
                 this.addData={
-                    'limitPurchaseAccountID':'',
+                    'limitPurchaseAccountInfoID':'',
                             'purchaseLimit':'',
                             'purchaseCost':'',
                             'discount':'',
                             'payType':'1',
                             'rechargeType':'1',
                             'remarks':'',
-                            'certificates_id':''
+                            'certificatesID':''
                 };
                 this.getZlists(this.defaultData);
             },
@@ -293,7 +293,7 @@
                     }
                     vm.common_model.upload(datas)
                             .then((response)=>{
-                                vm.addData.certificates_id=response.data.data;
+                                vm.addData.certificatesID=response.data.data;
                                 vm.saveerror='';
                                 vm.uploadText=files.name;
                                 dialogs('success','上传成功！');
@@ -303,8 +303,8 @@
             addBtn(){
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                if(this.addData.certificates_id==''&&this.addData.payType=='2'){this.fire=true;this.errortext='请上传凭证';return;}
-                let data={};this.addData.limitPurchaseAccountID=this.accountId;
+                if(this.addData.certificatesID==''&&this.addData.payType=='2'){this.fire=true;this.errortext='请上传凭证';return;}
+                let data={};this.addData.limitPurchaseAccountInfoID=this.accountId;
                 $.extend(true, data,this.addData);
                 data.purchaseLimit=parseInt(data.purchaseLimit)*100;
                 data.purchaseCost=parseInt(data.purchaseCost)*100;
@@ -325,7 +325,7 @@
             $('#modal_pay').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';
-                vm.addData.certificates_id='';
+                vm.addData.certificatesID='';
             })
         },
         components:{
