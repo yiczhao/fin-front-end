@@ -407,7 +407,7 @@
                                 <h5 class="modal-title">查看消化商户</h5>
                             </div>
                             <div class="modal-body">
-                                <div class="addtop">
+                                <div class="addtop" v-show="ischange">
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="xhdata.subCompanyID" @change="getxhCity(xhdata.subCompanyID)">
                                             <option value="">全部分公司</option>
@@ -456,7 +456,7 @@
                                             该账户没有消化商户
                                         </span>
                                     </div>
-                                    <div v-if="isTrue" class="tc" style="float: left;width: 100%;margin-top: 20px;">
+                                    <div v-if="isTrue&&ischange" class="tc" style="float: left;width: 100%;margin-top: 20px;">
                                         <input type="button" class="btn btn-gray" data-dismiss="modal" value="关闭">
                                         <input type="button" class="btn btn-gray" @click="updateXh()" data-dismiss="modal" value="调整消化商户">
                                     </div>
@@ -626,6 +626,7 @@
                     balanceLimit:0
                 },
                 saveerror:'',
+                ischange:true,
             }
         },
         methods:{
@@ -724,6 +725,7 @@
                 this.seexhList=[];
                 this.accountId=_id;
                 this.isTrue=isTrue;
+                this.ischange=false;
                 this.model.seehistoryxh(_id)
                         .then((response)=>{
                             (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
@@ -765,6 +767,7 @@
                 this.seexhList=[];
                 this.accountId=_id;
                 this.isTrue=isTrue;
+                this.ischange=true;
                 this.xhdata.limitPurchaseMerchantInfoID=_id;
                 this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
