@@ -108,7 +108,7 @@ export default function(router){
             }
         },
         /* 商户管理-额度采购账户明细 */
-        '/limitaccount-info/:id':{
+        '/limitaccount-info/:limitPurchaseMerchantInfoID/:accountName':{
             name:'limitaccount-info',
             component: function(resolve){
                 require(['./views/SHGL/limitaccount-info.vue'],resolve);

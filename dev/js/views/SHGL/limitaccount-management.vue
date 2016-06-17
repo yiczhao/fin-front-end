@@ -2,6 +2,8 @@
     <index :title="'额度采购账户列表'"
            :ptitle="'商户管理'"
            :hname="'business-lists'"
+           :p2title="'额度采购'"
+           :h2name="'business-limit'"
            :isshow="'isshow'">
         <div class="content" slot="content">
          <div class="panel">

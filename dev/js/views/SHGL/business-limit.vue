@@ -105,9 +105,8 @@
                                 </td>
                                 <td>
                                     <a href="javascript:void(0)" @click="updateNew(trlist.id)">编辑</a>
-                                    <a v-link="{'name':'limitaccount-info',params:{id:trlist.id}}">明细</a>
+                                    <a v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">明细</a>
                                     <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
-                                    <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
                                     <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
                                 </td>
                                 <td><a @click="seexh(trlist.id,true)" href="javascript:void(0)">查看</a></td>
@@ -281,7 +280,7 @@
                                                             <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                             <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
                                                         </td>
-                                                        <td><a href="javascript:void(0)" @click="seehistoryxh(n.limitPurchaseMerchantConfigID,true)">查看</a></td>
+                                                        <td><a href="javascript:void(0)" @click="seehistoryxh(n.limitPurchaseMerchantConfigID)">查看</a></td>
                                                         <td>{{n.startDate | datetime}}--{{n.endDate | datetime}}</td>
                                                         <td>{{n.updateBy}}</td>
                                                         <td><a v-if="n.certificateID!=''" href="{{origin}}/file/download/{{n.certificateID}}" >下载</a></td>
@@ -466,6 +465,45 @@
                     </div>
                 </div>
 
+                <div data-backdrop="static"  id="modal_seehistory" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">查看消化商户</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="addbottom">
+                                    <div class="col-md-12">
+                                        <table v-if="seexhList.length>0" class="table" style="border: 1px solid #ccc;">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>商户ID</th>
+                                                <th>分公司</th>
+                                                <th>城市</th>
+                                                <th>商户名</th>
+                                                <th>开始时间</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="n in seehistoryList" role="row">
+                                                <td>{{n.merchantID}}</td>
+                                                <td>{{n.subCompanyName}}</td>
+                                                <td>{{n.cityName}}</td>
+                                                <td>{{n.merchantName}}</td>
+                                                <td>{{n.startDate|datetime}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <span v-else>
+                                            该账户没有消化商户
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </index>
@@ -603,6 +641,7 @@
                 xhcity:[],
                 isTrue:false,
                 seexhList:[],
+                seehistoryList:[],
                 xhlist:[],
                 updateList:{
                     remarks: '',
@@ -626,7 +665,6 @@
                     balanceLimit:0
                 },
                 saveerror:'',
-                ischange:true,
             }
         },
         methods:{
@@ -721,15 +759,13 @@
                         })
 
             },
-            seehistoryxh(_id,isTrue){
-                this.seexhList=[];
+            seehistoryxh(_id){
+                this.seehistoryList=[];
                 this.accountId=_id;
-                this.isTrue=isTrue;
-                this.ischange=false;
                 this.model.seehistoryxh(_id)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
-                            if(this.isTrue){$('#modal_see').modal('show');}
+                            (response.data.code==0) ? this.$set('seehistoryList', response.data.data) : null;
+                            $('#modal_seehistory').modal('show');
                         })
             },
             updateXh(){
@@ -767,7 +803,6 @@
                 this.seexhList=[];
                 this.accountId=_id;
                 this.isTrue=isTrue;
-                this.ischange=true;
                 this.xhdata.limitPurchaseMerchantInfoID=_id;
                 this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
@@ -790,7 +825,7 @@
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
-                    'isDigest':null,
+                    'isDigest':0,
                 };
                 this.getxhCity();
                 this.clearUl();
@@ -803,7 +838,7 @@
                     'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
-                    'isLimitPurchase':null,
+                    'isLimitPurchase':0,
                     'isDigest':0,
                 };
                 this.getxhCity();
@@ -908,12 +943,12 @@
             vm.initList();
             vm.getClist();
             vm.getCity();
-            $('#modal_add,#modal_see').on('hidden.bs.modal',function(){
+            $('#modal_add,#modal_see,#modal_seehistory').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');
                 }
             })
-            $('#modal_update,#modal_add,#modal_waring,#modal_see').on('hidden.bs.modal', function () {
+            $('#modal_update,#modal_add,#modal_waring,#modal_see,#modal_seehistory').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 if($(this).hasClass('modal_update')){
                     vm.uploadText='';

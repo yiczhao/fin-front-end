@@ -1,11 +1,16 @@
 <template>
     <index :title="'额度采购账户明细'"
            :ptitle="'商户管理'"
-           :hname="'account-management'"
+           :hname="'business-lists'"
+           :p2title="'额度采购'"
+           :h2name="'business-limit'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
+                    <div>
+                        <span>商户名：{{accountName}}</span>
+                    </div>
                     <form class="form-inline manage-form">
                         <div class="m20">
                             <div class="form-group">
@@ -343,6 +348,7 @@
             this.model =model(this)
             this.common_model=common_model(this)
             return{
+                accountName:'',
                 loginList:{},
                 zdlists:[],
                 dzList:{},
@@ -357,6 +363,7 @@
                 zhichu:0,
                 gllists:[],
                 checkForm:{
+                    limitPurchaseMerchantInfoID:'',
                     accountId:'',
                     certificate:'',
                     keyword:'',
@@ -404,6 +411,8 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            (this.$route.params.limitPurchaseMerchantInfoID != ':limitPurchaseMerchantInfoID') ? this.checkForm.limitPurchaseMerchantInfoID = this.$route.params.limitPurchaseMerchantInfoID : null;
+            (this.$route.params.accountName != ':accountName') ? this.accountName = this.$route.params.accountName : null;
             this.accountId=this.checkForm.accountId=this.$route.params.accountId
             this.getTime();
             this.initList();
