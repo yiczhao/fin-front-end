@@ -189,8 +189,6 @@
                                 <input v-else type="text" style="width: 70%;display: inline-block;" v-model="applyPayInfo.displayName" class="form-control" placeholder="收款方">
                             </div>
                             <div class="form-group">
-                                <label class="remarks">备&nbsp;&nbsp;  注：</label>
-                                <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
                             </div>
                         </div>
                         <div class="modal-foot">
@@ -318,12 +316,12 @@
                   AccountS.push($(this).prop("class"));  
                 });
                 if(AccountS.length<=0){
-                    dialogs("请选择一条或多条记录，进行申请划付！");
+                    dialogs('error',"请选择一条或多条记录，进行申请划付！");
                    return false
                 }
                 for (var i = 1; i < AccountS.length; i++) {
                    if (AccountS[i] != AccountS[0]) {  // 遇到了不等于x[0]的元素，设置 flag = 1，然后跳出循环
-                        dialogs("选择的划付记录收款账户要一致！");
+                        dialogs('error',"选择的划付记录收款账户要一致！");
                         return false
                    }
                 }

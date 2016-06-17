@@ -187,7 +187,7 @@
                                             <th>更新时间</th>
                                             <th>更新人</th>
                                             <th>变更凭证</th>
-                                            <th>更新备注</th>
+                                            <th>更新说明</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -200,7 +200,7 @@
                                                 <td>{{n.createAt | datetime}}</td>
                                                 <td>{{n.createBy}}</td>
                                                 <td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>
-                                                <td>{{n.remarks}}</td>
+                                                <td>{{n.updateInfo}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -264,8 +264,12 @@
                                         <span v-text="uploadText" v-show="uploadText!=''"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tarea" class="w28" style="position: relative;top: -40px;">备注：</label>
-                                        <textarea class="form-control" v-model="updateList.remarks"></textarea>
+                                        <label for="tarea" class="w28" style="position: relative;top: -40px;">更新说明：</label>
+                                        <textarea class="form-control" v-model="updateList.updateInfo"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tarea" class="w28">转账特殊备注：</label>
+                                        <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
                                     </div>
                                     <div class="form-group tc">
                                         <button type="button" @click="updateTrue(updateList)" class="btn btn-primary">保存</button>
@@ -429,12 +433,13 @@
                     createAt: '',
                     certificates: '',
                     expired: '',
-                    remarks: '',
+                    updateInfo: '',
                     isCcb:'',
                     accountType:'',
                     settlementCycle:0,
                     subsidyRate:'',
-                    merchantID:''
+                    merchantID:'',
+                    specialRemarks:''
                 },
                 updataerror:false,
                 uploadText:'',
@@ -559,15 +564,17 @@
                         createAt: '',
                         certificates: '',
                         expired: '',
-                        remarks: '',
+                        updateInfo: '',
                         isCcb:'',
                         accountType:'',
                         settlementCycle:0,
                         subsidyRate:'',
+                        specialRemarks:'',
                         merchantID:this.accountId
                     }
                 }else{
                     $.extend(true, this.updateList, a);
+                    this.updateList.updateInfo='';
                 }
                 this.uploadText='';
                 this.updateList.certificates='';
