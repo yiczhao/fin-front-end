@@ -224,7 +224,7 @@
                                             <td>{{n.startDate|datetime}}</td>
                                             <th><a href="javascript:void(0)" @click="delxh(2,$event)">删除</a></th>
                                         </tr>
-                                        <tr v-else>
+                                        <tr v-if="!seexhList.length>0">
                                             <td colspan="7" valign="center">该账户没有消化商户</td>
                                         </tr>
                                         </tbody>
