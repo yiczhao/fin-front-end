@@ -196,7 +196,7 @@
                                         </template>
                                         <template v-if="n.status==6">
                                             <input data-toggle="modal" data-target="#modal_waring" type="button" @click="update(n.id)" class="btn btn-gray" value="更新订单">
-                                            <input data-toggle="modal" data-target="#modal_submit" type="button" @click="apply(n.id)" class="btn btn-gray" value="申请划付">
+                                            <input  type="button" @click="applyTrue(n.id)" class="btn btn-gray" value="申请划付">
                                             <input data-toggle="modal" data-target="#modal_waring" type="button" @click="close(n.id)" class="btn btn-gray" value="关闭订单">
                                         </template>
                                     </div>
@@ -245,19 +245,16 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="col-lg-3 control-label" v-if="subtitle=='退回重审'"><i>*</i>退回原因</label>
-                                <label class="col-lg-3 control-label" v-if="subtitle=='申请划付'"><i>*</i>备注</label>
                                 <div class="col-lg-9">
                                     <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
                                 </div>
                             </div>
                             <div class="form-group tc">
                                 <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
-                                <button  v-if="subtitle=='申请划付'" type="button" @click="applyTrue" class="btn btn-primary">申请</button>
                             </div>
                             <div class="form-group tc">
                                 <span v-show="!remarks&&fires" class="validation-error-label">
                                     <template v-if="subtitle=='退回重审'">请填写退回原因</template>
-                                    <template v-else>请填写备注</template>
                                 </span>
                             </div>
                         </div>
@@ -485,12 +482,6 @@
                 this.fires=false;
                 this.accountId=a;
             },
-            apply(a){
-                this.subtitle = '申请划付';
-                this.remarks='';
-                this.fires=false;
-                this.accountId=a;
-            },
             update(a){
                 this.waring = '你确认更新账单？';
                 this.accountId=a;
@@ -582,11 +573,9 @@
                                 }
                             })
             },
-            applyTrue(){
-                if(this.remarks==''){this.fires=true;return;}
+            applyTrue(_id){
                 let data={
-                    'id':this.accountId,
-                    'remarks':this.remarks,
+                    'id':_id,
                 }
                 this.model.reservecash_applypay(data)
                         .then( (response)=> {

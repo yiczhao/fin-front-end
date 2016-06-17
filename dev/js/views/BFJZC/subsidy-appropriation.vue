@@ -196,10 +196,6 @@
                                              <span v-if="dialogTitle=='申请划付'" v-text="applyPayInfo.displayName"></span>
                                              <input v-else type="text" style="width: 70%;display: inline-block;" v-model="applyPayInfo.displayName" class="form-control" placeholder="收款方">
                                          </div>
-                                         <div class="form-group">
-                                             <label class="remarks">备&nbsp;&nbsp;  注：</label>
-                                             <textarea class="remarks-form-control" cols="20" rows="3" v-model="applyPayRemarks"></textarea>
-                                         </div>
                                      </div>
                                      <div class="modal-foot">
                                         <input v-if="dialogTitle=='申请划付'" type="button" class="btn btn-primary" @click="submitOne()" value="提交">
