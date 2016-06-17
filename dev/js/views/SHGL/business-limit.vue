@@ -217,7 +217,7 @@
                                         </thead>
                                         <tbody>
                                         <tr v-if="seexhList.length>0" v-for="n in seexhList" role="row">
-                                            <td class="merchantIds">{{n.merchantID}}</td>
+                                            <td class="merchantIds">{{n.merchantOperationID}}</td>
                                             <td>{{n.merchantName}}</td>
                                             <td>{{n.subCompanyName}}</td>
                                             <td>{{n.cityName}}</td>
@@ -443,7 +443,7 @@
                                             </thead>
                                             <tbody>
                                             <tr v-for="n in seexhList" role="row">
-                                                <td>{{n.merchantID}}</td>
+                                                <td>{{n.merchantOperationID}}</td>
                                                 <td>{{n.subCompanyName}}</td>
                                                 <td>{{n.cityName}}</td>
                                                 <td>{{n.merchantName}}</td>
@@ -487,7 +487,7 @@
                                             </thead>
                                             <tbody>
                                             <tr v-for="n in seehistoryList" role="row">
-                                                <td>{{n.merchantID}}</td>
+                                                <td>{{n.merchantOperationID}}</td>
                                                 <td>{{n.subCompanyName}}</td>
                                                 <td>{{n.cityName}}</td>
                                                 <td>{{n.merchantName}}</td>
