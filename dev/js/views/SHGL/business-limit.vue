@@ -281,7 +281,7 @@
                                                             <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                             <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
                                                         </td>
-                                                        <td><a href="javascript:void(0)" @click="seehistoryxh(n.id,true)">查看</a></td>
+                                                        <td><a href="javascript:void(0)" @click="seehistoryxh(n.limitPurchaseMerchantConfigID,true)">查看</a></td>
                                                         <td>{{n.startDate | datetime}}--{{n.endDate | datetime}}</td>
                                                         <td>{{n.updateBy}}</td>
                                                         <td><a v-if="n.certificateID!=''" href="{{origin}}/file/download/{{n.certificateID}}" >下载</a></td>
