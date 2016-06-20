@@ -9,7 +9,6 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
                                     <option value="0">昨天</option>
@@ -26,8 +25,6 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.payAccountNumber" placeholder="付款账号">
                             </div>
-                        </div>
-                        <div  class="">
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
                             </div>
@@ -64,7 +61,6 @@
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
                             <!--</div>-->
-                        </div>
                     </form>
                 </div>
                 <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>

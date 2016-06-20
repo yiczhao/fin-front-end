@@ -7,7 +7,6 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.merchantId">
                                     <option value="">请选择账户</option>
@@ -30,8 +29,6 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-                        </div>
-                        <div  class="">
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="银行凭证号">
                             </div>
@@ -64,7 +61,6 @@
                             <div class="form-group">
                                 <input type="button" class="btn btn-info" @click="initList" value="查询">
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>

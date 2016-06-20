@@ -7,7 +7,6 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <input type="button" @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info" value="回款充值">
                             </div>
@@ -27,7 +26,6 @@
                                 <datepicker :readonly="true" :value.sync="defaultData.endDate"
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
-                        </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>

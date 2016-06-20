@@ -49,8 +49,6 @@
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="subsidyTaxRebateId" style="width: 100px" placeholder="补贴退税ID">
                         </div>
-                        <br/>
-                        <br/>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
@@ -67,9 +65,7 @@
                             <input type="number" class="form-control" v-model="phone" placeholder="手机号">
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <input type="text" class="form-control" style="width: 100px"  placeholder="活动ID" v-model="activityOperationID">
-                            </div>
+                            <input type="text" class="form-control" style="width: 100px"  placeholder="活动ID" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" v-on:click="query" value="查询">

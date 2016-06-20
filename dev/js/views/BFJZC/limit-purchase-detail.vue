@@ -33,8 +33,6 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="id" placeholder="ID">
                                 </div>
-                                <br/>
-                                <br/>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
@@ -94,7 +92,7 @@
                                         <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
                                         <td>{{lpd.purchaseLimit/100 | currency ''}}</td>
                                         <td>{{lpd.purchaseCost/100 | currency ''}}</td>
-                                        <td><a :href="lpd.limitPurchaseAccountID">查看</a></td>
+                                        <td><a v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':lpd.limitPurchaseAccountInfoID,'accountName':lpd.merchantName}}">查看</a></td>
                                         <td>
                                             <template v-if="lpd.status==1">
                                                 已关闭

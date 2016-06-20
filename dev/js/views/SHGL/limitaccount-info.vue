@@ -12,7 +12,6 @@
                         <span>商户名：{{accountName}}</span>
                     </div>
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
                                     <option value="0">昨天</option>
@@ -26,7 +25,6 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-                        </div>
                         <div  class="">
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -113,7 +111,8 @@
                                     <td>{{trlist.tradeTime|datetime}}</td>
                                     <td>
                                         <a v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'1'}}" v-if="trlist.payType==1">查看</a>
-                                        <a href="{{origin}}/file/download/{{trlist.certificateID}}" v-if="trlist.payType==2">下载</a>
+                                        <a v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'4'}}" v-if="trlist.payType==2">查看</a>
+                                        <a href="{{origin}}/file/download/{{trlist.certificatesID}}" v-if="trlist.payType==2&&trlist.certificatesID!=0">下载</a>
                                         <a v-link="{name:'trade-info',params:{'serialNumber':trlist.serialNumber}}" v-if="trlist.payType!=1&&trlist.payType==3">查看</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>

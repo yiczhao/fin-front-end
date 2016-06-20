@@ -33,8 +33,6 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="subsidyTaxRebateID"  placeholder="ID">
                                 </div>
-                                <br/>
-                                <br/>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>

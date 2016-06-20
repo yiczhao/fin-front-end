@@ -9,7 +9,6 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <input type="button" data-toggle="modal" data-target="#modal_add" class="btn btn-info"
                                        @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" value="预付充值">
@@ -30,7 +29,6 @@
                                 <datepicker :readonly="true" :value.sync="defaultData.endDate"
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
-                        </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号">
                         </div>
