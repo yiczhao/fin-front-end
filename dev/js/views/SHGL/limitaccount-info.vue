@@ -112,8 +112,9 @@
                                     </td>
                                     <td>{{trlist.tradeTime|datetime}}</td>
                                     <td>
-                                        <a href="">查看</a>
+                                        <a v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'1'}}" v-if="trlist.payType==1">查看</a>
                                         <a href="{{origin}}/file/download/{{trlist.certificateID}}" v-if="trlist.payType==2">下载</a>
+                                        <a v-link="{name:'trade-info',params:{'serialNumber':trlist.serialNumber}}" v-if="trlist.payType!=1&&trlist.payType==3">查看</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
