@@ -93,11 +93,11 @@
                                 <td>{{trlist.firstRechargeTime | datetime}}</td>
                                 <td>
                                     <template v-if="trlist.discountType==1">全单</template>
-                                    <template v-else>可打折</template>
+                                    <template v-if="trlist.discountType==2">可打折</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.isAutoPay==0">关闭</template>
-                                    <template v-else>开启</template>
+                                    <template v-if="trlist.isAutoPay==1">开启</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">停用</template>
@@ -271,11 +271,11 @@
                                                         <td>
                                                             <p>抵扣方式：
                                                                 <template v-if="n.discountType==1">全单</template>
-                                                                <template v-else>可打折</template>
+                                                                <template v-if="n.discountType==2">可打折</template>
                                                             </p>
                                                             <p>自动划付：
                                                                 <template v-if="n.isAutoPay==0">关闭</template>
-                                                                <template v-else>开启</template>
+                                                                <template v-if="n.isAutoPay==1">开启</template>
                                                             </p>
                                                             <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
                                                             <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
@@ -475,7 +475,7 @@
                             <div class="modal-body">
                                 <div class="addbottom">
                                     <div class="col-md-12">
-                                        <table v-if="seexhList.length>0" class="table" style="border: 1px solid #ccc;">
+                                        <table v-if="seehistoryList.length>0" class="table" style="border: 1px solid #ccc;">
                                             <thead>
                                             <tr role="row">
                                                 <th>商户ID</th>
@@ -761,7 +761,6 @@
             },
             seehistoryxh(_id){
                 this.seehistoryList=[];
-                this.accountId=_id;
                 this.model.seehistoryxh(_id)
                         .then((response)=>{
                             (response.data.code==0) ? this.$set('seehistoryList', response.data.data) : null;

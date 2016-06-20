@@ -103,11 +103,18 @@
                                     <td>{{trlist.merchantName}}</td>
                                     <td>{{trlist.purchaseLimit/100 | currency '' }}</td>
                                     <td>{{trlist.purchaseCost/100 | currency ''}}</td>
-                                    <td>{{trlist.accountName}}</td>
+                                    <td><a v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':checkForm.limitPurchaseMerchantInfoID,'accountName':trlist.accountName}}">{{trlist.accountName}}</a></td>
                                     <td>{{trlist.streamType}}</td>
-                                    <td>{{trlist.status}} </td>
-                                    <td>{{trlist.payType}}</td>
+                                    <td>{{trlist.accountStatus}}</td>
+                                    <td>
+                                        <template v-if="trlist.payType==1">现金转账</template>
+                                        <template v-if="trlist.payType==2">资源置换</template>
+                                    </td>
                                     <td>{{trlist.tradeTime|datetime}}</td>
+                                    <td>
+                                        <a href="">查看</a>
+                                        <a href="{{origin}}/file/download/{{trlist.certificateID}}" v-if="trlist.payType==2">下载</a>
+                                    </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 <tr>
@@ -142,43 +149,8 @@
     </index>
 </template>
 <style lang="sass" scoped>
-     div.wrapper{
-        overflow: visible;
-    }
-     div.dialog .content .box-body{
-        padding: 0 20px;
-    }
-     .table2{
-        position: relative;
-        background: rgb(255, 255, 255);
-        padding: 20px 0;
-    }
-     .box .box-header{
-        padding-top: 20px;
-    }
      .m20{
         margin-bottom:20px;
-    }
-     .modal-body .form-group{
-         width: auto;
-         text-align: left;
-     }
-      .modal-body .tc{
-        text-align: center;
-    }
-     .modal-body .tr{
-        text-align: right;
-        margin-left: 10px;
-    }
-     .modal-body .form-group .iblock{
-        width: 20%;
-        display: inline-block;
-    }
-      .modal-body .form-group .w28{
-        width: 28%;
-    }
-     .modal-body .form-group .w28 i{
-        color:red;
     }
      .content{
         padding: 0 15px;
@@ -196,13 +168,6 @@
      .datatable-scroll{
         overflow:auto;
     }
-     .modal-header{
-        margin-bottom: 20px;
-    }
-    table tr td,table tr th{
-        padding: 10px;
-        text-align: center;
-    }
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -213,6 +178,7 @@
             this.model =model(this)
             this.common_model=common_model(this)
             return{
+                origin:window.origin,
                 accountName:'',
                 loginList:{},
                 zdlists:[],
@@ -302,9 +268,6 @@
             'datepicker': datepicker,
         },
         watch:{
-            zdlists(){
-                this.getsumBalance();
-            },
             pagecur(){
                 this.checkForm.pageIndex=this.pagecur;
                 this.initList();

@@ -52,6 +52,8 @@
                                     <th>额采折扣差</th>
                                     <th>交易</th>
                                     <th>佣金值</th>
+                                    <th>结算周期</th>
+                                    <th>补贴税率</th>
                                     <th>额度采购消化账户</th>
                                     <th>划款账户</th>
                                     <th>联系人</th>
@@ -74,6 +76,12 @@
                                 <td><a v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
+                                    <template v-if="trlist.settlementCycle==1">日结</template>
+                                    <template v-if="trlist.settlementCycle==2">周结</template>
+                                    <template v-if="trlist.settlementCycle==3">月结</template>
+                                </td>
+                                <td>{{trlist.subsidyRate}}%</td>
+                                <td>
                                     <a @click="check_digest(trlist.merchantID,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>
                                     <!--<a v-link="{'name':'business-limit'}">额度消化商户</a>-->
                                 </td>
@@ -93,6 +101,8 @@
                                  <td>{{nums.commission33211/100 | currency ''}}</td>
                                  <td>{{nums.thirdpartyDiscountDiff/100 | currency ''}}</td>
                                  <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
+                                 <td></td>
+                                 <td></td>
                                  <td></td>
                                  <td></td>
                                  <td></td>
