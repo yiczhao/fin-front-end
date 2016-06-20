@@ -4,7 +4,6 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、姓名、描述">
                                 </div>

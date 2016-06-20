@@ -305,7 +305,10 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.common_model.getcompany()
+                let data={
+                    'type':'ImportUser'
+                }
+                this.common_model.getcompany(data)
                         .then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     (response.data.code==0) ? this.$set('companylists', response.data.data) : null;

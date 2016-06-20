@@ -145,7 +145,7 @@
                                         </span>
                                     </div>
                                     <div class="col-md-1">
-                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                        <input type="button" class="btn btn-info"  @click="addTrue($event)" value="添加">
                                         <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
                                         <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
                                     </div>

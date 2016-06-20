@@ -7,9 +7,9 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <!--<div class="form-group">-->
-                            <!--<input type="button" class="btn btn-info" @click="addUser" value="添加">-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" @click="addUser" value="添加">
+                        </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
@@ -381,7 +381,10 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.common_model.getcompany()
+                let data={
+                    'type':'ImportUser'
+                }
+                this.common_model.getcompany(data)
                         .then((response)=>{
                 // *** 判断请求是否成功如若成功则填充数据到模型
                 (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -422,12 +425,12 @@
             },
             addUser(){
                 this.shdata={
-                    'companyId':'-1',
-                    'cityId':'-1',
+                    'companyId':'',
+                    'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
-                    'isDigest':null,
+                    'isDigest':0,
                 };
                 this.getshCity();
                 this.clearUl();

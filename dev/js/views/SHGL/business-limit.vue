@@ -482,7 +482,6 @@
                                                 <th>分公司</th>
                                                 <th>城市</th>
                                                 <th>商户名</th>
-                                                <th>开始时间</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -491,7 +490,6 @@
                                                 <td>{{n.subCompanyName}}</td>
                                                 <td>{{n.cityName}}</td>
                                                 <td>{{n.merchantName}}</td>
-                                                <td>{{n.startDate|datetime}}</td>
                                             </tr>
                                             </tbody>
                                         </table>

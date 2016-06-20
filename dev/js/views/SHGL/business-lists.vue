@@ -82,7 +82,7 @@
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
                                 <td>
-                                    <a @click="check_digest(trlist.merchantID,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>
+                                    <a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>
                                     <!--<a v-link="{'name':'business-limit'}">额度消化商户</a>-->
                                 </td>
                                 <td><a @click="control(trlist)">管理</a></td>
@@ -643,10 +643,10 @@
                     return  e.target.value='';
                 }
             },
-            check_digest(_id,_merchantName){
-                this.id=_id;
+            check_digest(_list,_merchantName){
+                this.id=_list.merchantOperationID;
                 this.merchantName=_merchantName;
-                this.model.merchant_digest(_id)
+                this.model.merchant_digest(_list.merchantID)
                         .then((res)=>{
                             (res.data.code==0)?this.$set('checkLists',res.data.data):null;
                             $('#modal_checking').modal('show');
