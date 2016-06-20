@@ -796,6 +796,7 @@
                 this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
                                 this.initList();
+                                dialogs('success','已启用！');
                         })
             },
             seexh(_id,isTrue){

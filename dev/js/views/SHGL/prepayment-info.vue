@@ -243,11 +243,6 @@
         color: red;
         margin-left: 5px;
     }
-
-    .modal-body button {
-        width: 35%;
-    }
-
     td span {
         cursor: pointer;
         color: #3c8dbc;
