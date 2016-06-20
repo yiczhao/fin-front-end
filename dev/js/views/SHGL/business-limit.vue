@@ -832,15 +832,7 @@
             },
             addUser2(){
                 this.addTitle='添加消化商户';
-                this.shdata={
-                    'companyId':'',
-                    'cityId':'',
-                    'merchantOperationID':'',
-                    'merchantName':'',
-                    'isLimitPurchase':0,
-                    'isDigest':0,
-                };
-                this.getxhCity();
+                (this.shdata.companyId=='')?this.getxhCity():null;
                 $('.addbottom .col-md-4').children('ul').html('');
                 $('#modal_add').modal('show');
             },
@@ -895,7 +887,7 @@
                 if(!_li.length>0)return;
                 _li.each((index)=>{
                     let data={
-                        merchantID: _li.eq(index).attr('value'),
+                        merchantOperationID: _li.eq(index).attr('value'),
                         merchantName:_li.eq(index).attr('merchantName'),
                         subCompanyName:_li.eq(index).attr('subCompanyName'),
                         cityName: _li.eq(index).attr('cityName'),

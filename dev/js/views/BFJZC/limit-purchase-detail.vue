@@ -92,8 +92,8 @@
                                         <td>{{lpd.merchantOperationID}}</td>
                                         <td>{{lpd.merchantName}}</td>
                                         <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
-                                        <td>{{lpd.purchaseLimit}}</td>
-                                        <td>{{lpd.purchaseCost}}</td>
+                                        <td>{{lpd.purchaseLimit/100 | currency ''}}</td>
+                                        <td>{{lpd.purchaseCost/100 | currency ''}}</td>
                                         <td><a :href="lpd.limitPurchaseAccountID">查看</a></td>
                                         <td>
                                             <template v-if="lpd.status==1">
