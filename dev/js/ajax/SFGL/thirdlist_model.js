@@ -28,6 +28,22 @@ function model(_this){
          * */
         thirdParty_recharge(data){
             return _this.$http.post(_this.$API.thirdParty_recharge,data)
+        },
+        /**
+         * @description 三方添加账户
+         * @params {data}
+         * @returns {*}
+         * */
+        thirdParty_accountlist(data){
+            return _this.$http.get(_this.$API.thirdParty_accountlist+ decodeURIComponent($.param(data)))
+        },
+        /**
+         * @description 三方确认添加账户
+         * @params {data}
+         * @returns {*}
+         * */
+        thirdParty_save(data){
+            return _this.$http.post(_this.$API.thirdParty_save,data)
         }
     }
 }

@@ -136,7 +136,7 @@ export default function(router){
             }
         },
         /* 活动管理-活动列表 */
-        '/activity-lists/':{
+        '/activity-lists/:operationID/:name':{
             name:'activity-lists',
             component: function(resolve){
                 require(['./views/HDGL/activity-lists.vue'],resolve);

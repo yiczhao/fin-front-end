@@ -164,22 +164,26 @@
                             <div class="modal-body">
                                 <div class="addtop">
                                     <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.companyId" @change="getshCity(shdata.companyId)">
+                                        <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
                                             <option value="">全部分公司</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.cityId">
+                                        <select class="form-control" v-model="shdata.cityID">
                                             <option value="">全部城市</option>
                                             <option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID">
+                                        <select class="form-control" v-model="shdata.type">
+                                            <option value="">请选择类型</option>
+                                            <option value="BANK">银行</option>
+                                            <option value="COMM">运营商</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
+                                        <input type="text" class="form-control" v-model="shdata.name" placeholder="商户名">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
@@ -201,12 +205,18 @@
                                             <tr role="row" v-for="n in xhlist">
                                                 <td>
                                                     <label>
-                                                        <input :value="n.merchantID" type="checkbox">{{$index+1}}
+                                                        <input :value="n.id"
+                                                               type="checkbox"
+                                                               :name="n.name"
+                                                               :subCompanyID="n.subCompanyOperationID"
+                                                               :cityID="n.cityID"
+                                                               :_type="n.type"
+                                                        >{{$index+1}}
                                                     </label>
                                                 </td>
                                                 <td>{{n.subCompanyName}}</td>
                                                 <td>{{n.cityName}}</td>
-                                                <td>{{n.merchantName}}</td>
+                                                <td>{{n.name}}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -345,12 +355,10 @@
                     'pageSize': 15
                 },
                 shdata:{
-                    'companyId':'',
-                    'cityId':'',
-                    'merchantOperationID':'',
-                    'merchantName':'',
-                    'isLimitPurchase':0,
-                    'isDigest':0,
+                    'subCompanyID':'',
+                    'cityID':'',
+                    'type':'',
+                    'name':''
                 },
                 zdlists:[],
                 xhlist:[],
@@ -425,12 +433,10 @@
             },
             addUser(){
                 this.shdata={
-                    'companyId':'',
-                    'cityId':'',
-                    'merchantOperationID':'',
-                    'merchantName':'',
-                    'isLimitPurchase':0,
-                    'isDigest':0,
+                    'subCompanyID':'',
+                    'cityID':'',
+                    'type':'',
+                    'name':'',
                 };
                 this.getshCity();
                 this.clearUl();
@@ -438,11 +444,10 @@
             },
             searchDigest(){
                 this.clearUl();
-                this.common_model.getmerchant_list(this.shdata)
+                this.model.thirdParty_accountlist(this.shdata)
                         .then((response)=>{
-                (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-
-            })
+                            (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
+                        })
             },
             allCkb(e){
                 if(e.target.checked){
@@ -453,9 +458,13 @@
                 }
             },
             appendLi(a){
-                let _tr=$("input[value='" + a + "']").closest('tr');
+                let _this=$("input[value='" + a + "']");
+                let _tr=_this.closest('tr');
                 let _ul=$('.addbottom .col-md-4').children('ul');
-                _ul.append('<li value="'+a+'">'+_tr.children('td:last').html()+'</li>');
+                let subCompanyID=_this.attr('subCompanyID');
+                let cityID=_this.attr('cityID');
+                let type=_this.attr('_type');
+                _ul.append('<li value="'+a+'"subCompanyId="'+subCompanyID+'" cityID="'+cityID+'" type="'+type+'">'+_tr.children('td:last').html()+'</li>');
                 _tr.hide();
             },
             addTrue(e){
@@ -478,12 +487,26 @@
             submitTrue(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'id':this.defaultData.id,'IDList':Array.from(_li, i => i.getAttribute('value'))}
-                this.model.store_add(data)
+                var data=[];
+                _li.each(function(index){
+                    let _this=$(this);
+                    let name=_this.attr('name');
+                    let subCompanyID=_this.attr('subCompanyID');
+                    let cityID=_this.attr('cityID');
+                    let type=_this.attr('type');
+                    data.push(
+                    {
+                        name:name,
+                        subCompanyID:subCompanyID,
+                        cityID:cityID,
+                        type:type
+                    })
+                })
+                this.model.thirdParty_save(data)
                         .then((response)=>{
-                    this.initList();
-                dialogs('success','已添加！');
-            })
+                                this.initList();
+                            dialogs('success','已添加！');
+                        })
             },
             delstore(_id){
                 this.id=_id;

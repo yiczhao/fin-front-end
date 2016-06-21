@@ -413,7 +413,8 @@
         },
         ready() {
             var vm=this;
-            (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
+            (vm.$route.params.operationID!=':operationID')?vm.defaultData.operationID=vm.$route.params.operationID:null;
+            (vm.$route.params.name!=':name')?vm.defaultData.name=vm.$route.params.name:null;
             vm.initList();
             vm.getClist();
             vm.getCity();

@@ -550,11 +550,24 @@ export default function install(Vue) {
      */
     _o.thirdParty_status = './thirdParty/status';
     /**
-     * @description 三方停用启用接口地址
+     * @description 三方回款充值接口地址
      * @author 于凯乐
      * @method POST
      */
     _o.thirdParty_recharge = './thirdParty/recharge';
+    /**
+     * @description 三方添加账户接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.thirdParty_accountlist = './thirdParty/account/list?';
+    /**
+     * @description 三方确认添加账户接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.thirdParty_save = './thirdParty/save';
+
 
     //- todo  三方管理-账户明细 third-info
     /**

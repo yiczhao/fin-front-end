@@ -141,7 +141,7 @@
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>{{trlist.consumptionPhone}}</td>
                                 <td>{{trlist.consumptionAccountNumber}}</td>
-                                <td>{{trlist.activityOperationID}}:{{trlist.activityName}}</td>
+                                <td> <a v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
                                 <td>
                                     <template v-if="trlist.type==1">
                                         正常交易
