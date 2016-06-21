@@ -209,11 +209,9 @@
 </style>
 <script>
     import model from '../../ajax/SHGL/limitmana_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 pagecur:1,
                 page_size:15,
@@ -240,12 +238,10 @@
         methods:{
             getZlists(data){
                 this.model.limitPurchaseAccount(data)
-                            .then(function (response) {
+                            .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
                             });
             },
             initList(){
@@ -265,12 +261,10 @@
             selectRecharge(_id){
                 this.accountId=_id;
                 this.model.limitPurchase_selectRechargeInfoByID(_id)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('rechargeInfo', response.data.data) : null;
                             $('#modal_pay').modal('show');
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             uploadClick(){
@@ -311,11 +305,9 @@
                 data.purchaseLimit=parseInt(data.purchaseLimit)*100;
                 data.purchaseCost=parseInt(data.purchaseCost)*100;
                 this.model.recharge(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             dialogs('success','已充值！');
                             this.initList();
-                        }, function (response) {
-                            console.log(response);
                         });
             }
         },

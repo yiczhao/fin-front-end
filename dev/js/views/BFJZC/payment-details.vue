@@ -406,11 +406,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BFJZC/payment_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 id:'',
                 pagecur:1,
@@ -451,11 +449,9 @@
                     data.endDate=b;
                 }
                 this.model.getlist(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             initList(){
@@ -469,8 +465,6 @@
                 this.model.getpart(a.id)
                         .then( (response)=> {
                             (response.data.code==0) ? this.listinfos.$set(index,response.data.data): null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             back(a){

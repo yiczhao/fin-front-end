@@ -172,11 +172,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SHGL/limitinfo_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 origin:window.origin,
                 accountName:'',
@@ -227,23 +225,19 @@
                     data.endDate=b;
                 }
                 this.model.limitPurchaseAccount_detail(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             this.$set('zdlists', response.data.data)
                             this.$set('pageall', response.data.total)
 //                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
 //                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             getsumBalance(){
                 this.model.limitPurchaseAccount_getsumBalance(this.checkForm)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             this.$set('nums', response.data.data)
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             initList(){

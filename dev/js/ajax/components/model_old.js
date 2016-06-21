@@ -3,8 +3,8 @@
  * @author 赵俊涵
  * @date 2016.05.31
  */
-export default function install(Vue) {
-    var _m={
+function conmon_model(_this) {
+    return {
         /**
          * @description 查询分公司数据
          * @param {}
@@ -12,9 +12,9 @@ export default function install(Vue) {
          */
         getcompany (data) {
             if(typeof data=='undefined'){
-                return Vue.http.get('./subCompany/list?')
+                return _this.$http.get(_this.$API.subcompany)
             }else{
-                return Vue.http.get('./subCompany/list?' + decodeURIComponent($.param(data)));
+                return _this.$http.get(_this.$API.subcompany + decodeURIComponent($.param(data)));
             }
         },
         /**
@@ -23,7 +23,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         getcity (data) {
-            return Vue.http.get('./city/list?' + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.city + decodeURIComponent($.param(data)))
         },
         /**
          * @description 上传数据
@@ -31,7 +31,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         upload (data) {
-            return Vue.http.post('./file/upload', data)
+            return _this.$http.post(_this.$API.upload, data)
         },
         /**
          * @description 查看当前订单号及付款方式
@@ -39,7 +39,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         skipToOrder(data){
-            return Vue.http.get('reserveCashOrder/skipToOrder?' + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.skipToOrder + decodeURIComponent($.param(data)))
         },
         /**
          * @description 获取商户数据
@@ -47,11 +47,9 @@ export default function install(Vue) {
          * @returns {*}
          */
         getmerchant_list(data){
-            return Vue.http.get('./merchant/list?' + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.getmerchant_list + decodeURIComponent($.param(data)))
         },
-    };
 
-    Object.defineProperties(Vue.prototype, {
-        $common_model: {get(){return _m}}
-    })
+    }
 }
+module.exports = conmon_model

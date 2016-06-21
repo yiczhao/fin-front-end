@@ -130,11 +130,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BFJZC/advance_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model=model(this);
-            this.common_model=common_model(this);
             return{
                 advanceId:"",
                 subCompanyID:"",
@@ -171,7 +169,7 @@
             },
              //获取分公司数据
             getSubcompany(){
-                 this.common_model.getcompany()
+                 this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -183,13 +181,13 @@
                 let data={
                     'subCompanyID':_id
                 }
-                 this.common_model.getcity(data)
+                 this.$common_model.getcity(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
                     });
             },
-            query: function () {
+            query() {
                 // let data=this.data;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
@@ -215,7 +213,7 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.common_model.skipToOrder(data)
+                this.$common_model.skipToOrder(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
@@ -223,14 +221,14 @@
                     })
             }
         },
-        ready: function () {
+        ready() {
             (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
             this.query();
             this.getCity();
             this.getSubcompany();
         },
          watch:{
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },

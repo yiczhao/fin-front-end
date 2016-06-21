@@ -235,12 +235,12 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/XTPZ/user_model'
-    import common_model from '../../ajax/components/model'
+//    import common_model from '../../ajax/components/model'
 
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
+//            this.common_model=common_model(this)
             return{
                 subCompanyID:"",
                 keywords:"",
@@ -277,7 +277,7 @@
                 let data={
                     'type':'ImportUser'
                 }
-                 this.common_model.getcompany(data)
+                 this.$common_model.getcompany(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -410,7 +410,7 @@
                         })
             },
         },
-        ready: function () {
+        ready() {
             this.getUserList({});
             this.getSubcompany({});
             $(document).on('click','.addbottom .col-md-4 ul li',function(){

@@ -149,11 +149,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BFJZC/limit_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model=model(this);
-            this.common_model=common_model(this);
             return{
                 id:'',
                 subCompanyID:"",
@@ -179,7 +177,7 @@
         },
         methods:{
             //获取补贴划付数据
-             getlimitPurchaseDetailList:function(data){
+             getlimitPurchaseDetailList(data){
                 this.model.limit_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('limitPurchaseDetailList', response.data.data) : null;
@@ -187,8 +185,8 @@
                     });
             },
              //获取分公司数据
-            getSubcompany:function(){
-                 this.common_model.getcompany()
+            getSubcompany(){
+                 this.$common_model.getcompany()
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     });
@@ -199,12 +197,12 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.common_model.getcity(data)
+                this.$common_model.getcity(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
                     });
             },
-            query: function () {
+            query() {
                 // let data=this.data;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
@@ -230,7 +228,7 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.common_model.skipToOrder(data)
+                this.$common_model.skipToOrder(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
@@ -238,14 +236,14 @@
                     })
             }
         },
-        ready: function () {
+        ready() {
             (this.$route.params.id==':id')? this.id='' :this.id=this.$route.params.id;
             this.query();
             this.getSubcompany();
             this.getCity();
         },
          watch:{
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },

@@ -275,11 +275,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/HDGL/activity_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 pagecur:1,
                 page_size:15,
@@ -322,24 +320,20 @@
             // *** 请求账户列表数据
             getZlists(data){
                 this.model.activity_total(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('total', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
                 this.model.activity_list(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             getClist(){
                 // *** 请求公司数据
-                this.common_model.getcompany()
+                this.$common_model.getcompany()
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -351,7 +345,7 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.common_model.getcity(data)
+                this.$common_model.getcity(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -363,7 +357,7 @@
                         let data={
                             'subCompanyID':_id
                         }
-                        this.common_model.getcity(data)
+                        this.$common_model.getcity(data)
                                 .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('shcity', response.data.data) : null;

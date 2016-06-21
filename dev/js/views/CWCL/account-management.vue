@@ -261,11 +261,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/CWCL/account_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 pagecur:1,
                 page_size:15,
@@ -296,10 +294,6 @@
             }
         },
         methods:{
-            // http://192.168.1.123:80/dist/data-member-rules.json
-            // 'http://localhost:9000/dist/data-member-rules.json'
-            // +'/level_setting/list'
-
             // *** 请求账户列表数据
             errorHide(){
                 $('.suberror,.timeerror').hide();
@@ -307,22 +301,17 @@
             },
             getZlists(data){
                     this.model.getbanklist(data)
-                            .then(function (response) {
+                            .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
                             });
             },
             getClist(){
                 // *** 请求公司数据
-                this.common_model.getcompany()
-                        .then(function (response) {
+                this.$common_model.getcompany().then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             checkNew(){
@@ -387,33 +376,27 @@
                     "email": this.person.email,
                 }
                 this.model.saveperson(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             this.initList();
                             dialogs();
-                        }, function (response) {
-                            console.log(response);
                         })
             },
             startTrue(){
                 // *** 启用提交
                 this.model.startaccount(this.accountId)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则启用该数据
                             this.initList();
                             dialogs('success','已启用！');
-                        }, function (response) {
-                            console.log(response);
                         })
             },
             delTrue(){
                 // *** 删除提交
                 this.model.deleteaccount(this.accountId)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则删除该条数据
                             this.initList();
                             dialogs('success','已删除！');
-                        }, function (response) {
-                            console.log(response);
                         })
             },
             addBtn(){
@@ -432,7 +415,7 @@
                     "startDate": this.relist.startDate
                 };
                 this.model.changeaccount(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             if(response.data.code==-1){
                                 this.$set('saveerror', response.data.message)
                             }
@@ -440,8 +423,6 @@
                                 this.initList();
                                 dialogs();
                             }
-                        }, function (response) {
-                            console.log(response);
                         })
             }
         },
@@ -469,7 +450,7 @@
             }
         },
         validators: {
-            numeric: function (val) {
+            numeric(val) {
                 return /^[-+]?[0-9]+$/.test(val)
             }
         }

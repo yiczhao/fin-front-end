@@ -320,7 +320,6 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import common_model from '../../ajax/components/model'
     import model from '../../ajax/CWCL/trade_model'
     export default{
         props:{
@@ -328,7 +327,6 @@
         },
         data(){
             this.model=model(this);
-            this.common_model=common_model(this);
             return{
                 origin:window.origin,
                 subsidyPayId:"",
@@ -388,7 +386,7 @@
         },
         methods:{
             //获取交易记录
-             getTradeList:function(data){
+             getTradeList(data){
                  this.model.tradedetail(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
@@ -397,7 +395,7 @@
             },
             //获取分公司数据
             getSubcompany(){
-                 this.common_model.getcompany()
+                 this.$common_model.getcompany()
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     });
@@ -408,12 +406,12 @@
                 let data={
                     'subCompanyID':_id
                 }
-                 this.common_model.getcity(data)
+                 this.$common_model.getcity(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
                     });
             },
-            addTradeInfo:function(){
+            addTradeInfo(){
                 this.errorHideL();
                 this.select_merchantId='';
                 this.tradeInfo.merchantOperationID='';
@@ -429,7 +427,7 @@
                 this.uploadText='';
                 $('#modal_trade_info').modal('show');
             },
-            checkInfo:function(){
+            checkInfo(){
                 this.select_merchantId;
                 this.tradeInfo.consumptionAmount       
                 this.tradeInfo.discountAmount
@@ -438,11 +436,11 @@
                 this.tradeInfo.suspensionTax
                 this.tradeInfo.merchantSubsidyActual
             },
-            errorHideL:function(){
+            errorHideL(){
                 $('.suberror,.timeerror').hide();
                 this.fire=false;
             },
-            saveTradeInfo:function(){
+            saveTradeInfo(){
                 //隐藏非空提示
                 this.errorHideL();
                 //验证非空
@@ -467,7 +465,7 @@
                         $(".modal").modal("hide");
                     })
             },
-            query: function () {
+            query() {
                 //初始化
                 this.clear();
                 if (this.startDate=="" && this.endDate=="") {
@@ -494,7 +492,7 @@
                 this.getTradeList(data);
             },
             //初始化
-            clear:function(){
+            clear(){
                 this.tradeInfo={
                     merchantOperationID:'',
                     activityOperationID:'',
@@ -529,7 +527,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.common_model.upload(datas)
+                    vm.$common_model.upload(datas)
                             .then((response)=>{
                                     vm.tradeInfo.certificateId=response.data.data;
                                     vm.uploadText=files.name;
@@ -541,7 +539,7 @@
                 dialogs('error',msg);
             }
         },
-        ready: function () {
+        ready() {
             this.clear();
             (this.$route.params.subsidyPayId==':subsidyPayId')?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
             (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
@@ -554,7 +552,7 @@
             this.getCity();
         },
        watch:{
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },
@@ -594,7 +592,7 @@
            'datepicker': datepicker
         },
         validators: {
-            numeric: function (val) {
+            numeric(val) {
                 return /^[-+]?[0-9]+$/.test(val)
             }
         }

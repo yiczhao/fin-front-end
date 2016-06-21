@@ -234,11 +234,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BFJZC/appropriation_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 id:"",
                 subCompanyID:"",
@@ -288,7 +286,7 @@
             },
              //获取分公司数据
             getSubcompany(){
-                 this.common_model.getcompany()
+                 this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
@@ -300,27 +298,27 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.common_model.getcity(data)
+                this.$common_model.getcity(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
                     });
             },
-            checkAll:function(ck){
+            checkAll(ck){
                 if(ck.target.checked){
                     $("input[name='ckbox']").prop({'checked':true});
                 }else{
                     $("input[name='ckbox']").prop({'checked':false});
                 }
             },
-            clear:function(){
+            clear(){
                 this.applyPayRemarks="",
                 this.applyPayInfo={payType:{
                        1:"",
                        2:""
                     }};
             },
-            showModalApplyPay:function(){
+            showModalApplyPay(){
                 //批量划付判断首款信息是否一致
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
@@ -356,7 +354,7 @@
                             }
                         });
             },
-            showModalApplyPayById:function(id){
+            showModalApplyPayById(id){
                 let array=[];
                 array.push(id);
                 this.getApplyPayInfoByIDs(array);
@@ -401,7 +399,7 @@
                         });
                 $(".modal").modal("hide");
             },
-            submit:function(){
+            submit(){
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
@@ -427,7 +425,7 @@
                      //关闭弹出层
                     $(".modal").modal("hide");
             },
-            query: function () {
+            query() {
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
                     this.endDate=init_date(this.timeRange)[1];
@@ -454,7 +452,7 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.common_model.skipToOrder(data)
+                this.$common_model.skipToOrder(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
@@ -462,14 +460,14 @@
                         })
             }
         },
-        ready:function () {
+        ready() {
             (this.$route.params.subsidyPayID==':subsidyPayID')?this.id='':this.id=this.$route.params.subsidyPayID;
             this.query();
             this.getSubcompany();
             this.getCity();
         },
          watch:{
-            payType:function(){
+            payType(){
                 let type=$("#payType").val()
                 for(var i in this.payTypes){
                     if(type == this.payTypes[i].type){
@@ -477,7 +475,7 @@
                     }
                 }
             },
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },

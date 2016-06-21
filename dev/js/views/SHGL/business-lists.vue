@@ -382,11 +382,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SHGL/buslists_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 origin:window.origin,
                 id:'',
@@ -485,7 +483,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                this.common_model.getcompany()
+                this.$common_model.getcompany()
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -497,7 +495,7 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.common_model.getcity(data)
+                this.$common_model.getcity(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
@@ -620,7 +618,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.common_model.upload(datas)
+                    vm.$common_model.upload(datas)
                             .then((response)=>{
                                     vm.updateList.certificates=response.data.data;
                                     vm.uploadText=files.name;

@@ -1,39 +1,6 @@
 export default function install(Vue) {
     var _o={};
-
-    //- todo 公用
-    /**
-     * @description 获取分公司接口地址
-     * @author 洪钢
-     * @method GET
-     */
-    _o.subcompany = './subCompany/list?';
-    /**
-     * @description 获取城市接口地址
-     * @author 洪钢
-     * @method GET
-     */
-    _o.city = './city/list?';
-    /**
-     * @description 上传接口地址
-     * @author 洪钢
-     * @method POST
-     */
-    _o.upload = './file/upload';
-    /**
-     * @description 查看当前订单号及付款方式接口地址
-     * @author 冷艳君
-     * @method GET
-     */
-    _o.skipToOrder = 'reserveCashOrder/skipToOrder?';
-    /**
-     * @description 获取商户数据接口地址
-     * @author 冷艳君
-     * @method GET
-     */
-    _o.getmerchant_list ='./merchant/list?';
-
-
+    
     //- todo 登陆 login
     /**
      * @description 登陆接口地址
@@ -566,7 +533,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method POST
      */
-    _o.thirdParty_save = './thirdParty/save';
+    _o.thirdParty_save = './thirdParty/account/save';
 
 
     //- todo  三方管理-账户明细 third-info

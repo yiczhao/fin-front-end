@@ -19,6 +19,7 @@ import page from './views/components/page.vue'
 import common from  './utils/common'
 import store from './utils/store.js'
 import API from './ajax/api.js'
+import common_model from './ajax/components/model.js'
 import notify_instance from './views/components/notify'
 Vue.component('index', Index);
 Vue.component('page', page);
@@ -32,6 +33,7 @@ Vue.use(VueRouter);
 Vue.use(validator);
 Vue.use(store);
 Vue.use(API);
+Vue.use(common_model);
 // *** 实例化VueRouter
 let router = new VueRouter({
 	hashbang: true,

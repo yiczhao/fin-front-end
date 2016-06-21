@@ -358,11 +358,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SHGL/prepayment_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model = model(this)
-            this.common_model = common_model(this)
             return {
                 pageall: 1,
                 pagecur: 1,
@@ -413,25 +411,22 @@
         },
         methods: {
             //获取预付款商户数据
-            getPrepaymentList: function (data) {
+            getPrepaymentList(data) {
                 this.model.prepayment_lists(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('prepaymentList', response.data.data) : null;
                             (response.data.code == 0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
                 this.model.total(data)
                         .then((res) => {
-                (res.data.code == 0) ? this.$set('total', res.data.data) : null;
-            })
-                ;
+                            (res.data.code == 0) ? this.$set('total', res.data.data) : null;
+                        });
             },
             //获取预付充值数据
-            getRechargeInfo: function (prepaymentId) {
+            getRechargeInfo(prepaymentId) {
                 this.model.advancePaymentMerchant(prepaymentId)
-                        .then(function (response) {
+                        .then((response)=>{
                             if (response.data.code == 0) {
                                 this.$set('entity', response.data.data);
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
@@ -454,28 +449,22 @@
                                 this.saveerror = false;
                                 $("#modal_prepayment_recharge").modal('show');
                             }
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             //获取商户数据
             getMerchantList(){
-                this.common_model.getmerchant_list(this.merchantInfo)
-                        .then(function (response) {
+                this.$common_model.getmerchant_list(this.merchantInfo)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('merchantList', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             //获取分公司数据
             getSubcompany(){
-                this.common_model.getcompany()
-                        .then(function (response) {
+                this.$common_model.getcompany()
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('subcompanyList', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             //获取城市数据
@@ -484,12 +473,10 @@
                 let data = {
                     'subCompanyID': _id
                 }
-                this.common_model.getcity(data)
-                        .then(function (response) {
+                this.$common_model.getcity(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('cityList', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             getshCity(_id) {
@@ -497,15 +484,13 @@
                 let data = {
                     'subCompanyID': _id
                 }
-                this.common_model.getcity(data)
-                        .then(function (response) {
+                this.$common_model.getcity(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('shCity', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
-            checkAll: function (ck) {
+            checkAll(ck) {
                 if (ck.target.checked) {
                     $("input[name='ckbox']").prop({'checked': true});
                 } else {
@@ -513,20 +498,20 @@
                 }
             },
             //显示选择商户窗口
-            showMerchants: function () {
+            showMerchants() {
                 this.merchantInfo.companyId = "",
                         this.merchantInfo.cityId = "",
                         this.merchantInfo.merchantOperationID = "",
                         this.merchantInfo.merchantName = "",
                         this.queryForMerchantList();
             },
-            queryForMerchantList: function () {
+            queryForMerchantList() {
                 //设置全选属性
                 this.clear();
                 this.getshCity();
                 $("#modal_prepayment_info").modal('show');
             },
-            subApplyAdvancePay: function () {
+            subApplyAdvancePay() {
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
                 let entity = {
@@ -535,32 +520,30 @@
                     remarks: this.applyAdvancePay.remarks,
                 }
                 this.model.applyAdvancePay(entity)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若
                             if (response.data.code == 0) {
                                 dialogs();
                                 this.query();
                             }
-                        }, function (response) {
-                            console.log(response);
                         });
                 //关闭弹出层
                 $(".modal").modal("hide");
             },
             //清除
-            clear: function () {
+            clear() {
                 this.addId = [];
                 $('.col-md-7 tr input[type="checkbox"]').prop('checked', false);
                 $('.addbottom .col-md-4').children('ul').html('');
             },
-            appendLi: function (a) {
+            appendLi(a) {
 
                 let _tr = $("input[value='" + a + "']").closest('tr');
                 let _ul = $('.addbottom .col-md-4').children('ul');
                 _ul.append('<li value="' + a + '">' + _tr.children('td:last').html() + '</li>');
                 _tr.hide();
             },
-            addTrue: function (e) {
+            addTrue(e) {
                 this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value
                 )
                 ;
@@ -570,7 +553,7 @@
                 $('.col-md-7 td input[type="checkbox"]').prop('checked', false);
                 this.addId = [];
             },
-            delTrue: function (e) {
+            delTrue(e) {
                 let _ul = $(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
                         _table = $(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
                         _li = _ul.find('.check-li');
@@ -579,26 +562,24 @@
                 }
                 _li.remove();
             },
-            submit: function (e) {
+            submit(e) {
                 let _li = $("#IDS").children('li');
                 if (!_li.length > 0)return;
                 let data = {'merchantIDs': Array.from(_li, i => i.getAttribute('value')
                 )
             }
                 this.model.insertBatch(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若
                             if (response.data.code == 0) {
                                 this.query();
                                 dialogs();
                             }
-                        }, function (response) {
-                            console.log(response);
                         });
                 //关闭弹出层
                 $(".modal").modal("hide");
             },
-            query: function () {
+            query() {
                 $('.modal').modal('hide');
                 let data = {
                     subCompanyID: this.subCompanyID,
@@ -636,7 +617,7 @@
             })
             }
         },
-        ready: function () {
+        ready() {
             this.query();
             this.getSubcompany();
             this.getCity();

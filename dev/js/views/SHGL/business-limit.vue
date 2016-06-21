@@ -592,11 +592,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SHGL/buslimit_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 origin:window.origin,
                 pagecur:1,
@@ -676,22 +674,18 @@
                     data.endValue=b;
                 }
                     this.model.limitPurchaseMerchant_lists(data)
-                            .then(function (response) {
+                            .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
                             });
             },
             getClist(){
                 // *** 请求公司数据
-                this.common_model.getcompany()
-                        .then(function (response) {
+                this.$common_model.getcompany()
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             //获取城市数据
@@ -700,12 +694,10 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.common_model.getcity(data)
-                        .then(function (response) {
+                this.$common_model.getcity(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             getxhCity(_id){
@@ -713,12 +705,10 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.common_model.getcity(data)
-                        .then(function (response) {
+                this.$common_model.getcity(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('xhcity', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             initList(){
@@ -809,7 +799,7 @@
                         })
             },
             searchDigest(){
-                this.common_model.getmerchant_list(this.shdata)
+                this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
                             }
@@ -916,7 +906,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.common_model.upload(datas)
+                    vm.$common_model.upload(datas)
                             .then((response)=>{
                                 vm.updateList.certificateID=response.data.data;
                                 vm.uploadText=files.name;

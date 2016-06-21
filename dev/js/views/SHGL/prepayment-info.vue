@@ -335,11 +335,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SHGL/info_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model = model(this)
-            this.common_model = common_model(this)
             return {
                 pagecur: 1,
                 page_size: 15,
@@ -389,18 +387,15 @@
                     data.endDate = b;
                 }
                 this.model.advancePaymentAccount_list(data)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code == 0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
                 this.model.total(data)
                         .then((res) => {
-                (res.data.code == 0) ? this.$set('total', res.data.data) : null;
-            })
-                ;
+                            (res.data.code == 0) ? this.$set('total', res.data.data) : null;
+                        });
             },
             initList(){
                 $(".modal").modal("hide");
@@ -409,7 +404,7 @@
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
                 this.model.advancePaymentMerchant(prepaymentId)
-                        .then(function (response) {
+                        .then((response)=>{
                             if (response.data.code == 0) {
                                 this.$set('entity', response.data.data);
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
@@ -432,11 +427,9 @@
                                 this.saveerror=false;
                                 $("#modal_prepayment_recharge").modal('show');
                             }
-                        }, function (response) {
-                            console.log(response);
                         });
             },
-            subApplyAdvancePay: function () {
+            subApplyAdvancePay() {
                 this.saveerror=true;
                 if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
@@ -445,14 +438,12 @@
                     remarks: this.applyAdvancePay.remarks,
                 }
                 this.model.applyAdvancePay(entity)
-                        .then(function (response) {
+                        .then((response)=>{
                             // *** 判断请求是否成功如若
                             if (response.data.code == 0) {
                                 dialogs();
                                 this.initList();
                             }
-                        }, function (response) {
-                            console.log(response);
                         });
                 //关闭弹出层
                 $(".modal").modal("hide");
@@ -468,7 +459,7 @@
                         })
             }
         },
-        ready: function () {
+        ready() {
             (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
             this.getTime();
             this.initList();

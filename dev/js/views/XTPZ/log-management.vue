@@ -132,11 +132,9 @@
 <script>
     import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/XTPZ/log_model'
-    import common_model from '../../ajax/components/model'
     export default{
         data(){
             this.model =model(this)
-            this.common_model=common_model(this)
             return{
                 subCompanyID:"",
                 keywords:"",
@@ -179,7 +177,7 @@
                 let data={
                     'type':'ImportUser'
                 }
-                 this.common_model.getcompany(data)
+                 this.$common_model.getcompany(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     });
@@ -196,7 +194,7 @@
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
                         })
             },
-            query: function () {
+            query() {
                 let data={
                         subCompanyID:this.subCompanyID,
                         keywords:this.keywords,
@@ -210,7 +208,7 @@
                 this.getLogList(data);
             },
         },
-        ready: function () {
+        ready() {
             this.startDate=init_date(this.timeRange)[0];
             this.endDate=init_date(this.timeRange)[1];
             this.getdescription();
@@ -218,7 +216,7 @@
             this.getSubcompany({});
         },
        watch:{
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },
