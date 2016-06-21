@@ -266,10 +266,10 @@
             this.model =model(this)
             return{
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 loginList:{},
-                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 10},
                 zdlists:[],
                 relist:{
                     startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',

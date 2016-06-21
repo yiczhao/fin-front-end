@@ -183,7 +183,7 @@
                 dzList:{},
                 dz_show:false,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
@@ -204,7 +204,7 @@
                     startDate:'',
                     endDate:'',
                     pageIndex:1,
-                    pageSize:15
+                    pageSize:10
                 },
                 nums:{
                     purchaseLimitAmount:'',

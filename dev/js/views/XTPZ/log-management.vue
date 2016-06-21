@@ -146,9 +146,9 @@
                 endDate:'',
                 pageall:1,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageIndex:1,
-                pageSize:15,
+                pageSize:10,
                 logList:[],
                 log:{
                     "userName":"",

@@ -252,7 +252,7 @@
             this.model =model(this)
             return{
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 merchantName:'',
                 city:[],
@@ -262,7 +262,7 @@
                     'merchantOperationID': '',
                     'merchantName': '',
                     'pageIndex': 1,
-                    'pageSize': 15
+                    'pageSize': 10
                 },
                 shdata:{
                     'companyId':'',

@@ -358,7 +358,7 @@
             return{
                 id:'',
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 dateS:'1',
                 waring:'',
@@ -374,7 +374,7 @@
                     startDate:'',
                     endDate:'',
                     pageIndex:1,
-                    pageSize:15
+                    pageSize:10
                 },
                 listinfos:[],
                 zdlists:[],

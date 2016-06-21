@@ -598,7 +598,7 @@
             return{
                 origin:window.origin,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -611,7 +611,7 @@
                     'cycleStart': '',
                     'cycleEnd': '',
                     'pageIndex': 1,
-                    'pageSize': 15
+                    'pageSize': 10
                 },
                 shdata:{
                     'companyId':'',

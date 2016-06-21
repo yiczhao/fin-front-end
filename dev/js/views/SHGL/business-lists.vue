@@ -390,7 +390,7 @@
                 id:'',
                 merchantName:'',
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -401,7 +401,7 @@
                     "startValue": "",
                     "endValue": "",
                     "pageIndex": 1,
-                    "pageSize": 15
+                    "pageSize": 10
                 },
                 city:[],
                 companylists:[],

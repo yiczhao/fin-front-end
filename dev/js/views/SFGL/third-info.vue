@@ -253,7 +253,7 @@
                 },
                 dateS:'1',
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 city:[],
                 shcity:[],
@@ -266,7 +266,7 @@
                     'type': '0',
                     'remarks':'',
                     'pageIndex': 1,
-                    'pageSize': 15,
+                    'pageSize': 10,
                     'startDate':'',
                     'endDate':''
                 },

@@ -338,7 +338,7 @@
             this.model =model(this)
             return{
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 city:[],
                 shcity:[],
@@ -350,7 +350,7 @@
                     'cityID': '',
                     'status': '',
                     'pageIndex': 1,
-                    'pageSize': 15
+                    'pageSize': 10
                 },
                 shdata:{
                     'subCompanyID':'',
@@ -498,7 +498,7 @@
                         type:type
                     })
                 })
-                this.model.thirdParty_save(data)
+                this.model.thirdParty_save(JSON.stringify(data))
                         .then((response)=>{
                                 this.initList();
                             dialogs('success','已添加！');
