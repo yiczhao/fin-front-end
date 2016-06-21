@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar sidebar-main">
-        <div class="sidebar-content" style="min-height: 750px">
+        <div class="sidebar-content">
             <!-- User menu -->
             <div class="sidebar-user">
                 <div class="category-content">
@@ -138,6 +138,10 @@
                     nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
                 }
             }
+            window.onresize=(()=>{
+                        var availableHeight = $(window).height() - $('.page-container').offset().top -46;
+                        $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
+                    })
         }
     }
 </script>
