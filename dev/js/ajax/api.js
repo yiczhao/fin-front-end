@@ -542,13 +542,13 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method get
      */
-    _o.thirdinfo_list = './thirdParty/account/list?';
+    _o.thirdinfo_list = './thirdParty/account/detail?';
     /**
      * @description 列表数据接口地址
      * @author 于凯乐
      * @method get
      */
-    _o.thirdinfo_Blance = './thirdParty/account/accountBalance/';
+    _o.thirdinfo_Blance = './thirdParty/account/balance/';
 
 
     Object.defineProperties(Vue.prototype, {

@@ -11,7 +11,7 @@
                             <input type="button" class="btn btn-info" @click="addUser" value="添加">
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="账户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="名称">
@@ -183,7 +183,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.name" placeholder="商户名">
+                                        <input type="text" class="form-control" v-model="shdata.name" placeholder="名称">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
@@ -486,13 +486,14 @@
                 var data=[];
                 _li.each(function(index){
                     let _this=$(this);
-                    let name=_this.attr('name');
+                    let operationID=_this.attr('value');
                     let subCompanyID=_this.attr('subCompanyID');
                     let cityID=_this.attr('cityID');
                     let type=_this.attr('type');
                     data.push(
                     {
-                        name:name,
+                        operationID:operationID,
+                        name:_this.html(),
                         subCompanyID:subCompanyID,
                         cityID:cityID,
                         type:type
