@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.type">
                                 <option value="0">请选择类型</option>
-                                <option value="2">补贴划付</option>
+                                <option value="2">三方补贴</option>
                                 <option value="1">回款充值</option>
                             </select>
                         </div>
@@ -74,7 +74,9 @@
                                 <td>{{trlist.serialNumber}}</td>
                                 <td><template v-if="trlist.type==2">{{trlist.merchantOperationID}}</template></td>
                                 <td><template v-if="trlist.type==2">{{trlist.merchantName}}</template></td>
-                                <td>{{trlist.amount/100 | currency ''}}</td>
+                                <td>
+                                    <template v-if="trlist.type==2">-</template>{{trlist.amount/100 | currency ''}}
+                                </td>
                                 <td>
                                     <template v-if="trlist.type==1">回款充值</template>
                                     <template v-if="trlist.type==2">三方补贴</template>
