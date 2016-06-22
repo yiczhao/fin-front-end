@@ -62,27 +62,40 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.operationID}}</td>
-                                <td>{{trlist.accountName}}</td>
-                                <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.balanceAmount/100 | currency ''}}</td>
-                                <td>
-                                    <template v-if="trlist.status==0">停用</template>
-                                    <template v-if="trlist.status==1">启用</template>
-                                </td>
-                                <td>
-                                    <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit">回款</a>
-                                    <a v-link="{name:'third-info',params:{'id':trlist.id}}">明细</a>
-                                    <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring">停用</a>
-                                    <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring">启用</a>
-                                </td>
-                                <td>{{trlist.openTime | datetime}}</td>
-                                <td>{{trlist.contactName}}</td>
-                                <td>{{trlist.contactNumber}} </td>
-                                <td>{{trlist.staffName}} </td>
-                            </tr>
+                                <tr role="row" v-for="(index,trlist) in zdlists">
+                                    <td>{{trlist.operationID}}</td>
+                                    <td>{{trlist.accountName}}</td>
+                                    <td>{{trlist.subCompanyName}}</td>
+                                    <td>{{trlist.cityName}}</td>
+                                    <td>{{trlist.balanceAmount/100 | currency ''}}</td>
+                                    <td>
+                                        <template v-if="trlist.status==0">停用</template>
+                                        <template v-if="trlist.status==1">启用</template>
+                                    </td>
+                                    <td>
+                                        <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit">回款</a>
+                                        <a v-link="{name:'third-info',params:{'id':trlist.id}}">明细</a>
+                                        <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring">停用</a>
+                                        <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring">启用</a>
+                                    </td>
+                                    <td>{{trlist.openTime | datetime}}</td>
+                                    <td>{{trlist.contactName}}</td>
+                                    <td>{{trlist.contactNumber}} </td>
+                                    <td>{{trlist.staffName}} </td>
+                                </tr>
+                                <tr role="row">
+                                    <td></td>
+                                    <td>合计</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{total}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -141,8 +154,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 v-if="isEnable==0" class="modal-title">你确定启用该账户？</h5>
-                                <h5 v-if="isEnable==1" class="modal-title">你确定停用该账户？</h5>
+                                <h5 v-if="isEnable==1" class="modal-title">你确定启用该账户？</h5>
+                                <h5 v-if="isEnable==0" class="modal-title">你确定停用该账户？</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group tc">
@@ -370,7 +383,8 @@
                     name:'',
                     balanceAmount:''
                 },
-                saveerror:false
+                saveerror:false,
+                total:0
             }
         },
         methods:{
@@ -421,6 +435,7 @@
             initList(){
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
+                this.gettotal()
             },
             clearUl(){
                 this.xhlist=[];
@@ -560,6 +575,12 @@
                                 this.initList()
                                 dialogs('success','已充值！')
                             }
+                        })
+            },
+            gettotal(){
+                this.model.gettotal(this.defaultData)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('total',response.data.data):null;
                         })
             }
         },

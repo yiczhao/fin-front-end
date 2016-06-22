@@ -44,6 +44,14 @@ function model(_this){
          * */
         thirdParty_save(data){
             return _this.$http.post(_this.$API.thirdParty_save,data)
+        },
+        /**
+         * @description 三方合计
+         * @params {data}
+         * @returns {*}
+         * */
+        gettotal(data){
+            return _this.$http.get(_this.$API.gettotal+ decodeURIComponent($.param(data)))
         }
     }
 }

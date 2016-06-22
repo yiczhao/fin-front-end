@@ -540,6 +540,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.thirdParty_save = './thirdParty/account/save';
+    /**
+     * @description 三方确认添加账户接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.gettotal = './thirdParty/sum?';
 
 
     //- todo  三方管理-账户明细 third-info

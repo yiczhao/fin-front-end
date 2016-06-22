@@ -30,7 +30,7 @@
                                 <option value="">请选择状态</option>
                                 <option value="1">待上线</option>
                                 <option value="2">运行中</option>
-                                <option value="3">已关闭</option>
+                                <option value="3">已结束</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -91,7 +91,7 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>本页小计</td>
+                                <td>合计</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

@@ -71,7 +71,7 @@
                                 <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
                                 <td>{{trlist.payAmount/100 | currency '' }} </td>
                                 <td>{{trlist.commission33211/100 | currency '' }} </td>
-                                <td>{{trlist.thirdpartyDiscountDiff/100 | currency '' }} </td>
+                                <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
                                 <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
                                 <td><a v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
@@ -98,7 +98,7 @@
                                  <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                  <td>{{nums.payAmount/100 | currency ''}}</td>
                                  <td>{{nums.commission33211/100 | currency ''}}</td>
-                                 <td>{{nums.thirdpartyDiscountDiff/100 | currency ''}}</td>
+                                 <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                  <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
                                  <td></td>
                                  <td></td>
@@ -429,7 +429,7 @@
                     consumptionAmount:0,
                     payAmount:0,
                     commission33211:0,
-                    thirdpartyDiscountDiff:0,
+                    thirdPartyDiscountDiff:0,
                     limitPurchaseDiscountDiff:0
                 },
                 updateList:
