@@ -195,7 +195,7 @@
                             </div>
                             <div class="modal-foot btns">
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">申请付款
+                                <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">提交
                                 </button>
                             </div>
                             <div class="form-group tc">
@@ -441,7 +441,7 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若
                             if (response.data.code == 0) {
-                                dialogs();
+                                dialogs('success','提交成功！');
                                 this.initList();
                             }
                         });
