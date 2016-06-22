@@ -171,11 +171,17 @@ export default function install(Vue) {
 
     //- todo  备付金支出-额度采购 limit-purchase-detail
     /**
-     * @description 预付款划付列表接口地址
+     * @description 额度采购列表接口地址
      * @author 冷艳君
      * @method POST
      */
     _o.limit_list = './limitPurchaseDetail/list?';
+    /**
+     * @description 查询跳转ID接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.skipToInfo = './limitPurchaseDetail/info/';
 
     //- todo  备付金支出-补贴划付 subsidy-appropriation
     /**

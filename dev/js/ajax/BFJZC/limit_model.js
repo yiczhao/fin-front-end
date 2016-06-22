@@ -12,6 +12,14 @@ function model(_this){
          * */
         limit_list(data){
             return _this.$http.get(_this.$API.limit_list+ decodeURIComponent($.param(data)))
+        },
+        /**
+         * @description 查询跳转ID数据
+         * @params {data}
+         * @returns {*}
+         * */
+        skipToInfo(_id){
+            return _this.$http.get(_this.$API.skipToInfo+_id)
         }
     }
 }

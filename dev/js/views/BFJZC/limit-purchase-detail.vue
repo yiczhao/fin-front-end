@@ -92,7 +92,7 @@
                                         <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
                                         <td>{{lpd.purchaseLimit/100 | currency ''}}</td>
                                         <td>{{lpd.purchaseCost/100 | currency ''}}</td>
-                                        <td><a v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':lpd.limitPurchaseAccountInfoID,'accountName':lpd.merchantName}}">查看</a></td>
+                                        <td><a  @click="goinfo(lpd.limitPurchaseAccountInfoID,lpd.merchantName)" v-link="">查看</a></td>
                                         <td>
                                             <template v-if="lpd.status==1">
                                                 已关闭
@@ -234,6 +234,14 @@
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                         }
                     })
+            },
+            goinfo(a,b){
+                this.model.skipToInfo(a)
+                        .then((response)=>{
+                                if(response.data.code==0){
+                                this.$router.go({'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':response.data.data,'accountName':b}});
+                            }
+                        })
             }
         },
         ready() {

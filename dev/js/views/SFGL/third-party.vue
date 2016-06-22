@@ -63,10 +63,10 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.operationID}}</td>
                                 <td>{{trlist.accountName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.subCompanyAddress}}</td>
+                                <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.balanceAmount/100 | currency ''}}</td>
                                 <td>
                                     <template v-if="trlist.status==0">停用</template>
@@ -159,7 +159,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">添加商户</h5>
+                                <h5 class="modal-title">添加账户</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="addtop">

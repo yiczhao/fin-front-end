@@ -117,12 +117,14 @@
                                 <td>{{trlist.discountAmount/100 | currency ''}}</td>
                                 <td>{{trlist.payAmount/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.limitDeduct/100 | currency ''}}</a>
-                                    <span v-else>{{trlist.limitDeduct/100 | currency ''}}</span>
+                                    <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.limitDeduct/100 | currency ''}}</a>-->
+                                    <!--<span v-else>{{trlist.limitDeduct/100 | currency ''}}</span>-->
+                                    <span>{{trlist.limitDeduct/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.principalDeduct/100 | currency ''}}</a>
-                                    <span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>
+                                    <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.principalDeduct/100 | currency ''}}</a>-->
+                                    <!--<span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>-->
+                                    <span>{{trlist.principalDeduct/100 | currency ''}}</span>
                                 </td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>

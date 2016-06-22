@@ -35,7 +35,7 @@
                                         <li><a v-link="{'name':'payment-details'}">付款明细</a></li>
                                         <li><a v-link="{'name':'subsidy-appropriation'}">补贴划付</a></li>
                                         <li><a v-link="{'name':'subsidy-tax-rebate'}">补贴退税</a></li>
-                                        <li><a v-link="{'name':'limit-purchase-detail'}">额度采购</a></li>
+                                        <!--<li><a v-link="{'name':'limit-purchase-detail'}">额度采购</a></li>-->
                                         <li><a v-link="{'name':'advance-payment-detail'}">预付款划付</a></li>
                                     </ul>
                                 </li>
@@ -49,7 +49,7 @@
                                     <a href="javascript:void(0);" class="has-ul">商户管理</a>
                                     <ul class="hidden-ul">
                                         <li><a v-link="{'name':'business-lists'}">商户管理</a></li>
-                                        <li><a v-link="{'name':'business-limit'}">额度采购</a></li>
+                                        <!--<li><a v-link="{'name':'business-limit'}">额度采购</a></li>-->
                                         <li><a v-link="{'name':'prepayment-lists'}">预付款</a></li>
                                     </ul>
                                 </li>
