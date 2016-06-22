@@ -126,7 +126,7 @@
                                     <!--<span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>-->
                                     <span>{{trlist.principalDeduct/100 | currency ''}}</span>
                                 </td>
-                                <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td><a @click="goThird(trlist.id)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a></td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
                                     <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
@@ -539,6 +539,14 @@
             },
             errorDialog(msg){
                 dialogs('error',msg);
+            },
+            goThird(_id){
+                this.model.skipToThird(_id)
+                        .then((response)=>{
+                                if(response.data.code==0){
+                                this.$router.go({'name':'third-info',params:{'id':response.data.data}});
+                            }
+                        })
             }
         },
         ready() {

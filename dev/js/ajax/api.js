@@ -98,6 +98,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.tradedetailsum = './tradeDetail/total?';
+    /**
+     * @description 跳转三方接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.skipToThird = './tradeDetail/thirdPartyAccount/detail/';
 
     //- todo  备付金支出-付款明细 payment-details
     /**

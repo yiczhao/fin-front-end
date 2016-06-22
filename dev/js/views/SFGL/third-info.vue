@@ -72,8 +72,8 @@
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists">
                                 <td>{{trlist.serialNumber}}</td>
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td><template v-if="trlist.type==2">{{trlist.merchantOperationID}}</template></td>
+                                <td><template v-if="trlist.type==2">{{trlist.merchantName}}</template></td>
                                 <td>{{trlist.amount/100 | currency ''}}</td>
                                 <td>
                                     <template v-if="trlist.type==1">回款充值</template>
@@ -81,7 +81,7 @@
                                 </td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>
-                                    <a v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}">查看</a>
+                                    <a v-if="trlist.type==2" v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -340,6 +340,7 @@
                 this.getBlance();
             },
             recharge(){
+                this.saveerror=false;
                 this.redata={
                     id:this.defaultData.thirdPartyAccountID,
                     money:'',

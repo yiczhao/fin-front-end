@@ -70,7 +70,7 @@
                                     <td>{{trlist.balanceAmount/100 | currency ''}}</td>
                                     <td>
                                         <template v-if="trlist.status==0">停用</template>
-                                        <template v-if="trlist.status==1">启用</template>
+                                        <template v-if="trlist.status==1">正常</template>
                                     </td>
                                     <td>
                                         <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit">回款</a>
@@ -553,6 +553,7 @@
                         })
             },
             recharge(_id,_name,_money){
+                this.saveerror=false;
                 this.redata={
                     id:_id,
                     money:'',

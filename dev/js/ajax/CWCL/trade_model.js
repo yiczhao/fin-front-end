@@ -28,6 +28,14 @@ function model(_this) {
          */
         tradedetailsum(data){
             return _this.$http.get(_this.$API.tradedetailsum+ decodeURIComponent($.param(data)));
+        },
+        /**
+         * @description 跳转至三方
+         * @param data
+         * @returns {*}
+         */
+        skipToThird(_id){
+            return _this.$http.get(_this.$API.skipToThird+ _id);
         }
     }
 }
