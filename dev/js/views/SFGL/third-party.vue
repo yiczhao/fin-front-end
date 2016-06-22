@@ -85,10 +85,10 @@
                                 </tr>
                                 <tr role="row">
                                     <td></td>
-                                    <td>合计</td>
+                                    <td>合计：</td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{total}}</td>
+                                    <td>{{total/100 | currency ''}}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

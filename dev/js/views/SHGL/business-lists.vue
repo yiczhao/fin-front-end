@@ -91,7 +91,7 @@
                             </tr>
                              <tr>
                                  <td></td>
-                                 <td>合计</td>
+                                 <td>合计：</td>
                                  <td></td>
                                  <td></td>
                                  <td>{{nums.consumptionCount}}</td>

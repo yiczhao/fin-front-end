@@ -162,7 +162,7 @@
                             </tbody>
                             <tr role="row">
                                 <th></th>
-                                <th><h5><b>合计</b><h5></th>
+                                <th><h5><b>合计：</b><h5></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>

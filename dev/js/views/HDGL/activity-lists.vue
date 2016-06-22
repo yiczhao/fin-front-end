@@ -78,7 +78,7 @@
                                     <template v-if="trlist.status==2">运行中</template>
                                     <template v-if="trlist.status==3">已结束</template>
                                 </td>
-                                <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
+                                <td>{{trlist.consumptionTotalNumber}}</td>
                                 <td>{{trlist.consumptionTotalAmount/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartySettlementAmount/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSettlementAmount/100 | currency ''}}</td>
@@ -91,20 +91,20 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>合计</td>
+                                <td>合计：</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{total.consumptionTotalNumber}}</td>
+                                <td>{{total.consumptionTotalAmount/100 | currency ''}}</td>
                                 <td>{{total.thirdPartySettlementAmount/100 | currency ''}}</td>
                                 <td>{{total.merchantSettlementAmount/100 | currency ''}}</td>
                                 <td>{{total.merchantPaidAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{total.purchaseDiscountDiff/100 | currency ''}}</td>
-                                <td>{{total.commissionAmount/100 | currency ''}}</td>
+                                <td>{{total.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                 <td>{{total.commissionAmount/100 | currency ''}}</td>
                                 <td></td>
                             </tr>

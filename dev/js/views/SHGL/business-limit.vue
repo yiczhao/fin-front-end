@@ -117,7 +117,7 @@
                              <tr>
                                  <td></td>
                                  <td></td>
-                                 <td>合计</td>
+                                 <td>合计：</td>
                                  <td></td>
                                  <td>{{nums.totalLimit}}</td>
                                  <td>{{nums.totalPrincipal}}</td>
