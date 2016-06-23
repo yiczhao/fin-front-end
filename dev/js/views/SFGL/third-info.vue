@@ -70,23 +70,33 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.serialNumber}}</td>
-                                <td><template v-if="trlist.type==2">{{trlist.merchantOperationID}}</template></td>
-                                <td><template v-if="trlist.type==2">{{trlist.merchantName}}</template></td>
-                                <td>
-                                    <template v-if="trlist.type==2">-</template>{{trlist.amount/100 | currency ''}}
-                                </td>
-                                <td>
-                                    <template v-if="trlist.type==1">回款充值</template>
-                                    <template v-if="trlist.type==2">三方补贴</template>
-                                </td>
-                                <td>{{trlist.tradeTime | datetime}}</td>
-                                <td>
-                                    <a v-if="trlist.type==2" v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}">查看</a>
-                                </td>
-                                <td>{{trlist.remarks}}</td>
-                            </tr>
+                                <tr role="row" v-for="(index,trlist) in zdlists">
+                                    <td>{{trlist.serialNumber}}</td>
+                                    <td><template v-if="trlist.type==2">{{trlist.merchantOperationID}}</template></td>
+                                    <td><template v-if="trlist.type==2">{{trlist.merchantName}}</template></td>
+                                    <td>
+                                        <template v-if="trlist.type==2">-</template>{{trlist.amount/100 | currency ''}}
+                                    </td>
+                                    <td>
+                                        <template v-if="trlist.type==1">回款充值</template>
+                                        <template v-if="trlist.type==2">三方补贴</template>
+                                    </td>
+                                    <td>{{trlist.tradeTime | datetime}}</td>
+                                    <td>
+                                        <a v-if="trlist.type==2" v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}">查看</a>
+                                    </td>
+                                    <td>{{trlist.remarks}}</td>
+                                </tr>
+                                <tr role="row">
+                                    <td></td>
+                                    <td></td>
+                                    <td>合计：</td>
+                                    <td>{{total}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -280,7 +290,8 @@
                     name:'',
                     balanceAmount:''
                 },
-                saveerror:false
+                saveerror:false,
+                total:0
             }
         },
         methods:{
@@ -299,6 +310,10 @@
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         });
+                this.model.getthirdinfo_total(data)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('total',response.data.data):null;
+                        })
             },
             getClist(){
                 // *** 请求公司数据

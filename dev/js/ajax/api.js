@@ -573,6 +573,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.thirdinfo_Blance = './thirdParty/account/balance/';
+     /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getthirdinfo_total = './thirdParty/account/total?';
 
 
     Object.defineProperties(Vue.prototype, {

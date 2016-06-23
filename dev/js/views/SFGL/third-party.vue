@@ -1,5 +1,5 @@
 <template>
-    <index :title="'三方管理'"
+    <index :title="'账户列表'"
            :ptitle="'三方管理'"
            :hname="'third-party'"
            :isshow="'isshow'">

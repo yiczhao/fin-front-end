@@ -28,6 +28,14 @@ function model(_this){
          * */
         thirdParty_recharge(data){
             return _this.$http.post(_this.$API.thirdParty_recharge,data)
+        },
+         /**
+         * @description 查询三方合计
+         * @params {data}
+         * @returns {*}
+         * */
+        getthirdinfo_total(data){
+            return _this.$http.post(_this.$API.getthirdinfo_total+ decodeURIComponent($.param(data)))
         }
     }
 }

@@ -44,19 +44,19 @@
                             <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="subsidyPayId" style="width: 100px" placeholder="补贴划付ID">
+                            <input type="text" class="form-control" v-model="subsidyPayId" placeholder="补贴划付ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="subsidyTaxRebateId" style="width: 100px" placeholder="补贴退税ID">
+                            <input type="text" class="form-control" v-model="subsidyTaxRebateId" placeholder="补贴退税ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="id" style="width: 100px" placeholder="交易ID">
+                            <input type="text" class="form-control" v-model="id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="交易ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号">
@@ -65,7 +65,7 @@
                             <input type="number" class="form-control" v-model="phone" placeholder="手机号">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" style="width: 100px"  placeholder="活动ID" v-model="activityOperationID">
+                            <input type="text" class="form-control" placeholder="活动ID" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -133,11 +133,11 @@
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
                                     <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <a @click="errorDialog('本交易暂未生成补贴退税流水')" v-else>{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <span v-else>0</span>
                                 </td>
                                 <td>
                                     <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
-                                    <a @click="errorDialog('本交易暂未生成补贴划付流水')" v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    <span v-else>0</span>
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -165,7 +165,7 @@
                             </tbody>
                             <tr role="row">
                                 <th></th>
-                                <th><h5><b>合计：</b><h5></th>
+                                <th>合计：</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>

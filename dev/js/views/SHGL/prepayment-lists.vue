@@ -97,7 +97,7 @@
                             <tr role="row">
                                 <th></th>
                                 <th></th>
-                                <th><h5><b>合计：</b></h5></th>
+                                <th>合计：</th>
                                 <th></th>
                                 <th><B>{{total/100 | currency ''}}</B></th>
                                 <th></th>
