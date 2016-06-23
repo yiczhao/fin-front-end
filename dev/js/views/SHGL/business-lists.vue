@@ -321,7 +321,6 @@
         width:35%;
     }
       table tr td,  table tr th{
-         padding: 20px 2px;
          text-align: center;
          text-overflow: ellipsis;
          overflow: hidden;

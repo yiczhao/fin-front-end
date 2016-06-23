@@ -197,7 +197,6 @@
     }
     table tr{
     td,th{
-        padding: 20px 2px;
         text-align: center;
         text-overflow: ellipsis;
         overflow: hidden;
