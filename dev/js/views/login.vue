@@ -156,6 +156,7 @@
                 let data={'username':this.username,'password':this.password};
                 this.$http.post(this.$API.login,data)
                         .then((response)=>{
+                            this.isD=false;
                             if(response.data.code===0){
                                 $('body').removeClass('login');
                                 sessionStorage.setItem('userData',JSON.stringify(response.data.data));
@@ -166,6 +167,7 @@
                                 this.suberror=true;
                                 this.errortext=response.data.message;
                             }
+                        },()=>{
                             this.isD=false;
                         });
             }
