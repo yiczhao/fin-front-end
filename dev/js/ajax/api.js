@@ -439,6 +439,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.advancePaymentMerchant_total = './advancePaymentMerchant/total?';
+    /**
+     * @description 预付合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.changeBlance = './advancePaymentMerchant/update';
 
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**
@@ -480,7 +486,7 @@ export default function install(Vue) {
      */
     _o.advancePaymentAccount_total = './advancePaymentAccount/total?';
 
-    //- todo  商户管理-额度采购-账户列表 prepayment-lists
+    //- todo  商户管理-额度采购-账户列表 limitaccount-management
     /**
      * @description 列表数据接口地址
      * @author 冷艳君
@@ -500,7 +506,7 @@ export default function install(Vue) {
      */
     _o.recharge = './limitPurchaseAccount/charge';
 
-    //- todo  商户管理-额度采购-账户明细 prepayment-lists
+    //- todo  商户管理-额度采购-账户明细 limitaccount-info
     /**
      * @description 列表数据接口地址
      * @author 于凯乐

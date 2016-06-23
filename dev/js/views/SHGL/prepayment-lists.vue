@@ -68,7 +68,7 @@
                                 <td>{{prepayment.merchantName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
                                 <td>{{prepayment.cityName}}</td>
-                                <td>{{prepayment.balanceAmount/100 | currency ''}}</td>
+                                <td><input @blur="changeBlance($event,prepayment.id,prepayment.balanceAmount)" @click="changeInput($event)" class="w" type="text" readonly="true" :value="prepayment.balanceAmount/100 | currency ''"></td>
                                 <td>
                                     <template v-if="prepayment.status==0">
                                         <span style="color:rgb(255,​ 0,​ 0);">停用</span>
@@ -280,6 +280,14 @@
     </index>
 </template>
 <style lang="sass" scoped>
+.w{
+    background:none;
+    border:0;
+    padding:3px;
+    &:focus{
+        border:1px solid #999;
+    }
+}
     .prepayment-modal-btns {
         text-align: center;
     }
@@ -603,18 +611,39 @@
                 }
                 this.model.status(data)
                         .then((res) => {
-                    if(res.data.code == 0 && this.isEnable == 0
-            )
-                {
-                    this.query()
-                    dialogs('success', '已启用！')
+                        if(res.data.code == 0 && this.isEnable == 0
+                        )
+                            {
+                                this.query()
+                                dialogs('success', '已启用！')
+                            }
+                        else
+                            if (res.data.code == 0 && this.isEnable == 1) {
+                                this.query()
+                                dialogs('success', '已停用！')
+                            }
+                        })
+            },
+            changeInput(e){
+                e.target.removeAttribute("readOnly");
+            },
+            changeBlance(e,_id,_old){
+                if(parseInt(e.target.value)==parseInt(_old)){
+                    e.target.setAttribute("readOnly","true");
+                    return;    
                 }
-            else
-                if (res.data.code == 0 && this.isEnable == 1) {
-                    this.query()
-                    dialogs('success', '已停用！')
+                let data={
+                    id:_id,
+                    balanceAmount:e.target.value*100
                 }
-            })
+                this.model.changeBlance(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若
+                            if (response.data.code == 0) {
+                                this.query();
+                            }
+                        });
+                e.target.setAttribute("readOnly","true");
             }
         },
         ready() {

@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.type">
-                                <option value="0">请选择类型</option>
+                                <option value="">请选择类型</option>
                                 <option value="2">三方补贴</option>
                                 <option value="1">回款充值</option>
                             </select>
