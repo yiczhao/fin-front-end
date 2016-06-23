@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         getthirdinfo_total(data){
-            return _this.$http.post(_this.$API.getthirdinfo_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.getthirdinfo_total+ decodeURIComponent($.param(data)))
         }
     }
 }

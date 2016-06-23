@@ -91,7 +91,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>合计：</td>
-                                    <td>{{total}}</td>
+                                    <td>{{total/100 | currency ''}}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
