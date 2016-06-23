@@ -240,7 +240,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>提入行号：</label>
-                                        <input v-validate:bankNumber="['required']" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                        <input v-validate:bankNumber="['required']" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
                                         <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
                                     </div>
                                     <div class="form-group">

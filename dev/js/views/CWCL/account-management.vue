@@ -176,7 +176,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
-                                        <input type="text" class="form-control" v-validate:val4="['required']"  value="relist.accountNumber" v-model="relist.accountNumber">
+                                        <input type="text" class="form-control" v-validate:val4="['required']" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value="relist.accountNumber" v-model="relist.accountNumber">
                                         <span v-if="$vali.val4.required && fire1" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
