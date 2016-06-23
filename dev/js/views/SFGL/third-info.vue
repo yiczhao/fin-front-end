@@ -395,6 +395,7 @@
             this.defaultData.startDate = init_date(this.dateS)[0];
             this.defaultData.endDate = init_date(this.dateS)[1];
             (vm.$route.params.id != ':id') ? vm.defaultData.thirdPartyAccountID = vm.$route.params.id : null;
+            (vm.$route.params.serialNumber != ':serialNumber') ? vm.defaultData.serialNumber = vm.$route.params.serialNumber : null;
             vm.getClist();
             vm.initList();
         },

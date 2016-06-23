@@ -31,7 +31,7 @@
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="id" placeholder="ID">
+                                    <input type="text" class="form-control" v-model="id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="ID">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -47,7 +47,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" v-model="activityID">
+                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityID">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">

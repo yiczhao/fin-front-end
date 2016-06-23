@@ -32,7 +32,7 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="银行凭证号">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="银行凭证号">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">

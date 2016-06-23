@@ -44,10 +44,10 @@
                             <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="subsidyPayId" placeholder="补贴划付ID">
+                            <input type="text" class="form-control" v-model="subsidyPayId" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="补贴划付ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="subsidyTaxRebateId" placeholder="补贴退税ID">
+                            <input type="text" class="form-control" v-model="subsidyTaxRebateId" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="补贴退税ID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -65,7 +65,7 @@
                             <input type="number" class="form-control" v-model="phone" placeholder="手机号">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="活动ID" v-model="activityOperationID">
+                            <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" v-on:click="query" value="查询">
@@ -127,7 +127,7 @@
                                     <span>{{trlist.principalDeduct/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <a @click="goThird(trlist.id)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
+                                    <a @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
                                     <span v-else>0</span>
                                 </td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
@@ -222,7 +222,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>参与活动：</label>
-                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityOperationID" v-validate:val2="['required']">
+                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityOperationID" v-validate:val2="['required']" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                             <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
                                         </div>
                                         <div class="form-group">
@@ -543,11 +543,11 @@
             errorDialog(msg){
                 dialogs('error',msg);
             },
-            goThird(_id){
+            goThird(_id,_serialNumber){
                 this.model.skipToThird(_id)
                         .then((response)=>{
                                 if(response.data.code==0){
-                                this.$router.go({'name':'third-info',params:{'id':response.data.data}});
+                                this.$router.go({'name':'third-info',params:{'id':response.data.data,'serialNumber':_serialNumber}});
                             }
                         })
             }

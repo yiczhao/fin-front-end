@@ -80,7 +80,7 @@ export default function(router){
             }
         },
         /* 三方管理-账户明细 */
-        '/third-info/:id':{
+        '/third-info/:id/:serialNumber':{
             name:'third-info',
             component: function(resolve){
                 require(['./views/SFGL/third-info.vue'],resolve);
