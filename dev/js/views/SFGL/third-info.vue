@@ -274,7 +274,7 @@
                     'merchantName': '',
                     'merchantOperationID': '',
                     'serialNumber': '',
-                    'type': '0',
+                    'type': '',
                     'remarks':'',
                     'pageIndex': 1,
                     'pageSize': 10,

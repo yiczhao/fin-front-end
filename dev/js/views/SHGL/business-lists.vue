@@ -596,8 +596,8 @@
                 this.model.merchant_update(this.updateList)
                         .then(()=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            $(".modal").modal("hide");
                             dialogs();
+                            this.initList();
                         });
             },
             uploads(e){

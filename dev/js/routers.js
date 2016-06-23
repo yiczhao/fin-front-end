@@ -156,6 +156,13 @@ export default function(router){
                 require(['./views/XTPZ/log-management.vue'],resolve);
             }
         },
+        /* 系统配置-日志管理 */
+        '/uploadForm/':{
+            name:'uploadForm',
+            component: function(resolve){
+                require(['./views/uploadForm.vue'],resolve);
+            }
+        },
         // 转到登录页
         '*':{
             component:function () {

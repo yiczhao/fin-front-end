@@ -30,7 +30,7 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
-                                <input type="text" class="form-control" v-model="advanceId" placeholder="ID">
+                                <input type="text" class="form-control" v-model="advanceId" placeholder="预付款流水ID">
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
@@ -62,7 +62,7 @@
                                 <table id="table1" class="table">
                                     <thead>
                                         <tr>
-                                            <th>编号</th>
+                                            <th>ID</th>
                                             <th>申请时间</th>
                                             <th>分公司</th>
                                             <th>城市</th>
