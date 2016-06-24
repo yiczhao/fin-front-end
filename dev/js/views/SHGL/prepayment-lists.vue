@@ -124,7 +124,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3>添加商户</h3>
+                                <h5>添加商户</h5>
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                             </div>
                             <div class="modal-body">
@@ -514,6 +514,7 @@ table tr td,table tr th{
             showMerchants() {
                 this.merchantInfo.companyId = "", this.merchantInfo.cityId = "", this.merchantInfo.merchantOperationID = "", this.merchantInfo.merchantName = "", this.queryForMerchantList();
                 this.firstAdd=true;
+                this.merchantList=[];
             },
             queryForMerchantList() {
                 //设置全选属性

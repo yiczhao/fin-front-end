@@ -461,6 +461,7 @@
         },
         ready() {
             (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
+            (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
             this.initList();
             this.getBlance();

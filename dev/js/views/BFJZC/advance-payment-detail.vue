@@ -88,7 +88,7 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
-                                            <td><a v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantId}}">查看</a></td>
+                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantId)">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==1">等待审核</template>
@@ -219,6 +219,18 @@
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
                     })
+            },
+            gopreinfo(a,b,_id){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$common_model.skipToOrder(data)
+                        .then((response)=>{
+                                if(response.data.code==0){
+                                    this.$router.go({'name':'prepayment-info',params:{'id':_id,'orderNumber':response.data.data.orderNumber}});
+                                }
+                        })
             }
         },
         ready() {
