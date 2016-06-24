@@ -173,7 +173,7 @@
                             <div class="form-group">
                                 <label><i style="color:red">*</i>金额：</label>
                                 <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
-                                       v-model="applyAdvancePay.advancePaymentAmount"></input>
+                                       v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
                             </div>
                             <div class="form-group">
                                 <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>

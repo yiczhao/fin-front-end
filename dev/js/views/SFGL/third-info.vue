@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>

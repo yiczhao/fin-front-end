@@ -184,7 +184,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-if="firstAdd && !xhlist.length>0">
+                                        <span v-if="!merchantList.length>0 && firstAdd">
                                             未查询到商户数据！
                                         </span>
                                     </div>
@@ -240,11 +240,11 @@
                                             <label><i style="color:red">*</i>金额：</label>
                                             <input v-validate:val1="['required']" type="text" class="form-control"
                                                    name="advancePaymentAmount"
-                                                   v-model="applyAdvancePay.advancePaymentAmount"></input>
+                                                   v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>
-                                        <textarea v-validate:val2="['required']" class="form-control" name="remarks"
+                                        <textarea v-validate:val2="['required']" class="form-control" maxlength="50" name="remarks"
                                                   v-model="applyAdvancePay.remarks"></textarea>
                                         </div>
                                         <div class="form-group">
@@ -466,6 +466,7 @@ table tr td,table tr th{
             },
             //获取商户数据
             getMerchantList(){
+                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.merchantInfo)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -513,14 +514,13 @@ table tr td,table tr th{
             //显示选择商户窗口
             showMerchants() {
                 this.merchantInfo.companyId = "", this.merchantInfo.cityId = "", this.merchantInfo.merchantOperationID = "", this.merchantInfo.merchantName = "", this.queryForMerchantList();
-                this.firstAdd=true;
+                this.firstAdd=false;
                 this.merchantList=[];
             },
             queryForMerchantList() {
                 //设置全选属性
                 this.clear();
                 this.getshCity();
-                this.firstAdd=false;
                 $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay() {

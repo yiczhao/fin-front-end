@@ -25,7 +25,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号">
+                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
                     <div class="form-group">
                         <input type="button" class="btn btn-info" @click="checkNew" value="查询">
