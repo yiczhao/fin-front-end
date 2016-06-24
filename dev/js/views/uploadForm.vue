@@ -62,7 +62,7 @@
 					name:form.find('input[type="text"]').val(),
 					data:form.find('.hidden-data').val()
 				}
-				this.$common_model.upload(datas)
+				this.$http.post('./dev/tool/upload',datas)
 						.then((response)=>{
 					dialogs('success','上传成功！');
 			})
