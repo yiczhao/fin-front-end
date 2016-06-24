@@ -7,9 +7,6 @@
         	<div class="panel panel-flat">
         	 <div class="panel-heading">
         	 	<div class="upload-rows">
-	           		<div th:if="${message}">
-						<h2 th:text="${message}"/></h2>
-					</div>
 					<div>
 						<form method="POST" enctype="multipart/form-data" action="{{origin}}/merchant/account/tax">
 							<table>
@@ -22,9 +19,6 @@
 				 </div>
 
 				 <div class="upload-rows">
-	           		<div th:if="${message}">
-						<h2 th:text="${message}"/></h2>
-					</div>
 					<div>
 						<form method="POST" enctype="multipart/form-data" action="{{origin}}/merchant/account/tax">
 							<table>

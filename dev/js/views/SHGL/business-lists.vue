@@ -200,8 +200,8 @@
                                         <tr role="row" v-for="n in relist">
                                                 <td>{{$index+1}}</td>
                                                 <td>
-                                                    {{n.accountName}}
-                                                    {{n.accountNumber}}
+                                                    <p>{{n.accountName}}</p>
+                                                    <p>{{n.accountNumber}}</p>
                                                 </td>
                                                 <td>{{n.createAt | datetime}}</td>
                                                 <td>{{n.createBy}}</td>
