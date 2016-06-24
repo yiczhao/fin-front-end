@@ -451,6 +451,7 @@
                 };
                 this.getshCity();
                 this.clearUl();
+                this.firstAdd=false;
                 $('#modal_add').modal('show');
             },
             searchDigest(){

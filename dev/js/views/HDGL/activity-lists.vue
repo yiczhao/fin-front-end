@@ -377,6 +377,7 @@
                     'accountName':'',
                 };
                 this.id=_id;
+                this.firstAdd=false;
                 this.getshCity();
                 $('#modal_add').modal('show');
                 this.clearUl();

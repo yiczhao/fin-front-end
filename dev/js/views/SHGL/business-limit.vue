@@ -818,10 +818,12 @@
                 };
                 this.getxhCity();
                 this.clearUl();
+                this.firstAdd=false;
                 $('#modal_add').modal('show');
             },
             addUser2(){
                 this.addTitle='添加消化商户';
+                this.firstAdd=false;
                 (this.shdata.companyId=='')?this.getxhCity():null;
                 $('.addbottom .col-md-4').children('ul').html('');
                 $('#modal_add').modal('show');

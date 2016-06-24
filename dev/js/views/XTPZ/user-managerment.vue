@@ -332,6 +332,7 @@
             },
             addUser(){
                 $('#modal_add').modal('show');
+                this.firstAdd=false;
                 this.clearUl();
             },
             clearUl(){

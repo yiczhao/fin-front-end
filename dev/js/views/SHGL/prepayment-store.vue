@@ -328,6 +328,7 @@
                 };
                 this.clearUl();
                 this.getCity();
+                this.firstAdd=false;
                 $('#modal_add').modal('show');
             },
             searchDigest(){

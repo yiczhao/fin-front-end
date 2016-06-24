@@ -520,6 +520,7 @@ table tr td,table tr th{
                 //设置全选属性
                 this.clear();
                 this.getshCity();
+                this.firstAdd=false;
                 $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay() {
