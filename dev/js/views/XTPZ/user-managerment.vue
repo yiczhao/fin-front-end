@@ -140,7 +140,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -260,7 +260,8 @@
                     subCompanyID:'',
                     keyWord:''
                 },
-                addId:[]
+                addId:[],
+                firstAdd:false
             }
         },
         methods:{
@@ -338,7 +339,7 @@
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             queryUser(){
-                if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;
+                this.firstAdd=true;
                 this.model.readyImportUser(this.userdata)
                         .then((response)=>{
                             (response.data.code==0)?this.$set('userlists',response.data.data):null;

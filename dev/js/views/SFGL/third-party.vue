@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -233,7 +233,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="!xhlist.length>0&&firstAdd">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -383,6 +383,7 @@
                     balanceAmount:''
                 },
                 saveerror:false,
+                firstAdd:false,
                 total:0
             }
         },
@@ -454,6 +455,7 @@
             },
             searchDigest(){
                 this.clearUl();
+                this.firstAdd=true;
                 this.model.thirdParty_accountlist(this.shdata)
                         .then((response)=>{
                             (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
@@ -563,7 +565,7 @@
             },
             rechargeTrue(){
                 this.saveerror=true;
-                if(this.$vali.invalid)return;
+                if(this.$vali.invalid || this.redata.money==0)return;
                 let data={
                     id:this.redata.id,
                     money:this.redata.money *100,

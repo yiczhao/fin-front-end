@@ -137,7 +137,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -274,7 +274,8 @@
                 zdlists:[],
                 xhlist:[],
                 addId:[],
-                id:''
+                id:'',
+                firstAdd:false
             }
         },
         methods:{
@@ -331,6 +332,7 @@
             },
             searchDigest(){
                 this.clearUl();
+                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                         (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;

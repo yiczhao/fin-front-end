@@ -184,7 +184,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="firstAdd && !xhlist.length>0">
                                             未查询到商户数据！
                                         </span>
                                     </div>
@@ -284,6 +284,7 @@
     background:none;
     border:0;
     padding:3px;
+    text-align:center;
     &:focus{
         border:1px solid #999;
     }
@@ -362,6 +363,9 @@
     }
 
     }
+table tr td,table tr th{
+    text-align: center;
+}
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -414,7 +418,8 @@
                 isEnable: 0,
                 _id: '',
                 total: [],
-                saveerror: false
+                saveerror: false,
+                firstAdd: false
             }
         },
         methods: {
@@ -507,11 +512,8 @@
             },
             //显示选择商户窗口
             showMerchants() {
-                this.merchantInfo.companyId = "",
-                        this.merchantInfo.cityId = "",
-                        this.merchantInfo.merchantOperationID = "",
-                        this.merchantInfo.merchantName = "",
-                        this.queryForMerchantList();
+                this.merchantInfo.companyId = "", this.merchantInfo.cityId = "", this.merchantInfo.merchantOperationID = "", this.merchantInfo.merchantName = "", this.queryForMerchantList();
+                this.firstAdd=true;
             },
             queryForMerchantList() {
                 //设置全选属性
@@ -628,7 +630,7 @@
                 e.target.removeAttribute("readOnly");
             },
             changeBlance(e,_id,_old){
-                if(parseInt(e.target.value)==parseInt(_old)){
+                if(parseFloat(e.target.value.replace(/[^\d\.-]/g, ""))*100==parseInt(_old)){
                     e.target.setAttribute("readOnly","true");
                     return;    
                 }

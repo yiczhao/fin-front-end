@@ -361,7 +361,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span  v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -660,6 +660,7 @@
                     balanceLimit:0
                 },
                 saveerror:'',
+                firstAdd:false
             }
         },
         methods:{
@@ -798,6 +799,7 @@
                         })
             },
             searchDigest(){
+                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
