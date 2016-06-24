@@ -154,7 +154,10 @@
                                                 <a @click="gopayment(sa.id,1)">查看</a>
                                             </template>
                                         </td>
-                                        <td>{{sa.activityName}}</td>
+                                        <td>
+                                            <p>{{sa.activityOperationID}}</p>
+                                            <p>{{sa.activityName}}</p>
+                                        </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
                                 </tbody>
