@@ -48,9 +48,6 @@
 				let files=e.target.files[0];
 				let _this=$(e.target);
 				var reader = new FileReader();
-				if(!check_upload(files.name)){
-					return;
-				}
 				reader.readAsDataURL(files);
 				reader.onload = function(e){
 					_this.siblings('.hidden-data').val(this.result.split(',')[1])
