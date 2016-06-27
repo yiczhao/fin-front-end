@@ -109,9 +109,6 @@
 			}
 		},
 		watch:{
-			show(val) {
-				this.force_destroy(val)
-			}
 		},
 
 		ready() {
