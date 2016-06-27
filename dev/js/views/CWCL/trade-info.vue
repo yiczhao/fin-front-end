@@ -227,32 +227,32 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>消费金额：</label>
-                                            <input type="number" class="form-control" id="consumptionAmount" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                            <input type="text" class="form-control" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>折扣金额：</label>
-                                            <input type="number" class="form-control" id="discountAmount" v-model="tradeInfo.discountAmount" v-validate:val4="['required']"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                            <input type="text" class="form-control" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>实付金额：</label>
-                                            <input type="number" class="form-control" id="paAmount" v-model="tradeInfo.paAmount" v-validate:val5="['required']"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                            <input type="text" class="form-control" v-model="tradeInfo.paAmount" v-validate:val5="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>三方应收：</label>
-                                            <input type="number" class="form-control" id="thirdPartyReceivable" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                            <input type="text" class="form-control" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>暂扣税金：</label>
-                                            <input type="number" class="form-control" id="suspensionTax" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" >
+                                            <input type="text" class="form-control" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" >
                                             <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>商户实补：</label>
-                                            <input type="number" class="form-control" id="merchantSubsidyActual" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                            <input type="text" class="form-control" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
                                         </div>
                                         <div class="form-group">
