@@ -191,8 +191,8 @@
                                     <div class="col-md-2">
                                         <select class="form-control" v-model="shdata.type">
                                             <option value="">请选择类型</option>
-                                            <option value="BANK">银行</option>
-                                            <option value="COMM">运营商</option>
+                                            <option value="1">银行</option>
+                                            <option value="2">运营商</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
