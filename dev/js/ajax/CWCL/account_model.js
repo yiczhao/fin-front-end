@@ -35,7 +35,7 @@ function model(_this) {
          * @returns {*}
          */
         startaccount (a) {
-            return _this.$http.get(_this.$API.startaccount+a)
+            return _this.$http.post(_this.$API.startaccount+a)
         },
         /**
          * @description 删除账户

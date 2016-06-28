@@ -80,7 +80,7 @@
                                 <td>
                                     <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)"
                                        v-if="prepayment.status==1">预付</a>
-                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'merchantName':prepayment.merchantName}}"
+                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
                                        v-if="prepayment.status==1">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}">明细</a>
                                     <a data-toggle="modal" data-target="#modal_waring"

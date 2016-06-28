@@ -397,7 +397,7 @@
         ready() {
             var vm=this;
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
-            (vm.$route.params.merchantName!=':id')?vm.merchantName=vm.$route.params.merchantName:null;
+            (vm.$route.params.storeMerchantName!=':storeMerchantName')?vm.merchantName=vm.$route.params.storeMerchantName:null;
             vm.initList();
             vm.getClist();
             $(document).on('click','.addbottom .col-md-4 ul li',function(){

@@ -122,7 +122,7 @@ export default function(router){
             }
         },
         /* 商户管理-预付款门店管理 */
-        '/prepayment-store/:id/:merchantName':{
+        '/prepayment-store/:id/:storeMerchantName':{
             name:'prepayment-store',
             component: function(resolve){
                 require(['./views/SHGL/prepayment-store.vue'],resolve);
