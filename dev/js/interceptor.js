@@ -19,6 +19,7 @@ export default function install(Vue,router_proto) {
 			return request;
 		},
 		response (response) {
+			sessionStorage.setItem('isHttpin',0);
 			Message.hide();
 			// *** 拦截session过期
 			if(response.data.code === 50000){
@@ -35,7 +36,6 @@ export default function install(Vue,router_proto) {
 				conut++;
 				return;
 			}
-			sessionStorage.setItem('isHttpin',0);
 			return response;
 		}
 	});
