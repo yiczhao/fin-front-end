@@ -30,7 +30,9 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
-                                <input type="text" class="form-control" v-model="advanceId" placeholder="预付款流水ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="advanceId" placeholder="预付款流水ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
@@ -160,6 +162,7 @@
         methods:{
             //获取补贴划付数据
              getadvancePaymentDetailList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.advance_list(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型

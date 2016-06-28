@@ -267,6 +267,7 @@
         methods:{
             //获取员工数据
              getUserList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.user_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('userList', response.data.data) : null;
@@ -295,6 +296,7 @@
             },
             //显示员工管辖
             showCS(userId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.userID=userId
                 this.model.userControl_list(userId)
                     .then((response)=>{
@@ -311,6 +313,7 @@
                 })
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var arrays = [];
                 $("input[name='ckbox']:checked").each(function(){
                   arrays.push($(this).prop("id"));  
@@ -340,6 +343,7 @@
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             queryUser(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.firstAdd=true;
                 this.model.readyImportUser(this.userdata)
                         .then((response)=>{
@@ -384,6 +388,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 var data={data:[]};

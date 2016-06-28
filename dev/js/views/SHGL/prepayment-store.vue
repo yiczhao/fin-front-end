@@ -281,6 +281,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                     this.model.prepayment_store(data)
                             .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
@@ -332,6 +333,7 @@
                 $('#modal_add').modal('show');
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.clearUl();
                 this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
@@ -372,6 +374,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
@@ -385,6 +388,7 @@
                 this.id=_id;
             },
             del_true(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.delstore(this.id)
                         .then((res)=> {
                             if(res.data.code==0){

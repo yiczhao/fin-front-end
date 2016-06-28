@@ -441,6 +441,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -460,6 +461,7 @@
                 this.getZlists(this.checkForm);
             },
             getInfo(a,index){
+                if(sessionStorage.getItem('isHttpin')==1)return;
 //                this.zdlists[index].listinfo = []
                 if(this.listinfos[index] !='' && typeof(this.listinfos[index])!='undefined')return;
                 this.model.getpart(a.id)
@@ -491,6 +493,7 @@
                 this.delPurpose=b;
             },
             checking(a){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=a;
                 this.model.checklist(a)
                         .then( (response)=> {
@@ -498,6 +501,7 @@
                         })
             },
             checkTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'orderId':this.accountId,
                     'reserveCashId':_id
@@ -511,6 +515,7 @@
                         })
             },
             updateTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_update(this.accountId)
                     .then( (response)=> {
                         if(response.data.code==0){
@@ -520,6 +525,7 @@
                     })
             },
             payTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_allow(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
@@ -529,6 +535,7 @@
                         })
             },
             delTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':this.accountId,
                     'purpose':this.delPurpose
@@ -542,6 +549,7 @@
                         })
             },
             closeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_close(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
@@ -551,6 +559,7 @@
                         })
             },
             backTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
@@ -565,6 +574,7 @@
                             })
             },
             applyTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':_id,
                 }

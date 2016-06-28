@@ -390,6 +390,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.thirdParty_list(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -455,6 +456,7 @@
                 $('#modal_add').modal('show');
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.clearUl();
                 this.firstAdd=true;
                 this.model.thirdParty_accountlist(this.shdata)
@@ -498,6 +500,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 var data=[];
@@ -526,6 +529,7 @@
                 this.id=_id;
             },
             del_true(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.delstore(this.id)
                         .then((res)=> {
                                 if(res.data.code==0){
@@ -539,6 +543,7 @@
                 this.isEnable = status;
             },
             change_status(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data = {
                     'id': this._id,
                     'status': this.isEnable
@@ -565,6 +570,7 @@
                 }
             },
             rechargeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
                 if(this.$vali.invalid || this.redata.money==0)return;
                 let data={
@@ -581,6 +587,7 @@
                         })
             },
             gettotal(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.gettotal(this.defaultData)
                         .then((response)=>{
                             (response.data.code==0)?this.$set('total',response.data.data):null;

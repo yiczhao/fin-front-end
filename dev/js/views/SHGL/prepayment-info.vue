@@ -379,6 +379,7 @@
         methods: {
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if (data.endDate < data.startDate) {
                     let a = data.endDate, b = data.startDate;
                     this.checkForm.startDate = a;
@@ -403,6 +404,7 @@
             },
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.advancePaymentMerchant(prepaymentId)
                         .then((response)=>{
                             if (response.data.code == 0) {
@@ -430,6 +432,7 @@
                         });
             },
             subApplyAdvancePay() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
                 if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
@@ -453,6 +456,7 @@
                 this.defaultData.endDate = init_date(this.dateS)[1];
             },
             getBlance(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.getBlance(this.defaultData.advancePaymentMerchantID)
                         .then((res)=>{
                             (res.data.code==0)?this.$set('blanceList',res.data.data):null;

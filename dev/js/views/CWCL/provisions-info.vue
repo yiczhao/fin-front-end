@@ -420,6 +420,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -463,6 +464,7 @@
                 this.getZlists(this.checkForm);
             },
             dzOne(id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 请求对账数据
                 this.model.selectReserveCashOrderListByID(id)
                         .then((response)=>{
@@ -481,6 +483,7 @@
                   $('#modal_dzone').modal('hide');
             },
             dzTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.glradio=='one'){
                     this.associateCheck.detailID=_id;
                     this.model.associateCheck(this.associateCheck)

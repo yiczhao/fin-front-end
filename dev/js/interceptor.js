@@ -11,6 +11,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.interceptors.push({
 		request (request) {
 			Message.show('loading','loading...');
+			sessionStorage.setItem('isHttpin',1);
 			conut=0;
 			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
 			request.headers['X-Auth-Token']=token;
@@ -34,6 +35,7 @@ export default function install(Vue,router_proto) {
 				conut++;
 				return;
 			}
+			sessionStorage.setItem('isHttpin',0);
 			return response;
 		}
 	});

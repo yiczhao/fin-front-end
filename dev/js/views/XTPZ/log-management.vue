@@ -166,6 +166,7 @@
         methods:{
             //获取员工数据
              getLogList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.log_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('logList', response.data.data) : null;
@@ -189,6 +190,7 @@
                         })
             },
             showLog(id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.log_info(id)
                     .then((response)=>{
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;

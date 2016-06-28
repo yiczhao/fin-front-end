@@ -666,6 +666,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
                     let a=data.endValue,b=data.startValue;
                     this.defaultData.startValue=a;
@@ -720,6 +721,7 @@
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             updateNew(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=_id;
                 this.updateList={
                     remarks: '',
@@ -748,6 +750,7 @@
 
             },
             seehistoryxh(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.seehistoryList=[];
                 this.model.seehistoryxh(_id)
                         .then((response)=>{
@@ -764,6 +767,7 @@
                 $(e.target).closest('tr').hide().find('.merchantIds').removeClass('merchantIds');
             },
             submitUpdate(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror='';
                 if(!this.$vali.valid){this.$set('saveerror', '您的信息未填写完整');return;}
                 if(this.updateList.certificateID==''){this.$set('saveerror', '请上传凭证');return;}
@@ -781,6 +785,7 @@
                 this.isEnable=_isenb;
             },
             changeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
                                 this.initList();
@@ -788,6 +793,7 @@
                         })
             },
             seexh(_id,isTrue){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.seexhList=[];
                 this.accountId=_id;
                 this.isTrue=isTrue;
@@ -799,6 +805,7 @@
                         })
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
@@ -865,6 +872,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}

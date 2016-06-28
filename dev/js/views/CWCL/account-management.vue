@@ -327,6 +327,7 @@
                 this.addtitle = '添加账户';
             },
             initList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 $(".modal").modal("hide");
                 this.getZlists(this.defaultData);
             },
@@ -347,6 +348,7 @@
                 this.accountId=a;
             },
             personDialog(a,b){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errorHide();
                 this.fire=false;
                 this.accountId=b;
@@ -367,6 +369,7 @@
                         })
             },
             personTrue(a){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.$vali2.valid){this.fire=true;return;}
                 let data={
                     "id": a,
@@ -382,6 +385,7 @@
                         })
             },
             startTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 启用提交
                 this.model.startaccount(this.accountId)
                         .then((response)=>{
@@ -391,6 +395,7 @@
                         })
             },
             delTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 删除提交
                 this.model.deleteaccount(this.accountId)
                         .then((response)=>{
@@ -400,6 +405,7 @@
                         })
             },
             addBtn(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errorHide();
                 if(!this.$vali.valid){this.fire1=true;return;}
                 if(this.relist.startDate==''){$('.timeerror').show();return;}

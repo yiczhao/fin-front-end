@@ -265,6 +265,7 @@
         methods:{
             //获取补贴划付数据
              getsubsidyTaxRebateDetailList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.rebate_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
@@ -346,6 +347,7 @@
                 $('#displayName').attr("class",id);
             },
              getApplyPayInfoByIDs(idArray){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:idArray
                 }
@@ -367,6 +369,7 @@
                     });
             },
             submitOne(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:this.submitId,
                     remarks:this.applyPayRemarks,
@@ -385,6 +388,7 @@
                 });
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  

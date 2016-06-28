@@ -319,6 +319,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.activity_total(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -386,6 +387,7 @@
                 this.clearUl();
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.clearUl();
                 this.firstAdd=true;
                 this.model.activity_info(this.shdata)
@@ -397,6 +399,7 @@
                 this.id=_id;
             },
             checkTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':this.id,
                     'thirdPartyAccountID':_id

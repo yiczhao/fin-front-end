@@ -425,6 +425,7 @@ table tr td,table tr th{
         methods: {
             //获取预付款商户数据
             getPrepaymentList(data) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.prepayment_lists(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -438,6 +439,7 @@ table tr td,table tr th{
             },
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.advancePaymentMerchant(prepaymentId)
                         .then((response)=>{
                             if (response.data.code == 0) {
@@ -466,6 +468,7 @@ table tr td,table tr th{
             },
             //获取商户数据
             getMerchantList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.merchantInfo)
                         .then((response)=>{
@@ -524,6 +527,7 @@ table tr td,table tr th{
                 $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
                 let entity = {
@@ -575,6 +579,7 @@ table tr td,table tr th{
                 _li.remove();
             },
             submit(e) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li = $("#IDS").children('li');
                 if (!_li.length > 0)return;
                 let data = {'merchantIDs': Array.from(_li, i => i.getAttribute('value')
@@ -609,6 +614,7 @@ table tr td,table tr th{
                 this.isEnable = status;
             },
             change_status(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data = {
                     'id': this._id,
                     'status': this.isEnable

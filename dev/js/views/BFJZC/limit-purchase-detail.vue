@@ -178,6 +178,7 @@
         methods:{
             //获取补贴划付数据
              getlimitPurchaseDetailList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limit_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('limitPurchaseDetailList', response.data.data) : null;

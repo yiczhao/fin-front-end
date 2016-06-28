@@ -297,6 +297,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if (data.endDate < data.startDate) {
                     let a = data.endDate, b = data.startDate;
                     this.checkForm.startDate = a;
@@ -340,6 +341,7 @@
             },
             //获取城市数据
             getshCity(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.shdata.cityID='-1';
                 let data={
                     'subCompanyID':_id
@@ -374,6 +376,7 @@
                         })
             },
             rechargeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
                 if(this.$vali.invalid)return;
                 let data={

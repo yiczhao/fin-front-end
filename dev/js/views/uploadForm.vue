@@ -54,6 +54,7 @@
 				}
 			},
 			submits(e){
+				if(sessionStorage.getItem('isHttpin')==1)return;
 				let form=$(e.target).closest('form');
 				let datas={
 					name:form.find('input[type="text"]').val(),

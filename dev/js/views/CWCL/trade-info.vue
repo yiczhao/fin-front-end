@@ -446,6 +446,7 @@
                 this.fire=false;
             },
             saveTradeInfo(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 //隐藏非空提示
                 this.errorHideL();
                 //验证非空
@@ -471,6 +472,7 @@
                     })
             },
             query() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 this.clear();
                 if (this.startDate=="" && this.endDate=="") {

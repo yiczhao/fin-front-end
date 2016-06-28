@@ -217,6 +217,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -234,6 +235,7 @@
                         });
             },
             getsumBalance(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseAccount_getsumBalance(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型

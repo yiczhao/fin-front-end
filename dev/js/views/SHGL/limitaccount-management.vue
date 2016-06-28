@@ -237,6 +237,7 @@
         },
         methods:{
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseAccount(data)
                             .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
@@ -259,6 +260,7 @@
                 this.getZlists(this.defaultData);
             },
             selectRecharge(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=_id;
                 this.model.limitPurchase_selectRechargeInfoByID(_id)
                         .then((response)=>{
@@ -297,6 +299,7 @@
                 }
             },
             addBtn(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
                 if(this.addData.certificatesID==''&&this.addData.payType=='2'){this.fire=true;this.errortext='请上传凭证';return;}

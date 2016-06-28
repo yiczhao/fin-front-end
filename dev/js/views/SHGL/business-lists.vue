@@ -468,6 +468,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
                     this.defaultData.endValue=b;
                     data.startValue=a;
@@ -515,6 +516,7 @@
                 this.checkcontrol(_list.merchantID)
             },
             checkcontrol(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.merchant_account(_id)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -584,6 +586,7 @@
                 this.updateList.accountType=this.accountType;
             },
             updateTrue(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.$vali.valid){
                     this.updataerror=true;
                     this.errortext='您的信息未填写完整！';
@@ -640,6 +643,7 @@
                 }
             },
             check_digest(_list,_merchantName){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.id=_list.merchantOperationID;
                 this.merchantName=_merchantName;
                 this.model.merchant_digest(_list.merchantID)
@@ -649,6 +653,7 @@
                     })
             },
             getNums(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.merchant_total(this.defaultData)
                         .then((res)=>{
                             (res.data.code==0)?this.$set('nums',res.data.data):null;

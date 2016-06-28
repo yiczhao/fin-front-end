@@ -280,6 +280,7 @@
         methods:{
             //获取补贴划付数据
              getSubsidyAppropriationList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.appropriation_list(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -345,6 +346,7 @@
                 this.getApplyPayInfoByIDs(array);
             },
             updateById(id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.subsidy_update(id)
                         .then((response)=>{
                             if(response.data.code==0){
@@ -365,6 +367,7 @@
                 $('#displayName').attr("class",id);
             },
             getApplyPayInfoByIDs(idArray){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:idArray
                 }
@@ -386,6 +389,7 @@
                         });
             },
             submitOne(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:this.submitId,
                     remarks:this.applyPayRemarks,
@@ -403,6 +407,7 @@
                 $(".modal").modal("hide");
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
