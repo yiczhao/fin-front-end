@@ -155,8 +155,7 @@
                                             </template>
                                         </td>
                                         <td>
-                                            <p>{{sa.activityOperationID}}</p>
-                                            <p>{{sa.activityName}}</p>
+                                            {{sa.activityOperationID}},{{sa.activityName}}
                                         </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
