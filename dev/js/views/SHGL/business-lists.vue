@@ -479,6 +479,10 @@
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                             });
+                this.model.merchant_total(this.defaultData)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('nums',res.data.data):null;
+                     })
             },
             getClist(){
                 // *** 请求公司数据
@@ -651,13 +655,6 @@
                             (res.data.code==0)?this.$set('checkLists',res.data.data):null;
                             $('#modal_checking').modal('show');
                     })
-            },
-            getNums(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.merchant_total(this.defaultData)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('nums',res.data.data):null;
-                        })
             }
         },
         ready() {
@@ -666,7 +663,6 @@
             vm.initList();
             vm.getClist();
             vm.getCity();
-            vm.getNums();
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })
@@ -685,9 +681,6 @@
             'datepicker': datepicker
         },
         watch:{
-            zdlists(){
-                this.getNums()
-            },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();

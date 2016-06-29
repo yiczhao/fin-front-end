@@ -31,11 +31,6 @@ export default function install(Vue,router_proto) {
 				dialogs('error','系统错误,请及时联系开发人员解决！');
 				conut++;
 			}
-			else if(response.data.code !== 0){
-				dialogs('error',response.data.message);
-				conut++;
-				return;
-			}
 			return response;
 		}
 	});

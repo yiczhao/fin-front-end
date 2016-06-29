@@ -397,6 +397,10 @@
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         });
+                this.model.gettotal(this.defaultData)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('total',response.data.data):null;
+                        })
             },
             getClist(){
                 // *** 请求公司数据
@@ -436,7 +440,6 @@
             initList(){
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
-                this.gettotal()
             },
             clearUl(){
                 this.xhlist=[];
@@ -584,13 +587,6 @@
                                 this.initList()
                                 dialogs('success','已充值！')
                             }
-                        })
-            },
-            gettotal(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.gettotal(this.defaultData)
-                        .then((response)=>{
-                            (response.data.code==0)?this.$set('total',response.data.data):null;
                         })
             }
         },

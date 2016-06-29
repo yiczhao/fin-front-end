@@ -233,19 +233,15 @@
 //                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
 //                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         });
-            },
-            getsumBalance(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseAccount_getsumBalance(this.checkForm)
                         .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            this.$set('nums', response.data.data)
-                        });
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    this.$set('nums', response.data.data)
+                 });
             },
             initList(){
                 $(".modal").modal("hide");
                 this.getZlists(this.checkForm);
-                this.getsumBalance();
             },
             getTime(){
                 this.checkForm.startDate=init_date(this.dateS)[0];
