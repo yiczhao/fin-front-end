@@ -390,7 +390,7 @@
                                     }
                                 }
                                 $('#modal_applyPay').modal('show');
-                                }
+                            }
                         });
             },
             submitOne(){
@@ -407,7 +407,7 @@
                                 dialogs();
                                 this.query();
                             }
-            });
+                        });
                 $(".modal").modal("hide");
             },
             submit(){

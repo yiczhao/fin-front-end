@@ -493,7 +493,7 @@
                     this.model.associateCheck(this.associateCheck)
                         .then((response)=>{
                             if(response.data.code==0){
-                                his.initList();
+                                this.initList();
                                 dialogs('success','对账成功！');
                             }
                         })

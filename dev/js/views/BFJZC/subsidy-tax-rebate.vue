@@ -363,7 +363,8 @@
                     .then((response)=>{
                         // *** 判断请求是否成功如若
                         if(response.data.code==0){
-                             this.payTypes=this.applyPayInfo.payType;
+                            this.$set('applyPayInfo', response.data.data);
+                            this.payTypes=this.applyPayInfo.payType;
                              for(var i in this.payTypes){
                                  if(this.payType == this.payTypes[i].type){
                                      this.showPayAccount=this.payTypes[i].value

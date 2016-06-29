@@ -358,18 +358,20 @@
                 this.accountId=b;
                 this.model.queryperson(a)
                         .then((response)=>{
-                            // *** 判断请求是否成功如若成功则启用该数据
-                            var newperson={
-                                name:'',
-                                phone:'',
-                                email:''
-                            };
-                            if(response.data.data){
-                                this.$set('person', response.data.data)
-                            }else{
-                                this.$set('person',newperson)
+                            if(response.data.code == 0){
+                                // *** 判断请求是否成功如若成功则启用该数据
+                                var newperson={
+                                    name:'',
+                                    phone:'',
+                                    email:''
+                                };
+                                if(response.data.data){
+                                    this.$set('person', response.data.data)
+                                }else{
+                                    this.$set('person',newperson)
+                                }
+                                $('#modal_fzr').modal('show');
                             }
-                            $('#modal_fzr').modal('show');
                         })
             },
             personTrue(a){
@@ -384,8 +386,10 @@
                 }
                 this.model.saveperson(data)
                         .then((response)=>{
-                            this.initList();
-                            dialogs();
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs();
+                            }
                         })
             },
             startTrue(){
