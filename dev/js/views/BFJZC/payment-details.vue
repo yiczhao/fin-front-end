@@ -451,8 +451,10 @@
                 }
                 this.model.getlist(data)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
                         });
             },
             initList(){
@@ -497,8 +499,10 @@
                 this.accountId=a;
                 this.model.checklist(a)
                         .then( (response)=> {
-                             (response.data.code==0)?this.$set('checkLists',response.data.data):null;
-                        })
+                            if(response.data.code==0){
+                                this.$set('checkLists',response.data.data)
+                            }
+            })
             },
             checkTrue(_id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -583,7 +587,7 @@
                                 if(response.data.code==0){
                                     this.initList();
                                     dialogs('success','已申请！');
-                            }
+                                }
                         })
             },
             checkingTrue(a){

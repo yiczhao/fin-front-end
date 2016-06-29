@@ -394,15 +394,19 @@
              getTradeList(data){
                  this.model.tradedetail(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                         if(response.data.code==0){
+                            this.$set('tradeList', response.data.data)
+                            this.$set('pageall', response.data.total)
+                        }
                     });
             },
             //获取分公司数据
             getSubcompany(){
                  this.$common_model.getcompany()
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
                     });
             },
             //获取城市数据
@@ -413,7 +417,9 @@
                 }
                  this.$common_model.getcity(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('cityList', response.data.data)
+                        }
                     });
             },
             addTradeInfo(){
@@ -467,8 +473,8 @@
                         if(response.data.code==0){
                             this.query();
                             dialogs();
+                            $(".modal").modal("hide");
                         }
-                        $(".modal").modal("hide");
                     })
             },
             query() {
@@ -535,11 +541,13 @@
                         data:this.result.split(',')[1]
                     }
                     vm.$common_model.upload(datas)
-                            .then((response)=>{
-                                    vm.tradeInfo.certificateId=response.data.data;
-                                    vm.uploadText=files.name;
-                                    dialogs('success','上传成功！');
-                            })
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                vm.tradeInfo.certificateId=response.data.data;
+                                vm.uploadText=files.name;
+                                dialogs('success','上传成功！');
+                            }
+                        })
                 }
             },
             errorDialog(msg){
@@ -548,7 +556,7 @@
             goThird(_id,_serialNumber){
                 this.model.skipToThird(_id)
                         .then((response)=>{
-                                if(response.data.code==0){
+                            if(response.data.code==0){
                                 this.$router.go({'name':'third-info',params:{'id':response.data.data,'serialNumber':_serialNumber}});
                             }
                         })

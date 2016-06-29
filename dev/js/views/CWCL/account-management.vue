@@ -301,18 +301,22 @@
             },
             getZlists(data){
                     this.model.getbanklist(data)
-                            .then((response)=>{
-                                // *** 判断请求是否成功如若成功则填充数据到模型
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            });
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
+                        });
             },
             getClist(){
                 // *** 请求公司数据
-                this.$common_model.getcompany().then((response)=>{
+                    this.$common_model.getcompany().then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        });
+                            if(response.data.code==0){
+                                this.$set('companylists', response.data.data)
+                            }
+                    });
             },
             checkNew(){
                 this.initList();
@@ -390,8 +394,10 @@
                 this.model.startaccount(this.accountId)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则启用该数据
-                            this.initList();
-                            dialogs('success','已启用！');
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs('success','已启用！');
+                            }
                         })
             },
             delTrue(){
@@ -400,8 +406,10 @@
                 this.model.deleteaccount(this.accountId)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则删除该条数据
-                            this.initList();
-                            dialogs('success','已删除！');
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs('success','已删除！');
+                            }
                         })
             },
             addBtn(){
@@ -424,8 +432,7 @@
                         .then((response)=>{
                             if(response.data.code==-1){
                                 this.$set('saveerror', response.data.message)
-                            }
-                            else{
+                            }else{
                                 this.initList();
                                 dialogs();
                             }

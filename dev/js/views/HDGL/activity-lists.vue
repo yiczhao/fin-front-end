@@ -323,13 +323,17 @@
                 this.model.activity_total(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('total', response.data.data) : null;
+                            if(response.data.code==0){
+                                this.$set('total', response.data.data)
+                            }
                         });
                 this.model.activity_list(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
                         });
             },
             getClist(){
@@ -338,10 +342,12 @@
                     'type':'ImportUser'
                 }
                 this.$common_model.getcompany(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        });
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('companylists', response.data.data)
+                        }
+                    });
             },
             //获取城市数据
             getCity(_id){
@@ -352,7 +358,9 @@
                 this.$common_model.getcity(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                            if(response.data.code==0){
+                                this.$set('city', response.data.data)
+                            }
                         });
             },
             //获取城市数据
@@ -362,10 +370,12 @@
                             'subCompanyID':_id
                         }
                         this.$common_model.getcity(data)
-                                .then((response)=>{
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('shcity', response.data.data) : null;
-                    });
+                            .then((response)=>{
+                                // *** 判断请求是否成功如若成功则填充数据到模型
+                                if(response.data.code==0){
+                                    this.$set('shcity', response.data.data)
+                                }
+                            });
             },
             initList(){
                 $('.modal').modal('hide');
@@ -391,9 +401,11 @@
                 this.clearUl();
                 this.firstAdd=true;
                 this.model.activity_info(this.shdata)
-                        .then((response)=>{
-                            (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-                        })
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.$set('xhlist', response.data.data)
+                        }
+                    })
             },
             delstore(_id){
                 this.id=_id;
@@ -405,12 +417,12 @@
                     'thirdPartyAccountID':_id
                 }
                 this.model.activity_save(data)
-                        .then((res)=> {
-                            if(res.data.code==0){
-                                dialogs();
-                                this.initList();
-                            }
-                        })
+                    .then((res)=> {
+                        if(res.data.code==0){
+                            dialogs();
+                            this.initList();
+                        }
+                    })
             }
         },
         ready() {

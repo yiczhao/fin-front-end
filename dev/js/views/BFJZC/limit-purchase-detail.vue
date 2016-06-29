@@ -181,15 +181,19 @@
                  if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limit_list(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('limitPurchaseDetailList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        if(response.data.code==0){
+                             this.$set('limitPurchaseDetailList', response.data.data)
+                             this.$set('pageall', response.data.total)
+                        }
                     });
             },
              //获取分公司数据
             getSubcompany(){
                  this.$common_model.getcompany()
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
                     });
             },
             //获取城市数据
@@ -200,7 +204,9 @@
                 }
                 this.$common_model.getcity(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('cityList', response.data.data)
+                        }
                     });
             },
             query() {
@@ -233,15 +239,16 @@
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
-                        }
-                    })
+                            }
+
+                        })
             },
             goinfo(a,b){
                 this.model.skipToInfo(a)
                         .then((response)=>{
                                 if(response.data.code==0){
-                                this.$router.go({'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':response.data.data,'accountName':b}});
-                            }
+                                    this.$router.go({'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':response.data.data,'accountName':b}});
+                                }
                         })
             }
         },

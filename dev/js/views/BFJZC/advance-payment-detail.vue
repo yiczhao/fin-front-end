@@ -166,8 +166,10 @@
                 this.model.advance_list(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('advancePaymentDetailList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        if(response.data.code==0){
+                             this.$set('advancePaymentDetailList', response.data.data)
+                             this.$set('pageall', response.data.total)
+                        }
                     });
             },
              //获取分公司数据
@@ -175,7 +177,9 @@
                  this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                         if(response.data.code == 0){
+                                this.$set('subcompanyList', response.data.data)
+                         }
                     });
             },
             //获取城市数据
@@ -187,7 +191,10 @@
                  this.$common_model.getcity(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                         if((response.data.code==0)){
+                            this.$set('cityList', response.data.data)
+                        }
+
                     });
             },
             query() {
@@ -221,6 +228,7 @@
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
+
                     })
             },
             gopreinfo(a,b,_id){
@@ -233,6 +241,7 @@
                                 if(response.data.code==0){
                                     this.$router.go({'name':'prepayment-info',params:{'id':_id,'orderNumber':response.data.data.orderNumber}});
                                 }
+
                         })
             }
         },
