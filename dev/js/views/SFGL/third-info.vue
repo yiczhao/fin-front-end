@@ -310,16 +310,10 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                             if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                            }
                         });
                 this.model.getthirdinfo_total(data)
                         .then((response)=>{
                             (response.data.code==0)?this.$set('total',response.data.data):null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         })
             },
             getClist(){
@@ -331,9 +325,6 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                 });
             },
             //获取城市数据
@@ -346,9 +337,6 @@
                             .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                                }
                             });
             },
             //获取城市数据
@@ -362,9 +350,6 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('shcity', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             initList(){
@@ -388,9 +373,6 @@
                 this.model.thirdinfo_Blance(this.defaultData.thirdPartyAccountID)
                         .then((res)=>{
                             (res.data.code==0)?this.$set('blanceList',res.data.data):null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         })
             },
             rechargeTrue(){
@@ -407,9 +389,6 @@
                                 if(res.data.code == 0){
                                     this.initList()
                                     dialogs('success','已充值！')
-                                }
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
                                 }
                             })
             }

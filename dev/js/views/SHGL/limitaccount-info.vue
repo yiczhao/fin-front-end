@@ -230,16 +230,11 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
                 this.model.limitPurchaseAccount_getsumBalance(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.$set('nums', response.data.data)
                             }
                          });

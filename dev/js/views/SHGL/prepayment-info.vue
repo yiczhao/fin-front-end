@@ -392,16 +392,10 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code == 0) ? this.$set('pageall', response.data.total) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
                 this.model.total(data)
                         .then((res) => {
                             (res.data.code == 0) ? this.$set('total', res.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             initList(){
@@ -425,18 +419,15 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
-                            }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
-                            //判断是否有银行卡账号
-                            if (this.applyAdvancePay.collectionAccountNumber == null) {
-                                dialogs('error', '该商户未设置划款账户，无法充值！');
-                                return false;
-                            } else {
-                                //显示窗口
-                                this.saveerror=false;
-                                $("#modal_prepayment_recharge").modal('show');
+                                //判断是否有银行卡账号
+                                if (this.applyAdvancePay.collectionAccountNumber == null) {
+                                    dialogs('error', '该商户未设置划款账户，无法充值！');
+                                    return false;
+                                } else {
+                                    //显示窗口
+                                    this.saveerror=false;
+                                    $("#modal_prepayment_recharge").modal('show');
+                                }
                             }
                         });
             },
@@ -456,9 +447,6 @@
                                 dialogs('success','提交成功！');
                                 this.initList();
                             }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
                 //关闭弹出层
                 $(".modal").modal("hide");
@@ -472,9 +460,6 @@
                 this.model.getBlance(this.defaultData.advancePaymentMerchantID)
                         .then((res)=>{
                             (res.data.code==0)?this.$set('blanceList',res.data.data):null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         })
             }
         },

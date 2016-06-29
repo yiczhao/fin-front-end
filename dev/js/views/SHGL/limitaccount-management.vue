@@ -243,9 +243,6 @@
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                                }
                             });
             },
             initList(){
@@ -272,9 +269,6 @@
                                 this.$set('rechargeInfo', response.data.data);
                                 $('#modal_pay').modal('show');
                             }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             uploadClick(){
@@ -299,9 +293,7 @@
                     }
                     vm.common_model.upload(datas)
                             .then((response)=>{
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                                }else{
+                                if(response.data.code == 0){
                                     vm.addData.certificatesID=response.data.data;
                                     vm.saveerror='';
                                     vm.uploadText=files.name;
@@ -321,9 +313,7 @@
                 data.purchaseCost=parseInt(data.purchaseCost)*100;
                 this.model.recharge(data)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 dialogs('success','已充值！');
                                 this.initList();
                             }

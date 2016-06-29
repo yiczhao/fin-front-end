@@ -272,9 +272,6 @@
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('userList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                         if(response.data.code !== 0){
-                             dialogs('error',response.data.message);
-                         }
                     });
             },
             //获取分公司数据
@@ -286,9 +283,6 @@
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                        if(response.data.code !== 0){
-                            dialogs('error',response.data.message);
-                        }
                     });
             },
             query() {
@@ -308,9 +302,6 @@
                     .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('controlSpanList', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             checkAll(){
@@ -338,9 +329,6 @@
                         {
                             dialogs("保存成功！");
                         }
-                        if(response.data.code !== 0){
-                            dialogs('error',response.data.message);
-                        }
                     });
                     //关闭弹出层
                     $(".modal").modal("hide");
@@ -359,9 +347,7 @@
                 this.firstAdd=true;
                 this.model.readyImportUser(this.userdata)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.$set('userlists',response.data.data)
                                 this.clearUl();
                              }
@@ -427,9 +413,7 @@
                 })
                 this.model.importUser(data)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.query();
                                 $('#modal_add').modal('hide');
                                 dialogs('success','已添加！');

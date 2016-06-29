@@ -746,9 +746,6 @@
                                     this.clearUl();
                                     $('#modal_update').modal('show');
                                 }
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                                }
                         })
 
             },
@@ -760,9 +757,6 @@
                             if(response.data.code==0) {
                                 this.$set('seehistoryList', response.data.data)
                                 $('#modal_seehistory').modal('show');
-                            }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
                             }
                         })
             },
@@ -784,9 +778,7 @@
                 this.updateList.limitPurchaseMerchantInfoID=this.accountId;
                 this.model.limitPurchaseMerchant_editDigest(this.updateList)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已修改！');
                             }
@@ -800,9 +792,7 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已启用！');
                             }
@@ -816,9 +806,7 @@
                 this.xhdata.limitPurchaseMerchantInfoID=_id;
                 this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.$set('seexhList', response.data.data)
                                 if(this.isTrue){$('#modal_see').modal('show');}
                             }
@@ -830,9 +818,6 @@
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                                }
                             }
                         )
             },
@@ -901,9 +886,7 @@
                 let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
                 this.model.limitPurchaseMerchant_add(data)
                         .then((response)=>{
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }else{
+                            if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已添加！');
                             }
@@ -946,9 +929,7 @@
                     }
                     vm.$common_model.upload(datas)
                             .then((response)=>{
-                                if(response.data.code !== 0){
-                                    dialogs('error',response.data.message);
-                                }else{
+                                if(response.data.code == 0){
                                     vm.updateList.certificateID=response.data.data;
                                     vm.uploadText=files.name;
                                     vm.saveerror='';

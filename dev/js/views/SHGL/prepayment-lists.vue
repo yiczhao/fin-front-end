@@ -431,16 +431,10 @@ table tr td,table tr th{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('prepaymentList', response.data.data) : null;
                             (response.data.code == 0) ? this.$set('pageall', response.data.total) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
                 this.model.total(data)
                         .then((res) => {
                             (res.data.code == 0) ? this.$set('total', res.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             //获取预付充值数据
@@ -460,18 +454,15 @@ table tr td,table tr th{
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
-                            }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
-                            //判断是否有银行卡账号
-                            if (this.applyAdvancePay.collectionAccountNumber == null) {
-                                dialogs('error', '该商户未设置划款账户，无法充值！');
-                                return false;
-                            } else {
-                                //显示窗口
-                                this.saveerror = false;
-                                $("#modal_prepayment_recharge").modal('show');
+                                //判断是否有银行卡账号
+                                if (this.applyAdvancePay.collectionAccountNumber == null) {
+                                    dialogs('error', '该商户未设置划款账户，无法充值！');
+                                    return false;
+                                } else {
+                                    //显示窗口
+                                    this.saveerror = false;
+                                    $("#modal_prepayment_recharge").modal('show');
+                                }
                             }
                         });
             },
@@ -483,9 +474,6 @@ table tr td,table tr th{
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('merchantList', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             //获取分公司数据
@@ -494,9 +482,6 @@ table tr td,table tr th{
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('subcompanyList', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             //获取城市数据
@@ -509,9 +494,6 @@ table tr td,table tr th{
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('cityList', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             getshCity(_id) {
@@ -523,9 +505,6 @@ table tr td,table tr th{
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('shCity', response.data.data) : null;
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
             },
             checkAll(ck) {
@@ -562,9 +541,6 @@ table tr td,table tr th{
                             if (response.data.code == 0) {
                                 dialogs('success','提交成功！');
                                 this.query();
-                            }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
                             }
                         });
                 //关闭弹出层
@@ -616,9 +592,6 @@ table tr td,table tr th{
                                 this.query();
                                 dialogs();
                             }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         });
                 //关闭弹出层
                 $(".modal").modal("hide");
@@ -657,9 +630,6 @@ table tr td,table tr th{
                                     this.query()
                                     dialogs('success', '已停用！')
                             }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
-                            }
                         })
             },
             changeInput(e){
@@ -679,9 +649,6 @@ table tr td,table tr th{
                             // *** 判断请求是否成功如若
                             if (response.data.code == 0) {
                                 this.query();
-                            }
-                            if(response.data.code !== 0){
-                                dialogs('error',response.data.message);
                             }
                         });
                 e.target.setAttribute("readOnly","true");
