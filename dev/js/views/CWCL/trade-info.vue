@@ -237,7 +237,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>实付金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.paAmount" v-validate:val5="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                            <input type="text" class="form-control" v-model="tradeInfo.payAmount" v-validate:val5="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                                         </div>
                                         <div class="form-group">
@@ -360,8 +360,8 @@
                     merchantOperationID:'',
                     activityOperationID:'',
                     consumptionAmount:'',         
-                    discountAmount:'',    
-                    paAmount:'',  
+                    discountAmount:'',
+                    payAmount:'',
                     thirdPartyReceivable:'',    
                     suspensionTax:'', 
                     merchantSubsidyActual:'',
@@ -429,7 +429,7 @@
                 this.tradeInfo.activityOperationID='';
                 this.tradeInfo.consumptionAmount='';         
                 this.tradeInfo.discountAmount='';    
-                this.tradeInfo.paAmount='';  
+                this.tradeInfo.payAmount='';
                 this.tradeInfo.thirdPartyReceivable='';    
                 this.tradeInfo.suspensionTax=''; 
                 this.tradeInfo.merchantSubsidyActual='';
@@ -442,7 +442,7 @@
                 this.select_merchantId;
                 this.tradeInfo.consumptionAmount       
                 this.tradeInfo.discountAmount
-                this.tradeInfo.paAmount
+                this.tradeInfo.payAmount
                 this.tradeInfo.thirdPartyReceivable 
                 this.tradeInfo.suspensionTax
                 this.tradeInfo.merchantSubsidyActual
@@ -464,7 +464,7 @@
                 $.extend(true,data,this.tradeInfo);
                 data.consumptionAmount= this.tradeInfo.consumptionAmount*100;
                 data.discountAmount=this.tradeInfo.discountAmount*100;
-                data.paAmount=this.tradeInfo.paAmount*100;
+                data.payAmount=this.tradeInfo.payAmount*100;
                 data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
                 data.suspensionTax=this.tradeInfo.suspensionTax*100;
                 data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
@@ -510,8 +510,8 @@
                     merchantOperationID:'',
                     activityOperationID:'',
                     consumptionAmount:'',         
-                    discountAmount:'',    
-                    paAmount:'',  
+                    discountAmount:'',
+                    payAmount:'',
                     thirdPartyReceivable:'',    
                     suspensionTax:'', 
                     merchantSubsidyActual:'',

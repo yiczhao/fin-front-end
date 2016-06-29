@@ -315,6 +315,10 @@
                         .then((response)=>{
                             (response.data.code==0)?this.$set('total',response.data.data):null;
                         })
+                this.model.thirdinfo_Blance(this.defaultData.thirdPartyAccountID)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
+                        })
             },
             getClist(){
                 // *** 请求公司数据
@@ -355,7 +359,6 @@
             initList(){
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
-                this.getBlance();
             },
             recharge(){
                 this.saveerror=false;
@@ -368,12 +371,6 @@
             getTime(){
                 this.defaultData.startDate = init_date(this.dateS)[0];
                 this.defaultData.endDate = init_date(this.dateS)[1];
-            },
-            getBlance(){
-                this.model.thirdinfo_Blance(this.defaultData.thirdPartyAccountID)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
-                        })
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -399,8 +396,8 @@
             this.defaultData.endDate = init_date(this.dateS)[1];
             (vm.$route.params.id != ':id') ? vm.defaultData.thirdPartyAccountID = vm.$route.params.id : null;
             (vm.$route.params.serialNumber != ':serialNumber') ? vm.defaultData.serialNumber = vm.$route.params.serialNumber : null;
-            vm.getClist();
             vm.initList();
+            vm.getClist();
         },
         components:{
             'datepicker': datepicker

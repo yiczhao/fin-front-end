@@ -211,8 +211,8 @@
         ready() {
             this.startDate=init_date(this.timeRange)[0];
             this.endDate=init_date(this.timeRange)[1];
-            this.getSubcompany({});
             this.query();
+            this.getSubcompany({});
         },
        watch:{
             timeRange(){
