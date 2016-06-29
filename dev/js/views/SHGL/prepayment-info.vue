@@ -397,6 +397,10 @@
                         .then((res) => {
                             (res.data.code == 0) ? this.$set('total', res.data.data) : null;
                         });
+                this.model.getBlance(this.defaultData.advancePaymentMerchantID)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
+                        })
             },
             initList(){
                 $(".modal").modal("hide");
@@ -454,13 +458,6 @@
             getTime(){
                 this.defaultData.startDate = init_date(this.dateS)[0];
                 this.defaultData.endDate = init_date(this.dateS)[1];
-            },
-            getBlance(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.getBlance(this.defaultData.advancePaymentMerchantID)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
-                        })
             }
         },
         ready() {
@@ -468,7 +465,6 @@
             (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
             this.initList();
-            this.getBlance();
         },
         components: {
             'datepicker': datepicker
