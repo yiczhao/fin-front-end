@@ -405,10 +405,6 @@
             (vm.$route.params.storeMerchantName!=':storeMerchantName')?vm.merchantName=vm.$route.params.storeMerchantName:null;
             vm.initList();
             vm.getClist();
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                ($(this).hasClass('check-li'))?$(this).css('background','#ccc'):$(this).css('background','none');
-            })
         },
         components:{
             'datepicker': datepicker
