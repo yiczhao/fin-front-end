@@ -746,6 +746,9 @@
                                     this.clearUl();
                                     $('#modal_update').modal('show');
                                 }
+                                if(response.data.code !== 0){
+                                    dialogs('error',response.data.message);
+                                }
                         })
 
             },
@@ -754,8 +757,13 @@
                 this.seehistoryList=[];
                 this.model.seehistoryxh(_id)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('seehistoryList', response.data.data) : null;
-                            $('#modal_seehistory').modal('show');
+                            if(response.data.code==0) {
+                                this.$set('seehistoryList', response.data.data)
+                                $('#modal_seehistory').modal('show');
+                            }
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
                         })
             },
             updateXh(){
@@ -776,8 +784,12 @@
                 this.updateList.limitPurchaseMerchantInfoID=this.accountId;
                 this.model.limitPurchaseMerchant_editDigest(this.updateList)
                         .then((response)=>{
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }else{
                                 this.initList();
                                 dialogs('success','已修改！');
+                            }
                         })
             },
             changeDiscount(_id,_isenb){
@@ -788,8 +800,12 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }else{
                                 this.initList();
                                 dialogs('success','已启用！');
+                            }
                         })
             },
             seexh(_id,isTrue){
@@ -800,8 +816,12 @@
                 this.xhdata.limitPurchaseMerchantInfoID=_id;
                 this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
-                                (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }else{
+                                this.$set('seexhList', response.data.data)
                                 if(this.isTrue){$('#modal_see').modal('show');}
+                            }
                         })
             },
             searchDigest(){
@@ -810,6 +830,9 @@
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
+                                if(response.data.code !== 0){
+                                    dialogs('error',response.data.message);
+                                }
                             }
                         )
             },
@@ -878,8 +901,12 @@
                 let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
                 this.model.limitPurchaseMerchant_add(data)
                         .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }else{
+                                this.initList();
+                                dialogs('success','已添加！');
+                            }
                         })
             },
             submitTrue2(e){
@@ -919,10 +946,14 @@
                     }
                     vm.$common_model.upload(datas)
                             .then((response)=>{
-                                vm.updateList.certificateID=response.data.data;
-                                vm.uploadText=files.name;
-                                vm.saveerror='';
-                                dialogs('success','上传成功！');
+                                if(response.data.code !== 0){
+                                    dialogs('error',response.data.message);
+                                }else{
+                                    vm.updateList.certificateID=response.data.data;
+                                    vm.uploadText=files.name;
+                                    vm.saveerror='';
+                                    dialogs('success','上传成功！');
+                                }
                             })
                 }
             },

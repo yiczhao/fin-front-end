@@ -474,23 +474,29 @@
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.model.merchant_lists(data)
-                            .then((response)=>{
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            });
-                this.model.merchant_total(this.defaultData)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('nums',res.data.data):null;
-                     })
+                this.model.merchant_lists(data).then((response)=>{
+                    (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                    (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                    if(response.data.code !== 0){
+                        dialogs('error',response.data.message);
+                    }
+                });
+                this.model.merchant_total(this.defaultData).then((res)=>{
+                    (res.data.code==0)?this.$set('nums',res.data.data):null;
+                    if(response.data.code !== 0){
+                        dialogs('error',response.data.message);
+                    }
+                })
             },
             getClist(){
                 // *** 请求公司数据
-                this.$common_model.getcompany()
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        });
+                this.$common_model.getcompany().then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                    if(response.data.code !== 0){
+                        dialogs('error',response.data.message);
+                    }
+                });
             },
             //获取城市数据
             getCity(_id){
@@ -498,11 +504,13 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.$common_model.getcity(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        });
+                this.$common_model.getcity(data).then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                    if(response.data.code !== 0){
+                        dialogs('error',response.data.message);
+                    }
+                });
             },
             checkNew(){
                 this.initList();
@@ -524,8 +532,13 @@
                 this.model.merchant_account(_id)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('relist', response.data.data) : null;
-                            $('#modal_control').modal('show');
+                            if(response.data.code==0){
+                                this.$set('relist', response.data.data)
+                                $('#modal_control').modal('show');
+                            }
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
                         });
             },
             bthfShow(type,a){
@@ -603,8 +616,12 @@
                 this.model.merchant_update(this.updateList)
                         .then(()=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            dialogs();
-                            this.initList();
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }else{
+                                dialogs();
+                                this.initList();
+                            }
                         });
             },
             uploads(e){
@@ -625,10 +642,14 @@
                     }
                     vm.$common_model.upload(datas)
                             .then((response)=>{
-                                    vm.updateList.certificates=response.data.data;
-                                    vm.uploadText=files.name;
-                                    this.updataerror=false;
-                                    dialogs('success','上传成功！');
+                                    if(response.data.code !== 0){
+                                        dialogs('error',response.data.message);
+                                    }else{
+                                        vm.updateList.certificates=response.data.data;
+                                        vm.uploadText=files.name;
+                                        this.updataerror=false;
+                                        dialogs('success','上传成功！');
+                                    }
                             })
                 }
             },
@@ -652,8 +673,13 @@
                 this.merchantName=_merchantName;
                 this.model.merchant_digest(_list.merchantID)
                         .then((res)=>{
-                            (res.data.code==0)?this.$set('checkLists',res.data.data):null;
-                            $('#modal_checking').modal('show');
+                            if(res.data.code==0){
+                                this.$set('checkLists',res.data.data);
+                                $('#modal_checking').modal('show');
+                            }
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
                     })
             }
         },

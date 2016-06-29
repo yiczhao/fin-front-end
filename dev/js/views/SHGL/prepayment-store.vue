@@ -287,6 +287,9 @@
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                                if(response.data.code !== 0){
+                                    dialogs('error',response.data.message);
+                                }
                             });
             },
             getClist(){
@@ -295,6 +298,9 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
                         });
             },
             //获取城市数据
@@ -305,9 +311,12 @@
                 }
                 this.$common_model.getcity(data)
                         .then((response)=>{
-                // *** 判断请求是否成功如若成功则填充数据到模型
-                (response.data.code==0) ? this.$set('city', response.data.data) : null;
-            });
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
+                        });
             },
             initList(){
                 $('.modal').modal('hide');
@@ -338,9 +347,11 @@
                 this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
-                        (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-
-                    })
+                            (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
+                        })
             },
             allCkb(e){
                 if(e.target.checked){
@@ -380,8 +391,12 @@
                 let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
                 this.model.store_add(data)
                         .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }else{
+                                this.initList();
+                                dialogs('success','已添加！');
+                            }
                         })
             },
             delstore(_id){
@@ -394,6 +409,9 @@
                             if(res.data.code==0){
                                 dialogs('success','已删除');
                                 this.initList();
+                            }
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
                             }
                         })
             }

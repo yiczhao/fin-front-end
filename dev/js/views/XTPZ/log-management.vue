@@ -171,10 +171,16 @@
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('logList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                         if(response.data.code !== 0){
+                             dialogs('error',response.data.message);
+                         }
                     });
                  this.model.log_description()
                          .then((response)=>{
                              (response.data.code==0)?this.$set('descriptions',response.data.data):null
+                             if(response.data.code !== 0){
+                                 dialogs('error',response.data.message);
+                             }
                          })
             },
             //获取分公司数据
@@ -185,6 +191,9 @@
                  this.$common_model.getcompany(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                        if(response.data.code !== 0){
+                            dialogs('error',response.data.message);
+                        }
                     });
             },
             showLog(id){
@@ -192,6 +201,9 @@
                 this.model.log_info(id)
                     .then((response)=>{
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
+                            if(response.data.code !== 0){
+                                dialogs('error',response.data.message);
+                            }
                         })
             },
             query() {
