@@ -599,7 +599,7 @@
             vm.getCity();
             $(document).on('click','.addbottom .col-md-4 ul li',function(){
                 $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
+                ($(this).hasClass('check-li'))?$(this).css('background','#ccc'):$(this).css('background','none');
             })
         },
         components:{
