@@ -286,7 +286,7 @@
                                 <tbody>
                                     <tr role="row"  v-for="n in checkLists">
                                         <td>{{n.certificate}}</td>
-                                        <td>{{n.tradeTime || datetime}}</td>
+                                        <td>{{n.tradeTime | datetime}}</td>
                                         <td>{{n.collectionName}}</td>
                                         <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
                                         <td>{{n.payoutAmount/100 | currency '' }}</td>
