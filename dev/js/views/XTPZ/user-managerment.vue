@@ -9,7 +9,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" >
-                                    <option value="">请选择分公司</option>
+                                        <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
@@ -44,7 +44,7 @@
                                     <td>{{user.name}}</td>
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)">管辖范围</a>                                        
+                                        <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)">管辖范围</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -140,12 +140,12 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
                                     <div class="col-md-1">
-                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                        <input type="button" class="btn btn-info"  @click="addTrue($event)" value="添加">
                                         <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
                                         <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
                                     </div>
@@ -234,12 +234,13 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    
-    export default{
-        props:{
+    import model from '../../ajax/XTPZ/user_model'
+//    import common_model from '../../ajax/components/model'
 
-        },
+    export default{
         data(){
+            this.model =model(this)
+//            this.common_model=common_model(this)
             return{
                 subCompanyID:"",
                 keywords:"",
@@ -249,9 +250,9 @@
                 controlSpanList:[],
                 pageall:1,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageIndex:1,
-                pageSize:15,
+                pageSize:10,
                 userList:[],
                 controlSpanArray:[],
                 userlists:[],
@@ -259,29 +260,29 @@
                     subCompanyID:'',
                     keyWord:''
                 },
-                addId:[]
+                addId:[],
+                firstAdd:false
             }
         },
         methods:{
             //获取员工数据
              getUserList(data){
-                this.$http.post('./user/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+                 if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.user_list(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('userList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             //获取分公司数据
-            getSubcompany(data){
-                 this.$http.get('./subCompany/list')
-                    .then(function (response) {
+            getSubcompany(){
+                let data={
+                    'type':'ImportUser'
+                }
+                 this.$common_model.getcompany(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             query() {
@@ -295,14 +296,12 @@
             },
             //显示员工管辖
             showCS(userId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.userID=userId
-                this.$http.post('./user/userControlSpanList/'+userId)
-                    .then(function (response) {
+                this.model.userControl_list(userId)
+                    .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('controlSpanList', response.data.data) : null;
-                        },
-                         function (response) {
-                            console.log(response);
                         });
             },
             checkAll(){
@@ -314,6 +313,7 @@
                 })
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var arrays = [];
                 $("input[name='ckbox']:checked").each(function(){
                   arrays.push($(this).prop("id"));  
@@ -322,21 +322,20 @@
                     userID:this.userID,
                     subCompanyIDs:arrays
                 }
-                this.$http.post('./user/saveUserControlSpans',data)
-                    .then(function (response) {
+                this.model.saveUserControlSpans(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若
                         if (response.data.code==0)
                         {
                             dialogs("保存成功！");
                         }
-                    }, function (response) {
-                        console.log(response);
                     });
                     //关闭弹出层
                     $(".modal").modal("hide");
             },
             addUser(){
                 $('#modal_add').modal('show');
+                this.firstAdd=false;
                 this.clearUl();
             },
             clearUl(){
@@ -344,11 +343,14 @@
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             queryUser(){
-                if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;
-                this.$http.post('./user/readyImportUser',this.userdata)
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.firstAdd=true;
+                this.model.readyImportUser(this.userdata)
                         .then((response)=>{
-                            (response.data.code==0)?this.$set('userlists',response.data.data):null;
-                            this.clearUl();
+                            if(response.data.code == 0){
+                                this.$set('userlists',response.data.data)
+                                this.clearUl();
+                             }
                         })
             },
             allCkb(e){
@@ -388,6 +390,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 var data={data:[]};
@@ -408,21 +411,19 @@
                             }
 
                 })
-                this.$http.post('./user/importUser',data)
+                this.model.importUser(data)
                         .then((response)=>{
-                            this.query();
-                            $('#modal_add').modal('hide');
-                            dialogs('success','已添加！');
+                            if(response.data.code == 0){
+                                this.query();
+                                $('#modal_add').modal('hide');
+                                dialogs('success','已添加！');
+                            }
                         })
             },
         },
-        ready: function () {
+        ready() {
             this.getUserList({});
             this.getSubcompany({});
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
-            })
         },
        watch:{
            pagecur(){

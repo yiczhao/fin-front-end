@@ -7,11 +7,11 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.payType">
                                     <option value="1">备付金账户</option>
                                     <option value="2">商户预付款账户</option>
+                                    <option value="4">其他</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -19,6 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
+                                    <option value="5">今天</option>
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -30,10 +31,8 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-                        </div>
-                        <div  class="">
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="银行凭证号">
+                                <input type="text" class="form-control" v-model="checkForm.certificate" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="银行凭证号">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
@@ -65,7 +64,6 @@
                             <div class="form-group">
                                 <input type="button" class="btn btn-info" @click="initList" value="查询">
                             </div>
-                        </div>
                     </form>
                 </div>
                 <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
@@ -171,7 +169,7 @@
                                              <template v-if="n.purpose==2"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                              <template v-if="n.purpose==3"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                              <template v-if="n.purpose==4"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
-                                             <template v-if="n.status==6"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
+                                             <template v-if="n.status==6&&n.purpose==1||n.status==6&&n.purpose==3"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
                                         </span>
                                         <span>
                                             <template v-if="n.status==1"> 等待审核</template>
@@ -288,7 +286,7 @@
                                 <tbody>
                                     <tr role="row"  v-for="n in checkLists">
                                         <td>{{n.certificate}}</td>
-                                        <td>{{n.tradeTime || datetime}}</td>
+                                        <td>{{n.tradeTime | datetime}}</td>
                                         <td>{{n.collectionName}}</td>
                                         <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
                                         <td>{{n.payoutAmount/100 | currency '' }}</td>
@@ -407,12 +405,14 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/BFJZC/payment_model'
     export default{
         data(){
+            this.model =model(this)
             return{
                 id:'',
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 dateS:'1',
                 waring:'',
@@ -428,7 +428,7 @@
                     startDate:'',
                     endDate:'',
                     pageIndex:1,
-                    pageSize:15
+                    pageSize:10
                 },
                 listinfos:[],
                 zdlists:[],
@@ -441,6 +441,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -448,13 +449,12 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-                this.$http.post('./reservecash/order/list',data)
-                        .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
+                this.model.getlist(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
                         });
             },
             initList(){
@@ -463,15 +463,12 @@
                 this.getZlists(this.checkForm);
             },
             getInfo(a,index){
+                if(sessionStorage.getItem('isHttpin')==1)return;
 //                this.zdlists[index].listinfo = []
                 if(this.listinfos[index] !='' && typeof(this.listinfos[index])!='undefined')return;
-                this.$http.post('./reservecash/order/getpart/'+a.id)
+                this.model.getpart(a.id)
                         .then( (response)=> {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            //  this.zdlists.$set( index,info)
                             (response.data.code==0) ? this.listinfos.$set(index,response.data.data): null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             back(a){
@@ -498,18 +495,22 @@
                 this.delPurpose=b;
             },
             checking(a){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=a;
-                this.$http.post('./reservecash/order/checklist/'+a)
+                this.model.checklist(a)
                         .then( (response)=> {
-                             (response.data.code==0)?this.$set('checkLists',response.data.data):null;
-                        })
+                            if(response.data.code==0){
+                                this.$set('checkLists',response.data.data)
+                            }
+            })
             },
             checkTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'orderId':this.accountId,
                     'reserveCashId':_id
                 }
-                this.$http.post('./reservecash/order/checking',data)
+                this.model.checking(data)
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList()
@@ -518,7 +519,8 @@
                         })
             },
             updateTrue(){
-                this.$http.post('./reservecash/order/update/'+this.accountId)
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.reservecash_update(this.accountId)
                     .then( (response)=> {
                         if(response.data.code==0){
                             this.initList()
@@ -527,7 +529,8 @@
                     })
             },
             payTrue(){
-                this.$http.post('./reservecash/order/allow/'+this.accountId)
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.reservecash_allow(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
@@ -536,11 +539,12 @@
                         })
             },
             delTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':this.accountId,
                     'purpose':this.delPurpose
                 }
-                this.$http.post('reservecash/order/deleteDetail',data)
+                this.model.reservecash_delete(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.initList();
@@ -549,7 +553,8 @@
                         })
             },
             closeTrue(){
-                this.$http.post('./reservecash/order/close/'+this.accountId)
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.reservecash_close(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.initList();
@@ -558,12 +563,13 @@
                         })
             },
             backTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
                     'remarks':this.remarks,
                 }
-                this.$http.post('./reservecash/order/retrial',data)
+                this.model.reservecash_retrial(data)
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
@@ -572,15 +578,16 @@
                             })
             },
             applyTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':_id,
                 }
-                this.$http.post('./ reservecash/order/applypay',data)
+                this.model.reservecash_applypay(data)
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
-                                    dialogs('success','已划付！');
-                            }
+                                    dialogs('success','已申请！');
+                                }
                         })
             },
             checkingTrue(a){

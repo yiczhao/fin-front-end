@@ -9,6 +9,7 @@
                     :title="title"
                     :p2title="p2title"
                     :hname="hname"
+                    :h2name="h2name"
                     keep-alive></breadcrumb>
             <slot name="content" slot="content"></slot>
         </div>
@@ -39,6 +40,7 @@
             ptitle: {type: String,default:''},
             p2title: {type: String,default:''},
             hname: {type: String,default:''},
+            h2name: {type: String,default:''},
         },
         components:{
             'nvHeader': nvHeader,

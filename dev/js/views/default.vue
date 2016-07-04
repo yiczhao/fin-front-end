@@ -18,7 +18,7 @@
         },
         components:{
         },
-        ready:function(){
+        ready(){
             // *** 请求用户数据
             if(!!sessionStorage.getItem('userData')) {
                 this.$set('loginList',JSON.parse(sessionStorage.getItem('userData')))

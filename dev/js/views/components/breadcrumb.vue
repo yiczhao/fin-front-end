@@ -9,7 +9,7 @@
             <ul class="breadcrumb">
                 <li><a v-link="{'name':'default'}"><i class="icon-home2 position-left"></i> 首页</a></li>
                 <li><a v-link="{'name':hname}" v-text="ptitle"></a></li>
-                <li v-if="!p2title==''"><a v-link="{'name':hname}" v-text="p2title"></a></li>
+                <li v-if="!p2title==''"><a v-link="{'name':h2name}" v-text="p2title"></a></li>
                 <li class="active" v-text="title"></li>
             </ul>
         </div>
@@ -22,7 +22,8 @@
             title: {type: String, required: true},
             ptitle: {type: String, required: true},
             p2title: {type: String, required: true},
-            hname: {type: String, required: true}
+            hname: {type: String, required: true},
+            h2name: {type: String, required: false}
         },
         data(){
             return {

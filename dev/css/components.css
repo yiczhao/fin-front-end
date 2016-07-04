@@ -1088,7 +1088,7 @@ a.badge,
   }
 }
 .content {
-  padding: 0 20px 60px 20px;
+  padding: 0 20px;
 }
 .content:after {
   content: '';
@@ -19093,7 +19093,8 @@ thead .htCollapseButton:after {
     float: left;
   }
   .heading-form .form-group + .form-group {
-    margin-left: 15px;
+    margin-left: 0px;
+    margin-top: 5px;
   }
   .heading-form .checkbox-inline,
   .heading-form .radio-inline {

@@ -1317,8 +1317,11 @@ input[class*=bg-] + .form-control-feedback {
 /* Form layouts
 ----------------------------------*/
 @media (min-width: 769px) {
+  .form-inline .form-group{
+    margin-top: 5px;
+  }
   .form-inline .form-group + .form-group {
-    margin-left: 15px;
+    margin-left: 0px;
   }
   .form-inline .form-group > label {
     margin-right: 7px;

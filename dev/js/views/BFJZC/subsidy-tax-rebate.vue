@@ -4,21 +4,21 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
-                                    <option value="">请选择分公司</option>
+                                    <select class="form-control" v-model="subCompanyID"  @change="getCity(subCompanyID)">
+                                        <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="cityID">
-                                    <option value="">请选择城市</option>
+                                        <option value="">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="timeRange">
+                                        <option value="5">今天</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
                                         <option value="2">最近一个月</option>
@@ -31,13 +31,10 @@
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <span>ID:</span>
-                                    <input type="text" class="form-control" v-model="subsidyTaxRebateID">
+                                    <input type="text" class="form-control" v-model="subsidyTaxRebateID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="ID">
                                 </div>
-                                <br/>
-                                <br/>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID">
+                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
@@ -227,8 +224,10 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/BFJZC/rebate_model'
     export default{
         data(){
+            this.model =model(this)
             return{
                 subsidyTaxRebateID:"",
                 subCompanyID:"",
@@ -244,9 +243,9 @@
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageIndex:1,
-                pageSize:15,
+                pageSize:10,
                 cityList:[],
                 subsidyTaxRebateDetailList:[],
                 payTypes:[],
@@ -265,51 +264,53 @@
         },
         methods:{
             //获取补贴划付数据
-             getsubsidyTaxRebateDetailList:function(data){
-                this.$http.post('./subsidyTaxRebateDetail/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
-                    });
+             getsubsidyTaxRebateDetailList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.rebate_list(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.$set('subsidyTaxRebateDetailList', response.data.data)
+                            this.$set('pageall', response.data.total)
+                        }
+             });
             },
              //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.get('./subCompany/list')
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
+            getSubcompany(){
+                 this.$common_model.getcompany()
+                    .then((response)=>{
+                         if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                         }
                     });
             },
             //获取城市数据
-            getCity:function(data){
-                 this.$http.get('./city/list')
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
+            getCity(_id){
+                this.cityID='';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.$common_model.getcity(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.$set('cityList', response.data.data)
+                         }
                     });
             },
-             checkAll:function(ck){
+             checkAll(ck){
                 if(ck.target.checked){
                     $("input[name='ckbox']").prop({'checked':true});
                 }else{
                     $("input[name='ckbox']").prop({'checked':false});
                 }
             },
-            clear:function(){
+            clear(){
                 this.applyPayRemarks="", 
                 this.applyPayInfo={payType:{
                        1:"",
                        2:""
                     }};
             },
-            showModalApplyPay:function(){
+            showModalApplyPay(){
                 //批量划付判断首款信息是否一致
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
@@ -332,17 +333,16 @@
                 this.dialogTitle='合并付款';
                 this.getApplyPayInfoByIDs(array);
             },
-            updateById:function(id){
-                this.$http.post('./subsidyTaxRebateDetail/update/'+id).then(function(response){
-                    if(response.data.code==0){
-                        this.query();
-                        dialogs('success','更新成功！');
-                    }else{
-                        dialogs('error','更新失败！');
-                    }
-                });
+            updateById(id){
+                this.model.rebate_update(id)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.query();
+                                dialogs('success','更新成功！');
+                            }
+                        });
             },
-            showModalApplyPayById:function(id){
+            showModalApplyPayById(id){
                 let array=[];
                 array.push(id);
                 this.dialogTitle='申请付款';
@@ -350,8 +350,8 @@
                 $('#displayName').attr("readonly",true);
                 $('#displayName').attr("class",id);
             },
-             getApplyPayInfoByIDs:function(idArray){
-                console.log(idArray);
+             getApplyPayInfoByIDs(idArray){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:idArray
                 }
@@ -359,49 +359,46 @@
                      this.submitId=[idArray.toString()];
                  }
                  this.clear();
-                this.$http.post('./subsidyTaxRebateDetail/selectApplyPayInfoByIDs',data)
-                    .then(function (response) {
+                this.model.select_rebate(data)
+                    .then((response)=>{
                         // *** 判断请求是否成功如若
-                        (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
-                        this.payTypes=this.applyPayInfo.payType;
-                        for(var i in this.payTypes){
-                            if(this.payType == this.payTypes[i].type){
-                                this.showPayAccount=this.payTypes[i].value
-                            }
+                        if(response.data.code==0){
+                            this.$set('applyPayInfo', response.data.data);
+                            this.payTypes=this.applyPayInfo.payType;
+                             for(var i in this.payTypes){
+                                 if(this.payType == this.payTypes[i].type){
+                                     this.showPayAccount=this.payTypes[i].value
+                                 }
+                             }
+                             $('#modal_applyPay').modal('show');
                         }
-                        // this.showPayAccount=this.payTypes[0].value;
-                        $('#modal_applyPay').modal('show');
-                        console.log(this.applyPayInfo);
-                    }, function (response) {
-                        console.log(response);
                     });
             },
             submitOne(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:this.submitId,
                     remarks:this.applyPayRemarks,
                     payType:this.payType,
                     displayName:this.applyPayInfo.displayName
                 }
-                this.$http.post('./subsidyTaxRebateDetail/applyPay',data).then(function (response) {
+                this.model.rebate_applyPay(data).then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if (response.data.code==0)
                     {
                         dialogs();
                         this.query();
+                        //关闭弹出层
+                        $(".modal").modal("hide");
                     }
-                }, function (response) {
-                    console.log(response);
                 });
-                //关闭弹出层
-                $(".modal").modal("hide");
             },
-            submit:function(){
+            submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
                 });
-
                 if ($('#displayName').prop("readonly")) {
                     array.push($('#displayName').prop("class"));
                  }
@@ -410,22 +407,19 @@
                     remarks:this.applyPayRemarks,
                     payType:this.payType,
                     displayName:this.applyPayInfo.displayName
-                    
                 }
-               this.$http.post('./subsidyTaxRebateDetail/applyPay',data).then(function (response) {
+               this.model.rebate_applyPay(data).then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if (response.data.code==0)
                         {
                             dialogs;
                             this.query();
+                            //关闭弹出层
+                            $(".modal").modal("hide");
                         }
-                    }, function (response) {
-                        console.log(response);
                     });
-                     //关闭弹出层
-                    $(".modal").modal("hide");
             },
-            query: function () {
+            query() {
                 // let data=this.data;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
@@ -453,22 +447,22 @@
                     "streamID":a ,
                     "streamType": b
                 }
-                this.$http.post('reservecash/order/selectReserveCashOrderByDetails',data)
-                        .then((response)=>{
-                                if(response.data.code==0){
-                                    this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                this.$common_model.skipToOrder(data)
+                    .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
-                        })
+                    })
             }
         },
-        ready: function () {
+        ready() {
             (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.subsidyTaxRebateID='':this.subsidyTaxRebateID=this.$route.params.subsidyTaxRebateID;
             this.query();
-            this.getSubcompany({});
-            this.getCity({});
+            this.getSubcompany();
+            this.getCity();
         },
          watch:{
-            payType:function(){
+            payType(){
                 let type=$("#payType").val()
                 for(var i in this.payTypes){
                     if(type == this.payTypes[i].type){
@@ -476,7 +470,7 @@
                     }
                 }
             },
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },

@@ -12,7 +12,7 @@
                     </div>
                     <div class="form-group">
                         <select class="form-control" v-model="defaultData.companyId">
-                            <option value="">请选择分公司</option>
+                            <option value="">全部分公司</option>
                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
                     </div>
@@ -25,7 +25,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号">
+                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
                     <div class="form-group">
                         <input type="button" class="btn btn-info" @click="checkNew" value="查询">
@@ -34,7 +34,7 @@
             </div>
             <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
-                    <table id="table1" class="table ">
+                    <table class="table">
                         <thead>
                             <tr role="row">
                                 <th>分公司</th>
@@ -176,7 +176,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><i>*</i>账号</label>
-                                        <input type="text" class="form-control" v-validate:val4="['required']"  value="relist.accountNumber" v-model="relist.accountNumber">
+                                        <input type="text" class="form-control" v-validate:val4="['required']" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" value="relist.accountNumber" v-model="relist.accountNumber">
                                         <span v-if="$vali.val4.required && fire1" class="validation-error-label">请输入账号</span>
                                     </div>
                                     <div class="form-group">
@@ -260,14 +260,16 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/CWCL/account_model'
     export default{
         data(){
+            this.model =model(this)
             return{
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 loginList:{},
-                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 15},
+                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 10},
                 zdlists:[],
                 relist:{
                     startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
@@ -292,34 +294,29 @@
             }
         },
         methods:{
-            // http://192.168.1.123:80/dist/data-member-rules.json
-            // 'http://localhost:9000/dist/data-member-rules.json'
-            // +'/level_setting/list'
-
             // *** 请求账户列表数据
             errorHide(){
                 $('.suberror,.timeerror').hide();
                 this.saveerror='';
             },
             getZlists(data){
-                    this.$http.post('./bankaccount/list',data)
-                            .then(function (response) {
-                                // *** 判断请求是否成功如若成功则填充数据到模型
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
-                            });
+                    this.model.getbanklist(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
+                        });
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.get('./subCompany/list')
-                        .then(function (response) {
+                    this.$common_model.getcompany().then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
-                        });
+                            if(response.data.code==0){
+                                this.$set('companylists', response.data.data)
+                            }
+                    });
             },
             checkNew(){
                 this.initList();
@@ -334,6 +331,7 @@
                 this.addtitle = '添加账户';
             },
             initList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 $(".modal").modal("hide");
                 this.getZlists(this.defaultData);
             },
@@ -354,26 +352,30 @@
                 this.accountId=a;
             },
             personDialog(a,b){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errorHide();
                 this.fire=false;
                 this.accountId=b;
-                this.$http.get('./chargePerson/query/'+a)
-                        .then(function (response) {
-                            // *** 判断请求是否成功如若成功则启用该数据
-                            var newperson={
-                                name:'',
-                                phone:'',
-                                email:''
-                            };
-                            if(response.data.data){
-                                this.$set('person', response.data.data)
-                            }else{
-                                this.$set('person',newperson)
+                this.model.queryperson(a)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                // *** 判断请求是否成功如若成功则启用该数据
+                                var newperson={
+                                    name:'',
+                                    phone:'',
+                                    email:''
+                                };
+                                if(response.data.data){
+                                    this.$set('person', response.data.data)
+                                }else{
+                                    this.$set('person',newperson)
+                                }
+                                $('#modal_fzr').modal('show');
                             }
-                            $('#modal_fzr').modal('show');
-                        }, function (response) {})
+                        })
             },
             personTrue(a){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.$vali2.valid){this.fire=true;return;}
                 let data={
                     "id": a,
@@ -382,37 +384,40 @@
                     "phone": this.person.phone,
                     "email": this.person.email,
                 }
-                this.$http.post('./chargePerson/save',data)
-                        .then(function (response) {
-                            this.initList();
-                            dialogs();
-                        }, function (response) {
-                            console.log(response);
+                this.model.saveperson(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs();
+                            }
                         })
             },
             startTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 启用提交
-                this.$http.get('./bankaccount/change/'+this.accountId)
-                        .then(function (response) {
+                this.model.startaccount(this.accountId)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则启用该数据
-                            this.initList();
-                            dialogs('success','已启用！');
-                        }, function (response) {
-                            console.log(response);
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs('success','已启用！');
+                            }
                         })
             },
             delTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 删除提交
-                this.$http.get('./bankaccount/delete/'+this.accountId)
-                        .then(function (response) {
+                this.model.deleteaccount(this.accountId)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则删除该条数据
-                            this.initList();
-                            dialogs('success','已删除！');
-                        }, function (response) {
-                            console.log(response);
+                            if(response.data.code==0){
+                                this.initList();
+                                dialogs('success','已删除！');
+                            }
                         })
             },
             addBtn(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errorHide();
                 if(!this.$vali.valid){this.fire1=true;return;}
                 if(this.relist.startDate==''){$('.timeerror').show();return;}
@@ -427,17 +432,14 @@
                     "accountType": this.relist.accountType,
                     "startDate": this.relist.startDate
                 };
-                this.$http.post('./bankaccount/save',data)
-                        .then(function (response) {
+                this.model.changeaccount(data)
+                        .then((response)=>{
                             if(response.data.code==-1){
                                 this.$set('saveerror', response.data.message)
-                            }
-                            else{
+                            }else{
                                 this.initList();
                                 dialogs();
                             }
-                        }, function (response) {
-                            console.log(response);
                         })
             }
         },
@@ -465,7 +467,7 @@
             }
         },
         validators: {
-            numeric: function (val) {
+            numeric(val) {
                 return /^[-+]?[0-9]+$/.test(val)
             }
         }

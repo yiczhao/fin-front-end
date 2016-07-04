@@ -8,20 +8,20 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.companyId">
-                                <option value="">请选择分公司</option>
+                            <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
+                                <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.cityId">
-                                <option value="">请选择城市</option>
+                                <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
@@ -52,7 +52,9 @@
                                     <th>额采折扣差</th>
                                     <th>交易</th>
                                     <th>佣金值</th>
-                                    <th>额度采购消化账户</th>
+                                    <th>结算周期</th>
+                                    <th>补贴税率</th>
+                                    <!--<th>额度采购消化账户</th>-->
                                     <th>划款账户</th>
                                     <th>联系人</th>
                                     <th>电话 </th>
@@ -65,34 +67,41 @@
                                 <td>{{trlist.merchantName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.consumeTotal}}</td>
-                                <td>{{trlist.consumeMoney/100 | currency '' }} </td>
-                                <td>{{trlist.realMoney/100 | currency '' }} </td>
-                                <td>{{trlist.value01/100 | currency '' }} </td>
-                                <td>{{trlist.value02/100 | currency '' }} </td>
-                                <td>{{trlist.value03/100 | currency '' }} </td>
+                                <td>{{trlist.consumptionCount}}</td>
+                                <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
+                                <td>{{trlist.payAmount/100 | currency '' }} </td>
+                                <td>{{trlist.commission33211/100 | currency '' }} </td>
+                                <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
+                                <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
                                 <td><a v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal_checking" href="javascript:void(0)">查看消化账户</a>
-                                    <!--<a v-link="{'name':'business-limit'}">额度消化商户</a>-->
+                                    <template v-if="trlist.settlementCycle==1">日结</template>
+                                    <template v-if="trlist.settlementCycle==2">周结</template>
+                                    <template v-if="trlist.settlementCycle==3">月结</template>
                                 </td>
-                                <td><a href="javascript:void(0)" @click="control(trlist)">管理</a></td>
+                                <td>{{trlist.subsidyRate}}%</td>
+                                <!--<td>-->
+                                    <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
+                                <!--</td>-->
+                                <td><a @click="control(trlist)">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
                             </tr>
                              <tr>
                                  <td></td>
-                                 <td>合计</td>
+                                 <td>合计：</td>
                                  <td></td>
                                  <td></td>
-                                 <td>{{nums.consumeTotal}}</td>
-                                 <td>{{nums.consumeMoney}}</td>
-                                 <td>{{nums.realMoney}}</td>
-                                 <td>{{nums.value01}}</td>
-                                 <td>{{nums.value02}}</td>
-                                 <td>{{nums.value03}}</td>
+                                 <td>{{nums.consumptionCount}}</td>
+                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                 <td>{{nums.payAmount/100 | currency ''}}</td>
+                                 <td>{{nums.commission33211/100 | currency ''}}</td>
+                                 <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
+                                 <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
+                                 <td></td>
+                                 <td></td>
                                  <td></td>
                                  <td></td>
                                  <td></td>
@@ -123,40 +132,37 @@
                                 <h5 class="modal-title">额度采购消化账户</h5>
                             </div>
                             <div class="modal-body">
-                                <div>
-                                    <span>商户ID：4392</span>
-                                    <span>商户名：南昌玩聚恒茂店</span>
-                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit'}">南昌玩聚和他(她)朋友的咖啡馆</a></span>
+                                <div v-if="checkLists.length>0">
+                                    <span>商户ID：{{id}}</span>
+                                    <span>商户名：{{merchantName}}</span>
+                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>
                                 </div>
                                 <div style="padding: 10px 0;">历史记录：</div>
-                                <table class="table datatable-selection-single dataTable no-footer" style="border: 1px solid #ccc;">
+                                <div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">
+                                    无历史记录
+                                </div>
+                                <table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">
                                     <thead>
                                     <tr role="row">
                                         <th>ID</th>
                                         <th>账户名</th>
-                                        <th>更新时间</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
                                         <th>更新人</th>
                                         <th>变更凭证</th>
                                         <th>更新备注</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr role="row">
-                                        <td>1</td>
-                                        <td><a data-toggle="modal" data-dismiss="modal" data-target="#modal_control" href="javascript:void(0)">昌玩聚和他(她)朋友们</a></td>
-                                        <td>2013-06-03 13:26:19</td>
-                                        <td>贾燕</td>
-                                        <td><a href="">下载</a></td>
-                                        <td>总店额度采购</td>
+                                    <tr role="row" v-for="n in checkLists">
+                                        <td>{{n.merchantID}}</td>
+                                        <td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>
+                                        <td>{{n.startDate | datetime}}</td>
+                                        <td>{{n.closeTime | datetime}}</td>
+                                        <td>{{n.updateBy}}</td>
+                                        <td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>
+                                        <td>{{n.remarks}}</td>
                                     </tr>
-                                    <!--<tr role="row"  v-for="n in checkLists">-->
-                                        <!--<td>{{n.certificate}}</td>-->
-                                        <!--<td>{{n.collectionName}}</td>-->
-                                        <!--<td>{{n.tradeTime || datetime}}</td>-->
-                                        <!--<td>{{n.payoutAmount/100 | currency '' }}</td>-->
-                                        <!--<td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>-->
-                                        <!--<td>{{n.remarks}}</td>-->
-                                    <!--</tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -194,8 +200,8 @@
                                         <tr role="row" v-for="n in relist">
                                                 <td>{{$index+1}}</td>
                                                 <td>
-                                                    {{n.accountName}}
-                                                    {{n.accountNumber}}
+                                                    <p>{{n.accountName}}</p>
+                                                    <p>{{n.accountNumber}}</p>
                                                 </td>
                                                 <td>{{n.createAt | datetime}}</td>
                                                 <td>{{n.createBy}}</td>
@@ -234,7 +240,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>提入行号：</label>
-                                        <input v-validate:bankNumber="['required']" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                        <input v-validate:bankNumber="['required']" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
                                         <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
                                     </div>
                                     <div class="form-group">
@@ -315,7 +321,6 @@
         width:35%;
     }
       table tr td,  table tr th{
-         padding: 20px 2px;
          text-align: center;
          text-overflow: ellipsis;
          overflow: hidden;
@@ -374,12 +379,16 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/buslists_model'
     export default{
         data(){
+            this.model =model(this)
             return{
                 origin:window.origin,
+                id:'',
+                merchantName:'',
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -390,9 +399,10 @@
                     "startValue": "",
                     "endValue": "",
                     "pageIndex": 1,
-                    "pageSize": 15
+                    "pageSize": 10
                 },
                 city:[],
+                companylists:[],
                 zdlists:[],
                 controllist:{},
                 relist:[
@@ -409,18 +419,17 @@
                         "remarks": ""
                     }
                 ],
-                companylists:[],
                 typelists:[],
                 params:{},
                 accountId:'',
                 bthf:true,
                 nums:{
-                    consumeTotal:0,
-                    consumeMoney:0,
-                    realMoney:0,
-                    value01:0,
-                    value02:0,
-                    value03:0
+                    consumptionCount:0,
+                    consumptionAmount:0,
+                    payAmount:0,
+                    commission33211:0,
+                    thirdPartyDiscountDiff:0,
+                    limitPurchaseDiscountDiff:0
                 },
                 updateList:
                 {
@@ -441,6 +450,16 @@
                     merchantID:'',
                     specialRemarks:''
                 },
+                checkLists:[
+                    {
+                        "id":'',
+                        "name":"",
+                        "updateAt":'',
+                        "updateBy":""    ,
+                        "certificates":"",
+                        "remarks":""
+                    }
+                ],
                 updataerror:false,
                 uploadText:'',
                 errortext:''
@@ -449,39 +468,37 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
                     this.defaultData.endValue=b;
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.$http.get('./merchant/pages?' + decodeURIComponent($.param(data)))
-                            .then(function (response) {
-                                // *** 判断请求是否成功如若成功则填充数据到模型
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
-                            });
+                this.model.merchant_lists(data).then((response)=>{
+                    (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                    (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                });
+                this.model.merchant_total(this.defaultData).then((res)=>{
+                    (res.data.code==0)?this.$set('nums',res.data.data):null;
+                })
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.get('./subCompany/list')
-                        .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
-                        });
+                this.$common_model.getcompany().then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                });
             },
             //获取城市数据
-            getCity(data){
-                this.$http.get('./city/list')
-                        .then(function (response) {
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
-                        });
+            getCity(_id){
+                this.defaultData.cityId='';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.$common_model.getcity(data).then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                });
             },
             checkNew(){
                 this.initList();
@@ -496,19 +513,17 @@
                 this.accountId=_list.merchantID;
                 this.bthf=true;
                 this.accountType=1;
-                this.checkcontrol({
-                    "merchantId": _list.merchantID,
-                    "accountType": 1
-                })
+                this.checkcontrol(_list.merchantID)
             },
-            checkcontrol(data){
-                this.$http.get('./merchant/account?' + decodeURIComponent($.param(data)))
-                        .then(function (response) {
+            checkcontrol(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.merchant_account(_id)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('relist', response.data.data) : null;
-                            $('#modal_control').modal('show');
-                        }, function (response) {
-                            console.log(response);
+                            if(response.data.code==0){
+                                this.$set('relist', response.data.data)
+                                $('#modal_control').modal('show');
+                            }
                         });
             },
             bthfShow(type,a){
@@ -520,11 +535,7 @@
                         else{
                             this.bthf=true;
                             this.accountType=1;
-                            let updata={
-                                "merchantId": a,
-                                "accountType": 1
-                            }
-                            this.checkcontrol(updata)
+                            this.checkcontrol(a)
                         }
                         break;
                     case 1:
@@ -534,11 +545,7 @@
                         else{
                             this.bthf=false;
                             this.accountType=2;
-                            let updata={
-                                "merchantId": a,
-                                "accountType": 2
-                            }
-                            this.checkcontrol(updata);
+                            this.checkcontrol(a);
                         }
                         break;
                 }
@@ -581,6 +588,7 @@
                 this.updateList.accountType=this.accountType;
             },
             updateTrue(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.$vali.valid){
                     this.updataerror=true;
                     this.errortext='您的信息未填写完整！';
@@ -590,13 +598,13 @@
                     this.errortext='请上传凭证！';
                     return;}
                 this.updataerror=false;
-                this.$http.post('./merchant/update',this.updateList)
-                        .then(function (response) {
+                this.model.merchant_update(this.updateList)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            $(".modal").modal("hide");
-                            dialogs();
-                        }, function (response) {
-                            console.log(response);
+                            if(response.data.code == 0){
+                                dialogs();
+                                this.initList();
+                            }
                         });
             },
             uploads(e){
@@ -615,12 +623,14 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.$http.post('./file/upload',datas)
+                    vm.$common_model.upload(datas)
                             .then((response)=>{
-                                    vm.updateList.certificates=response.data.data;
-                                    vm.uploadText=files.name;
-                                    this.updataerror=false;
-                                    dialogs('success','上传成功！');
+                                    if(response.data.code == 0){
+                                        vm.updateList.certificates=response.data.data;
+                                        vm.uploadText=files.name;
+                                        this.updataerror=false;
+                                        dialogs('success','上传成功！');
+                                    }
                             })
                 }
             },
@@ -637,6 +647,18 @@
                 else{
                     return  e.target.value='';
                 }
+            },
+            check_digest(_list,_merchantName){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.id=_list.merchantOperationID;
+                this.merchantName=_merchantName;
+                this.model.merchant_digest(_list.merchantID)
+                        .then((res)=>{
+                            if(res.data.code==0){
+                                this.$set('checkLists',res.data.data);
+                                $('#modal_checking').modal('show');
+                            }
+                    })
             }
         },
         ready() {
@@ -663,23 +685,6 @@
             'datepicker': datepicker
         },
         watch:{
-            zdlists(){
-                var a=0,b=0,c=0,d=0,g=0,f=0;
-                this.zdlists.forEach(function(e){
-                    a+=e.consumeTotal;
-                    b+=e.consumeMoney;
-                    c+=e.realMoney;
-                    d+=e.value01;
-                    f+=e.value02;
-                    g+=e.value03;
-                });
-                this.nums.consumeTotal=(a/100).toFixed(2);
-                this.nums.consumeMoney=(b/100).toFixed(2);
-                this.nums.realMoney=(c/100).toFixed(2);
-                this.nums.value01=(d/100).toFixed(2);
-                this.nums.value02=(f/100).toFixed(2);
-                this.nums.value03=(g/100).toFixed(2);
-            },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();

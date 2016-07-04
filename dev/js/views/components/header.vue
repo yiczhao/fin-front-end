@@ -27,7 +27,7 @@
         },
         methods:{
             loginout() {
-                this.$http.post('./passport/loginout')
+                this.$http.post('./passport/loginOut')
                         .then(function (response) {
                             if(response.data.code===0){
                                 sessionStorage.removeItem('userData');

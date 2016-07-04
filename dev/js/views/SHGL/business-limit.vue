@@ -11,21 +11,21 @@
                             <input type="button" class="btn btn-info" @click="addUser" value="添加">
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantId" placeholder="商户ID">
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"   onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.companyId">
-                                <option value="">请选择分公司</option>
+                            <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
+                                <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.cityId">
-                                <option value="">请选择城市</option>
-                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
+                            <select class="form-control" v-model="defaultData.cityID">
+                                <option value="">全部城市</option>
+                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -43,9 +43,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.startValue" placeholder="循环次数">
+                            <input type="number" class="form-control" v-model="defaultData.cycleStart" placeholder="循环次数">
                             -
-                            <input type="number" class="form-control" v-model="defaultData.endValue" placeholder="循环次数">
+                            <input type="number" class="form-control" v-model="defaultData.cycleEnd" placeholder="循环次数">
                         </div>
                         <div class="form-group">
                             <input type="button" class="btn btn-info" @click="initList" value="查询">
@@ -80,35 +80,34 @@
                             </thead>
                         <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.operationId}}</td>
-                                <td>{{trlist.name}}</td>
-                                <td>{{trlist.company}}</td>
-                                <td>{{trlist.city}}</td>
+                                <td>{{trlist.merchantOperationID}}</td>
+                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.subCompanyName}}</td>
+                                <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.totalLimit/100 | currency ''}}</td>
                                 <td>{{trlist.totalPrincipal/100 | currency '' }} </td>
                                 <td>{{trlist.usedLimit/100 | currency '' }} </td>
-                                <td>{{trlist.usedPercent}}</td>
+                                <td>{{trlist.usedLimitPercentage}}</td>
                                 <td>{{trlist.balanceLimit/100 | currency ''}}</td>
-                                <td>{{trlist.loopNumber}}</td>
-                                <td>{{trlist.firstTime | datetime}}</td>
+                                <td>{{trlist.cycleNumber}}</td>
+                                <td>{{trlist.firstRechargeTime | datetime}}</td>
                                 <td>
                                     <template v-if="trlist.discountType==1">全单</template>
-                                    <template v-else>可打折</template>
+                                    <template v-if="trlist.discountType==2">可打折</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.isAutoPay==0">关闭</template>
-                                    <template v-else>开启</template>
+                                    <template v-if="trlist.isAutoPay==1">开启</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">停用</template>
                                     <template v-else>正常</template>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)" @click="updateNew(trlist)">编辑</a>
-                                    <a v-link="{'name':'limitaccount-info',params:{merchantID:trlist.limitPurchaseMerchantId}}">明细</a>
+                                    <a href="javascript:void(0)" @click="updateNew(trlist.id)">编辑</a>
+                                    <a v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">明细</a>
                                     <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)">启用</a></template>
-                                    <template v-else><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,0)" href="javascript:void(0)">停用</a></template>
-                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{merchantID:trlist.limitPurchaseMerchantId}}">账户</a>
+                                    <a href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
                                 </td>
                                 <td><a @click="seexh(trlist.id,true)" href="javascript:void(0)">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
@@ -118,7 +117,7 @@
                              <tr>
                                  <td></td>
                                  <td></td>
-                                 <td>合计</td>
+                                 <td>合计：</td>
                                  <td></td>
                                  <td>{{nums.totalLimit}}</td>
                                  <td>{{nums.totalPrincipal}}</td>
@@ -167,7 +166,7 @@
                                             <label class="w28" ><i>*</i>抵扣方式：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <select class="form-control"  v-validate:discountType="['required']" v-model="updateList.discountType" value="updateList.discountType">
+                                            <select class="form-control"  v-validate:discountType="['required']" v-model="updateList.discountType">
                                                 <option value="1">全单</option>
                                                 <option value="2">可打折</option>
                                             </select>
@@ -187,7 +186,7 @@
                                             <label class="w28" ><i>*</i>单笔采购额度：</label>
                                         </div>
                                         <div class="col-md-3">
-                                             <input v-validate:val3="['required']" class="form-control" type="text" v-model="updateList.singlePurchaseLimit" value="updateList.singlePurchaseLimit">
+                                             <input v-validate:val3="['required']" class="form-control" type="text" v-model="updateList.singlePurchaseLimit">
                                         </div>
                                         <div class="col-md-1">
                                             元
@@ -196,35 +195,37 @@
                                             <label class="w28" ><i>*</i>单笔采购本金：</label>
                                         </div>
                                         <div class="col-md-3">
-                                            <input v-validate:val4="['required']" class="form-control" type="text" v-model="updateList.singlePurchasePrincipal"  value="updateList.singlePurchasePrincipal">
+                                            <input v-validate:val4="['required']" class="form-control" type="text" v-model="updateList.singlePurchasePrincipal">
                                         </div>
                                         <div class="pull-left">
                                             元
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" data-dismiss="modal" @click="addUser2" class="btn">添加消化账户</button>
+                                        <button type="button" @click="addUser2" class="btn">添加消化账户</button>
                                     </div>
                                     <table class="table" style="border: 1px solid #ccc;">
                                         <thead>
                                         <tr role="row">
                                             <th>商户ID</th>
+                                            <th>商户名称</th>
                                             <th>分公司</th>
                                             <th>城市</th>
-                                            <th>商户名</th>
+                                            <th>开始时间</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr v-if="seexhList.length>0" v-for="n in seexhList" role="row">
-                                            <td class="merchantIds">{{n.merchantId}}</td>
-                                            <td>{{n.companyName}}</td>
-                                            <td>{{n.cityName}}</td>
+                                            <td class="merchantIds">{{n.merchantOperationID}}</td>
                                             <td>{{n.merchantName}}</td>
+                                            <td>{{n.subCompanyName}}</td>
+                                            <td>{{n.cityName}}</td>
+                                            <td>{{n.startDate|datetime}}</td>
                                             <th><a href="javascript:void(0)" @click="delxh(2,$event)">删除</a></th>
                                         </tr>
-                                        <tr v-else>
-                                            <td colspan="5" valign="center">该账户没有消化商户</td>
+                                        <tr v-if="!seexhList.length>0">
+                                            <td colspan="7" valign="center">该账户没有消化商户</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -251,45 +252,45 @@
                                         </div>
                                     </div>
                                     <div>历史记录：</div>
-                                    <div style="height:200px;overflow: auto;border: 1px solid #ccc;">
-                                         <table class="table">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>ID</th>
-                                            <th>账户信息</th>
-                                            <th>消化商户</th>
-                                            <th>更新时间</th>
-                                            <th>更新人</th>
-                                            <th>变更凭证</th>
-                                            <th>更新备注</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-if="historyList.length>1" role="row" v-for="n in historyList">
-                                                <td>{{$index+1}}</td>
-                                                <td>
-                                                    <p>抵扣方式：
-                                                        <template v-if="n.discountType==1">全单</template>
-                                                        <template v-else>可打折</template>
-                                                    </p>
-                                                    <p>自动划付：
-                                                        <template v-if="n.isAutoPay==0">关闭</template>
-                                                        <template v-else>开启</template>
-                                                    </p>
-                                                    <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
-                                                    <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
-                                                </td>
-                                                <td><a href="javascript:void(0)" @click="seexh(n.id,true)">查看</a></td>
-                                                <td>{{n.updateAt | datetime}}</td>
-                                                <td>{{n.updateAt}}</td>
-                                                <td><a v-if="n.certificates!=''" href="{{origin}}/file/download/{{n.certificates}}" >下载</a></td>
-                                                <td>{{n.remarks}}</td>
-                                        </tr>
-                                        <tr v-if="historyList.length<1">
-                                            <td colspan="7" valign="center">无历史记录</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <div style="max-height:200px;overflow: auto;border: 1px solid #ccc;">
+                                         <table class="table"  v-if="historyList.length>0">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>ID</th>
+                                                    <th>账户信息</th>
+                                                    <th>消化商户</th>
+                                                    <th>生效时间</th>
+                                                    <th>更新人</th>
+                                                    <th>变更凭证</th>
+                                                    <th>更新备注</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr role="row" v-for="n in historyList">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>
+                                                            <p>抵扣方式：
+                                                                <template v-if="n.discountType==1">全单</template>
+                                                                <template v-if="n.discountType==2">可打折</template>
+                                                            </p>
+                                                            <p>自动划付：
+                                                                <template v-if="n.isAutoPay==0">关闭</template>
+                                                                <template v-if="n.isAutoPay==1">开启</template>
+                                                            </p>
+                                                            <p>单笔采购额度：{{n.singlePurchaseLimit}}元</p>
+                                                            <p>单笔采购额度：{{n.singlePurchasePrincipal}}元</p>
+                                                        </td>
+                                                        <td><a href="javascript:void(0)" @click="seehistoryxh(n.limitPurchaseMerchantConfigID)">查看</a></td>
+                                                        <td>{{n.startDate | datetime}}--{{n.endDate | datetime}}</td>
+                                                        <td>{{n.updateBy}}</td>
+                                                        <td><a v-if="n.certificateID!=''" href="{{origin}}/file/download/{{n.certificateID}}" >下载</a></td>
+                                                        <td>{{n.remarks}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div v-if="!historyList.length>0" style="padding: 15px;font-size: 15px">
+                                            无历史记录
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -309,19 +310,19 @@
                             <div class="modal-body">
                                 <div class="addtop">
                                     <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.companyId">
-                                            <option value="">请选择分公司</option>
+                                        <select class="form-control" v-model="shdata.companyId" @change="getxhCity(shdata.companyId)">
+                                            <option value="">全部分公司</option>
                                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="shdata.cityId">
-                                            <option value="">请选择城市</option>
-                                            <option v-for="(index,n) in city" v-text="n.name" :value="n.cityId"></option>
+                                            <option value="">全部城市</option>
+                                            <option v-for="(index,n) in xhcity" v-text="n.name" :value="n.cityId"></option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID">
+                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
@@ -346,7 +347,12 @@
                                             <tr role="row" v-for="n in xhlist">
                                                 <td>
                                                     <label>
-                                                        <input :value="n.merchantID" type="checkbox">{{$index+1}}
+                                                        <input :value="n.merchantID"
+                                                               :subCompanyName="n.subCompanyName"
+                                                               :cityName="n.cityName"
+                                                               :merchantName="n.merchantName"
+                                                               :startDate="n.startDate"
+                                                               type="checkbox">{{$index+1}}
                                                     </label>
                                                 </td>
                                                 <td>{{n.subCompanyName}}</td>
@@ -355,7 +361,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span  v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -400,6 +406,29 @@
                                 <h5 class="modal-title">查看消化商户</h5>
                             </div>
                             <div class="modal-body">
+                                <div class="addtop">
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="xhdata.subCompanyID" @change="getxhCity(xhdata.subCompanyID)">
+                                            <option value="">全部分公司</option>
+                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control" v-model="xhdata.cityID">
+                                            <option value="">全部城市</option>
+                                            <option v-for="(index,n) in xhcity" v-text="n.name" :value="n.cityId"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" v-model="xhdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" v-model="xhdata.merchantName" placeholder="商户名">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="button" class="btn btn-info" @click="seaxh()" value="查询">
+                                    </div>
+                                </div>
                                 <div class="addbottom">
                                     <div class="col-md-12">
                                         <table v-if="seexhList.length>0" class="table" style="border: 1px solid #ccc;">
@@ -409,12 +438,56 @@
                                                 <th>分公司</th>
                                                 <th>城市</th>
                                                 <th>商户名</th>
+                                                <th>开始时间</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr v-for="n in seexhList" role="row">
-                                                <td>{{n.merchantId}}</td>
-                                                <td>{{n.companyName}}</td>
+                                                <td>{{n.merchantOperationID}}</td>
+                                                <td>{{n.subCompanyName}}</td>
+                                                <td>{{n.cityName}}</td>
+                                                <td>{{n.merchantName}}</td>
+                                                <td>{{n.startDate|datetime}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <span v-else>
+                                            该账户没有消化商户
+                                        </span>
+                                    </div>
+                                    <div class="tc" style="float: left;width: 100%;margin-top: 20px;">
+                                        <input type="button" class="btn btn-gray" data-dismiss="modal" value="关闭">
+                                        <input type="button" class="btn btn-gray" @click="updateXh()" data-dismiss="modal" value="调整消化商户">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-backdrop="static"  id="modal_seehistory" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">查看消化商户</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="addbottom">
+                                    <div class="col-md-12">
+                                        <table v-if="seehistoryList.length>0" class="table" style="border: 1px solid #ccc;">
+                                            <thead>
+                                            <tr role="row">
+                                                <th>商户ID</th>
+                                                <th>分公司</th>
+                                                <th>城市</th>
+                                                <th>商户名</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="n in seehistoryList" role="row">
+                                                <td>{{n.merchantOperationID}}</td>
+                                                <td>{{n.subCompanyName}}</td>
                                                 <td>{{n.cityName}}</td>
                                                 <td>{{n.merchantName}}</td>
                                             </tr>
@@ -424,16 +497,11 @@
                                             该账户没有消化商户
                                         </span>
                                     </div>
-                                    <div v-if="!isTrue" class="tc" style="float: left;width: 100%;margin-top: 20px;">
-                                        <input type="button" class="btn btn-gray" data-dismiss="modal" value="关闭">
-                                        <input type="button" class="btn btn-gray" data-dismiss="modal" data-toggle="modal" data-target="#modal_update" value="调整消化商户">
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </index>
@@ -482,7 +550,6 @@
     }
     table tr{
         td,th{
-            padding: 20px 2px;
             text-align: center;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -500,9 +567,6 @@
             top: 2px;
             left: -2px;
         }
-    }
-     .addbottom table tr td,  .addbottom table tr th{
-        padding: 2px;
     }
     #modal_update{
         table tr td{
@@ -526,25 +590,27 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/SHGL/buslimit_model'
     export default{
         data(){
+            this.model =model(this)
             return{
                 origin:window.origin,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
-                    'merchantId': '',
+                    'merchantOperationID': '',
                     'merchantName': '',
-                    'companyId': '',
-                    'cityId': '',
+                    'subCompanyID': '',
+                    'cityID': '',
                     'isAutoPay': '',
                     'status': '',
-                    'startValue': '',
-                    'endValue': '',
+                    'cycleStart': '',
+                    'cycleEnd': '',
                     'pageIndex': 1,
-                    'pageSize': 15
+                    'pageSize': 10
                 },
                 shdata:{
                     'companyId':'',
@@ -554,42 +620,35 @@
                     'isLimitPurchase':0,
                     'isDigest':0,
                 },
+                xhdata:{
+                    limitPurchaseMerchantInfoID:'',
+                    merchantOperationID:'',
+                    merchantName:'',
+                    subCompanyID:'',
+                    cityID:''
+                },
                 isEnable:0,
                 zdlists:[],
                 companylists:[],
-                seexhlist:[],
                 addTitle:'',
                 addId:[],
                 city:[],
+                xhcity:[],
                 isTrue:false,
-                seexhList:[
-                    {
-                        'merchantId':'',
-                        'merchantName': '',
-                        'companyName': '',
-                        'cityName': '',
-                        'beginTime': ''
-                    }
-                ],
-                xhlist:[
-                    {
-                        subCompanyName:'',
-                        cityName:'',
-                        merchantName:'',
-                        merchantID:''
-                    }
-                ],
+                seexhList:[],
+                seehistoryList:[],
+                xhlist:[],
                 updateList:{
                     remarks: '',
-                    isAutoPay: '',
-                    certificates: '',
+                    isAutoPay: '1',
+                    certificateID: '',
                     merchantId: '',
                     updateBy: '',
                     singlePurchaseLimit: '',
                     singlePurchasePrincipal: '',
                     updateAt: '',
                     discountType: '',
-                    id:''
+                    limitPurchaseMerchantInfoID:''
                 },
                 uploadText:'',
                 historyList:[],
@@ -601,11 +660,13 @@
                     balanceLimit:0
                 },
                 saveerror:'',
+                firstAdd:false
             }
         },
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
                     let a=data.endValue,b=data.startValue;
                     this.defaultData.startValue=a;
@@ -613,33 +674,42 @@
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.$http.get('./limitPurchaseMerchant/list?' + decodeURIComponent($.param(data)))
-                            .then(function (response) {
+                    this.model.limitPurchaseMerchant_lists(data)
+                            .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
                                 (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                                 (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            }, function (response) {
-                                console.log(response);
                             });
             },
             getClist(){
                 // *** 请求公司数据
-                this.$http.get('./subCompany/list')
-                        .then(function (response) {
+                this.$common_model.getcompany()
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
                         });
             },
             //获取城市数据
-            getCity:function(data){
-                this.$http.get('./city/list')
-                        .then(function (response) {
+            getCity(_id){
+                this.defaultData.cityID='';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.$common_model.getcity(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        }, function (response) {
-                            console.log(response);
+                        });
+            },
+            getxhCity(_id){
+                this.shdata.cityId='';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.$common_model.getcity(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('xhcity', response.data.data) : null;
                         });
             },
             initList(){
@@ -647,38 +717,71 @@
                 this.getZlists(this.defaultData);
             },
             clearUl(){
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
+                this.xhlist=[];
                 $('.addbottom .col-md-4').children('ul').html('');
             },
-            updateNew(_list){
-                this.accountId=_list.id;
-                this.seexh(this.accountId,false);
-                this.$http.get('./limitPurchaseMerchant/history/'+_list.merchantId)
+            updateNew(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.accountId=_id;
+                this.updateList={
+                    remarks: '',
+                    isAutoPay: '1',
+                    certificateID: '',
+                    merchantId: '',
+                    updateBy: '',
+                    singlePurchaseLimit: '',
+                    singlePurchasePrincipal: '',
+                    updateAt: '',
+                    discountType: '',
+                    limitPurchaseMerchantInfoID:''
+                };
+                this.seexh(_id,false);
+                this.model.limitPurchaseMerchant_history(_id)
                         .then((response)=>{
                                 if(response.data.code==0){
                                     $.extend(true, this.updateList,response.data.data[0]);
                                     this.$set('historyList', response.data.data)
-                                    this.updateList.certificates='';
-                                    $('input[type="file"]')[0].value=''
+                                    this.updateList.certificateID='';
+                                    $('input[type="file"]')[0].value='';
+                                    this.clearUl();
                                     $('#modal_update').modal('show');
                                 }
                         })
 
+            },
+            seehistoryxh(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.seehistoryList=[];
+                this.model.seehistoryxh(_id)
+                        .then((response)=>{
+                            if(response.data.code==0) {
+                                this.$set('seehistoryList', response.data.data)
+                                $('#modal_seehistory').modal('show');
+                            }
+                        })
+            },
+            updateXh(){
+                $('#modal_see').modal('hide');
+                this.updateNew(this.accountId);
             },
             delxh(_isenb,e){
                 this.isEnable=_isenb;
                 $(e.target).closest('tr').hide().find('.merchantIds').removeClass('merchantIds');
             },
             submitUpdate(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror='';
                 if(!this.$vali.valid){this.$set('saveerror', '您的信息未填写完整');return;}
-                if(this.updateList.certificates==''){this.$set('saveerror', '请上传凭证');return;}
+                if(this.updateList.certificateID==''){this.$set('saveerror', '请上传凭证');return;}
                 let datas = Array.from($(".merchantIds"), i => parseInt(i.innerHTML));
                 this.updateList.digestMerchants=datas;
-                this.$http.post('./ limitPurchaseMerchant/editDigest',this.updateList)
+                this.updateList.limitPurchaseMerchantInfoID=this.accountId;
+                this.model.limitPurchaseMerchant_editDigest(this.updateList)
                         .then((response)=>{
+                            if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已修改！');
+                            }
                         })
             },
             changeDiscount(_id,_isenb){
@@ -686,30 +789,35 @@
                 this.isEnable=_isenb;
             },
             changeTrue(){
-                let data={
-                    'id': this.accountId,
-                    'isEnable': this.isEnable
-                }
-                this.$http.post('./limitPurchaseMerchant/change',data)
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
+                            if(response.data.code == 0){
                                 this.initList();
+                                dialogs('success','已启用！');
+                            }
                         })
             },
             seexh(_id,isTrue){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.seexhList=[];
                 this.accountId=_id;
                 this.isTrue=isTrue;
-                this.$http.get('./limitPurchaseMerchant/viewDigest/'+this.accountId)
+                this.xhdata.limitPurchaseMerchantInfoID=_id;
+                this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
-                                (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
-                                if(isTrue){$('#modal_see').modal('show');}
+                            if(response.data.code == 0){
+                                this.$set('seexhList', response.data.data)
+                                if(this.isTrue){$('#modal_see').modal('show');}
+                            }
                         })
             },
             searchDigest(){
-                this.clearUl();
-                this.$http.get('./merchant/list?' + decodeURIComponent($.param(this.shdata)))
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.firstAdd=true;
+                this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-                                $('#modal_add').modal('show');
                             }
                         )
             },
@@ -721,21 +829,19 @@
                     'merchantOperationID':'',
                     'merchantName':'',
                     'isLimitPurchase':0,
-                    'isDigest':null,
+                    'isDigest':0,
                 };
-                this.searchDigest();
+                this.getxhCity();
+                this.clearUl();
+                this.firstAdd=false;
+                $('#modal_add').modal('show');
             },
             addUser2(){
                 this.addTitle='添加消化商户';
-                this.shdata={
-                    'companyId':'',
-                    'cityId':'',
-                    'merchantOperationID':'',
-                    'merchantName':'',
-                    'isLimitPurchase':null,
-                    'isDigest':0,
-                };
-                this.searchDigest();
+                this.firstAdd=false;
+                (this.shdata.companyId=='')?this.getxhCity():null;
+                $('.addbottom .col-md-4').children('ul').html('');
+                $('#modal_add').modal('show');
             },
             allCkb(e){
                 if(e.target.checked){
@@ -746,9 +852,14 @@
                 }
             },
             appendLi(a){
-                let _tr=$("input[value='" + a + "']").closest('tr');
+                let _this=$("input[value='" + a + "']")
+                let _tr=_this.closest('tr');
                 let _ul=$('.addbottom .col-md-4').children('ul');
-                _ul.append('<li value="'+a+'">'+_tr.children('td:last').html()+'</li>');
+                let merchantName=_this.attr('merchantName');
+                let subCompanyName=_this.attr('subCompanyName');
+                let cityName=_this.attr('cityName');
+                let startDate=_this.attr('startDate');
+                _ul.append('<li value="'+a+'" merchantName="'+merchantName+'" subCompanyName="'+subCompanyName+'" cityName="'+cityName+'" startDate="">'+_tr.children('td:last').html()+'</li>');
                 _tr.hide();
             },
             addTrue(e){
@@ -769,24 +880,32 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
-                this.$http.post('./limitPurchaseMerchant/add',data)
+                this.model.limitPurchaseMerchant_add(data)
                         .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                            if(response.data.code == 0){
+                                this.initList();
+                                dialogs('success','已添加！');
+                            }
                         })
             },
             submitTrue2(e){
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
-                let data={'id': this.accountId,'digestMerchants':Array.from(_li, i => parseInt(i.getAttribute('value')))}
-                this.$http.post('./limitPurchaseMerchant/addDigest',data)
-                        .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                _li.each((index)=>{
+                    let data={
+                        merchantOperationID: _li.eq(index).attr('value'),
+                        merchantName:_li.eq(index).attr('merchantName'),
+                        subCompanyName:_li.eq(index).attr('subCompanyName'),
+                        cityName: _li.eq(index).attr('cityName'),
+                        startDate: _li.eq(index).attr('startDate'),
+                    }
+                    this.seexhList.push(data);
                 })
+                $('#modal_add').modal('hide');
             },
             uploadClick(){
                 $('input[type="file"]').val('');
@@ -808,12 +927,14 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.$http.post('./file/upload',datas)
+                    vm.$common_model.upload(datas)
                             .then((response)=>{
-                                vm.updateList.certificates=response.data.data;
-                                vm.uploadText=files.name;
-                                vm.saveerror='';
-                                dialogs('success','上传成功！');
+                                if(response.data.code == 0){
+                                    vm.updateList.certificateID=response.data.data;
+                                    vm.uploadText=files.name;
+                                    vm.saveerror='';
+                                    dialogs('success','上传成功！');
+                                }
                             })
                 }
             },
@@ -821,25 +942,21 @@
         ready() {
             var vm=this;
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            (this.$route.params.id != ':id') ? this.defaultData.merchantOperationID = this.$route.params.id : null;
             vm.initList();
             vm.getClist();
             vm.getCity();
-            $('#modal_add,#modal_see').on('hidden.bs.modal',function(){
+            $('#modal_add,#modal_see,#modal_seehistory').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');
                 }
             })
-            $('#modal_update,#modal_add,#modal_waring,#modal_see').on('hidden.bs.modal', function () {
+            $('#modal_update,#modal_add,#modal_waring,#modal_see,#modal_seehistory').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 if($(this).hasClass('modal_update')){
                     vm.uploadText='';
-                    vm.updateList.certificates='';
-
+                    vm.updateList.certificateID='';
                 }
-            })
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
             })
         },
         components:{

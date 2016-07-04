@@ -4,19 +4,18 @@
             <div class="panel panel-flat">
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
-                                <br/>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、姓名、描述">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" >
-                                    <option value="">请选择分公司</option>
+                                    <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="timeRange">
-                                        <option value="">请选择日期</option>
+                                        <option value="5">今天</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
                                         <option value="2">最近一个月</option>
@@ -132,24 +131,24 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    
+    import model from '../../ajax/XTPZ/log_model'
     export default{
-        props:{
-
-        },
         data(){
+            this.model =model(this)
             return{
                 subCompanyID:"",
                 keywords:"",
                 timeRange:'1',
+                startDate:'',
+                endDate:'',
                 subcompanyList:[],
                 startDate:'',
                 endDate:'',
                 pageall:1,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageIndex:1,
-                pageSize:15,
+                pageSize:10,
                 logList:[],
                 log:{
                     "userName":"",
@@ -166,40 +165,36 @@
         },
         methods:{
             //获取员工数据
-             getLogList:function(data){
-                this.$http.post('./log/list',data)
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+             getLogList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.log_list(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('logList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
+                 this.model.log_description()
+                         .then((response)=>{
+                             (response.data.code==0)?this.$set('descriptions',response.data.data):null
+                         })
             },
             //获取分公司数据
-            getSubcompany:function(data){
-                 this.$http.get('./subCompany/list')
-                    .then(function (response) {
-                        // *** 判断请求是否成功如若成功则填充数据到模型
+            getSubcompany(){
+                let data={
+                    'type':'ImportUser'
+                }
+                 this.$common_model.getcompany(data)
+                    .then((response)=>{
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
-                    }, function (response) {
-                        console.log(response);
                     });
             },
-            getdescription(){
-                this.$http.post('./log/description')
-                        .then((response)=>{
-                            (response.data.code==0)?this.$set('descriptions',response.data.data):null
-                        })
-            },
             showLog(id){
-                this.$http.post('./log/info/'+id)
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.log_info(id)
                     .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
                         })
             },
-            query: function () {
+            query() {
                 let data={
                         subCompanyID:this.subCompanyID,
                         keywords:this.keywords,
@@ -208,18 +203,19 @@
                         pageIndex: this.pageIndex, 
                         pageSize: this.pageSize
                     };
+                this.startDate=init_date(this.timeRange)[0];
+                this.endDate=init_date(this.timeRange)[1];
                 this.getLogList(data);
             },
         },
-        ready: function () {
+        ready() {
             this.startDate=init_date(this.timeRange)[0];
             this.endDate=init_date(this.timeRange)[1];
-            this.getdescription();
-            this.getLogList({});
+            this.query();
             this.getSubcompany({});
         },
        watch:{
-            timeRange:function(){
+            timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },
@@ -233,7 +229,7 @@
             }
        },
         components:{
-           'datepicker': datepicker
+           'datepicker': datepicker,
         }
     }
 </script>

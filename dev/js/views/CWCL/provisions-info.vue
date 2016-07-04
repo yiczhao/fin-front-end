@@ -3,12 +3,12 @@
            :ptitle="'财务处理'"
            :p2title="'账户列表'"
            :hname="'account-management'"
+           :h2name="'account-management'"
            :isshow="'isshow'">
         <div class="content " slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                        <div class="m20">
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
                                     <option value="0">昨天</option>
@@ -23,11 +23,8 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <label>付款账号:</label>
-                                <input type="text" class="form-control" v-model="checkForm.payAccountNumber">
+                                <input type="text" class="form-control" v-model="checkForm.payAccountNumber" placeholder="付款账号">
                             </div>
-                        </div>
-                        <div  class="">
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
                             </div>
@@ -64,7 +61,6 @@
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
                             <!--</div>-->
-                        </div>
                     </form>
                 </div>
                 <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
@@ -214,7 +210,7 @@
                                             <textarea class="form-control" v-model="manualCheck.remarks" width="70%" cols="20" rows="3"></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group tc" v-show="glradio=='one'&&dzcheckList.purpose!=''||glradio=='two'">
+                                    <div class="form-group tc"  v-show="glradio=='one'&&dzcheckList.purpose!=''||glradio=='two'">
                                         <button type="button" @click="dzTrue(dzList.id)" class="btn btn-primary">保存</button>
                                     </div>
                                     <div class="form-group tc">
@@ -233,7 +229,7 @@
                                 <h5 class="modal-title">交易对账</h5>
                             </div>
                             <div class="modal-body">
-                        <table v-if="gllists.length>0" id="table2" class="table table-bordered table-hover">
+                        <table v-show="gllists.length>0" id="table2" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>订单号</th>
@@ -376,17 +372,19 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
+    import model from '../../ajax/CWCL/provisions_model'
     export default{
         props:{
         },
         data(){
+            this.model=model(this);
             return{
                 loginList:{},
                 zdlists:[],
                 dzList:{},
                 dz_show:false,
                 pagecur:1,
-                page_size:15,
+                page_size:10,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
@@ -404,7 +402,7 @@
                     startDate:'',
                     endDate:'',
                     pageIndex:1,
-                    pageSize:15
+                    pageSize:10
                 },
                 dzcheckList:{
                     purpose:'',
@@ -422,6 +420,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -429,13 +428,13 @@
                     data.startDate=a;
                     data.endDate=b;
                 }
-                this.$http.post('./reservecash/detail',data)
-                        .then(function (response) {
+                this.model.detail(data)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        }, function (response) {
-                            console.log(response);
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
                         });
             },
             cleardz(){
@@ -467,15 +466,16 @@
                 this.getZlists(this.checkForm);
             },
             dzOne(id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 请求对账数据
-                this.$http.post('./reservecash/selectReserveCashOrderListByID',{'id':id})
-                        .then(function (response) {
+                this.model.selectReserveCashOrderListByID(id)
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('gllists', response.data.data) : null;
-                            (this.checkOne)?this.checkOne=false:this.checkOne=true;
-                            $('#modal_dzone').modal('show');
-                        }, function (response) {
-                            console.log(response);
+                            if(response.data.code==0){
+                                this.$set('gllists', response.data.data)
+                                (this.checkOne)?this.checkOne=false:this.checkOne=true;
+                                $('#modal_dzone').modal('show');
+                            }
                         });
             },
             checkDz(purpose,remarks,_id){
@@ -487,25 +487,29 @@
                   $('#modal_dzone').modal('hide');
             },
             dzTrue(_id){
-                console.log(_id);
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.glradio=='one'){
                     this.associateCheck.detailID=_id;
-                    this.$http.post('./reservecash/associateCheck',this.associateCheck)
-                            .then((response)=>{
+                    this.model.associateCheck(this.associateCheck)
+                        .then((response)=>{
+                            if(response.data.code==0){
                                 this.initList();
                                 dialogs('success','对账成功！');
-                            })
+                            }
+                        })
                 }else{
                     if(this.manualCheck.remarks==''||this.manualCheck.purpose==''){
                         this.errortext='您的信息未填写完整';
                         return;
                     }
                     this.manualCheck.id=_id;
-                    this.$http.post('./reservecash/manualCheck',this.manualCheck)
-                            .then((response)=>{
+                    this.model.manualCheck(this.manualCheck)
+                        .then((response)=>{
+                            if(response.data.code==0){
                                 this.initList();
                                 dialogs('success','对账成功！');
-                            })
+                            }
+                        })
                 }
             },
             getTime(){
@@ -535,7 +539,7 @@
         },
         watch:{
             zdlists(){
-                this.$http.post('./reservecash/incomeAndPayoutAmount',this.checkForm)
+                this.model.incomeAndPayoutAmount(this.checkForm)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.shouru=response.data.data[0].incomeAmount;
