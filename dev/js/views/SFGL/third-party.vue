@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -191,8 +191,8 @@
                                     <div class="col-md-2">
                                         <select class="form-control" v-model="shdata.type">
                                             <option value="">请选择类型</option>
-                                            <option value="BANK">银行</option>
-                                            <option value="COMM">运营商</option>
+                                            <option value="1">银行</option>
+                                            <option value="2">运营商</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -233,7 +233,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="!xhlist.length>0&&firstAdd">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -383,18 +383,24 @@
                     balanceAmount:''
                 },
                 saveerror:false,
+                firstAdd:false,
                 total:0
             }
         },
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.thirdParty_list(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                             (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         });
+                this.model.gettotal(this.defaultData)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('total',response.data.data):null;
+                        })
             },
             getClist(){
                 // *** 请求公司数据
@@ -403,9 +409,9 @@
                 }
                 this.$common_model.getcompany(data)
                         .then((response)=>{
-                // *** 判断请求是否成功如若成功则填充数据到模型
-                (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-            });
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                        });
             },
             //获取城市数据
             getCity(_id){
@@ -415,9 +421,9 @@
                 }
                 this.$common_model.getcity(data)
                         .then((response)=>{
-                // *** 判断请求是否成功如若成功则填充数据到模型
-                (response.data.code==0) ? this.$set('city', response.data.data) : null;
-            });
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                        });
             },
             //获取城市数据
             getshCity(_id){
@@ -427,14 +433,13 @@
                 }
                 this.$common_model.getcity(data)
                         .then((response)=>{
-                // *** 判断请求是否成功如若成功则填充数据到模型
-                (response.data.code==0) ? this.$set('shcity', response.data.data) : null;
-            });
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('shcity', response.data.data) : null;
+                        });
             },
             initList(){
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
-                this.gettotal()
             },
             clearUl(){
                 this.xhlist=[];
@@ -450,10 +455,13 @@
                 };
                 this.getshCity();
                 this.clearUl();
+                this.firstAdd=false;
                 $('#modal_add').modal('show');
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.clearUl();
+                this.firstAdd=true;
                 this.model.thirdParty_accountlist(this.shdata)
                         .then((response)=>{
                             (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
@@ -495,6 +503,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 var data=[];
@@ -515,17 +524,20 @@
                 })
                 this.model.thirdParty_save(JSON.stringify(data))
                         .then((response)=>{
+                            if(response.data.code == 0){
                                 this.initList();
-                            dialogs('success','已添加！');
+                                dialogs('success','已添加！');
+                            }
                         })
             },
             delstore(_id){
                 this.id=_id;
             },
             del_true(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.delstore(this.id)
                         .then((res)=> {
-                                if(res.data.code==0){
+                            if(res.data.code==0){
                                 dialogs('success','已删除');
                                 this.initList();
                             }
@@ -536,6 +548,7 @@
                 this.isEnable = status;
             },
             change_status(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data = {
                     'id': this._id,
                     'status': this.isEnable
@@ -562,8 +575,9 @@
                 }
             },
             rechargeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
-                if(this.$vali.invalid)return;
+                if(this.$vali.invalid || this.redata.money==0)return;
                 let data={
                     id:this.redata.id,
                     money:this.redata.money *100,
@@ -572,15 +586,9 @@
                 this.model.thirdParty_recharge(data)
                         .then((res) => {
                                 if(res.data.code == 0){
-                                this.initList()
-                                dialogs('success','已充值！')
-                            }
-                        })
-            },
-            gettotal(){
-                this.model.gettotal(this.defaultData)
-                        .then((response)=>{
-                            (response.data.code==0)?this.$set('total',response.data.data):null;
+                                    this.initList()
+                                    dialogs('success','已充值！')
+                                }
                         })
             }
         },
@@ -589,10 +597,6 @@
             vm.initList();
             vm.getClist();
             vm.getCity();
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
-            })
         },
         components:{
             'datepicker': datepicker

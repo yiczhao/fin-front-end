@@ -200,8 +200,8 @@
                                         <tr role="row" v-for="n in relist">
                                                 <td>{{$index+1}}</td>
                                                 <td>
-                                                    {{n.accountName}}
-                                                    {{n.accountNumber}}
+                                                    <p>{{n.accountName}}</p>
+                                                    <p>{{n.accountNumber}}</p>
                                                 </td>
                                                 <td>{{n.createAt | datetime}}</td>
                                                 <td>{{n.createBy}}</td>
@@ -468,24 +468,26 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
                     this.defaultData.endValue=b;
                     data.startValue=a;
                     data.endValue=b;
                 }
-                    this.model.merchant_lists(data)
-                            .then((response)=>{
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            });
+                this.model.merchant_lists(data).then((response)=>{
+                    (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                    (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                });
+                this.model.merchant_total(this.defaultData).then((res)=>{
+                    (res.data.code==0)?this.$set('nums',res.data.data):null;
+                })
             },
             getClist(){
                 // *** 请求公司数据
-                this.$common_model.getcompany()
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        });
+                this.$common_model.getcompany().then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                });
             },
             //获取城市数据
             getCity(_id){
@@ -493,11 +495,10 @@
                 let data={
                     'subCompanyID':_id
                 }
-                this.$common_model.getcity(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        });
+                this.$common_model.getcity(data).then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                });
             },
             checkNew(){
                 this.initList();
@@ -515,11 +516,14 @@
                 this.checkcontrol(_list.merchantID)
             },
             checkcontrol(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.merchant_account(_id)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('relist', response.data.data) : null;
-                            $('#modal_control').modal('show');
+                            if(response.data.code==0){
+                                this.$set('relist', response.data.data)
+                                $('#modal_control').modal('show');
+                            }
                         });
             },
             bthfShow(type,a){
@@ -584,6 +588,7 @@
                 this.updateList.accountType=this.accountType;
             },
             updateTrue(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.$vali.valid){
                     this.updataerror=true;
                     this.errortext='您的信息未填写完整！';
@@ -594,10 +599,12 @@
                     return;}
                 this.updataerror=false;
                 this.model.merchant_update(this.updateList)
-                        .then(()=>{
+                        .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            dialogs();
-                            this.initList();
+                            if(response.data.code == 0){
+                                dialogs();
+                                this.initList();
+                            }
                         });
             },
             uploads(e){
@@ -618,10 +625,12 @@
                     }
                     vm.$common_model.upload(datas)
                             .then((response)=>{
-                                    vm.updateList.certificates=response.data.data;
-                                    vm.uploadText=files.name;
-                                    this.updataerror=false;
-                                    dialogs('success','上传成功！');
+                                    if(response.data.code == 0){
+                                        vm.updateList.certificates=response.data.data;
+                                        vm.uploadText=files.name;
+                                        this.updataerror=false;
+                                        dialogs('success','上传成功！');
+                                    }
                             })
                 }
             },
@@ -640,19 +649,16 @@
                 }
             },
             check_digest(_list,_merchantName){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.id=_list.merchantOperationID;
                 this.merchantName=_merchantName;
                 this.model.merchant_digest(_list.merchantID)
                         .then((res)=>{
-                            (res.data.code==0)?this.$set('checkLists',res.data.data):null;
-                            $('#modal_checking').modal('show');
+                            if(res.data.code==0){
+                                this.$set('checkLists',res.data.data);
+                                $('#modal_checking').modal('show');
+                            }
                     })
-            },
-            getNums(){
-                this.model.merchant_total(this.defaultData)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('nums',res.data.data):null;
-                        })
             }
         },
         ready() {
@@ -661,7 +667,6 @@
             vm.initList();
             vm.getClist();
             vm.getCity();
-            vm.getNums();
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })
@@ -680,9 +685,6 @@
             'datepicker': datepicker
         },
         watch:{
-            zdlists(){
-                this.getNums()
-            },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();

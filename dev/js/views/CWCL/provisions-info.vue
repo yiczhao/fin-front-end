@@ -420,6 +420,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -430,8 +431,10 @@
                 this.model.detail(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
                         });
             },
             cleardz(){
@@ -463,13 +466,16 @@
                 this.getZlists(this.checkForm);
             },
             dzOne(id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 // *** 请求对账数据
                 this.model.selectReserveCashOrderListByID(id)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('gllists', response.data.data) : null;
-                            (this.checkOne)?this.checkOne=false:this.checkOne=true;
-                            $('#modal_dzone').modal('show');
+                            if(response.data.code==0){
+                                this.$set('gllists', response.data.data)
+                                (this.checkOne)?this.checkOne=false:this.checkOne=true;
+                                $('#modal_dzone').modal('show');
+                            }
                         });
             },
             checkDz(purpose,remarks,_id){
@@ -481,13 +487,16 @@
                   $('#modal_dzone').modal('hide');
             },
             dzTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.glradio=='one'){
                     this.associateCheck.detailID=_id;
                     this.model.associateCheck(this.associateCheck)
-                            .then((response)=>{
+                        .then((response)=>{
+                            if(response.data.code==0){
                                 this.initList();
                                 dialogs('success','对账成功！');
-                            })
+                            }
+                        })
                 }else{
                     if(this.manualCheck.remarks==''||this.manualCheck.purpose==''){
                         this.errortext='您的信息未填写完整';
@@ -495,10 +504,12 @@
                     }
                     this.manualCheck.id=_id;
                     this.model.manualCheck(this.manualCheck)
-                            .then((response)=>{
+                        .then((response)=>{
+                            if(response.data.code==0){
                                 this.initList();
                                 dialogs('success','对账成功！');
-                            })
+                            }
+                        })
                 }
             },
             getTime(){

@@ -140,7 +140,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -260,12 +260,14 @@
                     subCompanyID:'',
                     keyWord:''
                 },
-                addId:[]
+                addId:[],
+                firstAdd:false
             }
         },
         methods:{
             //获取员工数据
              getUserList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.user_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('userList', response.data.data) : null;
@@ -294,6 +296,7 @@
             },
             //显示员工管辖
             showCS(userId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.userID=userId
                 this.model.userControl_list(userId)
                     .then((response)=>{
@@ -310,6 +313,7 @@
                 })
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var arrays = [];
                 $("input[name='ckbox']:checked").each(function(){
                   arrays.push($(this).prop("id"));  
@@ -331,6 +335,7 @@
             },
             addUser(){
                 $('#modal_add').modal('show');
+                this.firstAdd=false;
                 this.clearUl();
             },
             clearUl(){
@@ -338,11 +343,14 @@
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             queryUser(){
-                if(this.userdata.keyWord==''&&this.userdata.subCompanyID=='')return;
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.firstAdd=true;
                 this.model.readyImportUser(this.userdata)
                         .then((response)=>{
-                            (response.data.code==0)?this.$set('userlists',response.data.data):null;
-                            this.clearUl();
+                            if(response.data.code == 0){
+                                this.$set('userlists',response.data.data)
+                                this.clearUl();
+                             }
                         })
             },
             allCkb(e){
@@ -382,6 +390,7 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 var data={data:[]};
@@ -404,19 +413,17 @@
                 })
                 this.model.importUser(data)
                         .then((response)=>{
-                            this.query();
-                            $('#modal_add').modal('hide');
-                            dialogs('success','已添加！');
+                            if(response.data.code == 0){
+                                this.query();
+                                $('#modal_add').modal('hide');
+                                dialogs('success','已添加！');
+                            }
                         })
             },
         },
         ready() {
             this.getUserList({});
             this.getSubcompany({});
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
-            })
         },
        watch:{
            pagecur(){

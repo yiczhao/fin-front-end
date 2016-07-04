@@ -286,7 +286,7 @@
                                 <tbody>
                                     <tr role="row"  v-for="n in checkLists">
                                         <td>{{n.certificate}}</td>
-                                        <td>{{n.tradeTime || datetime}}</td>
+                                        <td>{{n.tradeTime | datetime}}</td>
                                         <td>{{n.collectionName}}</td>
                                         <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
                                         <td>{{n.payoutAmount/100 | currency '' }}</td>
@@ -441,6 +441,7 @@
         methods:{
             // *** 请求账户数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endDate<data.startDate){
                     let a=data.endDate,b=data.startDate;
                     this.checkForm.startDate=a;
@@ -450,8 +451,10 @@
                 }
                 this.model.getlist(data)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
                         });
             },
             initList(){
@@ -460,6 +463,7 @@
                 this.getZlists(this.checkForm);
             },
             getInfo(a,index){
+                if(sessionStorage.getItem('isHttpin')==1)return;
 //                this.zdlists[index].listinfo = []
                 if(this.listinfos[index] !='' && typeof(this.listinfos[index])!='undefined')return;
                 this.model.getpart(a.id)
@@ -491,13 +495,17 @@
                 this.delPurpose=b;
             },
             checking(a){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=a;
                 this.model.checklist(a)
                         .then( (response)=> {
-                             (response.data.code==0)?this.$set('checkLists',response.data.data):null;
-                        })
+                            if(response.data.code==0){
+                                this.$set('checkLists',response.data.data)
+                            }
+            })
             },
             checkTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'orderId':this.accountId,
                     'reserveCashId':_id
@@ -511,6 +519,7 @@
                         })
             },
             updateTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_update(this.accountId)
                     .then( (response)=> {
                         if(response.data.code==0){
@@ -520,6 +529,7 @@
                     })
             },
             payTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_allow(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
@@ -529,6 +539,7 @@
                         })
             },
             delTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':this.accountId,
                     'purpose':this.delPurpose
@@ -542,6 +553,7 @@
                         })
             },
             closeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_close(this.accountId)
                         .then( (response)=> {
                             if(response.data.code==0){
@@ -551,6 +563,7 @@
                         })
             },
             backTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.remarks==''){this.fires=true;return;}
                 let data={
                     'id':this.accountId,
@@ -565,6 +578,7 @@
                             })
             },
             applyTrue(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     'id':_id,
                 }
@@ -573,7 +587,7 @@
                                 if(response.data.code==0){
                                     this.initList();
                                     dialogs('success','已申请！');
-                            }
+                                }
                         })
             },
             checkingTrue(a){

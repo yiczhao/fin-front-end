@@ -80,7 +80,7 @@
                                 <td>
                                     <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)"
                                        v-if="prepayment.status==1">预付</a>
-                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'merchantName':prepayment.merchantName}}"
+                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
                                        v-if="prepayment.status==1">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}">明细</a>
                                     <a data-toggle="modal" data-target="#modal_waring"
@@ -124,7 +124,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3>添加商户</h3>
+                                <h5>添加商户</h5>
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                             </div>
                             <div class="modal-body">
@@ -184,7 +184,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="!merchantList.length>0 && firstAdd">
                                             未查询到商户数据！
                                         </span>
                                     </div>
@@ -240,12 +240,12 @@
                                             <label><i style="color:red">*</i>金额：</label>
                                             <input v-validate:val1="['required']" type="text" class="form-control"
                                                    name="advancePaymentAmount"
-                                                   v-model="applyAdvancePay.advancePaymentAmount"></input>
+                                                   v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>
-                                        <textarea v-validate:val2="['required']" class="form-control" name="remarks"
-                                                  v-model="applyAdvancePay.remarks"></textarea>
+                                        <textarea v-validate:val2="['required']" class="form-control" maxlength="50" name="remarks"
+                                                  v-model="applyAdvancePay.remarks" placeholder="最多50字符"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
@@ -284,6 +284,7 @@
     background:none;
     border:0;
     padding:3px;
+    text-align:center;
     &:focus{
         border:1px solid #999;
     }
@@ -362,6 +363,9 @@
     }
 
     }
+table tr td,table tr th{
+    text-align: center;
+}
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -414,12 +418,14 @@
                 isEnable: 0,
                 _id: '',
                 total: [],
-                saveerror: false
+                saveerror: false,
+                firstAdd: false
             }
         },
         methods: {
             //获取预付款商户数据
             getPrepaymentList(data) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.prepayment_lists(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -433,6 +439,7 @@
             },
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.advancePaymentMerchant(prepaymentId)
                         .then((response)=>{
                             if (response.data.code == 0) {
@@ -447,20 +454,22 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
-                            }
-                            //判断是否有银行卡账号
-                            if (this.applyAdvancePay.collectionAccountNumber == null) {
-                                dialogs('error', '该商户未设置划款账户，无法充值！');
-                                return false;
-                            } else {
-                                //显示窗口
-                                this.saveerror = false;
-                                $("#modal_prepayment_recharge").modal('show');
+                                //判断是否有银行卡账号
+                                if (this.applyAdvancePay.collectionAccountNumber == null) {
+                                    dialogs('error', '该商户未设置划款账户，无法充值！');
+                                    return false;
+                                } else {
+                                    //显示窗口
+                                    this.saveerror = false;
+                                    $("#modal_prepayment_recharge").modal('show');
+                                }
                             }
                         });
             },
             //获取商户数据
             getMerchantList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.merchantInfo)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
@@ -507,11 +516,9 @@
             },
             //显示选择商户窗口
             showMerchants() {
-                this.merchantInfo.companyId = "",
-                        this.merchantInfo.cityId = "",
-                        this.merchantInfo.merchantOperationID = "",
-                        this.merchantInfo.merchantName = "",
-                        this.queryForMerchantList();
+                this.merchantInfo.companyId = "", this.merchantInfo.cityId = "", this.merchantInfo.merchantOperationID = "", this.merchantInfo.merchantName = "", this.queryForMerchantList();
+                this.firstAdd=false;
+                this.merchantList=[];
             },
             queryForMerchantList() {
                 //设置全选属性
@@ -520,6 +527,7 @@
                 $("#modal_prepayment_info").modal('show');
             },
             subApplyAdvancePay() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
                 let entity = {
@@ -571,6 +579,7 @@
                 _li.remove();
             },
             submit(e) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li = $("#IDS").children('li');
                 if (!_li.length > 0)return;
                 let data = {'merchantIDs': Array.from(_li, i => i.getAttribute('value')
@@ -605,22 +614,21 @@
                 this.isEnable = status;
             },
             change_status(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data = {
                     'id': this._id,
                     'status': this.isEnable
                 }
                 this.model.status(data)
                         .then((res) => {
-                        if(res.data.code == 0 && this.isEnable == 0
-                        )
-                            {
-                                this.query()
-                                dialogs('success', '已启用！')
-                            }
-                        else
-                            if (res.data.code == 0 && this.isEnable == 1) {
-                                this.query()
-                                dialogs('success', '已停用！')
+                            if(res.data.code == 0 && this.isEnable == 0)
+                                {
+                                    this.query()
+                                    dialogs('success', '已启用！')
+                                }
+                            else if (res.data.code == 0 && this.isEnable == 1) {
+                                    this.query()
+                                    dialogs('success', '已停用！')
                             }
                         })
             },
@@ -628,7 +636,7 @@
                 e.target.removeAttribute("readOnly");
             },
             changeBlance(e,_id,_old){
-                if(parseInt(e.target.value)==parseInt(_old)){
+                if(parseFloat(e.target.value.replace(/[^\d\.-]/g, ""))*100==parseInt(_old)){
                     e.target.setAttribute("readOnly","true");
                     return;    
                 }
@@ -650,10 +658,6 @@
             this.query();
             this.getSubcompany();
             this.getCity();
-            $(document).on('click', '.addbottom .col-md-4 ul li', function () {
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li') ? $(this).css('background', '#ccc') : $(this).css('background', 'none');
-            });
         },
         components: {
             'datepicker': datepicker

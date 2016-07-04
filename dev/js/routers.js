@@ -122,14 +122,14 @@ export default function(router){
             }
         },
         /* 商户管理-预付款门店管理 */
-        '/prepayment-store/:id/:merchantName':{
+        '/prepayment-store/:id/:storeMerchantName':{
             name:'prepayment-store',
             component: function(resolve){
                 require(['./views/SHGL/prepayment-store.vue'],resolve);
             }
         },
         /* 商户管理-预付款账户明细 */
-        '/prepayment-info/:id':{
+        '/prepayment-info/:id/:orderNumber':{
             name:'prepayment-info',
             component: function(resolve){
                 require(['./views/SHGL/prepayment-info.vue'],resolve);

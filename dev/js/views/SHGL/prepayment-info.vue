@@ -173,7 +173,7 @@
                             <div class="form-group">
                                 <label><i style="color:red">*</i>金额：</label>
                                 <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
-                                       v-model="applyAdvancePay.advancePaymentAmount"></input>
+                                       v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
                             </div>
                             <div class="form-group">
                                 <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
@@ -379,6 +379,7 @@
         methods: {
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if (data.endDate < data.startDate) {
                     let a = data.endDate, b = data.startDate;
                     this.checkForm.startDate = a;
@@ -396,6 +397,10 @@
                         .then((res) => {
                             (res.data.code == 0) ? this.$set('total', res.data.data) : null;
                         });
+                this.model.getBlance(this.defaultData.advancePaymentMerchantID)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
+                        })
             },
             initList(){
                 $(".modal").modal("hide");
@@ -403,6 +408,7 @@
             },
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.advancePaymentMerchant(prepaymentId)
                         .then((response)=>{
                             if (response.data.code == 0) {
@@ -417,19 +423,20 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
-                            }
-                            //判断是否有银行卡账号
-                            if (this.applyAdvancePay.collectionAccountNumber == null) {
-                                dialogs('error', '该商户未设置划款账户，无法充值！');
-                                return false;
-                            } else {
-                                //显示窗口
-                                this.saveerror=false;
-                                $("#modal_prepayment_recharge").modal('show');
+                                //判断是否有银行卡账号
+                                if (this.applyAdvancePay.collectionAccountNumber == null) {
+                                    dialogs('error', '该商户未设置划款账户，无法充值！');
+                                    return false;
+                                } else {
+                                    //显示窗口
+                                    this.saveerror=false;
+                                    $("#modal_prepayment_recharge").modal('show');
+                                }
                             }
                         });
             },
             subApplyAdvancePay() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
                 if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
@@ -451,19 +458,13 @@
             getTime(){
                 this.defaultData.startDate = init_date(this.dateS)[0];
                 this.defaultData.endDate = init_date(this.dateS)[1];
-            },
-            getBlance(){
-                this.model.getBlance(this.defaultData.advancePaymentMerchantID)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
-                        })
             }
         },
         ready() {
             (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
+            (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
             this.initList();
-            this.getBlance();
         },
         components: {
             'datepicker': datepicker

@@ -128,16 +128,16 @@
                                 </td>
                                 <td>
                                     <a @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
-                                    <span v-else>0</span>
+                                    <span v-else>0.00</span>
                                 </td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
                                     <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0&&trlist.suspensionTax!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <span v-else>0</span>
+                                    <span v-else>0.00</span>
                                 </td>
                                 <td>
                                     <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
-                                    <span v-else>0</span>
+                                    <span v-else>0.00</span>
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -227,32 +227,32 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>消费金额：</label>
-                                            <input type="number" class="form-control" id="consumptionAmount" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']">
+                                            <input type="text" class="form-control" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>折扣金额：</label>
-                                            <input type="number" class="form-control" id="discountAmount" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" >
+                                            <input type="text" class="form-control" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>实付金额：</label>
-                                            <input type="number" class="form-control" id="paAmount" v-model="tradeInfo.paAmount" v-validate:val5="['required']" >
+                                            <input type="text" class="form-control" v-model="tradeInfo.payAmount" v-validate:val5="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>三方应收：</label>
-                                            <input type="number" class="form-control" id="thirdPartyReceivable" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']">
+                                            <input type="text" class="form-control" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>暂扣税金：</label>
-                                            <input type="number" class="form-control" id="suspensionTax" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" >
+                                            <input type="text" class="form-control" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" >
                                             <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>商户实补：</label>
-                                            <input type="number" class="form-control" id="merchantSubsidyActual" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']">
+                                            <input type="text" class="form-control" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                             <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
                                         </div>
                                         <div class="form-group">
@@ -360,8 +360,8 @@
                     merchantOperationID:'',
                     activityOperationID:'',
                     consumptionAmount:'',         
-                    discountAmount:'',    
-                    paAmount:'',  
+                    discountAmount:'',
+                    payAmount:'',
                     thirdPartyReceivable:'',    
                     suspensionTax:'', 
                     merchantSubsidyActual:'',
@@ -394,15 +394,19 @@
              getTradeList(data){
                  this.model.tradedetail(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('tradeList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                         if(response.data.code==0){
+                            this.$set('tradeList', response.data.data)
+                            this.$set('pageall', response.data.total)
+                        }
                     });
             },
             //获取分公司数据
             getSubcompany(){
                  this.$common_model.getcompany()
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
                     });
             },
             //获取城市数据
@@ -413,7 +417,9 @@
                 }
                  this.$common_model.getcity(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('cityList', response.data.data)
+                        }
                     });
             },
             addTradeInfo(){
@@ -423,7 +429,7 @@
                 this.tradeInfo.activityOperationID='';
                 this.tradeInfo.consumptionAmount='';         
                 this.tradeInfo.discountAmount='';    
-                this.tradeInfo.paAmount='';  
+                this.tradeInfo.payAmount='';
                 this.tradeInfo.thirdPartyReceivable='';    
                 this.tradeInfo.suspensionTax=''; 
                 this.tradeInfo.merchantSubsidyActual='';
@@ -436,7 +442,7 @@
                 this.select_merchantId;
                 this.tradeInfo.consumptionAmount       
                 this.tradeInfo.discountAmount
-                this.tradeInfo.paAmount
+                this.tradeInfo.payAmount
                 this.tradeInfo.thirdPartyReceivable 
                 this.tradeInfo.suspensionTax
                 this.tradeInfo.merchantSubsidyActual
@@ -446,6 +452,7 @@
                 this.fire=false;
             },
             saveTradeInfo(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 //隐藏非空提示
                 this.errorHideL();
                 //验证非空
@@ -457,7 +464,7 @@
                 $.extend(true,data,this.tradeInfo);
                 data.consumptionAmount= this.tradeInfo.consumptionAmount*100;
                 data.discountAmount=this.tradeInfo.discountAmount*100;
-                data.paAmount=this.tradeInfo.paAmount*100;
+                data.payAmount=this.tradeInfo.payAmount*100;
                 data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
                 data.suspensionTax=this.tradeInfo.suspensionTax*100;
                 data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
@@ -466,11 +473,12 @@
                         if(response.data.code==0){
                             this.query();
                             dialogs();
+                            $(".modal").modal("hide");
                         }
-                        $(".modal").modal("hide");
                     })
             },
             query() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 this.clear();
                 if (this.startDate=="" && this.endDate=="") {
@@ -502,8 +510,8 @@
                     merchantOperationID:'',
                     activityOperationID:'',
                     consumptionAmount:'',         
-                    discountAmount:'',    
-                    paAmount:'',  
+                    discountAmount:'',
+                    payAmount:'',
                     thirdPartyReceivable:'',    
                     suspensionTax:'', 
                     merchantSubsidyActual:'',
@@ -533,11 +541,13 @@
                         data:this.result.split(',')[1]
                     }
                     vm.$common_model.upload(datas)
-                            .then((response)=>{
-                                    vm.tradeInfo.certificateId=response.data.data;
-                                    vm.uploadText=files.name;
-                                    dialogs('success','上传成功！');
-                            })
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                vm.tradeInfo.certificateId=response.data.data;
+                                vm.uploadText=files.name;
+                                dialogs('success','上传成功！');
+                            }
+                        })
                 }
             },
             errorDialog(msg){
@@ -546,7 +556,7 @@
             goThird(_id,_serialNumber){
                 this.model.skipToThird(_id)
                         .then((response)=>{
-                                if(response.data.code==0){
+                            if(response.data.code==0){
                                 this.$router.go({'name':'third-info',params:{'id':response.data.data,'serialNumber':_serialNumber}});
                             }
                         })

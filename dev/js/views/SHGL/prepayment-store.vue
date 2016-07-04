@@ -137,7 +137,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -274,12 +274,14 @@
                 zdlists:[],
                 xhlist:[],
                 addId:[],
-                id:''
+                id:'',
+                firstAdd:false
             }
         },
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                     this.model.prepayment_store(data)
                             .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
@@ -303,9 +305,9 @@
                 }
                 this.$common_model.getcity(data)
                         .then((response)=>{
-                // *** 判断请求是否成功如若成功则填充数据到模型
-                (response.data.code==0) ? this.$set('city', response.data.data) : null;
-            });
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                        });
             },
             initList(){
                 $('.modal').modal('hide');
@@ -327,15 +329,17 @@
                 };
                 this.clearUl();
                 this.getCity();
+                this.firstAdd=false;
                 $('#modal_add').modal('show');
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.clearUl();
+                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
-                        (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-
-                    })
+                            (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
+                        })
             },
             allCkb(e){
                 if(e.target.checked){
@@ -369,19 +373,23 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
                 this.model.store_add(data)
                         .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                            if(response.data.code == 0){
+                                this.initList();
+                                dialogs('success','已添加！');
+                            }
                         })
             },
             delstore(_id){
                 this.id=_id;
             },
             del_true(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.delstore(this.id)
                         .then((res)=> {
                             if(res.data.code==0){
@@ -394,13 +402,9 @@
         ready() {
             var vm=this;
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
-            (vm.$route.params.merchantName!=':id')?vm.merchantName=vm.$route.params.merchantName:null;
+            (vm.$route.params.storeMerchantName!=':storeMerchantName')?vm.merchantName=vm.$route.params.storeMerchantName:null;
             vm.initList();
             vm.getClist();
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
-            })
         },
         components:{
             'datepicker': datepicker

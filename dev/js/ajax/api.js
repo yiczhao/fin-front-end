@@ -444,7 +444,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.changeBlance = './advancePaymentMerchant/update';
+    _o.changeBlance = './advancePaymentMerchant/balance/update';
 
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**

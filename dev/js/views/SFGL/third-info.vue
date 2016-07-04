@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -297,6 +297,7 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if (data.endDate < data.startDate) {
                     let a = data.endDate, b = data.startDate;
                     this.checkForm.startDate = a;
@@ -314,6 +315,10 @@
                         .then((response)=>{
                             (response.data.code==0)?this.$set('total',response.data.data):null;
                         })
+                this.model.thirdinfo_Blance(this.defaultData.thirdPartyAccountID)
+                        .then((res)=>{
+                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
+                        })
             },
             getClist(){
                 // *** 请求公司数据
@@ -322,8 +327,8 @@
                 }
                 this.$common_model.getcompany(data)
                         .then((response)=>{
-                    // *** 判断请求是否成功如若成功则填充数据到模型
-                    (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
                 });
             },
             //获取城市数据
@@ -334,12 +339,13 @@
                     }
                     this.$common_model.getcity(data)
                             .then((response)=>{
-                    // *** 判断请求是否成功如若成功则填充数据到模型
-                    (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                });
+                                // *** 判断请求是否成功如若成功则填充数据到模型
+                                (response.data.code==0) ? this.$set('city', response.data.data) : null;
+                            });
             },
             //获取城市数据
             getshCity(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.shdata.cityID='-1';
                 let data={
                     'subCompanyID':_id
@@ -353,7 +359,6 @@
             initList(){
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
-                this.getBlance();
             },
             recharge(){
                 this.saveerror=false;
@@ -367,13 +372,8 @@
                 this.defaultData.startDate = init_date(this.dateS)[0];
                 this.defaultData.endDate = init_date(this.dateS)[1];
             },
-            getBlance(){
-                this.model.thirdinfo_Blance(this.defaultData.thirdPartyAccountID)
-                        .then((res)=>{
-                            (res.data.code==0)?this.$set('blanceList',res.data.data):null;
-                        })
-            },
             rechargeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
                 if(this.$vali.invalid)return;
                 let data={
@@ -384,10 +384,10 @@
                 this.model.thirdParty_recharge(data)
                         .then((res) => {
                                 if(res.data.code == 0){
-                                this.initList()
-                                dialogs('success','已充值！')
-                            }
-                        })
+                                    this.initList()
+                                    dialogs('success','已充值！')
+                                }
+                            })
             }
         },
         ready() {
@@ -396,8 +396,8 @@
             this.defaultData.endDate = init_date(this.dateS)[1];
             (vm.$route.params.id != ':id') ? vm.defaultData.thirdPartyAccountID = vm.$route.params.id : null;
             (vm.$route.params.serialNumber != ':serialNumber') ? vm.defaultData.serialNumber = vm.$route.params.serialNumber : null;
-            vm.getClist();
             vm.initList();
+            vm.getClist();
         },
         components:{
             'datepicker': datepicker

@@ -30,7 +30,9 @@
                                     <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
-                                <input type="text" class="form-control" v-model="advanceId" placeholder="预付款流水ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="advanceId" placeholder="预付款流水ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
@@ -88,7 +90,7 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
-                                            <td><a v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantId}}">查看</a></td>
+                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantId)">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==1">等待审核</template>
@@ -160,11 +162,14 @@
         methods:{
             //获取补贴划付数据
              getadvancePaymentDetailList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.advance_list(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('advancePaymentDetailList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        if(response.data.code==0){
+                             this.$set('advancePaymentDetailList', response.data.data)
+                             this.$set('pageall', response.data.total)
+                        }
                     });
             },
              //获取分公司数据
@@ -172,7 +177,9 @@
                  this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                         if(response.data.code == 0){
+                                this.$set('subcompanyList', response.data.data)
+                         }
                     });
             },
             //获取城市数据
@@ -184,7 +191,10 @@
                  this.$common_model.getcity(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                         if((response.data.code==0)){
+                            this.$set('cityList', response.data.data)
+                        }
+
                     });
             },
             query() {
@@ -218,7 +228,21 @@
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
+
                     })
+            },
+            gopreinfo(a,b,_id){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$common_model.skipToOrder(data)
+                        .then((response)=>{
+                                if(response.data.code==0){
+                                    this.$router.go({'name':'prepayment-info',params:{'id':_id,'orderNumber':response.data.data.orderNumber}});
+                                }
+
+                        })
             }
         },
         ready() {

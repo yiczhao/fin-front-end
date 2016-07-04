@@ -361,7 +361,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-else>
+                                        <span  v-if="firstAdd && !xhlist.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
@@ -660,11 +660,13 @@
                     balanceLimit:0
                 },
                 saveerror:'',
+                firstAdd:false
             }
         },
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
                     let a=data.endValue,b=data.startValue;
                     this.defaultData.startValue=a;
@@ -719,6 +721,7 @@
                 $('.addbottom .col-md-4').children('ul').html('');
             },
             updateNew(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=_id;
                 this.updateList={
                     remarks: '',
@@ -747,11 +750,14 @@
 
             },
             seehistoryxh(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.seehistoryList=[];
                 this.model.seehistoryxh(_id)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('seehistoryList', response.data.data) : null;
-                            $('#modal_seehistory').modal('show');
+                            if(response.data.code==0) {
+                                this.$set('seehistoryList', response.data.data)
+                                $('#modal_seehistory').modal('show');
+                            }
                         })
             },
             updateXh(){
@@ -763,6 +769,7 @@
                 $(e.target).closest('tr').hide().find('.merchantIds').removeClass('merchantIds');
             },
             submitUpdate(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror='';
                 if(!this.$vali.valid){this.$set('saveerror', '您的信息未填写完整');return;}
                 if(this.updateList.certificateID==''){this.$set('saveerror', '请上传凭证');return;}
@@ -771,8 +778,10 @@
                 this.updateList.limitPurchaseMerchantInfoID=this.accountId;
                 this.model.limitPurchaseMerchant_editDigest(this.updateList)
                         .then((response)=>{
+                            if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已修改！');
+                            }
                         })
             },
             changeDiscount(_id,_isenb){
@@ -780,24 +789,32 @@
                 this.isEnable=_isenb;
             },
             changeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseMerchant_change(this.accountId)
                         .then((response)=>{
+                            if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已启用！');
+                            }
                         })
             },
             seexh(_id,isTrue){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.seexhList=[];
                 this.accountId=_id;
                 this.isTrue=isTrue;
                 this.xhdata.limitPurchaseMerchantInfoID=_id;
                 this.model.limitPurchaseMerchant_viewDigest(this.xhdata)
                         .then((response)=>{
-                                (response.data.code==0) ? this.$set('seexhList', response.data.data) : null;
+                            if(response.data.code == 0){
+                                this.$set('seexhList', response.data.data)
                                 if(this.isTrue){$('#modal_see').modal('show');}
+                            }
                         })
             },
             searchDigest(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
                                 (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
@@ -816,10 +833,12 @@
                 };
                 this.getxhCity();
                 this.clearUl();
+                this.firstAdd=false;
                 $('#modal_add').modal('show');
             },
             addUser2(){
                 this.addTitle='添加消化商户';
+                this.firstAdd=false;
                 (this.shdata.companyId=='')?this.getxhCity():null;
                 $('.addbottom .col-md-4').children('ul').html('');
                 $('#modal_add').modal('show');
@@ -861,13 +880,16 @@
                 _li.remove();
             },
             submitTrue(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'merchantIds':Array.from(_li, i => parseInt(i.getAttribute('value')))}
                 this.model.limitPurchaseMerchant_add(data)
                         .then((response)=>{
-                            this.initList();
-                            dialogs('success','已添加！');
+                            if(response.data.code == 0){
+                                this.initList();
+                                dialogs('success','已添加！');
+                            }
                         })
             },
             submitTrue2(e){
@@ -907,10 +929,12 @@
                     }
                     vm.$common_model.upload(datas)
                             .then((response)=>{
-                                vm.updateList.certificateID=response.data.data;
-                                vm.uploadText=files.name;
-                                vm.saveerror='';
-                                dialogs('success','上传成功！');
+                                if(response.data.code == 0){
+                                    vm.updateList.certificateID=response.data.data;
+                                    vm.uploadText=files.name;
+                                    vm.saveerror='';
+                                    dialogs('success','上传成功！');
+                                }
                             })
                 }
             },
@@ -933,10 +957,6 @@
                     vm.uploadText='';
                     vm.updateList.certificateID='';
                 }
-            })
-            $(document).on('click','.addbottom .col-md-4 ul li',function(){
-                $(this).toggleClass('check-li');
-                $(this).hasClass('check-li')?$(this).css('background','#ccc'):$(this).css('background','none');
             })
         },
         components:{

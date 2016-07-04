@@ -396,8 +396,11 @@
                 this.$http.post('./reservecash/order/list',data)
                         .then(function (response) {
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
+
                         }, function (response) {
                             console.log(response);
                         });
@@ -414,7 +417,9 @@
                         .then( (response)=> {
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             //  this.zdlists.$set( index,info)
-                            (response.data.code==0) ? this.listinfos.$set(index,response.data.data): null;
+                            if(response.data.code==0){
+                                this.listinfos.$set(index,response.data.data)
+                            }
                         }, function (response) {
                             console.log(response);
                         });
@@ -447,7 +452,9 @@
                 console.log(a);
                 this.$http.post('./reservecash/order/checklist/'+a)
                         .then( (response)=> {
-                             (response.data.code==0)?this.checkLists.$set(response.data.data):null;
+                            if(response.data.code==0){
+                                this.checkLists.$set(response.data.data)
+                            }
                         })
             },
             updateTrue(){
@@ -457,7 +464,7 @@
                             this.initList();
                             dialogs();
                         }
-                    })
+            })
             },
             payTrue(){
                 this.$http.post('./reservecash/order/allow/'+this.accountId)
@@ -466,7 +473,9 @@
                                 this.initList();
                                 dialogs();
                             }
-                        })
+
+
+            })
             },
             closeTrue(){
                 this.$http.post('./reservecash/order/close/'+this.accountId)
@@ -479,7 +488,7 @@
                                     confirmButtonColor: "#2196F3"
                                 })
                             }
-                        })
+            })
             },
             backTrue(){
                 if(this.remarks==''){this.fires=true;return;}
@@ -497,7 +506,7 @@
                                         confirmButtonColor: "#2196F3"
                                     })
                                 }
-                            })
+            })
             },
             applyTrue(){
                 if(this.remarks==''){this.fires=true;return;}
@@ -514,8 +523,8 @@
                                         type: "success",
                                         confirmButtonColor: "#2196F3"
                                     })
-                            }
-                        })
+                                }
+            })
             },
             checkingTrue(a){
                 console.log(a);

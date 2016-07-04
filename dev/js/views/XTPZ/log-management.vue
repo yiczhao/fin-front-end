@@ -166,11 +166,16 @@
         methods:{
             //获取员工数据
              getLogList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.log_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('logList', response.data.data) : null;
                         (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                     });
+                 this.model.log_description()
+                         .then((response)=>{
+                             (response.data.code==0)?this.$set('descriptions',response.data.data):null
+                         })
             },
             //获取分公司数据
             getSubcompany(){
@@ -182,13 +187,8 @@
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     });
             },
-            getdescription(){
-                this.model.log_description()
-                        .then((response)=>{
-                            (response.data.code==0)?this.$set('descriptions',response.data.data):null
-                        })
-            },
             showLog(id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.log_info(id)
                     .then((response)=>{
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
@@ -211,8 +211,7 @@
         ready() {
             this.startDate=init_date(this.timeRange)[0];
             this.endDate=init_date(this.timeRange)[1];
-            this.getdescription();
-            this.getLogList({});
+            this.query();
             this.getSubcompany({});
         },
        watch:{

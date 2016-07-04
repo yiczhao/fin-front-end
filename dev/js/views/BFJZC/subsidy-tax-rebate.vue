@@ -265,17 +265,22 @@
         methods:{
             //获取补贴划付数据
              getsubsidyTaxRebateDetailList(data){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.rebate_list(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('subsidyTaxRebateDetailList', response.data.data) : null;
-                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                    });
+                        if(response.data.code==0){
+                            this.$set('subsidyTaxRebateDetailList', response.data.data)
+                            this.$set('pageall', response.data.total)
+                        }
+             });
             },
              //获取分公司数据
             getSubcompany(){
                  this.$common_model.getcompany()
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
+                         if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                         }
                     });
             },
             //获取城市数据
@@ -286,7 +291,9 @@
                 }
                 this.$common_model.getcity(data)
                     .then((response)=>{
-                        (response.data.code==0) ? this.$set('cityList', response.data.data) : null;
+                        if(response.data.code==0){
+                            this.$set('cityList', response.data.data)
+                         }
                     });
             },
              checkAll(ck){
@@ -332,8 +339,6 @@
                             if(response.data.code==0){
                                 this.query();
                                 dialogs('success','更新成功！');
-                            }else{
-                                dialogs('error','更新失败！');
                             }
                         });
             },
@@ -346,6 +351,7 @@
                 $('#displayName').attr("class",id);
             },
              getApplyPayInfoByIDs(idArray){
+                 if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:idArray
                 }
@@ -356,17 +362,20 @@
                 this.model.select_rebate(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若
-                        (response.data.code==0) ? this.$set('applyPayInfo', response.data.data) : null;
-                        this.payTypes=this.applyPayInfo.payType;
-                        for(var i in this.payTypes){
-                            if(this.payType == this.payTypes[i].type){
-                                this.showPayAccount=this.payTypes[i].value
-                            }
+                        if(response.data.code==0){
+                            this.$set('applyPayInfo', response.data.data);
+                            this.payTypes=this.applyPayInfo.payType;
+                             for(var i in this.payTypes){
+                                 if(this.payType == this.payTypes[i].type){
+                                     this.showPayAccount=this.payTypes[i].value
+                                 }
+                             }
+                             $('#modal_applyPay').modal('show');
                         }
-                        $('#modal_applyPay').modal('show');
                     });
             },
             submitOne(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:this.submitId,
                     remarks:this.applyPayRemarks,
@@ -385,6 +394,7 @@
                 });
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push($(this).prop("id"));  
@@ -438,11 +448,11 @@
                     "streamType": b
                 }
                 this.$common_model.skipToOrder(data)
-                        .then((response)=>{
-                                if(response.data.code==0){
-                                    this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                    .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
-                        })
+                    })
             }
         },
         ready() {

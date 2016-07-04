@@ -237,6 +237,7 @@
         },
         methods:{
             getZlists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.limitPurchaseAccount(data)
                             .then((response)=>{
                                 // *** 判断请求是否成功如若成功则填充数据到模型
@@ -259,12 +260,15 @@
                 this.getZlists(this.defaultData);
             },
             selectRecharge(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=_id;
                 this.model.limitPurchase_selectRechargeInfoByID(_id)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('rechargeInfo', response.data.data) : null;
-                            $('#modal_pay').modal('show');
+                            if(response.data.code==0) {
+                                this.$set('rechargeInfo', response.data.data);
+                                $('#modal_pay').modal('show');
+                            }
                         });
             },
             uploadClick(){
@@ -289,14 +293,17 @@
                     }
                     vm.common_model.upload(datas)
                             .then((response)=>{
-                                vm.addData.certificatesID=response.data.data;
-                                vm.saveerror='';
-                                vm.uploadText=files.name;
-                                dialogs('success','上传成功！');
+                                if(response.data.code == 0){
+                                    vm.addData.certificatesID=response.data.data;
+                                    vm.saveerror='';
+                                    vm.uploadText=files.name;
+                                    dialogs('success','上传成功！');
+                                }
                      })
                 }
             },
             addBtn(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
                 if(this.addData.certificatesID==''&&this.addData.payType=='2'){this.fire=true;this.errortext='请上传凭证';return;}
@@ -306,8 +313,10 @@
                 data.purchaseCost=parseInt(data.purchaseCost)*100;
                 this.model.recharge(data)
                         .then((response)=>{
-                            dialogs('success','已充值！');
-                            this.initList();
+                            if(response.data.code == 0){
+                                dialogs('success','已充值！');
+                                this.initList();
+                            }
                         });
             }
         },
