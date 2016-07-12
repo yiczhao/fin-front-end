@@ -115,3 +115,56 @@ input[type="number"]{-moz-appearance:textfield;}
     }
   }
 }
+//ui规范
+#app{
+  font-family: "PingFang Sc","Microsoft Yahei", Helvetica Neue, Helvetica, Arial, sans-serif;
+  line-height:1.7;
+  h1{
+    font-size: 30px;
+  }
+  h2{
+    font-size: 24px;
+  }
+  h3{
+    font-size: 18px;
+  }
+  h4{
+    font-size: 16px;
+  }
+  h5{
+    font-size: 14px;
+  }
+  h6{
+    font-size: 12px;
+  }
+  .navbar-inverse{
+    padding: 1px 20px;
+  }
+  .navigation > li.active > a, .navigation > li.active > a:hover, .navigation > li.active > a:focus {
+    background-color: #2196f3;
+    color: #fff;
+  }
+  .btn-info{
+    background: #2196f3;
+    border-color: #2196f3;
+    min-width: 90px;
+    &:hover{
+      background: #42a5f5;
+      border-color: #42a5f5;
+    }
+  }
+  .form-control{
+    padding: 7px 10px;
+  }
+  .modal .form-group{
+    margin-bottom: 30px;
+  }
+  thead{
+    th{
+      border-color:#999;
+    }
+  }
+  td{
+    border-color:#E9E9E9;
+  }
+}
