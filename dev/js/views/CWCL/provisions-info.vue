@@ -472,7 +472,7 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
-                                this.$set('gllists', response.data.data)
+                                this.$set('gllists', response.data.data);
                                 (this.checkOne)?this.checkOne=false:this.checkOne=true;
                                 $('#modal_dzone').modal('show');
                             }
