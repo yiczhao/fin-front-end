@@ -15,14 +15,14 @@
                                 <span class="f18">请登录</span>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
-                                <input @keyup.enter="login" type="text" class="form-control userName" name="username" v-model="username" placeholder="用户名">
+                                <input @keyup.enter="login" type="text" class="form-control userName" name="username" v-model="username" placeholder="用户名" style="padding-left: 30px;">
                                  <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
                                 <label v-show="usershow" class="validation-error-label" v-text="usererror"></label>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
-                                <input @keyup.enter="login" type="password" class="form-control" name="password" v-model="password" placeholder="密码">
+                                <input @keyup.enter="login" type="password" class="form-control" name="password" v-model="password" placeholder="密码" style="padding-left: 30px;">
                                 <div class="form-control-feedback">
                                     <i class="icon-lock2 text-muted"></i>
                                 </div>

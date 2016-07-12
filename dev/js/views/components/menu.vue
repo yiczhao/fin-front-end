@@ -1,76 +1,31 @@
 <template>
     <div class="sidebar sidebar-main">
         <div class="sidebar-content">
-            <!-- User menu -->
-            <div class="sidebar-user">
-                <div class="category-content">
-                    <div class="media">
-                        <!--<a href="#" class="media-left"><img src="" class="img-circle img-sm" alt=""></a>-->
-                        <div class="media-body">
-                            <span class="media-heading text-semibold">功能导航</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /user menu -->
             <!-- Main navigation -->
             <div class="sidebar-category sidebar-category-visible">
                 <div class="category-content no-padding">
                     <ul class="navigation navigation-main navigation-accordion">
-                        <li>
-                            <a v-link="{'name':'default'}">
-                                <span>首页</span></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="has-ul">
-                                <span>财务处理</span>
-                            </a>
-                            <ul class="hidden-ul">
-                                <li><a v-link="{'name':'account-management'}">账户管理</a></li>
-                                <li><a v-link="{'name':'trade-info'}">交易明细</a></li>
-                                <li>
-                                    <a href="javascript:void(0);" class="has-ul">备付金支出</a>
-                                    <ul class="hidden-ul">
-                                        <li><a v-link="{'name':'payment-details'}">付款明细</a></li>
-                                        <li><a v-link="{'name':'subsidy-appropriation'}">补贴划付</a></li>
-                                        <li><a v-link="{'name':'subsidy-tax-rebate'}">补贴退税</a></li>
-                                        <!--<li><a v-link="{'name':'limit-purchase-detail'}">额度采购</a></li>-->
-                                        <li><a v-link="{'name':'advance-payment-detail'}">预付款划付</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="has-ul">三方管理</a>
-                                    <ul class="hidden-ul">
-                                        <li><a v-link="{'name':'third-party'}">账户列表</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="has-ul">商户管理</a>
-                                    <ul class="hidden-ul">
-                                        <li><a v-link="{'name':'business-lists'}">商户管理</a></li>
-                                        <!--<li><a v-link="{'name':'business-limit'}">额度采购</a></li>-->
-                                        <li><a v-link="{'name':'prepayment-lists'}">预付款</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="has-ul">
-                                <span>活动管理</span>
-                            </a>
-                            <ul class="hidden-ul">
-                                <li><a v-link="{'name':'activity-lists'}"></i>活动列表</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="has-ul">
-                                <span>系统配置</span>
-                            </a>
-                            <ul class="hidden-ul">
-                                <li><a v-link="{'name':'user-managerment'}"></i>员工管理</a></li>
-                                <li><a v-link="{'name':'log-management'}"></i>系统日志</a></li>
-                            </ul>
+                        <!-- 生成菜单 -->
+                        <li :class="menu_status[$index] && 'km-open'" v-for="menu in menu_list">
+                            <template v-if="menu.sub_menu.length>1">
+                                <a class="has-ul" @click="menu_status.splice($index, 1, !menu_status[$index])">
+                                    <i :class="menu.icon"></i><span v-text="menu.name"></span>
+                                </a>
+                                <ul v-show="menu_status[$index]" :data-parent="$index">
+                                    <li v-for="sub_menu in menu.sub_menu"
+                                        :class="sub_menu.link == current_menu && 'active'"
+                                    >
+                                        <a v-text="sub_menu.name" v-link="{'name': sub_menu.link}"
+                                           @click="view_switch($event, sub_menu.link)"
+                                        ></a>
+                                    </li>
+                                </ul>
+                            </template>
+                            <template v-else>
+                                <a v-link="{'name': menu.sub_menu[0].link}"
+                                   @click="view_switch($event, menu.sub_menu[0].link)"
+                                ><i :class="menu.icon"></i><span v-text="menu.sub_menu[0].name"></span></a>
+                            </template>
                         </li>
                     </ul>
                 </div>
@@ -79,69 +34,50 @@
         </div>
     </div>
 </template>
-<style lang="sass" scoped>
-    .category-content{
-        padding: 0 20px;
-        .media-heading {
-            margin: 12px 0 5px 0;
-            display: block;
-            font-size: 16px;
-        }
-    }
-</style>
+
 <script>
-    export default {
+    import menu_list from '../../ajax/menu.js'
+    import MenuAdapter from '../../utils/menu_adapter'
+
+    export default{
         data(){
-            return {
-                menus:[
-                    {
-                        sub_menu:{
-                            member:{open:false},
-                            point:{open:false},
-                            deposit:{open:false}
-                        },
-                        open:false
-                    }
-                ]
-            }
-        },
-        methods:{
-            toggle(index){
-                this.menus[index].open = !this.menus[index].open
+            return{
+                menu_status: [],
+                menu_list: menu_list,
+                current_menu: 'default'
             }
         },
         ready(){
-            var router_type = this.$route.router_type;
-            // console.log(JSON.parse(JSON.stringify(this.menus[0].sub_menu)),this.menus[0].sub_menu[router_type])
-            if(this.menus[0].sub_menu[router_type]){
-                this.menus[0].open = true
-                this.menus[0].sub_menu[router_type].open = true
-            }
+            var _this = this,
+
+            //- todo 初始化菜单默认状态
+            route_path = _this.$route.path.split('/');
+            _this.current_menu = route_path[route_path.length - 1]
+
+            //- todo 生成菜单
+//            _this.menu_list = MenuAdapter(JSON.parse(sessionStorage.getItem('user_data')).menus)
+            // *** 设置菜单展开
+            _this.menu_list.forEach(function (o, i) {
+                _this.menu_status.push(1)
+                o.sub_menu.forEach(function (_o) {
+                    if (_o.link == _this.current_menu)
+                        _this.menu_status.splice(i, 1, 1)
+                })
+            })
+
             var availableHeight = $(window).height() - $('.page-container').offset().top -46;
             $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
-            // Main navigation
-            $('.navigation-main').find('li').has('ul').children('a').on('click', function (e) {
-                e.preventDefault();
-                // Collapsible
-                $(this).parent('li').not('.disabled').not($('.sidebar-xs').not('.sidebar-xs-indicator').find('.navigation-main').children('li')).toggleClass('active').children('ul').slideToggle(250);
-                // Accordion
-                if ($('.navigation-main').hasClass('navigation-accordion')) {
-                    $(this).parent('li').not('.disabled').not($('.sidebar-xs').not('.sidebar-xs-indicator').find('.navigation-main').children('li')).siblings(':has(.has-ul)').removeClass('active').children('ul').slideUp(250);
-                }
-            });
-            var nowa= $('.navigation').find('.v-link-active').closest('.hidden-ul');
-            if(!nowa.length){
-                $('.v-link-active').parent('li').addClass('active');
-            }else{
-                nowa.show().parent('li').addClass('active');
-                if(nowa.closest('.hidden-ul').is(':hidden')){
-                    nowa.parent('li').parent('.hidden-ul').show().parent('li').addClass('active');
-                }
-            }
             window.onresize=(()=>{
-                        var availableHeight = $(window).height() - $('.page-container').offset().top -46;
-                        $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
-                    })
+                var availableHeight = $(window).height() - $('.page-container').offset().top -46;
+                $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
+            })
+        },
+        methods:{
+            /**
+             * @description 视图切换 handle function
+             * @param sub_menu {String} 子菜单路由名称
+             */
+            view_switch(sub_menu){this.current_menu = sub_menu}
         }
     }
 </script>

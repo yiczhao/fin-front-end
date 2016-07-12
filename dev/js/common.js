@@ -39,28 +39,28 @@ var dialog=((types,mes)=>{
             swal({
                 title: mes,
                 type: "error",
-                confirmButtonColor: "#F44336"
+                confirmButtonColor:"#EF5350"
             })
             break;
         case 'success':
             swal({
                 title: mes,
                 type:"success",
-                confirmButtonColor: "#4CAF50"
+                confirmButtonColor:"#4CAF50"
             })
             break;
         case 'info':
             swal({
                 title: mes,
                 type:"info",
-                confirmButtonColor: "#00BCD4"
+                confirmButtonColor:"#00BCD4"
             })
             break;
         default:
             swal({
                 title: '保存成功',
                 type:"success",
-                confirmButtonColor: "#4CAF50"
+                confirmButtonColor:"#4CAF50"
             })
             break;
     }
