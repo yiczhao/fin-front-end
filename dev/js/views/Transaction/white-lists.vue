@@ -364,7 +364,7 @@
             queryId(){
                 if(this.redata.operationID=='')return;
 
-                if(this.redata.type=='1'){
+                if(this.redata.type=='2'){
                     let data={
                         operationID:this.redata.operationID
                     }
