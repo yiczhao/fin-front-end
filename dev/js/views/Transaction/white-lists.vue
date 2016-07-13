@@ -58,13 +58,13 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.listOperationID }}</td>
-                                <td>{{trlist.listName }}</td>
+                                <td>{{trlist.operationID }}</td>
+                                <td>{{trlist.name }}</td>
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
                                     <template v-if="trlist.validType==1">
-                                        {{trlist.validStart | datetime }}
-                                        {{trlist.validEnd | datetime  }}
+                                        {{trlist.startDate | datetime }}
+                                        {{trlist.endDate | datetime  }}
                                     </template>
                                     <template v-if="trlist.validType==2">永久</template>
                                 </td>
@@ -111,7 +111,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><i>*</i>ID：</label>
-                                            <input style="width: 66%;" v-validate:listOperationID="['required']" v-model="redata.listOperationID" class="form-control" type="text" placeholder="商户/活动ID">
+                                            <input style="width: 66%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID">
                                             <input style="margin-left: 10px;margin-top: -4px;"  type="button" class="btn btn-info" @click="queryId" value="查询">
                                         </div>
                                         <div class="form-group">
@@ -229,9 +229,9 @@
                 isEnable: 0,
                 redata:{
                     id:'',
-                    type:0,
+                    type:1,
                     remarks:'',
-                    listOperationID:'',
+                    operationID:'',
                     listName:'',
                     subCompanyName:'',
                     certificateID:'',
@@ -362,11 +362,11 @@
                         })
             },
             queryId(){
-                if(this.redata.listOperationID=='')return;
+                if(this.redata.operationID=='')return;
 
                 if(this.redata.type=='0'){
                     let data={
-                        operationID:this.redata.listOperationID
+                        operationID:this.redata.operationID
                     }
                     this.model.queryA(data)
                             .then((res) => {
@@ -378,7 +378,7 @@
                 }
                 else{
                     let data={
-                        merchantOperationID:this.redata.listOperationID
+                        merchantOperationID:this.redata.operationID
                     }
                     this.model.queryC(data)
                             .then((res) => {
@@ -397,7 +397,7 @@
             $('#add_white').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';
-                vm.updateList.certificateID='';
+                vm.redata.certificateID='';
             })
         },
         components:{
