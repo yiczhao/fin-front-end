@@ -79,7 +79,7 @@ export default function install(Vue) {
      */
     _o.incomeAndPayoutAmount = './reserveCashDetail/total?';
 
-    //- todo 财务处理-交易明细 trade-info
+    //- todo 交易管理-交易明细 trade-info
     /**
      * @description 交易明细列表接口地址
      * @author 冷艳君
@@ -104,6 +104,38 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToThird = './tradeDetail/thirdPartyAccount/detail/';
+
+    //- todo 交易管理-交易白名单 white-lists
+    /**
+     * @description 交易白名单列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.whitedetail = './exception/trade/white/list/list?';
+    /**
+     * @description 保存交易白名单接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.whitesave = './exception/trade/white/list/save';
+    /**
+     * @description 失效白名单接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.whiteexpired = './exception/trade/white/list/expired/';
+    /**
+     * @description 查询活动接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.queryA = './activity/item?';
+    /**
+     * @description 查询商户接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.queryC = './merchant/item?';
 
     //- todo  备付金支出-付款明细 payment-details
     /**

@@ -90,7 +90,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title" v-text="addTitle"></h5>
+                                <h5 class="modal-title">导入员工</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="addtop">
@@ -203,6 +203,7 @@
         .col-md-1{
             padding-top: 40px;
             text-align: center;
+            width: 113px;
             input{
                 margin:15px 0;
             }
@@ -210,6 +211,7 @@
         .col-md-4{
             border: 1px solid #ccc;
             padding:10px;
+            width: 243px;
         }
         ul{
             list-style: none;
@@ -234,7 +236,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/XTPZ/user_model'
+    import model from '../../ajax/SystemConfiguration/user_model'
 //    import common_model from '../../ajax/components/model'
 
     export default{

@@ -1,6 +1,6 @@
 <template>
     <index :title="'交易明细'" 
-           :ptitle="'财务处理'"
+           :ptitle="'交易管理'"
            :hname="'trade-info'"  
            :isshow="'isshow'">
         <div class="content blists" slot="content">
@@ -325,7 +325,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/CWCL/trade_model'
+    import model from '../../ajax/Transaction/trade_model'
     export default{
         props:{
 

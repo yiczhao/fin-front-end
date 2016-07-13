@@ -253,7 +253,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/SFGL/thirdinfo_model'
+    import model from '../../ajax/ThreeParty/thirdinfo_model'
     export default{
         data(){
             this.model =model(this)

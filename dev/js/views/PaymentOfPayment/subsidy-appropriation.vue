@@ -235,7 +235,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/BFJZC/appropriation_model'
+    import model from '../../ajax/PaymentOfPayment/appropriation_model'
     export default{
         data(){
             this.model =model(this)

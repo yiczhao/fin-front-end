@@ -273,7 +273,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/HDGL/activity_model'
+    import model from '../../ajax/Activity/activity_model'
     export default{
         data(){
             this.model =model(this)

@@ -372,7 +372,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/CWCL/provisions_model'
+    import model from '../../ajax/AccountManagement/provisions_model'
     export default{
         props:{
         },

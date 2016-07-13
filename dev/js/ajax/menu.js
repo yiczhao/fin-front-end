@@ -19,7 +19,7 @@ module.exports = [
         sub_menu: [
             {name: '交易明细', link: 'trade-info'},
             {name: '异常交易', link: 'trade-info'},
-            {name: '异常白名单', link: 'trade-info'}
+            {name: '异常白名单', link: 'white-lists'}
         ]
     },
     {

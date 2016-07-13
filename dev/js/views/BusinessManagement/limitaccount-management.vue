@@ -208,7 +208,7 @@
     }
 </style>
 <script>
-    import model from '../../ajax/SHGL/limitmana_model'
+    import model from '../../ajax/BusinessManagement/limitmana_model'
     export default{
         data(){
             this.model =model(this)

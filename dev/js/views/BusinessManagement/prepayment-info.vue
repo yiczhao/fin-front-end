@@ -334,7 +334,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/SHGL/info_model'
+    import model from '../../ajax/BusinessManagement/info_model'
     export default{
         data(){
             this.model = model(this)

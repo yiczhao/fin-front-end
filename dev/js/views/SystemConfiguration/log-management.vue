@@ -131,7 +131,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/XTPZ/log_model'
+    import model from '../../ajax/SystemConfiguration/log_model'
     export default{
         data(){
             this.model =model(this)

@@ -529,6 +529,7 @@
         .col-md-1{
             padding-top: 40px;
             text-align: center;
+            width: 113px;
             input{
                 margin:15px 0;
             }
@@ -536,6 +537,7 @@
         .col-md-4{
             border: 1px solid #ccc;
             padding:10px;
+            width: 243px;
         }
         ul{
             list-style: none;
@@ -590,7 +592,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/SHGL/buslimit_model'
+    import model from '../../ajax/BusinessManagement/buslimit_model'
     export default{
         data(){
             this.model =model(this)

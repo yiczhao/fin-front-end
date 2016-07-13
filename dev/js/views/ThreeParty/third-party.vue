@@ -277,6 +277,7 @@
     .col-md-1{
         padding-top: 40px;
         text-align: center;
+        width: 113px;
     input{
         margin:15px 0;
     }
@@ -284,6 +285,7 @@
     .col-md-4{
         border: 1px solid #ccc;
         padding:10px;
+        width: 243px;
     }
     ul{
         list-style: none;
@@ -344,7 +346,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/SFGL/thirdlist_model'
+    import model from '../../ajax/ThreeParty/thirdlist_model'
     export default{
         data(){
             this.model =model(this)

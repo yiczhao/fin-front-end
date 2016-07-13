@@ -129,33 +129,23 @@
                             </div>
                             <div class="modal-body">
                                 <form class="form-inline manage-form">
-                                    <div class="form-group">
                                         <input type="text" class="form-control"
                                                v-model="merchantInfo.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
-                                    </div>
-                                    <div class="form-group">
                                         <input type="text" class="form-control" v-model="merchantInfo.merchantName"
                                                placeholder="商户名">
-                                    </div>
-                                    <div class="form-group">
                                         <select class="form-control" v-model="merchantInfo.companyId"
                                                 @change="getshCity(merchantInfo.companyId)">
                                             <option value="">全部分公司</option>
                                             <option v-for="n in subcompanyList" v-text="n.name"
                                                     :value="n.subCompanyID"></option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
                                         <select class="form-control" v-model="merchantInfo.cityId">
                                             <option value="">全部城市
                                             </option>
                                             <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
                                         <input type="button" class="btn btn-info" @click="getMerchantList"
                                                value="查询">
-                                    </div>
                                 </form>
 
                                 <div class="dataTables_wrapper no-footer addbottom">
@@ -188,7 +178,7 @@
                                             未查询到商户数据！
                                         </span>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
                                         <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
                                         <input type="button" class="btn btn-info" @click="submit()" value="确认">
@@ -312,7 +302,8 @@
 
     .col-md-2 {
         text-align: center;
-
+        width: 113px;
+        padding-right: 0;
     input {
         margin-bottom: 10px;
     }
@@ -324,8 +315,8 @@
         border: 1px solid #ccc;
     }
 
-    .col-md-1 {
-        padding-top: 40px;
+    .col-md-4 {
+        width: 243px;
 
     input {
         margin: 15px 0;
@@ -369,7 +360,7 @@ table tr td,table tr th{
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/SHGL/prepayment_model'
+    import model from '../../ajax/BusinessManagement/prepayment_model'
     export default{
         data(){
             this.model = model(this)

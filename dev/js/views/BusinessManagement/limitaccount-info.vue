@@ -171,7 +171,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/SHGL/limitinfo_model'
+    import model from '../../ajax/BusinessManagement/limitinfo_model'
     export default{
         data(){
             this.model =model(this)
