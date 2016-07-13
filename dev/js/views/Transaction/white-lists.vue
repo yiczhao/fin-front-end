@@ -235,8 +235,8 @@
                     listName:'',
                     subCompanyName:'',
                     certificateID:'',
-                    validStart:'',
-                    validEnd:'',
+                    startDate:'',
+                    endDate:'',
                     validType:'2'
                 },
                 saveerror:'',
@@ -272,6 +272,18 @@
                 this.getZlists(this.defaultData);
             },
             addWhite(){
+                this.redata={
+                    id:'',
+                    type:1,
+                    remarks:'',
+                    operationID:'',
+                    listName:'',
+                    subCompanyName:'',
+                    certificateID:'',
+                    startDate:'',
+                    endDate:'',
+                    validType:'2'
+                };
                 $('#add_white').modal('show');
             },
             startParty(_id, status){
