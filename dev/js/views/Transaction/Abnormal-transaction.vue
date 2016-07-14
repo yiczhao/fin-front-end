@@ -113,17 +113,14 @@
                                     <span>{{trlist.principalDeduct/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <a @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
-                                    <span v-else>0.00</span>
+                                    {{trlist.thirdPartyReceivable/100 | currency ''}}
                                 </td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0&&trlist.suspensionTax!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <span v-else>0.00</span>
+                                  {{trlist.suspensionTax/100 | currency ''}}
                                 </td>
                                 <td>
-                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
-                                    <span v-else>0.00</span>
+                                    {{trlist.merchantSubsidyActual/100 | currency ''}}
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -134,12 +131,12 @@
                                 <td>{{trlist.consumptionAccountNumber}}</td>
                                 <td> <a v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
                                 <td>
-                                    <template v-if="trlist.isHandled==0">
+                                    <span v-if="trlist.isHandled==0" style="color:red;">
                                         待处理
-                                    </template>
-                                    <template v-if="trlist.isHandled==1">
+                                    </span>
+                                    <span v-if="trlist.isHandled==1" style="color:green;">
                                         已处理
-                                    </template>
+                                    </span>
                                 </td>
                                 <td>
                                     <template v-if="trlist.isHandled==0">
