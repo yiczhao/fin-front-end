@@ -55,8 +55,6 @@ config.proxy(Vue,false)
 window.check_upload=common.check_upload;
 window.dialogs=common.dialogs;
 window.init_date=common.init_date;
-Vue.filter('datetime',common.datetime);
-Vue.filter('geturl',common.geturl);
 Vue.config.debug = true;
 $(document).on('click','.addbottom .col-md-4 ul li',function(){
 	$(this).toggleClass('check-li');

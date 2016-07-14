@@ -63,8 +63,7 @@
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
                                     <template v-if="trlist.validType==1">
-                                        {{trlist.startDate | datetime }}——
-                                        {{trlist.endDate | datetime  }}
+                                        {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
                                     </template>
                                     <template v-if="trlist.validType==2">永久</template>
                                 </td>

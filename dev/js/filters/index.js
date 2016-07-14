@@ -2,6 +2,15 @@
  * filter_number input中过滤为数字
  */
 
+import filter_dates from './filter_dates'
+exports.datetime = filter_dates.filter_dates
+
+import filter_date from './filter_date'
+exports.datetimes = filter_date.filter_date
+
+import geturl from './geturl'
+exports.geturl = geturl.geturl
+
 import filter_grade from './filter_grade'
 exports.filter_grade = filter_grade.filter_grade
 
