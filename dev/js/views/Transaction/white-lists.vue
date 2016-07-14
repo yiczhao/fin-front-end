@@ -63,7 +63,7 @@
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
                                     <template v-if="trlist.validType==1">
-                                        {{trlist.startDate | datetime }}
+                                        {{trlist.startDate | datetime }}——
                                         {{trlist.endDate | datetime  }}
                                     </template>
                                     <template v-if="trlist.validType==2">永久</template>
@@ -129,8 +129,8 @@
                                             <input type="radio" id="two" value="1" v-model="redata.validType" v-validate:isCcb="['required']">
                                             <label style="text-align: left;" for="two">自定义</label>
                                             <div v-show="redata.validType=='1'" style="padding-left: 75px;">
-                                                <datepicker :width="'215px'" :readonly="true" :value.sync="redata.validStart" format="YYYY-MM-DD"></datepicker>至
-                                                <datepicker :width="'215px'" :readonly="true" :value.sync="redata.validEnd" format="YYYY-MM-DD"></datepicker>
+                                                <datepicker :width="'215px'" :readonly="true" :value.sync="redata.startDate" format="YYYY-MM-DD"></datepicker>至
+                                                <datepicker :width="'215px'" :readonly="true" :value.sync="redata.endDate" format="YYYY-MM-DD"></datepicker>
                                             </div>
                                         </div>
                                         <div class="form-group">
