@@ -30,18 +30,25 @@ export default function(router){
                 require(['./views/AccountManagement/provisions-info.vue'],resolve);
             }
         },
-        //交易明细
+        //交易处理-交易明细
         '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber':{
             name:'trade-info',
             component: function(resolve){
                 require(['./views/Transaction/trade-info.vue'],resolve);
             }
         },
-        //交易明细
+        //交易处理-交易白名单
         '/white-lists/':{
             name:'white-lists',
             component: function(resolve){
                 require(['./views/Transaction/white-lists.vue'],resolve);
+            }
+        },
+        //交易处理-异常交易
+        '/Abnormal-transaction/':{
+            name:'Abnormal-transaction',
+            component: function(resolve){
+                require(['./views/Transaction/Abnormal-transaction.vue'],resolve);
             }
         },
         //备付金支出-付款明细

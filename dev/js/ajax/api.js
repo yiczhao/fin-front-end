@@ -136,6 +136,25 @@ export default function install(Vue) {
      * @method GET
      */
     _o.queryC = './merchant/item?';
+    //- todo 交易管理-交易白名单 white-lists
+    /**
+     * @description 异常交易列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.abnormaldetail = './exception/trade/list?';
+    /**
+     * @description 异常交易合计接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.abnormaltotal = './exception/trade/total?';
+    /**
+     * @description 异常交易处理接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.abnormalhandle = './exception/trade/handle';
 
     //- todo  备付金支出-付款明细 payment-details
     /**
