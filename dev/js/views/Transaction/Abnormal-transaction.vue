@@ -98,7 +98,7 @@
                             <tbody>
                             <tr  v-for="trlist in tradeList">
                                 <td>{{trlist.id}}</td>
-                                <td>{{trlist.serialNumber}}</td>
+                                <td><a v-link="{name:'trade-info',params:{serialNumber:trlist.serialNumber}}">{{trlist.serialNumber}}</a></td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
@@ -143,7 +143,7 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.isHandled==0">
-                                        <a data-toggle="modal" data-target="#modal_submit" type="button" @click="back(trlist.id)" >处理异常</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" type="button" @click="back(trlist.id)" >处理异常</a>
                                     </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
@@ -195,12 +195,12 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">处理异常？</h5>
+                                <h5 class="modal-title">处理异常</h5>
                             </div>
                             <div class="modal-body">
-                                <div class="form-group">
+                                <div class="form-group" style="overflow: hidden;">
                                     <label class="col-lg-3 control-label"><i>*</i>备注</label>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-10">
                                         <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="form-group tc">
                                     <span v-show="!remarks&&fires" class="validation-error-label">
-                                      请填写退回原因
+                                      请填写备注
                                     </span>
                                 </div>
                             </div>
@@ -229,7 +229,6 @@
     }
     .modal-body .form-control{
         text-align: left;
-        width:85%;
         display: inline-block;
     }
     .modal-body label{
@@ -333,6 +332,7 @@
             },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                $(".modal").modal("hide");
                 //初始化
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('1')[0];
@@ -370,9 +370,9 @@
                 this.model.abnormalhandle(data)
                         .then( (response)=> {
                             if(response.data.code==0){
-                            this.initList();
-                            dialogs('success','已处理！');
-                        }
+                                this.query();
+                                dialogs('success','已处理！');
+                            }
                     })
             }
         },
