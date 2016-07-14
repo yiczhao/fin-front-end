@@ -352,6 +352,11 @@
                     this.updataerror=true;
                     this.saveerror='请上传凭证！';
                     return;}
+                if(this.redata.validType=='1'&&(this.redata.startDate==''||this.redata.endDate=='')){
+                    this.updataerror=true;
+                    this.saveerror='请选择有效期！';
+                    return;
+                }
                 this.updataerror=false;
                 this.model.whitesave(this.redata)
                         .then((res) => {
