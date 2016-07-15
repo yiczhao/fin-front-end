@@ -65,7 +65,7 @@
                                     <template v-if="trlist.validType==1">
                                         {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
                                     </template>
-                                    <template v-if="trlist.validType==2">永久</template>
+                                    <template v-if="trlist.validType==2">{{trlist.startDate | datetimes }}--∞</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">已失效</template>
@@ -128,7 +128,7 @@
                                             <input type="radio" id="two" value="1" v-model="redata.validType" v-validate:isCcb="['required']">
                                             <label style="text-align: left;" for="two">自定义</label>
                                             <div v-show="redata.validType=='1'" style="padding-left: 75px;">
-                                                <datepicker :width="'215px'" :readonly="true" :value.sync="redata.startDate" format="YYYY-MM-DD"></datepicker>至
+                                                <input type="text" v-model="redata.startDate" readonly="readonly" class="form-control" style="width: 215px;">至
                                                 <datepicker :width="'215px'" :readonly="true" :value.sync="redata.endDate" format="YYYY-MM-DD"></datepicker>
                                             </div>
                                         </div>
@@ -283,8 +283,14 @@
                     endDate:'',
                     validType:'2'
                 };
+                var time = new Date();
+                var y = time.getFullYear();
+                var m = time.getMonth()+1;
+                var d = time.getDate();
+                this.redata.startDate=y+'-'+this.add0(m)+'-'+this.add0(d);
                 $('#add_white').modal('show');
             },
+            add0(m){return m<10?'0'+m:m },
             startParty(_id, status){
                 this._id = _id;
                 this.isEnable = status;
@@ -351,9 +357,14 @@
                     this.updataerror=true;
                     this.saveerror='请上传凭证！';
                     return;}
-                if(this.redata.validType=='1'&&(this.redata.startDate==''||this.redata.endDate=='')){
+                if(this.redata.validType=='1'&&this.redata.endDate==''){
                     this.updataerror=true;
                     this.saveerror='请选择有效期！';
+                    return;
+                }
+                if(this.redata.validType=='1'&&this.redata.endDate<this.redata.startDate){
+                    this.updataerror=true;
+                    this.saveerror='有效期结束日期不得小于开始日期！';
                     return;
                 }
                 this.updataerror=false;
