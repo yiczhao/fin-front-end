@@ -128,7 +128,7 @@
                                             <input type="radio" id="two" value="1" v-model="redata.validType" v-validate:isCcb="['required']">
                                             <label style="text-align: left;" for="two">自定义</label>
                                             <div v-show="redata.validType=='1'" style="padding-left: 75px;">
-                                                <input type="text" v-model="redata.startDate" readonly="readonly" class="form-control" style="width: 215px;">至
+                                                <datepicker :width="'215px'" :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
                                                 <datepicker :width="'215px'" :readonly="true" :value.sync="redata.endDate" format="YYYY-MM-DD"></datepicker>
                                             </div>
                                         </div>
@@ -214,6 +214,7 @@
                 page_size:10,
                 pageall:1,
                 companylists:[],
+                startDate:'',
                 defaultData:{
                     'subCompanyID': '',
                     'type': '',
@@ -270,6 +271,13 @@
                 $('.modal').modal('hide');
                 this.getZlists(this.defaultData);
             },
+            gettoday(){
+                var time = new Date();
+                var y = time.getFullYear();
+                var m = time.getMonth()+1;
+                var d = time.getDate();
+                return y+'-'+this.add0(m)+'-'+this.add0(d);
+            },
             addWhite(){
                 this.redata={
                     id:'',
@@ -287,7 +295,7 @@
                 var y = time.getFullYear();
                 var m = time.getMonth()+1;
                 var d = time.getDate();
-                this.redata.startDate=y+'-'+this.add0(m)+'-'+this.add0(d);
+                this.startDate=this.redata.startDate=this.gettoday();
                 $('#add_white').modal('show');
             },
             add0(m){return m<10?'0'+m:m },
@@ -431,6 +439,11 @@
             'datepicker': datepicker
         },
         watch:{
+            startDate(){
+                if(this.startDate<this.gettoday()){
+                    this.startDate=this.redata.startDate=this.gettoday();
+                }
+            },
             pagecur(){
                 this.defaultData.pageIndex=this.pagecur;
                 this.initList();
