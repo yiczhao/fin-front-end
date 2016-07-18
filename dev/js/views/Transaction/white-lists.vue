@@ -447,6 +447,8 @@
             startDate(){
                 if(this.startDate<this.gettoday()){
                     this.startDate=this.redata.startDate=this.gettoday();
+                }else{
+                    this.redata.startDate=this.startDate;
                 }
             },
             pagecur(){
