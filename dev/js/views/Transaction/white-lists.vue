@@ -375,7 +375,12 @@
                     this.saveerror='有效期结束日期不得小于开始日期！';
                     return;
                 }
+                if(this.redata.validType=='2'){
+                    this.redata.startDate=='';
+                    this.redata.endDate=='';
+                }
                 this.updataerror=false;
+                this.saveerror='';
                 this.model.whitesave(this.redata)
                         .then((res) => {
                             if(res.data.code == 0){
