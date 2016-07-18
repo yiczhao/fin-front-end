@@ -84,6 +84,14 @@ function model(_this) {
          */
         reservecash_applypay(data){
             return _this.$http.post(_this.$API.reservecash_applypay,data)
+        },
+        /**
+         * @description 一键划付
+         * @param {data}
+         * @returns {*}
+         */
+        reservecash_batchPay(data){
+            return _this.$http.post(_this.$API.reservecash_batchPay,data)
         }
     }
 }

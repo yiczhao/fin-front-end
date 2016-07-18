@@ -217,7 +217,13 @@ export default function install(Vue) {
      * @method POST
      */
     _o.reservecash_applypay='./reserveCashOrder/applyPay';
-
+    /**
+     * @description 一键划付接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_batchPay='./reserveCashOrder/batchPay';
+    
     //- todo  备付金支出-预付款划付 advance-payment-details
     /**
      * @description 预付款划付列表接口地址
