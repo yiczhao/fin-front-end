@@ -110,7 +110,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label"><i>*</i>ID：</label>
-                                            <input style="width: 66%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID">
+                                            <input style="width: 66%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                                             <input style="margin-left: 10px;margin-top: -4px;"  type="button" class="btn btn-info" @click="queryId" value="查询">
                                         </div>
                                         <div class="form-group">
@@ -291,6 +291,8 @@
                     endDate:'',
                     validType:'2'
                 };
+                this.saveerror='';
+                this.updataerror=false;
                 var time = new Date();
                 var y = time.getFullYear();
                 var m = time.getMonth()+1;
