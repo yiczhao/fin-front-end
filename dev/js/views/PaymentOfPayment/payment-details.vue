@@ -75,7 +75,7 @@
                             <tr role="row">
                                 <th><input type="checkbox" class="check-all" @change="addAll($event)"></th>
                                 <th>订单号</th>
-                                <th>商户Id</th>
+                                <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>划付金额</th>
                                 <th>付款账户</th>
