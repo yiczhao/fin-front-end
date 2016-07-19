@@ -60,3 +60,8 @@ $(document).on('click','.addbottom .col-md-4 ul li',function(){
 	$(this).toggleClass('check-li');
 	($(this).hasClass('check-li'))?$(this).css('background','#ccc'):$(this).css('background','none');
 })
+$(document).on('click','.sidebar-main-toggle', function (e) {
+	e.preventDefault();
+	// Toggle min sidebar class
+	$('body').toggleClass('sidebar-xs');
+});

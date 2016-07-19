@@ -3,6 +3,9 @@
         <div class="navbar-header" style="font-size: 24px;line-height: 24px;padding: 10px 18px;">
             财务管理系统
         </div>
+        <ul class="nav navbar-nav">
+            <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+        </ul>
         <div class="navbar-collapse collapse" id="navbar-mobile">
             <div class="navbar-right" style="margin: 13px;">
                 您好，<span v-text="uname"></span> <a href="javascript:void(0);" v-on:click="loginout" class="">退出</a>

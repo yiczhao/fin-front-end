@@ -28,7 +28,7 @@ module.exports = [
         sub_menu: [
             {name: '付款明细', link: 'payment-details'},
             {name: '补贴划付', link: 'subsidy-appropriation'},
-            {name: '额度采购', link: 'limit-purchase-detail'},
+            // {name: '额度采购', link: 'limit-purchase-detail'},
             {name: '补贴退税', link: 'subsidy-tax-rebate'},
             {name: '预付款划付', link: 'advance-payment-detail'}
         ]
@@ -38,7 +38,7 @@ module.exports = [
         icon: 'icon-table2',
         sub_menu: [
             {name: '商户管理', link: 'business-lists'},
-            {name: '额度采购', link: 'business-limit'},
+            // {name: '额度采购', link: 'business-limit'},
             {name: '预付款', link: 'prepayment-lists'}
         ]
     },

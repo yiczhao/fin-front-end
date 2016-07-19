@@ -167,4 +167,7 @@ input[type="number"]{-moz-appearance:textfield;}
   td{
     border-color:#E9E9E9;
   }
+  .page-header .breadcrumb-line:first-child {
+    z-index: 1;
+  }
 }
