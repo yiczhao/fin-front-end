@@ -23,9 +23,6 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.payAccountNumber" placeholder="付款账号">
-                            </div>
-                            <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
                             </div>
                             <div class="form-group">
@@ -63,11 +60,13 @@
                             <!--</div>-->
                     </form>
                 </div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>账户简称：</span><span style="margin-right: 10px;">{{aname}}</span>
+                    <span>余额：</span><span style="margin-right: 10px;">{{balance/100 | currency ''}}</span>
+                    <span  v-if="zdlists.length>0">总收入：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{shouru/100 | currency ''}}元</span>
+                    <span  v-if="zdlists.length>0">总支出：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{zhichu/100 | currency ''}}元</span>
+                </div>
                 <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
-                    <div style="margin: 0 0 20px 20px;font-size: 20px;">
-                        <span>总收入：</span><span>{{shouru/100 | currency ''}}元</span>
-                        <span>总支出：</span><span>{{zhichu/100 | currency ''}}元</span>
-                    </div>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -392,6 +391,8 @@
                 shouru:'',
                 zhichu:'',
                 gllists:[],
+                aname:'',
+                balance:'',
                 checkForm:{
                     payAccountNumber:'',
                     certificate:'',
@@ -522,6 +523,8 @@
             var vm=this;
             (vm.$route.params.accountId==0)?vm.accountId=vm.checkForm.payAccountNumber='' : vm.accountId=vm.checkForm.payAccountNumber=vm.$route.params.accountId;
             (vm.$route.params.certificate==0)? vm.checkForm.accountId='' : vm.checkForm.certificate=vm.$route.params.certificate;
+            (vm.$route.params.aname==':aname')? vm.aname='' : vm.aname=vm.$route.params.aname;
+            (vm.$route.params.balance==':balance')? vm.balance='' : vm.balance=vm.$route.params.balance;
             vm.getTime();
             vm.initList();
             $('#modal_dzone').on('hidden.bs.modal',function(){
