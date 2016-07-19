@@ -253,7 +253,7 @@
                 accountId:'',
                 subCompanyID:"",
                 cityID:"",
-                isHandled:"",
+                isHandled:"0",
                 timeRange:'1',
                 startDate:"",
                 endDate:"",
