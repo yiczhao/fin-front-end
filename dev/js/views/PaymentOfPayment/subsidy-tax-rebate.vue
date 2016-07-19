@@ -328,7 +328,7 @@
                 }
                 let array = [];
                 $("input[name='ckbox']:checked").each(function(){
-                  array.push($(this).prop("id"));  
+                  array.push(parseInt($(this).prop("id")));
                 });
                 this.dialogTitle='合并付款';
                 this.getApplyPayInfoByIDs(array);
@@ -344,7 +344,7 @@
             },
             showModalApplyPayById(id){
                 let array=[];
-                array.push(id);
+                array.push(parseInt(id));
                 this.dialogTitle='申请付款';
                 this.getApplyPayInfoByIDs(array);
                 $('#displayName').attr("readonly",true);
@@ -356,7 +356,7 @@
                     ids:idArray
                 }
                  if(idArray.length<=1){
-                     this.submitId=[idArray.toString()];
+                     this.submitId=idArray;
                  }
                  this.clear();
                 this.model.select_rebate(data)
@@ -397,10 +397,10 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 var array = [];
                 $("input[name='ckbox']:checked").each(function(){
-                  array.push($(this).prop("id"));  
+                  array.push(parseInt($(this).prop("id")));
                 });
                 if ($('#displayName').prop("readonly")) {
-                    array.push($('#displayName').prop("class"));
+                    array.push(parseInt($('#displayName').prop("class")));
                  }
                 let data={
                     ids:array,
