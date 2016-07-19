@@ -186,7 +186,7 @@
                                 <tr role="row">
                                     <th>生成日期</th>
                                     <th>划付金额</th>
-                                    <th>暂扣税金</th>
+                                    <th  v-if="listinfos[0].purpose=='补贴划付'">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
@@ -195,9 +195,9 @@
                             </thead>
                             <tr v-show="listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createAt | datetimes}}</td>
-                                <td>{{trlist.merchantName}}</td>
                                 <td>{{trlist.amount/100 | currency '' }}</td>
-                                <td>{{trlist.amount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.amount/100 | currency '' }}</td>
+                                <td>{{trlist.purpose}}</td>
                                 <td>
                                     <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
