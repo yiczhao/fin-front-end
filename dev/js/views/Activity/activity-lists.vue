@@ -72,7 +72,7 @@
                                 </td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.startDate | datetime}}--{{trlist.endDate | datetime}}</td>
+                                <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
                                 <td>
                                     <template v-if="trlist.status==1">待上线</template>
                                     <template v-if="trlist.status==2">运行中</template>
