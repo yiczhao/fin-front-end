@@ -80,12 +80,9 @@
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
-                                <th>暂扣税金</th>
-                                <th>商户实补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
                                 <th>33211佣</th>
-                                <th>入账金额</th>
                                 <th>交易时间</th>
                                 <th>手机号</th>
                                 <th>卡号</th>
@@ -116,16 +113,9 @@
                                     {{trlist.thirdPartyReceivable/100 | currency ''}}
                                 </td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
-                                <td>
-                                  {{trlist.suspensionTax/100 | currency ''}}
-                                </td>
-                                <td>
-                                    {{trlist.merchantSubsidyActual/100 | currency ''}}
-                                </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
-                                <td>{{trlist.entryAmount/100 | currency ''}}</td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>{{trlist.consumptionPhone}}</td>
                                 <td>{{trlist.consumptionAccountNumber}}</td>
@@ -160,12 +150,9 @@
                                 <th><b>{{nums.principalDeduct/100 | currency ''}}</b></th>
                                 <th><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></th>
                                 <th><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></th>
-                                <th><b>{{nums.suspensionTax/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></th>
                                 <th><b>{{nums.discountDiff/100 | currency ''}}</b></th>
                                 <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
                                 <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
-                                <th><b>{{nums.entryAmount/100 | currency ''}}</b></td>
                                 <th></th>
                                 <th></th>
                                 <th></th>
