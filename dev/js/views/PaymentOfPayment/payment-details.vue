@@ -196,7 +196,7 @@
                             <tr v-show="listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createAt | datetimes}}</td>
                                 <td>{{trlist.amount/100 | currency '' }}</td>
-                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.amount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
                                 <td>{{trlist.purpose}}</td>
                                 <td>
                                     <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
