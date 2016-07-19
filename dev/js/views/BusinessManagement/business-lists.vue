@@ -58,7 +58,6 @@
                                     <th>划款账户</th>
                                     <th>联系人</th>
                                     <th>电话 </th>
-                                    <th>工作人员</th>
                                 </tr>
                             </thead>
                         <tbody>
@@ -87,7 +86,6 @@
                                 <td><a @click="control(trlist)">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
-                                <td>{{trlist.servicePerson}}</td>
                             </tr>
                              <tr>
                                  <td></td>
@@ -100,7 +98,6 @@
                                  <td>{{nums.commission33211/100 | currency ''}}</td>
                                  <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                  <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
-                                 <td></td>
                                  <td></td>
                                  <td></td>
                                  <td></td>
