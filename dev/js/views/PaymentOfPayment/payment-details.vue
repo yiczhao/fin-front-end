@@ -186,7 +186,7 @@
                                 <tr role="row">
                                     <th>生成日期</th>
                                     <th>划付金额</th>
-                                    <th  v-if="listinfos[0].purpose=='补贴划付'">暂扣税金</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
