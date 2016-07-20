@@ -340,14 +340,12 @@
                 $("input[name='ckbox']:checked").each(function(){
                   array.push(parseInt($(this).prop("id")));
                 });
-                let data={
-                    ids:array
-                }
-                this.model.subsidy_applyPay(data)
+                this.model.subsidy_applyPay(JSON.stringify(array))
                         .then((response)=>{
                                 // *** 判断请求是否成功如若
                                 if(response.data.code==0){
                                     dialogs('success','审核成功！');
+                                    this.query();
                                 }
                         });
             },

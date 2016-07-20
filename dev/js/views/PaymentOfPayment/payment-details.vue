@@ -630,10 +630,7 @@
             },
             batchPay(){
                 if(this.orderIDs=='')return;
-                let data={
-                    idList:this.orderIDs
-                }
-                this.model.reservecash_batchPay(data)
+                this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     this.initList();
