@@ -32,10 +32,10 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="银行凭证号">
+                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="商户ID">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
+                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.status">
@@ -430,7 +430,7 @@
                 checkForm:{
                     payType: '1',
                     orderNumber: '',
-                    certificate:'',
+                    merchantOperationID:'',
                     keyword:'',
                     status:'',
                     purpose:'',
