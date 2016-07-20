@@ -94,7 +94,7 @@
                             </thead>
                             <tbody>
                             <tr  v-for="trlist in tradeList">
-                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.tradeDetailID}}</td>
                                 <td><a v-link="{name:'trade-info',params:{serialNumber:trlist.serialNumber}}">{{trlist.serialNumber}}</a></td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
