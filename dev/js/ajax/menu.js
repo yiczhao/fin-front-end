@@ -9,17 +9,19 @@ module.exports = [
     {
         name: '账户管理',
         icon: ' icon-user',
+        ksa:'function_master',
         sub_menu: [
-            {name: '账户管理', link: 'account-management'}
+            {name: '账户管理', link: 'account-management',ksa:'system_manage'}
         ]
     },
     {
         name: '交易管理',
         icon: 'icon-table2',
+        ksa:'function_master',
         sub_menu: [
-            {name: '交易明细', link: 'trade-info'},
-            {name: '异常交易', link: 'Abnormal-transaction'},
-            {name: '异常白名单', link: 'white-lists'}
+            {name: '交易明细', link: 'trade-info',ksa:'system_manage'},
+            {name: '异常交易', link: 'Abnormal-transaction',ksa:'system_manage'},
+            {name: '异常白名单', link: 'white-lists',ksa:'system_manage'}
         ]
     },
     {

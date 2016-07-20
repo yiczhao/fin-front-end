@@ -15,17 +15,27 @@
         </div>
     </div>
     <nv-footer keep-alive></nv-footer>
+    <div class="script-playground" style="dispaly: none"
+         v-el:script-playground
+    ></div>
 </template>
 <script>
     import nvHeader from './header.vue'
     import nvMenu from './menu.vue'
     import breadcrumb from './breadcrumb.vue'
     import nvFooter from './footer.vue'
+    import Cookie from '../../utils/Cookie'
     export default{
         data(){
             return{
                 userData: {}
             }
+        },
+        ready () {
+            // 插入权限控制 JS
+            let sciprt = document.createElement('SCRIPT')
+            sciprt.setAttribute('src', Cookie.get('KSAuthJSURL'))
+            this.$els.scriptPlayground.appendChild(sciprt)
         },
         watch: {
             userData() {
