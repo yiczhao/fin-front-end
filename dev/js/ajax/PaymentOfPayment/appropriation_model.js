@@ -37,6 +37,14 @@ function model(_this){
         select_subsidypay(data){
             return _this.$http.get(_this.$API.select_subsidypay+decodeURIComponent($.param(data)))
         },
+        /**
+         * @description 一键审核
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidy_applyPay(data){
+            return _this.$http.post(_this.$API.subsidy_applyPay,data)
+        }
     }
 }
 module.exports=model;
