@@ -599,7 +599,7 @@
                 };
                 this.model.tradedetailsum(data)
                         .then((response)=>{
-                            (response.data.code==0)?this.$set('nums',response.data.data[0]):null;
+                            (response.data.code==0)?this.$set('nums',response.data.data):null;
                         })
             },
             pagecur(){

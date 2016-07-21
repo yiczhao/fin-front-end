@@ -303,6 +303,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo?';
+    /**
+     * @description 补贴退税一键审核接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.rebate_batchCheck= './subsidyTaxRebateDetail/batchCheck';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

@@ -37,6 +37,14 @@ function model(_this){
         select_rebate(data){
             return _this.$http.get(_this.$API.select_rebate+ decodeURIComponent($.param(data)))
         },
+        /**
+         * @description 一键审核
+         * @params {data}
+         * @returns {*}
+         * */
+        rebate_batchCheck(data){
+            return _this.$http.post(_this.$API.rebate_batchCheck,data)
+        }
     }
 }
 module.exports=model;

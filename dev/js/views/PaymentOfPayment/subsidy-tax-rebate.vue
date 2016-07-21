@@ -63,8 +63,9 @@
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
+                                <br>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="批量划付">
+                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="一键审核">
                                 </div>
                             </form> 
                         </div>
@@ -317,21 +318,20 @@
                   AccountS.push($(this).prop("class"));  
                 });
                 if(AccountS.length<=0){
-                    dialogs('error',"请选择一条或多条记录，进行申请划付！");
                    return false
-                }
-                for (var i = 1; i < AccountS.length; i++) {
-                   if (AccountS[i] != AccountS[0]) {  // 遇到了不等于x[0]的元素，设置 flag = 1，然后跳出循环
-                        dialogs('error',"选择的划付记录收款账户要一致！");
-                        return false
-                   }
                 }
                 let array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push(parseInt($(this).prop("id")));
                 });
-                this.dialogTitle='合并付款';
-                this.getApplyPayInfoByIDs(array);
+                this.model.rebate_batchCheck(JSON.stringify(array))
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若
+                            if(response.data.code==0){
+                                dialogs('success','审核成功！');
+                                this.query();
+                            }
+                        });
             },
             updateById(id){
                 this.model.rebate_update(id)

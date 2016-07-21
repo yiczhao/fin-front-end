@@ -66,6 +66,7 @@
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
+                                <br>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="一键审核">
                                 </div>

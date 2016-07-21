@@ -62,10 +62,11 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="batchPay()" value="一键划付">
-                            </div>
-                            <div class="form-group">
                                 <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <input type="button" class="btn btn-info" @click="batchPay()" value="一键划付">
                             </div>
                     </form>
                 </div>
@@ -100,8 +101,7 @@
                                     <template v-if="n.status==2"><input type="checkbox" class="check-boxs" @change="addorderIDs($event,n.id)" :value="n.id"></template>
                                 </td>
                                 <td>
-                                    <a v-if="n.status!=0" @click="getInfo(n,index)">{{n.orderNumber}}</a>
-                                    <span v-else>{{n.orderNumber}}</span>
+                                    <span>{{n.orderNumber}}</span>
                                 </td>
                                 <td>
                                     {{n.merchantOperationID}}
@@ -129,6 +129,7 @@
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td>
+                                    <a v-if="n.status!=0" @click="getInfo(n,index)">详情</a>
                                     <template v-if="n.status==2">
                                         <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)">确认划付</a>
                                         <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)">退回重审</a>
@@ -144,7 +145,7 @@
                                 </td>
                                 <td>{{n.remarks}}</td>
                                 <td>
-                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,certificate:n.certificate}}">{{n.certificate}}</a></template>
+                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,certificate:n.certificate}}">查看</a></template>
                                 </td>
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeAccountName }}</span>
@@ -351,7 +352,6 @@
      .datatable-scroll{
          overflow: auto;
         padding-bottom: 20px;
-        padding-top: 20px;
         background:#fff;
          .main-table{
              .bgddd{
