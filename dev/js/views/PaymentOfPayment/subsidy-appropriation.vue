@@ -112,7 +112,7 @@
                                         <td>{{sa.subCompanyName}}</td>
                                         <td>{{sa.cityName}}</td>
                                         <td>{{sa.paymentAccountShortName}}</td>
-                                        <td>{{sa.merchantID}}</td>
+                                        <td>{{sa.merchantOperationID}}</td>
                                         <td>{{sa.merchantName}}</td>
                                         <td>{{sa.receiptAccountName}}<br/>{{sa.receiptAccountNumber}}</td>
                                         <td>
