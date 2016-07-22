@@ -134,7 +134,7 @@
                                 <td>
                                     <a v-if="n.status!=0" @click="getInfo(n,index)">详情</a>
                                     <template v-if="n.status==2">
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)">确认划付</a>
+                                        <a @click="pay(n.id)">确认划付</a>
                                         <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)">退回重审</a>
                                     </template>
                                     <template v-if="n.status==4">
@@ -515,8 +515,14 @@
                 this.accountId=a;
             },
             pay(a){
-                this.waring = '你确认划付该账单？';
-                this.accountId=a;
+                this.orderIDs.push(a);
+                this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
+                        .then( (response)=> {
+                            if(response.data.code==0){
+                                    this.initList();
+                                    dialogs('success','划付成功！');
+                                }
+                            })
             },
             close(a){
                 this.waring = '你确认关闭该账单？';

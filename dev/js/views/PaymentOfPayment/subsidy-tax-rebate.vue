@@ -164,42 +164,6 @@
                             </page>
                         </div>
             </div>
-
-            <div id="modal_applyPay" data-backdrop="static" class="modal fade">
-                <div class="modal-dialog mg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3>{{dialogTitle}}</h3>
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元
-                            </div>
-                            <div class="form-group">
-                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                <select id="payType" v-model="payType">
-                                    <option v-for="n in payTypes" v-text="n.name" :value="n.type"></option>
-                                </select>
-                                <label>付款账户：</label>
-                                <span >{{showPayAccount}}</span>
-                            </div>
-                            <div class="form-group">
-                                <label>收款方：</label>
-                                <span v-if="dialogTitle=='申请付款'" v-text="applyPayInfo.displayName"></span>
-                                <input v-else type="text" style="width: 70%;display: inline-block;" v-model="applyPayInfo.displayName" class="form-control" placeholder="收款方">
-                            </div>
-                            <div class="form-group">
-                            </div>
-                        </div>
-                        <div class="modal-foot">
-                            <input v-if="dialogTitle=='申请付款'" type="button" class="btn btn-primary" @click="submitOne()" value="提交">
-                            <input v-else type="button" class="btn btn-primary" @click="submit()" value="提交">
-                            <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </index>
 </template>
@@ -315,7 +279,6 @@
                     }};
             },
             showModalApplyPay(){
-                //批量划付判断首款信息是否一致
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
                   AccountS.push($(this).prop("class"));  
@@ -346,36 +309,20 @@
                         });
             },
             showModalApplyPayById(id){
-                let array=[];
-                array.push(parseInt(id));
-                this.dialogTitle='申请付款';
-                this.getApplyPayInfoByIDs(array);
-                $('#displayName').attr("readonly",true);
-                $('#displayName').attr("class",id);
-            },
-             getApplyPayInfoByIDs(idArray){
-                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    ids:idArray
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                var AccountS = [];
+                AccountS.push(id);
+                if(AccountS.length<=0){
+                    return false
                 }
-                 if(idArray.length<=1){
-                     this.submitId=idArray;
-                 }
-                 this.clear();
-                this.model.select_rebate(data)
-                    .then((response)=>{
+                this.model.rebate_batchCheck(JSON.stringify(AccountS))
+                        .then((response)=>{
                         // *** 判断请求是否成功如若
                         if(response.data.code==0){
-                            this.$set('applyPayInfo', response.data.data);
-                            this.payTypes=this.applyPayInfo.payType;
-                             for(var i in this.payTypes){
-                                 if(this.payType == this.payTypes[i].type){
-                                     this.showPayAccount=this.payTypes[i].value
-                                 }
-                             }
-                             $('#modal_applyPay').modal('show');
-                        }
-                    });
+                                dialogs('success','划付成功！');
+                                this.query();
+                            }
+                        });
             },
             submitOne(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
