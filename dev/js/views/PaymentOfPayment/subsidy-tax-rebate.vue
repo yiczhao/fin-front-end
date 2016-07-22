@@ -410,14 +410,9 @@
                     startDate:this.startDate,
                     endDate:this.endDate,
                     pageIndex: this.pageIndex,
-                    pageSize: this.pageSize
+                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
                 };
-                this.model.subsidyTaxexcel(data).then((response)=>{
-                    // *** 判断请求是否成功如若成功则填充数据到模型
-                    if (response.data.code==0)
-                        {
-                        }
-                    });
+                window.open(this.origin+this.$API.subsidyTaxexcel+ decodeURIComponent($.param(data)));
             },
             gopayment(a,b){
                 let data={

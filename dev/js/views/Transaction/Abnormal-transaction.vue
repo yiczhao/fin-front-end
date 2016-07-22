@@ -361,13 +361,10 @@
                     startDate:this.startDate,
                     endDate:this.endDate,
                     pageIndex: this.pageIndex,
-                    pageSize: this.pageSize
+                    pageSize: this.pageSize,
+                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
                 };
-                this.model.abnormalexcel(data)
-                        .then( (response)=> {
-                            if(response.data.code==0){
-                            }
-                        })
+                window.open(this.origin+this.$API.abnormalexcel+ decodeURIComponent($.param(data)));
             },
             back(a){
                 this.remarks='';

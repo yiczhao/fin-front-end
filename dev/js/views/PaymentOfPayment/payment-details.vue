@@ -447,6 +447,7 @@
                     remarks:'',
                     startDate:'',
                     endDate:'',
+                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
                     pageIndex:1,
                     pageSize:10
                 },
@@ -503,13 +504,7 @@
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];
                 }
-                this.model.payDetailexcel(this.checkForm)
-                        .then( (response)=> {
-                            if(response.data.code==0) {
-                                this.$set('listinfos',response.data.data);
-                                $('#list_info').modal('show');
-                            }
-                        });
+                window.open(this.origin+this.$API.payDetailexcel+ decodeURIComponent($.param(this.checkForm)));
             },
             getInfo(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;

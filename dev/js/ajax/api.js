@@ -9,6 +9,44 @@ export default function install(Vue) {
      */
     _o.login = './passport/login';
 
+    //todo 导出
+    /**
+     * @description 交易明细导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.tradeDetailexcel = '/data/export/excel/tradeDetail?';
+    /**
+     * @description 交易白名单导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.abnormalWhiteexcel = '/data/export/excel/abnormalWhite?';
+    /**
+     * @description 异常交易导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.abnormalexcel = '/data/export/excel/abnormal?';
+    /**
+     * @description 导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payDetailexcel='/data/export/excel/payDetail?';
+    /**
+     * @description 申请划付数据查询接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyPayexcel = '/data/export/excel/subsidyPay?';
+    /**
+     * @description 补贴退税导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyTaxexcel = '/data/export/excel/subsidyTax?';
+
     //- todo 财务处理-账户列表 account-management
     /**
      * @description 账户列表接口地址
@@ -104,12 +142,6 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToThird = './tradeDetail/thirdPartyAccount/detail/';
-    /**
-     * @description 交易明细导出接口地址
-     * @author 于凯乐
-     * @method GET
-     */
-    _o.tradeDetailexcel = '/data/export/excel/tradeDetail?';
 
     //- todo 交易管理-交易白名单 white-lists
     /**
@@ -142,12 +174,6 @@ export default function install(Vue) {
      * @method GET
      */
     _o.queryC = './merchant/item?';
-    /**
-     * @description 交易白名单导出接口地址
-     * @author 于凯乐
-     * @method GET
-     */
-    _o.abnormalWhiteexcel = './data/export/excel/abnormalWhite?';
     
     //- todo 交易管理-异常交易 white-lists
     /**
@@ -168,12 +194,6 @@ export default function install(Vue) {
      * @method POST
      */
     _o.abnormalhandle = './exception/trade/handle';
-    /**
-     * @description 异常交易导出接口地址
-     * @author 于凯乐
-     * @method GET
-     */
-    _o.abnormalexcel = './data/export/excel/abnormal?';
 
     //- todo  备付金支出-付款明细 payment-details
     /**
@@ -242,12 +262,6 @@ export default function install(Vue) {
      * @method POST
      */
     _o.reservecash_batchPay='./reserveCashOrder/batchPay';
-    /**
-     * @description 导出接口地址
-     * @author 于凯乐
-     * @method GET
-     */
-    _o.payDetailexcel='./data/export/excel/payDetail?';
 
     //- todo  备付金支出-预付款划付 advance-payment-details
     /**
@@ -302,12 +316,6 @@ export default function install(Vue) {
      * @method POST
      */
     _o.subsidy_applyPay = './subsidyPayDetail/strokePay';
-    /**
-     * @description 申请划付数据查询接口地址
-     * @author 冷艳君
-     * @method GET
-     */
-    _o.subsidyPayexcel = './data/export/excel/subsidyPay?';
 
 
     //- todo  备付金支出-补贴退税 subsidy-tax-rebate
@@ -341,12 +349,6 @@ export default function install(Vue) {
      * @method POST
      */
     _o.rebate_batchCheck= './subsidyTaxRebateDetail/batchCheck';
-    /**
-     * @description 补贴退税导出接口地址
-     * @author 于凯乐
-     * @method GET
-     */
-    _o.subsidyTaxexcel = './data/export/excel/subsidyTax?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

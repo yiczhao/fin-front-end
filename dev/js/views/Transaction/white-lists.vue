@@ -225,6 +225,7 @@
                     'operationID': '',
                     'name': '',
                     'pageIndex': 1,
+                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
                     'pageSize': 10
                 },
                 zdlists:[],
@@ -283,11 +284,7 @@
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];
                 }
-                this.model.abnormalWhiteexcel(this.defaultData)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                        });
+                window.open(this.origin+this.$API.abnormalWhiteexcel+ decodeURIComponent($.param(this.defaultData)));
             },
             gettoday(){
                 var time = new Date();
