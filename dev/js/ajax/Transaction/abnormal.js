@@ -6,7 +6,7 @@
 function model(_this) {
     return {
         /**
-         * @description 查询白名单数据列表
+         * @description 查询异常交易数据列表
          * @param data
          * @returns {*}
          */
@@ -14,7 +14,7 @@ function model(_this) {
             return _this.$http.get(_this.$API.abnormaldetail + decodeURIComponent($.param(data)))
         },
         /**
-         * @description 保存白名单
+         * @description 异常交易合计
          * @param data
          * @returns {*}
          */
@@ -22,13 +22,21 @@ function model(_this) {
             return _this.$http.get(_this.$API.abnormaltotal+ decodeURIComponent($.param(data)));
         },
         /**
-         * @description 失效白名单
+         * @description 异常交易处理异常
          * @param data
          * @returns {*}
          */
         abnormalhandle(data){
             return _this.$http.post(_this.$API.abnormalhandle,data);
         },
+        /**
+         * @description 异常交易导出
+         * @param data
+         * @returns {*}
+         */
+        abnormalexcel(data){
+            return _this.$http.get(_this.$API.abnormalexcel+ decodeURIComponent($.param(data)));
+        }
     }
 }
 module.exports = model
