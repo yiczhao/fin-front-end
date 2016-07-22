@@ -44,6 +44,9 @@ function model(_this) {
          */
         queryC(data){
             return _this.$http.get(_this.$API.queryC+ decodeURIComponent($.param(data)))
+        },
+        abnormalWhiteexcel(data){
+            return _this.$http.get(_this.$API.abnormalWhiteexcel+ decodeURIComponent($.param(data)))
         }
     }
 }

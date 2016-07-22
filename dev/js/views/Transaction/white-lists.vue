@@ -39,6 +39,9 @@
                         <div class="form-group">
                             <input type="button" class="btn btn-info" @click="initList" value="查询">
                         </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" @click="abnormalWhiteexcel" value="导出">
+                        </div>
                     </form>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -269,7 +272,22 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date('1')[0];
+                    this.endDate=init_date('1')[1];
+                }
                 this.getZlists(this.defaultData);
+            },
+            abnormalWhiteexcel(){
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date('1')[0];
+                    this.endDate=init_date('1')[1];
+                }
+                this.model.abnormalWhiteexcel(this.defaultData)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        });
             },
             gettoday(){
                 var time = new Date();
