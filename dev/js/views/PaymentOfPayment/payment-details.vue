@@ -64,6 +64,9 @@
                             <div class="form-group">
                                 <input type="button" class="btn btn-info" @click="initList" value="查询">
                             </div>
+                            <div class="form-group">
+                                <input type="button" class="btn btn-info" @click="payDetailexcel" value="导出">
+                            </div>
                             <br>
                             <div class="form-group">
                                 <input type="button" class="btn btn-info" @click="batchPay()" value="一键划付">
@@ -470,8 +473,25 @@
             },
             initList(){
                 $(".modal").modal("hide");
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date('1')[0];
+                    this.endDate=init_date('1')[1];
+                }
                 this.listinfos=[];
                 this.getZlists(this.checkForm);
+            },
+            payDetailexcel(){
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date('1')[0];
+                    this.endDate=init_date('1')[1];
+                }
+                this.model.payDetailexcel(this.checkForm)
+                        .then( (response)=> {
+                            if(response.data.code==0) {
+                                this.$set('listinfos',response.data.data);
+                                $('#list_info').modal('show');
+                            }
+                        });
             },
             getInfo(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;

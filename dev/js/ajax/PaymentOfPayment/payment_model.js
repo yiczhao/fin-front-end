@@ -92,6 +92,14 @@ function model(_this) {
          */
         reservecash_batchPay(data){
             return _this.$http.post(_this.$API.reservecash_batchPay,data)
+        },
+        /**
+         * @description 导出
+         * @param {data}
+         * @returns {*}
+         */
+        payDetailexcel(data) {
+            return _this.$http.get(_this.$API.payDetailexcel+decodeURIComponent($.param(data)))
         }
     }
 }
