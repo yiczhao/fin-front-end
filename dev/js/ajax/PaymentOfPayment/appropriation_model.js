@@ -44,6 +44,14 @@ function model(_this){
          * */
         subsidy_applyPay(data){
             return _this.$http.post(_this.$API.subsidy_applyPay,data)
+        },
+        /**
+         * @description 导出
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidyPayexcel(data){
+            return _this.$http.get(_this.$API.subsidyPayexcel+ decodeURIComponent($.param(data)))
         }
     }
 }

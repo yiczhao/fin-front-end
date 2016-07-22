@@ -66,6 +66,9 @@
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                                 </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" v-on:click="subsidyPayexcel" value="导出">
+                                </div>
                                 <br>
                                 <div class="form-group">
                                     <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="一键审核">
@@ -457,6 +460,33 @@
                     keywords:this.keywords 
                     };
                 this.getSubsidyAppropriationList(data);
+            },
+            subsidyPayexcel(){
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date(this.timeRange)[0];
+                    this.endDate=init_date(this.timeRange)[1];
+                }
+                let data={
+                    id:this.subsidyTaxRebateID,
+                    subCompanyID:this.subCompanyID,
+                    merchantOperationID:this.merchantID,
+                    cityID:this.cityID,
+                    createType:this.createType,
+                    timeRange:this.timeRange,
+                    keywords:this.keywords,
+                    status:this.status,
+                    remarks:this.remarks,
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    pageIndex: this.pageIndex,
+                    pageSize: this.pageSize
+                };
+                this.model.subsidyPayexcel(data).then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if (response.data.code==0)
+                        {
+                        }
+                    });
             },
             gopayment(a,b){
                 let data={
