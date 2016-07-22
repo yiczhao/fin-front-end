@@ -295,8 +295,8 @@
                             // *** 判断请求是否成功如若
                             if(response.data.code==0){
                                 dialogs('success','审核成功！');
-                                this.query();
                             }
+                            this.query();
                         });
             },
             updateById(id){
