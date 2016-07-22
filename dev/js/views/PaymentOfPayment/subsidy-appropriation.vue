@@ -34,7 +34,7 @@
                                     <input type="text" class="form-control" v-model="id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="keywords" style="width:185px;" placeholder="商户名、收款账户名、帐号">
@@ -219,7 +219,7 @@
                 timeRange:'1',
                 startDate:"",
                 endDate:"",
-                merchantID:"",      
+                merchantOperationID:"",
                 merchantName:"",
                 keywords:"",
                 remarks:"",   
@@ -401,7 +401,7 @@
                     cityID:this.cityID,
                     startDate:this.startDate,
                     endDate:this.endDate,
-                    merchantID:this.merchantID,
+                    merchantOperationID:this.merchantOperationID,
                     createType:this.createType,
                     status:this.status,
                     activityID:this.activityID,
@@ -420,7 +420,7 @@
                 let data={
                     id:this.subsidyTaxRebateID,
                     subCompanyID:this.subCompanyID,
-                    merchantOperationID:this.merchantID,
+                    merchantOperationID:this.merchantOperationID,
                     cityID:this.cityID,
                     createType:this.createType,
                     timeRange:this.timeRange,
