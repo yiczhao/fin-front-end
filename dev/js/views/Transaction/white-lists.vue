@@ -284,7 +284,7 @@
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];
                 }
-                window.open(this.origin+this.$API.abnormalWhiteexcel+ decodeURIComponent($.param(this.defaultData)));
+                window.open(window.origin+this.$API.abnormalWhiteexcel+ decodeURIComponent($.param(this.defaultData)));
             },
             gettoday(){
                 var time = new Date();

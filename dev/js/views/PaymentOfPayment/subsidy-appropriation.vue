@@ -432,7 +432,7 @@
                     pageIndex: this.pageIndex,
                     mid:JSON.parse(sessionStorage.getItem('userData')).authToken
                 };
-                window.open(this.origin+this.$API.subsidyPayexcel+ decodeURIComponent($.param(data)));
+                window.open(window.origin+this.$API.subsidyPayexcel+ decodeURIComponent($.param(data)));
             },
             gopayment(a,b){
                 let data={

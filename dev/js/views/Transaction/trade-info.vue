@@ -532,7 +532,7 @@
                     pageSize: this.pageSize,
                     mid:JSON.parse(sessionStorage.getItem('userData')).authToken
                 };
-                window.open(this.origin+this.$API.tradeDetailexcel+ decodeURIComponent($.param(data)));
+                window.open(window.origin+this.$API.tradeDetailexcel+ decodeURIComponent($.param(data)));
             },
             //初始化
             clear(){
