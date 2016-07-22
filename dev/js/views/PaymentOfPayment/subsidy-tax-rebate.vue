@@ -77,7 +77,7 @@
                             <table id="table1" class="table">
                                 <thead>
                                     <tr>
-                                    <th><input type="checkbox" id="All" @click="checkAll($event)"/>ID</th>
+                                    <th><input type="checkbox" id="All"  class="check-boxs" @click="checkAll($event)"/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
@@ -370,7 +370,7 @@
                     });
             },
             query() {
-                // let data=this.data;
+                $(".check-boxs").prop({'checked':false})
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
                     this.endDate=init_date(this.timeRange)[1];

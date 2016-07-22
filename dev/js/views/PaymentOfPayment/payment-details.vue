@@ -15,6 +15,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(subCompanyID)">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
                             </div>
                             <div class="form-group">
@@ -431,6 +437,7 @@
                 waring:'',
                 subtitle:'',
                 checkForm:{
+                    subCompanyID:'',
                     payType: '1',
                     orderNumber: '',
                     merchantOperationID:'',
@@ -449,6 +456,7 @@
                 remarks:'',
                 delPurpose:'',
                 fires:false,
+                subcompanyList:'',
                 orderIDs:[]
             }
         },
@@ -471,8 +479,18 @@
                             }
                         });
             },
+            //获取分公司数据
+            getSubcompany(){
+                this.$common_model.getcompany()
+                        .then((response)=>{
+                            if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
+                    });
+            },
             initList(){
                 $(".modal").modal("hide");
+                $(".check-boxs").prop({'checked':false})
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];
@@ -515,6 +533,7 @@
                 this.accountId=a;
             },
             pay(a){
+                this.orderIDs=[];
                 this.orderIDs.push(a);
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
@@ -685,6 +704,7 @@
             (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;
             (this.$route.params.payType==':payType')?this.checkForm.payType='1' :this.checkForm.payType=this.$route.params.payType;
             this.getTime();
+            this.getSubcompany();
             this.initList();
         }
     }

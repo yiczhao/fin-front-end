@@ -80,7 +80,7 @@
                             <table   id="table1" class="table">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" @click="checkAll($event)"/>ID</th>
+                                        <th><input type="checkbox"  class="check-boxs" @click="checkAll($event)"/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
@@ -390,6 +390,7 @@
                     $(".modal").modal("hide");
             },
             query() {
+                $(".check-boxs").prop({'checked':false})
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
                     this.endDate=init_date(this.timeRange)[1];
