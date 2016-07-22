@@ -44,6 +44,14 @@ function model(_this){
          * */
         rebate_batchCheck(data){
             return _this.$http.post(_this.$API.rebate_batchCheck,data)
+        },
+        /**
+         * @description 导出
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidyTaxexcel(data){
+            return _this.$http.get(_this.$API.subsidyTaxexcel+ decodeURIComponent($.param(data)))
         }
     }
 }
