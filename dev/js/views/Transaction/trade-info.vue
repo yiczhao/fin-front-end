@@ -70,6 +70,9 @@
                         <div class="form-group">
                             <input type="button" class="btn btn-info" v-on:click="query" value="查询">
                         </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" v-on:click="tradeDetailexcel" value="导出">
+                        </div>
                     </form>
                 </div>
                 <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -488,21 +491,51 @@
                 let data={
                     subsidyPayId:this.subsidyPayId,
                     subsidyTaxRebateId:this.subsidyTaxRebateId,
-                        subCompanyID:this.subCompanyID,
-                        cityID:this.cityID,
-                        type:this.type,
-                        merchantOperationID:this.merchantOperationID,
-                        merchantName:this.merchantName,
-                        tradeDetailID:this.id,
-                        serialNumber:this.serialNumber,        
-                        phone:this.phone,
-                        activityOperationID:this.activityOperationID,
-                        startDate:this.startDate,
-                        endDate:this.endDate,
-                        pageIndex: this.pageIndex, 
-                        pageSize: this.pageSize
+                    subCompanyID:this.subCompanyID,
+                    cityID:this.cityID,
+                    type:this.type,
+                    merchantOperationID:this.merchantOperationID,
+                    merchantName:this.merchantName,
+                    tradeDetailID:this.id,
+                    serialNumber:this.serialNumber,
+                    phone:this.phone,
+                    activityOperationID:this.activityOperationID,
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    pageIndex: this.pageIndex,
+                    pageSize: this.pageSize
                 };
                 this.getTradeList(data);
+            },
+            tradeDetailexcel() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                //初始化
+                if (this.startDate=="" && this.endDate=="") {
+                    this.startDate=init_date('1')[0];
+                    this.endDate=init_date('1')[1];
+                }
+                let data={
+                    subsidyPayId:this.subsidyPayId,
+                    subsidyTaxRebateId:this.subsidyTaxRebateId,
+                    subCompanyID:this.subCompanyID,
+                    cityID:this.cityID,
+                    type:this.type,
+                    merchantOperationID:this.merchantOperationID,
+                    merchantName:this.merchantName,
+                    tradeDetailID:this.id,
+                    serialNumber:this.serialNumber,
+                    phone:this.phone,
+                    activityOperationID:this.activityOperationID,
+                    startDate:this.startDate,
+                    endDate:this.endDate,
+                    pageIndex: this.pageIndex,
+                    pageSize: this.pageSize
+                };
+                this.model.tradeDetailexcel(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                            }
+                        })
             },
             //初始化
             clear(){
