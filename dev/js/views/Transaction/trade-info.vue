@@ -529,13 +529,10 @@
                     startDate:this.startDate,
                     endDate:this.endDate,
                     pageIndex: this.pageIndex,
-                    pageSize: this.pageSize
+                    pageSize: this.pageSize,
+                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
                 };
-                this.model.tradeDetailexcel(data)
-                        .then((response)=>{
-                            if(response.data.code==0){
-                            }
-                        })
+                window.open(this.origin+this.$API.tradeDetailexcel+ decodeURIComponent($.param(data)));
             },
             //初始化
             clear(){

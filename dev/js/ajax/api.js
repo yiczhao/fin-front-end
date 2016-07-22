@@ -109,7 +109,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.tradeDetailexcel = './data/export/excel/tradeDetail?';
+    _o.tradeDetailexcel = '/data/export/excel/tradeDetail?';
 
     //- todo 交易管理-交易白名单 white-lists
     /**
