@@ -205,7 +205,7 @@
                                 <td>
                                     <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='退税划付'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='补贴退税'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='预付款'"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'||trlist.status==6&&trlist.purpose=='退税划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,n.purpose)">删除</a></template>
                                 </td>
