@@ -234,8 +234,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>
-                                        <textarea v-validate:val2="['required']" class="form-control" maxlength="50" name="remarks"
-                                                  v-model="applyAdvancePay.remarks" placeholder="最多50字符"></textarea>
+                                        <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
+                                                  v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
