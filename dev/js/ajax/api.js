@@ -315,7 +315,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.subsidy_applyPay = './subsidyPayDetail/strokePay';
+    _o.subsidy_applyPay = './subsidyPayDetail/applyPay';
 
 
     //- todo  备付金支出-补贴退税 subsidy-tax-rebate
@@ -348,7 +348,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.rebate_batchCheck= './subsidyTaxRebateDetail/batchCheck';
+    _o.rebate_batchCheck= './subsidyTaxRebateDetail/applyPay';
 
     //- todo  活动管理-活动列表 activity-lists
     /**
