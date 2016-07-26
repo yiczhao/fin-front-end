@@ -14,7 +14,7 @@
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="名称">
+                            <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="名称">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
