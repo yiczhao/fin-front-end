@@ -68,7 +68,9 @@
                                 <td>{{prepayment.merchantName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
                                 <td>{{prepayment.cityName}}</td>
-                                <td><input @blur="changeBlance($event,prepayment.id,prepayment.balanceAmount)" @click="changeInput($event)" class="w" type="text" readonly="true" :value="prepayment.balanceAmount/100 | currency ''"></td>
+                                <td>
+                                    {{prepayment.balanceAmount/100 | currency ''}}
+                                </td>
                                 <td>
                                     <template v-if="prepayment.status==0">
                                         <span style="color:rgb(255,​ 0,​ 0);">停用</span>
@@ -622,27 +624,6 @@ table tr td,table tr th{
                                     dialogs('success', '已停用！')
                             }
                         })
-            },
-            changeInput(e){
-                e.target.removeAttribute("readOnly");
-            },
-            changeBlance(e,_id,_old){
-                if(parseFloat(e.target.value.replace(/[^\d\.-]/g, ""))*100==parseInt(_old)){
-                    e.target.setAttribute("readOnly","true");
-                    return;    
-                }
-                let data={
-                    id:_id,
-                    balanceAmount:e.target.value*100
-                }
-                this.model.changeBlance(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若
-                            if (response.data.code == 0) {
-                                this.query();
-                            }
-                        });
-                e.target.setAttribute("readOnly","true");
             }
         },
         ready() {

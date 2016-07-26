@@ -52,14 +52,6 @@ function model(_this){
          * */
         total(data){
             return _this.$http.get(_this.$API.advancePaymentAccount_total+ decodeURIComponent($.param(data)))
-        },
-        /**
-         * @description 修改余额
-         * @params {data}
-         * @returns {*}
-         * */
-        changeBlance(data){
-            return _this.$http.post(_this.$API.changeBlance,data);
         }
     }
 }

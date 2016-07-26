@@ -548,12 +548,6 @@ export default function install(Vue) {
      * @method GET
      */
     _o.advancePaymentMerchant_total = './advancePaymentMerchant/total?';
-    /**
-     * @description 预付合计接口地址
-     * @author 冷艳君
-     * @method GET
-     */
-    _o.changeBlance = './advancePaymentMerchant/balance/update';
 
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**
