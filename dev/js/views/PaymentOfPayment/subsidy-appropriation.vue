@@ -304,6 +304,7 @@
                   AccountS.push($(this).prop("class"));  
                 });
                 if(AccountS.length<=0){
+                    dialogs('error','请勾选审核信息！');
                    return false
                 }
                 let array = [];
