@@ -315,7 +315,7 @@
                         .then((response)=>{
                                 // *** 判断请求是否成功如若
                                 if(response.data.code==0){
-                                    dialogs('success','审核成功！');
+                                    dialogs('success','申请成功！');
                                 }
                                 this.query();
                         });
@@ -342,7 +342,7 @@
                         .then((response)=>{
                         // *** 判断请求是否成功如若
                             if(response.data.code==0){
-                                    dialogs('success','划付成功！');
+                                    dialogs('success','申请成功！');
                                     this.query();
                                 }
                             });
