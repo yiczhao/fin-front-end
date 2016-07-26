@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         getbanklist (data) {
-            return _this.$http.get(_this.$API.banklist+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.banklist+$.param(data))
         },
         /**
          * @description 查询负责人

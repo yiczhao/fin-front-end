@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         advancePaymentAccount_list(data){
-            return _this.$http.get(_this.$API.advancePaymentAccount_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.advancePaymentAccount_list+ $.param(data))
         },
         /**
          * @description 获取预付充值数据
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         total(data){
-            return _this.$http.get(_this.$API.advancePaymentAccount_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.advancePaymentAccount_total+ $.param(data))
         },
         /**
          * @description 预付商户名余额

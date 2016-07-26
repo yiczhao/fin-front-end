@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         detail (data) {
-            return _this.$http.get(_this.$API.detail+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.detail+$.param(data))
         },
         /**
          * @description 查询对账数据列表
@@ -43,7 +43,7 @@ function model(_this) {
          * @returns {*}
          */
         incomeAndPayoutAmount (data) {
-            return _this.$http.get(_this.$API.incomeAndPayoutAmount+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.incomeAndPayoutAmount+$.param(data))
         }
     }
 }

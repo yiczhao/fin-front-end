@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         thirdinfo_list(data){
-            return _this.$http.get(_this.$API.thirdinfo_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.thirdinfo_list+ $.param(data))
         },
         /**
          * @description 三方余额
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         getthirdinfo_total(data){
-            return _this.$http.get(_this.$API.getthirdinfo_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.getthirdinfo_total+ $.param(data))
         }
     }
 }

@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         limitPurchaseMerchant_lists(data){
-            return _this.$http.get(_this.$API.limitPurchaseMerchant_lists+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.limitPurchaseMerchant_lists+ $.param(data))
         },
         /**
          * @description 编辑额度采购查询
@@ -43,7 +43,7 @@ function model(_this){
          * @returns {*}
          * */
         limitPurchaseMerchant_viewDigest(data){
-            return _this.$http.get(_this.$API.limitPurchaseMerchant_viewDigest+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.limitPurchaseMerchant_viewDigest+ $.param(data))
         },
         /**
          * @description 额度采购历史记录消化商户查询

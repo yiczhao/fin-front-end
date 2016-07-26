@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         prepayment_store(data){
-            return _this.$http.get(_this.$API.prepayment_store+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.prepayment_store+ $.param(data))
         },
         /**
          * @description 删除门店

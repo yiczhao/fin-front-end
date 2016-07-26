@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         user_list(data){
-            return _this.$http.get(_this.$API.user_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.user_list+ $.param(data))
         },
         /**
          * @description 员工管辖查询

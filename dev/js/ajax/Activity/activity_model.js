@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         activity_list(data){
-            return _this.$http.get(_this.$API.activity_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.activity_list+ $.param(data))
         },
         /**
          * @description 查询合计数据
@@ -19,7 +19,7 @@ function model(_this){
          * @returns {*}
          * */
         activity_total(data){
-            return _this.$http.get(_this.$API.activity_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.activity_total+ $.param(data))
         },
         /**
          * @description 查询配置三方数据
@@ -27,7 +27,7 @@ function model(_this){
          * @returns {*}
          * */
         activity_info(data){
-            return _this.$http.get(_this.$API.activity_info+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.activity_info+ $.param(data))
         },
         /**
          * @description 保存配置三方数据

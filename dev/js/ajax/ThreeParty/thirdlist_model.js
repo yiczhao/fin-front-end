@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         thirdParty_list(data){
-            return _this.$http.get(_this.$API.thirdParty_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.thirdParty_list+ $.param(data))
         },
         /**
          * @description 三方停用启用
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         thirdParty_accountlist(data){
-            return _this.$http.get(_this.$API.thirdParty_accountlist+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.thirdParty_accountlist+ $.param(data))
         },
         /**
          * @description 三方确认添加账户
@@ -51,7 +51,7 @@ function model(_this){
          * @returns {*}
          * */
         gettotal(data){
-            return _this.$http.get(_this.$API.gettotal+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.gettotal+ $.param(data))
         }
     }
 }

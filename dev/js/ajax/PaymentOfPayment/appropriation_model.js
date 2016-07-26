@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         appropriation_list(data){
-            return _this.$http.get(_this.$API.appropriation_list+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.appropriation_list+$.param(data))
         },
         /**
          * @description 更新补贴划付
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         select_subsidypay(data){
-            return _this.$http.get(_this.$API.select_subsidypay+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.select_subsidypay+$.param(data))
         },
         /**
          * @description 一键审核
@@ -51,7 +51,7 @@ function model(_this){
          * @returns {*}
          * */
         subsidyPayexcel(data){
-            return _this.$http.get(_this.$API.subsidyPayexcel+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.subsidyPayexcel+ $.param(data))
         }
     }
 }

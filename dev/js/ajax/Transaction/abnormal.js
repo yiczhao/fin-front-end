@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         abnormaldetail (data) {
-            return _this.$http.get(_this.$API.abnormaldetail + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.abnormaldetail + $.param(data))
         },
         /**
          * @description 异常交易合计
@@ -19,7 +19,7 @@ function model(_this) {
          * @returns {*}
          */
         abnormaltotal(data){
-            return _this.$http.get(_this.$API.abnormaltotal+ decodeURIComponent($.param(data)));
+            return _this.$http.get(_this.$API.abnormaltotal+ $.param(data));
         },
         /**
          * @description 异常交易处理异常
@@ -35,7 +35,7 @@ function model(_this) {
          * @returns {*}
          */
         abnormalexcel(data){
-            return _this.$http.get(_this.$API.abnormalexcel+ decodeURIComponent($.param(data)));
+            return _this.$http.get(_this.$API.abnormalexcel+ $.param(data));
         }
     }
 }

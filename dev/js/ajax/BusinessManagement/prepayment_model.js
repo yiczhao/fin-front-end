@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         prepayment_lists(data){
-            return _this.$http.get(_this.$API.prepayment_lists+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.prepayment_lists+ $.param(data))
         },
         /**
          * @description 获取预付充值数据
@@ -51,7 +51,7 @@ function model(_this){
          * @returns {*}
          * */
         total(data){
-            return _this.$http.get(_this.$API.advancePaymentAccount_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.advancePaymentAccount_total+ $.param(data))
         }
     }
 }

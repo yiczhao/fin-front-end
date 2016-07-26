@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         tradedetail (data) {
-            return _this.$http.get(_this.$API.tradedetail + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.tradedetail + $.param(data))
         },
         /**
          * @description 添加交易
@@ -27,7 +27,7 @@ function model(_this) {
          * @returns {*}
          */
         tradedetailsum(data){
-            return _this.$http.get(_this.$API.tradedetailsum+ decodeURIComponent($.param(data)));
+            return _this.$http.get(_this.$API.tradedetailsum+ $.param(data));
         },
         /**
          * @description 跳转至三方
@@ -43,7 +43,7 @@ function model(_this) {
          * @returns {*}
          */
         tradeDetailexcel(data){
-            return _this.$http.get(_this.$API.tradeDetailexcel+ decodeURIComponent($.param(data)));
+            return _this.$http.get(_this.$API.tradeDetailexcel+ $.param(data));
         }
     }
 }

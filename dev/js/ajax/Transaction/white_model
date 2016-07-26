@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         whitedetail (data) {
-            return _this.$http.get(_this.$API.whitedetail + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.whitedetail + $.param(data))
         },
         /**
          * @description 保存白名单
@@ -35,7 +35,7 @@ function model(_this) {
          * @returns {*}
          */
         queryA(data){
-            return _this.$http.get(_this.$API.queryA+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.queryA+ $.param(data))
         },
         /**
          * @description 查询商户数据
@@ -43,10 +43,10 @@ function model(_this) {
          * @returns {*}
          */
         queryC(data){
-            return _this.$http.get(_this.$API.queryC+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.queryC+ $.param(data))
         },
         abnormalWhiteexcel(data){
-            return _this.$http.get(_this.$API.abnormalWhiteexcel+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.abnormalWhiteexcel+ $.param(data))
         }
     }
 }

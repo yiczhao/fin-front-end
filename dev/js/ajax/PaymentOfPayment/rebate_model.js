@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         rebate_list(data){
-            return _this.$http.get(_this.$API.rebate_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.rebate_list+ $.param(data))
         },
         /**
          * @description 更新补贴退税
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         select_rebate(data){
-            return _this.$http.get(_this.$API.select_rebate+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.select_rebate+ $.param(data))
         },
         /**
          * @description 一键审核
@@ -51,7 +51,7 @@ function model(_this){
          * @returns {*}
          * */
         subsidyTaxexcel(data){
-            return _this.$http.get(_this.$API.subsidyTaxexcel+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.subsidyTaxexcel+ $.param(data))
         }
     }
 }

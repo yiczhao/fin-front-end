@@ -505,7 +505,7 @@
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];
                 }
-                window.open(window.origin+this.$API.payDetailexcel+ decodeURIComponent($.param(this.checkForm)));
+                window.open(window.origin+this.$API.payDetailexcel+ $.param(this.checkForm));
             },
             getInfo(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;

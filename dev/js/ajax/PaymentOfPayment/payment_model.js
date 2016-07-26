@@ -11,7 +11,7 @@ function model(_this) {
          * @returns {*}
          */
         getlist (data) {
-            return _this.$http.get(_this.$API.reservecash_list+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.reservecash_list+$.param(data))
         },
         /**
          * @description 查询备付金详情数据
@@ -99,7 +99,7 @@ function model(_this) {
          * @returns {*}
          */
         payDetailexcel(data) {
-            return _this.$http.get(_this.$API.payDetailexcel+decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.payDetailexcel+$.param(data))
         }
     }
 }

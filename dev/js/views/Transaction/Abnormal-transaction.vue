@@ -364,7 +364,7 @@
                     pageSize: this.pageSize,
                     mid:JSON.parse(sessionStorage.getItem('userData')).authToken
                 };
-                window.open(window.origin+this.$API.abnormalexcel+ decodeURIComponent($.param(data)));
+                window.open(window.origin+this.$API.abnormalexcel+ $.param(data));
             },
             back(a){
                 this.remarks='';

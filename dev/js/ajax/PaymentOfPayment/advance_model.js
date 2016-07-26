@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         advance_list(data){
-            return _this.$http.get(_this.$API.advance_list+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.advance_list+ $.param(data))
         }
     }
 }

@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         merchant_lists(data){
-            return _this.$http.get(_this.$API.merchant_lists+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.merchant_lists+ $.param(data))
 },
         /**
          * @description 查询划款账户数据
@@ -43,7 +43,7 @@ function model(_this){
          * @returns {*}
          * */
         merchant_total(data){
-            return _this.$http.get(_this.$API.merchant_total+ decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.merchant_total+ $.param(data))
         },
 
     }
