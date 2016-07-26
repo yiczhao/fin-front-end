@@ -671,7 +671,7 @@
             },
             batchPay(){
                 if(this.orderIDs==''){
-                    dialogs('error','请勾选划付信息！');
+                    dialogs('info','请勾选划付信息！');
                     return;
                 }
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
