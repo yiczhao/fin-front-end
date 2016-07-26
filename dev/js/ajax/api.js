@@ -587,7 +587,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.advancePaymentAccount_total = './advancePaymentAccount/total?';
+    _o.advancePaymentAccount_total = './advancePaymentMerchant/total?';
 
     //- todo  商户管理-额度采购-账户列表 limitaccount-management
     /**
