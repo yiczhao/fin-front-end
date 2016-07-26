@@ -11,7 +11,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.interceptors.push({
 		request (request) {
 			Message.show('loading','loading...');
-			(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0) ? sessionStorage.setItem('isHttpin',1):null;
+			(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0) ? sessionStorage.setItem('isHttpin',1):null;
 			conut=0;
 			var token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
 			request.headers['X-Auth-Token']=token;
