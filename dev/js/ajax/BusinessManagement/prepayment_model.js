@@ -51,7 +51,7 @@ function model(_this){
          * @returns {*}
          * */
         total(data){
-            return _this.$http.get(_this.$API.advancePaymentAccount_total+ $.param(data))
+            return _this.$http.get(_this.$API.advancePaymentMerchant_total+ $.param(data))
         }
     }
 }
