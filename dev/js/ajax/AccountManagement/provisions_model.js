@@ -44,6 +44,14 @@ function model(_this) {
          */
         incomeAndPayoutAmount (data) {
             return _this.$http.get(_this.$API.incomeAndPayoutAmount+$.param(data))
+        },
+        /**
+         * @description 查询简称和余额
+         * @param data
+         * @returns {*}
+         */
+        getBalance (id) {
+            return _this.$http.get(_this.$API.getBalance+id)
         }
     }
 }

@@ -142,6 +142,13 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToThird = './tradeDetail/thirdPartyAccount/detail/';
+    /**
+     * @description 查询简称余额
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getBalance = './bankAccount/reserveCash/info/';
+
 
     //- todo 交易管理-交易白名单 white-lists
     /**

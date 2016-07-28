@@ -66,7 +66,7 @@
                                     佣金
                                 </template>
                             </td>
-                            <td>{{trlist.startDate}}</td>
+                            <td>{{trlist.startDate | datetimes}}</td>
                             <td>
                                 <a v-link="{name:'provisions-info',params:{accountId:trlist.accountNumber,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                             </td>

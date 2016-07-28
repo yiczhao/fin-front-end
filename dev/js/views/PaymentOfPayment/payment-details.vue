@@ -154,7 +154,7 @@
                                 </td>
                                 <td>{{n.remarks}}</td>
                                 <td>
-                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,certificate:n.certificate}}">查看</a></template>
+                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,subCompanyID:n.subCompanyID,certificate:n.certificate}}">查看</a></template>
                                 </td>
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeAccountName }}</span>
