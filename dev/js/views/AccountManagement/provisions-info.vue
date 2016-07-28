@@ -399,6 +399,7 @@
                 subCompanyID:'',
                 checkForm:{
                     id:'',
+                    accountId:'',
                     certificate:'',
                     keyword:'',
                     status:'',
@@ -526,7 +527,7 @@
                     if(res.data.code == 0){
                         this.aname=res.data.data.shortName;
                         this.balance=res.data.data.balanceAmount;
-                        this.checkForm.id=res.data.data.id;
+                        this.checkForm.accountId=res.data.data.id;
                         this.initList();
                     }
                 });
@@ -536,8 +537,8 @@
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             var vm=this;
-            (vm.$route.params.accountId==0)?vm.accountId=vm.checkForm.id='' : vm.accountId=vm.checkForm.id=vm.$route.params.accountId;
-            (vm.$route.params.certificate==0)? vm.checkForm.accountId='' : vm.checkForm.certificate=vm.$route.params.certificate;
+            (vm.$route.params.accountId==0)?vm.accountId=vm.checkForm.accountId='' : vm.accountId=vm.checkForm.accountId=vm.$route.params.accountId;
+            (vm.$route.params.certificate==0)? vm.checkForm.certificate='' : vm.checkForm.certificate=vm.$route.params.certificate;
             (vm.$route.params.aname==':aname')? vm.aname='' : vm.aname=vm.$route.params.aname;
             (vm.$route.params.balance==':balance')? vm.balance='' : vm.balance=vm.$route.params.balance;
             (vm.$route.params.subCompanyID==':subCompanyID')? vm.subCompanyID='' : vm.subCompanyID=vm.$route.params.subCompanyID;
