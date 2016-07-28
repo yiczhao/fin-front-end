@@ -245,9 +245,12 @@
                             <tr v-for="n in gllists">
                                 <td>{{n.orderId}}</td>
                                 <td>{{n.payTime | datetime}}</td>
-                                <td>{{n.displayName}}</td>
-                                <td>{{n.collectionAccountName}}
-                                    {{n.collectionAccountNumber}}</td>
+                                <td :title="n.displayName">{{n.displayName | filterlength}}</td>
+                                <td :title="n.collectionAccountName+n.collectionAccountNumber">
+                                    {{n.collectionAccountName | filterlength}}
+                                    </br>
+                                    {{n.collectionAccountNumber}}
+                                </td>
                                 <td>{{n.payAmount/100 | currency '' }}</td>
                                 <td>
                                     <template v-if="n.purpose==1"> 补贴划付</template>
@@ -260,7 +263,7 @@
                                     <template v-if="n.purpose==8"> 账户费用</template>
                                     <template v-if="n.purpose==9"> 其它</template>
                                 </td>
-                                <td>{{n.remarks}}</td>
+                                <td :title="n.remarks">{{n.remarks | filterlength}}</td>
                                 <td><a href="javascript:void(0);" @click="checkDz(n.purpose,n.remarks,n.id)">选择</a></td>
                             </tr>
                             </tbody>
