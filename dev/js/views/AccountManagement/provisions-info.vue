@@ -398,7 +398,6 @@
                 balance:'',
                 subCompanyID:'',
                 checkForm:{
-                    id:'',
                     accountId:'',
                     certificate:'',
                     keyword:'',
@@ -537,6 +536,7 @@
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             var vm=this;
+            vm.getTime();
             (vm.$route.params.accountId==0)?vm.accountId=vm.checkForm.accountId='' : vm.accountId=vm.checkForm.accountId=vm.$route.params.accountId;
             (vm.$route.params.certificate==0)? vm.checkForm.certificate='' : vm.checkForm.certificate=vm.$route.params.certificate;
             (vm.$route.params.aname==':aname')? vm.aname='' : vm.aname=vm.$route.params.aname;
