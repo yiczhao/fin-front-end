@@ -306,8 +306,8 @@
                                     <tr role="row"  v-for="n in checkLists">
                                         <td>{{n.certificate}}</td>
                                         <td>{{n.tradeTime | datetime}}</td>
-                                        <td>{{n.collectionName}}</td>
-                                        <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
+                                        <td :title = "n.collectionName">{{n.collectionName}}</td>
+                                        <td :title = "n.accountName">{{n.accountName | filterlength}}</br>{{n.accountNumber}}</td>
                                         <td>{{n.payoutAmount/100 | currency '' }}</td>
                                         <td>
                                             <template v-if="n.purpose==1"> 补贴划付</template>
