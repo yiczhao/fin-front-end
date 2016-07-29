@@ -47,7 +47,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityID">
+                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
@@ -224,7 +224,7 @@
                 keywords:"",
                 remarks:"",   
                 seriesNumber:"",        
-                activityID:"",
+                activityOperationID:"",
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
@@ -405,7 +405,7 @@
                     merchantOperationID:this.merchantOperationID,
                     createType:this.createType,
                     status:this.status,
-                    activityID:this.activityID,
+                    activityOperationID:this.activityOperationID,
                     remarks:this.remarks,
                     pageIndex:this.pageIndex,
                     pageSize:this.pageSize,
