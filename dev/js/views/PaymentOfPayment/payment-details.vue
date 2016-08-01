@@ -75,7 +75,7 @@
                             </div>
                             <br>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="batchPay()" value="一键划付">
+                                <input type="button" class="btn btn-info" @click="batchs()" value="一键划付">
                             </div>
                     </form>
                 </div>
@@ -241,7 +241,7 @@
                         <div class="modal-body">
                             <div class="form-group tc">
                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认划付该账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
@@ -537,6 +537,14 @@
                                 }
                             })
             },
+            batchs(){
+                if(this.orderIDs==''){
+                    dialogs('info','请勾选划付信息！');
+                    return;
+                }
+                this.waring = '你确认一键划付？';
+                $('#modal_waring').modal('show');
+            },
             close(a){
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
@@ -668,14 +676,11 @@
                 }
             },
             batchPay(){
-                if(this.orderIDs==''){
-                    dialogs('info','请勾选划付信息！');
-                    return;
-                }
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                                 if(response.data.code==0){
                                     dialogs('success','划付成功！');
+                                    this.orderIDs=[];
                                 }
                                 this.initList();
                         })
