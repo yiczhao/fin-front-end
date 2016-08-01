@@ -305,7 +305,7 @@
     .col-md-2 {
         text-align: center;
         width: 113px;
-        padding-right: 0;
+        padding: 0;
     input {
         margin-bottom: 10px;
     }
@@ -319,7 +319,8 @@
 
     .col-md-4 {
         width: 243px;
-
+        height: 300px;
+        padding: 0;
     input {
         margin: 15px 0;
     }
