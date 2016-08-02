@@ -679,9 +679,10 @@
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                                 if(response.data.code==0){
+                                     $("#modal_waring").modal("hide");
                                     dialogs('success','划付成功！');
-                                    this.orderIDs=[];
                                 }
+                                this.orderIDs=[];
                                 this.initList();
                         })
             }

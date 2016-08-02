@@ -320,6 +320,7 @@
                                 // *** 判断请求是否成功如若
                                 if(response.data.code==0){
                                     dialogs('success','申请成功！');
+                                    $("#modal_waring").modal("hide");
                                 }
                                 this.query();
                         });
