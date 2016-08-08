@@ -47,7 +47,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityID">
+                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="status">
@@ -71,7 +71,7 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="showModalApplyPay" value="一键审核">
+                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="batchs()" value="一键审核">
                                 </div>
                             </form> 
                         </div>
@@ -177,32 +177,29 @@
                             未查询到补贴划付信息！
                         </div>
             </div>
+            <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h5 class="modal-title">你确定一键审核？</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group tc">
+                                <button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>
+                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </index>
 </template>
 <style scoped>
-
-    .datatable-scroll{
-        overflow:auto;
+    .modal-body button{
+        width:35%;
     }
-    .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
-    .payment-method {
-        float: left;
-    }
-    .remarks{
-        float: left;
-    }
-    .remarks-form-control{
-        width: 90%;
-    }
-    .modal-foot{
-        text-align: center;
-        height: 60px;
-    }
-    
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
@@ -224,7 +221,7 @@
                 keywords:"",
                 remarks:"",   
                 seriesNumber:"",        
-                activityID:"",
+                activityOperationID:"",
                 subcompanyList:[],
                 pageall:1,
                 pagecur:1,
@@ -298,15 +295,22 @@
                        2:""
                     }};
             },
+            batchs(){
+                let AccountS = [];
+                $("input[name='ckbox']:checked").each(function(){
+                    AccountS.push($(this).prop("class"));
+                });
+                if(AccountS.length<=0){
+                    dialogs('info','请勾选审核信息！');
+                    return false
+                }
+                $('#modal_waring').modal('show');
+            },
             showModalApplyPay(){
                 var AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
                   AccountS.push($(this).prop("class"));  
                 });
-                if(AccountS.length<=0){
-                    dialogs('info','请勾选审核信息！');
-                   return false
-                }
                 let array = [];
                 $("input[name='ckbox']:checked").each(function(){
                   array.push(parseInt($(this).prop("id")));
@@ -316,6 +320,7 @@
                                 // *** 判断请求是否成功如若
                                 if(response.data.code==0){
                                     dialogs('success','申请成功！');
+                                    $("#modal_waring").modal("hide");
                                 }
                                 this.query();
                         });
@@ -405,7 +410,7 @@
                     merchantOperationID:this.merchantOperationID,
                     createType:this.createType,
                     status:this.status,
-                    activityID:this.activityID,
+                    activityOperationID:this.activityOperationID,
                     remarks:this.remarks,
                     pageIndex:this.pageIndex,
                     pageSize:this.pageSize,

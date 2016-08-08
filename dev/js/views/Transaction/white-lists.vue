@@ -65,10 +65,7 @@
                                 <td>{{trlist.name }}</td>
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
-                                    <template v-if="trlist.validType==1">
-                                        {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
-                                    </template>
-                                    <template v-if="trlist.validType==2">{{trlist.startDate | datetimes }}--∞</template>
+                                    {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">已失效</template>

@@ -24,7 +24,7 @@ export default function(router){
             }
         },
         //账户明细
-        '/provisions-info/:accountId/:certificate/:aname/:balance':{
+        '/provisions-info/:accountId/:certificate/:aname/:balance/:subCompanyID':{
             name:'provisions-info',
             component: function(resolve){
                 require(['./views/AccountManagement/provisions-info.vue'],resolve);

@@ -20,6 +20,9 @@ exports.filter_number = filter_number.filter_number
 import filter_to_fixed from './filter_to_fixed'
 exports.filter_to_fixed = filter_to_fixed.filter_to_fixed
 
+import filter_length from './filter_length'
+exports.filterlength = filter_length.filter_length
+
 import filter_phone from './filter_phone'
 exports.filter_phone = filter_phone.filter_phone
 

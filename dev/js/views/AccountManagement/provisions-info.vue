@@ -245,9 +245,12 @@
                             <tr v-for="n in gllists">
                                 <td>{{n.orderId}}</td>
                                 <td>{{n.payTime | datetime}}</td>
-                                <td>{{n.displayName}}</td>
-                                <td>{{n.collectionAccountName}}
-                                    {{n.collectionAccountNumber}}</td>
+                                <td :title="n.displayName">{{n.displayName | filterlength}}</td>
+                                <td :title="n.collectionAccountName+n.collectionAccountNumber">
+                                    {{n.collectionAccountName | filterlength}}
+                                    </br>
+                                    {{n.collectionAccountNumber}}
+                                </td>
                                 <td>{{n.payAmount/100 | currency '' }}</td>
                                 <td>
                                     <template v-if="n.purpose==1"> 补贴划付</template>
@@ -260,7 +263,7 @@
                                     <template v-if="n.purpose==8"> 账户费用</template>
                                     <template v-if="n.purpose==9"> 其它</template>
                                 </td>
-                                <td>{{n.remarks}}</td>
+                                <td :title="n.remarks">{{n.remarks | filterlength}}</td>
                                 <td><a href="javascript:void(0);" @click="checkDz(n.purpose,n.remarks,n.id)">选择</a></td>
                             </tr>
                             </tbody>
@@ -393,8 +396,9 @@
                 gllists:[],
                 aname:'',
                 balance:'',
+                subCompanyID:'',
                 checkForm:{
-                    payAccountNumber:'',
+                    accountId:'',
                     certificate:'',
                     keyword:'',
                     status:'',
@@ -516,17 +520,34 @@
             getTime(){
                 this.checkForm.startDate=init_date(this.dateS)[0];
                 this.checkForm.endDate=init_date(this.dateS)[1];
+            },
+            getBalance(){
+                this.model.getBalance(this.subCompanyID).then((res)=>{
+                    if(res.data.code == 0){
+                        this.aname=res.data.data.shortName;
+                        this.balance=res.data.data.balanceAmount;
+                        this.checkForm.accountId=res.data.data.id;
+                        this.initList();
+                    }
+                });
             }
+
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             var vm=this;
-            (vm.$route.params.accountId==0)?vm.accountId=vm.checkForm.payAccountNumber='' : vm.accountId=vm.checkForm.payAccountNumber=vm.$route.params.accountId;
-            (vm.$route.params.certificate==0)? vm.checkForm.accountId='' : vm.checkForm.certificate=vm.$route.params.certificate;
+            vm.getTime();
+            (vm.$route.params.accountId==0)?vm.accountId=vm.checkForm.accountId='' : vm.accountId=vm.checkForm.accountId=vm.$route.params.accountId;
+            (vm.$route.params.certificate==0)? vm.checkForm.certificate='' : vm.checkForm.certificate=vm.$route.params.certificate;
             (vm.$route.params.aname==':aname')? vm.aname='' : vm.aname=vm.$route.params.aname;
             (vm.$route.params.balance==':balance')? vm.balance='' : vm.balance=vm.$route.params.balance;
+            (vm.$route.params.subCompanyID==':subCompanyID')? vm.subCompanyID='' : vm.subCompanyID=vm.$route.params.subCompanyID;
+            if(vm.subCompanyID != ''){
+                vm.getBalance();
+            }else{
+                vm.initList();
+            }
             vm.getTime();
-            vm.initList();
             $('#modal_dzone').on('hidden.bs.modal',function(){
                 if(!$('#modal_fzr').is(':hidden')){
                     $('#app').addClass('modal-open');

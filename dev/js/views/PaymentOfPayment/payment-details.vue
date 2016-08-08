@@ -75,7 +75,7 @@
                             </div>
                             <br>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="batchPay()" value="一键划付">
+                                <input type="button" class="btn btn-info" @click="batchs()" value="一键划付">
                             </div>
                     </form>
                 </div>
@@ -154,7 +154,7 @@
                                 </td>
                                 <td>{{n.remarks}}</td>
                                 <td>
-                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,certificate:n.certificate}}">查看</a></template>
+                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,subCompanyID:n.subCompanyID,certificate:n.certificate}}">查看</a></template>
                                 </td>
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeAccountName }}</span>
@@ -188,7 +188,6 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title" v-text="waring"></h5>
                         </div>
                         <div class="modal-body">
                         <table class="table main-table">
@@ -241,7 +240,7 @@
                         <div class="modal-body">
                             <div class="form-group tc">
                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认划付该账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
@@ -306,8 +305,8 @@
                                     <tr role="row"  v-for="n in checkLists">
                                         <td>{{n.certificate}}</td>
                                         <td>{{n.tradeTime | datetime}}</td>
-                                        <td>{{n.collectionName}}</td>
-                                        <td>{{n.accountName}}</br>{{n.accountNumber}}</td>
+                                        <td :title = "n.collectionName">{{n.collectionName}}</td>
+                                        <td :title = "n.accountName">{{n.accountName | filterlength}}</br>{{n.accountNumber}}</td>
                                         <td>{{n.payoutAmount/100 | currency '' }}</td>
                                         <td>
                                             <template v-if="n.purpose==1"> 补贴划付</template>
@@ -537,6 +536,14 @@
                                 }
                             })
             },
+            batchs(){
+                if(this.orderIDs==''){
+                    dialogs('info','请勾选划付信息！');
+                    return;
+                }
+                this.waring = '你确认一键划付？';
+                $('#modal_waring').modal('show');
+            },
             close(a){
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
@@ -668,15 +675,13 @@
                 }
             },
             batchPay(){
-                if(this.orderIDs==''){
-                    dialogs('info','请勾选划付信息！');
-                    return;
-                }
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                                 if(response.data.code==0){
+                                     $("#modal_waring").modal("hide");
                                     dialogs('success','划付成功！');
                                 }
+                                this.orderIDs=[];
                                 this.initList();
                         })
             }
