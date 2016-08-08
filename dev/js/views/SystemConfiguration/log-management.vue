@@ -138,7 +138,7 @@
             return{
                 subCompanyID:"",
                 keywords:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:'',
                 endDate:'',
                 subcompanyList:[],

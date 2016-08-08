@@ -142,7 +142,7 @@
                 createType:"",
                 status:"",
                 remarks:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantID:"",      

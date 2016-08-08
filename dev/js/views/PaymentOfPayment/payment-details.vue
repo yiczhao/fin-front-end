@@ -431,7 +431,7 @@
                 pagecur:1,
                 page_size:10,
                 pageall:1,
-                dateS:'1',
+                dateS:'3',
                 waring:'',
                 subtitle:'',
                 checkForm:{
@@ -499,8 +499,8 @@
             },
             payDetailexcel(){
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 window.open(window.origin+this.$API.payDetailexcel+ $.param(this.checkForm));
             },

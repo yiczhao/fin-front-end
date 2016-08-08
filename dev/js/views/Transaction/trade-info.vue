@@ -347,7 +347,7 @@
                 subCompanyID:"",
                 cityID:"",
                 type:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantOperationID:"",
@@ -490,8 +490,8 @@
                 //初始化
                 this.clear();
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subsidyPayId:this.subsidyPayId,
@@ -516,8 +516,8 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subsidyPayId:this.subsidyPayId,

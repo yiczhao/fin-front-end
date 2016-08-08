@@ -200,7 +200,7 @@
                 cityID:"",
                 createType:"",
                 status:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 remarks:'',
                 endDate:"",

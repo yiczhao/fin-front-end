@@ -244,7 +244,7 @@
                 subCompanyID:"",
                 cityID:"",
                 isHandled:"0",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantOperationID:"",
@@ -322,8 +322,8 @@
                 $(".modal").modal("hide");
                 //初始化
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subCompanyID:this.subCompanyID,
@@ -345,8 +345,8 @@
             excel(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subCompanyID:this.subCompanyID,
