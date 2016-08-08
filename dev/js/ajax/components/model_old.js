@@ -14,7 +14,7 @@ function conmon_model(_this) {
             if(typeof data=='undefined'){
                 return _this.$http.get(_this.$API.subcompany)
             }else{
-                return _this.$http.get(_this.$API.subcompany + decodeURIComponent($.param(data)));
+                return _this.$http.get(_this.$API.subcompany + $.param(data));
             }
         },
         /**
@@ -23,7 +23,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         getcity (data) {
-            return _this.$http.get(_this.$API.city + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.city + $.param(data))
         },
         /**
          * @description 上传数据
@@ -39,7 +39,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         skipToOrder(data){
-            return _this.$http.get(_this.$API.skipToOrder + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.skipToOrder + $.param(data))
         },
         /**
          * @description 获取商户数据
@@ -47,7 +47,7 @@ function conmon_model(_this) {
          * @returns {*}
          */
         getmerchant_list(data){
-            return _this.$http.get(_this.$API.getmerchant_list + decodeURIComponent($.param(data)))
+            return _this.$http.get(_this.$API.getmerchant_list + $.param(data))
         },
 
     }

@@ -14,7 +14,7 @@ export default function install(Vue) {
             if(typeof data=='undefined'){
                 return Vue.http.get('./subCompany/list?')
             }else{
-                return Vue.http.get('./subCompany/list?' + decodeURIComponent($.param(data)));
+                return Vue.http.get('./subCompany/list?' + $.param(data));
             }
         },
         /**
@@ -23,7 +23,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         getcity (data) {
-            return Vue.http.get('./city/list?' + decodeURIComponent($.param(data)))
+            return Vue.http.get('./city/list?' + $.param(data))
         },
         /**
          * @description 上传数据
@@ -39,7 +39,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         skipToOrder(data){
-            return Vue.http.get('reserveCashOrder/skipToOrder?' + decodeURIComponent($.param(data)))
+            return Vue.http.get('reserveCashOrder/skipToOrder?' + $.param(data))
         },
         /**
          * @description 获取商户数据
@@ -47,7 +47,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         getmerchant_list(data){
-            return Vue.http.get('./merchant/list?' + decodeURIComponent($.param(data)))
+            return Vue.http.get('./merchant/list?' + $.param(data))
         },
     };
 

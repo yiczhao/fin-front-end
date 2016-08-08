@@ -9,6 +9,44 @@ export default function install(Vue) {
      */
     _o.login = './passport/login';
 
+    //todo 导出
+    /**
+     * @description 交易明细导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.tradeDetailexcel = '/data/export/excel/tradeDetail?';
+    /**
+     * @description 交易白名单导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.abnormalWhiteexcel = '/data/export/excel/abnormalWhite?';
+    /**
+     * @description 异常交易导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.abnormalexcel = '/data/export/excel/abnormal?';
+    /**
+     * @description 导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payDetailexcel='/data/export/excel/payDetail?';
+    /**
+     * @description 申请划付数据查询接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyPayexcel = '/data/export/excel/subsidyPay?';
+    /**
+     * @description 补贴退税导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyTaxexcel = '/data/export/excel/subsidyTax?';
+
     //- todo 财务处理-账户列表 account-management
     /**
      * @description 账户列表接口地址
@@ -79,7 +117,7 @@ export default function install(Vue) {
      */
     _o.incomeAndPayoutAmount = './reserveCashDetail/total?';
 
-    //- todo 财务处理-交易明细 trade-info
+    //- todo 交易管理-交易明细 trade-info
     /**
      * @description 交易明细列表接口地址
      * @author 冷艳君
@@ -104,6 +142,65 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToThird = './tradeDetail/thirdPartyAccount/detail/';
+    /**
+     * @description 查询简称余额
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getBalance = './bankAccount/reserveCash/info/';
+
+
+    //- todo 交易管理-交易白名单 white-lists
+    /**
+     * @description 交易白名单列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.whitedetail = './exception/trade/white/list/list?';
+    /**
+     * @description 保存交易白名单接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.whitesave = './exception/trade/white/list/save';
+    /**
+     * @description 失效白名单接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.whiteexpired = './exception/trade/white/list/expired/';
+    /**
+     * @description 查询活动接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.queryA = './activity/item?';
+    /**
+     * @description 查询商户接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.queryC = './merchant/item?';
+    
+    //- todo 交易管理-异常交易 white-lists
+    /**
+     * @description 异常交易列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.abnormaldetail = './exception/trade/list?';
+    /**
+     * @description 异常交易合计接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.abnormaltotal = './exception/trade/total?';
+    /**
+     * @description 异常交易处理接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.abnormalhandle = './exception/trade/handle';
 
     //- todo  备付金支出-付款明细 payment-details
     /**
@@ -166,6 +263,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.reservecash_applypay='./reserveCashOrder/applyPay';
+    /**
+     * @description 一键划付接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.reservecash_batchPay='./reserveCashOrder/batchPay';
 
     //- todo  备付金支出-预付款划付 advance-payment-details
     /**
@@ -214,6 +317,13 @@ export default function install(Vue) {
      * @method GET
      */
     _o.select_subsidypay = './subsidyPayDetail/applyPayInfo?';
+    /**
+     * @description 补贴划付一键审核接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidy_applyPay = './subsidyPayDetail/applyPay';
+
 
     //- todo  备付金支出-补贴退税 subsidy-tax-rebate
     /**
@@ -240,6 +350,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo?';
+    /**
+     * @description 补贴退税一键审核接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.rebate_batchCheck= './subsidyTaxRebateDetail/applyPay';
 
     //- todo  活动管理-活动列表 activity-lists
     /**
@@ -439,12 +555,6 @@ export default function install(Vue) {
      * @method GET
      */
     _o.advancePaymentMerchant_total = './advancePaymentMerchant/total?';
-    /**
-     * @description 预付合计接口地址
-     * @author 冷艳君
-     * @method GET
-     */
-    _o.changeBlance = './advancePaymentMerchant/balance/update';
 
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**

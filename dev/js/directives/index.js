@@ -5,3 +5,5 @@
 import disabled from './disabled'
 exports.disabled = disabled
 
+import auth from './auth'
+exports.auth = auth
