@@ -6,14 +6,15 @@
                 <div class="category-content no-padding">
                     <ul class="navigation navigation-main navigation-accordion">
                         <!-- 生成菜单 -->
-                        <li :class="menu_status[$index] && 'km-open'" v-for="menu in menu_list">
+                        <template v-for="menu in menu_list">
+                        <li :class="menu_status[$index] && 'km-open'" :data-ksa="menu.ksa">
                             <template v-if="menu.sub_menu.length>1">
                                 <a class="has-ul" @click="menu_status.splice($index, 1, !menu_status[$index])">
                                     <i :class="menu.icon"></i><span v-text="menu.name"></span>
                                 </a>
                                 <ul v-show="menu_status[$index]" :data-parent="$index">
                                     <li v-for="sub_menu in menu.sub_menu"
-                                        :class="sub_menu.link == current_menu && 'active'"
+                                        :class="sub_menu.link == current_menu && 'active'" :data-ksa="sub_menu.ksa"
                                     >
                                         <a v-text="sub_menu.name" v-link="{'name': sub_menu.link}"
                                            @click="view_switch($event, sub_menu.link)"
@@ -27,6 +28,7 @@
                                 ><i :class="menu.icon"></i><span v-text="menu.sub_menu[0].name"></span></a>
                             </template>
                         </li>
+                        </template>
                     </ul>
                 </div>
             </div>
