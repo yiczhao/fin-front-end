@@ -12,7 +12,7 @@
                         <div class="panel panel-body login-form">
                             <div class="t200">财务管理系统</div>
                             <div class="form-group">
-                                <span class="f18">请登录</span>
+                                <span class="f18">欢迎您</span>
                             </div>
                             <div class="form-group has-feedback has-feedback-left">
                                 <input @keyup.enter="login" type="text" class="form-control userName" name="username" v-model="username" placeholder="用户名" style="padding-left: 30px;">
