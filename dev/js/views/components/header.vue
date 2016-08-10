@@ -34,11 +34,11 @@
                         .then(function (response) {
                             if(response.data.code===0){
                                 sessionStorage.removeItem('userData');
-                                this.$router.go({name:'login'});
                                 // 注销 cookie
                                 if (window.KSAuthKit) {
                                     window.KSAuthKit.destroy()
                                 }
+                                this.$router.go({name:'login'});
                             }
                             else{
                                 alert(response.data.message);
@@ -49,12 +49,10 @@
 
             }
         },
+        created(){
+        },
         ready(){
-            if(!!sessionStorage.getItem('userData')) {
-                this.$set('uname',JSON.parse(sessionStorage.getItem('userData')).trueName)
-            }else{
-                this.$router.go('login');
-            }
+            this.uname=JSON.parse(sessionStorage.getItem('userData')).trueName;
         }
     }
 </script>

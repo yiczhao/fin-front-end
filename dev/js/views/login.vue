@@ -130,6 +130,7 @@
     }
 </style>
 <script>
+    import Cookie from '../utils/Cookie'
     export default{
         data(){
             return{
@@ -153,20 +154,35 @@
                 if(this.password==''){this.passerror='请输入密码';this.passshow=true;return;}
                 if(this.usershow||this.passshow||this.isD){return false;}
                 this.isD=true;
-                let data={'username':this.username,'password':this.password};
-                this.$http.post(this.$API.login,data)
+//                let data={'login_name':this.username,'password':this.password,'sys_id':4};
+                this.$http.post(window.authurl+'/auth/login/login'+'?login_name='+this.username+'&password='+this.password+'&sys_id=4')
                         .then((response)=>{
-                            this.isD=false;
-                            if(response.data.code===0){
-                                $('body').removeClass('login');
-                                sessionStorage.setItem('userData',JSON.stringify(response.data.data));
-                                $('.message-notify.show,.message-notify').css('top','6px');
-                                this.$router.go({name:'default'});
+                            console.info(this)
+                            if(response.data.code===10000){
+                                let data=response.data.data;
+                                //todo cookie 失效时间 7 日后
+                                Cookie.set('KSAuthSysId', data.sys_id, {expires: 7})
+                                // noinspection JSUnresolvedVariable
+                                Cookie.set('KSAuthUserToken', data.user_token, {expires: 7})
+                                // noinspection JSUnresolvedVariable
+                                Cookie.set('KSAuthJSURL', data.js_url, {expires: 7,})
+                                // noinspection JSUnresolvedVariable
+                                Cookie.set('KSAuthApiURL', data.api_url, {expires: 7})
+                                this.$http.post(this.$API.login,{username:data.login_name})
+                                        .then((response)=>{
+                                                if(response.data.code===0){
+                                                    sessionStorage.setItem('userData',JSON.stringify(response.data.data));
+                                                    $('body').removeClass('login');
+                                                    $('.message-notify.show,.message-notify').css('top','6px');
+                                                    this.$router.go({name:'default'});
+                                                }
+                                        });
                             }
                             else{
                                 this.suberror=true;
                                 this.errortext=response.data.message;
                             }
+                            this.isD=false;
                         },()=>{
                             this.isD=false;
                         });
