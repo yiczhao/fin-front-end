@@ -131,6 +131,7 @@
 </style>
 <script>
     import Cookie from '../utils/Cookie'
+    import md5 from 'blueimp-md5'
     export default{
         data(){
             return{
@@ -148,6 +149,65 @@
         components:{
         },
         methods:{
+            /**
+             * @description Ajax request helper
+             * @param config {Object} 配置
+             * @param cb {Function} 成功回调.
+             * @param errCb {Function} 失败回调.
+             */
+            xhrReq (config, cb, errCb) {
+                var W=window;
+                var xhr = null
+                var xhrConfig = {
+                    method: 'GET',
+                    address: 'http://localhost/'
+                }
+
+                // 初始化配置项
+                xhrConfig.method = config.method && config.method
+                xhrConfig.address = config.address && config.address
+
+                // 创建 XHR 对象
+                // 非IE浏览器创建 XMlHttpRequest 对象
+                // noinspection JSUnresolvedVariable
+                if (W.XMLHttpRequest) {
+                    // noinspection JSUnresolvedFunction
+                    xhr = new W.XMLHttpRequest()
+                }
+                // IE浏览器创建XmlHttpRequest对象
+                // noinspection JSUnresolvedVariable
+                if (W.ActiveXObject) {
+                    try {
+                        // noinspection JSUnresolvedVariable
+                        xhr = new W.ActiveXObject('Microsoft.XMLHTTP')
+                    } catch (e) {
+                        try {
+                            // noinspection JSUnresolvedVariable
+                            xhr = new W.ActiveXObject('msxml2.XMLHTTP')
+                        } catch (ex) { }
+                    }
+                }
+                let _appkey = 'p0obc8spr3ou8h35y1goejfod4ndngom83xzl90v'
+                let _secretkey = 'vc9iwg6550dzznfxrwv8rupl0z8prqmxir6wogr4'
+                let _now=Date.now();
+                let token=md5(_appkey+_now+_secretkey)
+                xhr.open(xhrConfig.method, xhrConfig.address, true)
+                xhr.withCredentials = true;
+                xhr.setRequestHeader('Accept', 'application/json, text/plain, */*')
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+                xhr.setRequestHeader('X-AUTH-TIME',_now)
+                xhr.setRequestHeader('X-AUTH-APPKEY',_appkey)
+                xhr.setRequestHeader('X-AUTH-TOKEN',token)
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        cb(JSON.parse(xhr.responseText))
+                    }
+                    if (xhr.readyState === 4 && xhr.status !== 200) {
+                        errCb(xhr.responseText)
+                    }
+                }
+                return xhr
+            },
             login(){
                 this.suberror=false;
                 if(this.username==''){this.usererror='请输入用户名';this.usershow=true;return;}
@@ -155,11 +215,11 @@
                 if(this.usershow||this.passshow||this.isD){return false;}
                 this.isD=true;
 //                let data={'login_name':this.username,'password':this.password,'sys_id':4};
-                this.$http.post(window.authurl+'/auth/login/login'+'?login_name='+this.username+'&password='+this.password+'&sys_id=4')
-                        .then((response)=>{
-                            console.info(this)
-                            if(response.data.code===10000){
-                                let data=response.data.data;
+                this.xhrReq(
+                   {method: 'POST', address:window.authurl+'/auth/login/login'},
+                        (response)=>{
+                            if(response.code===10000){
+                                var data=response.data;
                                 //todo cookie 失效时间 7 日后
                                 Cookie.set('KSAuthSysId', data.sys_id, {expires: 7})
                                 // noinspection JSUnresolvedVariable
@@ -170,12 +230,12 @@
                                 Cookie.set('KSAuthApiURL', data.api_url, {expires: 7})
                                 this.$http.post(this.$API.login,{username:data.login_name})
                                         .then((response)=>{
-                                                if(response.data.code===0){
-                                                    sessionStorage.setItem('userData',JSON.stringify(response.data.data));
-                                                    $('body').removeClass('login');
-                                                    $('.message-notify.show,.message-notify').css('top','6px');
-                                                    this.$router.go({name:'default'});
-                                                }
+                                            if(response.data.code===0){
+                                                sessionStorage.setItem('userData',JSON.stringify(response.data.data));
+                                                $('body').removeClass('login');
+                                                $('.message-notify.show,.message-notify').css('top','6px');
+                                                this.$router.go({name:'default'});
+                                            }
                                         });
                             }
                             else{
@@ -184,8 +244,9 @@
                             }
                             this.isD=false;
                         },()=>{
-                            this.isD=false;
-                        });
+                             this.isD=false;
+                        }
+                ).send('login_name='+this.username+'&password='+this.password+'&sys_id=4');
             }
         },
         watch:{

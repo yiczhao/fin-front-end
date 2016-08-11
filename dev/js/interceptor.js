@@ -9,6 +9,7 @@ export default function install(Vue,router_proto) {
 	var conut;
 	window.origin && (Vue.http.options.root = window.origin );
 	Vue.http.options.emulateJSON = false;
+	Vue.http.options.xhr = { withCredentials: true };
 	Vue.http.interceptors.push({
 		request (request) {
 			Message.show('loading','loading...');
