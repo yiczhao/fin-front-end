@@ -390,7 +390,7 @@
                 pageall:1,
                 accountId:'',
                 checkOne:false,
-                dateS:'1',
+                dateS:'3',
                 shouru:'',
                 zhichu:'',
                 gllists:[],
