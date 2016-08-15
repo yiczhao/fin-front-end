@@ -58,10 +58,10 @@
                             <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                            <a class="btn btn-info" v-on:click="query">查询</a>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="excel" value="导出">
+                            <a class="btn btn-info" v-on:click="excel">导出</a>
                         </div>
                     </form>
                 </div>

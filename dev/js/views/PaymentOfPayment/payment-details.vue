@@ -68,14 +68,14 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="initList" value="查询">
+                                <a class="btn btn-info" @click="initList">查询</a>
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="payDetailexcel" value="导出">
+                                <a class="btn btn-info" @click="payDetailexcel" >导出</a>
                             </div>
                             <br>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="batchs()" value="一键划付">
+                                <a class="btn btn-info" @click="batchs()">一键划付</a>
                             </div>
                     </form>
                 </div>

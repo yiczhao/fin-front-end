@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                        <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="addTradeInfo" value="添加交易">
+                           <a class="btn btn-info" v-on:click="addTradeInfo">添加交易</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
@@ -68,10 +68,10 @@
                             <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                            <a class="btn btn-info" v-on:click="query">查询</a>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="tradeDetailexcel" value="导出">
+                            <a class="btn btn-info" v-on:click="tradeDetailexcel">导出</a>
                         </div>
                     </form>
                 </div>

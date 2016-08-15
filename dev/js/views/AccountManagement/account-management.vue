@@ -8,7 +8,7 @@
             <div class="panel-heading">
                 <form class="form-inline manage-form">
                     <div class="form-group">
-                        <input type="button" data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" value="添加账户">
+                        <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser">添加账户</a>
                     </div>
                     <div class="form-group">
                         <select class="form-control" v-model="defaultData.companyId">
@@ -28,7 +28,7 @@
                         <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
                     <div class="form-group">
-                        <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                        <a class="btn btn-info" @click="checkNew" >查询</a>
                     </div>
                 </form>
             </div>

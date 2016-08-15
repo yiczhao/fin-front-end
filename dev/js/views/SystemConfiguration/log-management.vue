@@ -28,7 +28,7 @@
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                                    <a class="btn btn-info" v-on:click="query" >查询</a>
                                 </div>
                             </form>
                         </div>

@@ -8,8 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" data-toggle="modal" @click="showMerchants()"
-                                   value="添加">
+                            <a class="btn btn-info" data-toggle="modal" @click="showMerchants()">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -38,7 +37,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="query" value="查询">
+                            <a class="btn btn-info" @click="query">查询</a>
                         </div>
                     </form>
                 </div>

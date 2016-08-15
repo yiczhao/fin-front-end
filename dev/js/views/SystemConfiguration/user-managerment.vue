@@ -5,7 +5,7 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="addUser" value="导入员工">
+                                    <a class="btn btn-info" v-on:click="addUser">导入员工</a>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" >
@@ -17,7 +17,7 @@
                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                                    <a class="btn btn-info" v-on:click="query">查询</a>
                                 </div>
                             </form>
                         </div>

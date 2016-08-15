@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                             <div class="form-group">
-                                <input type="button" @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info" value="回款充值">
+                                <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info">回款充值</a>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
@@ -46,7 +46,7 @@
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                     </form>
                 </div>

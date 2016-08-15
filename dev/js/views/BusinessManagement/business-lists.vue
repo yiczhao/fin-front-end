@@ -31,7 +31,7 @@
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                            <a class="btn btn-info" @click="checkNew">查询</a>
                         </div>
                     </form>
                 </div>

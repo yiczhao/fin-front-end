@@ -61,14 +61,14 @@
                                     <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                                    <a class="btn btn-info" v-on:click="query">查询</a>
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="subsidyTaxexcel" value="导出">
+                                    <a class="btn btn-info" v-on:click="subsidyTaxexcel">导出</a>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" data-toggle="modal"  @click="batchs()" value="一键审核">
+                                    <a class="btn btn-info" data-toggle="modal"  @click="batchs()">一键审核</a>
                                 </div>
                             </form> 
                         </div>
