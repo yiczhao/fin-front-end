@@ -390,10 +390,10 @@
                         if (response.data.code==0){
                             dialogs('success','申请成功！');
                             this.query();
+                            //关闭弹出层
+                            $(".modal").modal("hide");
                         }
-            });
-                     //关闭弹出层
-                    $(".modal").modal("hide");
+                });
             },
             query() {
                 $(".check-boxs").prop({'checked':false})
