@@ -35,7 +35,8 @@
         },
         ready () {
             let sciprt = document.createElement('SCRIPT')
-            sciprt.setAttribute('src', Cookie.get('KSAuthJSURL'))
+            let _src=Cookie.get('KSAuthJSURL').replace('http','https');
+            sciprt.setAttribute('src',_src);
             this.$els.scriptPlayground.appendChild(sciprt)
         },
         watch: {
