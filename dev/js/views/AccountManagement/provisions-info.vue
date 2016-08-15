@@ -354,6 +354,9 @@
              th{
                  text-align: center;
              }
+             td{
+                 text-align: center;
+             }
          }
     }
      .modal-header{
