@@ -350,6 +350,11 @@
     }
      .datatable-scroll{
         overflow:auto;
+         table{
+             th{
+                 text-align: center;
+             }
+         }
     }
      .modal-header{
         margin-bottom: 20px;
