@@ -240,7 +240,7 @@
                             }
                             else{
                                 this.suberror=true;
-                                this.errortext=response.data.message;
+                                this.errortext=response.message;
                             }
                             this.isD=false;
                         },()=>{
