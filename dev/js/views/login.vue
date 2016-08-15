@@ -225,7 +225,7 @@
                                 // noinspection JSUnresolvedVariable
                                 Cookie.set('KSAuthUserToken', data.user_token, {expires: 7})
                                 // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthJSURL', data.js_url.replace('http','https'), {expires: 7,})
+                                Cookie.set('KSAuthJSURL', data.js_url.replace('http://','https://'), {expires: 7,})
                                 // noinspection JSUnresolvedVariable
                                 Cookie.set('KSAuthApiURL', data.api_url, {expires: 7})
                                 this.$http.post(this.$API.login,{username:data.login_name})
