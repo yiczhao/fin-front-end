@@ -14,7 +14,24 @@
 								<tr><td>Name:</td><td><input type="text" name="name"/></td></tr>
 								<tr><td></td><td><input type="button" value="提交" @click="submits($event)"/></td></tr>
 								<tr><td>选择日期：<datepicker  :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker></td><td><input type="button" value="提交" @click="submitTime($event)"/></td></tr>
+								<tr><td></td><td><input type="button" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/></td></tr>
 							</table>
+							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">×</button>
+											<h5 class="modal-title">你确认修复数据？</h5>
+										</div>
+										<div class="modal-body">
+											<div class="form-group tc">
+												<button type="button" @click="submitSave" class="btn btn-primary">确认</button>
+												<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</form>
 					</div>
 				 </div>
@@ -80,6 +97,12 @@
 							.then((response)=>{
 									dialogs('success','回滚成功！');
 							})
+			},
+			submitSave(){
+				this.$http.post('./dev/tool/tradeDetail/JXCCB/rollback')
+						.then((response)=>{
+								dialogs('success','回滚成功！');
+						})
 			}
         },
         ready() {
