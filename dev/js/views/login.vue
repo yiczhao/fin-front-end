@@ -146,7 +146,21 @@
                 isD:false
             }
         },
-        components:{
+        created(){
+            function setCookie (key, value, expire) {
+                var data = new Date()
+                data.setDate(data.getDate() + expire)
+                document.cookie = key + '=' + escape(value) +
+                        ((expire === null) ? '' : ';expires=' + data.toGMTString())
+            }
+            // 移除用户 cookie
+            setCookie('KSAuthUserToken', '', -1);
+            setCookie('KSAuthJSURL', '', -1);
+            setCookie('KSAuthApiURL', '', -1);
+            setCookie('KSAuthSysId', '', -1);
+            setCookie('JSESSTOKEN', '', -1);
+            setCookie('JSESSID', '', -1);
+            sessionStorage.removeItem('userData');
         },
         methods:{
             /**
