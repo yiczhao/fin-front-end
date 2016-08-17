@@ -70,7 +70,7 @@
                                 <td>{{trlist.suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'third-info',params:{'id':trlist.id}}">交易明细</a>
+                                    <a v-link="{name:'third-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
                                     <a @click="applyPay()">税金提现</a>
                                     <a @click="recharge(trlist.activityName,trlist.invoiceAmount)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
                                 </td>
