@@ -66,7 +66,7 @@
                                 <td>{{trlist.consumptionTotalAmount}}</td>
                                 <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
                                 <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
-                                <td>{{trlist.unpaidAmount/100 | currency ''}}</td>
+                                <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
                                 <td>{{trlist.suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
                                 <td>

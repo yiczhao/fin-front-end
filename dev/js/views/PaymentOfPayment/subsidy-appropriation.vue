@@ -455,6 +455,8 @@
         },
         ready() {
             (this.$route.params.subsidyPayID==':subsidyPayID')?this.id='':this.id=this.$route.params.subsidyPayID;
+            (this.$route.params.subsidySHid==':subsidySHid')?this.merchantOperationID='':this.merchantOperationID=this.$route.params.subsidySHid;
+            (this.$route.params.subsidyHDid==':subsidyHDid')?this.activityOperationID='':this.activityOperationID=this.$route.params.subsidyHDid;
             this.query();
             this.getSubcompany();
             this.getCity();

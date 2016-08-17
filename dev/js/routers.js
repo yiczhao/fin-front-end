@@ -73,7 +73,7 @@ export default function(router){
             }
         },
         //备付金支出-补贴划付
-        '/subsidy-appropriation/:subsidyPayID':{
+        '/subsidy-appropriation/:subsidyPayID/:subsidySHid/:subsidyHDid':{
             name:'subsidy-appropriation',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/subsidy-appropriation.vue'],resolve);
