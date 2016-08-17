@@ -36,8 +36,8 @@ export default function install(Vue,router_proto) {
 				   Vue.router.go({name:'login'});
 			  })
 			}
-			else if(!response.status===403){
-				dialogs('error','您无此操作的权限！');
+			else if(response.status===403){
+				dialogs('error',response.data.message);
 				conut++;
 			}
 			else if(!response.ok&&conut===0){
