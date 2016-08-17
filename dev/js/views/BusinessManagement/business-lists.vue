@@ -54,6 +54,10 @@
                                     <th>佣金值</th>
                                     <th>结算周期</th>
                                     <th>补贴税率</th>
+                                    <th>已划付</th>
+                                    <th>待划付</th>
+                                    <th>暂扣税金</th>
+                                    <th>发票</th>
                                     <!--<th>额度采购消化账户</th>-->
                                     <th>划款账户</th>
                                     <th>联系人</th>
@@ -80,6 +84,10 @@
                                     <template v-if="trlist.settlementCycle==3">月结</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">活动列表</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">活动列表</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">活动列表</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">活动列表</a></td>
                                 <!--<td>-->
                                     <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
                                 <!--</td>-->
