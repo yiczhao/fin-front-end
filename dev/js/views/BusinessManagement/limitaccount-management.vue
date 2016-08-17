@@ -291,7 +291,7 @@
                         name:files.name,
                         data:this.result.split(',')[1]
                     }
-                    vm.common_model.upload(datas)
+                    vm.$common_model.upload(datas)
                             .then((response)=>{
                                 if(response.data.code == 0){
                                     vm.addData.certificatesID=response.data.data;

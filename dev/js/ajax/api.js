@@ -46,6 +46,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.subsidyTaxexcel = '/data/export/excel/subsidyTax?';
+    /**
+     * @description 活动管理页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.activityManage = '/data/export/excel/activityManage?';
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -467,6 +473,37 @@ export default function install(Vue) {
      */
     _o.merchant_total = './merchant/sumBalance?';
 
+    //- todo  商户管理-商户列表-商户补贴账户管理 merchat-activity-subsidy-account
+    /**
+     * @description 商户补贴账户管理数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyAccount_list = './subsidyAccount/list?';
+    /**
+     * @description 商户补贴账户管理合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyAccount_total = './subsidyAccount/total?';
+    /**
+     * @description 商户补贴账户管理发票充值接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidyAccount_recharge = './subsidyAccount/recharge';
+    /**
+     * @description 商户补贴账户管理申请提现接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.subsidyAccount_applyPay = './subsidyAccount/applyPay';
+    /**
+     * @description 商户补贴账户管理申请提现页面税金池和可提现金额 接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyAccount_info = './subsidyAccount/info?';
 
     //- todo  商户管理-额度采购 business-limit
     /**

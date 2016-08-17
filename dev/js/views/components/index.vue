@@ -33,9 +33,6 @@
         },
         ready () {
             // 插入权限控制 JS
-            let sciprt = document.createElement('SCRIPT')
-            sciprt.setAttribute('src', Cookie.get('KSAuthJSURL'))
-            this.$els.scriptPlayground.appendChild(sciprt)
         },
         watch: {
             userData() {

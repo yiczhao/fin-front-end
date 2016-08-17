@@ -107,6 +107,13 @@ export default function(router){
                 require(['./views/BusinessManagement/business-lists.vue'],resolve);
             }
         },
+        /* 商户管理-商户列表-活动管理 */
+        '/merchat-activity-subsidy-account/:merchantID/:merchantName/:merchantOperationID':{
+            name:'merchat-activity',
+            component: function(resolve){
+                require(['./views/BusinessManagement/merchat-activity-subsidy-account.vue'],resolve);
+            }
+        },
         /* 商户管理-额度采购 */
         '/business-limit/:id':{
             name:'business-limit',

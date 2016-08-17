@@ -1,0 +1,369 @@
+<template>
+    <index :title="'活动列表'"
+           :ptitle="'商户管理'"
+           :p2title="'商户列表'"
+           :hname="'business-lists'"
+           :h2name="'business-lists'"
+           :isshow="'isshow'">
+        <div class="content" slot="content">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <form class="form-inline manage-form">
+                        <div class="form-group">
+                            <input type="number" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="defaultData.activityStatus">
+                                <option value="">请选择状态</option>
+                                <option value="1">待上线</option>
+                                <option value="0">运行中</option>
+                                <option value="0">已结束</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-info" @click="initList">查询</a>
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-info" @click="excel">导出</a>
+                        </div>
+                    </form>
+                </div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantOperationID}}</span>
+                    <span>商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                </div>
+                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="datatable-scroll">
+                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                            <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>起止时间</th>
+                                <th>状态 </th>
+                                <th>消费总笔数</th>
+                                <th>消费总金额</th>
+                                <th>已划付金额</th>
+                                <th>待划付金额</th>
+                                <th>暂扣税金</th>
+                                <th>发票余额</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr role="row" v-for="(index,trlist) in zdlists">
+                                <td>{{trlist.activityOperationID }}</td>
+                                <td>{{trlist.activityName }}</td>
+                                <td>{{trlist.startDate | datetimes}}--{{trlist.endDate  | datetimes}}</td>
+                                <td>
+                                    <template v-if="trlist.activityStatus ==0">待上线</template>
+                                    <template v-if="trlist.activityStatus ==1">运行中</template>
+                                    <template v-if="trlist.activityStatus ==1">已结束</template>
+                                </td>
+                                <td>{{trlist.consumptionTotalAmount}}</td>
+                                <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
+                                <td>{{trlist.paidAmount/100 | currency ''}}</td>
+                                <td>{{trlist.unpaidAmount/100 | currency ''}}</td>
+                                <td>{{trlist.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
+                                <td>
+                                    <a v-link="{name:'third-info',params:{'id':trlist.id}}">交易明细</a>
+                                    <a @click="applyPay()">税金提现</a>
+                                    <a @click="recharge(trlist.activityName,trlist.invoiceAmount)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
+                                </td>
+                            </tr>
+                            <tr role="row">
+                                <td></td>
+                                <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{total.consumptionTotalNumber}}</td>
+                                <td>{{total.consumptionTotalAmount/100 | currency ''}}</td>
+                                <td>{{total.paidAmount/100 | currency ''}}</td>
+                                <td>{{total.unpaidAmount/100 | currency ''}}</td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{total.invoiceAmount/100 | currency ''}}</td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="datatable-footer">
+                        <page :all="defaultData.pageTotal"
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
+                        </page>
+                    </div>
+                </div>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                    未找到数据
+                </div>
+
+                <div data-backdrop="static"  id="modal_applyPay" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">申请提现</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="control-label">税金池余额：{{redata.suspensionTaxAmount/100 | currency ''}} 元</label>
+                                    <label class="control-label">可提现金额：{{redata.withdrawCashAmount/100 | currency ''}} 元</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label"><i>*</i>付款方式：</label>
+                                    <select class="form-control" v-model="applyData.payType">
+                                        <option value="1">备付金账户</option>
+                                        <option value="0">商户预付款账户</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="position: relative;top: -95px;" class="control-label">备注：</label>
+                                    <textarea rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
+                                </div>
+                                <div class="form-group tc">
+                                    <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <validator name="vali">
+                    <form novalidate>
+                        <div id="modal_recharge" data-backdrop="static"  class="modal fade" style="display: none;">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                        <h5 class="modal-title">发票充值</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>商户名：</label>
+                                            <span>{{rechargeInfo.val1}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>活动名：</label>
+                                            <span>{{rechargeInfo.val2}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>余额：</label>
+                                            <span>{{rechargeInfo.val3/100 | currency '' }}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i>*</i>金额：</label>
+                                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"></div>
+                                        <div class="form-group" v-else>
+                                            <label><i>*</i>上传凭证：</label>
+                                            <input  style="display:none" @change="uploads($event)" type="file">
+                                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                            <span v-text="uploadText" v-show="uploadText!=''"></span>
+                                        </div>
+                                        <div class="form-group tc">
+                                            <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
+                                        </div>
+                                        <div class="form-group tc">
+                                            <span v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </validator>
+
+            </div>
+        </div>
+    </index>
+</template>
+<style>
+
+</style>
+<script>
+    import model from '../../ajax/BusinessManagement/merchat-activity-subsidy-account'
+    export default{
+        data(){
+            this.model =model(this)
+            return{
+                defaultData:{
+                    'merchantID': '',
+                    'activityOperationID': '',
+                    'activityStatus': '',
+                    'activityName': '',
+                    'pageTotal': 1,
+                    'pageIndex': 1,
+                    'pageSize': 10,
+                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
+                },
+                zdlists:[],
+                total:{
+                    'unpaidAmount': '',
+                    'suspensionTaxAmount': '',
+                    'paidAmount': '',
+                    'invoiceAmount': '',
+                    'consumptionTotalNumber': '',
+                    'consumptionTotalAmount':'',
+                },
+                balance:{
+                    merchantName:'',
+                    merchantOperationID:''
+                },
+                redata:{
+                    suspensionTaxAmount:'',
+                    withdrawCashAmount:''
+                },
+                rechargeData:{
+                    payAmount:'',
+                    certificateId:''
+                },
+                applyData:{
+                    remarks:'',
+                    payType:'1'
+                },
+                rechargeInfo:{
+                    val1:'',
+                    val2:'',
+                    val3:'',
+                },
+                errortext:'',
+                uploadText:''
+            }
+        },
+        methods:{
+            // *** 请求账户数据
+            getZlists(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.subsidyAccount_list(this.defaultData)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('zdlists', response.data.data)
+                                this.defaultData.pageTotal=response.data.total
+                            }
+                        });
+                this.model.subsidyAccount_total(this.defaultData)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('total', response.data.data)
+                            }
+                        });
+            },
+            initList(){
+                if(this.defaultData.pageIndex==1){
+                    this. getZlists();
+                    return;
+                }
+                this.defaultData.pageIndex=1;
+            },
+            excel(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                //初始化
+                window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
+            },
+            applyPay(){
+                this.model.subsidyAccount_info(this.defaultData)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('redata', response.data.data);
+                                $('#modal_applyPay').modal('show');
+                            }
+                        });
+            },
+            applyPayTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.subsidyAccount_applyPay(this.applyPay)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                dialogs('success','已充值！');
+                                this.initList();
+                            }
+                        });
+            },
+            recharge(val2,val3){
+                this.rechargeInfo.val1=this.balance.merchantName;
+                this.rechargeInfo.val2=val2;
+                this.rechargeInfo.val3=val3;
+            },
+            rechargeTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.errortext='';
+                if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
+                if(this.rechargeData.certificatesID==''){this.fire=true;this.errortext='请上传凭证';return;}
+                let data={};
+                $.extend(true, data,this.rechargeData);
+                data.payAmount=parseInt(data.payAmount)*100;
+                this.model.subsidyAccount_recharge(data)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                dialogs('success','已充值！');
+                                this.initList();
+                            }
+                        });
+            },
+            uploadClick(){
+                $('input[type="file"]').val('');
+                $('input[type="file"]').click();
+            },
+            uploads(e){
+                if(e.target.value==''&&this.uploadText!=''){
+                    return;
+                }
+                let files=e.target.files[0];
+                let vm=this;
+                var reader = new FileReader();
+                if(!check_upload(files.name)){
+                    return;
+                }
+                reader.readAsDataURL(files);
+                reader.onload = function(e){
+                    let datas={
+                        name:files.name,
+                        data:this.result.split(',')[1]
+                    }
+                    vm.$common_model.upload(datas)
+                            .then((response)=>{
+                                if(response.data.code == 0){
+                                    vm.recharge.certificatesID=response.data.data;
+                                    vm.saveerror='';
+                                    vm.uploadText=files.name;
+                                    dialogs('success','上传成功！');
+                                }
+                            })
+                }
+            },
+        },
+        watch:{
+            'defaultData.pageIndex':{
+                handler:(val,oldVal)=>{
+                    this.getZlists()
+                },
+                deep:true
+            },
+            'defaultData.pageSize':{
+                handler:(val,oldVal)=>{
+                    this.getZlists()
+                },
+                deep:true
+            }
+        },
+        ready(){
+            let vm=this;
+            (vm.$route.params.merchantID==':merchantID')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID;
+            (vm.$route.params.merchantName==':merchantName')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName;
+            (vm.$route.params.merchantOperationID==':merchantOperationID')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID;
+            vm.getZlists();
+            $('#modal_recharge').on('hidden.bs.modal', function () {
+                $('body').css('padding-right',0);
+                vm.uploadText='';
+                vm.recharge.certificatesID='';
+            })
+        }
+    }
+</script>
