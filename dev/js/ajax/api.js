@@ -505,6 +505,34 @@ export default function install(Vue) {
      */
     _o.subsidyAccount_info = './subsidyAccount/info?';
 
+    //- todo  商户管理-商户列表-商户补贴账户管理-商户暂扣税金账户明细 suspension-tax-account-detail
+    /**
+     * @description 商户暂扣税金账户明细数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.suspensionTaxAccountDetail_list = './suspensionTaxAccountDetail/list?';
+    /**
+     * @description 商户暂扣税金账户明细合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.suspensionTaxAccountDetail_total = './suspensionTaxAccountDetail/total?';
+
+    //- todo  商户管理-商户列表-商户补贴账户管理-商户发票账户明细 invoice-account-detail
+    /**
+     * @description 商户发票账户明细数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.invoiceAccountDetail_list = './invoiceAccountDetail/list?';
+    /**
+     * @description 商户发票账户明细合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.invoiceAccountDetail_total = './invoiceAccountDetail/total?';
+
     //- todo  商户管理-额度采购 business-limit
     /**
      * @description 额度采购数据接口地址
