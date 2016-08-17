@@ -9,9 +9,9 @@ module.exports = [
     {
         name: '账户管理',
         icon: ' icon-user',
-        ksa:'account',
+        ksa:'account_manage',
         sub_menu: [
-            {name: '账户管理', link: 'account-management',ksa:'account'}
+            {name: '账户管理', link: 'account-management',ksa:'account_manage'}
         ]
     },
     {
