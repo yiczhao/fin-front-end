@@ -705,6 +705,7 @@
         ready(){
             (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;
             (this.$route.params.payType==':payType')?this.checkForm.payType='1' :this.checkForm.payType=this.$route.params.payType;
+            (this.$route.params.merchantOperationIDs==':merchantOperationIDs')?this.checkForm.merchantOperationID='' :this.checkForm.merchantOperationID=this.$route.params.merchantOperationIDs;
             this.getTime();
             this.getSubcompany();
             this.initList();

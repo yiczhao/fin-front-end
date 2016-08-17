@@ -240,7 +240,6 @@
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
-
                         })
             },
             goinfo(a,b){

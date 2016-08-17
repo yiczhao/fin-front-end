@@ -52,7 +52,7 @@ export default function(router){
             }
         },
         //备付金支出-付款明细
-        '/payment-details/:reserveCashOrderNumber/:payType':{
+        '/payment-details/:reserveCashOrderNumber/:payType/:merchantOperationIDs':{
             name:'payment-details',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/payment-details.vue'],resolve);
