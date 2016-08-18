@@ -378,7 +378,7 @@
             batchs(){
                 let AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
-                    AccountS.push($(this).prop("id"));
+                    AccountS.push(parseInt($(this).prop("id")));
                 });
                 if(AccountS.length<=0){
                     dialogs('info','请勾选审核信息！');
@@ -389,7 +389,7 @@
             },
             showModalApplyPayById(id){
                 let array=[];
-                array.push(id);
+                array.push(parseInt(id));
                 this.getApplyPayInfoByIDs(array);
                 this.dialogTitle='申请划付';
             },
@@ -401,7 +401,7 @@
                 let data={
                     ids:idArray
                 }
-                this.submitId=[idArray.toString()];
+                this.submitId=idArray;
                 this.clear();
                 this.model.select_subsidypay(data)
                         .then((response)=>{
@@ -419,7 +419,7 @@
                     ids:this.submitId,
                     payType:this.applyPayInfo.payType
                 }
-                this.model.subsidy_applyPay(JSON.stringify(data))
+                this.model.subsidy_applyPay(data)
                         .then((response)=>{
                         // *** 判断请求是否成功如若
                             if(response.data.code==0){
