@@ -91,6 +91,7 @@
                                         <th>生成方式</th>
                                         <th>三方应补</th>
                                         <th>划付金额</th>
+                                        <th>暂扣税金</th>
                                         <th>交易</th>
                                         <th>状态</th>
                                         <th>操作</th>
@@ -125,6 +126,7 @@
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount/100 | currency ''}}</td>
+                                        <td>{{sa.suspensionTaxAmount/100 | currency ''}}</td>
                                         <td><a v-link="{name:'trade-info',params:{subsidyPayId:sa.id}}">明细</a> </td>
                                         <td>
                                             <template v-if="sa.status==0">
