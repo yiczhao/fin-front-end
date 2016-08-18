@@ -88,6 +88,7 @@
                                 <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>划付金额</th>
+                                <th>暂扣税金</th>
                                 <th>付款账户</th>
                                 <th>用途</th>
                                 <th>状态</th>
@@ -117,6 +118,10 @@
                                 </td>
                                 <td>{{n.merchantName}}</td>
                                 <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="n.purpose==1">{{n.suspensionTaxAmount/100 | currency '' }}</template>
+                                    <template v-else>--</template>
+                                </td>
                                 <td>
                                     <template v-if="n.payType==1">{{n.payoutAccount}}</template>
                                     <template v-else>{{n.payoutAccount}}</template>
@@ -195,6 +200,7 @@
                                 <tr role="row">
                                     <th>生成日期</th>
                                     <th>划付金额</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
@@ -204,6 +210,7 @@
                             <tr v-show="listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createAt | datetimes}}</td>
                                 <td>{{trlist.amount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
                                 <td>{{trlist.purpose}}</td>
                                 <td>
                                     <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
