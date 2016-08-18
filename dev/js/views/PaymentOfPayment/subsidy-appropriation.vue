@@ -236,7 +236,7 @@
                             </div>
                             <div class="form-group" style="text-align: center">
                                 <input type="button" class="btn btn-info btn-primary" @click="submit()" value="提交">
-                                <input type="button" class="btn btn-info btn-gray" @click="" data-dismiss="modal" value="取消">
+                                <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
                             </div>
                         </div>
                     </div>

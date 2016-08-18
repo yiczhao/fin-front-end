@@ -362,6 +362,7 @@
                         });
             },
             query() {
+                $('.modal').modal('hide');
                 $(".check-boxs").prop({'checked':false})
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
