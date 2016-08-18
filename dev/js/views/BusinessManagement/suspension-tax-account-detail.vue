@@ -41,11 +41,12 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
-                                <option value="2">对账成功</option>
-                                <option value="1">等待对账</option>
-                                <option value="1">等待划付</option>
-                                <option value="1">划付失败</option>
-                                <option value="1">已关闭</option>
+                                <option value="5">对账成功</option>
+                                <option value="4">等待对账</option>
+                                <option value="3">转账中</option>
+                                <option value="2">等待划付</option>
+                                <option value="6">划付失败</option>
+                                <option value="0">已关闭</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -89,12 +90,16 @@
                                     <template v-if="trlist.payType==2">预付款</template>
                                 </td>
                                 <td>
-                                    <template v-if="trlist.status==1">备付金</template>
-                                    <template v-if="trlist.status==2">预付款</template>
+                                    <template v-if="trlist.status==0">已关闭</template>
+                                    <template v-if="trlist.status==2">等待划付 </template>
+                                    <template v-if="trlist.status==3">转账中</template>
+                                    <template v-if="trlist.status==4">等待对账</template>
+                                    <template v-if="trlist.status==5">对账成功</template>
+                                    <template v-if="trlist.status==6">划付失败</template>
                                 </td>
                                 <td>{{trlist.tradeTime  | datetimes}}</td>
                                 <td>
-                                    <a href="{{origin}}/file/download/{{n.certificateID}}">下载</a>
+                                    <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID，payType:trlist.payType}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -202,6 +207,7 @@
                     remarks:'',
                     payType:'1'
                 },
+                dateS:'1'
             }
         },
         methods:{
@@ -263,8 +269,8 @@
                         });
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+                this.defaultData.startDate=init_date(this.dateS)[0];
+                this.defaultData.endDate=init_date(this.dateS)[1];
             },
         },
         watch:{
