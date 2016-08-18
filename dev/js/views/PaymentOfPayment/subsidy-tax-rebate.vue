@@ -150,6 +150,22 @@
                                         </td>
                                         <td>{{strd.remarks}}</td>
                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>合计</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{total.taxRebateAmount/100 | currency ''}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                             </div>
@@ -195,7 +211,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                <select v-model="applyPayInfo.payType">
+                                <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
                                     <option value="1">备付金账户</option>
                                     <option value="2">商户预付款账户</option>
                                     <option value="3">银行结算</option>
@@ -244,28 +260,35 @@
                 pageSize:10,
                 cityList:[],
                 subsidyTaxRebateDetailList:[],
-                payTypes:[],
+                payTypes:'2',
                 showPayAccount:'',
                 payType:"1",
-                applyPayInfo:{
-                    payType:'1'
-                },
                 applyPayRemarks:'',
                 dialogTitle:'',
-                submitId:''
+                submitId:'',
+                total:{
+                    taxRebateAmount:'',
+                }
             }
         },
         methods:{
             //获取补贴划付数据
              getsubsidyTaxRebateDetailList(data){
                  if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.rebate_list(data)
+                 this.model.rebate_list(data)
                     .then((response)=>{
                         if(response.data.code==0){
                             this.$set('subsidyTaxRebateDetailList', response.data.data)
                             this.$set('pageall', response.data.total)
                         }
-             });
+                    });
+                 this.model.rebate_total(data)
+                         .then((response)=>{
+                             // *** 判断请求是否成功如若成功则填充数据到模型
+                             if(response.data.code==0){
+                                 this.$set('total', response.data.data)
+                             }
+                         });
             },
              //获取分公司数据
             getSubcompany(){
@@ -297,7 +320,7 @@
                 }
             },
             clear(){
-                this.applyPayInfo.payType='1';
+                this.payTypes='2';
             },
             updateById(id){
                 this.model.rebate_update(id)
@@ -318,7 +341,7 @@
                     return false
                 }
                 this.getApplyPayInfoByIDs(AccountS);
-                this.dialogTitle='一键划付';
+                this.dialogTitle='一键审核';
             },
             showModalApplyPayById(id){
                 let array=[];
@@ -341,22 +364,24 @@
                                 // *** 判断请求是否成功如若
                                 // *** 判断请求是否成功如若
                                 if(response.data.code==0){
-                                this.$set('applyPayInfo', response.data.data)
-                                $('#modal_applyPay').modal('show');
-                            }
-                        });
+                                        this.$set('applyPayInfo', response.data.data)
+                                        $('#modal_applyPay').modal('show');
+                                    }
+                                });
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                var mes;
+                (this.submitId.length>1)?mes='审核成功':mes='划付成功';
                 let data={
                     ids:this.submitId,
-                    payType:this.applyPayInfo.payType
+                    payType:this.payTypes
                 }
                 this.model.rebate_applyPay(JSON.stringify(data))
                         .then((response)=>{
                             // *** 判断请求是否成功如若
                             if(response.data.code==0){
-                                dialogs('success','划付成功！');
+                                dialogs('success',mes);
                                 this.query();
                             }
                         });

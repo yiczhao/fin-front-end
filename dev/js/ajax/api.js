@@ -330,7 +330,7 @@ export default function install(Vue) {
      */
     _o.subsidy_applyPay = './subsidyPayDetail/applyPay';
     /**
-     * @description 补贴划付一键审核接口地址
+     * @description 补贴划付合计接口地址
      * @author 冷艳君
      * @method POST
      */
@@ -368,6 +368,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.rebate_batchCheck= './subsidyTaxRebateDetail/applyPay';
+    /**
+     * @description 补贴退税合计接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.rebate_total = './subsidyTaxRebateDetail/total?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**
