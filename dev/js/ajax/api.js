@@ -361,7 +361,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo?';
+    _o.select_rebate = './subsidyTaxRebateDetail/applyInfo?';
     /**
      * @description 补贴退税一键审核接口地址
      * @author 冷艳君

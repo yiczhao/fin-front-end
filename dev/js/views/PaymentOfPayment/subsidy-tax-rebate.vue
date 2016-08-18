@@ -355,9 +355,10 @@
                     return false
                 }
                 let data={
-                    ids:idArray
+                    ids:idArray.toString(),
+                    subsidyType:2
                 }
-                this.submitId=[idArray.toString()];
+                this.submitId=idArray;
                 this.clear();
                 this.model.select_rebate(data)
                         .then((response)=>{
