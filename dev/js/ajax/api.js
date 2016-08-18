@@ -322,7 +322,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.select_subsidypay = './subsidyPayDetail/applyPayInfo?';
+    _o.select_subsidypay = './subsidyPayDetail/applyInfo?';
     /**
      * @description 补贴划付一键审核接口地址
      * @author 冷艳君

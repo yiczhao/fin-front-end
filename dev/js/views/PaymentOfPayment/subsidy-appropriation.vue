@@ -177,22 +177,52 @@
                             未查询到补贴划付信息！
                         </div>
             </div>
-            <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                <div class="modal-dialog">
+            <!--<div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">-->
+                <!--<div class="modal-dialog">-->
+                    <!--<div class="modal-content">-->
+                        <!--<div class="modal-header">-->
+                            <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+                            <!--<h5 class="modal-title">你确定一键审核？</h5>-->
+                        <!--</div>-->
+                        <!--<div class="modal-body">-->
+                            <!--<div class="form-group tc">-->
+                                <!--<button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>-->
+                                <!--<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
+                <div class="modal-dialog mg">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <h3>{{dialogTitle}}</h3>
                             <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title">你确定一键审核？</h5>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group tc">
-                                <button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>
-                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            <div class="form-group">
+                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元
                             </div>
+                            <div class="form-group">
+                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                <select v-model="payType">
+                                    <option value="1">备付金账户</option>
+                                    <option value="2">商户预付款账户</option>
+                                    <option value="3">银行结算</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-foot">
+                            <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                            <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </index>
 </template>
@@ -234,10 +264,7 @@
                 subsidyAppropriationList:[],
                 payType:"1",
                 applyPayInfo:{
-                    payType:{
-                       1:"",
-                       2:""
-                    }
+                    payType:'1'
                 },
                 applyPayRemarks:'',
                 dialogTitle:'',
@@ -289,42 +316,27 @@
                 }
             },
             clear(){
-                this.applyPayRemarks="",
-                this.applyPayInfo={payType:{
-                       1:"",
-                       2:""
-                    }};
+                this.applyPayInfo.payType='1';
             },
-            batchs(){
-                let AccountS = [];
-                $("input[name='ckbox']:checked").each(function(){
-                    AccountS.push($(this).prop("class"));
-                });
-                if(AccountS.length<=0){
-                    dialogs('info','请勾选审核信息！');
-                    return false
-                }
-                $('#modal_waring').modal('show');
-            },
-            showModalApplyPay(){
-                var AccountS = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  AccountS.push($(this).prop("class"));  
-                });
-                let array = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  array.push(parseInt($(this).prop("id")));
-                });
-                this.model.subsidy_applyPay(JSON.stringify(array))
-                        .then((response)=>{
-                                // *** 判断请求是否成功如若
-                                if(response.data.code==0){
-                                    dialogs('success','申请成功！');
-                                    $("#modal_waring").modal("hide");
-                                }
-                                this.query();
-                        });
-            },
+//            showModalApplyPay(){
+//                var AccountS = [];
+//                $("input[name='ckbox']:checked").each(function(){
+//                  AccountS.push($(this).prop("class"));
+//                });
+//                let array = [];
+//                $("input[name='ckbox']:checked").each(function(){
+//                  array.push(parseInt($(this).prop("id")));
+//                });
+//                this.model.subsidy_applyPay(JSON.stringify(array))
+//                        .then((response)=>{
+//                                // *** 判断请求是否成功如若
+//                                if(response.data.code==0){
+//                                    dialogs('success','申请成功！');
+//                                    $("#modal_waring").modal("hide");
+//                                }
+//                                this.query();
+//                        });
+//            },
             updateById(id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.subsidy_update(id)
@@ -337,63 +349,84 @@
                             }
                         });
             },
-            showModalApplyPayById(id){
-                var AccountS = [];
-                AccountS.push(id);
+//            batchs(){
+//                let AccountS = [];
+//                $("input[name='ckbox']:checked").each(function(){
+//                    AccountS.push($(this).prop("class"));
+//                });
+//                if(AccountS.length<=0){
+//                    dialogs('info','请勾选审核信息！');
+//                    return false
+//                }
+//                $('#modal_waring').modal('show');
+//            },
+//            showModalApplyPayById(id){
+//                var AccountS = [];
+//                AccountS.push(id);
+//                if(AccountS.length<=0){
+//                    return false
+//                }
+//                this.model.subsidy_applyPay(JSON.stringify(AccountS))
+//                        .then((response)=>{
+//                        // *** 判断请求是否成功如若
+//                            if(response.data.code==0){
+//                                    dialogs('success','申请成功！');
+//                                    this.query();
+//                                }
+//                            });
+//            },
+            batchs(){
+                let AccountS = [];
+                $("input[name='ckbox']:checked").each(function(){
+                    AccountS.push($(this).prop("id"));
+                });
                 if(AccountS.length<=0){
+                    dialogs('info','请勾选审核信息！');
                     return false
                 }
-                this.model.subsidy_applyPay(JSON.stringify(AccountS))
-                        .then((response)=>{
-                        // *** 判断请求是否成功如若
-                            if(response.data.code==0){
-                                    dialogs('success','申请成功！');
-                                    this.query();
-                                }
-                            });
+                this.getApplyPayInfoByIDs(AccountS);
+                this.dialogTitle='一键划付';
             },
-            submitOne(){
+            showModalApplyPayById(id){
+                let array=[];
+                array.push(id);
+                this.getApplyPayInfoByIDs(array);
+                this.dialogTitle='申请划付';
+            },
+            getApplyPayInfoByIDs(idArray){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    ids:this.submitId,
-                    remarks:this.applyPayRemarks,
-                    payType:this.payType,
-                    displayName:this.applyPayInfo.displayName
+                if(idArray.length<=0){
+                    return false
                 }
-                this.model.subsidy_applyPay(data)
+                let data={
+                    ids:idArray
+                }
+                this.submitId=[idArray.toString()];
+                this.clear();
+                this.model.select_subsidypay(data)
                         .then((response)=>{
-                            if (response.data.code==0){
-                                dialogs();
-                                this.query();
+                            // *** 判断请求是否成功如若
+                            // *** 判断请求是否成功如若
+                            if(response.data.code==0){
+                                this.$set('applyPayInfo', response.data.data)
+                                $('#modal_applyPay').modal('show');
                             }
                         });
-                $(".modal").modal("hide");
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                var array = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  array.push($(this).prop("id"));  
-                });
-
-                if ($('#displayName').prop("readonly")) {
-                    array.push($('#displayName').prop("class"));
-                 }
                 let data={
-                    ids:array,
-                    remarks:this.applyPayRemarks,
-                    payType:this.payType,
-                    displayName:this.applyPayInfo.displayName
-                    
+                    ids:this.submitId,
+                    payType:this.applyPayInfo.payType
                 }
-               this.model.subsidy_applyPay(data).then((response)=>{
-                        if (response.data.code==0){
-                            dialogs('success','申请成功！');
-                            this.query();
-                            //关闭弹出层
-                            $(".modal").modal("hide");
-                        }
-                });
+                this.model.subsidy_applyPay(JSON.stringify(data))
+                        .then((response)=>{
+                        // *** 判断请求是否成功如若
+                            if(response.data.code==0){
+                                    dialogs('success','划付成功！');
+                                    this.query();
+                                }
+                            });
             },
             query() {
                 $(".check-boxs").prop({'checked':false})
