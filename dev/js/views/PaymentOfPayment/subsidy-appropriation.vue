@@ -213,7 +213,7 @@
                                     <option value="3">银行结算</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="text-align: center">
                                 <input type="button" class="btn btn-info btn-primary" @click="submit()" value="提交">
                                 <input type="button" class="btn btn-info btn-gray" @click="" data-dismiss="modal" value="取消">
                             </div>
@@ -259,11 +259,10 @@
                 pageIndex:1,
                 pageSize:10,
                 cityList:[],
-                payTypes:[],
                 showPayAccount:'',
                 subsidyAppropriationList:[],
                 payType:"1",
-                payTypes:'1',
+                payTypes:'2',
                 applyPayInfo:{
                 },
                 applyPayRemarks:'',
@@ -316,7 +315,7 @@
                 }
             },
             clear(){
-                this.payTypes='1';
+                this.payTypes='2';
             },
 //            showModalApplyPay(){
 //                var AccountS = [];
@@ -385,7 +384,7 @@
                     return false
                 }
                 this.getApplyPayInfoByIDs(AccountS);
-                this.dialogTitle='一键划付';
+                this.dialogTitle='一键审核';
             },
             showModalApplyPayById(id){
                 let array=[];
@@ -419,11 +418,13 @@
                     ids:this.submitId,
                     payType:this.payTypes
                 }
+                var mes;
+                (this.submitId.length>1)?mes='审核成功':mes='划付成功';
                 this.model.subsidy_applyPay(data)
                         .then((response)=>{
                         // *** 判断请求是否成功如若
                             if(response.data.code==0){
-                                    dialogs('success','划付成功！');
+                                    dialogs('success',mes);
                                     this.query();
                                 }
                             });
@@ -496,14 +497,6 @@
             this.getCity();
         },
          watch:{
-            payType(){
-                let type=$("#payType").val()
-                for(var i in this.payTypes){
-                    if(type == this.payTypes[i].type){
-                        this.showPayAccount=this.payTypes[i].value
-                    }
-                }
-            },
             timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
