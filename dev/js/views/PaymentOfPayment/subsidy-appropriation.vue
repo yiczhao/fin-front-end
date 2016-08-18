@@ -165,6 +165,25 @@
                                         </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>合计</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
+                                        <td>{{total.payAmount/100 | currency ''}}</td>
+                                        <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                     </div>
@@ -269,7 +288,12 @@
                 },
                 applyPayRemarks:'',
                 dialogTitle:'',
-                submitId:''
+                submitId:'',
+                total:{
+                    thirdPartySubsidyShould:'',
+                    suspensionTaxAmount:'',
+                    payAmount:''
+                }
             }
         },
         methods:{
@@ -284,6 +308,13 @@
                             this.$set('pageall', response.data.total)
                         }
                     });
+                 this.model.appropriation_total(data)
+                         .then((response)=>{
+                             // *** 判断请求是否成功如若成功则填充数据到模型
+                             if(response.data.code==0){
+                                 this.$set('total', response.data.data)
+                             }
+                         });
             },
              //获取分公司数据
             getSubcompany(){

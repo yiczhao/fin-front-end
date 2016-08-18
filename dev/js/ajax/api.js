@@ -329,6 +329,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.subsidy_applyPay = './subsidyPayDetail/applyPay';
+    /**
+     * @description 补贴划付一键审核接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.appropriation_total = './subsidyPayDetail/total?';
 
 
     //- todo  备付金支出-补贴退税 subsidy-tax-rebate
