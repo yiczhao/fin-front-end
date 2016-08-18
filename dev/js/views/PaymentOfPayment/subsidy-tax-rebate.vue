@@ -207,7 +207,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.recordCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元
+                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeAmount/100 | currency ''}}</span>  元
                             </div>
                             <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
@@ -217,10 +217,10 @@
                                     <option value="3">银行结算</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="modal-foot">
-                            <input type="button" class="btn btn-primary" @click="submit()" value="提交">
-                            <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-primary" @click="submit()" value="提交">
+                                <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
+                            </div>
                         </div>
                     </div>
                 </div>
