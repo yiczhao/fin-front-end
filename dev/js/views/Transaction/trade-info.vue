@@ -470,12 +470,12 @@
                 }
                 let data={};
                 $.extend(true,data,this.tradeInfo);
-                data.consumptionAmount= this.tradeInfo.consumptionAmount*100;
-                data.discountAmount=this.tradeInfo.discountAmount*100;
-                data.payAmount=this.tradeInfo.payAmount*100;
-                data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
-                data.suspensionTax=this.tradeInfo.suspensionTax*100;
-                data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
+                data.consumptionAmount= accMul(this.tradeInfo.consumptionAmount,100);
+                data.discountAmount=accMul(this.tradeInfo.discountAmount,100);
+                data.payAmount=accMul(this.tradeInfo.payAmount,100);
+                data.thirdPartyReceivable=accMul(this.tradeInfo.thirdPartyReceivable,100);
+                data.suspensionTax=accMul(this.tradeInfo.suspensionTax,100);
+                data.merchantSubsidyActual=accMul(this.tradeInfo.merchantSubsidyActual,100);
                 this.model.addtrade(data)
                     .then((response)=>{
                         if(response.data.code==0){

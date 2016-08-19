@@ -525,7 +525,7 @@ table tr td,table tr th{
                 if (this.$vali.invalid && this.saveerror)return;
                 let entity = {
                     advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
-                    advancePaymentAmount: this.applyAdvancePay.advancePaymentAmount * 100,
+                    advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,
                 }
                 this.model.applyAdvancePay(entity)

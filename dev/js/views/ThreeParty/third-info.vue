@@ -378,7 +378,7 @@
                 if(this.$vali.invalid)return;
                 let data={
                     id:this.redata.id,
-                    money:this.redata.money *100,
+                    money:accMul(this.redata.money,100),
                     remarks:this.redata.remarks
                 }
                 this.model.thirdParty_recharge(data)
