@@ -204,7 +204,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/Transaction/white_model'
+    import model from '../../ajax/Transaction/white_model.js'
     export default{
         data(){
             this.model =model(this)
