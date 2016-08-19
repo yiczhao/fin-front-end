@@ -84,10 +84,10 @@
                                     <template v-if="trlist.settlementCycle==3">月结</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
-                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">活动列表</a></td>
-                                <td><a v-link="{name:'invoice-account',params:{invoiceSHid:trlist.merchantID,invoiceHDid:trlist.merchantOperationID,invoiceSHname:trlist.merchantName}}">活动列表</a></td>
-                                <td><a v-link="{name:'suspension-tax',params:{invoiceSHid:trlist.merchantID,invoiceHDid:trlist.merchantOperationID,invoiceSHname:trlist.merchantName}}">活动列表</a></td>
-                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">活动列表</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'invoice-account',params:{invoiceSHid:trlist.merchantID,invoiceHDid:trlist.merchantOperationID,invoiceSHname:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'suspension-tax',params:{invoiceSHid:trlist.merchantID,invoiceHDid:trlist.merchantOperationID,invoiceSHname:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <!--<td>-->
                                     <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
                                 <!--</td>-->
