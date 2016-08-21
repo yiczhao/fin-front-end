@@ -15,6 +15,7 @@
 								<tr><td></td><td><input type="button" value="提交" @click="submits($event)"/></td></tr>
 								<tr><td>选择日期：<datepicker  :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker></td><td><input type="button" value="提交" @click="submitTime($event)"/></td></tr>
 								<tr><td></td><td><input type="button" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/></td></tr>
+								<tr><td></td><td><input type="button" value="测试" @click="testBank"/></td></tr>
 							</table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
@@ -103,6 +104,13 @@
 						.then((response)=>{
 								dialogs('success','回滚成功！');
 						})
+			},
+			testBank(){
+				this.$http.post('./dev/tool/testBank')
+						.then(
+								(response)=>{
+									dialogs('success','请求成功');
+				})
 			}
         },
         ready() {
