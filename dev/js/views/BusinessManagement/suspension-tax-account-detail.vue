@@ -99,7 +99,7 @@
                                 </td>
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
-                                    <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID，payType:trlist.payType}}">查看</a>
+                                    <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID,payType:trlist.payType}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>

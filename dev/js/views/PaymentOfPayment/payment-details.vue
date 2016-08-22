@@ -62,6 +62,7 @@
                                     <option value="3">退税划付</option>
                                     <option value="4">预付款</option>
                                     <option value="5">供货商划付</option>
+                                    <option value="10">税金提现</option>
                                 </select>
                             </div>
                             <div class="form-group">
