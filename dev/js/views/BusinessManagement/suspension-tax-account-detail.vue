@@ -258,6 +258,11 @@
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
             applyPay({id}){
+                this.applyData={
+                    remarks:'',
+                    payoutAmount:'',
+                    payType:'1'
+                };
                 let data={
                     id:id,
                 }
@@ -274,13 +279,16 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.applyText='';
                 if(this.applyData.payoutAmount==''){
-                    this.applyText='请填写充值金额！';
+                    this.applyText='请填写提现金额！';
                     return;
                 }
-                this.model.subsidyAccount_applyPay(this.applyData)
+                let data={};
+                $.extend(true, data,this.applyData);
+                data.payoutAmount=parseInt(data.payoutAmount)*100;
+                this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success','已充值！');
+                                dialogs('success',response.message);
                                 this.initList();
                             }
                         });

@@ -67,12 +67,12 @@
                                 <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
                                 <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td><a v-link="{name:'invoice-account',params:{invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.suspensionTaxAmount,invoiceSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
                                 <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.invoiceAmount,suspensionSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.suspensionTaxAmount,invoiceSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
                                 <td>
                                     <a v-link="{name:'third-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
                                     <a @click="applyPay(trlist)">税金提现</a>
-                                    <a @click="recharge(trlist.activityName,trlist.invoiceAmount)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
+                                    <a @click="recharge(trlist)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
                                 </td>
                             </tr>
                             <tr role="row">
@@ -131,7 +131,7 @@
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
                                 </div>
-                                <div class="form-group tc" style="display: inline;">
+                                <div class="form-group tc">
                                     <span v-show="applyText!=''" class="validation-error-label" v-text="applyText"></span>
                                 </div>
                             </div>
@@ -170,11 +170,15 @@
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
                                         </div>
+                                        <div class="form-group">
+                                            <label style="position: relative;top: -95px;" class="control-label">备注：</label>
+                                            <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
+                                        </div>
                                         <div class="form-group tc">
                                             <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
                                         </div>
                                         <div class="form-group tc">
-                                            <span  style="display: inline;" v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                                            <span v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +192,9 @@
     </index>
 </template>
 <style>
-
+.validation-error-label{
+    display: inline;
+}
 </style>
 <script>
     import model from '../../ajax/BusinessManagement/merchat-activity-subsidy-account'
@@ -224,7 +230,9 @@
                     withdrawCashAmount:''
                 },
                 rechargeData:{
-                    payAmount:'',
+                    subsidyAccountID:'',
+                    payoutAmount:'',
+                    remarks:'',
                     certificateId:''
                 },
                 applyData:{
@@ -264,6 +272,7 @@
                         });
             },
             initList(){
+                $('.modal').modal('hide');
                 if(this.defaultData.pageIndex==1){
                     this. getZlists();
                     return;
@@ -276,6 +285,12 @@
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
             applyPay({id}){
+                this.applyData={
+                    remarks:'',
+                    id:'',
+                    payoutAmount:'',
+                    payType:'1'
+                };
                 this.applyData.id=id;
                 let data={
                     id:id,
@@ -293,34 +308,44 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.applyText='';
                 if(this.applyData.payoutAmount==''){
-                    this.applyText='请填写充值金额！';
+                    this.applyText='请填写提现金额！';
                     return;
                 }
-                this.model.subsidyAccount_applyPay(this.applyData)
+                let data={};
+                $.extend(true, data,this.applyData);
+                data.payoutAmount=parseInt(data.payoutAmount)*100;
+                this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success','已充值！');
+                                dialogs('success',response.message);
                                 this.initList();
                             }
                         });
             },
-            recharge(val2,val3){
+            recharge({id,activityName,invoiceAmount}){
+                this.rechargeData={
+                    subsidyAccountID:'',
+                    payoutAmount:'',
+                    remarks:'',
+                    certificateId:''
+                },
+                this.rechargeData.subsidyAccountID=id;
                 this.rechargeInfo.val1=this.balance.merchantName;
-                this.rechargeInfo.val2=val2;
-                this.rechargeInfo.val3=val3;
+                this.rechargeInfo.val2=activityName;
+                this.rechargeInfo.val3=invoiceAmount;
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                if(this.rechargeData.certificatesID==''){this.fire=true;this.errortext='请上传凭证';return;}
+                if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true, data,this.rechargeData);
-                data.payAmount=parseInt(data.payAmount)*100;
+                data.payoutAmount=parseInt(data.payoutAmount)*100;
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success','已充值！');
+                                dialogs('success',response.message);
                                 this.initList();
                             }
                         });
@@ -348,7 +373,7 @@
                     vm.$common_model.upload(datas)
                             .then((response)=>{
                                 if(response.data.code == 0){
-                                    vm.recharge.certificatesID=response.data.data;
+                                    vm.rechargeData.certificateId=response.data.data;
                                     vm.saveerror='';
                                     vm.uploadText=files.name;
                                     dialogs('success','上传成功！');
@@ -380,7 +405,7 @@
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';
-                vm.recharge.certificatesID='';
+                vm.rechargeData.certificateId='';
             })
         }
     }

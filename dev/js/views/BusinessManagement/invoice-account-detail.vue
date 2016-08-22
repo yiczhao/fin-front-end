@@ -158,6 +158,10 @@
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
                                         </div>
+                                        <div class="form-group">
+                                            <label style="position: relative;top: -95px;" class="control-label">备注：</label>
+                                            <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
+                                        </div>
                                         <div class="form-group tc">
                                             <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
                                         </div>
@@ -212,7 +216,9 @@
                     balanceAmount:''
                 },
                 rechargeData:{
-                    payAmount:'',
+                    subsidyAccountID:'',
+                    payoutAmount:'',
+                    remarks:'',
                     certificateId:''
                 },
                 rechargeInfo:{
@@ -252,6 +258,7 @@
                         });
             },
             initList(){
+                $('.modal').modal('hide');
                 if(this.defaultData.pageIndex==1){
                     this. getZlists();
                     return;
@@ -264,6 +271,11 @@
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
             recharge(){
+                this.rechargeData={
+                    payoutAmount:'',
+                    remarks:'',
+                    certificateId:''
+                },
                 this.rechargeInfo.val1=this.balance.accountName;
                 this.rechargeInfo.val2=this.balance.merchantName;
                 this.rechargeInfo.val3=this.balance.balanceAmount;
@@ -279,7 +291,7 @@
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success','已充值！');
+                                dialogs('success',response.message);
                                 this.initList();
                             }
                         });
@@ -343,6 +355,7 @@
             (vm.$route.params.invoiceSHname==':invoiceSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.invoiceSHname;
             (vm.$route.params.invoiceZHbalance==':invoiceZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.invoiceZHbalance;
             (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
+            (vm.$route.params.invoiceHDid==':invoiceHDid')? vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID='' : vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID=vm.$route.params.invoiceHDid;
             vm.getTime();
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
