@@ -11,6 +11,7 @@
                                 <select class="form-control" v-model="checkForm.payType">
                                     <option value="1">备付金账户</option>
                                     <option value="2">商户预付款账户</option>
+                                    <option value="3">银行结算</option>
                                     <option value="4">其他</option>
                                 </select>
                             </div>
@@ -209,7 +210,7 @@
                                     <th>备注</th>
                                 </tr>
                             </thead>
-                            <tr v-show="listinfos!=null" class="div-table" v-for="trlist in listinfos">
+                            <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createAt | datetimes}}</td>
                                 <td>{{trlist.amount/100 | currency '' }}</td>
                                 <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
@@ -232,6 +233,9 @@
                                     <template v-if="trlist.status==0"> 已关闭</template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
+                            </tr>
+                            <tr style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                                <td>未找到数据</td>
                             </tr>
                         </table>
                         </div>
