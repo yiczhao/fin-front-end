@@ -97,7 +97,7 @@
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
                                 </td>
-                                <td>{{trlist.tradeTime  | datetimes}}</td>
+                                <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
                                     <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID，payType:trlist.payType}}">查看</a>
                                 </td>

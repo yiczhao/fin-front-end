@@ -97,9 +97,9 @@
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
                                 </td>
-                                <td>{{trlist.tradeTime  | datetimes}}</td>
+                                <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
-                                    <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载凭证</a>
+                                    <a v-if="trlist.certificateId!=0" href="{{origin}}/file/download/{{trlist.certificateId}}">下载凭证</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
