@@ -288,7 +288,7 @@
                 this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success',response.message);
+                                dialogs('success',response.data.message);
                                 this.balance.balanceAmount=response.data.data;
                                 this.initList();
                             }

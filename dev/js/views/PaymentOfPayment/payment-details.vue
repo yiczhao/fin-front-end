@@ -145,7 +145,7 @@
                                 <td>
                                     <a v-if="n.status!=0" @click="getInfo(n,index)">详情</a>
                                     <template v-if="n.status==2">
-                                        <a @click="pay(n.id)">确认划付</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)">确认划付</a>
                                         <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)">退回重审</a>
                                     </template>
                                     <template v-if="n.status==4">
@@ -247,6 +247,7 @@
                         <div class="modal-body">
                             <div class="form-group tc">
                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认划付账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
@@ -533,8 +534,12 @@
                 this.accountId=a;
             },
             pay(a){
+                this.waring = '你确认划付账单？';
+                this.accountId=a;
+            },
+            payTrue(){
                 this.orderIDs=[];
-                this.orderIDs.push(a);
+                this.orderIDs.push(this.accountId);
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                             if(response.data.code==0){
@@ -593,16 +598,6 @@
                             dialogs('success','已更新！');
                         }
                     })
-            },
-            payTrue(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.reservecash_allow(this.accountId)
-                        .then( (response)=> {
-                            if(response.data.code==0){
-                                this.initList();
-                                dialogs('success','划付成功！');
-                            }
-                        })
             },
             delTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;

@@ -317,7 +317,7 @@
                 this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success',response.message);
+                                dialogs('success',response.data.message);
                                 this.initList();
                             }
                         });
@@ -345,7 +345,7 @@
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                dialogs('success',response.message);
+                                dialogs('success',response.data.message);
                                 this.initList();
                             }
                         });
