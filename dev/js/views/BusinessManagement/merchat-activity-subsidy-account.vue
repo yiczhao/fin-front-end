@@ -67,11 +67,11 @@
                                 <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
                                 <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td>{{trlist.suspensionTaxAmount/100 | currency ''}}</td>
-                                <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
+                                <td><a v-link="{name:'invoice-account',params:{invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.suspensionTaxAmount,invoiceSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.invoiceAmount,suspensionSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
                                     <a v-link="{name:'third-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
-                                    <a @click="applyPay()">税金提现</a>
+                                    <a @click="applyPay(trlist)">税金提现</a>
                                     <a @click="recharge(trlist.activityName,trlist.invoiceAmount)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
                                 </td>
                             </tr>
@@ -116,17 +116,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>付款方式：</label>
-                                    <select class="form-control" v-model="applyData.payType">
+                                    <select class="form-control" v-model="applyData.payType" style="display: inline-block;width: 80%;">
                                         <option value="1">备付金账户</option>
                                         <option value="0">商户预付款账户</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label><i style="color:red;">*</i>金额：</label>
+                                    <input style="width: 70%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount"></div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label">备注：</label>
                                     <textarea rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
+                                </div>
+                                <div class="form-group tc" style="display: inline;">
+                                    <span v-show="applyText!=''" class="validation-error-label" v-text="applyText"></span>
                                 </div>
                             </div>
                         </div>
@@ -156,10 +162,10 @@
                                             <span>{{rechargeInfo.val3/100 | currency '' }}</span>
                                         </div>
                                         <div class="form-group">
-                                            <label><i>*</i>金额：</label>
-                                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"></div>
+                                            <label><i style="color:red;">*</i>金额：</label>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"></div>
                                         <div class="form-group" v-else>
-                                            <label><i>*</i>上传凭证：</label>
+                                            <label><i style="color:red;">*</i>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
@@ -168,7 +174,7 @@
                                             <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
                                         </div>
                                         <div class="form-group tc">
-                                            <span v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                                            <span  style="display: inline;" v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -223,6 +229,8 @@
                 },
                 applyData:{
                     remarks:'',
+                    id:'',
+                    payoutAmount:'',
                     payType:'1'
                 },
                 rechargeInfo:{
@@ -231,6 +239,7 @@
                     val3:'',
                 },
                 errortext:'',
+                applyText:'',
                 uploadText:''
             }
         },
@@ -266,8 +275,12 @@
                 //初始化
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
-            applyPay(){
-                this.model.subsidyAccount_info(this.defaultData)
+            applyPay({id}){
+                this.applyData.id=id;
+                let data={
+                    id:id,
+                }
+                this.model.subsidyAccount_info(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
@@ -278,7 +291,12 @@
             },
             applyPayTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.subsidyAccount_applyPay(this.applyPay)
+                this.applyText='';
+                if(this.applyData.payoutAmount==''){
+                    this.applyText='请填写充值金额！';
+                    return;
+                }
+                this.model.subsidyAccount_applyPay(this.applyData)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success','已充值！');

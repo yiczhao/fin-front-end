@@ -22,6 +22,14 @@ function model(_this){
             return _this.$http.get(_this.$API.suspensionTaxAccountDetail_total+ $.param(data))
         },
         /**
+         * @description 商户补贴账户管理申请提现页面税金池和可提现金额
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidyAccount_info(data){
+            return _this.$http.get(_this.$API.subsidyAccount_info+ $.param(data))
+        },
+        /**
          * @description 商户暂扣税金账户明细申请提现
          * @params {data}
          * @returns {*}

@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info">充值</a>
+                            <a @click="recharge()" data-toggle="modal" data-target="#modal_recharge" class="btn btn-info">充值</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="dateS">
@@ -62,8 +62,8 @@
                 </div>
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                    <span>账户名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>账户余额：</span><span style="margin-right: 10px;">{{balance.balanceAmount }}</span>
+                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
+                    <span>账户余额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}</span>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -150,10 +150,10 @@
                                             <span>{{rechargeInfo.val3/100 | currency '' }}</span>
                                         </div>
                                         <div class="form-group">
-                                            <label><i>*</i>金额：</label>
-                                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"></div>
+                                            <label><i style="color:red;">*</i>金额：</label>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"></div>
                                         <div class="form-group" v-else>
-                                            <label><i>*</i>上传凭证：</label>
+                                            <label><i style="color:red;">*</i>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
@@ -263,10 +263,10 @@
                 //初始化
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
-            recharge(val2,val3){
-                this.rechargeInfo.val1=this.balance.merchantName;
-                this.rechargeInfo.val2=val2;
-                this.rechargeInfo.val3=val3;
+            recharge(){
+                this.rechargeInfo.val1=this.balance.accountName;
+                this.rechargeInfo.val2=this.balance.merchantName;
+                this.rechargeInfo.val3=this.balance.balanceAmount;
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -339,10 +339,10 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.invoiceZHname==':invoiceZHname')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID;
-            (vm.$route.params.invoiceSHname==':invoiceSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName;
-            (vm.$route.params.invoiceZHbalance==':invoiceZHbalance')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID;
-            (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID;
+            (vm.$route.params.invoiceZHname==':invoiceZHname')?vm.balance.accountName= '' : vm.balance.accountName=vm.$route.params.invoiceZHname;
+            (vm.$route.params.invoiceSHname==':invoiceSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.invoiceSHname;
+            (vm.$route.params.invoiceZHbalance==':invoiceZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.invoiceZHbalance;
+            (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
             vm.getTime();
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {

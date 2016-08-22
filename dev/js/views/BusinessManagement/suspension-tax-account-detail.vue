@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info">充值</a>
+                            <a @click="applyPay(applyData)" class="btn btn-info">提现</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="dateS">
@@ -62,8 +62,8 @@
                 </div>
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                    <span>账户名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>账户余额：</span><span style="margin-right: 10px;">{{balance.balanceAmount }}</span>
+                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
+                    <span>账户余额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100| currency '' }}</span>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -141,17 +141,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>付款方式：</label>
-                                    <select class="form-control" v-model="applyData.payType">
+                                    <select class="form-control" v-model="applyData.payType" style="display: inline-block;width: 80%;">
                                         <option value="1">备付金账户</option>
                                         <option value="0">商户预付款账户</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label><i style="color:red;">*</i>金额：</label>
+                                    <input style="width: 70%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount"></div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label">备注：</label>
                                     <textarea rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
+                                </div>
+                                <div class="form-group tc" style="display: inline;">
+                                    <span v-show="applyText!=''" class="validation-error-label" v-text="applyText"></span>
                                 </div>
                             </div>
                         </div>
@@ -205,8 +211,11 @@
                 },
                 applyData:{
                     remarks:'',
+                    id:'',
+                    payoutAmount:'',
                     payType:'1'
                 },
+                applyText:'',
                 dateS:'1'
             }
         },
@@ -248,8 +257,11 @@
                 //初始化
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
-            applyPay(){
-                this.model.subsidyAccount_info(this.defaultData)
+            applyPay({id}){
+                let data={
+                    id:id,
+                }
+                this.model.subsidyAccount_info(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
@@ -260,7 +272,12 @@
             },
             applyPayTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.subsidyAccount_applyPay(this.applyPay)
+                this.applyText='';
+                if(this.applyData.payoutAmount==''){
+                    this.applyText='请填写充值金额！';
+                    return;
+                }
+                this.model.subsidyAccount_applyPay(this.applyData)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success','已充值！');
@@ -292,10 +309,11 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.suspensionZHname==':suspensionZHname')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID;
-            (vm.$route.params.suspensionSHname==':suspensionSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName;
-            (vm.$route.params.suspensionZHbalance==':suspensionZHbalance')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID;
-            (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID;
+            (vm.$route.params.suspensionZHname==':suspensionZHname')?vm.defaultData.accountName= '' : vm.defaultData.accountName=vm.$route.params.suspensionZHname;
+            (vm.$route.params.suspensionSHname==':suspensionSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.suspensionSHname;
+            (vm.$route.params.suspensionZHbalance==':suspensionZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.suspensionZHbalance;
+            (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
+            (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id='' : vm.applyData.id=vm.$route.params.suspensionHDid;
             vm.getTime();
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
