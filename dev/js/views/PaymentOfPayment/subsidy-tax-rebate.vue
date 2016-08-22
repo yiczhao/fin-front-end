@@ -373,7 +373,7 @@
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 var mes;
-                (this.submitId.length>1)?mes='审核成功':mes='划付成功';
+                (this.submitId.length>1)?mes='审核成功':mes='申请成功';
                 let data={
                     ids:this.submitId,
                     payType:this.payTypes

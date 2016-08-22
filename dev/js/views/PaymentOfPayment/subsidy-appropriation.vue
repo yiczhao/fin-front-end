@@ -452,7 +452,7 @@
                     payType:this.payTypes
                 }
                 var mes;
-                (this.submitId.length>1)?mes='审核成功':mes='划付成功';
+                (this.submitId.length>1)?mes='审核成功':mes='申请成功';
                 this.model.subsidy_applyPay(data)
                         .then((response)=>{
                         // *** 判断请求是否成功如若
