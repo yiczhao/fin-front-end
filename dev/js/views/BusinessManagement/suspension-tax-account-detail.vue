@@ -318,11 +318,11 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.suspensionZHname==':suspensionZHname')?vm.defaultData.accountName= '' : vm.defaultData.accountName=vm.$route.params.suspensionZHname;
+            (vm.$route.params.suspensionZHname==':suspensionZHname')?vm.balance.accountName= '' : vm.balance.accountName=vm.$route.params.suspensionZHname;
             (vm.$route.params.suspensionSHname==':suspensionSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.suspensionSHname;
             (vm.$route.params.suspensionZHbalance==':suspensionZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.suspensionZHbalance;
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
-            (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id='' : vm.applyData.id=vm.$route.params.suspensionHDid;
+            (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {

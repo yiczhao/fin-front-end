@@ -401,12 +401,12 @@
                 this.endDate=init_date(this.timeRange)[1];
             },
             pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
+                this.pageIndex=this.pagecur;
+                this.query();
             },
             page_size(){
-                this.defaultData.pageSize=this.page_size;
-                this.initList();
+                this.pageSize=this.page_size;
+                this.query();
             }
         }
     }
