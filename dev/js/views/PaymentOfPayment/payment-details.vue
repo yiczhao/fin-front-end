@@ -133,6 +133,7 @@
                                     <template v-if="n.purpose==3"> 退税划付</template>
                                     <template v-if="n.purpose==4"> 预付款</template>
                                     <template v-if="n.purpose==5"> 供货商划付</template>
+                                    <template v-if="n.purpose==10">税金提现</template>
                                 </td>
                                 <td>
                                     <template v-if="n.status==1"> 等待审核</template>
