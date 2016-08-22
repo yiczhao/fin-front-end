@@ -67,8 +67,8 @@
                                 <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
                                 <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.invoiceAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.suspensionTaxAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
                                     <a v-link="{name:'third-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
                                     <a @click="applyPay(trlist)">税金提现</a>
@@ -80,8 +80,8 @@
                                 <td>合计：</td>
                                 <td></td>
                                 <td></td>
-                                <td>{{total.consumptionTotalNumber}}</td>
-                                <td>{{total.consumptionTotalAmount/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
                                 <td>{{total.paidAmount/100 | currency ''}}</td>
                                 <td>{{total.unpaidAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>

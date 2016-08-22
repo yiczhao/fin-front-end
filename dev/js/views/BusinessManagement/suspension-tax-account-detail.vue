@@ -289,6 +289,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.message);
+                                this.balance.balanceAmount=response.data.data;
                                 this.initList();
                             }
                         });

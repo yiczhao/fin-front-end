@@ -99,7 +99,7 @@
                                 </td>
                                 <td>{{trlist.tradeTime  | datetimes}}</td>
                                 <td>
-                                    <a href="{{origin}}/file/download/{{n.certificateID}}">下载凭证</a>
+                                    <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载凭证</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -290,6 +290,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.message);
+                                this.balance.balanceAmount=response.data.data;
                                 this.initList();
                             }
                         });
