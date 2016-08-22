@@ -19,8 +19,8 @@
                             <select class="form-control" v-model="defaultData.activityStatus">
                                 <option value="">请选择状态</option>
                                 <option value="1">待上线</option>
-                                <option value="0">运行中</option>
-                                <option value="0">已结束</option>
+                                <option value="2">运行中</option>
+                                <option value="3">已结束</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -59,16 +59,16 @@
                                 <td>{{trlist.activityName }}</td>
                                 <td>{{trlist.startDate | datetimes}}--{{trlist.endDate  | datetimes}}</td>
                                 <td>
-                                    <template v-if="trlist.activityStatus ==0">待上线</template>
-                                    <template v-if="trlist.activityStatus ==1">运行中</template>
-                                    <template v-if="trlist.activityStatus ==1">已结束</template>
+                                    <template v-if="trlist.activityStatus==1">待上线</template>
+                                    <template v-if="trlist.activityStatus==2">运行中</template>
+                                    <template v-if="trlist.activityStatus==3">已结束</template>
                                 </td>
                                 <td>{{trlist.consumptionTotalAmount}}</td>
                                 <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
                                 <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.invoiceAmount,suspensionSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
-                                <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.suspensionTaxAmount,invoiceSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.invoiceAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.suspensionTaxAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
                                     <a v-link="{name:'third-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
                                     <a @click="applyPay(trlist)">税金提现</a>
@@ -313,7 +313,7 @@
                 }
                 let data={};
                 $.extend(true, data,this.applyData);
-                data.payoutAmount=parseInt(data.payoutAmount)*100;
+                data.payoutAmount=parseFloat(data.payoutAmount)*100;
                 this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
@@ -341,7 +341,7 @@
                 if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true, data,this.rechargeData);
-                data.payoutAmount=parseInt(data.payoutAmount)*100;
+                data.payoutAmount=parseFloat(data.payoutAmount)*100;
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){

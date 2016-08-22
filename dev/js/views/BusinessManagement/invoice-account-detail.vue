@@ -271,11 +271,9 @@
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
             recharge(){
-                this.rechargeData={
-                    payoutAmount:'',
-                    remarks:'',
-                    certificateId:''
-                },
+                this.rechargeData.payoutAmount='';
+                this.rechargeData.remarks='';
+                this.rechargeData.certificateId='';
                 this.rechargeInfo.val1=this.balance.accountName;
                 this.rechargeInfo.val2=this.balance.merchantName;
                 this.rechargeInfo.val3=this.balance.balanceAmount;
@@ -284,10 +282,10 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                if(this.rechargeData.certificatesID==''){this.fire=true;this.errortext='请上传凭证';return;}
+                if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
-                $.extend(true, data,this.rechargeData);
-                data.payAmount=parseInt(data.payAmount)*100;
+                $.extend(true,data,this.rechargeData);
+                data.payoutAmount=parseFloat(data.payoutAmount)*100;
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){
@@ -319,7 +317,7 @@
                     vm.$common_model.upload(datas)
                             .then((response)=>{
                                 if(response.data.code == 0){
-                                    vm.recharge.certificatesID=response.data.data;
+                                    vm.rechargeData.certificateId=response.data.data;
                                     vm.saveerror='';
                                     vm.uploadText=files.name;
                                     dialogs('success','上传成功！');
@@ -361,7 +359,7 @@
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';
-                vm.recharge.certificatesID='';
+                vm.rechargeData.certificateId='';
             })
         }
     }
