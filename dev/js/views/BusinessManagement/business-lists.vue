@@ -84,10 +84,10 @@
                                     <template v-if="trlist.settlementCycle==3">月结</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
-                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
-                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
-                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                <td><a v-link="{name:'merchat-activity',params:{merchantID:trlist.merchantID,merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <!--<td>-->
                                     <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
                                 <!--</td>-->

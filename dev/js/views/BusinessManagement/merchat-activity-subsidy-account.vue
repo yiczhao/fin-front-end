@@ -70,7 +70,7 @@
                                 <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
                                 <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
-                                    <a v-link="{name:'third-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
+                                    <a v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
                                     <a @click="applyPay(trlist)">税金提现</a>
                                     <a @click="recharge(trlist)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
                                 </td>
@@ -398,9 +398,9 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.merchantID==':merchantID')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID;
-            (vm.$route.params.merchantName==':merchantName')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName;
-            (vm.$route.params.merchantOperationID==':merchantOperationID')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID;
+            (vm.$route.params.merchantID1==':merchantID1')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID1;
+            (vm.$route.params.merchantName1==':merchantName1')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName1;
+            (vm.$route.params.merchantOperationID1==':merchantOperationID1')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID1;
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);

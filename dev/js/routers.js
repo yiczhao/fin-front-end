@@ -108,7 +108,7 @@ export default function(router){
             }
         },
         /* 商户管理-商户列表-活动管理 */
-        '/merchat-activity-subsidy-account/:merchantID/:merchantName/:merchantOperationID':{
+        '/merchat-activity-subsidy-account/:merchantID1/:merchantName1/:merchantOperationID1':{
             name:'merchat-activity',
             component: function(resolve){
                 require(['./views/BusinessManagement/merchat-activity-subsidy-account.vue'],resolve);
