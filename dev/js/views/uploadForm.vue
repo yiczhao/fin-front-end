@@ -33,7 +33,7 @@
                                     <td>
                                         开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
                                         结束日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="enddateStr" format="YYYY-MM-DD"></datepicker>
-                                        <input type="text" class="form-control" v-model="accNumber" placeholder="账号"/>
+                                        <input type="text" class="form-control" v-model="bankAccountID" placeholder="账号"/>
                                     </td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="提交" @click="reserveCashDetail($event)"/>
@@ -111,7 +111,7 @@
 				dateStr:'',
                 startdateStr:'',
                 enddateStr:'',
-                accNumber:''
+                bankAccountID:''
             }
         },
 		components:{
@@ -173,7 +173,7 @@
                 let data={
                     startDate :this.startdateStr.replace(/\-/g,''),
                     endDate :this.enddateStr.replace(/\-/g,''),
-                    accountNumber:this.accNumber
+					bankAccountID:this.bankAccountID
                 }
                 this.$http.post('./dev/tool/reserveCashDetail',data)
                         .then((response)=>{
