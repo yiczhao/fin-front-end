@@ -258,11 +258,9 @@
                 window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
             },
             applyPay({id}){
-                this.applyData={
-                    remarks:'',
-                    payoutAmount:'',
-                    payType:'1'
-                };
+                this.applyData.remarks='';
+                this.applyData.payoutAmount='';
+                this.applyData.payType='';
                 let data={
                     id:id,
                 }
