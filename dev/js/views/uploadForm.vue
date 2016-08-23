@@ -12,12 +12,23 @@
 							<table>
 								<tr><td>File to upload:</td><td><input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data"></td></tr>
 								<tr><td>Name:</td><td><input type="text" name="name"/></td></tr>
-								<tr><td></td><td><input type="button" value="提交" @click="submits($event)"/></td></tr>
-								<tr><td>选择日期：<datepicker  :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker></td><td><input type="button" value="提交" @click="submitTime($event)"/></td></tr>
-								<tr><td></td><td><input type="button" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/></td></tr>
-								<tr><td></td><td><input type="button" value="补贴账户数据" data-toggle="modal" data-target="#modal_subsidy_account_data"/></td></tr>
-								<tr><td></td><td><input type="button" value="测试" @click="testBank"/></td></tr>
-							</table>
+								<tr><td></td><td><input type="button" class="btn btn-primary" value="提交" @click="submits($event)"/></td></tr>
+								<tr><td>选择日期：<datepicker  :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker></td><td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td></tr>
+								<tr><td></td><td><input type="button" class="btn btn-primary" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/></td></tr>
+								<tr><td></td><td><input type="button" class="btn btn-primary" value="补贴账户数据" data-toggle="modal" data-target="#modal_subsidy_account_data"/></td></tr>
+								<tr><td></td><td><input type="button" class="btn btn-primary" value="测试" @click="testBank"/></td></tr>
+                                <tr>
+                                    <td>
+                                        开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
+                                        结束日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="enddateStr" format="YYYY-MM-DD"></datepicker>
+                                        <input type="text" class="form-control" v-model="accNumber" placeholder="账号"/>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="提交" @click="reserveCashDetail($event)"/>
+                                    </td>
+                                </tr>
+
+                            </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
 									<div class="modal-content">
@@ -64,9 +75,16 @@
 	}
 	.upload-rows div{
 		padding:10px;
-		td{
+        tr{
+            border:1px solid #dadada;
+        }
+        td{
 			padding:20px;
-		}
+            input{
+                display: inline-block;
+                width:150px;
+            }
+        }
 	}
 </style>
 <script>
@@ -78,7 +96,10 @@
             return{
                 origin:window.origin,
 				name1:'',
-				dateStr:''
+				dateStr:'',
+                startdateStr:'',
+                enddateStr:'',
+                accNumber:''
             }
         },
 		components:{
@@ -134,7 +155,21 @@
 								(response)=>{
 									dialogs('success','请求成功');
 				})
-			}
+			},
+            reserveCashDetail(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                let data={
+                    startDate :this.startdateStr.replace(/\-/g,''),
+                    endDate :this.enddateStr.replace(/\-/g,''),
+                    accountNumber:this.accNumber
+                }
+                this.$http.post('./dev/tool/reserveCashDetail',data)
+                        .then((response)=>{
+                            dialogs('success','处理成功！');
+                        })
+
+
+            }
         },
         ready() {
         },
