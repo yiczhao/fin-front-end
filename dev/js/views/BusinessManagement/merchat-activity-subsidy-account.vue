@@ -44,8 +44,6 @@
                                 <th>名称</th>
                                 <th>起止时间</th>
                                 <th>状态 </th>
-                                <th>消费总笔数</th>
-                                <th>消费总金额</th>
                                 <th>已划付金额</th>
                                 <th>待划付金额</th>
                                 <th>暂扣税金</th>
@@ -63,8 +61,6 @@
                                     <template v-if="trlist.activityStatus==2">运行中</template>
                                     <template v-if="trlist.activityStatus==3">已结束</template>
                                 </td>
-                                <td>{{trlist.consumptionTotalAmount}}</td>
-                                <td>{{trlist.consumptionTotalNumber/100 | currency ''}}</td>
                                 <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
                                 <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
