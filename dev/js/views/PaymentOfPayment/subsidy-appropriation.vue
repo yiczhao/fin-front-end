@@ -492,7 +492,7 @@
                     this.endDate=init_date(this.timeRange)[1];
                 }
                 let data={
-                    id:this.subsidyTaxRebateID,
+                    id:this.id,
                     subCompanyID:this.subCompanyID,
                     merchantOperationID:this.merchantOperationID,
                     cityID:this.cityID,
