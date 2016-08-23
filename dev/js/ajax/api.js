@@ -275,6 +275,13 @@ export default function install(Vue) {
      * @method POST
      */
     _o.reservecash_batchPay='./reserveCashOrder/batchPay';
+    /**
+     * @description 跳转至商户补贴账户
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToSubsidyAccount='./reserveCashOrder/skipToSubsidyAccount/';
+
 
     //- todo  备付金支出-预付款划付 advance-payment-details
     /**

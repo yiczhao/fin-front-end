@@ -119,15 +119,15 @@
                                     {{n.merchantOperationID}}
                                 </td>
                                 <td>{{n.merchantName}}</td>
-                                <td>{{n.payoutAmount/100 | currency '' }}</td>
                                 <td>
-                                    <template v-if="n.purpose==1">{{n.suspensionTaxAmount/100 | currency '' }}</template>
+                                    <template v-if="n.purpose!=3">{{n.payoutAmount/100 | currency '' }}</template>
                                     <template v-else>--</template>
                                 </td>
                                 <td>
-                                    <template v-if="n.payType==1">{{n.payoutAccount}}</template>
-                                    <template v-else>{{n.payoutAccount}}</template>
+                                    <template v-if="n.purpose==1 || n.purpose==3">{{n.suspensionTaxAmount/100 | currency '' }}</template>
+                                    <template v-else>--</template>
                                 </td>
+                                <td>{{n.payoutAccount}}</td>
                                 <td>
                                     <template v-if="n.purpose==1"> 补贴划付</template>
                                     <template v-if="n.purpose==2"> 额度采购</template>
@@ -202,7 +202,10 @@
                             <thead>
                                 <tr role="row">
                                     <th>生成日期</th>
-                                    <th>划付金额</th>
+                                    <th>
+                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">暂扣税金</span>
+                                        <span v-else>划付金额</span>
+                                    </th>
                                     <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
@@ -220,6 +223,7 @@
                                     <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='补贴退税'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='预付款'"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)">详情</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)">删除</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)">删除</a></template>
                                 </td>
@@ -691,6 +695,16 @@
                                 }
                                 this.orderIDs=[];
                                 this.initList();
+                        })
+            },
+            skipToSubsidyAccount(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.skipToSubsidyAccount(_id)
+                        .then( (response)=> {
+                            if(response.data.code==0&&!!response.data.data){
+                                let trlist=response.data.data;
+                                this.$router.go({name:'suspension-tax',params:{suspensionHDid:trlist.reserveCashOrder.id,suspensionBTid:trlist.reserveCashOrder.merchantID,suspensionZHname:trlist.activity.activityName,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.ReserveCashOrder.suspensionTaxAmount,suspensionSHname:trlist.merchant.merchantName}});
+                            }
                         })
             }
         },
