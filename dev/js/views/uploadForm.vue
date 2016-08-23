@@ -10,13 +10,25 @@
 					<div>
 						<form method="POST" enctype="multipart/form-data">
 							<table>
-								<tr><td>File to upload:</td><td><input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data"></td></tr>
-								<tr><td>Name:</td><td><input type="text" name="name"/></td></tr>
-								<tr><td></td><td><input type="button" class="btn btn-primary" value="提交" @click="submits($event)"/></td></tr>
-								<tr><td>选择日期：<datepicker  :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker></td><td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td></tr>
-								<tr><td></td><td><input type="button" class="btn btn-primary" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/></td></tr>
-								<tr><td></td><td><input type="button" class="btn btn-primary" value="补贴账户数据" data-toggle="modal" data-target="#modal_subsidy_account_data"/></td></tr>
-								<tr><td></td><td><input type="button" class="btn btn-primary" value="测试" @click="testBank"/></td></tr>
+								<tr>
+									<td>File to upload:<input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data">Name:<input type="text"  class="form-control" name="name"/></td>
+									<td><input class="btn btn-primary" type="button" value="提交" @click="submits($event)"/></td>
+								</tr>
+								<tr>
+									<td>选择日期：
+										<datepicker :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="补贴账户数据" data-toggle="modal" data-target="#modal_subsidy_account_data"/>
+										<input type="button" class="btn btn-primary" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="测试" @click="testBank"/>
+									</td>
+								</tr>
                                 <tr>
                                     <td>
                                         开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
