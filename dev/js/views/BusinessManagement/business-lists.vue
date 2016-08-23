@@ -84,7 +84,7 @@
                                     <template v-if="trlist.settlementCycle==3">月结</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
-                                <template  v-if="trlist.paidAmount!=0&&!trlist.unpaidAmount!=0&&trlist.suspensionTaxAmount!=0&&trlist.invoiceAmount!=0">
+                                <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
                                     <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
                                     <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
                                     <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
