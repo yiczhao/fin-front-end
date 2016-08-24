@@ -66,7 +66,7 @@
                                 <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
                                 <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
-                                    <a v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID}}">交易明细</a>
+                                    <a v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':balance.merchantOperationID}}">交易明细</a>
                                     <a @click="applyPay(trlist)">税金提现</a>
                                     <a @click="recharge(trlist)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
                                 </td>
@@ -74,8 +74,6 @@
                             <tr role="row">
                                 <td></td>
                                 <td>合计：</td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>{{total.paidAmount/100 | currency ''}}</td>

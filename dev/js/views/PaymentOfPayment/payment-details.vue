@@ -59,7 +59,7 @@
                                 <select class="form-control" v-model="checkForm.purpose">
                                     <option value="">请选择用途</option>
                                     <option value="1">补贴划付</option>
-                                    <option value="2">额度采购</option>
+                                    <!--<option value="2">额度采购</option>-->
                                     <option value="3">退税划付</option>
                                     <option value="4">预付款</option>
                                     <option value="5">供货商划付</option>
@@ -120,8 +120,7 @@
                                 </td>
                                 <td>{{n.merchantName}}</td>
                                 <td>
-                                    <template v-if="n.purpose!=3">{{n.payoutAmount/100 | currency '' }}</template>
-                                    <template v-else>--</template>
+                                    {{n.payoutAmount/100 | currency '' }}
                                 </td>
                                 <td>
                                     <template v-if="n.purpose==1 || n.purpose==3">{{n.suspensionTaxAmount/100 | currency '' }}</template>
