@@ -107,7 +107,7 @@ function model(_this) {
          * @returns {*}
          */
         skipToSubsidyAccount(_id){
-            return _this.$http.post(_this.$API.skipToSubsidyAccount+_id)
+            return _this.$http.get(_this.$API.skipToSubsidyAccount+_id)
         }
     }
 }
