@@ -104,7 +104,7 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr role="row">
-                                <td></td>
+                                <td>合计：</td>
                                 <td>{{total.incomeAmount/100 | currency ''}}</td>
                                 <td>{{total.payoutAmount/100 | currency ''}}</td>
                                 <td></td>
@@ -147,10 +147,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 70%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount"></div>
+                                    <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount"></div>
                                 <div class="form-group">
-                                    <label style="position: relative;top: -95px;" class="control-label">备注：</label>
+                                    <label style="position: relative;top: -95px;width: 13%" class="control-label">备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
@@ -216,7 +216,7 @@
                     payType:'1'
                 },
                 applyText:'',
-                dateS:'1'
+                dateS:'3'
             }
         },
         methods:{
@@ -299,13 +299,13 @@
         },
         watch:{
             'defaultData.pageIndex':{
-                handler:(val,oldVal)=>{
+                handler:function(){
                     this.getZlists()
                 },
                 deep:true
             },
             'defaultData.pageSize':{
-                handler:(val,oldVal)=>{
+                handler:function(){
                     this.getZlists()
                 },
                 deep:true

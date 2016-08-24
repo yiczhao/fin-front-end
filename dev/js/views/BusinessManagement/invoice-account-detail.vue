@@ -104,7 +104,7 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr role="row">
-                                <td></td>
+                                <td>合计：</td>
                                 <td>{{total.incomeAmount/100 | currency ''}}</td>
                                 <td>{{total.payoutAmount/100 | currency ''}}</td>
                                 <td></td>
@@ -151,7 +151,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"></div>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                         <div class="form-group" v-else>
                                             <label><i style="color:red;">*</i>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
@@ -228,7 +228,7 @@
                 },
                 errortext:'',
                 uploadText:'',
-                dateS:'1'
+                dateS:'3'
             }
         },
         methods:{
@@ -333,13 +333,13 @@
         },
         watch:{
             'defaultData.pageIndex':{
-                handler:(val,oldVal)=>{
+                handler:function(){
                     this.getZlists()
                 },
                 deep:true
             },
             'defaultData.pageSize':{
-                handler:(val,oldVal)=>{
+                handler:function(){
                     this.getZlists()
                 },
                 deep:true
