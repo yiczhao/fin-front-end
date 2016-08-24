@@ -702,7 +702,7 @@
                         .then( (response)=> {
                             if(response.data.code==0&&!!response.data.data){
                                 let trlist=response.data.data;
-                                this.$router.go({name:'suspension-tax',params:{suspensionHDid:trlist.reserveCashOrder.id,suspensionBTid:trlist.reserveCashOrder.merchantID,suspensionZHname:trlist.activity.activityName,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.ReserveCashOrder.suspensionTaxAmount,suspensionSHname:trlist.merchant.merchantName}});
+                                this.$router.go({name:'suspension-tax',params:{suspensionHDid:trlist.reserveCashOrder.id,suspensionBTid:trlist.reserveCashOrder.merchantID,suspensionZHname:trlist.activity.activityName,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.reserveCashOrder.suspensionTaxAmount,suspensionSHname:trlist.merchant.merchantName}});
                             }
                         })
             }
