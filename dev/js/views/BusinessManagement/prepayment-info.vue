@@ -356,7 +356,7 @@
                     "endDate": ''
                 },
                 zdlists: [],
-                dateS: '1',
+                dateS: '3',
                 applyAdvancePay: {
                     merchantName: "",//商户名
                     balanceAmount: "",//余额
