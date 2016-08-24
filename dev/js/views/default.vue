@@ -19,14 +19,10 @@
         components:{
         },
         ready(){
-            // *** 请求用户数据
-            if(!!sessionStorage.getItem('userData')) {
-                this.$set('loginList',JSON.parse(sessionStorage.getItem('userData')))
-            }else{
-                this.$router.go('login');
-            }
-        },
-        props:{
+//            if(!sessionStorage.getItem('userData')){
+//                this.$router.go({name:'login'});
+//            }
+            this.loginList=JSON.parse(sessionStorage.getItem('userData'));
         }
     }
 </script>
