@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount"></div>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;width: 13%" class="control-label">备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
@@ -246,6 +246,7 @@
                         });
             },
             initList(){
+                $('.modal').modal('hide');
                 if(this.defaultData.pageIndex==1){
                     this. getZlists();
                     return;
@@ -259,7 +260,7 @@
             },
             applyPay({id}){
                 this.applyData.remarks='';
-                this.applyData.payoutAmount='';
+                this.applyData.payoutAmount='1';
                 this.applyData.payType='';
                 let data={
                     id:id,
@@ -282,7 +283,7 @@
                 }
                 let data={};
                 $.extend(true, data,this.applyData);
-                data.payoutAmount=parseInt(data.payoutAmount)*100;
+                data.payoutAmount=accMul(data.payoutAmount,100);
                 this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){

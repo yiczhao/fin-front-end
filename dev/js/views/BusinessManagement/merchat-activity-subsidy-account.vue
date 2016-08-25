@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount"></div>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                 <div class="form-group">
                                     <label style="width:13%;position: relative;top: -95px;" class="control-label">备注：</label>
                                     <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
@@ -310,7 +310,7 @@ table tr th,table tr td{
                 }
                 let data={};
                 $.extend(true, data,this.applyData);
-                data.payoutAmount=parseFloat(data.payoutAmount)*100;
+                data.payoutAmount=accMul(data.payoutAmount,100);
                 this.model.subsidyAccount_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
@@ -338,7 +338,7 @@ table tr th,table tr td{
                 if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true, data,this.rechargeData);
-                data.payoutAmount=parseFloat(data.payoutAmount)*100;
+                data.payoutAmount=accMul(data.payoutAmount,100);
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){

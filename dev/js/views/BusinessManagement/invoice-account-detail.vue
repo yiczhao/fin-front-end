@@ -285,7 +285,7 @@
                 if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true,data,this.rechargeData);
-                data.payoutAmount=parseFloat(data.payoutAmount)*100;
+                data.payoutAmount=accMul(data.payoutAmount,100);
                 this.model.subsidyAccount_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){
