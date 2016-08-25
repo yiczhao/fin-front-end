@@ -8,7 +8,7 @@
             <div class="panel-heading">
                 <form class="form-inline manage-form">
                     <div class="form-group">
-                        <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser">添加账户</a>
+                        <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
                     </div>
                     <div class="form-group">
                         <select class="form-control" v-model="defaultData.companyId">
@@ -28,7 +28,7 @@
                         <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
                     <div class="form-group">
-                        <a class="btn btn-info" @click="checkNew" >查询</a>
+                        <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                     </div>
                 </form>
             </div>
@@ -68,15 +68,15 @@
                             </td>
                             <td>{{trlist.startDate | datetimes}}</td>
                             <td>
-                                <a v-link="{name:'provisions-info',params:{accountId:trlist.id,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                <a data-ksa="reserve_cash_detail_manage.search" v-link="{name:'provisions-info',params:{accountId:trlist.id,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                             </td>
                             <td v-if="trlist.status==0">
-                                <span @click="rewrite(trlist)">编辑</span>
-                                <span data-toggle="modal" data-target="#modal_waring" @click="start(trlist.id)">启用</span>
-                                <span data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id)">删除</span>
+                                <span data-ksa="account_manage.add" @click="rewrite(trlist)">编辑</span>
+                                <span data-ksa="account_manage.enable" data-toggle="modal" data-target="#modal_waring" @click="start(trlist.id)">启用</span>
+                                <span data-ksa="account_manage.enable" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id)">删除</span>
                             </td>
                             <td v-else>
-                                <span chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)">负责人</span>
+                                <span chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)" data-ksa="charge_person_manage.add">负责人</span>
                             </td>
                         </tr>
                     </tbody>

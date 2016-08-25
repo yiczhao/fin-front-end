@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a @click="recharge()" data-toggle="modal" data-target="#modal_recharge" class="btn btn-info">充值</a>
+                            <a @click="recharge()" data-toggle="modal" data-target="#modal_recharge" class="btn btn-info" data-ksa="subsidy_account_manage.recharge">充值</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="dateS">
@@ -53,10 +53,10 @@
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="invoice_account_detail.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="excel">导出</a>
+                            <a class="btn btn-info" @click="excel" data-ksa="invoice_account_detail.search.export">导出</a>
                         </div>
                     </form>
                 </div>

@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                             <div class="form-group">
-                                <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info">回款充值</a>
+                                <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info" data-ksa="third_party_account_manage.recharge">回款充值</a>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
@@ -46,7 +46,7 @@
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="third_party_account_manage.detail">查询</a>
                         </div>
                     </form>
                 </div>
@@ -83,7 +83,7 @@
                                     </td>
                                     <td>{{trlist.tradeTime | datetime}}</td>
                                     <td>
-                                        <a v-if="trlist.type==2" v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}">查看</a>
+                                        <a v-if="trlist.type==2" v-link="{'name':'trade-info',params:{'serialNumber':trlist.serialNumber}}" data-ksa="trade_detail_manage.search">查看</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>

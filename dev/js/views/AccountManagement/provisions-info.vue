@@ -53,7 +53,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <a class="btn btn-info" @click="checkNew">查询</a>
+                                <a class="btn btn-info" @click="checkNew" data-ksa="reserve_cash_detail_manage.search">查询</a>
                             </div>
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
@@ -113,8 +113,8 @@
                                         <span v-else>待对账</span>
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  @click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
-                                        <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.reserveCashOrderNumber}}" v-if="trlist.status==1&&trlist.checkType==1">详情</a>
+                                        <a data-ksa="reserve_cash_detail_manage.check" href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  @click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
+                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.reserveCashOrderNumber}}" v-if="trlist.status==1&&trlist.checkType==1">详情</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>

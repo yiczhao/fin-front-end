@@ -58,10 +58,10 @@
                             <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="query">查询</a>
+                            <a class="btn btn-info" v-on:click="query" data-ksa="exception_trade_manage.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="excel">导出</a>
+                            <a class="btn btn-info" v-on:click="excel" data-ksa="exception_trade_manage.export">导出</a>
                         </div>
                     </form>
                 </div>
@@ -122,7 +122,7 @@
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>{{trlist.consumptionPhone}}</td>
                                 <td>{{trlist.consumptionAccountNumber}}</td>
-                                <td> <a v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
+                                <td> <a data-ksa="activity_manage.search" v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
                                 <td>
                                     <span v-if="trlist.isHandled==0" style="color:red;">
                                         待处理
@@ -133,7 +133,7 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.isHandled==0">
-                                        <a data-toggle="modal" data-target="#modal_waring" type="button" @click="back(trlist.id)" >处理异常</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" type="button" @click="back(trlist.id)"  data-ksa="exception_trade_manage.handle">处理异常</a>
                                     </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>

@@ -24,10 +24,10 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="subsidy_account_manage.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="excel">导出</a>
+                            <a class="btn btn-info" @click="excel" data-ksa="subsidy_account_manage.export">导出</a>
                         </div>
                     </form>
                 </div>
@@ -61,14 +61,14 @@
                                     <template v-if="trlist.activityStatus==2">运行中</template>
                                     <template v-if="trlist.activityStatus==3">已结束</template>
                                 </td>
-                                <td><a v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
-                                <td><a v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td><a v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                <td><a v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                <td><a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
+                                <td><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
+                                <td><a data-ksa="suspension_tax_account_detail_manage.search" v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a data-ksa="invoice_account_detail.search" v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
-                                    <a v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':balance.merchantOperationID}}">交易明细</a>
-                                    <a @click="applyPay(trlist)">税金提现</a>
-                                    <a @click="recharge(trlist)" data-toggle="modal" data-target="#modal_recharge">发票充值</a>
+                                    <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':balance.merchantOperationID}}">交易明细</a>
+                                    <a @click="applyPay(trlist)" data-ksa="subsidy_account_manage.with_draw">税金提现</a>
+                                    <a @click="recharge(trlist)" data-toggle="modal" data-target="#modal_recharge" data-ksa="subsidy_account_manage.recharge">发票充值</a>
                                 </td>
                             </tr>
                             <tr role="row">

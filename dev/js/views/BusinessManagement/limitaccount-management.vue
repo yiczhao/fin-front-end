@@ -49,7 +49,7 @@
                                 <td>{{trlist.recycleCount}}</td>
                                 <td>{{trlist.priorLevel}}</td>
                                 <td><a href="">{{trlist.supplyMerchant}}</a></td>
-                                <td><a @click="selectRecharge(trlist.id)" href="javascript:void(0)">充值</a></td>
+                                <td><a @click="selectRecharge(trlist.id)" href="javascript:void(0)" data-ksa="limit_purchase_account_manage.recharge">充值</a></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             </tbody>
