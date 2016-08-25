@@ -122,7 +122,7 @@ export default function(router){
             }
         },
         /* 商户管理-商户列表-活动管理-暂扣税金账户明细 */
-        '/suspension-tax-account-detail/:suspensionHDid/:suspensionZHname/:suspensionSHname/:suspensionZHbalance/:suspensionBTid':{
+        '/suspension-tax-account-detail/:orderId/:suspensionHDid/:suspensionZHname/:suspensionSHname/:suspensionZHbalance/:suspensionBTid':{
             name:'suspension-tax',
             component: function(resolve){
                 require(['./views/BusinessManagement/suspension-tax-account-detail.vue'],resolve);

@@ -321,6 +321,7 @@
             (vm.$route.params.suspensionSHname==':suspensionSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.suspensionSHname;
             (vm.$route.params.suspensionZHbalance==':suspensionZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.suspensionZHbalance;
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
+            (vm.$route.params.orderId==':orderId')? vm.defaultData.orderID='' : vm.defaultData.orderID=vm.$route.params.orderId;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
             vm.getZlists();
