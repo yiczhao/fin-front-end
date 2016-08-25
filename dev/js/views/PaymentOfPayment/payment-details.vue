@@ -222,7 +222,7 @@
                                     <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='补贴退税'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='预付款'"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)">详情</a></template>
+                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount()">详情</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)">删除</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)">删除</a></template>
                                 </td>
@@ -532,6 +532,7 @@
             getInfo(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.listinfos = []
+                this.id=a.id;
                 this.model.getpart(a.id)
                         .then( (response)=> {
                             if(response.data.code==0) {
@@ -704,9 +705,9 @@
                                 this.initList();
                         })
             },
-            skipToSubsidyAccount(_id){
+            skipToSubsidyAccount(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.skipToSubsidyAccount(_id)
+                this.model.skipToSubsidyAccount(this.id)
                         .then( (response)=> {
                             if(response.data.code==0&&!!response.data.data){
                                 let trlist=response.data.data;
