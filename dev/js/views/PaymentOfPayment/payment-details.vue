@@ -135,13 +135,13 @@
                                     <template v-if="n.purpose==5"> 供货商划付</template>
                                     <template v-if="n.purpose==10">税金提现</template>
                                 </td>
-                                <td>
+                                <td >
                                     <template v-if="n.status==1"> 等待审核</template>
                                     <template v-if="n.status==2"> 等待划付</template>
                                     <template v-if="n.status==3"> 转账中</template>
                                     <template v-if="n.status==4"> 等待对账</template>
                                     <template v-if="n.status==5"> 对账成功</template>
-                                    <template v-if="n.status==6"> 划付失败</template>
+                                    <span v-bind:class="{'redrow':n.status==6}" v-if="n.status==6"> 划付失败</span>
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td>
@@ -413,6 +413,14 @@
                          border-right: 0;
                      }
                  }
+             }
+             .redrow{
+                 display: inline-block;
+                 padding:6px;
+                 border-radius: 6px;
+                 background: rgb(253,110,73);
+                 color: #fff;
+                 font-size: 12px;
              }
          }
    }
