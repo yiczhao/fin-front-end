@@ -456,10 +456,10 @@
                 this.model.subsidy_applyPay(data)
                         .then((response)=>{
                         // *** 判断请求是否成功如若
-                            if(response.data.code==0){
+                                if(response.data.code==0){
                                     dialogs('success',mes);
-                                    this.query();
                                 }
+                                this.query();
                             });
             },
             query() {
