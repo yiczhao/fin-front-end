@@ -89,7 +89,6 @@
 			},
 			auto_hide() {
 				if (this.duration) {
-					console.log('auto_hide')
 					this.closeTimer = setTimeout(() => {
 			        	this.on_end && this.on_end()
 			        	this.close()

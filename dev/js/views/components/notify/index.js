@@ -10,7 +10,6 @@ Notify.instance =  propers=> {
     Object.keys(data).forEach(item => {
     	props += ' :' + camelcaseToHyphen(item) + '=' + item
     })
-	console.log(props)
 	const div = document.createElement('div')
 	div.innerHTML = `<notify ${props}></notify>`
 	document.body.appendChild(div)
@@ -52,7 +51,6 @@ Notify.instance =  propers=> {
             notify.duration = duration || ''
 
             if(notify.duration){
-        	    console.log(notify.duration)
                 notify.on_end = on_end
                 notify.auto_hide()
                 notify.count = 0
