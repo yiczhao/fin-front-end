@@ -202,7 +202,7 @@
                                 <tr role="row">
                                     <th>生成日期</th>
                                     <th>
-                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">暂扣税金</span>
+                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
                                     <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">暂扣税金</th>
