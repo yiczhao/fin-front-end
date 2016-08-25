@@ -260,8 +260,8 @@
             },
             applyPay({id}){
                 this.applyData.remarks='';
-                this.applyData.payoutAmount='1';
-                this.applyData.payType='';
+                this.applyData.payoutAmount='';
+                this.applyData.payType='1';
                 let data={
                     id:id,
                 }
