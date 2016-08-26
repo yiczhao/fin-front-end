@@ -135,11 +135,13 @@
                                 </td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0&&trlist.suspensionTax!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <span v-else>{{trlist.suspensionTax/100 | currency ''}}</span>
+                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
                                     <span v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</span>
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
