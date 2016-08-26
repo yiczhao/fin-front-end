@@ -18,8 +18,7 @@ module.exports = [
         name: '交易管理',
         icon: 'icon-table2',
         sub_menu: [
-            // {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
-            {name: '交易明细', link: 'trade-info'},
+            {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
             {name: '异常交易', link: 'Abnormal-transaction',ksa:'exception_trade_manage'},
             {name: '异常白名单', link: 'white-lists',ksa:'exception_trade_white_list_manage'}
         ]

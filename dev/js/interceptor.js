@@ -40,6 +40,10 @@ export default function install(Vue,router_proto) {
 				dialogs('error',response.data.message);
 				conut++;
 			}
+			else if(response.status===504){
+				dialogs('error','网络拥堵，请求超时，请稍后再试！');
+				conut++;
+			}
 			else if(!response.ok&&conut===0){
 				dialogs('error','系统错误,请及时联系开发人员解决！');
 				conut++;
