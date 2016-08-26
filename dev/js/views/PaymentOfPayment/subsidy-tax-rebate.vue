@@ -266,6 +266,8 @@
                 applyPayRemarks:'',
                 dialogTitle:'',
                 submitId:'',
+                applyPayInfo:{
+                },
                 total:{
                     taxRebateAmount:'',
                 }

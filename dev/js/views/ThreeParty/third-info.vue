@@ -262,7 +262,7 @@
                     accountName:'',
                     balanceAmount:'',
                 },
-                dateS:'1',
+                dateS:'3',
                 pagecur:1,
                 page_size:10,
                 pageall:1,
