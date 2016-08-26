@@ -108,6 +108,9 @@ function model(_this) {
          */
         skipToSubsidyAccount(_id){
             return _this.$http.get(_this.$API.skipToSubsidyAccount+_id)
+        },
+        reserveCashOrdertotal(data){
+            return _this.$http.get(_this.$API.reserveCashOrdertotal+$.param(data))
         }
     }
 }

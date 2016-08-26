@@ -281,6 +281,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToSubsidyAccount='./reserveCashOrder/skipToSubsidyAccount/';
+    /**
+     * @description 合计
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.reserveCashOrdertotal='./reserveCashOrder/total?';
 
 
     //- todo  备付金支出-预付款划付 advance-payment-details

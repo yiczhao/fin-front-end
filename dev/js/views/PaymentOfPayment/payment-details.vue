@@ -178,6 +178,27 @@
                                 <td>{{n.refuseReason }}</td>
                             </tr>
                         </template>
+                        <tr role="row">
+                            <td></td>
+                            <td>合计：</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{total.payoutAmount/100 | currency ''}}</td>
+                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -474,6 +495,10 @@
                     pageIndex:1,
                     pageSize:10
                 },
+                total:{
+                    suspensionTaxAmount:'',
+                    payoutAmount:''
+                },
                 listinfos:[],
                 zdlists:[],
                 checkLists:[],
@@ -500,6 +525,12 @@
                             if(response.data.code==0){
                                 this.$set('zdlists', response.data.data)
                                 this.$set('pageall', response.data.total)
+                            }
+                        });
+                this.model.reserveCashOrdertotal(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('total', response.data.data)
                             }
                         });
             },
