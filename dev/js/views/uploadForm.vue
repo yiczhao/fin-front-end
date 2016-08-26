@@ -39,7 +39,15 @@
                                         <input type="button" class="btn btn-primary" value="提交" @click="reserveCashDetail($event)"/>
                                     </td>
                                 </tr>
-
+								<tr>
+									<td>
+										<input type="text" class="form-control" v-model="startID" placeholder="开始ID"/>
+										<input type="text" class="form-control" v-model="endID" placeholder="结束ID"/>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="提交" @click="generateDataYesterday($event)"/>
+									</td>
+								</tr>
                             </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
@@ -111,6 +119,8 @@
 				dateStr:'',
                 startdateStr:'',
                 enddateStr:'',
+				startID:'',
+				endID:'',
                 bankAccountID:''
             }
         },
@@ -179,9 +189,18 @@
                         .then((response)=>{
                             dialogs('success','处理成功！');
                         })
-
-
-            }
+            },
+			generateDataYesterday(e){
+				if(sessionStorage.getItem('isHttpin')==1)return;
+				let data={
+					startID :this.startID,
+					endID :this.endID
+				}
+				this.$http.post('./dev/tool/subsidy_account/generateDataYesterday',data)
+						.then((response)=>{
+								dialogs('success','处理成功！');
+						})
+			}
         },
         ready() {
         },
