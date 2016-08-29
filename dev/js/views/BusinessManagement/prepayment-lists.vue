@@ -301,48 +301,42 @@
     .addbottom {
         margin-top: 15px;
 
-    .col-md-2 {
-        text-align: center;
-        width: 113px;
-        padding: 0;
-    input {
-        margin-bottom: 10px;
-    }
-
-    }
-    .col-md-7 {
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-
-    .col-md-4 {
-        width: 243px;
-        height: 300px;
-        padding: 0;
-    input {
-        margin: 15px 0;
-    }
-
-    }
-    ul {
-        list-style: none;
-        border: 1px solid #ccc;
-        padding: 10px;
-        height: 300px;
-        overflow: auto;
-
-    li {
-        margin: 5px 0;
-        cursor: pointer;
-        padding-left: 3px;
-    }
-
-    li.check-li {
-        background: #ccc;
-    }
-
-    }
+        .col-md-2 {
+            text-align: center;
+            width: 113px;
+            padding: 0;
+            input {
+                margin-bottom: 10px;
+            }
+        }
+        .col-md-7 {
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+        .col-md-4 {
+            width: 243px;
+            height: 300px;
+            padding: 0;
+            input {
+                margin: 15px 0;
+            }
+        }
+        ul {
+            list-style: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow: auto;
+            li {
+                margin: 5px 0;
+                cursor: pointer;
+                padding-left: 3px;
+            }
+            li.check-li {
+                background: #ccc;
+            }
+        }
     }
     .btn.btn-info {
         margin: 2px;
