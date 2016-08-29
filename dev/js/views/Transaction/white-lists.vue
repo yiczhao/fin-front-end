@@ -277,6 +277,7 @@
                 this.getZlists(this.defaultData);
             },
             abnormalWhiteexcel(){
+                if(!this.zdlists.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];

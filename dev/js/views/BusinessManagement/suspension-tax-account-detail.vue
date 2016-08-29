@@ -193,7 +193,7 @@
                     'pageTotal': 1,
                     'pageIndex': 1,
                     'pageSize': 10,
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
+                    mid:''
                 },
                 zdlists:[],
                 total:{
@@ -254,9 +254,9 @@
                 this.defaultData.pageIndex=1;
             },
             excel(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                //初始化
-                window.open(window.origin+this.$API.activityManage+ $.param(this.defaultData));
+                if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.suspensionTaxAccountDetailexcel+ $.param(this.defaultData));
             },
             applyPay({id}){
                 this.applyData.remarks='';

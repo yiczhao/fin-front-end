@@ -52,6 +52,24 @@ export default function install(Vue) {
      * @method GET
      */
     _o.activityManage = '/data/export/excel/activityManage?';
+    /**
+     * @description 发票充值页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.invoiceRechargeexcel = '/data/export/excel/invoiceRecharge?';
+    /**
+     * @description 商户补贴账户页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyAccountexcel = '/data/export/excel/subsidyAccount?';
+    /**
+     * @description 暂扣税金页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.suspensionTaxAccountDetailexcel = '/data/export/excel/suspensionTaxAccountDetail?';
 
     //- todo 财务处理-账户列表 account-management
     /**

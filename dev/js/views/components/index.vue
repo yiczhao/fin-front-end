@@ -31,9 +31,6 @@
                 userData: {}
             }
         },
-        ready () {
-            // 插入权限控制 JS
-        },
         watch: {
             userData() {
                 if (!!this.$parent.$data.userData) {

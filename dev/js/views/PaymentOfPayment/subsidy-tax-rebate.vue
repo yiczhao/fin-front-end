@@ -414,6 +414,7 @@
                 this.getsubsidyTaxRebateDetailList(data);
             },
             subsidyTaxexcel(){
+                if(!this.subsidyTaxRebateDetailList.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
                     this.endDate=init_date(this.timeRange)[1];

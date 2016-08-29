@@ -343,7 +343,7 @@
                 this.getTradeList(data);
             },
             excel(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(!this.tradeList.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('3')[0];
                     this.endDate=init_date('3')[1];

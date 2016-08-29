@@ -515,7 +515,7 @@
                 this.getTradeList(data);
             },
             tradeDetailexcel() {
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(!this.tradeList.length>0)return;
                 //初始化
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('3')[0];

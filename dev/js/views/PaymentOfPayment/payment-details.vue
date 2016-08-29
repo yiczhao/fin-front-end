@@ -554,6 +554,7 @@
                 this.getZlists(this.checkForm);
             },
             payDetailexcel(){
+                if(!this.zdlists.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('3')[0];
                     this.endDate=init_date('3')[1];
