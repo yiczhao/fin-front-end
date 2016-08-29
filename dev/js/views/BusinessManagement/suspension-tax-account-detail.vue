@@ -34,8 +34,8 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.payType">
                                 <option value="">请选择付款方式</option>
-                                <option value="2">备付金</option>
-                                <option value="1">预付款</option>
+                                <option value="1">备付金</option>
+                                <option value="2">预付款</option>
                             </select>
                         </div>
                         <div class="form-group">
