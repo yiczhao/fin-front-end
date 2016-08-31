@@ -90,7 +90,7 @@
                                 <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>划付金额</th>
-                                <th>暂扣税金</th>
+                                <th>退税款</th>
                                 <th>付款账户</th>
                                 <th>用途</th>
                                 <th>状态</th>
@@ -226,7 +226,7 @@
                                         <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
-                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">暂扣税金</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">退税款</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
