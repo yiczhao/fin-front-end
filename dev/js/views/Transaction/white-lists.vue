@@ -268,18 +268,11 @@
             },
             initList(){
                 $('.modal').modal('hide');
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
-                }
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             abnormalWhiteexcel(){
                 if(!this.zdlists.length>0)return;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
-                }
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.abnormalWhiteexcel+ $.param(this.defaultData));
             },
@@ -417,7 +410,6 @@
             },
             queryId(){
                 if(this.redata.operationID=='')return;
-
                 if(this.redata.type=='2'){
                     let data={
                         operationID:this.redata.operationID
@@ -446,8 +438,9 @@
         },
         ready() {
             var vm=this;
-            vm.initList();
             vm.getClist();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#add_white').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';

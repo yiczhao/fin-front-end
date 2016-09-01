@@ -218,8 +218,7 @@ export default function(router){
         else{
             back_json.isback=false;
             back_json.num=0;
+            localStorage.removeItem(transition.to.path);
         }
-        localStorage.removeItem(transition.to.path);
-        console.log(transition.to.path);
     });
 }

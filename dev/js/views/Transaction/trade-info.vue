@@ -31,7 +31,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="timeRange">
+                            <select class="form-control" v-model="checkForm.timeRange">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -39,7 +39,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
                         </div>
-                        <div class="form-group" v-show="timeRange==4">
+                        <div class="form-group" v-show="checkForm.timeRange==4">
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
@@ -359,9 +359,9 @@
                     phone:"",
                     activityOperationID:'',
                     pageIndex:1,
+                    timeRange:'3',
                     pageSize:10
                 },
-                timeRange:'3',
                 subcompanyList:[],
                 pageall:1,
                 select_merchantId:'',
@@ -402,6 +402,10 @@
         methods:{
             //获取交易记录
              getTradeList(data){
+                 this.model.tradedetailsum(data)
+                         .then((response)=>{
+                             (response.data.code==0)?this.$set('nums',response.data.data):null;
+                         });
                  this.model.tradedetail(data)
                     .then((response)=>{
                          if(response.data.code==0){
@@ -409,10 +413,6 @@
                             this.$set('pageall', response.data.total)
                         }
                     });
-                 this.model.tradedetailsum(data)
-                         .then((response)=>{
-                             (response.data.code==0)?this.$set('nums',response.data.data):null;
-                         })
             },
             //获取分公司数据
             getSubcompany(){
@@ -495,6 +495,7 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 this.clear();
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
             },
             tradeDetailexcel() {
@@ -562,25 +563,21 @@
             }
         },
         ready() {
-            if(back_json.isback&&back_json.fetchArray(this.$route.path)!=''){
-                var defaultData=back_json.fetchArray(this.$route.path);
-                this.getTradeList(defaultData);
-            }else{
-                (this.$route.params.subsidyPayId==':subsidyPayId')?this.checkForm.subsidyPayId='' : this.checkForm.subsidyPayId=this.$route.params.subsidyPayId;
-                (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.checkForm.subsidyTaxRebateId='' : this.checkForm.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
-                (this.$route.params.merchantOperationID==':merchantOperationID')?this.checkForm.merchantOperationID='' : this.checkForm.merchantOperationID=this.$route.params.merchantOperationID;
-                (this.$route.params.merchantName==':merchantName')? this.checkForm.merchantName='' : this.checkForm.merchantName=this.$route.params.merchantName;
-                (this.$route.params.activityOperationID==':activityOperationID')? this.checkForm.activityOperationID='' : this.checkForm.activityOperationID=this.$route.params.activityOperationID;
-                (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
-                this.query();
-            }
+            (this.$route.params.subsidyPayId==':subsidyPayId')?this.checkForm.subsidyPayId='' : this.checkForm.subsidyPayId=this.$route.params.subsidyPayId;
+            (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.checkForm.subsidyTaxRebateId='' : this.checkForm.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
+            (this.$route.params.merchantOperationID==':merchantOperationID')?this.checkForm.merchantOperationID='' : this.checkForm.merchantOperationID=this.$route.params.merchantOperationID;
+            (this.$route.params.merchantName==':merchantName')? this.checkForm.merchantName='' : this.checkForm.merchantName=this.$route.params.merchantName;
+            (this.$route.params.activityOperationID==':activityOperationID')? this.checkForm.activityOperationID='' : this.checkForm.activityOperationID=this.$route.params.activityOperationID;
+            (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
             this.getSubcompany();
             this.getCity();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.query();
         },
        watch:{
-            timeRange(){
-                this.checkForm.startDate=init_date(this.timeRange)[0];
-                this.checkForm.endDate=init_date(this.timeRange)[1];
+            'checkForm.timeRange'(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();

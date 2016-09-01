@@ -285,6 +285,7 @@
                     });
             },
             query() {
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getUserList(this.checkForm);
             },
             //显示员工管辖
@@ -415,8 +416,9 @@
             },
         },
         ready() {
-            this.getUserList(this.checkForm);
             this.getSubcompany({});
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.getUserList(this.checkForm);
         },
        watch:{
            'checkForm.pageIndex+checkForm.pageSize'(){

@@ -585,6 +585,7 @@ table tr td,table tr th{
             },
             query() {
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getPrepaymentList(this.checkForm);
             },
             show_waring(_id, status){
@@ -612,9 +613,10 @@ table tr td,table tr th{
             }
         },
         ready() {
-            this.query();
             this.getSubcompany();
             this.getCity();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.query();
         },
         components: {
             'datepicker': datepicker

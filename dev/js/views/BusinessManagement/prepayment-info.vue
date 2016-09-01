@@ -14,7 +14,7 @@
                                 @click="getRechargeInfo(defaultData.advancePaymentMerchantID)">预付充值</a>
                             </div>
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="checkForm.dateS">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -22,7 +22,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="checkForm.dateS==4">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
@@ -351,10 +351,10 @@
                     "payType": '',
                     "remarks": '',
                     "startDate": '',
+                    dateS: '3',
                     "endDate": ''
                 },
                 zdlists: [],
-                dateS: '3',
                 applyAdvancePay: {
                     merchantName: "",//商户名
                     balanceAmount: "",//余额
@@ -402,6 +402,7 @@
             },
             initList(){
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             //获取预付充值数据
@@ -454,21 +455,22 @@
                 $(".modal").modal("hide");
             },
             getTime(){
-                this.defaultData.startDate = init_date(this.dateS)[0];
-                this.defaultData.endDate = init_date(this.dateS)[1];
+                this.defaultData.startDate = init_date(this.checkForm.dateS)[0];
+                this.defaultData.endDate = init_date(this.checkForm.dateS)[1];
             }
         },
         ready() {
             (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
             (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
         },
         components: {
             'datepicker': datepicker
         },
         watch: {
-            dateS(){
+            'checkForm.dataS'(){
                 this.getTime();
             },
             'defaultData.pageIndex+defaultData.pageSize'(){

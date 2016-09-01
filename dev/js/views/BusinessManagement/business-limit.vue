@@ -714,6 +714,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -943,9 +944,10 @@
             var vm=this;
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             (this.$route.params.id != ':id') ? this.defaultData.merchantOperationID = this.$route.params.id : null;
-            vm.initList();
             vm.getClist();
             vm.getCity();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#modal_add,#modal_see,#modal_seehistory').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');

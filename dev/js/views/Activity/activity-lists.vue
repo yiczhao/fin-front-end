@@ -377,6 +377,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -427,9 +428,10 @@
             var vm=this;
             (vm.$route.params.operationID!=':operationID')?vm.defaultData.operationID=vm.$route.params.operationID:null;
             (vm.$route.params.name!=':name')?vm.defaultData.name=vm.$route.params.name:null;
-            vm.initList();
             vm.getClist();
             vm.getCity();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
         },
         components:{
             'datepicker': datepicker

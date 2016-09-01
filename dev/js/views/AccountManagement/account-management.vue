@@ -317,7 +317,6 @@
                     });
             },
             checkNew(){
-                back_json.saveArray(this.$route.path,this.defaultData);
                 this.initList();
             },
             addUser(){
@@ -332,6 +331,7 @@
             initList(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             rewrite(_list){
@@ -444,9 +444,9 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            this.getClist();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
-            this.getClist();
             let vm=this;
             $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
                 this.fire=false;

@@ -270,11 +270,8 @@ table tr th,table tr td{
             },
             initList(){
                 $('.modal').modal('hide');
-                if(this.defaultData.pageIndex==1){
-                    this. getZlists();
-                    return;
-                }
-                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this. getZlists();
             },
             excel(){
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
@@ -382,7 +379,7 @@ table tr th,table tr td{
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
-                this.getZlists()
+                this.initList()
             }
         },
         ready(){
@@ -390,6 +387,7 @@ table tr th,table tr td{
             (vm.$route.params.merchantID1==':merchantID1')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID1;
             (vm.$route.params.merchantName1==':merchantName1')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName1;
             (vm.$route.params.merchantOperationID1==':merchantOperationID1')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID1;
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);

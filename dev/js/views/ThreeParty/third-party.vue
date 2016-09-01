@@ -436,6 +436,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -591,9 +592,10 @@
         },
         ready() {
             var vm=this;
-            vm.initList();
             vm.getClist();
             vm.getCity();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
         },
         components:{
             'datepicker': datepicker

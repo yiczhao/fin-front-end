@@ -17,7 +17,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="timeRange">
+                                    <select class="form-control" v-model="checkForm.timeRange">
                                         <option value="5">今天</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
@@ -26,7 +26,7 @@
                                         <option value="4">自定义时间</option>
                                     </select>
                                 </div>
-                                <div class="form-group" v-show="timeRange==4">
+                                <div class="form-group" v-show="checkForm.timeRange==4">
                                     <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
@@ -149,8 +149,8 @@
                     keywords:"",
                     pageIndex:1,
                     pageSize:10,
+                    timeRange:'3'
                 },
-                timeRange:'3',
                 subcompanyList:[],
                 pageall:1,
                 cityList:[],
@@ -198,9 +198,10 @@
             query() {
                 // let data=this.data;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
-                    this.checkForm.startDate=init_date(this.timeRange)[0];
-                    this.checkForm.endDate=init_date(this.timeRange)[1];
+                    this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
                 }
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getadvancePaymentDetailList(this.checkForm);
             },
             gopayment(a,b){
@@ -232,14 +233,15 @@
         },
         ready() {
             (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
-            this.query();
             this.getCity();
             this.getSubcompany();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.query();
         },
          watch:{
-            timeRange(){
-                this.checkForm.startDate=init_date(this.timeRange)[0];
-                this.checkForm.endDate=init_date(this.timeRange)[1];
+            'checkForm.timeRange'(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();

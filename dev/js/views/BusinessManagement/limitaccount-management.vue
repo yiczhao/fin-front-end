@@ -255,6 +255,7 @@
                             'remarks':'',
                             'certificatesID':''
                 };
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             selectRecharge(_id){
@@ -322,6 +323,7 @@
             let vm=this;
             (this.$route.params.limitPurchaseMerchantInfoID != ':limitPurchaseMerchantInfoID') ? this.defaultData.limitPurchaseMerchantInfoID = this.$route.params.limitPurchaseMerchantInfoID : null;
             (this.$route.params.accountName != ':accountName') ? this.accountName = this.$route.params.accountName : null;
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
             $('#modal_pay').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
