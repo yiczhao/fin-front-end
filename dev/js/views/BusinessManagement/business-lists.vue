@@ -96,7 +96,7 @@
                                     <td>0.00</td>
                                     <td>0.00</td>
                                 </template>
-                                    <!--<td>-->
+                                <!--<td>-->
                                     <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
                                 <!--</td>-->
                                 <td><a @click="control(trlist)">管理</a></td>
@@ -131,8 +131,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -403,8 +403,6 @@
                 origin:window.origin,
                 id:'',
                 merchantName:'',
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -701,12 +699,7 @@
             'datepicker': datepicker
         },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageSize+defaultData.pageIndex'(){
                 this.initList();
             }
         }

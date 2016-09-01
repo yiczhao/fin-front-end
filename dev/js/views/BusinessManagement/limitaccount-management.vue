@@ -55,8 +55,8 @@
                             </tbody>
                         </table>
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                     <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
@@ -213,8 +213,6 @@
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 accountName:'',
@@ -345,12 +343,7 @@
                 this.nums.val2=(this.nums.val1-this.nums.val4).toFixed(2);
                 (this.nums.val1!='0.00')?this.nums.val3=((this.nums.val2/this.nums.val1)*100).toFixed(2):null;
             },
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageSize+defaultData.pageIndex'(){
                 this.initList();
             }
         },

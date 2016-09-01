@@ -79,7 +79,12 @@
              * @description 视图切换 handle function
              * @param sub_menu {String} 子菜单路由名称
              */
-            view_switch(sub_menu){this.current_menu = sub_menu}
+            view_switch(e,sub_menu){
+                if(('/'+sub_menu)==this.$route.path)return;
+//                localStorage.setItem('oldpath',this.$route.path);
+//                this.current_menu = sub_menu;
+//                localStorage.removeItem('nextData');
+            }
         }
     }
 </script>

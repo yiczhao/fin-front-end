@@ -5,13 +5,13 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID"  @change="getCity(subCompanyID)">
+                                    <select class="form-control" v-model="checkForm.subCompanyID"  @change="getCity(checkForm.subCompanyID)">
                                         <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="cityID">
+                                    <select class="form-control" v-model="checkForm.cityID">
                                         <option value="">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
@@ -27,27 +27,27 @@
                                     </select>
                                 </div>
                                 <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="subsidyTaxRebateID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="ID">
+                                    <input type="text" class="form-control" v-model="checkForm.subsidyTaxRebateID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="createType">
+                                    <select class="form-control" v-model="checkForm.createType">
                                         <option value="">请选择生成方式</option>
                                         <option value="1">系统生成</option>
                                         <option value="2">手工录入</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="status">
+                                    <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="1">等待审核</option>
                                         <option value="2">等待划付</option>
@@ -58,7 +58,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query">查询</a>
@@ -175,28 +175,11 @@
                         </div>
                         <div v-show="!!subsidyTaxRebateDetailList.length" class="datatable-footer">
                             <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
                             </page>
                         </div>
             </div>
-
-            <!--<div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">-->
-                <!--<div class="modal-dialog">-->
-                    <!--<div class="modal-content">-->
-                        <!--<div class="modal-header">-->
-                            <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
-                            <!--<h5 class="modal-title">你确定一键审核？</h5>-->
-                        <!--</div>-->
-                        <!--<div class="modal-body">-->
-                            <!--<div class="form-group tc">-->
-                                <!--<button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>-->
-                                <!--<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
 
             <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
                 <div class="modal-dialog mg">
@@ -241,23 +224,23 @@
         data(){
             this.model =model(this)
             return{
-                subsidyTaxRebateID:"",
-                subCompanyID:"",
-                cityID:"",
-                createType:"",
-                status:"",
+                checkForm:{
+                    subsidyTaxRebateID:"",
+                    subCompanyID:"",
+                    cityID:"",
+                    createType:"",
+                    status:"",
+                    startDate:"",
+                    remarks:'',
+                    endDate:"",
+                    merchantOperationID:"",
+                    keywords:"",
+                    pageIndex:1,
+                    pageSize:10,
+                },
                 timeRange:'3',
-                startDate:"",
-                remarks:'',
-                endDate:"",
-                merchantID:"",      
-                keywords:"",
                 subcompanyList:[],
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 cityList:[],
                 subsidyTaxRebateDetailList:[],
                 payTypes:'2',
@@ -392,49 +375,20 @@
             query() {
                 $('.modal').modal('hide');
                 $(".check-boxs").prop({'checked':false})
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date(this.timeRange)[0];
-                    this.endDate=init_date(this.timeRange)[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date(this.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.timeRange)[1];
                 }
-                let data={
-                        id:this.subsidyTaxRebateID,
-                        subCompanyID:this.subCompanyID,
-                        merchantOperationID:this.merchantID,
-                        cityID:this.cityID,
-                        createType:this.createType,
-                        timeRange:this.timeRange,
-                        keywords:this.keywords,
-                        status:this.status,
-                        remarks:this.remarks,
-                        startDate:this.startDate,
-                        endDate:this.endDate,
-                        pageIndex: this.pageIndex, 
-                        pageSize: this.pageSize
-                    };
-                this.getsubsidyTaxRebateDetailList(data);
+                this.getsubsidyTaxRebateDetailList(this.checkForm);
             },
             subsidyTaxexcel(){
                 if(!this.subsidyTaxRebateDetailList.length>0)return;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date(this.timeRange)[0];
-                    this.endDate=init_date(this.timeRange)[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date(this.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.timeRange)[1];
                 }
-                let data={
-                    id:this.subsidyTaxRebateID,
-                    subCompanyID:this.subCompanyID,
-                    merchantOperationID:this.merchantID,
-                    cityID:this.cityID,
-                    createType:this.createType,
-                    timeRange:this.timeRange,
-                    keywords:this.keywords,
-                    status:this.status,
-                    remarks:this.remarks,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    pageIndex: this.pageIndex,
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
-                };
-                window.open(window.origin+this.$API.subsidyTaxexcel+ $.param(data));
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.subsidyTaxexcel+ $.param(this.checkForm));
             },
             gopayment(a,b){
                 let data={
@@ -450,22 +404,17 @@
             }
         },
         ready() {
-            (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.subsidyTaxRebateID='':this.subsidyTaxRebateID=this.$route.params.subsidyTaxRebateID;
+            (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.checkForm.subsidyTaxRebateID='':this.checkForm.subsidyTaxRebateID=this.$route.params.subsidyTaxRebateID;
             this.query();
             this.getSubcompany();
             this.getCity();
         },
          watch:{
             timeRange(){
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
+                this.checkForm.startDate=init_date(this.timeRange)[0];
+                this.checkForm.endDate=init_date(this.timeRange)[1];
             },
-            pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
        },

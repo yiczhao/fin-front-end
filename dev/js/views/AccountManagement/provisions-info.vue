@@ -123,8 +123,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="checkForm.pageIndex"
+                              :page_size.sync="checkForm.pageSize">
                         </page>
                     </div>
                 </div>
@@ -393,8 +393,6 @@
                 zdlists:[],
                 dzList:{},
                 dz_show:false,
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
@@ -579,12 +577,7 @@
                             }
                         })
             },
-            pagecur(){
-                this.checkForm.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.checkForm.pageSize=this.page_size;
+            'checkForm.pageSize + checkForm.pageIndex'(){
                 this.initList();
             },
             dateS(){

@@ -140,8 +140,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -598,8 +598,6 @@
             this.model =model(this)
             return{
                 origin:window.origin,
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -978,12 +976,7 @@
                 this.nums.usedLimit=(c/100).toFixed(2);
                 this.nums.balanceLimit=(d/100).toFixed(2);
             },
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         }

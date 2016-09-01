@@ -163,6 +163,20 @@ var accMul=(arg1,arg2)=> {
     try{m+=s2.split(".")[1].length}catch(e){}
     return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
 }
+var _i={};
+_i.fetchArray=(key)=>{
+    if(localStorage.getItem(key)){
+        return JSON.parse(localStorage.getItem(key));
+    }
+    return [];
+};
+_i.saveArray=(key, value)=>{
+    localStorage.setItem(key, JSON.stringify(value));
+}
+_i.isback=false;
+_i.num=0;
+window.back_json=_i;
+
 module.exports = {
     check_upload:check_upload,
     datetime:datetime,

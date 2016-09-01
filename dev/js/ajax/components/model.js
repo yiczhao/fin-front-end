@@ -50,8 +50,7 @@ export default function install(Vue) {
             return Vue.http.get('./merchant/list?' + $.param(data))
         }
     };
-
     Object.defineProperties(Vue.prototype, {
-        $common_model: {get(){return _m}}
+        $common_model: {get(){return _m}},
     })
 }

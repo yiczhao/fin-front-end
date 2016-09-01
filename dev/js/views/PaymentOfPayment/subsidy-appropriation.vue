@@ -5,13 +5,13 @@
                 <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                                    <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                         <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="cityID">
+                                    <select class="form-control" v-model="checkForm.cityID">
                                         <option value="">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
@@ -27,30 +27,30 @@
                                     </select>
                                 </div>
                                 <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="ID">
+                                    <input type="text" class="form-control" v-model="checkForm.id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantOperationID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    <input type="text" class="form-control" v-model="checkForm.merchantOperationID" style="width: 100px" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" style="width:185px;" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" style="width:185px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="createType">
+                                    <select class="form-control" v-model="checkForm.createType">
                                         <option value="">请选择生成方式</option>
                                         <option value="1">系统生成</option>
                                         <option value="2">手工录入</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
+                                    <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="checkForm.activityOperationID">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="status">
+                                    <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="1">等待审核</option>
                                         <option value="2">等待划付</option>
@@ -61,7 +61,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" style="width: 100px" v-model="remarks" placeholder="备注">
+                                    <input type="text" class="form-control" style="width: 100px" v-model="checkForm.remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query">查询</a>
@@ -189,8 +189,8 @@
                     </div>
                             <div class="datatable-footer">
                             <page :all="pageall"
-                                  :cur.sync="pagecur"
-                                  :page_size.sync="page_size">
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
                             </page>
                         </div>
                         </div>
@@ -198,22 +198,6 @@
                             未查询到补贴划付信息！
                         </div>
             </div>
-            <!--<div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">-->
-                <!--<div class="modal-dialog">-->
-                    <!--<div class="modal-content">-->
-                        <!--<div class="modal-header">-->
-                            <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
-                            <!--<h5 class="modal-title">你确定一键审核？</h5>-->
-                        <!--</div>-->
-                        <!--<div class="modal-body">-->
-                            <!--<div class="form-group tc">-->
-                                <!--<button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>-->
-                                <!--<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
 
             <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
                 <div class="modal-dialog mg">
@@ -259,26 +243,25 @@
         data(){
             this.model =model(this)
             return{
-                id:"",
-                subCompanyID:"",
-                cityID:"",
-                createType:"",
-                status:"",
+                checkForm:{
+                    id:"",
+                    subCompanyID:"",
+                    cityID:"",
+                    createType:"",
+                    status:"",
+                    startDate:"",
+                    endDate:"",
+                    merchantOperationID:"",
+                    merchantName:"",
+                    keywords:"",
+                    remarks:"",
+                    activityOperationID:"",
+                    pageIndex:1,
+                    pageSize:10,
+                },
                 timeRange:'3',
-                startDate:"",
-                endDate:"",
-                merchantOperationID:"",
-                merchantName:"",
-                keywords:"",
-                remarks:"",   
-                seriesNumber:"",        
-                activityOperationID:"",
                 subcompanyList:[],
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 cityList:[],
                 showPayAccount:'',
                 subsidyAppropriationList:[],
@@ -350,25 +333,6 @@
             clear(){
                 this.payTypes='2';
             },
-//            showModalApplyPay(){
-//                var AccountS = [];
-//                $("input[name='ckbox']:checked").each(function(){
-//                  AccountS.push($(this).prop("class"));
-//                });
-//                let array = [];
-//                $("input[name='ckbox']:checked").each(function(){
-//                  array.push(parseInt($(this).prop("id")));
-//                });
-//                this.model.subsidy_applyPay(JSON.stringify(array))
-//                        .then((response)=>{
-//                                // *** 判断请求是否成功如若
-//                                if(response.data.code==0){
-//                                    dialogs('success','申请成功！');
-//                                    $("#modal_waring").modal("hide");
-//                                }
-//                                this.query();
-//                        });
-//            },
             updateById(id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.subsidy_update(id)
@@ -381,32 +345,6 @@
                             }
                         });
             },
-//            batchs(){
-//                let AccountS = [];
-//                $("input[name='ckbox']:checked").each(function(){
-//                    AccountS.push($(this).prop("class"));
-//                });
-//                if(AccountS.length<=0){
-//                    dialogs('info','请勾选审核信息！');
-//                    return false
-//                }
-//                $('#modal_waring').modal('show');
-//            },
-//            showModalApplyPayById(id){
-//                var AccountS = [];
-//                AccountS.push(id);
-//                if(AccountS.length<=0){
-//                    return false
-//                }
-//                this.model.subsidy_applyPay(JSON.stringify(AccountS))
-//                        .then((response)=>{
-//                        // *** 判断请求是否成功如若
-//                            if(response.data.code==0){
-//                                    dialogs('success','申请成功！');
-//                                    this.query();
-//                                }
-//                            });
-//            },
             batchs(){
                 let AccountS = [];
                 $("input[name='ckbox']:checked").each(function(){
@@ -465,49 +403,20 @@
             query() {
                 $(".check-boxs").prop({'checked':false})
                 $('.modal').modal('hide');
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date(this.timeRange)[0];
-                    this.endDate=init_date(this.timeRange)[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date(this.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.timeRange)[1];
                 }
-                let data={
-                    id:this.id,
-                    subCompanyID:this.subCompanyID,
-                    cityID:this.cityID,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    merchantOperationID:this.merchantOperationID,
-                    createType:this.createType,
-                    status:this.status,
-                    activityOperationID:this.activityOperationID,
-                    remarks:this.remarks,
-                    pageIndex:this.pageIndex,
-                    pageSize:this.pageSize,
-                    keywords:this.keywords 
-                    };
-                this.getSubsidyAppropriationList(data);
+                this.getSubsidyAppropriationList(this.checkForm);
             },
             subsidyPayexcel(){
                 if(!this.subsidyAppropriationList.length>0)return;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date(this.timeRange)[0];
-                    this.endDate=init_date(this.timeRange)[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date(this.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.timeRange)[1];
                 }
-                let data={
-                    id:this.id,
-                    subCompanyID:this.subCompanyID,
-                    merchantOperationID:this.merchantOperationID,
-                    cityID:this.cityID,
-                    createType:this.createType,
-                    timeRange:this.timeRange,
-                    keywords:this.keywords,
-                    status:this.status,
-                    remarks:this.remarks,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    pageIndex: this.pageIndex,
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
-                };
-                window.open(window.origin+this.$API.subsidyPayexcel+ $.param(data));
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.subsidyPayexcel+ $.param(this.checkForm));
             },
             gopayment(a,b){
                 let data={
@@ -523,24 +432,19 @@
             }
         },
         ready() {
-            (this.$route.params.subsidyPayID==':subsidyPayID')?this.id='':this.id=this.$route.params.subsidyPayID;
-            (this.$route.params.subsidySHid==':subsidySHid')?this.merchantOperationID='':this.merchantOperationID=this.$route.params.subsidySHid;
-            (this.$route.params.subsidyHDid==':subsidyHDid')?this.activityOperationID='':this.activityOperationID=this.$route.params.subsidyHDid;
+            (this.$route.params.subsidyPayID==':subsidyPayID')?this.checkForm.id='':this.checkForm.id=this.$route.params.subsidyPayID;
+            (this.$route.params.subsidySHid==':subsidySHid')?this.checkForm.merchantOperationID='':this.checkForm.merchantOperationID=this.$route.params.subsidySHid;
+            (this.$route.params.subsidyHDid==':subsidyHDid')?this.checkForm.activityOperationID='':this.checkForm.activityOperationID=this.$route.params.subsidyHDid;
             this.query();
             this.getSubcompany();
             this.getCity();
         },
          watch:{
             timeRange(){
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
+                this.checkForm.startDate=init_date(this.timeRange)[0];
+                this.checkForm.endDate=init_date(this.timeRange)[1];
             },
-            pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
        },

@@ -203,8 +203,8 @@
                     </table>
                 </div>
                 <page v-if="zdlists.length>0" :all="pageall"
-                      :cur.sync="pagecur"
-                      :page_size.sync="page_size">
+                      :cur.sync="checkForm.pageIndex"
+                      :page_size.sync="checkForm.pageSize">
                 </page>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                     未找到数据
@@ -474,8 +474,6 @@
             this.model =model(this)
             return{
                 id:'',
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 dateS:'3',
                 waring:'',
@@ -491,7 +489,7 @@
                     remarks:'',
                     startDate:'',
                     endDate:'',
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
+                    mid:'',
                     pageIndex:1,
                     pageSize:10
                 },
@@ -559,6 +557,7 @@
                     this.startDate=init_date('3')[0];
                     this.endDate=init_date('3')[1];
                 }
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.payDetailexcel+ $.param(this.checkForm));
             },
             getInfo(a){
@@ -747,12 +746,7 @@
             }
         },
         watch:{
-            pagecur(){
-                this.checkForm.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.checkForm.pageSize=this.page_size;
+            'checkForm.pageSize+checkForm.pageIndex'(){
                 this.initList();
             },
             dateS(){

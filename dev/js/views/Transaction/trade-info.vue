@@ -11,19 +11,19 @@
                            <a class="btn btn-info" v-on:click="addTradeInfo">添加交易</a>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="cityID">
+                            <select class="form-control" v-model="checkForm.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="type">
+                            <select class="form-control" v-model="checkForm.type">
                             <option value="">请选择交易类型</option>
                             <option value="1">正常交易</option>
                             <option value="2">手工单</option>
@@ -40,32 +40,32 @@
                             </select>
                         </div>
                         <div class="form-group" v-show="timeRange==4">
-                            <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                            <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                            <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="subsidyPayId" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="补贴划付ID">
+                            <input type="text" class="form-control" v-model="checkForm.subsidyPayId" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="补贴划付ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="subsidyTaxRebateId" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="补贴退税ID">
+                            <input type="text" class="form-control" v-model="checkForm.subsidyTaxRebateId" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="补贴退税ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
+                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="交易ID">
+                            <input type="text" class="form-control" v-model="checkForm.tradeDetailID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="交易ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号">
+                            <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="phone" placeholder="手机号">
+                            <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
+                            <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="checkForm.activityOperationID">
                         </div>
                         <div class="form-group">
                             <a class="btn btn-info" v-on:click="query">查询</a>
@@ -205,8 +205,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="checkForm.pageIndex"
+                              :page_size.sync="checkForm.pageSize">
                         </page>
                     </div>
                 </div>
@@ -344,26 +344,26 @@
             this.model=model(this);
             return{
                 origin:window.origin,
-                subsidyPayId:"",
-                subsidyTaxRebateId:"",
-                subCompanyID:"",
-                cityID:"",
-                type:"",
+                checkForm:{
+                    subsidyPayId:"",
+                    subsidyTaxRebateId:"",
+                    subCompanyID:"",
+                    cityID:"",
+                    type:"",
+                    startDate:"",
+                    endDate:"",
+                    merchantOperationID:"",
+                    merchantName:"",
+                    tradeDetailID:"",
+                    serialNumber:"",
+                    phone:"",
+                    activityOperationID:'',
+                    pageIndex:1,
+                    pageSize:10
+                },
                 timeRange:'3',
-                startDate:"",
-                endDate:"",
-                merchantOperationID:"",
-                merchantName:"",   
-                id:"",   
-                serialNumber:"",        
-                phone:"",
-                activityOperationID:'',
                 subcompanyList:[],
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 select_merchantId:'',
                 fire:false,
                 tradeInfo:{
@@ -409,6 +409,10 @@
                             this.$set('pageall', response.data.total)
                         }
                     });
+                 this.model.tradedetailsum(data)
+                         .then((response)=>{
+                             (response.data.code==0)?this.$set('nums',response.data.data):null;
+                         })
             },
             //获取分公司数据
             getSubcompany(){
@@ -491,55 +495,13 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 this.clear();
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('3')[0];
-                    this.endDate=init_date('3')[1];
-                }
-                let data={
-                    subsidyPayId:this.subsidyPayId,
-                    subsidyTaxRebateId:this.subsidyTaxRebateId,
-                    subCompanyID:this.subCompanyID,
-                    cityID:this.cityID,
-                    type:this.type,
-                    merchantOperationID:this.merchantOperationID,
-                    merchantName:this.merchantName,
-                    tradeDetailID:this.id,
-                    serialNumber:this.serialNumber,
-                    phone:this.phone,
-                    activityOperationID:this.activityOperationID,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    pageIndex: this.pageIndex,
-                    pageSize: this.pageSize
-                };
-                this.getTradeList(data);
+                this.getTradeList(this.checkForm);
             },
             tradeDetailexcel() {
                 if(!this.tradeList.length>0)return;
                 //初始化
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('3')[0];
-                    this.endDate=init_date('3')[1];
-                }
-                let data={
-                    subsidyPayId:this.subsidyPayId,
-                    subsidyTaxRebateId:this.subsidyTaxRebateId,
-                    subCompanyID:this.subCompanyID,
-                    cityID:this.cityID,
-                    type:this.type,
-                    merchantOperationID:this.merchantOperationID,
-                    merchantName:this.merchantName,
-                    tradeDetailID:this.id,
-                    serialNumber:this.serialNumber,
-                    phone:this.phone,
-                    activityOperationID:this.activityOperationID,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    pageIndex: this.pageIndex,
-                    pageSize: this.pageSize,
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken
-                };
-                window.open(window.origin+this.$API.tradeDetailexcel+ $.param(data));
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.tradeDetailexcel+ $.param(this.checkForm));
             },
             //初始化
             clear(){
@@ -600,51 +562,27 @@
             }
         },
         ready() {
-            this.clear();
-            (this.$route.params.subsidyPayId==':subsidyPayId')?this.subsidyPayId='' : this.subsidyPayId=this.$route.params.subsidyPayId;
-            (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.subsidyTaxRebateId='' : this.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
-            (this.$route.params.merchantOperationID==':merchantOperationID')?this.merchantOperationID='' : this.merchantOperationID=this.$route.params.merchantOperationID;
-            (this.$route.params.merchantName==':merchantName')? this.merchantName='' : this.merchantName=this.$route.params.merchantName;
-            (this.$route.params.activityOperationID==':activityOperationID')? this.activityOperationID='' : this.activityOperationID=this.$route.params.activityOperationID;
-            (this.$route.params.serialNumber==':serialNumber')? this.serialNumber='' : this.serialNumber=this.$route.params.serialNumber;
-            this.query();
+            if(back_json.isback&&back_json.fetchArray(this.$route.path)!=''){
+                var defaultData=back_json.fetchArray(this.$route.path);
+                this.getTradeList(defaultData);
+            }else{
+                (this.$route.params.subsidyPayId==':subsidyPayId')?this.checkForm.subsidyPayId='' : this.checkForm.subsidyPayId=this.$route.params.subsidyPayId;
+                (this.$route.params.subsidyTaxRebateId==':subsidyTaxRebateId')? this.checkForm.subsidyTaxRebateId='' : this.checkForm.subsidyTaxRebateId=this.$route.params.subsidyTaxRebateId;
+                (this.$route.params.merchantOperationID==':merchantOperationID')?this.checkForm.merchantOperationID='' : this.checkForm.merchantOperationID=this.$route.params.merchantOperationID;
+                (this.$route.params.merchantName==':merchantName')? this.checkForm.merchantName='' : this.checkForm.merchantName=this.$route.params.merchantName;
+                (this.$route.params.activityOperationID==':activityOperationID')? this.checkForm.activityOperationID='' : this.checkForm.activityOperationID=this.$route.params.activityOperationID;
+                (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
+                this.query();
+            }
             this.getSubcompany();
             this.getCity();
         },
        watch:{
             timeRange(){
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
+                this.checkForm.startDate=init_date(this.timeRange)[0];
+                this.checkForm.endDate=init_date(this.timeRange)[1];
             },
-            tradeList(){
-                let data={
-                    subsidyPayId:this.subsidyPayId,
-                    subsidyTaxRebateId:this.subsidyTaxRebateId,
-                    subCompanyID:this.subCompanyID,
-                    cityID:this.cityID,
-                    type:this.type,
-                    merchantOperationID:this.merchantOperationID,
-                    merchantName:this.merchantName,
-                    tradeDetailID:this.id,
-                    serialNumber:this.serialNumber,
-                    phone:this.phone,
-                    activityOperationID:this.activityOperationID,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    pageIndex: this.pageIndex,
-                    pageSize: this.pageSize
-                };
-                this.model.tradedetailsum(data)
-                        .then((response)=>{
-                            (response.data.code==0)?this.$set('nums',response.data.data):null;
-                        })
-            },
-            pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
        },

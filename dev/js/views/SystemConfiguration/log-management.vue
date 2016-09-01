@@ -5,10 +5,10 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="用户名、姓名、描述">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、姓名、描述">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
+                                    <select class="form-control" v-model="checkForm.subCompanyID" >
                                     <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
@@ -24,8 +24,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query" >查询</a>
@@ -67,8 +67,8 @@
                             </div>
                             <div class="datatable-footer">
                                 <page :all="pageall"
-                                      :cur.sync="pagecur"
-                                      :page_size.sync="page_size">
+                                      :cur.sync="checkForm.pageIndex"
+                                      :page_size.sync="checkForm.pageSize">
                                 </page>
                             </div>
                         </div>
@@ -136,19 +136,19 @@
         data(){
             this.model =model(this)
             return{
-                subCompanyID:"",
-                keywords:"",
+                checkForm:{
+                    subCompanyID:"",
+                    keywords:"",
+                    startDate:'',
+                    endDate:'',
+                    startDate:'',
+                    endDate:'',
+                    pageIndex:1,
+                    pageSize:10,
+                },
                 timeRange:'3',
-                startDate:'',
-                endDate:'',
                 subcompanyList:[],
-                startDate:'',
-                endDate:'',
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 logList:[],
                 log:{
                     "userName":"",
@@ -195,22 +195,14 @@
                         })
             },
             query() {
-                let data={
-                        subCompanyID:this.subCompanyID,
-                        keywords:this.keywords,
-                        startDate:this.startDate,
-                        endDate:this.endDate,
-                        pageIndex: this.pageIndex, 
-                        pageSize: this.pageSize
-                    };
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
-                this.getLogList(data);
+                this.checkForm.startDate=init_date(this.timeRange)[0];
+                this.checkForm.endDate=init_date(this.timeRange)[1];
+                this.getLogList(this.checkForm);
             },
         },
         ready() {
-            this.startDate=init_date(this.timeRange)[0];
-            this.endDate=init_date(this.timeRange)[1];
+            this.checkForm.startDate=init_date(this.timeRange)[0];
+            this.checkForm.endDate=init_date(this.timeRange)[1];
             this.query();
             this.getSubcompany({});
         },
@@ -219,12 +211,7 @@
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];
             },
-             pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
        },

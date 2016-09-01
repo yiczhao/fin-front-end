@@ -5,14 +5,14 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                                    <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                         <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="cityID">
-                                        <option value="">全部城市</option></option>
+                                    <select class="form-control" v-model="checkForm.cityID">
+                                        <option value="">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
@@ -27,20 +27,20 @@
                                     </select>
                                 </div>
                                 <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="ID">
+                                    <input type="text" class="form-control" v-model="checkForm.id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="ID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    <input type="text" class="form-control" v-model="checkForm.merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="status">
+                                    <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="0">已关闭</option>
                                         <option value="2">等待划付</option>
@@ -51,7 +51,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query">查询</a>
@@ -125,8 +125,8 @@
                             </div>
                             <div class="datatable-footer">
                                 <page :all="pageall"
-                                      :cur.sync="pagecur"
-                                      :page_size.sync="page_size">
+                                      :cur.sync="checkForm.pageIndex"
+                                      :page_size.sync="checkForm.pageSize">
                                 </page>
                             </div>
                         </div>
@@ -153,23 +153,22 @@
         data(){
             this.model=model(this);
             return{
-                id:'',
-                subCompanyID:"",
-                cityID:"",
-                createType:"",
-                status:"",
-                remarks:"",
-                timeRange:'1',
-                startDate:"",
-                endDate:"",
-                merchantID:"",
-                merchantName:"",
-                keywords:"",
+                checkForm:{
+                    id:'',
+                    subCompanyID:"",
+                    cityID:"",
+                    status:"",
+                    remarks:"",
+                    startDate:"",
+                    endDate:"",
+                    merchantID:"",
+                    merchantName:"",
+                    keywords:"",
+                    pageIndex:1,
+                    pageSize:10,
+                },
+                timeRange:'3',
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 subcompanyList:[],
                 cityList:[],
                 limitPurchaseDetailList:[]
@@ -211,24 +210,11 @@
             },
             query() {
                 // let data=this.data;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date(this.timeRange)[0];
-                    this.endDate=init_date(this.timeRange)[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date(this.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.timeRange)[1];
                 }
-                let data={
-                        id:this.id,
-                        subCompanyID:this.subCompanyID,
-                        cityID:this.cityID,
-                        startDate:this.startDate,
-                        endDate:this.endDate,
-                        merchantOperationID:this.merchantID,
-                        keywords:this.keywords,
-                        status:this.status,
-                        remarks:this.remarks,
-                        pageIndex: this.pageIndex, 
-                        pageSize: this.pageSize        
-                    };
-                this.getlimitPurchaseDetailList(data);
+                this.getlimitPurchaseDetailList(this.checkForm);
             },
             gopayment(a,b){
                 let data={
@@ -259,15 +245,10 @@
         },
          watch:{
             timeRange(){
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
+                this.checkForm.startDate=init_date(this.timeRange)[0];
+                this.checkForm.endDate=init_date(this.timeRange)[1];
             },
-            pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
        },

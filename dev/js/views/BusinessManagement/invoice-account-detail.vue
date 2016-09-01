@@ -332,17 +332,8 @@
             },
         },
         watch:{
-            'defaultData.pageIndex':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
-            },
-            'defaultData.pageSize':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.getZlists()
             },
             dateS(){
                 this.getTime();

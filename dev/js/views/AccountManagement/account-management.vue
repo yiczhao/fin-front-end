@@ -84,8 +84,8 @@
                 </div>
                 <div class="datatable-footer">
                     <page :all="pageall"
-                          :cur.sync="pagecur"
-                          :page_size.sync="page_size">
+                          :cur.sync="defaultData.pageIndex"
+                          :page_size.sync="defaultData.pageSize">
                     </page>
                 </div>
             </div>
@@ -265,8 +265,6 @@
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 10},
@@ -319,6 +317,7 @@
                     });
             },
             checkNew(){
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.initList();
             },
             addUser(){
@@ -445,6 +444,7 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
             this.getClist();
             let vm=this;
@@ -457,12 +457,7 @@
             'datepicker': datepicker
         },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         },

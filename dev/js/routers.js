@@ -10,7 +10,7 @@ export default function(router){
             }
         },
         /* 首页 */
-        '/default/':{
+        '/default':{
             name:'default',
             component: function(resolve){
                 require(['./views/default.vue'],resolve);
@@ -209,5 +209,17 @@ export default function(router){
         $(".modal").modal("hide");
         $("body").scrollTop(0);
         transition.next();
+    });
+    router.afterEach((transition) =>{
+        Message.hide();
+        if(back_json.num==0){
+            back_json.isback=true;
+        }
+        else{
+            back_json.isback=false;
+            back_json.num=0;
+        }
+        localStorage.removeItem(transition.to.path);
+        console.log(transition.to.path);
     });
 }
