@@ -63,7 +63,7 @@
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>账户余额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}</span>
+                    <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}元</span>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -71,8 +71,8 @@
                             <thead>
                             <tr role="row">
                                 <th>订单号</th>
-                                <th>收入</th>
-                                <th>支出</th>
+                                <th>欠发票增加</th>
+                                <th>收发票</th>
                                 <th>付款方式 </th>
                                 <th>状态</th>
                                 <th>交易时间</th>

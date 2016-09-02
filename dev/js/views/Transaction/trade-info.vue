@@ -93,7 +93,7 @@
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
-                                <th>暂扣税金</th>
+                                <th>退税款</th>
                                 <th>商户实补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
@@ -256,9 +256,9 @@
                                             <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                                         </div>
                                         <div class="form-group">
-                                            <label><i>*</i>暂扣税金：</label>
+                                            <label><i>*</i>退税款：</label>
                                             <input type="text" class="form-control" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" >
-                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
+                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>商户实补：</label>
