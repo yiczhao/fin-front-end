@@ -67,7 +67,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <a class="btn btn-info" @click="initList">查询</a>
+                                <a class="btn btn-info" @click="initList" data-ksa="limit_purchase_account_manage.detail">查询</a>
                             </div>
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
@@ -110,10 +110,10 @@
                                     </td>
                                     <td>{{trlist.tradeTime|datetime}}</td>
                                     <td>
-                                        <a v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'1'}}" v-if="trlist.payType==1">查看</a>
-                                        <a v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'4'}}" v-if="trlist.payType==2">查看</a>
+                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'1'}}" v-if="trlist.payType==1">查看</a>
+                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details','params':{'reserveCashOrderNumber':trlist.serialNumber,'payType':'4'}}" v-if="trlist.payType==2">查看</a>
                                         <a href="{{origin}}/file/download/{{trlist.certificatesID}}" v-if="trlist.payType==2&&trlist.certificatesID!=0">下载</a>
-                                        <a v-link="{name:'trade-info',params:{'serialNumber':trlist.serialNumber}}" v-if="trlist.payType!=1&&trlist.payType==3">查看</a>
+                                        <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'serialNumber':trlist.serialNumber}}" v-if="trlist.payType!=1&&trlist.payType==3">查看</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>

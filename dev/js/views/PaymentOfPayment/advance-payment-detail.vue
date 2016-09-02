@@ -55,7 +55,7 @@
                                     <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query">查询</a>
+                                    <a class="btn btn-info" v-on:click="query" data-ksa="advance_payment_detail_manage.search">查询</a>
                                 </div>
                             </form> 
                         </div>
@@ -90,7 +90,7 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
-                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantId)">查看</a></td>
+                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantId)" data-ksa="advance_payment_account_manage.search">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==1">等待审核</template>
@@ -100,7 +100,7 @@
                                                 <template v-if="apd.status==5">对账成功</template>
                                                 <template v-if="apd.status==6">划付失败</template>
                                             </td>
-                                            <td><a v-if="apd.status!=1" @click="gopayment(apd.id,4)">查看</a></td>
+                                            <td><a v-if="apd.status!=1" @click="gopayment(apd.id,4)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
                                             <td>{{apd.remarks}}</td>
                                         </tr>
                                     </tbody>

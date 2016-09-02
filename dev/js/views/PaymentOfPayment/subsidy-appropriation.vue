@@ -64,14 +64,14 @@
                                     <input type="text" class="form-control" style="width: 100px" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query">查询</a>
+                                    <a class="btn btn-info" v-on:click="query" data-ksa="subsidy_pay_detail_manage.search">查询</a>
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="subsidyPayexcel">导出</a>
+                                    <a class="btn btn-info" v-on:click="subsidyPayexcel" data-ksa="subsidy_pay_detail_manage.export">导出</a>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <a class="btn btn-info" data-toggle="modal" @click="batchs()">一键审核</a>
+                                    <a class="btn btn-info" data-toggle="modal" @click="batchs()" data-ksa="subsidy_pay_detail_manage.apply_pay">一键审核</a>
                                 </div>
                             </form> 
                         </div>
@@ -127,7 +127,7 @@
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount/100 | currency ''}}</td>
                                         <td>{{sa.suspensionTaxAmount/100 | currency ''}}</td>
-                                        <td><a v-link="{name:'trade-info',params:{subsidyPayId:sa.id}}">明细</a> </td>
+                                        <td><a v-link="{name:'trade-info',params:{subsidyPayId:sa.id}}" data-ksa="trade_detail_manage.search">明细</a> </td>
                                         <td>
                                             <template v-if="sa.status==0">
                                                 已关闭
@@ -153,11 +153,11 @@
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">
-                                                <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)">申请划付</a>
-                                                <a href="javascript:void(0);" @click="updateById(sa.id)">更新</a>
+                                                <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)" data-ksa="subsidy_pay_detail_manage.apply_pay">申请划付</a>
+                                                <a href="javascript:void(0);" @click="updateById(sa.id)" data-ksa="subsidy_pay_detail_manage.update">更新</a>
                                             </template>
                                             <template v-else>
-                                                <a @click="gopayment(sa.id,1)">查看</a>
+                                                <a @click="gopayment(sa.id,1)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                             </template>
                                         </td>
                                         <td>

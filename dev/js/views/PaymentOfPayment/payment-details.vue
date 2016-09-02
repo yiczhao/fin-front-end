@@ -70,14 +70,14 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <a class="btn btn-info" @click="initList">查询</a>
+                                <a class="btn btn-info" @click="initList" data-ksa="reserve_cash_order_manage.search">查询</a>
                             </div>
                             <div class="form-group">
-                                <a class="btn btn-info" @click="payDetailexcel" >导出</a>
+                                <a class="btn btn-info" @click="payDetailexcel" data-ksa="reserve_cash_order_manage.export">导出</a>
                             </div>
                             <br>
                             <div class="form-group">
-                                <a class="btn btn-info" @click="batchs()">一键划付</a>
+                                <a class="btn btn-info" @click="batchs()" data-ksa="reserve_cash_order_manage.pay">一键划付</a>
                             </div>
                     </form>
                 </div>
@@ -145,23 +145,23 @@
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td>
-                                    <a v-if="n.status!=0" @click="getInfo(n,index)">详情</a>
+                                    <a v-if="n.status!=0" @click="getInfo(n,index)" data-ksa="reserve_cash_order_manage.detail">详情</a>
                                     <template v-if="n.status==2">
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)">确认划付</a>
-                                        <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)">退回重审</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)" data-ksa="reserve_cash_order_manage.pay">确认划付</a>
+                                        <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)" data-ksa="reserve_cash_order_manage.retrial">退回重审</a>
                                     </template>
                                     <template v-if="n.status==4">
-                                        <a data-toggle="modal" data-target="#modal_checking" @click="checking(n.id)" >对账</a>
+                                        <a data-toggle="modal" data-target="#modal_checking" @click="checking(n.id)" data-ksa="reserve_cash_order_manage.check">对账</a>
                                     </template>
                                     <template v-if="n.status==6">
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="update(n.id)">更新订单</a>
-                                        <a @click="applyTrue(n.id)">申请划付</a>
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="close(n.id)">关闭订单</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" @click="update(n.id)" data-ksa="reserve_cash_order_manage.update">更新订单</a>
+                                        <a @click="applyTrue(n.id)" data-ksa="reserve_cash_order_manage.apply_pay">申请划付</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" @click="close(n.id)" data-ksa="reserve_cash_order_manage.close">关闭订单</a>
                                     </template>
                                 </td>
                                 <td>{{n.remarks}}</td>
                                 <td>
-                                    <template v-if="n.certificate!=''"><a v-link="{name:'provisions-info',params:{accountId:0,subCompanyID:n.subCompanyID,certificate:n.certificate}}">查看</a></template>
+                                    <template v-if="n.certificate!=''"><a data-ksa="reserve_cash_detail_manage.search" v-link="{name:'provisions-info',params:{accountId:0,subCompanyID:n.subCompanyID,certificate:n.certificate}}">查看</a></template>
                                 </td>
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeAccountName }}</span>
@@ -239,6 +239,7 @@
                                 <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
                                 <td>{{trlist.purpose}}</td>
                                 <td>
+<<<<<<< HEAD
                                     <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='补贴退税'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
@@ -246,6 +247,15 @@
                                     <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount()">详情</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)">删除</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)">删除</a></template>
+=======
+                                    <template v-if="trlist.purpose=='补贴划付'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='额度采购'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='补贴退税'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='预付款'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>
+                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>
+>>>>>>> feature/CWXT-876-1
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>

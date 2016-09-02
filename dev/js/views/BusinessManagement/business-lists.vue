@@ -31,7 +31,7 @@
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="checkNew">查询</a>
+                            <a class="btn btn-info" @click="checkNew" data-ksa="merchant_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -76,7 +76,7 @@
                                 <td>{{trlist.commission33211/100 | currency '' }} </td>
                                 <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
                                 <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
-                                <td><a v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
+                                <td><a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
                                 <td>{{trlist.commission/100 | currency '' }} </td>
                                 <td>
                                     <template v-if="trlist.settlementCycle==1">日结</template>
@@ -85,10 +85,10 @@
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
                                 <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
-                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
-                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
-                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
+                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
+                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 </template>
                                 <template v-else>
                                     <td>0.00</td>
@@ -97,9 +97,9 @@
                                     <td>0.00</td>
                                 </template>
                                     <!--<td>-->
-                                    <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
+                                    <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>-->
                                 <!--</td>-->
-                                <td><a @click="control(trlist)">管理</a></td>
+                                <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                             </tr>
@@ -294,7 +294,7 @@
                                         <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
                                     </div>
                                     <div class="form-group tc">
-                                        <button type="button" @click="updateTrue(updateList)" class="btn btn-primary">保存</button>
+                                        <button type="button" @click="updateTrue(updateList)" class="btn btn-primary" data-ksa="merchant_manage.update">保存</button>
                                     </div>
                                     <div class="form-group tc">
                                         <span v-show="(!$vali.valid&&updataerror)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>

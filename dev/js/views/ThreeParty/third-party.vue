@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a class="btn btn-info" @click="addUser">添加</a>
+                            <a class="btn btn-info" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -36,7 +36,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="third_party_account_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -70,10 +70,10 @@
                                         <template v-if="trlist.status==1">正常</template>
                                     </td>
                                     <td>
-                                        <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit">回款</a>
-                                        <a v-link="{name:'third-info',params:{'id':trlist.id}}">明细</a>
-                                        <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring">停用</a>
-                                        <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring">启用</a>
+                                        <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit" data-ksa="third_party_account_manage.recharge">回款</a>
+                                        <a v-link="{name:'third-info',params:{'id':trlist.id}}" data-ksa="third_party_account_manage.detail">明细</a>
+                                        <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">停用</a>
+                                        <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">启用</a>
                                     </td>
                                     <td>{{trlist.openTime | datetime}}</td>
                                     <td>{{trlist.contactName}}</td>

@@ -11,7 +11,7 @@
                     <form class="form-inline manage-form">
                             <div class="form-group">
                                 <a data-toggle="modal" data-target="#modal_add" class="btn btn-info"
-                                @click="getRechargeInfo(defaultData.advancePaymentMerchantID)">预付充值</a>
+                                @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
@@ -67,7 +67,7 @@
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="advance_payment_account_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -121,9 +121,9 @@
                                 </td>
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>
-                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
+                                    <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
                                        v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
-                                    <a v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}"
+                                    <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}"
                                        v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
