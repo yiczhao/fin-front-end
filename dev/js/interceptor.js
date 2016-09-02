@@ -24,7 +24,7 @@ export default function install(Vue,router_proto) {
 			// *** 拦截session过期
 			if(response.data.code === 50000){
 			  setTimeout(()=>{
-				  router_proto.go({name:'login'});
+				  router_proto.replace({name:'login'});
 			  })
 			}
 			else if(!response.ok&&conut===0){

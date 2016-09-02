@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                             <div class="form-group">
-                                <input type="button" @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info" value="回款充值">
+                                <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info">回款充值</a>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
@@ -46,7 +46,7 @@
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                     </form>
                 </div>
@@ -262,7 +262,7 @@
                     accountName:'',
                     balanceAmount:'',
                 },
-                dateS:'1',
+                dateS:'3',
                 pagecur:1,
                 page_size:10,
                 pageall:1,
@@ -378,7 +378,7 @@
                 if(this.$vali.invalid)return;
                 let data={
                     id:this.redata.id,
-                    money:this.redata.money *100,
+                    money:accMul(this.redata.money,100),
                     remarks:this.redata.remarks
                 }
                 this.model.thirdParty_recharge(data)

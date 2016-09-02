@@ -52,7 +52,7 @@ export default function(router){
             }
         },
         //备付金支出-付款明细
-        '/payment-details/:reserveCashOrderNumber/:payType':{
+        '/payment-details/:reserveCashOrderNumber/:payType/:merchantOperationIDs':{
             name:'payment-details',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/payment-details.vue'],resolve);
@@ -73,7 +73,7 @@ export default function(router){
             }
         },
         //备付金支出-补贴划付
-        '/subsidy-appropriation/:subsidyPayID':{
+        '/subsidy-appropriation/:subsidyPayID/:subsidySHid/:subsidyHDid':{
             name:'subsidy-appropriation',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/subsidy-appropriation.vue'],resolve);
@@ -105,6 +105,27 @@ export default function(router){
             name:'business-lists',
             component: function(resolve){
                 require(['./views/BusinessManagement/business-lists.vue'],resolve);
+            }
+        },
+        /* 商户管理-商户列表-活动管理 */
+        '/merchat-activity-subsidy-account/:merchantID1/:merchantName1/:merchantOperationID1':{
+            name:'merchat-activity',
+            component: function(resolve){
+                require(['./views/BusinessManagement/merchat-activity-subsidy-account.vue'],resolve);
+            }
+        },
+        /* 商户管理-商户列表-活动管理-发票账户明细 */
+        '/invoice-account-detail/:invoiceHDid/:invoiceZHname/:invoiceSHname/:invoiceZHbalance/:invoiceBTid':{
+            name:'invoice-account',
+            component: function(resolve){
+                require(['./views/BusinessManagement/invoice-account-detail.vue'],resolve);
+            }
+        },
+        /* 商户管理-商户列表-活动管理-暂扣税金账户明细 */
+        '/suspension-tax-account-detail/:orderId/:suspensionHDid/:suspensionZHname/:suspensionSHname/:suspensionZHbalance/:suspensionBTid':{
+            name:'suspension-tax',
+            component: function(resolve){
+                require(['./views/BusinessManagement/suspension-tax-account-detail.vue'],resolve);
             }
         },
         /* 商户管理-额度采购 */

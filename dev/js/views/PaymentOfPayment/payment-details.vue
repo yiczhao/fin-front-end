@@ -11,6 +11,7 @@
                                 <select class="form-control" v-model="checkForm.payType">
                                     <option value="1">备付金账户</option>
                                     <option value="2">商户预付款账户</option>
+                                    <option value="3">银行结算</option>
                                     <option value="4">其他</option>
                                 </select>
                             </div>
@@ -58,24 +59,25 @@
                                 <select class="form-control" v-model="checkForm.purpose">
                                     <option value="">请选择用途</option>
                                     <option value="1">补贴划付</option>
-                                    <option value="2">额度采购</option>
+                                    <!--<option value="2">额度采购</option>-->
                                     <option value="3">退税划付</option>
                                     <option value="4">预付款</option>
                                     <option value="5">供货商划付</option>
+                                    <option value="10">税金提现</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="initList" value="查询">
+                                <a class="btn btn-info" @click="initList">查询</a>
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="payDetailexcel" value="导出">
+                                <a class="btn btn-info" @click="payDetailexcel" >导出</a>
                             </div>
                             <br>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="batchs()" value="一键划付">
+                                <a class="btn btn-info" @click="batchs()">一键划付</a>
                             </div>
                     </form>
                 </div>
@@ -88,6 +90,7 @@
                                 <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>划付金额</th>
+                                <th>退税款</th>
                                 <th>付款账户</th>
                                 <th>用途</th>
                                 <th>状态</th>
@@ -116,31 +119,35 @@
                                     {{n.merchantOperationID}}
                                 </td>
                                 <td>{{n.merchantName}}</td>
-                                <td>{{n.payoutAmount/100 | currency '' }}</td>
                                 <td>
-                                    <template v-if="n.payType==1">{{n.payoutAccount}}</template>
-                                    <template v-else>{{n.payoutAccount}}</template>
+                                    {{n.payoutAmount/100 | currency '' }}
                                 </td>
+                                <td>
+                                    <template v-if="n.purpose==1 || n.purpose==3">{{n.suspensionTaxAmount/100 | currency '' }}</template>
+                                    <template v-else>--</template>
+                                </td>
+                                <td>{{n.payoutAccount}}</td>
                                 <td>
                                     <template v-if="n.purpose==1"> 补贴划付</template>
                                     <template v-if="n.purpose==2"> 额度采购</template>
                                     <template v-if="n.purpose==3"> 退税划付</template>
                                     <template v-if="n.purpose==4"> 预付款</template>
                                     <template v-if="n.purpose==5"> 供货商划付</template>
+                                    <template v-if="n.purpose==10">税金提现</template>
                                 </td>
-                                <td>
+                                <td >
                                     <template v-if="n.status==1"> 等待审核</template>
                                     <template v-if="n.status==2"> 等待划付</template>
                                     <template v-if="n.status==3"> 转账中</template>
                                     <template v-if="n.status==4"> 等待对账</template>
                                     <template v-if="n.status==5"> 对账成功</template>
-                                    <template v-if="n.status==6"> 划付失败</template>
+                                    <span v-bind:class="{'redrow':n.status==6}" v-if="n.status==6"> 划付失败</span>
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td>
                                     <a v-if="n.status!=0" @click="getInfo(n,index)">详情</a>
                                     <template v-if="n.status==2">
-                                        <a @click="pay(n.id)">确认划付</a>
+                                        <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)">确认划付</a>
                                         <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)">退回重审</a>
                                     </template>
                                     <template v-if="n.status==4">
@@ -171,6 +178,27 @@
                                 <td>{{n.refuseReason }}</td>
                             </tr>
                         </template>
+                        <tr role="row">
+                            <td></td>
+                            <td>合计：</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{total.payoutAmount/100 | currency ''}}</td>
+                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -194,22 +222,28 @@
                             <thead>
                                 <tr role="row">
                                     <th>生成日期</th>
-                                    <th>划付金额</th>
+                                    <th>
+                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">退税金额</span>
+                                        <span v-else>划付金额</span>
+                                    </th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">退税款</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
                                     <th>备注</th>
                                 </tr>
                             </thead>
-                            <tr v-show="listinfos!=null" class="div-table" v-for="trlist in listinfos">
+                            <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createAt | datetimes}}</td>
                                 <td>{{trlist.amount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
                                 <td>{{trlist.purpose}}</td>
                                 <td>
                                     <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='补贴退税'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='预付款'"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount()">详情</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)">删除</a></template>
                                     <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)">删除</a></template>
                                 </td>
@@ -223,6 +257,9 @@
                                     <template v-if="trlist.status==0"> 已关闭</template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
+                            </tr>
+                            <tr style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                                <td>未找到数据</td>
                             </tr>
                         </table>
                         </div>
@@ -240,6 +277,7 @@
                         <div class="modal-body">
                             <div class="form-group tc">
                                 <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
+                                <button  v-if="waring=='你确认划付账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
@@ -397,6 +435,14 @@
                      }
                  }
              }
+             .redrow{
+                 display: inline-block;
+                 padding:6px;
+                 border-radius: 6px;
+                 background: rgb(253,110,73);
+                 color: #fff;
+                 font-size: 12px;
+             }
          }
    }
      .div-table{
@@ -431,7 +477,7 @@
                 pagecur:1,
                 page_size:10,
                 pageall:1,
-                dateS:'1',
+                dateS:'3',
                 waring:'',
                 subtitle:'',
                 checkForm:{
@@ -448,6 +494,10 @@
                     mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
                     pageIndex:1,
                     pageSize:10
+                },
+                total:{
+                    suspensionTaxAmount:'',
+                    payoutAmount:''
                 },
                 listinfos:[],
                 zdlists:[],
@@ -477,6 +527,12 @@
                                 this.$set('pageall', response.data.total)
                             }
                         });
+                this.model.reserveCashOrdertotal(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('total', response.data.data)
+                            }
+                        });
             },
             //获取分公司数据
             getSubcompany(){
@@ -498,15 +554,17 @@
                 this.getZlists(this.checkForm);
             },
             payDetailexcel(){
+                if(!this.zdlists.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 window.open(window.origin+this.$API.payDetailexcel+ $.param(this.checkForm));
             },
             getInfo(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.listinfos = []
+                this.id=a.id;
                 this.model.getpart(a.id)
                         .then( (response)=> {
                             if(response.data.code==0) {
@@ -526,8 +584,12 @@
                 this.accountId=a;
             },
             pay(a){
+                this.waring = '你确认划付账单？';
+                this.accountId=a;
+            },
+            payTrue(){
                 this.orderIDs=[];
-                this.orderIDs.push(a);
+                this.orderIDs.push(this.accountId);
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                             if(response.data.code==0){
@@ -587,16 +649,6 @@
                         }
                     })
             },
-            payTrue(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.reservecash_allow(this.accountId)
-                        .then( (response)=> {
-                            if(response.data.code==0){
-                                this.initList();
-                                dialogs('success','划付成功！');
-                            }
-                        })
-            },
             delTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
@@ -650,7 +702,6 @@
                         })
             },
             checkingTrue(a){
-                console.log(a);
             },
             getTime(){
                 this.checkForm.startDate=init_date(this.dateS)[0];
@@ -663,7 +714,6 @@
                     $(e.target).removeClass('checked-boxs');
                 }
                 this.orderIDs= Array.from($(".checked-boxs"), i => parseInt(i.value));
-                console.log(this.orderIDs.toString());
             },
             addAll(e){
                 if(e.target.checked){
@@ -683,6 +733,16 @@
                                 }
                                 this.orderIDs=[];
                                 this.initList();
+                        })
+            },
+            skipToSubsidyAccount(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.skipToSubsidyAccount(this.id)
+                        .then( (response)=> {
+                            if(response.data.code==0&&!!response.data.data){
+                                let trlist=response.data.data;
+                                this.$router.go({name:'suspension-tax',params:{orderId:trlist.reserveCashOrder.orderId,suspensionHDid:trlist.subsidyAccount.id,suspensionBTid:trlist.reserveCashOrder.merchantId,suspensionZHname:trlist.activity.name,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.subsidyAccount.suspensionTaxAmount,suspensionSHname:trlist.merchant.name}});
+                            }
                         })
             }
         },
@@ -705,6 +765,7 @@
         ready(){
             (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;
             (this.$route.params.payType==':payType')?this.checkForm.payType='1' :this.checkForm.payType=this.$route.params.payType;
+            (this.$route.params.merchantOperationIDs==':merchantOperationIDs')?this.checkForm.merchantOperationID='' :this.checkForm.merchantOperationID=this.$route.params.merchantOperationIDs;
             this.getTime();
             this.getSubcompany();
             this.initList();

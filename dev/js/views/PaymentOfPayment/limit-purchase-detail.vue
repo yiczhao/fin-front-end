@@ -54,7 +54,7 @@
                                     <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                                    <a class="btn btn-info" v-on:click="query">查询</a>
                                 </div>
                             </form> 
                         </div>
@@ -240,7 +240,6 @@
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
-
                         })
             },
             goinfo(a,b){

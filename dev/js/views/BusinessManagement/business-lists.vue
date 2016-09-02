@@ -31,7 +31,7 @@
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                            <a class="btn btn-info" @click="checkNew">查询</a>
                         </div>
                     </form>
                 </div>
@@ -54,6 +54,10 @@
                                     <th>佣金值</th>
                                     <th>结算周期</th>
                                     <th>补贴税率</th>
+                                    <th>已划付</th>
+                                    <th>待划付</th>
+                                    <th>退税款</th>
+                                    <th>欠发票金额</th>
                                     <!--<th>额度采购消化账户</th>-->
                                     <th>划款账户</th>
                                     <th>联系人</th>
@@ -80,7 +84,19 @@
                                     <template v-if="trlist.settlementCycle==3">月结</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
-                                <!--<td>-->
+                                <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
+                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
+                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
+                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                    <td><a v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                </template>
+                                <template v-else>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                </template>
+                                    <!--<td>-->
                                     <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)">查看消化账户</a>-->
                                 <!--</td>-->
                                 <td><a @click="control(trlist)">管理</a></td>
@@ -98,6 +114,9 @@
                                  <td>{{nums.commission33211/100 | currency ''}}</td>
                                  <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                  <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
                                  <td></td>
                                  <td></td>
                                  <td></td>

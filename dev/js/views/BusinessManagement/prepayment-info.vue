@@ -10,8 +10,8 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                             <div class="form-group">
-                                <input type="button" data-toggle="modal" data-target="#modal_add" class="btn btn-info"
-                                       @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" value="预付充值">
+                                <a data-toggle="modal" data-target="#modal_add" class="btn btn-info"
+                                @click="getRechargeInfo(defaultData.advancePaymentMerchantID)">预付充值</a>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="dateS">
@@ -67,7 +67,7 @@
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                     </form>
                 </div>
@@ -356,7 +356,7 @@
                     "endDate": ''
                 },
                 zdlists: [],
-                dateS: '1',
+                dateS: '3',
                 applyAdvancePay: {
                     merchantName: "",//商户名
                     balanceAmount: "",//余额
@@ -441,7 +441,7 @@
                 if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
                     advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
-                    advancePaymentAmount: this.applyAdvancePay.advancePaymentAmount * 100,
+                    advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,
                 }
                 this.model.applyAdvancePay(entity)

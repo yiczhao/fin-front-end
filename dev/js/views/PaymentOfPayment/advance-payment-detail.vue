@@ -55,7 +55,7 @@
                                     <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                                    <a class="btn btn-info" v-on:click="query">查询</a>
                                 </div>
                             </form> 
                         </div>
@@ -142,7 +142,7 @@
                 createType:"",
                 status:"",
                 remarks:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantID:"",      

@@ -52,6 +52,14 @@ function model(_this){
          * */
         subsidyTaxexcel(data){
             return _this.$http.get(_this.$API.subsidyTaxexcel+ $.param(data))
+        },
+        /**
+         * @description 合计
+         * @params {data}
+         * @returns {*}
+         * */
+        rebate_total(data){
+            return _this.$http.get(_this.$API.rebate_total+ $.param(data))
         }
     }
 }

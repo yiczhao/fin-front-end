@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="addUser" value="添加">
+                            <a class="btn btn-info" @click="addUser">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -36,14 +36,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                     </form>
                 </div>
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                    <div>
-
-                    </div>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -582,7 +579,7 @@
                 if(this.$vali.invalid || this.redata.money==0)return;
                 let data={
                     id:this.redata.id,
-                    money:this.redata.money *100,
+                    money:accMul(this.redata.money,100),
                     remarks:this.redata.remarks
                 }
                 this.model.thirdParty_recharge(data)

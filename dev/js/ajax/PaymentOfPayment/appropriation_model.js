@@ -52,6 +52,14 @@ function model(_this){
          * */
         subsidyPayexcel(data){
             return _this.$http.get(_this.$API.subsidyPayexcel+ $.param(data))
+        },
+        /**
+         * @description 合计
+         * @params {data}
+         * @returns {*}
+         * */
+        appropriation_total(data){
+            return _this.$http.get(_this.$API.appropriation_total+ $.param(data))
         }
     }
 }

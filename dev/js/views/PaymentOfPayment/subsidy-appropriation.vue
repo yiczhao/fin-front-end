@@ -64,14 +64,14 @@
                                     <input type="text" class="form-control" style="width: 100px" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                                    <a class="btn btn-info" v-on:click="query">查询</a>
                                 </div>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" v-on:click="subsidyPayexcel" value="导出">
+                                    <a class="btn btn-info" v-on:click="subsidyPayexcel">导出</a>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <input type="button" class="btn btn-info" data-toggle="modal" @click="batchs()" value="一键审核">
+                                    <a class="btn btn-info" data-toggle="modal" @click="batchs()">一键审核</a>
                                 </div>
                             </form> 
                         </div>
@@ -91,6 +91,7 @@
                                         <th>生成方式</th>
                                         <th>三方应补</th>
                                         <th>划付金额</th>
+                                        <th>退税款</th>
                                         <th>交易</th>
                                         <th>状态</th>
                                         <th>操作</th>
@@ -125,6 +126,7 @@
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount/100 | currency ''}}</td>
+                                        <td>{{sa.suspensionTaxAmount/100 | currency ''}}</td>
                                         <td><a v-link="{name:'trade-info',params:{subsidyPayId:sa.id}}">明细</a> </td>
                                         <td>
                                             <template v-if="sa.status==0">
@@ -163,6 +165,25 @@
                                         </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>合计</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
+                                        <td>{{total.payAmount/100 | currency ''}}</td>
+                                        <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                     </div>
@@ -177,22 +198,52 @@
                             未查询到补贴划付信息！
                         </div>
             </div>
-            <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                <div class="modal-dialog">
+            <!--<div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">-->
+                <!--<div class="modal-dialog">-->
+                    <!--<div class="modal-content">-->
+                        <!--<div class="modal-header">-->
+                            <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+                            <!--<h5 class="modal-title">你确定一键审核？</h5>-->
+                        <!--</div>-->
+                        <!--<div class="modal-body">-->
+                            <!--<div class="form-group tc">-->
+                                <!--<button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>-->
+                                <!--<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
+                <div class="modal-dialog mg">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <h3>{{dialogTitle}}</h3>
                             <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title">你确定一键审核？</h5>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group tc">
-                                <button type="button" @click="showModalApplyPay" class="btn btn-primary">确认</button>
-                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            <div class="form-group">
+                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeAmount/100 | currency ''}}</span>  元
+                            </div>
+                            <div class="form-group">
+                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
+                                    <option value="1">备付金账户</option>
+                                    <option value="2">商户预付款账户</option>
+                                    <option value="3">银行结算</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="text-align: center">
+                                <input type="button" class="btn btn-info btn-primary" @click="submit()" value="提交">
+                                <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </index>
 </template>
@@ -213,7 +264,7 @@
                 cityID:"",
                 createType:"",
                 status:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantOperationID:"",
@@ -229,19 +280,20 @@
                 pageIndex:1,
                 pageSize:10,
                 cityList:[],
-                payTypes:[],
                 showPayAccount:'',
                 subsidyAppropriationList:[],
                 payType:"1",
+                payTypes:'2',
                 applyPayInfo:{
-                    payType:{
-                       1:"",
-                       2:""
-                    }
                 },
                 applyPayRemarks:'',
                 dialogTitle:'',
-                submitId:''
+                submitId:'',
+                total:{
+                    thirdPartySubsidyShould:'',
+                    suspensionTaxAmount:'',
+                    payAmount:''
+                }
             }
         },
         methods:{
@@ -256,6 +308,13 @@
                             this.$set('pageall', response.data.total)
                         }
                     });
+                 this.model.appropriation_total(data)
+                         .then((response)=>{
+                             // *** 判断请求是否成功如若成功则填充数据到模型
+                             if(response.data.code==0){
+                                 this.$set('total', response.data.data)
+                             }
+                         });
             },
              //获取分公司数据
             getSubcompany(){
@@ -289,42 +348,27 @@
                 }
             },
             clear(){
-                this.applyPayRemarks="",
-                this.applyPayInfo={payType:{
-                       1:"",
-                       2:""
-                    }};
+                this.payTypes='2';
             },
-            batchs(){
-                let AccountS = [];
-                $("input[name='ckbox']:checked").each(function(){
-                    AccountS.push($(this).prop("class"));
-                });
-                if(AccountS.length<=0){
-                    dialogs('info','请勾选审核信息！');
-                    return false
-                }
-                $('#modal_waring').modal('show');
-            },
-            showModalApplyPay(){
-                var AccountS = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  AccountS.push($(this).prop("class"));  
-                });
-                let array = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  array.push(parseInt($(this).prop("id")));
-                });
-                this.model.subsidy_applyPay(JSON.stringify(array))
-                        .then((response)=>{
-                                // *** 判断请求是否成功如若
-                                if(response.data.code==0){
-                                    dialogs('success','申请成功！');
-                                    $("#modal_waring").modal("hide");
-                                }
-                                this.query();
-                        });
-            },
+//            showModalApplyPay(){
+//                var AccountS = [];
+//                $("input[name='ckbox']:checked").each(function(){
+//                  AccountS.push($(this).prop("class"));
+//                });
+//                let array = [];
+//                $("input[name='ckbox']:checked").each(function(){
+//                  array.push(parseInt($(this).prop("id")));
+//                });
+//                this.model.subsidy_applyPay(JSON.stringify(array))
+//                        .then((response)=>{
+//                                // *** 判断请求是否成功如若
+//                                if(response.data.code==0){
+//                                    dialogs('success','申请成功！');
+//                                    $("#modal_waring").modal("hide");
+//                                }
+//                                this.query();
+//                        });
+//            },
             updateById(id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.subsidy_update(id)
@@ -337,66 +381,90 @@
                             }
                         });
             },
-            showModalApplyPayById(id){
-                var AccountS = [];
-                AccountS.push(id);
+//            batchs(){
+//                let AccountS = [];
+//                $("input[name='ckbox']:checked").each(function(){
+//                    AccountS.push($(this).prop("class"));
+//                });
+//                if(AccountS.length<=0){
+//                    dialogs('info','请勾选审核信息！');
+//                    return false
+//                }
+//                $('#modal_waring').modal('show');
+//            },
+//            showModalApplyPayById(id){
+//                var AccountS = [];
+//                AccountS.push(id);
+//                if(AccountS.length<=0){
+//                    return false
+//                }
+//                this.model.subsidy_applyPay(JSON.stringify(AccountS))
+//                        .then((response)=>{
+//                        // *** 判断请求是否成功如若
+//                            if(response.data.code==0){
+//                                    dialogs('success','申请成功！');
+//                                    this.query();
+//                                }
+//                            });
+//            },
+            batchs(){
+                let AccountS = [];
+                $("input[name='ckbox']:checked").each(function(){
+                    AccountS.push(parseInt($(this).prop("id")));
+                });
                 if(AccountS.length<=0){
+                    dialogs('info','请勾选审核信息！');
                     return false
                 }
-                this.model.subsidy_applyPay(JSON.stringify(AccountS))
-                        .then((response)=>{
-                        // *** 判断请求是否成功如若
-                            if(response.data.code==0){
-                                    dialogs('success','申请成功！');
-                                    this.query();
-                                }
-                            });
+                this.getApplyPayInfoByIDs(AccountS);
+                this.dialogTitle='一键审核';
             },
-            submitOne(){
+            showModalApplyPayById(id){
+                let array=[];
+                array.push(parseInt(id));
+                this.getApplyPayInfoByIDs(array);
+                this.dialogTitle='申请划付';
+            },
+            getApplyPayInfoByIDs(idArray){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    ids:this.submitId,
-                    remarks:this.applyPayRemarks,
-                    payType:this.payType,
-                    displayName:this.applyPayInfo.displayName
+                if(idArray.length<=0){
+                    return false
                 }
-                this.model.subsidy_applyPay(data)
+                let data={
+                    ids:idArray.toString()
+                }
+                this.submitId=idArray;
+                this.clear();
+                this.model.select_subsidypay(data)
                         .then((response)=>{
-                            if (response.data.code==0){
-                                dialogs();
-                                this.query();
+                            // *** 判断请求是否成功如若
+                            // *** 判断请求是否成功如若
+                            if(response.data.code==0){
+                                this.$set('applyPayInfo', response.data.data)
+                                $('#modal_applyPay').modal('show');
                             }
                         });
-                $(".modal").modal("hide");
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                var array = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  array.push($(this).prop("id"));  
-                });
-
-                if ($('#displayName').prop("readonly")) {
-                    array.push($('#displayName').prop("class"));
-                 }
                 let data={
-                    ids:array,
-                    remarks:this.applyPayRemarks,
-                    payType:this.payType,
-                    displayName:this.applyPayInfo.displayName
-                    
+                    ids:this.submitId,
+                    payType:this.payTypes
                 }
-               this.model.subsidy_applyPay(data).then((response)=>{
-                        if (response.data.code==0){
-                            dialogs('success','申请成功！');
-                            this.query();
-                        }
-            });
-                     //关闭弹出层
-                    $(".modal").modal("hide");
+                var mes;
+                (this.submitId.length>1)?mes='审核成功':mes='申请成功';
+                this.model.subsidy_applyPay(data)
+                        .then((response)=>{
+                        // *** 判断请求是否成功如若
+                                if(response.data.code==0){
+                                    dialogs('success',mes);
+                                }
+                                this.query();
+                            });
             },
             query() {
                 $(".check-boxs").prop({'checked':false})
+                $('.modal').modal('hide');
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
                     this.endDate=init_date(this.timeRange)[1];
@@ -419,12 +487,13 @@
                 this.getSubsidyAppropriationList(data);
             },
             subsidyPayexcel(){
+                if(!this.subsidyAppropriationList.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date(this.timeRange)[0];
                     this.endDate=init_date(this.timeRange)[1];
                 }
                 let data={
-                    id:this.subsidyTaxRebateID,
+                    id:this.id,
                     subCompanyID:this.subCompanyID,
                     merchantOperationID:this.merchantOperationID,
                     cityID:this.cityID,
@@ -455,19 +524,13 @@
         },
         ready() {
             (this.$route.params.subsidyPayID==':subsidyPayID')?this.id='':this.id=this.$route.params.subsidyPayID;
+            (this.$route.params.subsidySHid==':subsidySHid')?this.merchantOperationID='':this.merchantOperationID=this.$route.params.subsidySHid;
+            (this.$route.params.subsidyHDid==':subsidyHDid')?this.activityOperationID='':this.activityOperationID=this.$route.params.subsidyHDid;
             this.query();
             this.getSubcompany();
             this.getCity();
         },
          watch:{
-            payType(){
-                let type=$("#payType").val()
-                for(var i in this.payTypes){
-                    if(type == this.payTypes[i].type){
-                        this.showPayAccount=this.payTypes[i].value
-                    }
-                }
-            },
             timeRange(){
                 this.startDate=init_date(this.timeRange)[0];
                 this.endDate=init_date(this.timeRange)[1];

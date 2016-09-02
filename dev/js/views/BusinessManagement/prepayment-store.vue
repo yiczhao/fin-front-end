@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="addUser" value="添加">
+                            <a class="btn btn-info" @click="addUser">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -19,7 +19,7 @@
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                     </form>
                 </div>
@@ -141,7 +141,7 @@
                                             无可添加数据
                                         </span>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
                                         <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
                                         <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
@@ -165,40 +165,45 @@
               padding: 7px;
         }
     }
-    .addbottom{
+    .addbottom {
         margin-top: 15px;
-        .col-md-2{
-            text-align: center;
-            input{
-                margin-bottom: 10px;
-            }
-        }
-        .col-md-7{
-            height: 300px;
-            overflow: auto;
-            border: 1px solid #ccc;
-        }
-        .col-md-1{
-            padding-top: 40px;
-            text-align: center;
-            input{
-                margin:15px 0;
-            }
-        }
-        .col-md-4{
-            border: 1px solid #ccc;
-            padding:10px;
-        }
-        ul{
-            list-style: none;
-            height: 278px;
-            overflow: auto;
-            li{
-                margin:5px 0;
-                cursor: pointer;
-                padding-left:3px;
-            }
-        }
+
+    .col-md-2 {
+        text-align: center;
+        width: 113px;
+        padding: 0;
+    input {
+        margin-bottom: 10px;
+    }
+    }
+    .col-md-7 {
+        height: 300px;
+        overflow: auto;
+        border: 1px solid #ccc;
+    }
+    .col-md-4 {
+        width: 243px;
+        height: 300px;
+        padding: 0;
+    input {
+        margin: 15px 0;
+    }
+    }
+    ul {
+        list-style: none;
+        border: 1px solid #ccc;
+        padding: 10px;
+        height: 300px;
+        overflow: auto;
+    li {
+        margin: 5px 0;
+        cursor: pointer;
+        padding-left: 3px;
+    }
+    li.check-li {
+        background: #ccc;
+    }
+    }
     }
     table tr{
         td,th{

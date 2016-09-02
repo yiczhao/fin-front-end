@@ -34,7 +34,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                     </form>
                 </div>
@@ -55,7 +55,7 @@
                                 <th>三方结算金额</th>
                                 <th>商户结算金额</th>
                                 <th>商户已付金额</th>
-                                <th>暂扣税金</th>
+                                <th>退税款</th>
                                 <th>额采折扣差 </th>
                                 <th>三方折扣差</th>
                                 <th>佣金</th>

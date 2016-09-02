@@ -48,7 +48,7 @@ export default function install(Vue) {
          */
         getmerchant_list(data){
             return Vue.http.get('./merchant/list?' + $.param(data))
-        },
+        }
     };
 
     Object.defineProperties(Vue.prototype, {

@@ -46,6 +46,7 @@
                                     <option value="6">往来款</option>
                                     <option value="7">转账退款</option>
                                     <option value="8">账户费用</option>
+                                    <option value="10">税金提现</option>
                                     <option value="9">其它</option>
                                 </select>
                             </div>
@@ -53,7 +54,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                             </div>
                             <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="checkNew" value="查询">
+                                <a class="btn btn-info" @click="checkNew">查询</a>
                             </div>
                             <!--<div class="form-group">-->
                             <!--<input type="button" class="btn btn-info" value="导出">-->
@@ -107,6 +108,7 @@
                                         <template v-if="trlist.purpose==7">转账退款</template>
                                         <template v-if="trlist.purpose==8">账户费用</template>
                                         <template v-if="trlist.purpose==9">其它</template>
+                                        <template v-if="trlist.purpose==10">税金提现</template>
                                     </td>
                                     <td>
                                         <span v-if="trlist.status==1">成功</span>
@@ -179,6 +181,7 @@
                                             <span v-if="dzcheckList.purpose==6"> 往来款</span>
                                             <span v-if="dzcheckList.purpose==7"> 转账退款</span>
                                             <span v-if="dzcheckList.purpose==8"> 账户费用</span>
+                                            <span v-if="dzcheckList.purpose==10"> 税金提现</span>
                                             <span v-if="dzcheckList.purpose==9"> 其它</span>
                                         </div>
                                         <div class="form-group" v-show="glradio=='one'&&dzcheckList.purpose!=''">
@@ -197,6 +200,7 @@
                                                 <option value="6">往来款</option>
                                                 <option value="7">转账退款</option>
                                                 <option value="8">账户费用</option>
+                                                <option value="10">税金提现</option>
                                                 <option value="9">其它</option>
                                             </select>
                                         </div>
@@ -262,6 +266,7 @@
                                     <template v-if="n.purpose==7"> 转账退款</template>
                                     <template v-if="n.purpose==8"> 账户费用</template>
                                     <template v-if="n.purpose==9"> 其它</template>
+                                    <template v-if="n.purpose==10">税金提现</template>
                                 </td>
                                 <td :title="n.remarks">{{n.remarks | filterlength}}</td>
                                 <td><a href="javascript:void(0);" @click="checkDz(n.purpose,n.remarks,n.id)">选择</a></td>
@@ -350,6 +355,14 @@
     }
      .datatable-scroll{
         overflow:auto;
+         table{
+             th{
+                 text-align: center;
+             }
+             td{
+                 text-align: center;
+             }
+         }
     }
      .modal-header{
         margin-bottom: 20px;
@@ -390,7 +403,7 @@
                 pageall:1,
                 accountId:'',
                 checkOne:false,
-                dateS:'1',
+                dateS:'3',
                 shouru:'',
                 zhichu:'',
                 gllists:[],

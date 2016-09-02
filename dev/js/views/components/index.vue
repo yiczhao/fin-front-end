@@ -15,12 +15,16 @@
         </div>
     </div>
     <nv-footer keep-alive></nv-footer>
+    <div class="script-playground" style="dispaly: none"
+         v-el:script-playground
+    ></div>
 </template>
 <script>
     import nvHeader from './header.vue'
     import nvMenu from './menu.vue'
     import breadcrumb from './breadcrumb.vue'
     import nvFooter from './footer.vue'
+    import Cookie from '../../utils/Cookie'
     export default{
         data(){
             return{

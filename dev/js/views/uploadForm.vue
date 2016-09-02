@@ -10,12 +10,45 @@
 					<div>
 						<form method="POST" enctype="multipart/form-data">
 							<table>
-								<tr><td>File to upload:</td><td><input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data"></td></tr>
-								<tr><td>Name:</td><td><input type="text" name="name"/></td></tr>
-								<tr><td></td><td><input type="button" value="提交" @click="submits($event)"/></td></tr>
-								<tr><td>选择日期：<datepicker  :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker></td><td><input type="button" value="提交" @click="submitTime($event)"/></td></tr>
-								<tr><td></td><td><input type="button" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/></td></tr>
-							</table>
+								<tr>
+									<td>File to upload:<input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data">Name:<input type="text"  class="form-control" name="name"/></td>
+									<td><input class="btn btn-primary" type="button" value="提交" @click="submits($event)"/></td>
+								</tr>
+								<tr>
+									<td>选择日期：
+										<datepicker :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="补贴账户数据" data-toggle="modal" data-target="#modal_subsidy_account_data"/>
+										<input type="button" class="btn btn-primary" value="江西建行数据修复" data-toggle="modal" data-target="#modal_waring"/>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="测试" @click="testBank"/>
+									</td>
+								</tr>
+                                <tr>
+                                    <td>
+                                        开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
+                                        结束日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="enddateStr" format="YYYY-MM-DD"></datepicker>
+                                        <input type="text" class="form-control" v-model="bankAccountID" placeholder="账号"/>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="提交" @click="reserveCashDetail($event)"/>
+                                    </td>
+                                </tr>
+								<tr>
+									<td>
+										<input type="text" class="form-control" v-model="startID" placeholder="开始ID"/>
+										<input type="text" class="form-control" v-model="endID" placeholder="结束ID"/>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="提交" @click="generateDataYesterday($event)"/>
+									</td>
+								</tr>
+                            </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
 									<div class="modal-content">
@@ -26,6 +59,22 @@
 										<div class="modal-body">
 											<div class="form-group tc">
 												<button type="button" @click="submitSave" class="btn btn-primary">确认</button>
+												<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div data-backdrop="static"  id="modal_subsidy_account_data" class="modal fade" style="display: none;">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">×</button>
+											<h5 class="modal-title">你确定生成数据么？</h5>
+										</div>
+										<div class="modal-body">
+											<div class="form-group tc">
+												<button type="button" @click="generateSubsidyAccountData" class="btn btn-primary">确认</button>
 												<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
 											</div>
 										</div>
@@ -46,9 +95,16 @@
 	}
 	.upload-rows div{
 		padding:10px;
-		td{
+        tr{
+            border:1px solid #dadada;
+        }
+        td{
 			padding:20px;
-		}
+            input{
+                display: inline-block;
+                width:150px;
+            }
+        }
 	}
 </style>
 <script>
@@ -60,7 +116,12 @@
             return{
                 origin:window.origin,
 				name1:'',
-				dateStr:''
+				dateStr:'',
+                startdateStr:'',
+                enddateStr:'',
+				startID:'',
+				endID:'',
+                bankAccountID:''
             }
         },
 		components:{
@@ -102,6 +163,42 @@
 				this.$http.post('./dev/tool/tradeDetail/JXCCB/rollback')
 						.then((response)=>{
 								dialogs('success','回滚成功！');
+						})
+			},
+			generateSubsidyAccountData(){
+				this.$http.post('./dev/tool/subsidy_account/generateData')
+						.then((response)=> {
+							dialogs('success', '生成成功！');
+						})
+			},
+			testBank(){
+				this.$http.post('./dev/tool/testBank')
+						.then(
+								(response)=>{
+									dialogs('success','请求成功');
+				})
+			},
+            reserveCashDetail(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                let data={
+                    startDate :this.startdateStr.replace(/\-/g,''),
+                    endDate :this.enddateStr.replace(/\-/g,''),
+					bankAccountID:this.bankAccountID
+                }
+                this.$http.post('./dev/tool/reserveCashDetail',data)
+                        .then((response)=>{
+                            dialogs('success','处理成功！');
+                        })
+            },
+			generateDataYesterday(e){
+				if(sessionStorage.getItem('isHttpin')==1)return;
+				let data={
+					startID :this.startID,
+					endID :this.endID
+				}
+				this.$http.post('./dev/tool/subsidy_account/generateDataYesterday',data)
+						.then((response)=>{
+								dialogs('success','处理成功！');
 						})
 			}
         },

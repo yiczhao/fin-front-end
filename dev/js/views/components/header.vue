@@ -35,12 +35,15 @@
                             if(response.data.code===0){
                                 sessionStorage.removeItem('userData');
                                 this.$router.go({name:'login'});
+                                // 注销 cookie
+                                if (window.KSAuthKit) {
+                                    window.KSAuthKit.destroy()
+                                }
                             }
                             else{
                                 alert(response.data.message);
                             }
                         }, function (response) {
-                            console.log(response);
                         });
 
             }

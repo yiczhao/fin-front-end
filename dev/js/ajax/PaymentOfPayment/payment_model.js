@@ -100,6 +100,17 @@ function model(_this) {
          */
         payDetailexcel(data) {
             return _this.$http.get(_this.$API.payDetailexcel+$.param(data))
+        },
+        /**
+         * @description 跳转
+         * @param {data}
+         * @returns {*}
+         */
+        skipToSubsidyAccount(_id){
+            return _this.$http.get(_this.$API.skipToSubsidyAccount+_id)
+        },
+        reserveCashOrdertotal(data){
+            return _this.$http.get(_this.$API.reserveCashOrdertotal+$.param(data))
         }
     }
 }

@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="addWhite" value="添加">
+                            <a class="btn btn-info" @click="addWhite">添加</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.subCompanyID">
@@ -37,10 +37,10 @@
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="initList" value="查询">
+                            <a class="btn btn-info" @click="initList">查询</a>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="abnormalWhiteexcel" value="导出">
+                            <a class="btn btn-info" @click="abnormalWhiteexcel">导出</a>
                         </div>
                     </form>
                 </div>
@@ -204,7 +204,7 @@
 </style>
 <script>
     import datepicker from '../components/datepicker.vue'
-    import model from '../../ajax/Transaction/white_model'
+    import model from '../../ajax/Transaction/white_model.js'
     export default{
         data(){
             this.model =model(this)
@@ -277,6 +277,7 @@
                 this.getZlists(this.defaultData);
             },
             abnormalWhiteexcel(){
+                if(!this.zdlists.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
                     this.startDate=init_date('1')[0];
                     this.endDate=init_date('1')[1];

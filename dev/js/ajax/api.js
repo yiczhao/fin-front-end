@@ -46,6 +46,30 @@ export default function install(Vue) {
      * @method GET
      */
     _o.subsidyTaxexcel = '/data/export/excel/subsidyTax?';
+    /**
+     * @description 活动管理页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.activityManage = '/data/export/excel/activityManage?';
+    /**
+     * @description 发票充值页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.invoiceRechargeexcel = '/data/export/excel/invoiceRecharge?';
+    /**
+     * @description 商户补贴账户页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyAccountexcel = '/data/export/excel/subsidyAccount?';
+    /**
+     * @description 暂扣税金页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.suspensionTaxAccountDetailexcel = '/data/export/excel/suspensionTaxAccountDetail?';
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -269,6 +293,19 @@ export default function install(Vue) {
      * @method POST
      */
     _o.reservecash_batchPay='./reserveCashOrder/batchPay';
+    /**
+     * @description 跳转至商户补贴账户
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToSubsidyAccount='./reserveCashOrder/skipToSubsidyAccount/';
+    /**
+     * @description 合计
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.reserveCashOrdertotal='./reserveCashOrder/total?';
+
 
     //- todo  备付金支出-预付款划付 advance-payment-details
     /**
@@ -316,13 +353,19 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.select_subsidypay = './subsidyPayDetail/applyPayInfo?';
+    _o.select_subsidypay = './subsidyPayDetail/applyInfo?';
     /**
      * @description 补贴划付一键审核接口地址
      * @author 冷艳君
      * @method POST
      */
     _o.subsidy_applyPay = './subsidyPayDetail/applyPay';
+    /**
+     * @description 补贴划付合计接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.appropriation_total = './subsidyPayDetail/total?';
 
 
     //- todo  备付金支出-补贴退税 subsidy-tax-rebate
@@ -349,13 +392,19 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.select_rebate = './subsidyTaxRebateDetail/applyPayInfo?';
+    _o.select_rebate = './subsidyTaxRebateDetail/applyInfo?';
     /**
      * @description 补贴退税一键审核接口地址
      * @author 冷艳君
      * @method POST
      */
     _o.rebate_batchCheck= './subsidyTaxRebateDetail/applyPay';
+    /**
+     * @description 补贴退税合计接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.rebate_total = './subsidyTaxRebateDetail/total?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**
@@ -467,6 +516,65 @@ export default function install(Vue) {
      */
     _o.merchant_total = './merchant/sumBalance?';
 
+    //- todo  商户管理-商户列表-商户补贴账户管理 merchat-activity-subsidy-account
+    /**
+     * @description 商户补贴账户管理数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyAccount_list = './subsidyAccount/list?';
+    /**
+     * @description 商户补贴账户管理合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyAccount_total = './subsidyAccount/total?';
+    /**
+     * @description 商户补贴账户管理发票充值接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidyAccount_recharge = './subsidyAccount/recharge';
+    /**
+     * @description 商户补贴账户管理申请提现接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.subsidyAccount_applyPay = './subsidyAccount/applyPay';
+    /**
+     * @description 商户补贴账户管理申请提现页面税金池和可提现金额 接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyAccount_info = './subsidyAccount/info?';
+
+    //- todo  商户管理-商户列表-商户补贴账户管理-商户暂扣税金账户明细 suspension-tax-account-detail
+    /**
+     * @description 商户暂扣税金账户明细数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.suspensionTaxAccountDetail_list = './suspensionTaxAccountDetail/list?';
+    /**
+     * @description 商户暂扣税金账户明细合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.suspensionTaxAccountDetail_total = './suspensionTaxAccountDetail/total?';
+
+    //- todo  商户管理-商户列表-商户补贴账户管理-商户发票账户明细 invoice-account-detail
+    /**
+     * @description 商户发票账户明细数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.invoiceAccountDetail_list = './invoiceAccountDetail/list?';
+    /**
+     * @description 商户发票账户明细合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.invoiceAccountDetail_total = './invoiceAccountDetail/total?';
 
     //- todo  商户管理-额度采购 business-limit
     /**

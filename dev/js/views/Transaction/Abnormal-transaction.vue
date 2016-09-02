@@ -58,10 +58,10 @@
                             <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                            <a class="btn btn-info" v-on:click="query">查询</a>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="excel" value="导出">
+                            <a class="btn btn-info" v-on:click="excel">导出</a>
                         </div>
                     </form>
                 </div>
@@ -244,7 +244,7 @@
                 subCompanyID:"",
                 cityID:"",
                 isHandled:"0",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantOperationID:"",
@@ -322,8 +322,8 @@
                 $(".modal").modal("hide");
                 //初始化
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subCompanyID:this.subCompanyID,
@@ -343,10 +343,10 @@
                 this.getTradeList(data);
             },
             excel(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(!this.tradeList.length>0)return;
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subCompanyID:this.subCompanyID,
@@ -401,12 +401,12 @@
                 this.endDate=init_date(this.timeRange)[1];
             },
             pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
+                this.pageIndex=this.pagecur;
+                this.query();
             },
             page_size(){
-                this.defaultData.pageSize=this.page_size;
-                this.initList();
+                this.pageSize=this.page_size;
+                this.query();
             }
         }
     }

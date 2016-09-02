@@ -8,8 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" data-toggle="modal" @click="showMerchants()"
-                                   value="添加">
+                            <a class="btn btn-info" data-toggle="modal" @click="showMerchants()">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -38,7 +37,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" @click="query" value="查询">
+                            <a class="btn btn-info" @click="query">查询</a>
                         </div>
                     </form>
                 </div>
@@ -302,48 +301,42 @@
     .addbottom {
         margin-top: 15px;
 
-    .col-md-2 {
-        text-align: center;
-        width: 113px;
-        padding: 0;
-    input {
-        margin-bottom: 10px;
-    }
-
-    }
-    .col-md-7 {
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-
-    .col-md-4 {
-        width: 243px;
-        height: 300px;
-        padding: 0;
-    input {
-        margin: 15px 0;
-    }
-
-    }
-    ul {
-        list-style: none;
-        border: 1px solid #ccc;
-        padding: 10px;
-        height: 300px;
-        overflow: auto;
-
-    li {
-        margin: 5px 0;
-        cursor: pointer;
-        padding-left: 3px;
-    }
-
-    li.check-li {
-        background: #ccc;
-    }
-
-    }
+        .col-md-2 {
+            text-align: center;
+            width: 113px;
+            padding: 0;
+            input {
+                margin-bottom: 10px;
+            }
+        }
+        .col-md-7 {
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+        .col-md-4 {
+            width: 243px;
+            height: 300px;
+            padding: 0;
+            input {
+                margin: 15px 0;
+            }
+        }
+        ul {
+            list-style: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow: auto;
+            li {
+                margin: 5px 0;
+                cursor: pointer;
+                padding-left: 3px;
+            }
+            li.check-li {
+                background: #ccc;
+            }
+        }
     }
     .btn.btn-info {
         margin: 2px;
@@ -526,7 +519,7 @@ table tr td,table tr th{
                 if (this.$vali.invalid && this.saveerror)return;
                 let entity = {
                     advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
-                    advancePaymentAmount: this.applyAdvancePay.advancePaymentAmount * 100,
+                    advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,
                 }
                 this.model.applyAdvancePay(entity)

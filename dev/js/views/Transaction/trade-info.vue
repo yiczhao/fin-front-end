@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                        <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="addTradeInfo" value="添加交易">
+                           <a class="btn btn-info" v-on:click="addTradeInfo">添加交易</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
@@ -68,10 +68,10 @@
                             <input type="text" class="form-control" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="activityOperationID">
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="query" value="查询">
+                            <a class="btn btn-info" v-on:click="query">查询</a>
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btn btn-info" v-on:click="tradeDetailexcel" value="导出">
+                            <a class="btn btn-info" v-on:click="tradeDetailexcel">导出</a>
                         </div>
                     </form>
                 </div>
@@ -93,7 +93,7 @@
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
-                                <th>暂扣税金</th>
+                                <th>退税款</th>
                                 <th>商户实补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
@@ -135,11 +135,13 @@
                                 </td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
-                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID!=0&&trlist.suspensionTax!=0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <span v-else>{{trlist.suspensionTax/100 | currency ''}}</span>
+                                    <a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                    <a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
                                     <span v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</span>
                                 </td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
@@ -254,9 +256,9 @@
                                             <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                                         </div>
                                         <div class="form-group">
-                                            <label><i>*</i>暂扣税金：</label>
+                                            <label><i>*</i>退税款：</label>
                                             <input type="text" class="form-control" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" >
-                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
+                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>商户实补：</label>
@@ -347,7 +349,7 @@
                 subCompanyID:"",
                 cityID:"",
                 type:"",
-                timeRange:'1',
+                timeRange:'3',
                 startDate:"",
                 endDate:"",
                 merchantOperationID:"",
@@ -470,12 +472,12 @@
                 }
                 let data={};
                 $.extend(true,data,this.tradeInfo);
-                data.consumptionAmount= this.tradeInfo.consumptionAmount*100;
-                data.discountAmount=this.tradeInfo.discountAmount*100;
-                data.payAmount=this.tradeInfo.payAmount*100;
-                data.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable*100;
-                data.suspensionTax=this.tradeInfo.suspensionTax*100;
-                data.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual*100;
+                data.consumptionAmount= accMul(this.tradeInfo.consumptionAmount,100);
+                data.discountAmount=accMul(this.tradeInfo.discountAmount,100);
+                data.payAmount=accMul(this.tradeInfo.payAmount,100);
+                data.thirdPartyReceivable=accMul(this.tradeInfo.thirdPartyReceivable,100);
+                data.suspensionTax=accMul(this.tradeInfo.suspensionTax,100);
+                data.merchantSubsidyActual=accMul(this.tradeInfo.merchantSubsidyActual,100);
                 this.model.addtrade(data)
                     .then((response)=>{
                         if(response.data.code==0){
@@ -490,8 +492,8 @@
                 //初始化
                 this.clear();
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subsidyPayId:this.subsidyPayId,
@@ -513,11 +515,11 @@
                 this.getTradeList(data);
             },
             tradeDetailexcel() {
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(!this.tradeList.length>0)return;
                 //初始化
                 if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                    this.startDate=init_date('3')[0];
+                    this.endDate=init_date('3')[1];
                 }
                 let data={
                     subsidyPayId:this.subsidyPayId,
