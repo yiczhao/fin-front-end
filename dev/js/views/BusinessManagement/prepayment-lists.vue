@@ -82,7 +82,7 @@
                                     <a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"
                                        v-if="prepayment.status==1">预付</a>
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
-                                       v-if="prepayment.status==1" data-ksa="advance_payment_merchant_manage.search">门店</a>
+                                       v-if="prepayment.status==1" data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
                                     <a data-ksa="advance_payment_merchant_manage.enable_disable"  data-toggle="modal" data-target="#modal_waring"
                                        @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
