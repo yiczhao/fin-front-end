@@ -259,11 +259,8 @@
             },
             initList(){
                 $('.modal').modal('hide');
-                if(this.defaultData.pageIndex==1){
-                    this. getZlists();
-                    return;
-                }
-                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this. getZlists();
             },
             excel(){
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
@@ -332,17 +329,8 @@
             },
         },
         watch:{
-            'defaultData.pageIndex':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
-            },
-            'defaultData.pageSize':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList()
             },
             dateS(){
                 this.getTime();
@@ -356,6 +344,7 @@
             (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
             (vm.$route.params.invoiceHDid==':invoiceHDid')? vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID='' : vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID=vm.$route.params.invoiceHDid;
             vm.getTime();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);

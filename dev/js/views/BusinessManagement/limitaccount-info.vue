@@ -13,7 +13,7 @@
                     </div>
                     <form class="form-inline manage-form">
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="checkForm.dateS">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -21,7 +21,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="checkForm.dateS==4">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -136,8 +136,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="checkForm.pageIndex"
+                              :page_size.sync="checkForm.pageSize">
                         </page>
                     </div>
                 </div>
@@ -182,17 +182,15 @@
                 zdlists:[],
                 dzList:{},
                 dz_show:false,
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
-                dateS:'1',
                 shouru:0,
                 zhichu:0,
                 gllists:[],
                 checkForm:{
                     limitPurchaseMerchantInfoID:'',
+                    dateS:'3',
                     accountName:'卡说账户',
                     merchantOperationID:'',
                     merchantName:'',
@@ -241,11 +239,12 @@
             },
             initList(){
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+                this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
+                this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
             }
         },
         ready: function () {
@@ -254,21 +253,17 @@
             (this.$route.params.accountName != ':accountName') ? this.accountName = this.$route.params.accountName : null;
             this.accountId=this.checkForm.accountId=this.$route.params.accountId
             this.getTime();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
         },
         components:{
             'datepicker': datepicker,
         },
         watch:{
-            pagecur(){
-                this.checkForm.pageIndex=this.pagecur;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.initList();
             },
-            page_size(){
-                this.checkForm.pageSize=this.page_size;
-                this.initList();
-            },
-            dateS(){
+            'checkForm.dateS'(){
                 this.getTime();
             }
         },

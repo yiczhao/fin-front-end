@@ -25,7 +25,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="checkForm.dateS">
                                     <option value="5">今天</option>
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
@@ -34,7 +34,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="checkForm.dateS==4">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -203,8 +203,8 @@
                     </table>
                 </div>
                 <page v-if="zdlists.length>0" :all="pageall"
-                      :cur.sync="pagecur"
-                      :page_size.sync="page_size">
+                      :cur.sync="checkForm.pageIndex"
+                      :page_size.sync="checkForm.pageSize">
                 </page>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                     未找到数据
@@ -484,10 +484,7 @@
             this.model =model(this)
             return{
                 id:'',
-                pagecur:1,
-                page_size:10,
                 pageall:1,
-                dateS:'3',
                 waring:'',
                 subtitle:'',
                 checkForm:{
@@ -501,8 +498,9 @@
                     remarks:'',
                     startDate:'',
                     endDate:'',
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
+                    mid:'',
                     pageIndex:1,
+                    dateS:'3',
                     pageSize:10
                 },
                 total:{
@@ -556,19 +554,21 @@
             initList(){
                 $(".modal").modal("hide");
                 $(".check-boxs").prop({'checked':false})
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date('1')[0];
+                    this.checkForm.endDate=init_date('1')[1];
                 }
                 this.listinfos=[];
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);
             },
             payDetailexcel(){
                 if(!this.zdlists.length>0)return;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('3')[0];
-                    this.endDate=init_date('3')[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date('3')[0];
+                    this.checkForm.endDate=init_date('3')[1];
                 }
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.payDetailexcel+ $.param(this.checkForm));
             },
             getInfo(a){
@@ -714,8 +714,8 @@
             checkingTrue(a){
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+                this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
+                this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
             },
             addorderIDs(e){
                 if(e.target.checked){
@@ -757,15 +757,10 @@
             }
         },
         watch:{
-            pagecur(){
-                this.checkForm.pageIndex=this.pagecur;
+            'checkForm.pageSize+checkForm.pageIndex'(){
                 this.initList();
             },
-            page_size(){
-                this.checkForm.pageSize=this.page_size;
-                this.initList();
-            },
-            dateS(){
+            'checkForm.dateS'(){
                 this.getTime();
             }
         },
@@ -778,6 +773,7 @@
             (this.$route.params.merchantOperationIDs==':merchantOperationIDs')?this.checkForm.merchantOperationID='' :this.checkForm.merchantOperationID=this.$route.params.merchantOperationIDs;
             this.getTime();
             this.getSubcompany();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.initList();
         }
     }

@@ -11,25 +11,25 @@
                             <a class="btn btn-info" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="merchantName" placeholder="商户名">
+                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="cityID">
+                            <select class="form-control" v-model="checkForm.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="status">
+                            <select class="form-control" v-model="checkForm.status">
                                 <option value="">账户状态</option>
                                 <option value="0">停用</option>
                                 <option value="1">正常</option>
@@ -112,8 +112,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="checkForm.pageIndex"
+                              :page_size.sync="checkForm.pageSize">
                         </page>
                     </div>
                 </div>
@@ -362,15 +362,15 @@ table tr td,table tr th{
             this.model = model(this)
             return {
                 pageall: 1,
-                pagecur: 1,
-                page_size: 10,
-                pageIndex: 1,
-                pageSize: 10,
-                subCompanyID: "",
-                cityID: "",
-                merchantOperationID: "",
-                merchantName: "",
-                status: "",
+                checkForm:{
+                    subCompanyID: "",
+                    cityID: "",
+                    merchantOperationID: "",
+                    merchantName: "",
+                    status: "",
+                    pageIndex: 1,
+                    pageSize: 10,
+                },
                 subcompanyList: [],
                 cityList: [],
                 shCity: [],
@@ -585,16 +585,8 @@ table tr td,table tr th{
             },
             query() {
                 $('.modal').modal('hide');
-                let data = {
-                    subCompanyID: this.subCompanyID,
-                    cityID: this.cityID,
-                    merchantOperationID: this.merchantOperationID,
-                    merchantName: this.merchantName,
-                    status: this.status,
-                    pageIndex: this.pageIndex,
-                    pageSize: this.pageSize
-                };
-                this.getPrepaymentList(data);
+                back_json.saveArray(this.$route.path,this.checkForm);
+                this.getPrepaymentList(this.checkForm);
             },
             show_waring(_id, status){
                 this._id = _id;
@@ -621,20 +613,16 @@ table tr td,table tr th{
             }
         },
         ready() {
-            this.query();
             this.getSubcompany();
             this.getCity();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.query();
         },
         components: {
             'datepicker': datepicker
         },
         watch: {
-            pagecur(){
-                this.pageIndex = this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize = this.page_size;
+            'checkForm.pageSize+checkForm.pageIndex'(){
                 this.query();
             }
         }

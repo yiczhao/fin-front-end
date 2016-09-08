@@ -56,6 +56,7 @@ window.check_upload=common.check_upload;
 window.dialogs=common.dialogs;
 window.init_date=common.init_date;
 window.accMul=common.accMul;
+
 Vue.config.debug = true;
 $(document).on('click','.addbottom .col-md-4 ul li',function(){
 	$(this).toggleClass('check-li');
@@ -66,3 +67,11 @@ $(document).on('click','.sidebar-main-toggle', function (e) {
 	// Toggle min sidebar class
 	$('body').toggleClass('sidebar-xs');
 });
+$(document).on('click','a', function () {
+	if(back_json.num==0){
+		back_json.num++;
+	}
+});
+window.onbeforeunload=()=>{
+	localStorage.clear();
+}

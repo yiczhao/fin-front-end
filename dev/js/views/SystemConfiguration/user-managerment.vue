@@ -8,13 +8,13 @@
                                     <a class="btn btn-info" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
+                                    <select class="form-control" v-model="checkForm.subCompanyID" >
                                         <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、手机号、姓名">
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query" data-ksa="user_manage.search">查询</a>
@@ -52,8 +52,8 @@
                             </div>
                             <div class="datatable-footer">
                                 <page :all="pageall"
-                                      :cur.sync="pagecur"
-                                      :page_size.sync="page_size">
+                                      :cur.sync="checkForm.pageIndex"
+                                      :page_size.sync="checkForm.pageSize">
                                 </page>
                             </div>
                         </div>
@@ -235,26 +235,23 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SystemConfiguration/user_model'
-//    import common_model from '../../ajax/components/model'
 
     export default{
         data(){
             this.model =model(this)
-//            this.common_model=common_model(this)
             return{
-                subCompanyID:"",
-                keywords:"",
+                checkForm:{
+                    subCompanyID:"",
+                    keywords:"",
+                    pageSize:10,
+                    pageIndex:1
+                },
                 id:"",
                 userID:"",
                 subcompanyList:[],
                 controlSpanList:[],
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 userList:[],
                 controlSpanArray:[],
                 userlists:[],
@@ -288,13 +285,8 @@
                     });
             },
             query() {
-                let data={
-                        subCompanyID:this.subCompanyID,
-                        keywords:this.keywords,
-                        pageIndex: this.pageIndex, 
-                        pageSize: this.pageSize
-                    };
-                this.getUserList(data);
+                back_json.saveArray(this.$route.path,this.checkForm);
+                this.getUserList(this.checkForm);
             },
             //显示员工管辖
             showCS(userId) {
@@ -424,21 +416,16 @@
             },
         },
         ready() {
-            this.getUserList({});
             this.getSubcompany({});
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.getUserList(this.checkForm);
         },
        watch:{
-           pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+           'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
        },
         components:{
-           'datepicker': datepicker
         }
     }
 </script>

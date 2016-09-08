@@ -13,7 +13,7 @@
                             <a @click="applyPay(applyData)" class="btn btn-info" data-ksa="subsidy_account_manage.with_draw">提现</a>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="dateS">
+                            <select class="form-control" v-model="defaultData.dateS">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -21,7 +21,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
                         </div>
-                        <div class="form-group" v-show="dateS==4">
+                        <div class="form-group" v-show="defaultData.dateS==4">
                             <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                         format="YYYY-MM-DD"></datepicker>
                             至
@@ -193,7 +193,8 @@
                     'pageTotal': 1,
                     'pageIndex': 1,
                     'pageSize': 10,
-                    mid:''
+                    mid:'',
+                    dateS:'3'
                 },
                 zdlists:[],
                 total:{
@@ -215,8 +216,7 @@
                     payoutAmount:'',
                     payType:'1'
                 },
-                applyText:'',
-                dateS:'3'
+                applyText:''
             }
         },
         methods:{
@@ -247,11 +247,8 @@
             },
             initList(){
                 $('.modal').modal('hide');
-                if(this.defaultData.pageIndex==1){
-                    this. getZlists();
-                    return;
-                }
-                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists();
             },
             excel(){
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
@@ -294,25 +291,16 @@
                         });
             },
             getTime(){
-                this.defaultData.startDate=init_date(this.dateS)[0];
-                this.defaultData.endDate=init_date(this.dateS)[1];
+                this.defaultData.startDate=init_date(this.defaultData.dateS)[0];
+                this.defaultData.endDate=init_date(this.defaultData.dateS)[1];
             },
         },
         watch:{
-            'defaultData.pageIndex':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList()
             },
-            'defaultData.pageSize':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
-            },
-            dateS(){
-                this.getTime();
+            'defaultData.dateS'(){
+                this.getTime()
             }
         },
         ready(){
@@ -324,7 +312,8 @@
             (vm.$route.params.orderId==':orderId')? vm.defaultData.orderID='' : vm.defaultData.orderID=vm.$route.params.orderId;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
-            vm.getZlists();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';
