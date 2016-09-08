@@ -55,12 +55,13 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
-                                <option value="0">已关闭</option>
+                                <option value="7">等待复核</option>
                                 <option value="2">等待划付</option>
                                 <option value="3">转账中</option>
                                 <option value="4">等待对账</option>
                                 <option value="5">对账成功</option>
                                 <option value="6">划付失败</option>
+                                <option value="0">已关闭</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -118,6 +119,7 @@
                                     <template v-if="trlist.status==4">等待对账</template>
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
+                                    <template v-if="trlist.status==7">等待复核</template>
                                 </td>
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>

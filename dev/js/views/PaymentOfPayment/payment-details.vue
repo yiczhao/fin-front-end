@@ -239,23 +239,13 @@
                                 <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
                                 <td>{{trlist.purpose}}</td>
                                 <td>
-<<<<<<< HEAD
-                                    <template v-if="trlist.purpose=='补贴划付'"><a v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='额度采购'"><a v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='补贴退税'"><a v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='预付款'"><a v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount()">详情</a></template>
-                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)">删除</a></template>
-                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)">删除</a></template>
-=======
                                     <template v-if="trlist.purpose=='补贴划付'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='额度采购'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='补贴退税'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='预付款'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
-                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>
-                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>
->>>>>>> feature/CWXT-876-1
+                                    <!--<template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>-->
+                                    <!--<template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>-->
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>
@@ -290,7 +280,7 @@
                                 <button  v-if="waring=='你确认划付账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
+                                <!--<button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>-->
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -620,11 +610,11 @@
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
             },
-            delBtn(a,b){
-                this.waring = '你确认删除该订单流水？';
-                this.accountId=a;
-                this.delPurpose=b;
-            },
+//            delBtn(a,b){
+//                this.waring = '你确认删除该订单流水？';
+//                this.accountId=a;
+//                this.delPurpose=b;
+//            },
             checking(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=a;
@@ -659,20 +649,20 @@
                         }
                     })
             },
-            delTrue(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    'id':this.accountId,
-                    'purpose':this.delPurpose
-                }
-                this.model.reservecash_delete(data)
-                        .then((response)=>{
-                            if(response.data.code==0){
-                                this.initList();
-                                dialogs('success','已删除！');
-                            }
-                        })
-            },
+//            delTrue(){
+//                if(sessionStorage.getItem('isHttpin')==1)return;
+//                let data={
+//                    'id':this.accountId,
+//                    'purpose':this.delPurpose
+//                }
+//                this.model.reservecash_delete(data)
+//                        .then((response)=>{
+//                            if(response.data.code==0){
+//                                this.initList();
+//                                dialogs('success','已删除！');
+//                            }
+//                        })
+//            },
             closeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_close(this.accountId)

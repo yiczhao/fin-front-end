@@ -140,7 +140,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-if="firstAdd && !xhlist.length>0">
+                                        <span v-if="firstAdd && !userlists.length>0">
                                             无可添加数据
                                         </span>
                                     </div>

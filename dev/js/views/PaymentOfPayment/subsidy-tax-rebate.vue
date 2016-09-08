@@ -50,6 +50,7 @@
                                     <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="1">等待审核</option>
+                                        <option value="7">等待复核</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">转账中</option>
                                         <option value="4">等待对账</option>
@@ -138,6 +139,7 @@
                                             <template v-if="strd.status==6">
                                                 划付失败
                                             </template>
+                                            <template v-if="strd.status==7">等待复核</template>
                                         </td>
                                         <td>
                                             <template v-if="strd.status==1">

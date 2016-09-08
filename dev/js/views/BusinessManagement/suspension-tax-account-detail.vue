@@ -41,6 +41,7 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
+                                <option value="7">等待复核</option>
                                 <option value="5">对账成功</option>
                                 <option value="4">等待对账</option>
                                 <option value="3">转账中</option>
@@ -96,6 +97,7 @@
                                     <template v-if="trlist.status==4">等待对账</template>
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
+                                    <template v-if="trlist.status==7">等待复核</template>
                                 </td>
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
@@ -150,7 +152,7 @@
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
                                     <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                 <div class="form-group">
-                                    <label style="position: relative;top: -95px;width: 13%" class="control-label">备注：</label>
+                                    <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
@@ -276,6 +278,10 @@
                 this.applyText='';
                 if(this.applyData.payoutAmount==''){
                     this.applyText='请填写提现金额！';
+                    return;
+                }
+                if(this.applyData.remarks==''){
+                    this.applyText='请填写备注！';
                     return;
                 }
                 let data={};

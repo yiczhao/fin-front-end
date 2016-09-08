@@ -333,7 +333,6 @@ table tr th,table tr td{
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true, data,this.rechargeData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
