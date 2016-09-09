@@ -43,6 +43,7 @@
                                     <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="7">等待复核</option>
+                                        <option value="8">复核不通过</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">转账中</option>
                                         <option value="4">等待对账</option>
@@ -113,7 +114,8 @@
                                             <template v-if="lpd.status==6">
                                                 对账失败
                                             </template>
-                                            <template v-if="trlist.status==7">等待复核</template>
+                                            <template v-if="lpd.status==7">等待复核</template>
+                                            <template v-if="lpd.status==8">复核不通过</template>
                                         </td>
                                         <td>
                                             <template v-if="lpd.payType==1">现金购买</template>

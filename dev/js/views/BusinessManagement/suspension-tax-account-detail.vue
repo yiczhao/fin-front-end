@@ -42,6 +42,7 @@
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
                                 <option value="7">等待复核</option>
+                                <option value="8">复核不通过</option>
                                 <option value="5">对账成功</option>
                                 <option value="4">等待对账</option>
                                 <option value="3">转账中</option>
@@ -98,6 +99,7 @@
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
                                     <template v-if="trlist.status==7">等待复核</template>
+                                    <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
