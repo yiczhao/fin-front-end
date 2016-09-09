@@ -31,10 +31,13 @@
                                     <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.subsidyTaxRebateID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="ID">
+                                    <input type="text" class="form-control" v-model="checkForm.id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  placeholder="ID">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="checkForm.payRecheckID" placeholder="划付复核ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
@@ -228,8 +231,9 @@
             this.model =model(this)
             return{
                 checkForm:{
-                    subsidyTaxRebateID:"",
+                    id:"",
                     subCompanyID:"",
+                    payRecheckID:"",
                     cityID:"",
                     createType:"",
                     status:"",
