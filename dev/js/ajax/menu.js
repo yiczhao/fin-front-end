@@ -28,6 +28,7 @@ module.exports = [
         icon: 'icon-table2',
         sub_menu: [
             {name: '付款明细', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
+            {name: '划付复核', link: 'pay-recheck'},
             {name: '补贴划付', link: 'subsidy-appropriation',ksa:'subsidy_pay_detail_manage'},
             // {name: '额度采购', link: 'limit-purchase-detail'},
             {name: '补贴退税', link: 'subsidy-tax-rebate',ksa:'subsidy_tax_rebate_detail_manage'},

@@ -177,11 +177,7 @@
 </style>
 <script>
     import model from '../../ajax/BusinessManagement/suspension-tax-account-detail'
-    import datepicker from '../components/datepicker.vue'
     export default{
-        components:{
-            'datepicker': datepicker
-        },
         data(){
             this.model =model(this)
             return{

@@ -16,12 +16,14 @@ import interceptor from './interceptor.js'
 // *** 公共组件
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
+import datepicker from './views/components/datepicker.vue'
 import common from  './utils/common'
 import store from './utils/store.js'
 import API from './ajax/api.js'
 import common_model from './ajax/components/model.js'
 import notify_instance from './views/components/notify'
 Vue.component('index', Index);
+Vue.component('datepicker', datepicker);
 Vue.component('page', page);
 // *** 引入filter
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));

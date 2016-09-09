@@ -234,7 +234,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/Transaction/abnormal'
     export default{
         data(){
@@ -359,9 +358,6 @@
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             'checkForm.timeRange'(){

@@ -120,7 +120,7 @@
             :style="styleObj"
             :readonly="readonly"
             :value="value"
-            @click="show = !show">
+            @click="show = !show" class="form-control">
             <span class="fa fa-close close" v-show="value" @click="clear()"></span>
         <div class="picker-wrap" v-show="show">
             <table class="date-picker">
@@ -157,7 +157,7 @@
 <script>
     export default {
         props: {
-            width: { type: String, default: '238px' },
+            width: { type: String, default: '150px' },
             readonly: { type: Boolean, default: false },
             value: { type: String, default: '' },
             valueDefault: { type: String, default: '' },

@@ -335,7 +335,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/info_model'
     export default{
         data(){
@@ -467,9 +466,6 @@
             this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
-        },
-        components: {
-            'datepicker': datepicker
         },
         watch: {
             'checkForm.dataS'(){

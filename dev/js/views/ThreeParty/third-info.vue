@@ -252,7 +252,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/ThreeParty/thirdinfo_model'
     export default{
         data(){
@@ -398,9 +397,6 @@
             vm.getClist();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             'defaultData.dateS'(){

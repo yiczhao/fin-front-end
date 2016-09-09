@@ -386,7 +386,6 @@
      }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/AccountManagement/provisions_model'
     export default{
         props:{
@@ -569,9 +568,6 @@
             $('#modal_fzr').on('show.bs.modal',function(){
                 vm.errortext='';
             })
-        },
-        components:{
-            'datepicker': datepicker,
         },
         watch:{
             zdlists(){

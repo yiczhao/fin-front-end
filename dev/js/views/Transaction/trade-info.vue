@@ -334,7 +334,6 @@
 
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/Transaction/trade_model'
     export default{
         props:{
@@ -583,9 +582,6 @@
                 this.query();
             }
        },
-        components:{
-           'datepicker': datepicker
-        },
         validators: {
             numeric(val) {
                 return /^[-+]?[0-9]+$/.test(val)

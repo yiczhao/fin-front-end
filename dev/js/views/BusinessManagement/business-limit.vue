@@ -591,7 +591,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/buslimit_model'
     export default{
         data(){
@@ -960,9 +959,6 @@
                     vm.updateList.certificateID='';
                 }
             })
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             zdlists(){

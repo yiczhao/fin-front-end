@@ -203,7 +203,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/Transaction/white_model.js'
     export default{
         data(){
@@ -446,9 +445,6 @@
                 vm.uploadText='';
                 vm.redata.certificateID='';
             })
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             startDate(){

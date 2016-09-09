@@ -259,7 +259,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/AccountManagement/account_model'
     export default{
         data(){
@@ -452,9 +451,6 @@
                 this.fire=false;
                 vm.$resetValidation();
             })
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){

@@ -355,7 +355,6 @@ table tr td,table tr th{
 }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/prepayment_model'
     export default{
         data(){
@@ -617,9 +616,6 @@ table tr td,table tr th{
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
-        },
-        components: {
-            'datepicker': datepicker
         },
         watch: {
             'checkForm.pageSize+checkForm.pageIndex'(){

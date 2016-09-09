@@ -130,7 +130,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SystemConfiguration/log_model'
     export default{
         data(){
@@ -214,9 +213,6 @@
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
-       },
-        components:{
-           'datepicker': datepicker,
-        }
+       }
     }
 </script>

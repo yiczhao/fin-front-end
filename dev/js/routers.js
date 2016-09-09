@@ -5,6 +5,7 @@ export default function(router){
         /* 登录 */
         '/login':{
             name:'login',
+            cnname:'登录',
             component: function(resolve){
                 require(['./views/login.vue'],resolve);
             }
@@ -70,6 +71,13 @@ export default function(router){
             name:'advance-payment-detail',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/advance-payment-detail.vue'],resolve);
+            }
+        },
+        //备付金支出-划付复核
+        '/pay-recheck':{
+            name:'pay-recheck',
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/pay-recheck.vue'],resolve);
             }
         },
         //备付金支出-补贴划付

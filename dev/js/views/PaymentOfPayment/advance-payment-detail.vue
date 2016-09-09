@@ -130,7 +130,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/PaymentOfPayment/advance_model'
     export default{
         data(){
@@ -246,9 +245,6 @@
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
-       },
-        components:{
-           'datepicker': datepicker
-        }
+       }
     }
 </script>

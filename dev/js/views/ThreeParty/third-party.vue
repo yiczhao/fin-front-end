@@ -342,7 +342,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/ThreeParty/thirdlist_model'
     export default{
         data(){
@@ -596,9 +595,6 @@
             vm.getCity();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             'defaultData.pageSize+defaultData.pageIndex'(){

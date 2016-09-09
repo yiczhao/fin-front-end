@@ -467,7 +467,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/PaymentOfPayment/payment_model'
     export default{
         data(){
@@ -753,9 +752,6 @@
             'checkForm.dateS'(){
                 this.getTime();
             }
-        },
-        components:{
-            'datepicker': datepicker,
         },
         ready(){
             (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;

@@ -108,7 +108,6 @@
 	}
 </style>
 <script>
-	import datepicker from './components/datepicker.vue'
     export default{
         props:{
         },
@@ -124,9 +123,6 @@
                 bankAccountID:''
             }
         },
-		components:{
-			'datepicker': datepicker,
-		},
         methods:{
 			uploads(e){
 				if(e.target.value==''){
