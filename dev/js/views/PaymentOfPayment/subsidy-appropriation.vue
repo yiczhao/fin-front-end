@@ -57,7 +57,6 @@
                                         <option value="">请选择状态</option>
                                         <option value="1">等待审核</option>
                                         <option value="7">等待复核</option>
-                                        <option value="8">复核不通过</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">转账中</option>
                                         <option value="4">等待对账</option>
@@ -85,7 +84,7 @@
                             <table   id="table1" class="table">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox"  class="check-boxs" @click="checkAll($event)"/>ID</th>
+                                        <th><input type="checkbox" :value.sysc="ischeckData" class="check-boxs" @click="checkAll($event)"/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
@@ -111,7 +110,7 @@
                                                 <input type="checkbox" disabled="true" name="ckbox-disabled" :id="sa.id"/>{{sa.id}}
                                             </template>
                                             <template v-else>
-                                                <input type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}
+                                                <input :value.sysc="ischeck" type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}
                                             </template>
                                         </td>
                                         <td>{{sa.createAT | datetime}}</td>
@@ -156,7 +155,6 @@
                                                 划付失败
                                             </template>
                                             <template v-if="sa.status==7">等待复核</template>
-                                            <template v-if="sa.status==8">复核不通过</template>
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">

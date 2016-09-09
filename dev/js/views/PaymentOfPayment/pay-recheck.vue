@@ -7,10 +7,10 @@
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.paytype">
                                 <option value="">全部付款方式</option>
-                                <option value="0">备付金账户</option>
-                                <option value="1">商户预付款账户</option>
-                                <option value="2">银行结算</option>
-                                <option value="3">其他</option>
+                                <option value="1">备付金账户</option>
+                                <option value="2">商户预付款账户</option>
+                                <option value="3">银行结算</option>
+                                <option value="4">其他</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -22,11 +22,11 @@
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.purpose">
                                 <option value="">全部用途</option>
-                                <option value="">补贴划付</option>
-                                <option value="">补贴退税</option>
-                                <option value="">税金体现</option>
-                                <option value="">预付款</option>
-                                <option value="">额度采购</option>
+                                <option value="1">补贴划付</option>
+                                <option value="3">补贴退税</option>
+                                <option value="10">税金提现</option>
+                                <option value="4">预付款</option>
+                                <option value="2">额度采购</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -40,8 +40,8 @@
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.createType">
                                 <option value="">全部生成方式</option>
-                                <option value="7">系统生成</option>
-                                <option value="9">手工结算</option>
+                                <option value="1">系统生成</option>
+                                <option value="2">手工结算</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -114,7 +114,7 @@
         },
         methods:{
             query(){
-
+                console.log(_.map({ 'a': 4, 'b': 8 },function(n){ return n * n}))
             },
             payRecheckexcel(){
 

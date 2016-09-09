@@ -70,6 +70,13 @@ export default function install(Vue) {
      * @method GET
      */
     _o.suspensionTaxAccountDetailexcel = '/data/export/excel/suspensionTaxAccountDetail?';
+    /**
+     * @description 划付复核页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payrecheckexcel = '/data/export/excel/suspensionTaxAccountDetail?';
+
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -328,6 +335,33 @@ export default function install(Vue) {
      * @method POST
      */
     _o.skipToInfo = './limitPurchaseDetail/info/';
+
+    //- todo  备付金支出-划付复核 pay-recheck
+    /**
+     * @description 划付复核列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payrecheck_list = './payRecheck/list?';
+    /**
+     * @description 合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payrecheck_total = './payRecheck/total?';
+    /**
+     * @description 复核通过接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.payrecheck_pass = './payRecheck/back';
+    /**
+     * @description 复核回退接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.payrecheck_back = './payRecheck/back';
+
 
     //- todo  备付金支出-补贴划付 subsidy-appropriation
     /**

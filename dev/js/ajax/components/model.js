@@ -51,6 +51,6 @@ export default function install(Vue) {
         }
     };
     Object.defineProperties(Vue.prototype, {
-        $common_model: {get(){return _m}},
+        $common_model: {get(){return _m}}
     })
 }

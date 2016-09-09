@@ -58,5 +58,10 @@ module.exports = {
     },
 	plugins:[
 		new ExtractTextPlugin('app.css'),
+		new webpack.ProvidePlugin({
+			_: 'lodash',
+			swal: 'sweetalert',
+			'window._':'lodash'
+		})
 	]
 };

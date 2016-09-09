@@ -3,7 +3,6 @@
  * @author cwxtDesigner
  */
 require('../sass/app.scss');
-require("./assets/sweet_alert.min.js");
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
