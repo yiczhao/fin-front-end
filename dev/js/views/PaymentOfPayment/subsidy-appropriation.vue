@@ -158,10 +158,13 @@
                                         </td>
                                         <td>
                                             <template v-if="sa.status==1">
-                                                <a href="javascript:void(0);" @click="showModalApplyPayById(sa.id)" data-ksa="subsidy_pay_detail_manage.apply_pay">申请划付</a>
-                                                <a href="javascript:void(0);" @click="updateById(sa.id)" data-ksa="subsidy_pay_detail_manage.update">更新</a>
+                                                <a @click="showModalApplyPayById(sa.id)" data-ksa="subsidy_pay_detail_manage.apply_pay">申请划付</a>
+                                                <a @click="updateById(sa.id)" data-ksa="subsidy_pay_detail_manage.update">更新</a>
                                             </template>
-                                            <template v-else>
+                                            <template v-if="sa.status==7">
+                                                <a v-link="{name:'pay-recheck',params:{subsidyPayId:sa.id}}">查看</a>
+                                            </template>
+                                            <template v-if="sa.status!=7&&sa.status==1">
                                                 <a @click="gopayment(sa.id,1)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                             </template>
                                         </td>
@@ -223,6 +226,10 @@
                                     <option value="3">银行结算</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label><input type="checkbox" v-model="mergePay"/>
+                                    相同账户合并付款</label>
+                            </div>
                             <div class="form-group" style="text-align: center">
                                 <input type="button" class="btn btn-info btn-primary" @click="submit()" value="提交">
                                 <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
@@ -272,6 +279,7 @@
                 subsidyAppropriationList:[],
                 payType:"1",
                 payTypes:'2',
+                mergePay:false,
                 applyPayInfo:{
                 },
                 applyPayRemarks:'',
@@ -337,6 +345,7 @@
             },
             clear(){
                 this.payTypes='2';
+                this.mergePay=false;
             },
             updateById(id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -392,7 +401,8 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:this.submitId,
-                    payType:this.payTypes
+                    payType:this.payTypes,
+                    mergePay:this.mergePay
                 }
                 var mes;
                 (this.submitId.length>1)?mes='审核成功':mes='申请成功';
