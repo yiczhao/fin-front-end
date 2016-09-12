@@ -160,7 +160,7 @@
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
                                 </div>
-                                <div class="form-group tc" style="display: inline;">
+                                <div class="form-group tc">
                                     <span v-show="applyText!=''" class="validation-error-label" v-text="applyText"></span>
                                 </div>
                             </div>

@@ -153,7 +153,7 @@
                                             <label><i style="color:red;">*</i>金额：</label>
                                             <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                         <div class="form-group" v-else>
-                                            <label><i style="color:red;">*</i>上传凭证：</label>
+                                            <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
