@@ -18,8 +18,8 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        payrecheckexcel_total(data){
-            return _this.$http.get(_this.$API.payrecheckexcel_total+ $.param(data))
+        payrecheck_total(data){
+            return _this.$http.get(_this.$API.payrecheck_total+ $.param(data))
         },
         /**
          * @description 通过
@@ -27,7 +27,7 @@ function model(_this){
          * @returns {*}
          * */
         payrecheck_pass(data){
-            return _this.$http.post(_this.$API.payrecheckexcel_back,data)
+            return _this.$http.post(_this.$API.payrecheck_pass,data)
         },
         /**
          * @description 回退
@@ -35,7 +35,7 @@ function model(_this){
          * @returns {*}
          * */
         payrecheck_back(data){
-            return _this.$http.post(_this.$API.payrecheckexcel_back,data)
+            return _this.$http.post(_this.$API.payrecheck_back,data)
         }
     }
 }

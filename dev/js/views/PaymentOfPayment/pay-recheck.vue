@@ -65,7 +65,7 @@
                             <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="请输入商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.keywords"  placeholder="请输入商户名/收款账户名/账号">
+                            <input type="text" class="form-control" v-model="checkForm.keywords"  placeholder="商户名/收款账户名/账号">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="请输入备注关键词">
@@ -85,6 +85,98 @@
                         </div>
                     </form>
                 </div>
+
+                <div v-if="recheckLists.length>0" class="dataTables_wrapper">
+                    <div class="datatable-scroll" v-show="!!recheckLists.length">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" v-model="checkAll" @click="chooseAll"></th>
+                                    <th>ID</th>
+                                    <th>申请时间</th>
+                                    <th>分公司</th>
+                                    <th>城市</th>
+                                    <th>付款账户</th>
+                                    <th>商户ID</th>
+                                    <th>商户名称</th>
+                                    <th>收款账户信息</th>
+                                    <th>生成方式</th>
+                                    <th>付款方式</th>
+                                    <th>用途</th>
+                                    <th>三方应补</th>
+                                    <th>划付金额</th>
+                                    <th>暂扣税金</th>
+                                    <th>复核状态</th>
+                                    <th>操作</th>
+                                    <th>活动名称</th>
+                                    <th>备注</th>
+                                    <th>不通过原因</th>
+                                </tr>
+                            </thead>
+                            <tr v-for="n in recheckLists">
+                                <td><input type="checkbox" v-model="n.ischeck"/></td>
+                                <td>{{n.id }}</td>
+                                <td>{{n.createTime | datetime}}</td>
+                                <td>{{n.subCompanyName}}</td>
+                                <td>{{n.cityName }}</td>
+                                <td>{{n.payAccount }}</td>
+                                <td>{{n.merchantOperationID }}</td>
+                                <td>{{n.merchantName }}</td>
+                                <td>{{n.collectionBankName }}<br>
+                                    {{n.collectionBankNumber}}
+                                </td>
+                                <td>
+                                    <template v-if="n.createType==1">系统生成</template>
+                                    <template v-if="n.createType==2">手工录入</template>
+                                </td>
+                                <td>
+                                    <template v-if="n.payType==1">备付金账户</template>
+                                    <template v-if="n.payType==2">预付款账户</template>
+                                    <template v-if="n.payType==3">银行结算</template>
+                                </td>
+                                <td>
+                                    <template v-if="n.purpose==1">补贴划付</template>
+                                    <template v-if="n.purpose==2">额度采购</template>
+                                    <template v-if="n.purpose==3">退税划付</template>
+                                    <template v-if="n.purpose==4">预付款</template>
+                                    <template v-if="n.purpose==5">供货商划付</template>
+                                    <template v-if="n.purpose==10">税金提现</template>
+                                </td>
+                                <td>{{n.thirdPartySubsidyShould/100 | currency ''}}</td>
+                                <td>{{n.payAmount/100 | currency ''}}</td>
+                                <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>
+                                    <template v-if="n.status==7">待复核</template>
+                                    <template v-if="n.status==8">复核不通过</template>
+                                    <template v-if="n.status==9">复核通过</template>
+                                </td>
+                                <td>
+                                    <a @click="pass">通过</a>
+                                    <a @click="back">退回</a>
+                                    <a @click="">详情</a>
+                                    <a v-link="">详情</a>
+                                    <a @click="">查看</a>
+                                    <a v-link="">查看</a>
+                                </td>
+                                <td>{{n.activityOperationID}}{{n.activityName}}</td>
+                                <td>{{n.remarks}}</td>
+                                <td>{{n.refuseReason}}</td>
+                            </tr>
+                            <tr><td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
+                                <td>{{total.payAmount/100 | currency ''}}</td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td></td><td></td><td></td><td></td><td></td></tr>
+                        </table>
+                    </div>
+                </div>
+                <page v-if="recheckLists.length>0" :all="pageall"
+                      :cur.sync="checkForm.pageIndex"
+                      :page_size.sync="checkForm.pageSize">
+                </page>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!recheckLists.length>0" v-cloak>
+                    未找到数据
+                </div>
             </div>
         </div>
     </index>
@@ -92,8 +184,10 @@
 <style>
 </style>
 <script>
+    import model from '../../ajax/PaymentOfPayment/payrecheck_model'
     export default {
         data(){
+            this.model =model(this)
             return {
                 checkForm:{
                     paytype:'',
@@ -108,20 +202,61 @@
                     merchantOperationID:'',
                     keywords:'',
                     remarks:'',
-                    activityOperationID:'',
-                }
+                    pageIndex:1,
+                    pageSize:10,
+                    activityOperationID:''
+                },
+                pageall:1,
+                recheckLists:[]
             }
         },
         methods:{
+            getLists(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.payrecheck_list(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('recheckLists', response.data.data)
+                                this.$set('pageall', response.data.total)
+                            }
+                        });
+                this.model.payrecheck_total(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('total', response.data.data)
+                            }
+                        });
+            },
             query(){
-                console.log(_.map({ 'a': 4, 'b': 8 },function(n){ return n * n}))
+                this.getLists(this.checkForm);
             },
             payRecheckexcel(){
 
             },
             batchs(){
 
+            },
+            chooseAll(){
+                let cloneData=_.cloneDeep(this.recheckLists);
+                _.map(cloneData,(value)=>{
+                    (this.checkAll)?value.ischeck=false:value.ischeck=true;
+                })
+                this.recheckLists=cloneData;
             }
+        },
+        computed:{
+            checkAll(){
+                let clength=0;
+                _.map(this.recheckLists,(value)=>{
+                    (!value.ischeck)?clength++:null;
+                })
+                return !clength
+            }
+        },
+        ready(){
+            this.query();
         }
     }
 </script>
