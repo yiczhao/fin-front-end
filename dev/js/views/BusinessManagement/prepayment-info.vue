@@ -100,7 +100,7 @@
                                     <template v-if="trlist.status==7">等待复核</template>
                                     <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
-                                <td>{{trlist.payTime | datetime}}</td>
+                                <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>
                                     <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
                                        v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
