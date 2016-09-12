@@ -14,7 +14,7 @@
                                 @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
                             </div>
                             <div class="form-group">
-                                <select class="form-control" v-model="checkForm.dateS">
+                                <select class="form-control" v-model="defaultData.dateS">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -22,7 +22,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="checkForm.dateS==4">
+                            <div class="form-group" v-show="defaultData.dateS==4">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
@@ -37,25 +37,10 @@
                                    placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.purpose">
-                                <option value="">请选择类型</option>
-                                <option value="1">补贴划付</option>
-                                <option value="3">补贴退税</option>
-                                <option value="4">预付充值</option>
-                                <option value="6">退款冲抵</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.payType">
-                                <option value="">请选择付款方式</option>
-                                <option value="1">现金转账</option>
-                                <option value="2">账户抵扣</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
                                 <option value="7">等待复核</option>
+                                <option value="8">复核不通过</option>
                                 <option value="2">等待划付</option>
                                 <option value="3">转账中</option>
                                 <option value="4">等待对账</option>
@@ -84,9 +69,8 @@
                             <tr role="row">
                                 <th>订单号</th>
                                 <th>商户名称</th>
-                                <th>金额</th>
-                                <th>流水类型</th>
-                                <th>付款方式</th>
+                                <th>收入</th>
+                                <th>支出</th>
                                 <th>状态</th>
                                 <th>交易时间</th>
                                 <th>操作</th>
@@ -99,17 +83,11 @@
                                 <td>{{trlist.merchantName}}</td>
                                 <td>
                                     <template v-if="trlist.payType==2">-</template>
-                                    {{trlist.amount/100 | currency ''}}
+                                    {{trlist.incomeAmount/100 | currency ''}}
                                 </td>
                                 <td>
-                                    <template v-if="trlist.purpose==1">补贴划付</template>
-                                    <template v-if="trlist.purpose==3">补贴退税</template>
-                                    <template v-if="trlist.purpose==4">预付充值</template>
-                                    <template v-if="trlist.purpose==6">退款冲抵</template>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.payType==1">现金转账</template>
-                                    <template v-if="trlist.payType==2">账户抵扣</template>
+                                    <template v-if="trlist.payType==2">-</template>
+                                    {{trlist.payoutAmount/100 | currency ''}}
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">已关闭</template>
@@ -120,6 +98,7 @@
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
                                     <template v-if="trlist.status==7">等待复核</template>
+                                    <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>
@@ -133,8 +112,8 @@
                             <tr>
                                 <td></td>
                                 <td>合计：</td>
-                                <td>{{total/100| currency '' }}</td>
-                                <td></td>
+                                <td>{{total.incomeAmount/100| currency '' }}</td>
+                                <td>{{total.payoutAmount/100| currency '' }}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -342,7 +321,7 @@
             return {
                 pageall: 1,
                 blanceList:{},
-                total: [],
+                total: {},
                 defaultData: {
                     "advancePaymentMerchantID": '',
                     "orderNumber": '',
@@ -353,6 +332,8 @@
                     "remarks": '',
                     "startDate": '',
                     dateS: '3',
+                    pageIndex:1,
+                    pageSize:10,
                     "endDate": ''
                 },
                 zdlists: [],
@@ -456,8 +437,8 @@
                 $(".modal").modal("hide");
             },
             getTime(){
-                this.defaultData.startDate = init_date(this.checkForm.dateS)[0];
-                this.defaultData.endDate = init_date(this.checkForm.dateS)[1];
+                this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
+                this.defaultData.endDate = init_date(this.defaultData.dateS)[1];
             }
         },
         ready() {
@@ -468,7 +449,7 @@
             this.initList();
         },
         watch: {
-            'checkForm.dataS'(){
+            'defaultData.dataS'(){
                 this.getTime();
             },
             'defaultData.pageIndex+defaultData.pageSize'(){

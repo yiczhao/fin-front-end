@@ -88,7 +88,7 @@
 
                 <div v-if="recheckLists.length>0" class="dataTables_wrapper">
                     <div class="datatable-scroll" v-show="!!recheckLists.length">
-                        <table>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th><input type="checkbox" v-model="checkAll" @click="chooseAll"></th>
@@ -207,6 +207,11 @@
                     activityOperationID:''
                 },
                 pageall:1,
+                total:{
+                    thirdPartySubsidyShould:0,
+                    payAmount:0,
+                    suspensionTaxAmount:0
+                },
                 recheckLists:[]
             }
         },
@@ -235,15 +240,21 @@
             payRecheckexcel(){
 
             },
-            batchs(){
-
-            },
             chooseAll(){
                 let cloneData=_.cloneDeep(this.recheckLists);
                 _.map(cloneData,(value)=>{
                     (this.checkAll)?value.ischeck=false:value.ischeck=true;
                 })
                 this.recheckLists=cloneData;
+            },
+            back(){
+
+            },
+            pass(){
+
+            },
+            batchs(){
+
             }
         },
         computed:{
