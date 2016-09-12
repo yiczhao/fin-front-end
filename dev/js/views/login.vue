@@ -230,7 +230,7 @@
                 this.isD=true;
 //                let data={'login_name':this.username,'password':this.password,'sys_id':4};
                 this.xhrReq(
-                   {method: 'POST', address:window.authurl+'/auth/login/login'},
+                   {method: 'POST', address:window.authurl2+'/auth/login/login'},
                         (response)=>{
                             if(response.code===10000){
                                 var data=response.data;
