@@ -76,6 +76,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.payrecheckexcel = '/data/export/excel/suspensionTaxAccountDetail?';
+    /**
+     * @description 手工结算页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.manuallyexcel = '/data/export/excel/suspensionTaxAccountDetail?';
 
 
     //- todo 财务处理-账户列表 account-management
@@ -179,6 +185,32 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getBalance = './bankAccount/reserveCash/info/';
+
+    //- todo 交易管理-手工结算 manually-settlement
+    /**
+     * @description 手工结算列表接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.manually_list = './manuallySettlement/tradeDetail/list?';
+    /**
+     * @description 手工结算合计接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.manuallysum = './manuallySettlement/tradeDetail/total?';
+    /**
+     * @description 手工结算划付接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.manuallypay = './manuallySettlement/generate';
+    /**
+     * @description 查询手工结算划付接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.select_manuallypay = './manuallySettlement/info?';
 
 
     //- todo 交易管理-交易白名单 white-lists
