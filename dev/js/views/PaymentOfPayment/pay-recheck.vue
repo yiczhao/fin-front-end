@@ -336,7 +336,7 @@
                     }
                     let data={
                         'id':this.id,
-                        'remarks':this.remarks
+                        'refuseReason':this.remarks
                     }
                     this.model.payrecheck_back(data)
                             .then( (response)=> {
