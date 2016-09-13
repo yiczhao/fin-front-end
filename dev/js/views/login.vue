@@ -278,8 +278,6 @@
           }
         },
         ready(){
-
-            console.log(this.$route.matched);
             $('.userName').focus();
             $('body').addClass('login').removeClass('stop-scrolling');
             let pd=($('body').height()-$('.login-form').height())/2-80;

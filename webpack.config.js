@@ -1,7 +1,6 @@
 /**
  * webpack 配置
  */
-console.log('dddd')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 module.exports = {

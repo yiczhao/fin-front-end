@@ -1,19 +1,6 @@
 <template>
     <index title="划付复核" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
-
-            <content-dialog
-                    :show.sync="show" :is-cancel="true"
-                    :title.sync="'dtitle'" @kok="backPass" @kcancel="show = false"
-            >
-                <div class="form-group" v-show="dtitle==''">
-                    <label class="col-lg-3 control-label"><i>*</i>退回原因</label>
-                    <div class="col-lg-9">
-                        <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
-                    </div>
-                </div>
-            </content-dialog>
-
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -98,6 +85,7 @@
                         </div>
                     </form>
                 </div>
+
                 <div v-if="recheckLists.length>0" class="dataTables_wrapper">
                     <div class="datatable-scroll" v-show="!!recheckLists.length">
                         <table class="table">
@@ -197,13 +185,10 @@
 </style>
 <script>
     import model from '../../ajax/PaymentOfPayment/payrecheck_model'
-    import ContentDialog from '../components/ContentDialog.vue'
-
     export default {
         data(){
             this.model =model(this)
             return {
-                show:true,
                 checkForm:{
                     paytype:'',
                     subCompanyID:'',
@@ -227,8 +212,7 @@
                     payAmount:0,
                     suspensionTaxAmount:0
                 },
-                recheckLists:[],
-                dtitle:''
+                recheckLists:[]
             }
         },
         methods:{
@@ -264,12 +248,9 @@
                 this.recheckLists=cloneData;
             },
             back(){
-                this.dtitle=''
+
             },
             pass(){
-                this.dtitle='确认通过'
-            },
-            backPass(){
 
             },
             batchs(){
@@ -287,7 +268,6 @@
         },
         ready(){
             this.query();
-        },
-        components: { ContentDialog }
+        }
     }
 </script>
