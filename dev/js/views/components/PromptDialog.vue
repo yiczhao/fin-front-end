@@ -100,7 +100,7 @@
 </script>
 
 <style lang="sass">
-  @import "../../../style/bootstrap";
+ 
 
   $kdialog-height: 240px;
   $kdialog-width: 480px;

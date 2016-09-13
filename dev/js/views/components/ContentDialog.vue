@@ -3,7 +3,7 @@
     <background-mask :class="!mask && 'kno-mask'">
       <div class="kdialog-mask-shadow">
         <div class="kdialog">
-        <div :class="'kdialog__header kdialog__header--' + type" v-show="title!=''">
+        <div :class="'kdialog__header kdialog__header--' + type">
           <h3 class="title" v-text="title">标题</h3>
           <div class="kdialog__close icon-cross2"
                @click="show = false"

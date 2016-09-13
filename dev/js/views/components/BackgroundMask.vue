@@ -13,8 +13,6 @@
 </script>
 
 <style lang="sass">
-  @import "../../../style/bootstrap";
-
   // 遮罩样式
   .k-mask {
     position: fixed;top: -50px;left: 0;right: 0;bottom: 0;

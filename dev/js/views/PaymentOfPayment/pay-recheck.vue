@@ -1,19 +1,6 @@
 <template>
     <index title="划付复核" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
-
-            <content-dialog
-                    :show.sync="show" :is-cancel="true"
-                    :title.sync="'dtitle'" @kok="backPass" @kcancel="show = false"
-            >
-                <div class="form-group" v-show="dtitle==''">
-                    <label class="col-lg-3 control-label"><i>*</i>退回原因</label>
-                    <div class="col-lg-9">
-                        <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
-                    </div>
-                </div>
-            </content-dialog>
-
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
@@ -94,7 +81,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <a class="btn btn-info" data-toggle="modal" @click="batchs">批量复核</a>
+                            <a class="btn btn-info" data-toggle="modal" @click="batchs(false)">批量复核</a>
                         </div>
                     </form>
                 </div>
@@ -126,7 +113,7 @@
                                 </tr>
                             </thead>
                             <tr v-for="n in recheckLists">
-                                <td><input type="checkbox" v-model="n.ischeck"/></td>
+                                <td><input type="checkbox" @change="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
                                 <td>{{n.id }}</td>
                                 <td>{{n.createTime | datetime}}</td>
                                 <td>{{n.subCompanyName}}</td>
@@ -163,8 +150,8 @@
                                     <template v-if="n.status==9">复核通过</template>
                                 </td>
                                 <td>
-                                    <a @click="pass">通过</a>
-                                    <a @click="back">退回</a>
+                                    <a v-if="n.status==7" @click="pass(n.id)">通过</a>
+                                    <a v-if="n.status==7" @click="back(n.id)">退回</a>
                                     <a @click="">详情</a>
                                     <a v-link="">详情</a>
                                     <a @click="">查看</a>
@@ -190,10 +177,45 @@
                     未找到数据
                 </div>
             </div>
+            <content-dialog
+                    :show.sync="show" :is-cancel="true"
+                    :title.sync="dtitle" @kok="backPass" @kcancel="show = false"
+            >
+                <div class="form-group dcontent" v-show="dtitle=='退回'">
+                    <label class="col-lg-3 control-label"><i>*</i>退回原因：</label>
+                    <div class="col-lg-9">
+                        <textarea rows="5" cols="5" class="form-control" v-bind:class="{ 'error': !remarks&&fires}" v-model="remarks" placeholder=""></textarea>
+                        <span v-show="!remarks&&fires" class="validation-error-label">
+                            请填写退回原因
+                        </span>
+                    </div>
+                </div>
+            </content-dialog>
         </div>
     </index>
 </template>
-<style>
+<style lang="sass">
+    .dcontent{
+        overflow: hidden;
+        margin-bottom: 0px;
+        .dtitle{
+            text-align: center;
+            padding-bottom: 15px;
+            color:black;
+        }
+        .control-label {
+            i{
+                color:red
+            }
+        }
+        .error{
+            border-color:red;
+        }
+        .validation-error-label{
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    }
 </style>
 <script>
     import model from '../../ajax/PaymentOfPayment/payrecheck_model'
@@ -203,7 +225,7 @@
         data(){
             this.model =model(this)
             return {
-                show:true,
+                show:false,
                 checkForm:{
                     paytype:'',
                     subCompanyID:'',
@@ -228,7 +250,11 @@
                     suspensionTaxAmount:0
                 },
                 recheckLists:[],
-                dtitle:''
+                checkedIds:[],
+                id:'',
+                dtitle:'',
+                remarks:'',
+                fires:false
             }
         },
         methods:{
@@ -251,6 +277,8 @@
                         });
             },
             query(){
+                this.show=false;
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getLists(this.checkForm);
             },
             payRecheckexcel(){
@@ -259,21 +287,88 @@
             chooseAll(){
                 let cloneData=_.cloneDeep(this.recheckLists);
                 _.map(cloneData,(value)=>{
-                    (this.checkAll)?value.ischeck=false:value.ischeck=true;
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        this.checkedIds.push(value.id)
+                        value.ischeck=true;
+                    }
                 })
+                if(this.checkAll){
+                    this.checkedIds=[];
+                }
                 this.recheckLists=cloneData;
             },
-            back(){
-                this.dtitle=''
+            checked(bool,_id){
+                if(bool){
+                    this.checkedIds.push(_id);
+                }else{
+                    _.remove(this.checkedIds, function(n) {
+                        return n==_id;
+                    })
+                }
+                console.info(this.checkedIds)
             },
-            pass(){
-                this.dtitle='确认通过'
+            getTime(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
+            },
+            back(a){
+                this.id=a;
+                this.dtitle='退回';
+                this.show=true;
+                this.fires=false;
+                this.remarks='';
+            },
+            pass(a){
+                this.id=a;
+                this.dtitle='确认通过';
+                this.show=true;
             },
             backPass(){
-
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(this.dtitle=='退回'){
+                    if(this.remarks==''){
+                        this.fires=true;
+                        return;
+                    }
+                    let data={
+                        'ids':this.id,
+                        'remarks':this.remarks
+                    }
+                    this.model.payrecheck_back(data)
+                            .then( (response)=> {
+                                if(response.data.code==0){
+                                    this.query();
+                                    dialogs('success','已退回！');
+                                }
+                            })
+                }
+                else{
+                    this.batchs(true);
+                }
             },
-            batchs(){
-
+            batchs(bool){
+                if(bool){
+                    var data={
+                        'ids':this.id
+                    }
+                }else{
+                    if(!this.checkedIds.length){
+                        dialogs('info','未勾选复核信息！');
+                        return;
+                    }
+                    var data={
+                        'ids':this.checkedIds
+                    }
+                }
+                this.model.payrecheck_pass(data)
+                        .then( (response)=> {
+                            if(response.data.code==0){
+                                this.query();
+                                dialogs('success','已通过！');
+                            }
+                        })
             }
         },
         computed:{
@@ -286,7 +381,17 @@
             }
         },
         ready(){
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.getTime();
             this.query();
+        },
+        watch:{
+            'checkForm.pageSize+checkForm.pageIndex'(){
+                this.initList();
+            },
+            'checkForm.timeRange'(){
+                this.getTime();
+            }
         },
         components: { ContentDialog }
     }
