@@ -35,10 +35,13 @@
         },
         ready () {
             // 插入权限控制 JS
-            let sciprt = document.createElement('SCRIPT')
-            let _src=Cookie.get('KSAuthJSURL').replace('http://','https://');
-            sciprt.setAttribute('src',_src);
-            this.$els.scriptPlayground.appendChild(sciprt)
+//            let sciprt = document.createElement('SCRIPT')
+//            let _src=Cookie.get('KSAuthJSURL').replace('http://','https://');
+//            sciprt.setAttribute('src',_src);
+//            this.$els.scriptPlayground.appendChild(sciprt)
+//            if(true){
+//                window.KSAuthKit.off();
+//            }
         },
         watch: {
             userData() {
