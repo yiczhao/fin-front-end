@@ -113,7 +113,7 @@
                                 </tr>
                             </thead>
                             <tr v-for="n in recheckLists">
-                                <td><input type="checkbox" @change="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
+                                <td><input v-if="n.status==7" type="checkbox" @change="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
                                 <td>{{n.id }}</td>
                                 <td>{{n.createTime | datetime}}</td>
                                 <td>{{n.subCompanyName}}</td>
@@ -278,6 +278,7 @@
             },
             query(){
                 this.show=false;
+                this.checkedIds=[];
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getLists(this.checkForm);
             },
@@ -290,8 +291,10 @@
                     if(this.checkAll){
                         value.ischeck=false;
                     }else{
-                        this.checkedIds.push(value.id)
-                        value.ischeck=true;
+                        if(value.status==7){
+                            this.checkedIds.push(value.id);
+                            value.ischeck=true;
+                        }
                     }
                 })
                 if(this.checkAll){
@@ -307,7 +310,6 @@
                         return n==_id;
                     })
                 }
-                console.info(this.checkedIds)
             },
             getTime(){
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
@@ -375,7 +377,7 @@
             checkAll(){
                 let clength=0;
                 _.map(this.recheckLists,(value)=>{
-                    (!value.ischeck)?clength++:null;
+                    (!value.ischeck&&value.status==7)?clength++:null;
                 })
                 return !clength
             }
