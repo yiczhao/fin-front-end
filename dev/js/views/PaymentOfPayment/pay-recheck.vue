@@ -335,7 +335,7 @@
                         return;
                     }
                     let data={
-                        'ids':this.id,
+                        'id':this.id,
                         'remarks':this.remarks
                     }
                     this.model.payrecheck_back(data)
