@@ -119,7 +119,7 @@
     // 内容区样式
     @include e(content) {
       padding: 20px 20px 0 20px;margin: 0;
-      color: $global-text-light;font-size: 13px;
+      color: $global-text-light;font-size: 17px;
   }
 
     // button 区域

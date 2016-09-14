@@ -221,9 +221,7 @@ export default function(router){
         }
     })
     router.beforeEach(transition =>{
-        if(!sessionStorage.getItem('userData')){
-            router.go({name:'login'})
-        }
+        $(".modal").modal("hide");
         $("body").scrollTop(0);
         transition.next();
     });
