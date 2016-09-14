@@ -105,6 +105,7 @@
                                     <th>三方应补</th>
                                     <th>划付金额</th>
                                     <th>暂扣税金</th>
+                                    <th>合并类型</th>
                                     <th>复核状态</th>
                                     <th>操作</th>
                                     <th>活动名称</th>
@@ -144,6 +145,7 @@
                                 <td>{{n.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{n.payAmount/100 | currency ''}}</td>
                                 <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{n.mergePay}}</td>
                                 <td>
                                     <template v-if="n.status==7">待复核</template>
                                     <template v-if="n.status==8">复核不通过</template>
