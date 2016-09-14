@@ -164,7 +164,7 @@
                                             <template v-if="sa.status==7">
                                                 <a @click="goRecheck(sa.id,1)">查看</a>
                                             </template>
-                                            <template v-if="sa.status!=7&&sa.status==1">
+                                            <template v-if="sa.status!=7&&sa.status!=1">
                                                 <a @click="gopayment(sa.id,1)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                             </template>
                                         </td>
