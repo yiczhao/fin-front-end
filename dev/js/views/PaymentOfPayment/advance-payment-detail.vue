@@ -102,7 +102,7 @@
                                                 <template v-if="apd.status==5">对账成功</template>
                                                 <template v-if="apd.status==6">划付失败</template>
                                             </td>
-                                            <td><a v-if="apd.status!=1" @click="gopayment(apd.id,4)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
+                                            <td><a v-if="apd.status!=1" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
                                             <td>{{apd.remarks}}</td>
                                         </tr>
                                     </tbody>
