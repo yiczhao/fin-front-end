@@ -81,7 +81,7 @@ export default function(router){
             }
         },
         //备付金支出-划付复核
-        '/pay-recheck':{
+        '/pay-recheck/:recheckId':{
             name:'pay-recheck',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/pay-recheck.vue'],resolve);

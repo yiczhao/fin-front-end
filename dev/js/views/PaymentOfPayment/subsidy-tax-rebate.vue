@@ -149,7 +149,10 @@
                                                 <a href="javascript:void(0);" @click="showModalApplyPayById(strd.id)" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">申请划付</a>&nbsp;
                                                 <a href="javascript:void(0);" @click="updateById(strd.id)" data-ksa="subsidy_tax_rebate_detail_manage.update">更新</a>
                                             </template>
-                                            <template v-else>
+                                            <template v-if="strd.status==7">
+                                                <a @click="goRecheck(strd.id,3)" data-ksa="reserve_cash_order_manage.search">查看</a>
+                                            </template>
+                                            <template v-if="sa.status!=7&&sa.status==1">
                                                 <a @click="gopayment(strd.id,3)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                             </template>
                                         </td>
@@ -414,6 +417,18 @@
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
                     })
+            },
+            goRecheck(a,b){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$common_model.skipToRecheck(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'pay-recheck',params:{recheckId:response.data.data.id}});
+                            }
+                        })
             }
         },
         ready() {

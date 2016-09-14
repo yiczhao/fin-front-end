@@ -162,7 +162,7 @@
                                                 <a @click="updateById(sa.id)" data-ksa="subsidy_pay_detail_manage.update">更新</a>
                                             </template>
                                             <template v-if="sa.status==7">
-                                                <a v-link="{name:'pay-recheck',params:{subsidyPayId:sa.id}}">查看</a>
+                                                <a @click="goRecheck(sa.id,1)">查看</a>
                                             </template>
                                             <template v-if="sa.status!=7&&sa.status==1">
                                                 <a @click="gopayment(sa.id,1)" data-ksa="reserve_cash_order_manage.search">查看</a>
@@ -444,7 +444,19 @@
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
                             }
-            })
+                })
+            },
+            goRecheck(a,b){
+                let data={
+                    "streamID":a ,
+                    "streamType": b
+                }
+                this.$common_model.skipToRecheck(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'pay-recheck',params:{recheckId:response.data.data.id}});
+                            }
+                        })
             }
         },
         ready() {

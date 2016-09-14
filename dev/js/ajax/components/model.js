@@ -42,6 +42,14 @@ export default function install(Vue) {
             return Vue.http.get('reserveCashOrder/skipToOrder?' + $.param(data))
         },
         /**
+         * @description 获取复核ID
+         * @param {data}
+         * @returns {*}
+         */
+        skipToRecheck(data){
+            return Vue.http.get('payRecheck/skipToPayRecheck?' + $.param(data))
+        },
+        /**
          * @description 获取商户数据
          * @param {data}
          * @returns {*}
