@@ -389,7 +389,7 @@
         },
         watch:{
             'checkForm.pageSize+checkForm.pageIndex'(){
-                this.initList();
+                this.query();
             },
             'checkForm.timeRange'(){
                 this.getTime();

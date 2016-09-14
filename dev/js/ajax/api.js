@@ -386,7 +386,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method POST
      */
-    _o.payrecheck_pass = './payRecheck/back';
+    _o.payrecheck_pass = './payRecheck/pass';
     /**
      * @description 复核回退接口地址
      * @author 于凯乐
