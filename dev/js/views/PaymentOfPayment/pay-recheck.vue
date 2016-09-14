@@ -219,7 +219,6 @@
 </style>
 <script>
     import model from '../../ajax/PaymentOfPayment/payrecheck_model'
-    import ContentDialog from '../components/ContentDialog.vue'
 
     export default {
         data(){
@@ -395,7 +394,6 @@
             'checkForm.timeRange'(){
                 this.getTime();
             }
-        },
-        components: { ContentDialog }
+        }
     }
 </script>

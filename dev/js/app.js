@@ -16,6 +16,7 @@ import interceptor from './interceptor.js'
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
 import datepicker from './views/components/datepicker.vue'
+import ContentDialog from './views/components/ContentDialog.vue'
 import common from  './utils/common'
 import store from './utils/store.js'
 import API from './ajax/api.js'
@@ -24,6 +25,7 @@ import notify_instance from './views/components/notify'
 Vue.component('index', Index);
 Vue.component('datepicker', datepicker);
 Vue.component('page', page);
+Vue.component('ContentDialog', ContentDialog);
 // *** 引入filter
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 // *** 引入directive
