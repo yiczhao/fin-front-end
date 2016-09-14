@@ -106,6 +106,7 @@
                                        v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
                                     <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}"
                                        v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
+                                    <a v-if="trlist.status==7||trlist.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>

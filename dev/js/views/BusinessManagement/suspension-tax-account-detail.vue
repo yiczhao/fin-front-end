@@ -103,7 +103,8 @@
                                 </td>
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
-                                    <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID,payType:trlist.payType}}" data-ksa="reserve_cash_order_manage.search">查看</a>
+                                    <a v-if="trlist.status==7||trlist.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
+                                    <a v-else v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID,payType:trlist.payType}}" data-ksa="reserve_cash_order_manage.search">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
