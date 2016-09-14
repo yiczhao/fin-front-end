@@ -1,5 +1,5 @@
 /**
- * author zdzDesigner
+ * author zjhDesigner
  * [过滤 ，只留合法数值]
  * @param  {[type]} index     [合法数值]
  */
@@ -27,5 +27,6 @@ exports.filter_number = {
 		}
 
 }
+
 
 

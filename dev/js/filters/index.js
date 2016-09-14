@@ -17,6 +17,9 @@ exports.filter_grade = filter_grade.filter_grade
 import filter_number from './filter_number'
 exports.filter_number = filter_number.filter_number
 
+import numbers from './numbers'
+exports.numbers = numbers.numbers
+
 import filter_to_fixed from './filter_to_fixed'
 exports.filter_to_fixed = filter_to_fixed.filter_to_fixed
 

@@ -164,12 +164,14 @@ input[type="number"]{-moz-appearance:textfield;}
   .modal .form-group{
     margin-bottom: 30px;
   }
-  thead{
+  .table thead{
     th{
+      padding: 15px 10px;
       border-color:#999;
     }
   }
-  td{
+  .table td{
+    padding: 15px 10px;
     border-color:#E9E9E9;
   }
   .page-header .breadcrumb-line:first-child {

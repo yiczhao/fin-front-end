@@ -8,6 +8,9 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
+                            <a class="btn btn-info" @click="initList">生成执行表</a>
+                        </div>
+                        <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                         </div>
                         <div class="form-group">

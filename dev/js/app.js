@@ -21,7 +21,9 @@ import store from './utils/store.js'
 import API from './ajax/api.js'
 import common_model from './ajax/components/model.js'
 import notify_instance from './views/components/notify'
+import ContentDialog from './views/components/ContentDialog.vue'
 Vue.component('index', Index);
+Vue.component('ContentDialog', ContentDialog);
 Vue.component('datepicker', datepicker);
 Vue.component('page', page);
 // *** 引入filter
