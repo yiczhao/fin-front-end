@@ -229,7 +229,7 @@
                     paytype:'',
                     subCompanyID:'',
                     purpose:'',
-                    status:'',
+                    status:'7',
                     createType:'',
                     timeRange:'3',
                     startDate:'',

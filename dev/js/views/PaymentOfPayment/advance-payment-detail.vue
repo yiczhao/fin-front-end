@@ -43,7 +43,8 @@
                                     <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="0">已关闭</option>
-                                        <option value="1">等待审核</option>
+                                        <option value="7">等待复核</option>
+                                        <option value="8">复核不通过</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">转账中</option>
                                         <option value="4">等待对账</option>
@@ -90,10 +91,11 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
-                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantId)" data-ksa="advance_payment_account_manage.search">查看</a></td>
+                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantID)" data-ksa="advance_payment_account_manage.search">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
-                                                <template v-if="apd.status==1">等待审核</template>
+                                                <template v-if="apd.status==7">等待复核</template>
+                                                <template v-if="apd.status==8">复核不通过</template>
                                                 <template v-if="apd.status==2">等待划付</template>
                                                 <template v-if="apd.status==3">转账中</template>
                                                 <template v-if="apd.status==4">等待对账</template>
