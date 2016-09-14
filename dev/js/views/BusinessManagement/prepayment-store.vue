@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a class="btn btn-info" @click="addUser" data-ksa="advance_payment_merchant_manage.add">添加</a>
+                            <a class="btn btn-info" @click="addUser" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -19,7 +19,7 @@
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="advance_payment_merchant_manage.search">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -44,7 +44,7 @@
                             <tr role="row" v-for="(index,trlist) in zdlists">
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
-                                <td><a @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring" data-ksa="advance_payment_merchant_manage.delete">删除</a></td>
+                                <td><a @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring" data-ksa="advance_payment_merchant_store_manage.delete">删除</a></td>
                                 <td>{{trlist.updateAt | datetime}}</td>
                                 <td>{{trlist.connectionPerson}}</td>
                                 <td>{{trlist.connectionPhone}} </td>

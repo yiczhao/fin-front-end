@@ -244,8 +244,6 @@
                                     <template v-if="trlist.purpose=='补贴退税'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='预付款'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
                                     <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
-                                    <!--<template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>-->
-                                    <!--<template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>-->
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>

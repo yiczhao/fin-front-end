@@ -48,6 +48,15 @@
 										<input type="button" class="btn btn-primary" value="提交" @click="generateDataYesterday($event)"/>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="text" class="form-control" v-model="flowID" placeholder="flowID"/>
+										<input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号"/>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="提交" @click="revokeTradeDetail($event)"/>
+									</td>
+								</tr>
                             </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
@@ -120,7 +129,9 @@
                 enddateStr:'',
 				startID:'',
 				endID:'',
-                bankAccountID:''
+                bankAccountID:'',
+				flowID:'',
+				serialNumber :''
             }
         },
         methods:{
@@ -195,6 +206,20 @@
 				this.$http.post('./dev/tool/subsidy_account/generateDataYesterday',data)
 						.then((response)=>{
 								dialogs('success','处理成功！');
+						})
+			},
+			revokeTradeDetail(e){
+				if(this.flowID!=''&&this.serialNumber!=''){
+					dialogs('error','只能传入一个参数！');
+					return;
+				}
+				let data={
+					flowID :this.flowID,
+					serialNumber :this.serialNumber
+				}
+				this.$http.post('./dev/tool/tradeDetail/revoke',data)
+						.then((response)=>{
+							dialogs('success','撤销成功！');
 						})
 			}
         },

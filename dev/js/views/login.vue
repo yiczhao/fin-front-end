@@ -230,7 +230,7 @@
                 this.isD=true;
 //                let data={'login_name':this.username,'password':this.password,'sys_id':4};
                 this.xhrReq(
-                   {method: 'POST', address:window.authurl+'/auth/login/login'},
+                   {method: 'POST', address:window.authurl2+'/auth/login/login'},
                         (response)=>{
                             if(response.code===10000){
                                 var data=response.data;
@@ -239,9 +239,9 @@
                                 // noinspection JSUnresolvedVariable
                                 Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',expires: 7})
                                 // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthJSURL', data.js_url.replace('http://','https://'), {domain:'.kashuo.net',expires: 7,})
+                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 7,})
                                 // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthApiURL', data.api_url.replace('http://','https://'), {domain:'.kashuo.net',expires: 7})
+                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 7})
                                 this.$http.post(this.$API.login,{username:data.login_name})
                                         .then((response)=>{
                                             if(response.data.code===0){
