@@ -54,7 +54,7 @@
                                     <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query">查询</a>
+                                    <a class="btn btn-info" v-on:click="query" data-ksa="limit_purchase_account_manage.search">查询</a>
                                 </div>
                             </form> 
                         </div>
@@ -92,7 +92,7 @@
                                         <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
                                         <td>{{lpd.purchaseLimit/100 | currency ''}}</td>
                                         <td>{{lpd.purchaseCost/100 | currency ''}}</td>
-                                        <td><a  @click="goinfo(lpd.limitPurchaseAccountInfoID,lpd.merchantName)" v-link="">查看</a></td>
+                                        <td><a  @click="goinfo(lpd.limitPurchaseAccountInfoID,lpd.merchantName)" data-ksa="limit_purchase_account_manage.search">查看</a></td>
                                         <td>
                                             <template v-if="lpd.status==1">
                                                 已关闭
@@ -117,7 +117,7 @@
                                             <template v-if="lpd.payType==1">现金购买</template>
                                             <template v-if="lpd.payType==2">刷卡购买</template>
                                         </td>
-                                        <td><a @click="gopayment(lpd.id,2)">查看</a></td>
+                                        <td><a @click="gopayment(lpd.id,2)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
                                         <td>{{lpd.remarks}}</td>
                                     </tr>
                                 </tbody>

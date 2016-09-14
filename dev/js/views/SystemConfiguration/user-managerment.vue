@@ -5,7 +5,7 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="addUser">导入员工</a>
+                                    <a class="btn btn-info" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="subCompanyID" >
@@ -17,7 +17,7 @@
                                     <input type="text" class="form-control" v-model="keywords" placeholder="用户名、手机号、姓名">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query">查询</a>
+                                    <a class="btn btn-info" v-on:click="query" data-ksa="user_manage.search">查询</a>
                                 </div>
                             </form>
                         </div>
@@ -44,7 +44,7 @@
                                     <td>{{user.name}}</td>
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)">管辖范围</a>
+                                        <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)" data-ksa="user_manage.control_span">管辖范围</a>
                                     </td>
                                 </tr>
                                 </tbody>

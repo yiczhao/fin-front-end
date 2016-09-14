@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a class="btn btn-info" data-toggle="modal" @click="showMerchants()">添加</a>
+                            <a class="btn btn-info" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -37,7 +37,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="query">查询</a>
+                            <a class="btn btn-info" @click="query" data-ksa="advance_payment_merchant_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -79,14 +79,14 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0);" @click="getRechargeInfo(prepayment.id)"
+                                    <a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"
                                        v-if="prepayment.status==1">预付</a>
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
-                                       v-if="prepayment.status==1">门店</a>
-                                    <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}">明细</a>
-                                    <a data-toggle="modal" data-target="#modal_waring"
+                                       v-if="prepayment.status==1" data-ksa="advance_payment_merchant_store_manage.search">门店</a>
+                                    <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
+                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"  data-toggle="modal" data-target="#modal_waring"
                                        @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
-                                    <a data-toggle="modal" data-target="#modal_waring"
+                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"  data-toggle="modal" data-target="#modal_waring"
                                        @click="show_waring(prepayment.id,1)" v-if="prepayment.status==1">停用</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>

@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <a class="btn btn-info" @click="addWhite">添加</a>
+                            <a class="btn btn-info" @click="addWhite" data-target="#modal_waring" data-ksa="exception_trade_white_list_manage.add">添加</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.subCompanyID">
@@ -37,10 +37,10 @@
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="exception_trade_white_list_manage.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="abnormalWhiteexcel">导出</a>
+                            <a class="btn btn-info" @click="abnormalWhiteexcel" data-ksa="exception_trade_white_list_manage.export">导出</a>
                         </div>
                     </form>
                 </div>
@@ -73,7 +73,7 @@
                                 </td>
                                 <td>{{trlist.remarks }}</td>
                                 <td>
-                                    <a v-if="trlist.status==1" @click="whiteexpired(trlist.id)" data-toggle="modal" data-target="#modal_waring">失效</a>
+                                    <a v-if="trlist.status==1" @click="whiteexpired(trlist.id)" data-toggle="modal" data-target="#modal_waring" data-ksa="exception_trade_white_list_manage.expired">失效</a>
                                     <a href="{{origin}}/file/download/{{trlist.certificateID}}">下载</a>
                                 </td>
                                 <td>{{trlist.createUserName }}</td>

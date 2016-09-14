@@ -34,7 +34,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="activity_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -67,7 +67,7 @@
                                 <td>{{trlist.operationID}}</td>
                                 <td>{{trlist.name}}</td>
                                 <td>
-                                    <template v-if="trlist.thirdPartyAccountID==0"><a @click="addUser(trlist.id)">配置</a></template>
+                                    <template v-if="trlist.thirdPartyAccountID==0"><a @click="addUser(trlist.id)" data-ksa="activity_manage.config">配置</a></template>
                                     <template v-else>{{trlist.thirdPartyAccountName}}</template>
                                 </td>
                                 <td>{{trlist.subCompanyName}}</td>
@@ -87,7 +87,7 @@
                                 <td>{{trlist.purchaseDiscountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.commissionAmount/100 | currency ''}}</td>
-                                <td><a v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
+                                <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
                             </tr>
                             <tr>
                                 <td></td>

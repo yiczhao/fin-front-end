@@ -28,7 +28,7 @@
                                     <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query" >查询</a>
+                                    <a class="btn btn-info" v-on:click="query" data-ksa="system_log_manage.search">查询</a>
                                 </div>
                             </form>
                         </div>
@@ -59,7 +59,7 @@
                                     </td>
                                     <td>{{log.createTime | datetime}}</td>
                                     <td>
-                                        <a data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)">详情</a>
+                                        <a data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)" data-ksa="system_log_manage.detail">详情</a>
                                     </td>
                                 </tr>
                                 </tbody>

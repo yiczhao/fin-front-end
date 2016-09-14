@@ -61,14 +61,14 @@
                                     <input type="text" class="form-control" v-model="remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query">查询</a>
+                                    <a class="btn btn-info" v-on:click="query" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="subsidyTaxexcel">导出</a>
+                                    <a class="btn btn-info" v-on:click="subsidyTaxexcel" data-ksa="subsidy_tax_rebate_detail_manage.export">导出</a>
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <a class="btn btn-info" data-toggle="modal"  @click="batchs()">一键审核</a>
+                                    <a class="btn btn-info" data-toggle="modal"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
                                 </div>
                             </form> 
                         </div>
@@ -115,7 +115,7 @@
                                             <template v-if="strd.createType==2">手工录入</template>
                                         </td>
                                         <td>{{strd.taxRebateAmount/100 | currency ''}}</td>
-                                        <td><a v-link="{name:'trade-info',params:{subsidyTaxRebateId:strd.id}}">明细</a> </td>
+                                        <td><a v-link="{name:'trade-info',params:{subsidyTaxRebateId:strd.id}}" data-ksa="trade_detail_manage.search">明细</a> </td>
                                         <td>
                                             <template v-if="strd.status==0">
                                                 已关闭
@@ -141,11 +141,11 @@
                                         </td>
                                         <td>
                                             <template v-if="strd.status==1">
-                                                <a href="javascript:void(0);" @click="showModalApplyPayById(strd.id)">申请划付</a>&nbsp;
-                                                <a href="javascript:void(0);" @click="updateById(strd.id)">更新</a>
+                                                <a href="javascript:void(0);" @click="showModalApplyPayById(strd.id)" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">申请划付</a>&nbsp;
+                                                <a href="javascript:void(0);" @click="updateById(strd.id)" data-ksa="subsidy_tax_rebate_detail_manage.update">更新</a>
                                             </template>
                                             <template v-else>
-                                                <a @click="gopayment(strd.id,3)">查看</a>
+                                                <a @click="gopayment(strd.id,3)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                             </template>
                                         </td>
                                         <td>{{strd.remarks}}</td>
