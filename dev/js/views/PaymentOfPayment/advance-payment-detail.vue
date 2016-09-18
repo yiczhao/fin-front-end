@@ -31,9 +31,6 @@
                                     <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.id" placeholder="预付款流水ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
-                                </div>
-                                <div class="form-group">
                                     <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
@@ -141,7 +138,6 @@
             this.model=model(this);
             return{
                 checkForm:{
-                    id:"",
                     subCompanyID:"",
                     cityID:"",
                     status:"",
