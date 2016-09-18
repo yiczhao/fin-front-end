@@ -12,7 +12,7 @@
         <p class="kdialog__content">
           <slot></slot>
         </p>
-        <div class="kdialog__btnwrap">
+        <div class="kdialog__btnwrap" v-if="isButton">
           <k-button class="r" :type="type" size="xl"
                     style="width: 90px;margin-left: 5px;"
                     @kclick="$emit('kok')"
@@ -38,8 +38,9 @@
     },
     props: {
       isCancel: {type: Boolean, default: true},
+      isButton: {type: Boolean, default: true},
       show: {type: Boolean, default: true, twoWay: true},
-      type: {type: String, default: 'primary', twoWay: true},
+      type: {type: String, default: 'infos', twoWay: true},
       mask: {type: Boolean, default: false, twoWay: true},
       title: {type: String, default: 'title', twoWay: true}
     },
@@ -73,7 +74,7 @@
     margin-top: 10px;
     border-radius: 2px;
     box-shadow: 1px 1px 6px #AEAEAE;
-    width: $kdialog-width;
+    min-width: $kdialog-width;
     background: #FFF;
 
     @include center-translate();

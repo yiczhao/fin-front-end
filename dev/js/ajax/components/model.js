@@ -42,6 +42,14 @@ export default function install(Vue) {
             return Vue.http.get('reserveCashOrder/skipToOrder?' + $.param(data))
         },
         /**
+         * @description 查看当前订单号及付款方式
+         * @param {data}
+         * @returns {*}
+         */
+        skipToOrderById(id){
+            return Vue.http.get('reserveCashOrder/info/' + id)
+        },
+        /**
          * @description 获取复核ID
          * @param {data}
          * @returns {*}

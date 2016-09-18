@@ -145,7 +145,10 @@
                                 <td>{{n.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{n.payAmount/100 | currency ''}}</td>
                                 <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
-                                <td>{{n.mergePay}}</td>
+                                <td>
+                                    <template v-if="n.mergePay">是</template>
+                                    <template v-else>否</template>
+                                </td>
                                 <td>
                                     <template v-if="n.status==7">待复核</template>
                                     <template v-if="n.status==8">复核不通过</template>
@@ -154,10 +157,8 @@
                                 <td>
                                     <a v-if="n.status==7" @click="pass(n.id)">通过</a>
                                     <a v-if="n.status==7" @click="back(n.id)">退回</a>
-                                    <a @click="">详情</a>
-                                    <a v-link="">详情</a>
-                                    <a @click="">查看</a>
-                                    <a v-link="">查看</a>
+                                    <a @click="checkPaydetail(n)">详情</a>
+                                    <a v-if="n.status==9" @click="gopayment(n.id)">查看</a>
                                 </td>
                                 <td>{{n.activityOperationID}}{{n.activityName}}</td>
                                 <td>{{n.remarks}}</td>
@@ -180,7 +181,7 @@
                 </div>
             </div>
             <content-dialog
-                    :show.sync="show" :is-cancel="true"
+                    :show.sync="show" :is-cancel="true" :type.sync="'primary'"
                     :title.sync="dtitle" @kok="backPass" @kcancel="show = false"
             >
                 <div class="form-group dcontent" v-show="dtitle=='退回'">
@@ -190,6 +191,61 @@
                         <span v-show="!remarks&&fires" class="validation-error-label">
                             请填写退回原因
                         </span>
+                    </div>
+                </div>
+            </content-dialog>
+            <content-dialog
+                    :show.sync="detailshow" :is-button="false" :type.sync="'primary'"
+                    :title.sync="'详情'"
+            >
+                <div class="form-group dcontent">
+                    <table class="table main-table" v-if="listinfos!=''">
+                        <thead>
+                        <tr role="row">
+                            <th>生成日期</th>
+                            <th>划付金额</th>
+                            <th  v-if="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
+                            <th>用途</th>
+                            <th>操作</th>
+                            <th>状态</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tr class="div-table" v-for="trlist in listinfos">
+                            <td>{{trlist.createTime | datetimes}}</td>
+                            <td>{{trlist.payAmount/100 | currency '' }}</td>
+                            <td  v-if="trlist.purpose==1">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                            <td>
+                                <template v-if="trlist.purpose==1">补贴划付</template>
+                                <template v-if="trlist.purpose==2">额度采购</template>
+                                <template v-if="trlist.purpose==3">退税划付</template>
+                                <template v-if="trlist.purpose==4">预付款</template>
+                                <template v-if="trlist.purpose==5">供货商划付</template>
+                                <template v-if="trlist.purpose==10">税金提现</template>
+                            </td>
+                            <td>
+                                <template v-if="trlist.purpose==1"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
+                                <template v-if="trlist.purpose==2"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
+                                <template v-if="trlist.purpose==3"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
+                                <template v-if="trlist.purpose==4"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
+                                <template v-if="trlist.purpose==10"><a @click="skipToSubsidyAccount(trlist.id)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                            </td>
+                            <td>
+                                <template v-if="trlist.status==1"> 等待审核</template>
+                                <template v-if="trlist.status==2"> 等待划付</template>
+                                <template v-if="trlist.status==3"> 转账中</template>
+                                <template v-if="trlist.status==4"> 等待对账</template>
+                                <template v-if="trlist.status==5"> 对账成功</template>
+                                <template v-if="trlist.status==6"> 划付失败</template>
+                                <template v-if="trlist.status==7">等待复核</template>
+                                <template v-if="trlist.status==0"> 已关闭</template>
+                            </td>
+                            <td>{{trlist.remarks}}</td>
+                        </tr>
+                    </table>
+
+                    <div style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                        未找到数据
                     </div>
                 </div>
             </content-dialog>
@@ -227,6 +283,7 @@
             this.model =model(this)
             return {
                 show:false,
+                detailshow:false,
                 checkForm:{
                     paytype:'',
                     subCompanyID:'',
@@ -251,6 +308,7 @@
                     suspensionTaxAmount:0
                 },
                 recheckLists:[],
+                listinfos:[],
                 checkedIds:[],
                 id:'',
                 dtitle:'',
@@ -288,7 +346,7 @@
             },
             chooseAll(){
                 let cloneData=_.cloneDeep(this.recheckLists);
-                _.map(cloneData,(value)=>{
+                cloneData.map((value)=>{
                     if(this.checkAll){
                         value.ischeck=false;
                     }else{
@@ -327,6 +385,38 @@
                 this.id=a;
                 this.dtitle='确认通过';
                 this.show=true;
+            },
+            checkPaydetail({id,purpose}){
+                let data={
+                    'id':id,
+                    'purpose':purpose
+                }
+                this.model.skipToPayRecheck(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('listinfos',response.data.data);
+                                this.detailshow=true;
+                            }
+                        })
+            },
+            gopayment(a){
+                this.$common_model.skipToOrderById(a)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderId,payType:response.data.data.payType}});
+                            }
+
+                        })
+            },
+            skipToSubsidyAccount(a){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.skipToSubsidyAccount(a)
+                        .then( (response)=> {
+                            if(response.data.code==0&&!!response.data.data){
+                                let trlist=response.data.data;
+                                this.$router.go({name:'suspension-tax',params:{orderId:trlist.reserveCashOrder.orderId,suspensionHDid:trlist.subsidyAccount.id,suspensionBTid:trlist.reserveCashOrder.merchantId,suspensionZHname:trlist.activity.name,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.subsidyAccount.suspensionTaxAmount,suspensionSHname:trlist.merchant.name}});
+                            }
+                        })
             },
             backPass(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -377,7 +467,7 @@
         computed:{
             checkAll(){
                 let clength=0;
-                _.map(this.recheckLists,(value)=>{
+                this.recheckLists.map((value)=>{
                     (!value.ischeck&&value.status==7)?clength++:null;
                 })
                 return !clength

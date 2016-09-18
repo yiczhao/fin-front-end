@@ -393,6 +393,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.payrecheck_back = './payRecheck/back';
+    /**
+     * @description 详情查询接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToPayRecheck = 'payRecheck/detail?';
 
 
     //- todo  备付金支出-补贴划付 subsidy-appropriation

@@ -36,6 +36,22 @@ function model(_this){
          * */
         payrecheck_back(data){
             return _this.$http.post(_this.$API.payrecheck_back,data)
+        },
+        /**
+         * @description 查看当前订单号及付款方式
+         * @param {data}
+         * @returns {*}
+         */
+        skipToPayRecheck(data){
+            return _this.$http.get(_this.$API.skipToPayRecheck + $.param(data))
+        },
+        /**
+         * @description 跳转
+         * @param {data}
+         * @returns {*}
+         */
+        skipToSubsidyAccount(_id){
+            return _this.$http.get(_this.$API.skipToSubsidyAccount+_id)
         }
     }
 }
