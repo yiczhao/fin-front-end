@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"  onkeyup="value=value.replace(/[^\d+(\-\d+\.\)?$]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d+(\-\d+\.\)?$]/g,'')"></div>
                                         <div class="form-group" v-else>
                                             <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
