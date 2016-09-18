@@ -119,7 +119,7 @@
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
                                     <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                 <div class="form-group">
-                                    <label style="width:13%;position: relative;top: -95px;" class="control-label">备注：</label>
+                                    <label style="width:13%;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
@@ -159,7 +159,7 @@
                                             <label><i style="color:red;">*</i>金额：</label>
                                             <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
                                         <div class="form-group" v-else>
-                                            <label><i style="color:red;">*</i>上传凭证：</label>
+                                            <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
@@ -304,6 +304,10 @@ table tr th,table tr td{
                 this.applyText='';
                 if(this.applyData.payoutAmount==''){
                     this.applyText='请填写提现金额！';
+                    return;
+                }
+                if(this.applyData.remarks==''){
+                    this.applyText='请填写备注！';
                     return;
                 }
                 let data={};

@@ -100,6 +100,7 @@
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
                                     <a v-if="trlist.certificateId!=0" href="{{origin}}/file/download/{{trlist.certificateId}}">下载凭证</a>
+                                    <a v-if="trlist.orderID!=''" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderID,'payType':trlist.payType}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>

@@ -444,7 +444,7 @@
             batchs(bool){
                 if(bool){
                     var data={
-                        'ids':this.id
+                        'ids':[this.id]
                     }
                 }else{
                     if(!this.checkedIds.length){
