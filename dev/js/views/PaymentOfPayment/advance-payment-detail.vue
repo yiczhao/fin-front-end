@@ -209,7 +209,7 @@
                 this.getadvancePaymentDetailList(this.checkForm);
             },
             gopayment(a){
-                this.$common_model.skipToOrder(a)
+                this.$common_model.skipToOrderById(a)
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderId,payType:response.data.data.payType}});
