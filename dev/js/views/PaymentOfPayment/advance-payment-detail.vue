@@ -91,7 +91,7 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
-                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantID)" data-ksa="advance_payment_account_manage.search">查看</a></td>
+                                            <td><a v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID}}" data-ksa="advance_payment_account_manage.search">查看</a></td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
                                                 <template v-if="apd.status==7">等待复核</template>
@@ -102,7 +102,10 @@
                                                 <template v-if="apd.status==5">对账成功</template>
                                                 <template v-if="apd.status==6">划付失败</template>
                                             </td>
-                                            <td><a v-if="apd.status!=1" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
+                                            <td>
+                                                <a v-if="apd.status==7||apd.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':apd.payRecheckID}}">查看</a>
+                                                <a v-if="apd.status!=1&&apd.status!=7&&apd.status!=8" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">查看</a>
+                                            </td>
                                             <td>{{apd.remarks}}</td>
                                         </tr>
                                     </tbody>
@@ -205,31 +208,14 @@
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getadvancePaymentDetailList(this.checkForm);
             },
-            gopayment(a,b){
-                let data={
-                    "streamID":a ,
-                    "streamType": b
-                }
-                this.$common_model.skipToOrder(data)
+            gopayment(a){
+                this.$common_model.skipToOrder(a)
                         .then((response)=>{
                             if(response.data.code==0){
-                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderId,payType:response.data.data.payType}});
                             }
 
                     })
-            },
-            gopreinfo(a,b,_id){
-                let data={
-                    "streamID":a ,
-                    "streamType": b
-                }
-                this.$common_model.skipToOrder(data)
-                        .then((response)=>{
-                                if(response.data.code==0){
-                                    this.$router.go({'name':'prepayment-info',params:{'id':_id,'orderNumber':response.data.data.orderNumber}});
-                                }
-
-                        })
             }
         },
         ready() {
