@@ -41,7 +41,8 @@
                             <select class="form-control" v-model="checkForm.createType">
                                 <option value="">全部生成方式</option>
                                 <option value="1">系统生成</option>
-                                <option value="2">手工结算</option>
+                                <option value="2">手工单</option>
+                                <option value="3">手工结算</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -127,7 +128,8 @@
                                 </td>
                                 <td>
                                     <template v-if="n.createType==1">系统生成</template>
-                                    <template v-if="n.createType==2">手工录入</template>
+                                    <template v-if="n.createType==2">手工单</template>
+                                    <template v-if="n.createType==3">手工结算</template>
                                 </td>
                                 <td>
                                     <template v-if="n.payType==1">备付金账户</template>

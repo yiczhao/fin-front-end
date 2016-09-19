@@ -37,16 +37,14 @@
                                     <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.payRecheckID" placeholder="划付复核ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
-                                </div>
-                                <div class="form-group">
                                     <input type="text" class="form-control" v-model="checkForm.keywords" style="width:185px;" placeholder="商户名、收款账户名、帐号">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control" v-model="checkForm.createType">
                                         <option value="">请选择生成方式</option>
                                         <option value="1">系统生成</option>
-                                        <option value="2">手工录入</option>
+                                        <option value="2">手工单</option>
+                                        <option value="3">手工结算</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -121,12 +119,9 @@
                                         <td>{{sa.merchantName}}</td>
                                         <td>{{sa.receiptAccountName}}<br/>{{sa.receiptAccountNumber}}</td>
                                         <td>
-                                            <template v-if="sa.createType==1">
-                                                系统生成
-                                            </template>
-                                            <template v-if="sa.createType==2">
-                                                手工录入
-                                            </template>
+                                            <template v-if="sa.createType==1">系统生成</template>
+                                            <template v-if="sa.createType==2">手工单</template>
+                                            <template v-if="sa.createType==3">手工结算</template>
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount/100 | currency ''}}</td>
@@ -257,7 +252,6 @@
                 checkForm:{
                     id:"",
                     subCompanyID:"",
-                    payRecheckID:"",
                     cityID:"",
                     createType:"",
                     status:"",

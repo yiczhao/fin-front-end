@@ -74,7 +74,6 @@
                         <table id="table1" class="table">
                             <thead>
                             <tr role="row">
-                                <th><input type="checkbox" v-model="checkAll" @click="chooseAll"></th>
                                 <th>交易ID</th>
                                 <th>交易流水号</th>
                                 <th>分公司</th>
@@ -104,7 +103,6 @@
                             </thead>
                             <tbody>
                             <tr v-for="trlist in tradeList">
-                                <td><input type="checkbox" @change="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck"/></td>
                                 <td>{{trlist.id}}</td>
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
@@ -114,31 +112,12 @@
                                 <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.discountAmount/100 | currency ''}}</td>
                                 <td>{{trlist.payAmount/100 | currency ''}}</td>
-                                <td>
-                                    <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.limitDeduct/100 | currency ''}}</a>-->
-                                    <!--<span v-else>{{trlist.limitDeduct/100 | currency ''}}</span>-->
-                                    <span>{{trlist.limitDeduct/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.principalDeduct/100 | currency ''}}</a>-->
-                                    <!--<span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>-->
-                                    <span>{{trlist.principalDeduct/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <a data-ksa="third_party_account_manage.search" @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
-                                    <span v-else>0.00</span>
-                                </td>
+                                <td><span>{{trlist.limitDeduct/100 | currency ''}}</span></td>
+                                <td><span>{{trlist.principalDeduct/100 | currency ''}}</span></td>
+                                <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
-                                <td>
-                                    <a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
-                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
-                                    <span v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</span>
-                                </td>
+                                <td>{{trlist.suspensionTax/100 | currency ''}}</td>
+                                <td>{{trlist.merchantSubsidyActual/100 | currency ''}}</td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
@@ -164,7 +143,6 @@
                             </tr>
                             </tbody>
                             <tr role="row" v-if="nums.length>0">
-                                <th></th>
                                 <th>合计：</th>
                                 <th></th>
                                 <th></th>
@@ -283,13 +261,6 @@
     export default{
         components: { ContentDialog },
         computed:{
-            checkAll(){
-                let clength=0;
-                _.map(this.tradeList,(value)=>{
-                    (!value.ischeck)?clength++:null;
-                })
-                return !clength
-            }
         },
         data(){
             this.model=model(this);
@@ -363,31 +334,6 @@
                             this.$set('cityList', response.data.data)
                         }
                     });
-            },
-            chooseAll(){
-                let cloneData=_.cloneDeep(this.tradeList);
-                _.map(cloneData,(value)=>{
-                    if(this.checkAll){
-                        value.ischeck=false;
-                    }else{
-                        this.checkedIds.push(value.id)
-                        value.ischeck=true;
-                    }
-                })
-                if(this.checkAll){
-                    this.checkedIds=[];
-                }
-                this.tradeList=cloneData;
-            },
-            checked(bool,_id){
-                if(bool){
-                    this.checkedIds.push(_id);
-                }else{
-                    _.remove(this.checkedIds, function(n) {
-                        return n==_id;
-                    })
-                }
-                console.info(this.checkedIds)
             },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
