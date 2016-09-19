@@ -273,6 +273,7 @@
                                             <option value="1">日结</option>
                                             <option value="2">周结</option>
                                             <option value="3">月结</option>
+                                            <option value="4">手工结算</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
