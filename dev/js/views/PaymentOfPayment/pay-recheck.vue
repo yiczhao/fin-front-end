@@ -38,14 +38,6 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="checkForm.createType">
-                                <option value="">全部生成方式</option>
-                                <option value="1">系统生成</option>
-                                <option value="2">手工单</option>
-                                <option value="3">手工结算</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <select class="form-control" v-model="checkForm.timeRange">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
@@ -125,11 +117,6 @@
                                 <td>{{n.merchantName }}</td>
                                 <td>{{n.collectionBankName }}<br>
                                     {{n.collectionBankNumber}}
-                                </td>
-                                <td>
-                                    <template v-if="n.createType==1">系统生成</template>
-                                    <template v-if="n.createType==2">手工单</template>
-                                    <template v-if="n.createType==3">手工结算</template>
                                 </td>
                                 <td>
                                     <template v-if="n.payType==1">备付金账户</template>
@@ -291,7 +278,6 @@
                     subCompanyID:'',
                     purpose:'',
                     status:'',
-                    createType:'',
                     timeRange:'3',
                     startDate:'',
                     endDate:'',

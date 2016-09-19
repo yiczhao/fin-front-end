@@ -351,6 +351,10 @@
             },
             payApply(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                if(this.checkForm.merchantOperationID==''||this.checkForm.activityOperationID==''){
+                    dialogs('info','必须填写商户ID及活动ID！');
+                    return false
+                }
                 this.model.select_manuallypay(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若
