@@ -14,7 +14,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
@@ -322,6 +322,15 @@
                             }
                         });
             },
+            //获取分公司数据
+            getSubcompany(){
+                this.$common_model.getcompany()
+                        .then((response)=>{
+                    if(response.data.code==0){
+                    this.$set('subcompanyList', response.data.data)
+                }
+            });
+            },
             query(){
                 this.show=false;
                 this.checkedIds=[];
@@ -464,6 +473,7 @@
             (this.$route.params.recheckId==':recheckId')?this.checkForm.id='':this.checkForm.id=this.$route.params.recheckId;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.getTime();
+            this.getSubcompany();
             this.query();
         },
         watch:{
