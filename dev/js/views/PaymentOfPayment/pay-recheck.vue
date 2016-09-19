@@ -290,7 +290,7 @@
                     payType:'',
                     subCompanyID:'',
                     purpose:'',
-                    status:'7',
+                    status:'',
                     createType:'',
                     timeRange:'3',
                     startDate:'',
