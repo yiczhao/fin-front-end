@@ -158,6 +158,10 @@
                                     <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label><input type="checkbox" v-model="applyData.mergePay"/>
+                                        相同账户合并付款</label>
+                                </div>
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
                                 </div>
@@ -215,6 +219,7 @@
                     remarks:'',
                     id:'',
                     payoutAmount:'',
+                    mergePay:false,
                     payType:'1'
                 },
                 applyText:''
@@ -260,6 +265,7 @@
                 this.applyData.remarks='';
                 this.applyData.payoutAmount='';
                 this.applyData.payType='1';
+                this.applyData.mergePay=false;
                 let data={
                     id:id,
                 }
