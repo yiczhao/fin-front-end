@@ -5,7 +5,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <select class="form-control" v-model="checkForm.paytype">
+                            <select class="form-control" v-model="checkForm.payType">
                                 <option value="">全部付款方式</option>
                                 <option value="1">备付金账户</option>
                                 <option value="2">商户预付款账户</option>
@@ -287,7 +287,7 @@
                 show:false,
                 detailshow:false,
                 checkForm:{
-                    paytype:'',
+                    payType:'',
                     subCompanyID:'',
                     purpose:'',
                     status:'7',
