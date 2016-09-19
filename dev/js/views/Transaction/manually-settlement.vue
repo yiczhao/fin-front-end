@@ -183,14 +183,15 @@
                 </div>
 
                 <content-dialog
-                        :show.sync="show" :is-cancel="true"
+                        :show.sync="show" :is-cancel="true" :type.sync="'primary'"
                         :title.sync="'申请划付'" @kok="submit" @kcancel="show = false"
                 >
                     <div class="modal-body">
                         <div class="form-group">
                             您目前选择了
-                            <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>笔交易记录，
-                            商户实补： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.merchantSubsidyActual/100 | currency ''}}</span>  元，
+                            <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeSize}}</span>笔交易记录，
+                            三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartyReceivable/100 | currency ''}}</span>  元，
+                            补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元，
                             暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTax/100 | currency ''}}</span>  元
                         </div>
                         <div class="form-group">
@@ -350,14 +351,7 @@
             },
             payApply(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.checkedIds.length<=0){
-                    dialogs('info','请勾选审核信息！');
-                    return false
-                }
-                let data={
-                    idList:this.checkedIds.toString()
-                }
-                this.model.select_manuallypay(data)
+                this.model.select_manuallypay(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若
                             // *** 判断请求是否成功如若
@@ -369,17 +363,15 @@
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    idList:this.checkedIds,
-                    payType:this.payTypes,
-                    mergePay:this.mergePay
-                }
+                let data=_.cloneDeep(this.checkForm);
+                data.payType=this.payTypes;
+                data.mergePay=this.mergePay;
                 this.model.manuallypay(data)
                         .then((response)=>{
                             if(response.data.code==0){
-                                dialogs('success','申请成功');
+                                dialogs('success',response.data.message);
+                                this.query();
                             }
-                            this.query();
                         });
             },
             getTime(){
