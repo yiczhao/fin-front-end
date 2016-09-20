@@ -273,11 +273,29 @@ export default function install(Vue) {
      */
     _o.reservecash_list = './reserveCashOrder/list?';
     /**
-     * @description 备付金支出明细详情接口地址
+     * @description 备付金支出明细补贴划付详情接口地址
      * @author 冷艳君
      * @method GET
      */
-    _o.getpart = './reserveCashOrder/stream/list/';
+    _o.getpart1 = './reserveCashOrder/subsidyPayDetail/list/';
+    /**
+     * @description 备付金支出明细补贴退税详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart3 = './reserveCashOrder/subsidyTaxRebateDetail/list/';
+    /**
+     * @description 备付金支出明细预付款详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart4 = './reserveCashOrder/advancePaymentAccountDetail/list/';
+    /**
+     * @description 备付金支出明细税金提现详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart10 = './reserveCashOrder/suspensionTaxAccountDetail/list/';
     /**
      * @description 查询对账数据接口地址
      * @author 冷艳君

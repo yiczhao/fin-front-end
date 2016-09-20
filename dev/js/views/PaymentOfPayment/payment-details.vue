@@ -145,7 +145,9 @@
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td>
-                                    <a v-if="n.status!=0" @click="getInfo(n,index)" data-ksa="reserve_cash_order_manage.detail">详情</a>
+                                    <template v-if="n.status!=0">
+                                        <a @click="getInfo(n)" data-ksa="reserve_cash_order_manage.detail">详情</a>
+                                    </template>
                                     <template v-if="n.status==2">
                                         <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)" data-ksa="reserve_cash_order_manage.pay">确认划付</a>
                                         <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)" data-ksa="reserve_cash_order_manage.retrial">退回重审</a>
@@ -234,16 +236,16 @@
                                 </tr>
                             </thead>
                             <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
-                                <td>{{trlist.createAt | datetimes}}</td>
-                                <td>{{trlist.amount/100 | currency '' }}</td>
-                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
+                                <td>{{trlist.createDate | datetimes}}</td>
+                                <td>{{trlist.payAmount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                                 <td>{{trlist.purpose}}</td>
                                 <td>
-                                    <template v-if="trlist.purpose=='补贴划付'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='额度采购'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='补贴退税'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='预付款'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                                    <template v-if="trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='3'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='4'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='10'"><a @click="skipToSubsidyAccount(trlist.streamID)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>
@@ -562,13 +564,44 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.listinfos = []
                 this.id=a.id;
-                this.model.getpart(a.id)
-                        .then( (response)=> {
-                            if(response.data.code==0) {
-                                this.$set('listinfos',response.data.data);
-                                $('#list_info').modal('show');
-                            }
-                        });
+                switch(a.purpose){
+                    case 1:
+                        this.model.getpart1(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                    case 3:
+                        this.model.getpart3(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                    case 4:
+                        this.model.getpart4(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                    case 10:
+                        this.model.getpart10(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                }
             },
             back(a){
                 this.subtitle = '退回重审';

@@ -52,7 +52,7 @@
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.id" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="请输入ID">
+                            <input type="text" class="form-control" v-model="checkForm.id" placeholder="请输入ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="请输入商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
@@ -295,6 +295,7 @@
                     suspensionTaxAmount:0
                 },
                 recheckLists:[],
+                subcompanyList:[],
                 listinfos:[],
                 checkedIds:[],
                 id:'',
@@ -326,10 +327,10 @@
             getSubcompany(){
                 this.$common_model.getcompany()
                         .then((response)=>{
-                    if(response.data.code==0){
-                    this.$set('subcompanyList', response.data.data)
-                }
-            });
+                                if(response.data.code==0){
+                                this.$set('subcompanyList', response.data.data)
+                            }
+                        });
             },
             query(){
                 this.show=false;
