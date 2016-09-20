@@ -772,9 +772,9 @@
                                 this.initList();
                         })
             },
-            skipToSubsidyAccount(){
+            skipToSubsidyAccount(_id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.skipToSubsidyAccount(this.id)
+                this.model.skipToSubsidyAccount(_id)
                         .then( (response)=> {
                             if(response.data.code==0&&!!response.data.data){
                                 let trlist=response.data.data;
