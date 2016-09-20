@@ -444,7 +444,7 @@
                                 }
                             })
                 }
-                if(this.dtitle=='你确定批量划付？'){
+                else if(this.dtitle=='你确定批量划付？'){
                     this.batchs(false);
                 }
                 else{
