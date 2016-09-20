@@ -204,7 +204,7 @@
                         <tr class="div-table" v-for="trlist in listinfos">
                             <td>{{trlist.createTime | datetimes}}</td>
                             <td>{{trlist.payAmount/100 | currency '' }}</td>
-                            <td  v-if="trlist.purpose==1">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                            <td  v-if="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                             <td>
                                 <template v-if="trlist.purpose==1">补贴划付</template>
                                 <template v-if="trlist.purpose==2">额度采购</template>
@@ -417,7 +417,10 @@
             },
             skipToSubsidyAccount(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.skipToSubsidyAccount(a)
+                let data={
+                    id:a
+                }
+                this.model.skipToSubsidyAccount(data)
                         .then( (response)=> {
                             if(response.data.code==0&&!!response.data.data){
                                 let trlist=response.data.data;

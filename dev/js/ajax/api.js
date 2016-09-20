@@ -417,7 +417,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToPayRecheck = 'payRecheck/detail?';
-
+    /**
+     * @description 详情 用途是税金提现的穿透到暂扣税金账户明细接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToSuspensionTaxAccountDetail = 'payRecheck/skipToSuspensionTaxAccountDetail?';
 
     //- todo  备付金支出-补贴划付 subsidy-appropriation
     /**
