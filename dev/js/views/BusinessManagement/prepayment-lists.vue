@@ -11,7 +11,7 @@
                             <a class="btn btn-info" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
@@ -131,7 +131,7 @@
                             <div class="modal-body">
                                 <form class="form-inline manage-form">
                                         <input type="text" class="form-control"
-                                               v-model="merchantInfo.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                               v-model="merchantInfo.merchantOperationID" placeholder="商户ID" v-limitnumber="merchantInfo.merchantOperationID">
                                         <input type="text" class="form-control" v-model="merchantInfo.merchantName"
                                                placeholder="商户名">
                                         <select class="form-control" v-model="merchantInfo.companyId"
@@ -231,7 +231,7 @@
                                             <label><i style="color:red">*</i>金额：</label>
                                             <input v-validate:val1="['required']" type="text" class="form-control"
                                                    name="advancePaymentAmount"
-                                                   v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
+                                                   v-model="applyAdvancePay.advancePaymentAmount" v-limitprice="applyAdvancePay.advancePaymentAmount"/>
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>

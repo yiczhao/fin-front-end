@@ -30,7 +30,7 @@
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号">
+                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName"
@@ -159,7 +159,7 @@
                             <div class="form-group">
                                 <label><i style="color:red">*</i>金额：</label>
                                 <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
-                                       v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
+                                       v-model="applyAdvancePay.advancePaymentAmount"  v-limitprice="applyAdvancePay.advancePaymentAmount"/>
                             </div>
                             <div class="form-group">
                                 <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>

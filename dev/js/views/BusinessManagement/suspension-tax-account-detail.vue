@@ -29,7 +29,7 @@
                                         format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号" v-limitnumber="defaultData.orderID">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.payType">
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount"></div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>

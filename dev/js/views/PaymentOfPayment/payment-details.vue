@@ -22,7 +22,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
+                                <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号" v-limitnumber="checkForm.orderNumber">
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.dateS">
@@ -39,7 +39,7 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="商户ID">
+                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">

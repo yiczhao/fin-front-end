@@ -11,7 +11,7 @@
                             <a class="btn btn-info" @click="addUser" data-ksa="limit_purchase_merchant_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"   onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -104,12 +104,12 @@
                                     <template v-else>正常</template>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)" @click="updateNew(trlist.id)" data-ksa="limit_purchase_merchant_manage.update">编辑</a>
+                                    <a @click="updateNew(trlist.id)" data-ksa="limit_purchase_merchant_manage.update">编辑</a>
                                     <a data-ksa="limit_purchase_account_manage.detail" v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">明细</a>
-                                    <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)" data-ksa="limit_purchase_merchant_manage.enable">启用</a></template>
-                                    <a data-ksa="limit_purchase_account_manage.search" href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
+                                    <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" data-ksa="limit_purchase_merchant_manage.enable">启用</a></template>
+                                    <a data-ksa="limit_purchase_account_manage.search" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
                                 </td>
-                                <td><a @click="seexh(trlist.id,true)" href="javascript:void(0)" data-ksa="limit_purchase_merchant_manage.search_digest">查看</a></td>
+                                <td><a @click="seexh(trlist.id,true)" data-ksa="limit_purchase_merchant_manage.search_digest">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
@@ -322,7 +322,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID" v-limitnumber="shdata.merchantOperationID">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
@@ -420,7 +420,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="xhdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                        <input type="text" class="form-control" v-model="xhdata.merchantOperationID" placeholder="商户ID" v-limitnumber="xhdata.merchantOperationID">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" v-model="xhdata.merchantName" placeholder="商户名">

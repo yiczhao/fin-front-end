@@ -29,7 +29,7 @@
                                         format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号" v-limitnumber="defaultData.orderID">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.payType">
@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount"  onkeyup="value=value.replace(/[^\d+(\-\d+\.\)?$]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d+(\-\d+\.\)?$]/g,'')"></div>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount"></div>
                                         <div class="form-group" v-else>
                                             <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">

@@ -11,7 +11,7 @@
                             <a class="btn btn-info" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID" v-limitnumber="defaultData.operationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="名称">
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>

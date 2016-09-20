@@ -31,7 +31,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID" v-limitnumber="defaultData.operationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">

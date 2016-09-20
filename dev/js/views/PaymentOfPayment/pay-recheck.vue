@@ -52,10 +52,10 @@
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.id" placeholder="请输入ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                            <input type="text" class="form-control" v-model="checkForm.id" placeholder="请输入ID" v-limitnumber="checkForm.id">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="请输入商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="请输入商户ID" v-limitnumber="checkForm.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="checkForm.keywords"  placeholder="商户名/收款账户名/账号">
@@ -64,7 +64,7 @@
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="请输入备注关键词">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="请输入活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="checkForm.activityOperationID">
+                            <input type="text" class="form-control" placeholder="请输入活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         </div>
                         <div class="form-group">
                             <a class="btn btn-info" v-on:click="query">查询</a>
