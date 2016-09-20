@@ -149,7 +149,7 @@
                                     <a v-if="n.status==7" @click="pass(n.id)">通过</a>
                                     <a v-if="n.status==7" @click="back(n.id)">退回</a>
                                     <a @click="checkPaydetail(n)">详情</a>
-                                    <a v-if="n.status==9" v-link="{name:'payment-details',params:{reserveCashOrderNumber:n.reserveCashOrderID,payType:n.payType}}">查看</a>
+                                    <a v-if="n.status==9" @click="gopayment(n.reserveCashOrderID)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                 </td>
                                 <td>{{n.remarks}}</td>
                                 <td>{{n.refuseReason}}</td>
@@ -409,11 +409,11 @@
             gopayment(a){
                 this.$common_model.skipToOrderById(a)
                         .then((response)=>{
-                            if(response.data.code==0){
-                                this.$router.go();
-                            }
+                    if(response.data.code==0){
+                        this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderId,payType:response.data.data.payType}});
+                    }
 
-                        })
+                })
             },
             skipToSubsidyAccount(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
