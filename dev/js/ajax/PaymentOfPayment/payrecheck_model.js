@@ -50,8 +50,8 @@ function model(_this){
          * @param {data}
          * @returns {*}
          */
-        skipToSubsidyAccount(data){
-            return _this.$http.get(_this.$API.skipToSubsidyAccount+ $.param(data))
+        skipToSubsidyAccount(_id){
+            return _this.$http.get(_this.$API.skipToSubsidyAccount+_id)
         }
     }
 }

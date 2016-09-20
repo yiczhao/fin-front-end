@@ -417,10 +417,7 @@
             },
             skipToSubsidyAccount(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    id:a
-                }
-                this.model.skipToSubsidyAccount(data)
+                this.model.skipToSubsidyAccount(a)
                         .then( (response)=> {
                             if(response.data.code==0&&!!response.data.data){
                                 let trlist=response.data.data;
