@@ -191,7 +191,7 @@
                             您目前选择了
                             <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeSize}}</span>笔交易记录，
                             三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartyReceivable/100 | currency ''}}</span>  元，
-                            补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元，
+                            补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.merchantSubsidyActual/100 | currency ''}}</span>  元，
                             暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTax/100 | currency ''}}</span>  元
                         </div>
                         <div class="form-group">
