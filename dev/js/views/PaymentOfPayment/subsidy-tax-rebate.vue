@@ -430,7 +430,7 @@
             }
         },
         ready() {
-            (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.checkForm.subsidyTaxRebateID='':this.checkForm.subsidyTaxRebateID=this.$route.params.subsidyTaxRebateID;
+            (this.$route.params.subsidyTaxRebateID==':subsidyTaxRebateID')?this.checkForm.id='':this.checkForm.id=this.$route.params.subsidyTaxRebateID;
             this.getSubcompany();
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
