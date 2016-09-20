@@ -341,7 +341,9 @@
                 this.getLists(this.checkForm);
             },
             payRecheckexcel(){
-
+                if(!this.recheckLists.length>0)return;
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.payrecheckexcel+ $.param(this.checkForm));
             },
             chooseAll(){
                 let cloneData=_.cloneDeep(this.recheckLists);

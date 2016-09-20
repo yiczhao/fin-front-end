@@ -75,7 +75,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.payrecheckexcel = '/data/export/excel/suspensionTaxAccountDetail?';
+    _o.payrecheckexcel = '/data/export/excel/payRecheck?';
     /**
      * @description 手工结算页面数据导出接口地址
      * @author 于凯乐
