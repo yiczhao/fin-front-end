@@ -141,7 +141,7 @@
                                     <template v-else>否</template>
                                 </td>
                                 <td>
-                                    <template v-if="n.status==7">待复核</template>
+                                    <template v-if="n.status==7">等待复核</template>
                                     <template v-if="n.status==8">复核不通过</template>
                                     <template v-if="n.status==9">复核通过</template>
                                 </td>
