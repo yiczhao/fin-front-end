@@ -179,7 +179,7 @@
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                    未查询到手工单数据！
+                    未查询到手工结算数据！
                 </div>
 
                 <content-dialog
