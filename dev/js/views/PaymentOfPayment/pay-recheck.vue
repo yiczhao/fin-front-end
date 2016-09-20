@@ -74,7 +74,7 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <a class="btn btn-info" data-toggle="modal" @click="batchs(false)">批量复核</a>
+                            <a class="btn btn-info" @click="batchsBtn">批量复核</a>
                         </div>
                     </form>
                 </div>
@@ -385,6 +385,14 @@
                 this.dtitle='确认通过';
                 this.show=true;
             },
+            batchsBtn(){
+                if(!this.checkedIds.length){
+                    dialogs('info','未勾选复核信息！');
+                    return;
+                }
+                this.dtitle='你确定批量划付？';
+                this.show=true;
+            },
             checkPaydetail({id,purpose}){
                 let data={
                     'id':id,
@@ -436,6 +444,9 @@
                                 }
                             })
                 }
+                if(this.dtitle=='你确定批量划付？'){
+                    this.batchs(false);
+                }
                 else{
                     this.batchs(true);
                 }
@@ -446,10 +457,6 @@
                         'ids':[this.id]
                     }
                 }else{
-                    if(!this.checkedIds.length){
-                        dialogs('info','未勾选复核信息！');
-                        return;
-                    }
                     var data={
                         'ids':this.checkedIds
                     }

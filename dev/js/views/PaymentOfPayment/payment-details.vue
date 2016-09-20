@@ -225,10 +225,10 @@
                                 <tr role="row">
                                     <th>生成日期</th>
                                     <th>
-                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">退税金额</span>
+                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='3'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
-                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">退税款</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'">退税款</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
@@ -238,8 +238,15 @@
                             <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createDate | datetimes}}</td>
                                 <td>{{trlist.payAmount/100 | currency '' }}</td>
-                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
-                                <td>{{trlist.purpose}}</td>
+                                <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                                <td>
+                                    <template v-if="trlist.purpose==1"> 补贴划付</template>
+                                    <template v-if="trlist.purpose==2"> 额度采购</template>
+                                    <template v-if="trlist.purpose==3"> 退税划付</template>
+                                    <template v-if="trlist.purpose==4"> 预付款</template>
+                                    <template v-if="trlist.purpose==5"> 供货商划付</template>
+                                    <template v-if="trlist.purpose==10">税金提现</template>
+                                </td>
                                 <td>
                                     <template v-if="trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
                                     <template v-if="trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>

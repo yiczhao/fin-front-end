@@ -34,6 +34,9 @@
                                     <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
                                 </div>
                                 <div class="form-group">
+                                    <input type="text" class="form-control" v-model="checkForm.advancePaymentAccountDetailID" placeholder="预付款流水ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                </div>
+                                <div class="form-group">
                                     <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号" style="width:185px">
                                 </div>
                                 <div class="form-group">
@@ -79,7 +82,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(index,apd) in advancePaymentDetailList">
-                                            <td>{{index+1}}</td>
+                                            <td>{{apd.advancePaymentAccountDetailID}}</td>
                                             <td>{{apd.applyTime | datetime}}</td>
                                             <td>{{apd.subCompanyName}}</td>
                                             <td>{{apd.cityName}}</td>
@@ -139,6 +142,7 @@
             return{
                 checkForm:{
                     subCompanyID:"",
+                    advancePaymentAccountDetailID:"",
                     cityID:"",
                     status:"",
                     remarks:"",
@@ -215,7 +219,7 @@
             }
         },
         ready() {
-            (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
+            (this.$route.params.advanceId==':advanceId')?this.checkForm.advancePaymentAccountDetailID='':this.checkForm.advancePaymentAccountDetailID=this.$route.params.advanceId;
             this.getCity();
             this.getSubcompany();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
