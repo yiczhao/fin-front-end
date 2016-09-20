@@ -51,7 +51,7 @@ function model(_this){
          * @returns {*}
          */
         skipToSubsidyAccount(data){
-            return _this.$http.get(_this.$API.skipToSuspensionTaxAccountDetail+ $.param(data))
+            return _this.$http.get(_this.$API.skipToSubsidyAccount+ $.param(data))
         }
     }
 }
