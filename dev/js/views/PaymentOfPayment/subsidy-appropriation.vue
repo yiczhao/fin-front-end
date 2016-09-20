@@ -89,6 +89,8 @@
                                         <th>付款账户</th>
                                         <th>商户ID</th>
                                         <th>商户名称</th>
+                                        <th>活动ID</th>
+                                        <th>活动名称</th>
                                         <th>收款账户信息</th>
                                         <th>生成方式</th>
                                         <th>三方应收</th>
@@ -97,7 +99,6 @@
                                         <th>交易</th>
                                         <th>状态</th>
                                         <th>操作</th>
-                                        <th>活动名称</th>
                                         <th>备注</th>
                                     </tr>
                                 </thead>
@@ -117,6 +118,8 @@
                                         <td>{{sa.paymentAccountShortName}}</td>
                                         <td>{{sa.merchantOperationID}}</td>
                                         <td>{{sa.merchantName}}</td>
+                                        <td>{{sa.activityOperationID}}</td>
+                                        <td>{{sa.activityName}}</td>
                                         <td>{{sa.receiptAccountName}}<br/>{{sa.receiptAccountNumber}}</td>
                                         <td>
                                             <template v-if="sa.createType==1">系统生成</template>
@@ -163,14 +166,13 @@
                                                 <a @click="gopayment(sa.id,1)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                             </template>
                                         </td>
-                                        <td>
-                                            {{sa.activityOperationID}},{{sa.activityName}}
-                                        </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>合计</td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
