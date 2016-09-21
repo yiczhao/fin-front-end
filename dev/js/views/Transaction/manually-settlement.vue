@@ -65,7 +65,7 @@
                             <a class="btn btn-info" v-on:click="query" data-ksa="trade_detail_manage.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">导出</a>
+                            <a class="btn btn-info" v-on:click="manuallyexcel" data-ksa="trade_detail_manage.export">导出</a>
                         </div>
                     </form>
                 </div>
@@ -142,8 +142,9 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             </tbody>
-                            <tr role="row" v-if="nums.length>0">
+                            <tr role="row" v-if="nums!=''">
                                 <th>合计：</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -161,7 +162,6 @@
                                 <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
                                 <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
                                 <th><b>{{nums.entryAmount/100 | currency ''}}</b></td>
-                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -344,10 +344,10 @@
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
             },
-            tradeDetailexcel() {
+            manuallyexcel() {
                 if(!this.tradeList.length>0)return;
                 this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                window.open(window.origin+this.$API.tradeDetailexcel+ $.param(this.checkForm));
+                window.open(window.origin+this.$API.manuallyexcel+ $.param(this.checkForm));
             },
             payApply(){
                 if(sessionStorage.getItem('isHttpin')==1)return;

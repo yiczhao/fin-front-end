@@ -81,7 +81,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.manuallyexcel = '/data/export/excel/suspensionTaxAccountDetail?';
+    _o.manuallyexcel = '/data/export/excel/manuallySettle?';
 
 
     //- todo 财务处理-账户列表 account-management
