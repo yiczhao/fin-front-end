@@ -207,10 +207,6 @@
                                     <option value="3">银行结算</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label><input type="checkbox" v-model="mergePay"/>
-                                相同账户合并付款</label>
-                            </div>
                             <div style="text-align: center" class="form-group">
                                 <input type="button" class="btn btn-primary" @click="submit()" value="提交">
                                 <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
