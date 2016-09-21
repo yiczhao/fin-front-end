@@ -82,6 +82,7 @@
                                     <template v-if="trlist.settlementCycle==1">日结</template>
                                     <template v-if="trlist.settlementCycle==2">周结</template>
                                     <template v-if="trlist.settlementCycle==3">月结</template>
+                                    <template v-if="trlist.settlementCycle==4">手工结算</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
                                 <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
