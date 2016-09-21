@@ -50,7 +50,7 @@
                             <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.tradeDetailID" v-limitnumber="checkForm.tradeDetailID">
+                            <input type="text" class="form-control" v-model="checkForm.tradeDetailID" placeholder="交易ID" v-limitnumber="checkForm.tradeDetailID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号" v-limitnumber="checkForm.serialNumber">
