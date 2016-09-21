@@ -228,6 +228,8 @@
                                 <template v-if="trlist.status==5"> 对账成功</template>
                                 <template v-if="trlist.status==6"> 划付失败</template>
                                 <template v-if="trlist.status==7">等待复核</template>
+                                <template v-if="trlist.status==8">复核不通过</template>
+                                <template v-if="trlist.status==9">复核通过</template>
                                 <template v-if="trlist.status==0"> 已关闭</template>
                             </td>
                             <td>{{trlist.remarks}}</td>
