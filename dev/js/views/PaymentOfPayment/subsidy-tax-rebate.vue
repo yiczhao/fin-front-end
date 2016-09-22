@@ -197,11 +197,14 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeAmount/100 | currency ''}}</span>  元
+                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，
+                                共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔，
+                                <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeAmount/100 | currency ''}}</span>  元
                             </div>
                             <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                                 <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
+                                    <option value="">请选择付款方式</option>
                                     <option value="1">备付金账户</option>
                                     <option value="2">商户预付款账户</option>
                                     <option value="3">银行结算</option>
@@ -249,10 +252,9 @@
                 pageall:1,
                 cityList:[],
                 subsidyTaxRebateDetailList:[],
-                payTypes:'2',
+                payTypes:'',
                 mergePay:false,
                 showPayAccount:'',
-                payType:"1",
                 applyPayRemarks:'',
                 dialogTitle:'',
                 submitId:'',
@@ -312,7 +314,7 @@
                 }
             },
             clear(){
-                this.payTypes='2';
+                this.payTypes='';
                 this.mergePay=false;
             },
             updateById(id){
@@ -349,7 +351,7 @@
                 }
                 let data={
                     ids:idArray.toString(),
-                    subsidyType:2
+                    subsidyType:3
                 }
                 this.submitId=idArray;
                 this.clear();
@@ -364,7 +366,7 @@
                                 });
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
                 var mes;
                 (this.submitId.length>1)?mes='审核成功':mes='申请成功';
                 let data={

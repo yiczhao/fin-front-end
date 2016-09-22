@@ -197,6 +197,7 @@
                         <div class="form-group">
                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                             <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
+                                <option value="">请选择付款方式</option>
                                 <option value="1">备付金账户</option>
                                 <option value="2">商户预付款账户</option>
                                 <option value="3">银行结算</option>
@@ -295,7 +296,7 @@
                 },
                 show:false,
                 submitId:[],
-                payTypes:'1',
+                payTypes:'',
                 mergePay:''
             }
         },
@@ -355,6 +356,7 @@
                     dialogs('info','必须填写商户ID及活动ID！');
                     return false
                 }
+                this.payTypes='';
                 this.model.select_manuallypay(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若
@@ -366,7 +368,7 @@
                         });
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
                 let data=_.cloneDeep(this.checkForm);
                 data.payType=this.payTypes;
                 data.mergePay=this.mergePay;
