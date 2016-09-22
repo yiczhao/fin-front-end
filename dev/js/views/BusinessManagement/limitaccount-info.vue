@@ -33,7 +33,7 @@
                                 <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="订单号/交易流水号">
+                                <input type="text" class="form-control" placeholder="订单号/交易流水号">
                             </div>
                             <div class="form-group">
                                 <select class="form-control" v-model="checkForm.streamType">

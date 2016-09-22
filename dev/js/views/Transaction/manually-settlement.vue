@@ -53,7 +53,7 @@
                             <input type="text" class="form-control" v-model="checkForm.tradeDetailID" placeholder="交易ID" v-limitnumber="checkForm.tradeDetailID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号" v-limitnumber="checkForm.serialNumber">
+                            <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
                         </div>
                         <div class="form-group">
                             <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
