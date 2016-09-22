@@ -213,16 +213,11 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，
-                                共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔，
-                                三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartyReceivable/100 | currency ''}}</span>  元，
-                                补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.merchantSubsidyActual/100 | currency ''}}</span>  元，
-                                暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTax/100 | currency ''}}</span>  元
+                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔， <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeAmount/100 | currency ''}}</span>  元
                             </div>
                             <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                                 <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
-                                    <option value="">请选择付款方式</option>
                                     <option value="1">备付金账户</option>
                                     <option value="2">商户预付款账户</option>
                                     <option value="3">银行结算</option>
@@ -278,7 +273,8 @@
                 cityList:[],
                 showPayAccount:'',
                 subsidyAppropriationList:[],
-                payTypes:'',
+                payType:"1",
+                payTypes:'2',
                 mergePay:false,
                 applyPayInfo:{
                 },
@@ -344,7 +340,7 @@
                 }
             },
             clear(){
-                this.payTypes='';
+                this.payTypes='2';
                 this.mergePay=false;
             },
             updateById(id){
@@ -383,8 +379,7 @@
                     return false
                 }
                 let data={
-                    ids:idArray.toString(),
-                    subsidyType:1
+                    ids:idArray.toString()
                 }
                 this.submitId=idArray;
                 this.clear();
@@ -399,7 +394,7 @@
                         });
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     ids:this.submitId,
                     payType:this.payTypes,
