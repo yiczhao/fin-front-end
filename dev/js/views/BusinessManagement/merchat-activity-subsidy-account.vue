@@ -111,9 +111,14 @@
                                 <div class="form-group">
                                     <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
                                     <select class="form-control" v-model="applyData.payType" style="display: inline-block;width: 80%;">
+                                        <option value="">请选择付款方式</option>
                                         <option value="1">备付金账户</option>
                                         <option value="2">商户预付款账户</option>
                                     </select>
+                                </div>
+                                <div class="form-group" v-show="applyData.payType==1">
+                                    <label style="padding-left: 13%"><input type="checkbox" v-model="applyData.mergePay"/>
+                                        相同账户合并付款</label>
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
@@ -121,10 +126,6 @@
                                 <div class="form-group">
                                     <label style="width:13%;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
-                                </div>
-                                <div class="form-group" v-show="applyData.payType==1">
-                                    <label><input type="checkbox" v-model="applyData.mergePay"/>
-                                        相同账户合并付款</label>
                                 </div>
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
@@ -241,7 +242,7 @@ table tr th,table tr td{
                     id:'',
                     payoutAmount:'',
                     mergePay:false,
-                    payType:'1'
+                    payType:''
                 },
                 rechargeInfo:{
                     val1:'',
@@ -290,7 +291,7 @@ table tr th,table tr td{
                     id:'',
                     payoutAmount:'',
                     mergePay:false,
-                    payType:'1'
+                    payType:''
                 };
                 this.applyData.id=id;
                 let data={
@@ -314,6 +315,10 @@ table tr th,table tr td{
                 }
                 if(this.applyData.remarks==''){
                     this.applyText='请填写备注！';
+                    return;
+                }
+                if(this.applyData.payType==''){
+                    this.applyText='请选择付款方式！';
                     return;
                 }
                 let data={};
