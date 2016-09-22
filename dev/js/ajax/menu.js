@@ -19,7 +19,7 @@ module.exports = [
         icon: 'icon-table2',
         sub_menu: [
             {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
-            {name: '手工结算', link: 'manually-settlement'},
+            {name: '手工结算', link: 'manually-settlement',ksa:'manually_settlement'},
             {name: '异常交易', link: 'Abnormal-transaction',ksa:'exception_trade_manage'},
             {name: '异常白名单', link: 'white-lists',ksa:'exception_trade_white_list_manage'}
         ]
@@ -29,7 +29,7 @@ module.exports = [
         icon: 'icon-table2',
         sub_menu: [
             {name: '付款明细', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
-            {name: '划付复核', link: 'pay-recheck'},
+            {name: '划付复核', link: 'pay-recheck',ksa:'pay_recheck'},
             {name: '补贴划付', link: 'subsidy-appropriation',ksa:'subsidy_pay_detail_manage'},
             // {name: '额度采购', link: 'limit-purchase-detail'},
             {name: '补贴退税', link: 'subsidy-tax-rebate',ksa:'subsidy_tax_rebate_detail_manage'},

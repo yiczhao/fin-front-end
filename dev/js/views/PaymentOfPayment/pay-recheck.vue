@@ -67,14 +67,14 @@
                             <input type="text" class="form-control" placeholder="请输入活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="query">查询</a>
+                            <a class="btn btn-info" v-on:click="query" data-ksa="pay_recheck.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="payRecheckexcel">导出</a>
+                            <a class="btn btn-info" v-on:click="payRecheckexcel" data-ksa="pay_recheck.export">导出</a>
                         </div>
                         <br>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="batchsBtn">批量复核</a>
+                            <a class="btn btn-info" @click="batchsBtn" data-ksa="pay_recheck.pass">批量复核</a>
                         </div>
                     </form>
                 </div>
@@ -146,9 +146,9 @@
                                     <template v-if="n.status==9">复核通过</template>
                                 </td>
                                 <td>
-                                    <a v-if="n.status==7" @click="pass(n.id)">通过</a>
-                                    <a v-if="n.status==7" @click="back(n.id)">退回</a>
-                                    <a @click="checkPaydetail(n)">详情</a>
+                                    <a v-if="n.status==7" @click="pass(n.id)" data-ksa="pay_recheck.pass">通过</a>
+                                    <a v-if="n.status==7" @click="back(n.id)" data-ksa="pay_recheck.back">退回</a>
+                                    <a @click="checkPaydetail(n)" data-ksa="pay_recheck.search">详情</a>
                                     <a v-if="n.status==9" @click="gopayment(n.reserveCashOrderID)" data-ksa="reserve_cash_order_manage.search">查看</a>
                                 </td>
                                 <td>{{n.remarks}}</td>

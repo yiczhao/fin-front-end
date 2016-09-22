@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                        <div class="form-group">
-                           <a class="btn btn-info" v-on:click="payApply">生成划付</a>
+                           <a class="btn btn-info" v-on:click="payApply" data-ksa="manually_settlement.pay">生成划付</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
@@ -62,10 +62,10 @@
                             <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="query" data-ksa="trade_detail_manage.search">查询</a>
+                            <a class="btn btn-info" v-on:click="query" data-ksa="manually_settlement.search">查询</a>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" v-on:click="manuallyexcel" data-ksa="trade_detail_manage.export">导出</a>
+                            <a class="btn btn-info" v-on:click="manuallyexcel" data-ksa="manually_settlement.export">导出</a>
                         </div>
                     </form>
                 </div>
