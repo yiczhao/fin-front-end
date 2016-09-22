@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                        <div class="form-group">
-                           <a class="btn btn-info" v-on:click="payApply" data-ksa="manually_settlement.pay">生成划付</a>
+                           <a class="btn btn-info" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">生成划付</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
