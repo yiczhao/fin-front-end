@@ -394,7 +394,7 @@
                     dialogs('info','未勾选复核信息！');
                     return;
                 }
-                this.dtitle='你确定批量划付？';
+                this.dtitle='你确定批量复核？';
                 this.show=true;
             },
             checkPaydetail({id,purpose}){
