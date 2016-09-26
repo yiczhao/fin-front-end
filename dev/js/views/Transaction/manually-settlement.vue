@@ -357,6 +357,7 @@
                     return false
                 }
                 this.payTypes='';
+                this.mergePay=false;
                 this.model.select_manuallypay(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若
