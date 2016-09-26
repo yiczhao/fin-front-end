@@ -446,7 +446,7 @@
                                 }
                             })
                 }
-                else if(this.dtitle=='你确定批量划付？'){
+                else if(this.dtitle=='你确定批量复核？'){
                     this.batchs(false);
                 }
                 else{
@@ -454,12 +454,13 @@
                 }
             },
             batchs(bool){
+                let data;
                 if(bool){
-                    var data={
+                    data={
                         'ids':[this.id]
                     }
                 }else{
-                    var data={
+                    data={
                         'ids':this.checkedIds
                     }
                 }
