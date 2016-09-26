@@ -107,7 +107,7 @@
                                 </tr>
                             </thead>
                             <tr v-for="n in recheckLists">
-                                <td><input v-if="n.status==7" type="checkbox" @change="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
+                                <td><input v-if="n.status==7" type="checkbox" @click="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
                                 <td>{{n.id }}</td>
                                 <td>{{n.createTime | datetime}}</td>
                                 <td>{{n.subCompanyName}}</td>
@@ -348,6 +348,7 @@
                 window.open(window.origin+this.$API.payrecheckexcel+ $.param(this.checkForm));
             },
             chooseAll(){
+                this.checkedIds=[];
                 let cloneData=_.cloneDeep(this.recheckLists);
                 cloneData.map((value)=>{
                     if(this.checkAll){
@@ -359,13 +360,10 @@
                         }
                     }
                 })
-                if(this.checkAll){
-                    this.checkedIds=[];
-                }
                 this.recheckLists=cloneData;
             },
             checked(bool,_id){
-                if(bool){
+                if(!bool){
                     this.checkedIds.push(_id);
                 }else{
                     _.remove(this.checkedIds, function(n) {

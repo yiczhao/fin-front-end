@@ -147,13 +147,7 @@
             }
         },
         created(){
-            Cookie.set('KSAuthSysId', '', {domain:'.kashuo.net',expires: -1})
-            // noinspection JSUnresolvedVariable
-            Cookie.set('KSAuthUserToken', '', {domain:'.kashuo.net',expires: -1})
-            // noinspection JSUnresolvedVariable
-            Cookie.set('KSAuthJSURL', '', {domain:'.kashuo.net',expires: -1})
-            // noinspection JSUnresolvedVariable
-            Cookie.set('KSAuthApiURL', '', {domain:'.kashuo.net',expires: -1})
+            removeCookie();
             sessionStorage.removeItem('userData');
         },
         methods:{
@@ -272,8 +266,6 @@
           }
         },
         ready(){
-
-            console.log(this.$route.matched);
             $('.userName').focus();
             $('body').addClass('login').removeClass('stop-scrolling');
             let pd=($('body').height()-$('.login-form').height())/2-80;
