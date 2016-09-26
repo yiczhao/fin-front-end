@@ -23,14 +23,6 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="checkForm.type">
-                            <option value="">请选择交易类型</option>
-                            <option value="1">正常交易</option>
-                            <option value="2">手工单</option>
-                                <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <select class="form-control" v-model="checkForm.timeRange">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -97,7 +89,6 @@
                                 <th>手机号</th>
                                 <th>卡号</th>
                                 <th>参与活动</th>
-                                <th>交易类型</th>
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -130,14 +121,6 @@
                                         无
                                     </template>
                                     <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.type==1">
-                                        正常交易
-                                    </template>
-                                    <template v-if="trlist.type==2">
-                                        手工单
-                                    </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -272,7 +255,6 @@
                 checkForm:{
                     subCompanyID:"",
                     cityID:"",
-                    type:"",
                     startDate:"",
                     endDate:"",
                     merchantOperationID:"",
