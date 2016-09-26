@@ -222,14 +222,14 @@
                         (response)=>{
                             if(response.code===10000){
                                 var data=response.data;
-                                //todo cookie 失效时间 7 日后
-                                Cookie.set('KSAuthSysId', data.sys_id, {domain:'.kashuo.net',expires: 7})
+                                //todo cookie 失效时间 10 小时后
+                                Cookie.set('KSAuthSysId', data.sys_id, {domain:'.kashuo.net',expires: 0.8})
                                 // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',expires: 7})
+                                Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',expires: 0.8})
                                 // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 7})
+                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 0.8})
                                 // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 7})
+                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 0.8})
                                 this.$http.post(this.$API.login,{username:data.login_name})
                                         .then((response)=>{
                                             if(response.data.code===0){
