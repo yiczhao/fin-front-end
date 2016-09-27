@@ -222,10 +222,10 @@
                         (response)=>{
                             if(response.code===10000){
                                 var data=response.data;
-                                Cookie.set('KSAuthSysId', data.sys_id, {domain:'.kashuo.net',maxage: 36000})
-                                Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',maxage: 36000})
-                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',maxage: 36000})
-                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',maxage: 36000})
+                                Cookie.set('KSAuthSysId', data.sys_id, {domain:'.kashuo.net',maxage: 30})
+                                Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',maxage: 30})
+                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',maxage: 30})
+                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',maxage: 30})
                                 this.$http.post(this.$API.login,{username:data.login_name})
                                         .then((response)=>{
                                             if(response.data.code===0){
