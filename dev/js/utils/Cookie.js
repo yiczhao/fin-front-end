@@ -120,6 +120,7 @@ export default (() => {
       var expires = options['expires']
       var domain = options['domain']
       var path = options['path']
+      var maxage = options['maxage']
 
       if (!options['raw']) {
         value = encode(String(value))
@@ -128,14 +129,16 @@ export default (() => {
       var text = name + '=' + value
 
       // expires
-      var date = expires
-      if (typeof date === 'number') {
-        date = new Date()
-        date.setDate(date.getDate() + expires)
-      }
-      if (date instanceof Date) {
-        text += '; expires=' + date.toUTCString()
-      }
+      // var date = expires
+      // if (typeof date === 'number') {
+      //   date = new Date()
+      //   date.setDate(date.getDate() + expires)
+      // }
+      // if (date instanceof Date) {
+      //   text += '; expires=' + date.toUTCString()
+      // }
+
+      text += '; max-age='+maxage
 
       // domain
       if (isNonEmptyString(domain)) {
