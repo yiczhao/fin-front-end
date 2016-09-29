@@ -58,7 +58,9 @@ module.exports = [
         icon: 'icon-flag3',
         ksa:'activity_manage',
         sub_menu: [
-            {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'}
+            {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'},
+            {name: '税率管理', link: 'activity-formulae'},
+            {name: '活动执行表', link: 'activity-lists'}
         ]
     },
     {

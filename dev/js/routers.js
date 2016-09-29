@@ -192,6 +192,13 @@ export default function(router){
                 require(['./views/Activity/activity-lists.vue'],resolve);
             }
         },
+        /* 活动管理-活动列表-计算公式 */
+        '/activity-formulae/:operationID/:name':{
+            name:'activity-formulae',
+            component: function(resolve){
+                require(['./views/Activity/activity-formulae.vue'],resolve);
+            }
+        },
         /* 系统配置-员工管理 */
         '/user-managerment/':{
             name:'user-managerment',
