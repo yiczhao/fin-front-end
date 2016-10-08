@@ -7,28 +7,32 @@
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <form class="form-inline manage-form">
-                    <div class="form-group">
-                        <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
+                    <div>
+                        <div class="form-group">
+                            <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <select class="form-control" v-model="defaultData.companyId">
-                            <option value="">全部分公司</option>
-                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" v-model="defaultData.accountType">
-                            <option value="">请选择类型</option>
-                            <option value="1">备付金</option>
-                            <option value="2">本金</option>
-                            <option value="3">佣金</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" v-limitnumber="defaultData.accountNumber">
-                    </div>
-                    <div class="form-group">
-                        <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
+                    <div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="defaultData.companyId">
+                                <option value="">全部分公司</option>
+                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" v-model="defaultData.accountType">
+                                <option value="">请选择类型</option>
+                                <option value="1">备付金</option>
+                                <option value="2">本金</option>
+                                <option value="3">佣金</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" v-limitnumber="defaultData.accountNumber">
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
+                        </div>
                     </div>
                 </form>
             </div>
