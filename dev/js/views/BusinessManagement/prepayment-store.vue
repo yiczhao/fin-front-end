@@ -367,8 +367,8 @@
                 this.addId=[];
             },
             delTrue(e){
-                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
-                    _table=$(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
+                let _ul=$(e.target).parent('.col-md-2').next('.col-md-4').children('ul'),
+                    _table=$(e.target).parent('.col-md-2').prev('.col-md-7').children('table').find('tr:hidden'),
                     _li= _ul.find('.check-li');
                 for(let i=0;i<_li.length;i++){
                     _table.eq(_li.eq(i).index()).show();
@@ -377,7 +377,7 @@
             },
             submitTrue(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
+                let _li=$(e.target).parent('.col-md-2').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
                 this.model.store_add(data)

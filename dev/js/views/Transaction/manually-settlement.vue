@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                        <div class="form-group">
-                           <a class="btn btn-info" v-on:click="payApply" data-ksa="manually_settlement.pay">生成划付</a>
+                           <a class="btn btn-info" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">生成划付</a>
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
@@ -20,14 +20,6 @@
                             <select class="form-control" v-model="checkForm.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.type">
-                            <option value="">请选择交易类型</option>
-                            <option value="1">正常交易</option>
-                            <option value="2">手工单</option>
-                                <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -97,7 +89,6 @@
                                 <th>手机号</th>
                                 <th>卡号</th>
                                 <th>参与活动</th>
-                                <th>交易类型</th>
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -130,14 +121,6 @@
                                         无
                                     </template>
                                     <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.type==1">
-                                        正常交易
-                                    </template>
-                                    <template v-if="trlist.type==2">
-                                        手工单
-                                    </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -197,6 +180,7 @@
                         <div class="form-group">
                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                             <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
+                                <option value="">请选择付款方式</option>
                                 <option value="1">备付金账户</option>
                                 <option value="2">商户预付款账户</option>
                                 <option value="3">银行结算</option>
@@ -271,7 +255,6 @@
                 checkForm:{
                     subCompanyID:"",
                     cityID:"",
-                    type:"",
                     startDate:"",
                     endDate:"",
                     merchantOperationID:"",
@@ -295,7 +278,7 @@
                 },
                 show:false,
                 submitId:[],
-                payTypes:'1',
+                payTypes:'',
                 mergePay:''
             }
         },
@@ -355,6 +338,8 @@
                     dialogs('info','必须填写商户ID及活动ID！');
                     return false
                 }
+                this.payTypes='';
+                this.mergePay=false;
                 this.model.select_manuallypay(this.checkForm)
                         .then((response)=>{
                             // *** 判断请求是否成功如若
@@ -366,7 +351,7 @@
                         });
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
                 let data=_.cloneDeep(this.checkForm);
                 data.payType=this.payTypes;
                 data.mergePay=this.mergePay;

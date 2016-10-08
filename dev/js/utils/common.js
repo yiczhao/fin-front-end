@@ -1,3 +1,4 @@
+import Cookie from '../utils/Cookie'
 var check_upload=((names)=>{
     var FileName=new String(names);
     var extension=new String (FileName.substring(FileName.lastIndexOf(".")+1,FileName.length));
@@ -163,6 +164,21 @@ var accMul=(arg1,arg2)=> {
     try{m+=s2.split(".")[1].length}catch(e){}
     return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
 }
+var removeCookie=()=> {
+    Cookie.set('KSAuthSysId', '', {domain:'.kashuo.net',maxage: -1})
+    // noinspection JSUnresolvedVariable
+    Cookie.set('KSAuthUserToken', '', {domain:'.kashuo.net',maxage: -1})
+    // noinspection JSUnresolvedVariable
+    Cookie.set('KSAuthJSURL', '', {domain:'.kashuo.net',maxage: -1})
+    // noinspection JSUnresolvedVariable
+    Cookie.set('KSAuthApiURL', '', {domain:'.kashuo.net',maxage: -1})
+    // noinspection JSUnresolvedVariable
+    Cookie.set('JSESSTOKEN', '', {domain:'.kashuo.net',maxage: -1})
+    // noinspection JSUnresolvedVariable
+    Cookie.set('JSESSID', '', {domain:'.kashuo.net',maxage: -1})
+    // noinspection JSUnresolvedVariable
+    Cookie.set('XSRF-TOKEN', '', {domain:'.kashuo.net',maxage: -1})
+}
 var _i={};
 _i.fetchArray=(key)=>{
     if(localStorage.getItem(key)){
@@ -183,5 +199,6 @@ module.exports = {
     dialogs:dialog,
     geturl:geturl,
     init_date:init_date,
+    removeCookie:removeCookie,
     accMul:accMul
 }

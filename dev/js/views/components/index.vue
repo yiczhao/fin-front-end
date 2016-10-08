@@ -35,6 +35,10 @@
         },
         ready () {
             // 插入权限控制 JS
+            if(!Cookie.get('KSAuthJSURL')){
+                this.$router.go({name:'login'})
+                return
+            }
             let sciprt = document.createElement('SCRIPT')
             let _src=Cookie.get('KSAuthJSURL').replace(window.authurl1,window.authurl2);
             sciprt.setAttribute('src',_src);

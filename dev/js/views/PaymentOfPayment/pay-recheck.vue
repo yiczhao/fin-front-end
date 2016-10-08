@@ -107,7 +107,7 @@
                                 </tr>
                             </thead>
                             <tr v-for="n in recheckLists">
-                                <td><input v-if="n.status==7" type="checkbox" @change="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
+                                <td><input v-if="n.status==7" type="checkbox" @click="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
                                 <td>{{n.id }}</td>
                                 <td>{{n.createTime | datetime}}</td>
                                 <td>{{n.subCompanyName}}</td>
@@ -348,6 +348,7 @@
                 window.open(window.origin+this.$API.payrecheckexcel+ $.param(this.checkForm));
             },
             chooseAll(){
+                this.checkedIds=[];
                 let cloneData=_.cloneDeep(this.recheckLists);
                 cloneData.map((value)=>{
                     if(this.checkAll){
@@ -359,13 +360,10 @@
                         }
                     }
                 })
-                if(this.checkAll){
-                    this.checkedIds=[];
-                }
                 this.recheckLists=cloneData;
             },
             checked(bool,_id){
-                if(bool){
+                if(!bool){
                     this.checkedIds.push(_id);
                 }else{
                     _.remove(this.checkedIds, function(n) {
@@ -394,7 +392,7 @@
                     dialogs('info','未勾选复核信息！');
                     return;
                 }
-                this.dtitle='你确定批量划付？';
+                this.dtitle='你确定批量复核？';
                 this.show=true;
             },
             checkPaydetail({id,purpose}){
@@ -448,7 +446,7 @@
                                 }
                             })
                 }
-                else if(this.dtitle=='你确定批量划付？'){
+                else if(this.dtitle=='你确定批量复核？'){
                     this.batchs(false);
                 }
                 else{
@@ -456,12 +454,13 @@
                 }
             },
             batchs(bool){
+                let data;
                 if(bool){
-                    var data={
+                    data={
                         'ids':[this.id]
                     }
                 }else{
-                    var data={
+                    data={
                         'ids':this.checkedIds
                     }
                 }
