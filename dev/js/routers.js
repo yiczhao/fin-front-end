@@ -5,12 +5,13 @@ export default function(router){
         /* 登录 */
         '/login':{
             name:'login',
+            cnname:'登录',
             component: function(resolve){
                 require(['./views/login.vue'],resolve);
             }
         },
         /* 首页 */
-        '/default/':{
+        '/default':{
             name:'default',
             component: function(resolve){
                 require(['./views/default.vue'],resolve);
@@ -35,6 +36,13 @@ export default function(router){
             name:'trade-info',
             component: function(resolve){
                 require(['./views/Transaction/trade-info.vue'],resolve);
+            }
+        },
+        //交易处理-手工结算
+        '/manually-settlement/':{
+            name:'manually-settlement',
+            component: function(resolve){
+                require(['./views/Transaction/manually-settlement.vue'],resolve);
             }
         },
         //交易处理-交易白名单
@@ -70,6 +78,13 @@ export default function(router){
             name:'advance-payment-detail',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/advance-payment-detail.vue'],resolve);
+            }
+        },
+        //备付金支出-划付复核
+        '/pay-recheck/:recheckId':{
+            name:'pay-recheck',
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/pay-recheck.vue'],resolve);
             }
         },
         //备付金支出-补贴划付
@@ -206,8 +221,22 @@ export default function(router){
         }
     })
     router.beforeEach(transition =>{
+        if(!sessionStorage.getItem('userData')){
+            router.go({name:'login'})
+        }
         $(".modal").modal("hide");
         $("body").scrollTop(0);
         transition.next();
+    });
+    router.afterEach((transition) =>{
+        Message.hide();
+        if(back_json.num==0){
+            back_json.isback=true;
+        }
+        else{
+            back_json.isback=false;
+            back_json.num=0;
+            localStorage.removeItem(transition.to.path);
+        }
     });
 }

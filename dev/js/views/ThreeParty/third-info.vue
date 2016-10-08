@@ -11,7 +11,7 @@
                                 <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info" data-ksa="third_party_account_manage.recharge">回款充值</a>
                             </div>
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="defaultData.dateS">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -19,7 +19,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="defaultData.dateS==4">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
@@ -27,7 +27,7 @@
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -102,8 +102,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -252,7 +252,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/ThreeParty/thirdinfo_model'
     export default{
         data(){
@@ -262,14 +261,12 @@
                     accountName:'',
                     balanceAmount:'',
                 },
-                dateS:'3',
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 city:[],
                 shcity:[],
                 companylists:[],
                 defaultData:{
+                    dateS:'3',
                     'thirdPartyAccountID': '',
                     'merchantName': '',
                     'merchantOperationID': '',
@@ -358,6 +355,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             recharge(){
@@ -369,8 +367,8 @@
                 }
             },
             getTime(){
-                this.defaultData.startDate = init_date(this.dateS)[0];
-                this.defaultData.endDate = init_date(this.dateS)[1];
+                this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
+                this.defaultData.endDate = init_date(this.defaultData.dateS)[1];
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -392,26 +390,19 @@
         },
         ready() {
             var vm=this;
-            this.defaultData.startDate = init_date(this.dateS)[0];
-            this.defaultData.endDate = init_date(this.dateS)[1];
+            this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
+            this.defaultData.endDate = init_date(this.defaultData.dateS)[1];
             (vm.$route.params.id != ':id') ? vm.defaultData.thirdPartyAccountID = vm.$route.params.id : null;
             (vm.$route.params.serialNumber != ':serialNumber') ? vm.defaultData.serialNumber = vm.$route.params.serialNumber : null;
-            vm.initList();
             vm.getClist();
-        },
-        components:{
-            'datepicker': datepicker
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
         },
         watch:{
-            dateS(){
+            'defaultData.dateS'(){
                 this.getTime();
             },
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         }

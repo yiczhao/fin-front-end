@@ -70,6 +70,19 @@ export default function install(Vue) {
      * @method GET
      */
     _o.suspensionTaxAccountDetailexcel = '/data/export/excel/suspensionTaxAccountDetail?';
+    /**
+     * @description 划付复核页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payrecheckexcel = '/data/export/excel/payRecheck?';
+    /**
+     * @description 手工结算页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.manuallyexcel = '/data/export/excel/manuallySettle?';
+
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -173,6 +186,32 @@ export default function install(Vue) {
      */
     _o.getBalance = './bankAccount/reserveCash/info/';
 
+    //- todo 交易管理-手工结算 manually-settlement
+    /**
+     * @description 手工结算列表接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.manually_list = './manuallySettlement/tradeDetail/list?';
+    /**
+     * @description 手工结算合计接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.manuallysum = './manuallySettlement/tradeDetail/total?';
+    /**
+     * @description 手工结算划付接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.manuallypay = './manuallySettlement/generate';
+    /**
+     * @description 查询手工结算划付接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.select_manuallypay = './manuallySettlement/info?';
+
 
     //- todo 交易管理-交易白名单 white-lists
     /**
@@ -234,11 +273,29 @@ export default function install(Vue) {
      */
     _o.reservecash_list = './reserveCashOrder/list?';
     /**
-     * @description 备付金支出明细详情接口地址
+     * @description 备付金支出明细补贴划付详情接口地址
      * @author 冷艳君
      * @method GET
      */
-    _o.getpart = './reserveCashOrder/stream/list/';
+    _o.getpart1 = './reserveCashOrder/subsidyPayDetail/list/';
+    /**
+     * @description 备付金支出明细补贴退税详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart3 = './reserveCashOrder/subsidyTaxRebateDetail/list/';
+    /**
+     * @description 备付金支出明细预付款详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart4 = './reserveCashOrder/advancePaymentAccountDetail/list/';
+    /**
+     * @description 备付金支出明细税金提现详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart10 = './reserveCashOrder/suspensionTaxAccountDetail/list/';
     /**
      * @description 查询对账数据接口地址
      * @author 冷艳君
@@ -328,6 +385,44 @@ export default function install(Vue) {
      * @method POST
      */
     _o.skipToInfo = './limitPurchaseDetail/info/';
+
+    //- todo  备付金支出-划付复核 pay-recheck
+    /**
+     * @description 划付复核列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payrecheck_list = './payRecheck/list?';
+    /**
+     * @description 合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.payrecheck_total = './payRecheck/total?';
+    /**
+     * @description 复核通过接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.payrecheck_pass = './payRecheck/pass';
+    /**
+     * @description 复核回退接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.payrecheck_back = './payRecheck/back';
+    /**
+     * @description 详情查询接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToPayRecheck = 'payRecheck/detail?';
+    /**
+     * @description 详情 用途是税金提现的穿透到暂扣税金账户明细接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToSuspensionTaxAccountDetail = 'payRecheck/skipToSuspensionTaxAccountDetail?';
 
     //- todo  备付金支出-补贴划付 subsidy-appropriation
     /**

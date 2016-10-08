@@ -11,7 +11,7 @@
                             <a class="btn btn-info" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID" v-limitnumber="defaultData.operationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="名称">
@@ -98,8 +98,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -342,14 +342,11 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/ThreeParty/thirdlist_model'
     export default{
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 city:[],
                 shcity:[],
@@ -438,6 +435,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -593,20 +591,13 @@
         },
         ready() {
             var vm=this;
-            vm.initList();
             vm.getClist();
             vm.getCity();
-        },
-        components:{
-            'datepicker': datepicker
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
         },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageSize+defaultData.pageIndex'(){
                 this.initList();
             }
         }

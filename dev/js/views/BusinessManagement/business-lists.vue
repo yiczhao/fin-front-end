@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -82,6 +82,7 @@
                                     <template v-if="trlist.settlementCycle==1">日结</template>
                                     <template v-if="trlist.settlementCycle==2">周结</template>
                                     <template v-if="trlist.settlementCycle==3">月结</template>
+                                    <template v-if="trlist.settlementCycle==4">手工结算</template>
                                 </td>
                                 <td>{{trlist.subsidyRate}}%</td>
                                 <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
@@ -98,7 +99,7 @@
                                 </template>
                                     <!--<td>-->
                                     <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>-->
-                                <!--</td>-->
+                                <!--<td>-->
                                 <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
@@ -131,8 +132,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -256,7 +257,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="w28" ><i>*</i>提入行号：</label>
-                                        <input v-validate:bankNumber="['required']" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                        <input v-validate:bankNumber="['required']" v-limitnumber="updateList.bankNumber" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
                                         <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
                                     </div>
                                     <div class="form-group">
@@ -273,6 +274,7 @@
                                             <option value="1">日结</option>
                                             <option value="2">周结</option>
                                             <option value="3">月结</option>
+                                            <option value="4">手工结算</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -394,7 +396,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/buslists_model'
     export default{
         data(){
@@ -403,8 +404,6 @@
                 origin:window.origin,
                 id:'',
                 merchantName:'',
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -521,6 +520,7 @@
             },
             initList(){
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             control(_list){
@@ -680,9 +680,10 @@
         ready() {
             let vm=this;
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
-            vm.initList();
             vm.getClist();
             vm.getCity();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#modal_updata').on('show.bs.modal', function () {
                 vm.updateBtn(vm.relist[0]);
             })
@@ -697,16 +698,8 @@
                 }
             })
         },
-        components:{
-            'datepicker': datepicker
-        },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageSize+defaultData.pageIndex'(){
                 this.initList();
             }
         }

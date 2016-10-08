@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID" v-limitnumber="defaultData.operationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="活动名称">
@@ -113,8 +113,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -272,14 +272,11 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/Activity/activity_model'
     export default{
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 city:[],
                 companylists:[],
@@ -379,6 +376,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -429,20 +427,13 @@
             var vm=this;
             (vm.$route.params.operationID!=':operationID')?vm.defaultData.operationID=vm.$route.params.operationID:null;
             (vm.$route.params.name!=':name')?vm.defaultData.name=vm.$route.params.name:null;
-            vm.initList();
             vm.getClist();
             vm.getCity();
-        },
-        components:{
-            'datepicker': datepicker
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
         },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex + defaultData.pageSize'(){
                 this.initList();
             }
         }

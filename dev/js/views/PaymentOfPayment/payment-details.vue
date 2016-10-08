@@ -22,10 +22,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
+                                <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号" v-limitnumber="checkForm.orderNumber">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="checkForm.dateS">
                                     <option value="5">今天</option>
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
@@ -34,12 +34,12 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="checkForm.dateS==4">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="商户ID">
+                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">
@@ -145,7 +145,9 @@
                                     <template v-if="n.status==0"> 已关闭</template>
                                 </td>
                                 <td>
-                                    <a v-if="n.status!=0" @click="getInfo(n,index)" data-ksa="reserve_cash_order_manage.detail">详情</a>
+                                    <template v-if="n.status!=0">
+                                        <a @click="getInfo(n)" data-ksa="reserve_cash_order_manage.detail">详情</a>
+                                    </template>
                                     <template v-if="n.status==2">
                                         <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)" data-ksa="reserve_cash_order_manage.pay">确认划付</a>
                                         <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)" data-ksa="reserve_cash_order_manage.retrial">退回重审</a>
@@ -203,8 +205,8 @@
                     </table>
                 </div>
                 <page v-if="zdlists.length>0" :all="pageall"
-                      :cur.sync="pagecur"
-                      :page_size.sync="page_size">
+                      :cur.sync="checkForm.pageIndex"
+                      :page_size.sync="checkForm.pageSize">
                 </page>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                     未找到数据
@@ -223,10 +225,10 @@
                                 <tr role="row">
                                     <th>生成日期</th>
                                     <th>
-                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='补贴退税'">退税金额</span>
+                                        <span v-if="listinfos!=''&&listinfos[0].purpose=='3'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
-                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='补贴划付'">退税款</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'">退税款</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
@@ -234,18 +236,23 @@
                                 </tr>
                             </thead>
                             <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
-                                <td>{{trlist.createAt | datetimes}}</td>
-                                <td>{{trlist.amount/100 | currency '' }}</td>
-                                <td  v-if="trlist.purpose=='补贴划付'">{{trlist.taxAmount/100 | currency '' }}</td>
-                                <td>{{trlist.purpose}}</td>
+                                <td>{{trlist.createDate | datetimes}}</td>
+                                <td>{{trlist.payAmount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                                 <td>
-                                    <template v-if="trlist.purpose=='补贴划付'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='额度采购'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='补贴退税'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='预付款'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.id}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='税金提现'"><a @click="skipToSubsidyAccount(trlist.id)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
-                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴划付'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,1)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>
-                                    <template v-if="trlist.status==6&&trlist.purpose=='补贴退税'"><a href="javascript:;" data-toggle="modal" data-target="#modal_waring" @click="delBtn(trlist.id,3)" data-ksa="reserve_cash_order_manage.delete">删除</a></template>
+                                    <template v-if="trlist.purpose==1"> 补贴划付</template>
+                                    <template v-if="trlist.purpose==2"> 额度采购</template>
+                                    <template v-if="trlist.purpose==3"> 退税划付</template>
+                                    <template v-if="trlist.purpose==4"> 预付款</template>
+                                    <template v-if="trlist.purpose==5"> 供货商划付</template>
+                                    <template v-if="trlist.purpose==10">税金提现</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='3'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='4'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.streamID}}">详情</a></template>
+                                    <template v-if="trlist.purpose=='10'"><a @click="skipToSubsidyAccount(trlist.streamID)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>
@@ -280,7 +287,7 @@
                                 <button  v-if="waring=='你确认划付账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                                 <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>
+                                <!--<button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>-->
                                 <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -467,17 +474,13 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/PaymentOfPayment/payment_model'
     export default{
         data(){
             this.model =model(this)
             return{
                 id:'',
-                pagecur:1,
-                page_size:10,
                 pageall:1,
-                dateS:'3',
                 waring:'',
                 subtitle:'',
                 checkForm:{
@@ -491,8 +494,9 @@
                     remarks:'',
                     startDate:'',
                     endDate:'',
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
+                    mid:'',
                     pageIndex:1,
+                    dateS:'3',
                     pageSize:10
                 },
                 total:{
@@ -546,32 +550,65 @@
             initList(){
                 $(".modal").modal("hide");
                 $(".check-boxs").prop({'checked':false})
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date('1')[0];
+                    this.checkForm.endDate=init_date('1')[1];
                 }
                 this.listinfos=[];
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);
             },
             payDetailexcel(){
                 if(!this.zdlists.length>0)return;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('3')[0];
-                    this.endDate=init_date('3')[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date('3')[0];
+                    this.checkForm.endDate=init_date('3')[1];
                 }
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.payDetailexcel+ $.param(this.checkForm));
             },
             getInfo(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.listinfos = []
                 this.id=a.id;
-                this.model.getpart(a.id)
-                        .then( (response)=> {
-                            if(response.data.code==0) {
-                                this.$set('listinfos',response.data.data);
-                                $('#list_info').modal('show');
-                            }
-                        });
+                switch(a.purpose){
+                    case 1:
+                        this.model.getpart1(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                    case 3:
+                        this.model.getpart3(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                    case 4:
+                        this.model.getpart4(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                    case 10:
+                        this.model.getpart10(a.id)
+                                .then( (response)=> {
+                                    if(response.data.code==0) {
+                                        this.$set('listinfos',response.data.data);
+                                        $('#list_info').modal('show');
+                                    }
+                                });
+                        break;
+                }
             },
             back(a){
                 this.subtitle = '退回重审';
@@ -610,11 +647,11 @@
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
             },
-            delBtn(a,b){
-                this.waring = '你确认删除该订单流水？';
-                this.accountId=a;
-                this.delPurpose=b;
-            },
+//            delBtn(a,b){
+//                this.waring = '你确认删除该订单流水？';
+//                this.accountId=a;
+//                this.delPurpose=b;
+//            },
             checking(a){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.accountId=a;
@@ -649,20 +686,20 @@
                         }
                     })
             },
-            delTrue(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    'id':this.accountId,
-                    'purpose':this.delPurpose
-                }
-                this.model.reservecash_delete(data)
-                        .then((response)=>{
-                            if(response.data.code==0){
-                                this.initList();
-                                dialogs('success','已删除！');
-                            }
-                        })
-            },
+//            delTrue(){
+//                if(sessionStorage.getItem('isHttpin')==1)return;
+//                let data={
+//                    'id':this.accountId,
+//                    'purpose':this.delPurpose
+//                }
+//                this.model.reservecash_delete(data)
+//                        .then((response)=>{
+//                            if(response.data.code==0){
+//                                this.initList();
+//                                dialogs('success','已删除！');
+//                            }
+//                        })
+//            },
             closeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.reservecash_close(this.accountId)
@@ -704,8 +741,8 @@
             checkingTrue(a){
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+                this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
+                this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
             },
             addorderIDs(e){
                 if(e.target.checked){
@@ -735,9 +772,9 @@
                                 this.initList();
                         })
             },
-            skipToSubsidyAccount(){
+            skipToSubsidyAccount(_id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.skipToSubsidyAccount(this.id)
+                this.model.skipToSubsidyAccount(_id)
                         .then( (response)=> {
                             if(response.data.code==0&&!!response.data.data){
                                 let trlist=response.data.data;
@@ -747,20 +784,12 @@
             }
         },
         watch:{
-            pagecur(){
-                this.checkForm.pageIndex=this.pagecur;
+            'checkForm.pageSize+checkForm.pageIndex'(){
                 this.initList();
             },
-            page_size(){
-                this.checkForm.pageSize=this.page_size;
-                this.initList();
-            },
-            dateS(){
+            'checkForm.dateS'(){
                 this.getTime();
             }
-        },
-        components:{
-            'datepicker': datepicker,
         },
         ready(){
             (this.$route.params.reserveCashOrderNumber==':reserveCashOrderNumber')?this.checkForm.orderNumber='' :this.checkForm.orderNumber=this.$route.params.reserveCashOrderNumber;
@@ -768,6 +797,7 @@
             (this.$route.params.merchantOperationIDs==':merchantOperationIDs')?this.checkForm.merchantOperationID='' :this.checkForm.merchantOperationID=this.$route.params.merchantOperationIDs;
             this.getTime();
             this.getSubcompany();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.initList();
         }
     }

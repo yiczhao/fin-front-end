@@ -29,7 +29,7 @@
                                         format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号" v-limitnumber="defaultData.orderID">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.payType">
@@ -100,6 +100,7 @@
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
                                     <a v-if="trlist.certificateId!=0" href="{{origin}}/file/download/{{trlist.certificateId}}">下载凭证</a>
+                                    <a v-if="trlist.orderID!=''" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderID,'payType':trlist.payType}}">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -151,9 +152,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount"></div>
                                         <div class="form-group" v-else>
-                                            <label><i style="color:red;">*</i>上传凭证：</label>
+                                            <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
@@ -183,11 +184,7 @@
 </style>
 <script>
     import model from '../../ajax/BusinessManagement/invoice-account-detail'
-    import datepicker from '../components/datepicker.vue'
     export default{
-        components:{
-            'datepicker': datepicker
-        },
         data(){
             this.model =model(this)
             return{
@@ -259,11 +256,8 @@
             },
             initList(){
                 $('.modal').modal('hide');
-                if(this.defaultData.pageIndex==1){
-                    this. getZlists();
-                    return;
-                }
-                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this. getZlists();
             },
             excel(){
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
@@ -282,7 +276,6 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true,data,this.rechargeData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
@@ -332,17 +325,8 @@
             },
         },
         watch:{
-            'defaultData.pageIndex':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
-            },
-            'defaultData.pageSize':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList()
             },
             dateS(){
                 this.getTime();
@@ -356,6 +340,7 @@
             (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
             (vm.$route.params.invoiceHDid==':invoiceHDid')? vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID='' : vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID=vm.$route.params.invoiceHDid;
             vm.getTime();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);

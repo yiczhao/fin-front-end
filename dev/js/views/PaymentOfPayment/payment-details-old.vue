@@ -352,7 +352,6 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     export default{
         data(){
             return{
@@ -583,9 +582,6 @@
             dateS(){
                 this.getTime();
             }
-        },
-        components:{
-            'datepicker': datepicker,
         },
         ready(){
             this.getTime();

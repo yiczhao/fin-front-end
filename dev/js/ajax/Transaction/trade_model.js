@@ -36,14 +36,6 @@ function model(_this) {
          */
         skipToThird(_id){
             return _this.$http.get(_this.$API.skipToThird+ _id);
-        },
-        /**
-         * @description 导出
-         * @param data
-         * @returns {*}
-         */
-        tradeDetailexcel(data){
-            return _this.$http.get(_this.$API.tradeDetailexcel+ $.param(data));
         }
     }
 }

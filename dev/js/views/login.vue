@@ -147,19 +147,7 @@
             }
         },
         created(){
-            function setCookie (key, value, expire) {
-                var data = new Date()
-                data.setDate(data.getDate() + expire)
-                document.cookie = key + '=' + escape(value) +
-                        ((expire === null) ? '' : ';expires=' + data.toGMTString())
-            }
-            // 移除用户 cookie
-            setCookie('KSAuthUserToken', '', -1);
-            setCookie('KSAuthJSURL', '', -1);
-            setCookie('KSAuthApiURL', '', -1);
-            setCookie('KSAuthSysId', '', -1);
-            setCookie('JSESSTOKEN', '', -1);
-            setCookie('JSESSID', '', -1);
+            removeCookie();
             sessionStorage.removeItem('userData');
         },
         methods:{
@@ -234,14 +222,10 @@
                         (response)=>{
                             if(response.code===10000){
                                 var data=response.data;
-                                //todo cookie 失效时间 7 日后
-                                Cookie.set('KSAuthSysId', data.sys_id, {domain:'.kashuo.net',expires: 7})
-                                // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',expires: 7})
-                                // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 7,})
-                                // noinspection JSUnresolvedVariable
-                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',expires: 7})
+                                Cookie.set('KSAuthSysId', data.sys_id, {domain:'.kashuo.net',maxage: 36000})
+                                Cookie.set('KSAuthUserToken', data.user_token, {domain:'.kashuo.net',maxage: 36000})
+                                Cookie.set('KSAuthJSURL', data.js_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',maxage: 36000})
+                                Cookie.set('KSAuthApiURL', data.api_url.replace(window.authurl1,window.authurl2), {domain:'.kashuo.net',maxage: 36000})
                                 this.$http.post(this.$API.login,{username:data.login_name})
                                         .then((response)=>{
                                             if(response.data.code===0){

@@ -5,19 +5,19 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+                                    <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                         <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="cityID">
+                                    <select class="form-control" v-model="checkForm.cityID">
                                         <option value="">全部城市</option>
                                         <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="timeRange">
+                                    <select class="form-control" v-model="checkForm.timeRange">
                                         <option value="5">今天</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
@@ -26,24 +26,25 @@
                                         <option value="4">自定义时间</option>
                                     </select>
                                 </div>
-                                <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                <div class="form-group" v-show="checkForm.timeRange==4">
+                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="advanceId" placeholder="预付款流水ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="merchantID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                    <input type="text" class="form-control" v-model="checkForm.advancePaymentAccountDetailID" placeholder="预付款流水ID" v-limitnumber="checkForm.advancePaymentAccountDetailID">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="商户名、收款账户名、帐号" style="width:185px">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号" style="width:185px">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="status">
+                                    <select class="form-control" v-model="checkForm.status">
                                         <option value="">请选择状态</option>
                                         <option value="0">已关闭</option>
-                                        <option value="1">等待审核</option>
+                                        <option value="7">等待复核</option>
+                                        <option value="8">复核不通过</option>
                                         <option value="2">等待划付</option>
                                         <option value="3">转账中</option>
                                         <option value="4">等待对账</option>
@@ -52,7 +53,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="remarks" placeholder="备注">
+                                    <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query" data-ksa="advance_payment_detail_manage.search">查询</a>
@@ -81,7 +82,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(index,apd) in advancePaymentDetailList">
-                                            <td>{{index+1}}</td>
+                                            <td>{{apd.advancePaymentAccountDetailID}}</td>
                                             <td>{{apd.applyTime | datetime}}</td>
                                             <td>{{apd.subCompanyName}}</td>
                                             <td>{{apd.cityName}}</td>
@@ -90,17 +91,24 @@
                                             <td>{{apd.merchantName}}</td>
                                             <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
                                             <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
-                                            <td><a @click="gopreinfo(apd.id,4,apd.advancePaymentMerchantId)" data-ksa="advance_payment_account_manage.search">查看</a></td>
+                                            <td>
+                                                <a v-if="apd.reserveCashOrderID==0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'payRecheckID':apd.payRecheckID}}" data-ksa="advance_payment_account_manage.search">查看</a>
+                                                <a v-if="apd.reserveCashOrderID!=0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'orderNumber':apd.orderNumber}}" data-ksa="advance_payment_account_manage.search">查看</a>
+                                            </td>
                                             <td>
                                                 <template v-if="apd.status==0">已关闭</template>
-                                                <template v-if="apd.status==1">等待审核</template>
+                                                <template v-if="apd.status==7">等待复核</template>
+                                                <template v-if="apd.status==8">复核不通过</template>
                                                 <template v-if="apd.status==2">等待划付</template>
                                                 <template v-if="apd.status==3">转账中</template>
                                                 <template v-if="apd.status==4">等待对账</template>
                                                 <template v-if="apd.status==5">对账成功</template>
                                                 <template v-if="apd.status==6">划付失败</template>
                                             </td>
-                                            <td><a v-if="apd.status!=1" @click="gopayment(apd.id,4)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
+                                            <td>
+                                                <a v-if="apd.status==7||apd.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':apd.payRecheckID}}">查看</a>
+                                                <a v-if="apd.status!=1&&apd.status!=7&&apd.status!=8" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">查看</a>
+                                            </td>
                                             <td>{{apd.remarks}}</td>
                                         </tr>
                                     </tbody>
@@ -108,8 +116,8 @@
                             </div>
                              <div class="datatable-footer">
                                 <page :all="pageall"
-                                      :cur.sync="pagecur"
-                                      :page_size.sync="page_size">
+                                      :cur.sync="checkForm.pageIndex"
+                                      :page_size.sync="checkForm.pageSize">
                                 </page>
                             </div>
                         </div>
@@ -130,31 +138,28 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/PaymentOfPayment/advance_model'
     export default{
         data(){
             this.model=model(this);
             return{
-                advanceId:"",
-                subCompanyID:"",
-                cityID:"",
-                createType:"",
-                status:"",
-                remarks:"",
-                timeRange:'3',
-                startDate:"",
-                endDate:"",
-                merchantID:"",      
-                merchantName:"",
-                keywords:"", 
-                seriesNumber:"",        
+                checkForm:{
+                    subCompanyID:"",
+                    advancePaymentAccountDetailID:"",
+                    cityID:"",
+                    status:"",
+                    remarks:"",
+                    startDate:"",
+                    endDate:"",
+                    merchantOperationID:"",
+                    merchantName:"",
+                    keywords:"",
+                    pageIndex:1,
+                    pageSize:10,
+                    timeRange:'3'
+                },
                 subcompanyList:[],
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 cityList:[],
                 advancePaymentDetailList:[]
             }
@@ -199,74 +204,38 @@
             },
             query() {
                 // let data=this.data;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date(this.timeRange)[0];
-                    this.endDate=init_date(this.timeRange)[1];
+                if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
+                    this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                    this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
                 }
-                let data={
-                    id:this.advanceId,
-                    subCompanyID:this.subCompanyID,
-                    cityID:this.cityID,
-                    startDate:this.startDate,
-                    endDate:this.endDate,
-                    merchantOperationID:this.merchantID,
-                    keywords:this.keywords,
-                    status:this.status,
-                    remarks:this.remarks,
-                    pageIndex: this.pageIndex, 
-                    pageSize: this.pageSize
-                    };
-                this.getadvancePaymentDetailList(data);
+                back_json.saveArray(this.$route.path,this.checkForm);
+                this.getadvancePaymentDetailList(this.checkForm);
             },
-            gopayment(a,b){
-                let data={
-                    "streamID":a ,
-                    "streamType": b
-                }
-                this.$common_model.skipToOrder(data)
+            gopayment(a){
+                this.$common_model.skipToOrderById(a)
                         .then((response)=>{
                             if(response.data.code==0){
-                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderNumber,payType:response.data.data.payType}});
+                                this.$router.go({name:'payment-details',params:{reserveCashOrderNumber:response.data.data.orderId,payType:response.data.data.payType}});
                             }
 
                     })
-            },
-            gopreinfo(a,b,_id){
-                let data={
-                    "streamID":a ,
-                    "streamType": b
-                }
-                this.$common_model.skipToOrder(data)
-                        .then((response)=>{
-                                if(response.data.code==0){
-                                    this.$router.go({'name':'prepayment-info',params:{'id':_id,'orderNumber':response.data.data.orderNumber}});
-                                }
-
-                        })
             }
         },
         ready() {
-            (this.$route.params.advanceId==':advanceId')?this.advanceId='':this.advanceId=this.$route.params.advanceId;
-            this.query();
+            (this.$route.params.advanceId==':advanceId')?this.checkForm.advancePaymentAccountDetailID='':this.checkForm.advancePaymentAccountDetailID=this.$route.params.advanceId;
             this.getCity();
             this.getSubcompany();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.query();
         },
          watch:{
-            timeRange(){
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
+            'checkForm.timeRange'(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             },
-            pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
-       },
-        components:{
-           'datepicker': datepicker
-        }
+       }
     }
 </script>

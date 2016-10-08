@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID" v-limitnumber="defaultData.activityOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
@@ -111,15 +111,20 @@
                                 <div class="form-group">
                                     <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
                                     <select class="form-control" v-model="applyData.payType" style="display: inline-block;width: 80%;">
+                                        <option value="">请选择付款方式</option>
                                         <option value="1">备付金账户</option>
                                         <option value="2">商户预付款账户</option>
                                     </select>
                                 </div>
+                                <div class="form-group" v-show="applyData.payType==1">
+                                    <label style="padding-left: 13%"><input type="checkbox" v-model="applyData.mergePay"/>
+                                        相同账户合并付款</label>
+                                </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount"></div>
                                 <div class="form-group">
-                                    <label style="width:13%;position: relative;top: -95px;" class="control-label">备注：</label>
+                                    <label style="width:13%;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
@@ -157,9 +162,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount"></div>
                                         <div class="form-group" v-else>
-                                            <label><i style="color:red;">*</i>上传凭证：</label>
+                                            <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
@@ -236,7 +241,8 @@ table tr th,table tr td{
                     remarks:'',
                     id:'',
                     payoutAmount:'',
-                    payType:'1'
+                    mergePay:false,
+                    payType:''
                 },
                 rechargeInfo:{
                     val1:'',
@@ -270,11 +276,8 @@ table tr th,table tr td{
             },
             initList(){
                 $('.modal').modal('hide');
-                if(this.defaultData.pageIndex==1){
-                    this. getZlists();
-                    return;
-                }
-                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this. getZlists();
             },
             excel(){
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
@@ -287,7 +290,8 @@ table tr th,table tr td{
                     remarks:'',
                     id:'',
                     payoutAmount:'',
-                    payType:'1'
+                    mergePay:false,
+                    payType:''
                 };
                 this.applyData.id=id;
                 let data={
@@ -307,6 +311,14 @@ table tr th,table tr td{
                 this.applyText='';
                 if(this.applyData.payoutAmount==''){
                     this.applyText='请填写提现金额！';
+                    return;
+                }
+                if(this.applyData.remarks==''){
+                    this.applyText='请填写备注！';
+                    return;
+                }
+                if(this.applyData.payType==''){
+                    this.applyText='请选择付款方式！';
                     return;
                 }
                 let data={};
@@ -336,7 +348,6 @@ table tr th,table tr td{
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                if(this.rechargeData.certificateId==''){this.fire=true;this.errortext='请上传凭证';return;}
                 let data={};
                 $.extend(true, data,this.rechargeData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
@@ -381,17 +392,8 @@ table tr th,table tr td{
             },
         },
         watch:{
-            'defaultData.pageIndex':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
-            },
-            'defaultData.pageSize':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList()
             }
         },
         ready(){
@@ -399,6 +401,7 @@ table tr th,table tr td{
             (vm.$route.params.merchantID1==':merchantID1')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID1;
             (vm.$route.params.merchantName1==':merchantName1')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName1;
             (vm.$route.params.merchantOperationID1==':merchantOperationID1')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID1;
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);

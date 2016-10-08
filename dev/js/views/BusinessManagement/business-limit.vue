@@ -11,7 +11,7 @@
                             <a class="btn btn-info" @click="addUser" data-ksa="limit_purchase_merchant_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"   onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -104,12 +104,12 @@
                                     <template v-else>正常</template>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)" @click="updateNew(trlist.id)" data-ksa="limit_purchase_merchant_manage.update">编辑</a>
+                                    <a @click="updateNew(trlist.id)" data-ksa="limit_purchase_merchant_manage.update">编辑</a>
                                     <a data-ksa="limit_purchase_account_manage.detail" v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">明细</a>
-                                    <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" href="javascript:void(0)" data-ksa="limit_purchase_merchant_manage.enable">启用</a></template>
-                                    <a data-ksa="limit_purchase_account_manage.search" href="javascript:void(0)" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
+                                    <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" data-ksa="limit_purchase_merchant_manage.enable">启用</a></template>
+                                    <a data-ksa="limit_purchase_account_manage.search" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
                                 </td>
-                                <td><a @click="seexh(trlist.id,true)" href="javascript:void(0)" data-ksa="limit_purchase_merchant_manage.search_digest">查看</a></td>
+                                <td><a @click="seexh(trlist.id,true)" data-ksa="limit_purchase_merchant_manage.search_digest">查看</a></td>
                                 <td>{{trlist.contactsPerson}}</td>
                                 <td>{{trlist.contactsPhone}}</td>
                                 <td>{{trlist.servicePerson}}</td>
@@ -140,8 +140,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -322,7 +322,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID" v-limitnumber="shdata.merchantOperationID">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
@@ -420,7 +420,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="xhdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                        <input type="text" class="form-control" v-model="xhdata.merchantOperationID" placeholder="商户ID" v-limitnumber="xhdata.merchantOperationID">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" v-model="xhdata.merchantName" placeholder="商户名">
@@ -591,15 +591,12 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/buslimit_model'
     export default{
         data(){
             this.model =model(this)
             return{
                 origin:window.origin,
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{
@@ -716,6 +713,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -945,9 +943,10 @@
             var vm=this;
             (!!sessionStorage.getItem('userData')) ? vm.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
             (this.$route.params.id != ':id') ? this.defaultData.merchantOperationID = this.$route.params.id : null;
-            vm.initList();
             vm.getClist();
             vm.getCity();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#modal_add,#modal_see,#modal_seehistory').on('hidden.bs.modal',function(){
                 if(!$('#modal_update').is(':hidden')){
                     $('#app').addClass('modal-open');
@@ -960,9 +959,6 @@
                     vm.updateList.certificateID='';
                 }
             })
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             zdlists(){
@@ -978,12 +974,7 @@
                 this.nums.usedLimit=(c/100).toFixed(2);
                 this.nums.balanceLimit=(d/100).toFixed(2);
             },
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         }

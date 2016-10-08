@@ -18,8 +18,32 @@ function model(_this) {
          * @param {id}
          * @returns {*}
          */
-        getpart(_id){
-            return _this.$http.get(_this.$API.getpart+_id)
+        getpart1(_id){
+            return _this.$http.get(_this.$API.getpart1+_id)
+        },
+        /**
+         * @description 查询备付金详情数据
+         * @param {id}
+         * @returns {*}
+         */
+        getpart3(_id){
+            return _this.$http.get(_this.$API.getpart3+_id)
+        },
+        /**
+         * @description 查询备付金详情数据
+         * @param {id}
+         * @returns {*}
+         */
+        getpart4(_id){
+            return _this.$http.get(_this.$API.getpart4+_id)
+        },
+        /**
+         * @description 查询备付金详情数据
+         * @param {id}
+         * @returns {*}
+         */
+        getpart10(_id){
+            return _this.$http.get(_this.$API.getpart10+_id)
         },
         /**
          * @description 查询对账数据

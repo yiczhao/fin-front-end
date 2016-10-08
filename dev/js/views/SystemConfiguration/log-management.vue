@@ -5,16 +5,16 @@
                         <div class="panel-heading">
                             <form class="form-inline manage-form">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="keywords" placeholder="用户名、姓名、描述">
+                                    <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、姓名、描述">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="subCompanyID" >
+                                    <select class="form-control" v-model="checkForm.subCompanyID" >
                                     <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" v-model="timeRange">
+                                    <select class="form-control" v-model="checkForm.timeRange">
                                         <option value="5">今天</option>
                                         <option value="0">昨天</option>
                                         <option value="1">最近一周</option>
@@ -23,9 +23,9 @@
                                         <option value="4">自定义时间</option>
                                     </select>
                                 </div>
-                                <div class="form-group" v-show="timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="endDate" format="YYYY-MM-DD"></datepicker>
+                                <div class="form-group" v-show="checkForm.timeRange==4">
+                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                                 <div class="form-group">
                                     <a class="btn btn-info" v-on:click="query" data-ksa="system_log_manage.search">查询</a>
@@ -67,8 +67,8 @@
                             </div>
                             <div class="datatable-footer">
                                 <page :all="pageall"
-                                      :cur.sync="pagecur"
-                                      :page_size.sync="page_size">
+                                      :cur.sync="checkForm.pageIndex"
+                                      :page_size.sync="checkForm.pageSize">
                                 </page>
                             </div>
                         </div>
@@ -130,25 +130,24 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/SystemConfiguration/log_model'
     export default{
         data(){
             this.model =model(this)
             return{
-                subCompanyID:"",
-                keywords:"",
-                timeRange:'3',
-                startDate:'',
-                endDate:'',
+                checkForm:{
+                    subCompanyID:"",
+                    keywords:"",
+                    startDate:'',
+                    endDate:'',
+                    startDate:'',
+                    endDate:'',
+                    pageIndex:1,
+                    pageSize:10,
+                    timeRange:'3'
+                },
                 subcompanyList:[],
-                startDate:'',
-                endDate:'',
                 pageall:1,
-                pagecur:1,
-                page_size:10,
-                pageIndex:1,
-                pageSize:10,
                 logList:[],
                 log:{
                     "userName":"",
@@ -195,41 +194,25 @@
                         })
             },
             query() {
-                let data={
-                        subCompanyID:this.subCompanyID,
-                        keywords:this.keywords,
-                        startDate:this.startDate,
-                        endDate:this.endDate,
-                        pageIndex: this.pageIndex, 
-                        pageSize: this.pageSize
-                    };
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
-                this.getLogList(data);
+                back_json.saveArray(this.$route.path,this.checkForm);
+                this.getLogList(this.checkForm);
             },
         },
         ready() {
-            this.startDate=init_date(this.timeRange)[0];
-            this.endDate=init_date(this.timeRange)[1];
-            this.query();
+            this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+            this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             this.getSubcompany({});
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
+            this.query();
         },
        watch:{
-            timeRange(){
-                this.startDate=init_date(this.timeRange)[0];
-                this.endDate=init_date(this.timeRange)[1];
+            'checkForm.timeRange'(){
+                this.startDate=init_date(this.checkForm.timeRange)[0];
+                this.endDate=init_date(this.checkForm.timeRange)[1];
             },
-             pagecur(){
-                this.pageIndex=this.pagecur;
-                this.query();
-            },
-            page_size(){
-                this.pageSize=this.page_size;
+            'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
-       },
-        components:{
-           'datepicker': datepicker,
-        }
+       }
     }
 </script>

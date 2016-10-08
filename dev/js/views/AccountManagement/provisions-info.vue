@@ -10,7 +10,7 @@
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="checkForm.dateS">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -18,7 +18,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="checkForm.dateS==4">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -125,8 +125,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="checkForm.pageIndex"
+                              :page_size.sync="checkForm.pageSize">
                         </page>
                     </div>
                 </div>
@@ -386,7 +386,6 @@
      }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/AccountManagement/provisions_model'
     export default{
         props:{
@@ -398,12 +397,9 @@
                 zdlists:[],
                 dzList:{},
                 dz_show:false,
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
-                dateS:'3',
                 shouru:'',
                 zhichu:'',
                 gllists:[],
@@ -411,6 +407,7 @@
                 balance:'',
                 subCompanyID:'',
                 checkForm:{
+                    dateS:'3',
                     accountId:'',
                     certificate:'',
                     keyword:'',
@@ -474,13 +471,14 @@
                 this.dz_show=true;
             },
             checkNew(){
-                this.getZlists(this.checkForm);
+                this.initList();
             },
             close_dialog() {
                 this.dz_show = false;
             },
             initList(){
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);
             },
             dzOne(id){
@@ -531,8 +529,8 @@
                 }
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+                this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
+                this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
             },
             getBalance(){
                 this.model.getBalance(this.subCompanyID).then((res)=>{
@@ -555,12 +553,12 @@
             (vm.$route.params.aname==':aname')? vm.aname='' : vm.aname=vm.$route.params.aname;
             (vm.$route.params.balance==':balance')? vm.balance='' : vm.balance=vm.$route.params.balance;
             (vm.$route.params.subCompanyID==':subCompanyID')? vm.subCompanyID='' : vm.subCompanyID=vm.$route.params.subCompanyID;
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.checkForm=back_json.fetchArray(vm.$route.path):null;
             if(vm.subCompanyID != ''){
                 vm.getBalance();
             }else{
                 vm.initList();
             }
-            vm.getTime();
             $('#modal_dzone').on('hidden.bs.modal',function(){
                 if(!$('#modal_fzr').is(':hidden')){
                     $('#app').addClass('modal-open');
@@ -570,9 +568,6 @@
             $('#modal_fzr').on('show.bs.modal',function(){
                 vm.errortext='';
             })
-        },
-        components:{
-            'datepicker': datepicker,
         },
         watch:{
             zdlists(){
@@ -584,15 +579,10 @@
                             }
                         })
             },
-            pagecur(){
-                this.checkForm.pageIndex=this.pagecur;
+            'checkForm.pageSize + checkForm.pageIndex'(){
                 this.initList();
             },
-            page_size(){
-                this.checkForm.pageSize=this.page_size;
-                this.initList();
-            },
-            dateS(){
+            'checkForm.dataS'(){
                 this.getTime();
             }
         },

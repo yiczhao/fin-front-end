@@ -14,7 +14,7 @@
                                 @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
                             </div>
                             <div class="form-group">
-                                <select class="form-control" v-model="dateS">
+                                <select class="form-control" v-model="defaultData.dateS">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -22,7 +22,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="dateS==4">
+                            <div class="form-group" v-show="defaultData.dateS==4">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
@@ -30,37 +30,23 @@
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号">
+                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName"
                                    placeholder="商户名">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="defaultData.purpose">
-                                <option value="">请选择类型</option>
-                                <option value="1">补贴划付</option>
-                                <option value="3">补贴退税</option>
-                                <option value="4">预付充值</option>
-                                <option value="6">退款冲抵</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.payType">
-                                <option value="">请选择付款方式</option>
-                                <option value="1">现金转账</option>
-                                <option value="2">账户抵扣</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
-                                <option value="0">已关闭</option>
+                                <option value="7">等待复核</option>
+                                <option value="8">复核不通过</option>
                                 <option value="2">等待划付</option>
                                 <option value="3">转账中</option>
                                 <option value="4">等待对账</option>
                                 <option value="5">对账成功</option>
                                 <option value="6">划付失败</option>
+                                <option value="0">已关闭</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -83,9 +69,8 @@
                             <tr role="row">
                                 <th>订单号</th>
                                 <th>商户名称</th>
-                                <th>金额</th>
-                                <th>流水类型</th>
-                                <th>付款方式</th>
+                                <th>收入</th>
+                                <th>支出</th>
                                 <th>状态</th>
                                 <th>交易时间</th>
                                 <th>操作</th>
@@ -98,17 +83,11 @@
                                 <td>{{trlist.merchantName}}</td>
                                 <td>
                                     <template v-if="trlist.payType==2">-</template>
-                                    {{trlist.amount/100 | currency ''}}
+                                    {{trlist.incomeAmount/100 | currency ''}}
                                 </td>
                                 <td>
-                                    <template v-if="trlist.purpose==1">补贴划付</template>
-                                    <template v-if="trlist.purpose==3">补贴退税</template>
-                                    <template v-if="trlist.purpose==4">预付充值</template>
-                                    <template v-if="trlist.purpose==6">退款冲抵</template>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.payType==1">现金转账</template>
-                                    <template v-if="trlist.payType==2">账户抵扣</template>
+                                    <template v-if="trlist.payType==2">-</template>
+                                    {{trlist.payoutAmount/100 | currency ''}}
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">已关闭</template>
@@ -118,21 +97,28 @@
                                     <template v-if="trlist.status==4">等待对账</template>
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
+                                    <template v-if="trlist.status==7">等待复核</template>
+                                    <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
-                                <td>{{trlist.payTime | datetime}}</td>
+                                <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>
-                                    <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
-                                       v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
-                                    <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}"
-                                       v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
+                                    <template v-if="trlist.status==7||trlist.status==8">
+                                        <a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
+                                    </template>
+                                    <template v-else>
+                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
+                                           v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
+                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':1}}"
+                                           v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
+                                    </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>合计：</td>
-                                <td>{{total/100| currency '' }}</td>
-                                <td></td>
+                                <td>{{total.incomeAmount/100| currency '' }}</td>
+                                <td>{{total.payoutAmount/100| currency '' }}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -144,8 +130,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -173,7 +159,7 @@
                             <div class="form-group">
                                 <label><i style="color:red">*</i>金额：</label>
                                 <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
-                                       v-model="applyAdvancePay.advancePaymentAmount"  onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"/>
+                                       v-model="applyAdvancePay.advancePaymentAmount"  v-limitprice="applyAdvancePay.advancePaymentAmount"/>
                             </div>
                             <div class="form-group">
                                 <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
@@ -333,17 +319,14 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/info_model'
     export default{
         data(){
             this.model = model(this)
             return {
-                pagecur: 1,
-                page_size: 10,
                 pageall: 1,
                 blanceList:{},
-                total: [],
+                total: {},
                 defaultData: {
                     "advancePaymentMerchantID": '',
                     "orderNumber": '',
@@ -353,10 +336,12 @@
                     "payType": '',
                     "remarks": '',
                     "startDate": '',
+                    dateS: '3',
+                    pageIndex:1,
+                    pageSize:10,
                     "endDate": ''
                 },
                 zdlists: [],
-                dateS: '3',
                 applyAdvancePay: {
                     merchantName: "",//商户名
                     balanceAmount: "",//余额
@@ -404,6 +389,7 @@
             },
             initList(){
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             //获取预付充值数据
@@ -440,7 +426,7 @@
                 this.saveerror=true;
                 if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
-                    advancePaymentMerchantId: this.applyAdvancePay.advancePaymentMerchantId,
+                    advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,
                 }
@@ -456,29 +442,22 @@
                 $(".modal").modal("hide");
             },
             getTime(){
-                this.defaultData.startDate = init_date(this.dateS)[0];
-                this.defaultData.endDate = init_date(this.dateS)[1];
+                this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
+                this.defaultData.endDate = init_date(this.defaultData.dateS)[1];
             }
         },
         ready() {
             (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
             (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
         },
-        components: {
-            'datepicker': datepicker
-        },
         watch: {
-            dateS(){
+            'defaultData.dataS'(){
                 this.getTime();
             },
-            pagecur(){
-                this.defaultData.pageIndex = this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize = this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         }

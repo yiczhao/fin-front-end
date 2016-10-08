@@ -13,7 +13,7 @@
                             <a @click="applyPay(applyData)" class="btn btn-info" data-ksa="subsidy_account_manage.with_draw">提现</a>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" v-model="dateS">
+                            <select class="form-control" v-model="defaultData.dateS">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -21,7 +21,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
                         </div>
-                        <div class="form-group" v-show="dateS==4">
+                        <div class="form-group" v-show="defaultData.dateS==4">
                             <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                         format="YYYY-MM-DD"></datepicker>
                             至
@@ -29,7 +29,7 @@
                                         format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.orderID" placeholder="订单号" v-limitnumber="defaultData.orderID">
                         </div>
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.payType">
@@ -41,6 +41,8 @@
                         <div class="form-group">
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
+                                <option value="7">等待复核</option>
+                                <option value="8">复核不通过</option>
                                 <option value="5">对账成功</option>
                                 <option value="4">等待对账</option>
                                 <option value="3">转账中</option>
@@ -96,10 +98,13 @@
                                     <template v-if="trlist.status==4">等待对账</template>
                                     <template v-if="trlist.status==5">对账成功</template>
                                     <template v-if="trlist.status==6">划付失败</template>
+                                    <template v-if="trlist.status==7">等待复核</template>
+                                    <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
                                 <td>{{trlist.tradeTime  | datetime}}</td>
                                 <td>
-                                    <a v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID,payType:trlist.payType}}" data-ksa="reserve_cash_order_manage.search">查看</a>
+                                    <a v-if="trlist.status==7||trlist.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
+                                    <a v-else v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.orderID,payType:trlist.payType}}" data-ksa="reserve_cash_order_manage.search">查看</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -142,21 +147,26 @@
                                 <div class="form-group">
                                     <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
                                     <select class="form-control" v-model="applyData.payType" style="display: inline-block;width: 80%;">
+                                        <option value="">请选择付款方式</option>
                                         <option value="1">备付金账户</option>
                                         <option value="2">商户预付款账户</option>
                                     </select>
                                 </div>
+                                <div class="form-group" v-show="applyData.payType==1">
+                                    <label style="padding-left: 13%"><input type="checkbox" v-model="applyData.mergePay"/>
+                                        相同账户合并付款</label>
+                                </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></div>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount"></div>
                                 <div class="form-group">
-                                    <label style="position: relative;top: -95px;width: 13%" class="control-label">备注：</label>
+                                    <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                                 </div>
                                 <div class="form-group tc">
                                     <button  type="button" @click="applyPayTrue" class="btn btn-primary">申请提现</button>
                                 </div>
-                                <div class="form-group tc" style="display: inline;">
+                                <div class="form-group tc">
                                     <span v-show="applyText!=''" class="validation-error-label" v-text="applyText"></span>
                                 </div>
                             </div>
@@ -173,11 +183,7 @@
 </style>
 <script>
     import model from '../../ajax/BusinessManagement/suspension-tax-account-detail'
-    import datepicker from '../components/datepicker.vue'
     export default{
-        components:{
-            'datepicker': datepicker
-        },
         data(){
             this.model =model(this)
             return{
@@ -193,7 +199,8 @@
                     'pageTotal': 1,
                     'pageIndex': 1,
                     'pageSize': 10,
-                    mid:''
+                    mid:'',
+                    dateS:'3'
                 },
                 zdlists:[],
                 total:{
@@ -213,10 +220,10 @@
                     remarks:'',
                     id:'',
                     payoutAmount:'',
-                    payType:'1'
+                    mergePay:false,
+                    payType:''
                 },
-                applyText:'',
-                dateS:'3'
+                applyText:''
             }
         },
         methods:{
@@ -247,11 +254,8 @@
             },
             initList(){
                 $('.modal').modal('hide');
-                if(this.defaultData.pageIndex==1){
-                    this. getZlists();
-                    return;
-                }
-                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists();
             },
             excel(){
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
@@ -261,7 +265,8 @@
             applyPay({id}){
                 this.applyData.remarks='';
                 this.applyData.payoutAmount='';
-                this.applyData.payType='1';
+                this.applyData.payType='';
+                this.applyData.mergePay=false;
                 let data={
                     id:id,
                 }
@@ -281,6 +286,14 @@
                     this.applyText='请填写提现金额！';
                     return;
                 }
+                if(this.applyData.remarks==''){
+                    this.applyText='请填写备注！';
+                    return;
+                }
+                if(this.applyData.payType==''){
+                    this.applyText='请选择付款方式！';
+                    return;
+                }
                 let data={};
                 $.extend(true, data,this.applyData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
@@ -294,25 +307,16 @@
                         });
             },
             getTime(){
-                this.defaultData.startDate=init_date(this.dateS)[0];
-                this.defaultData.endDate=init_date(this.dateS)[1];
+                this.defaultData.startDate=init_date(this.defaultData.dateS)[0];
+                this.defaultData.endDate=init_date(this.defaultData.dateS)[1];
             },
         },
         watch:{
-            'defaultData.pageIndex':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList()
             },
-            'defaultData.pageSize':{
-                handler:function(){
-                    this.getZlists()
-                },
-                deep:true
-            },
-            dateS(){
-                this.getTime();
+            'defaultData.dateS'(){
+                this.getTime()
             }
         },
         ready(){
@@ -324,7 +328,8 @@
             (vm.$route.params.orderId==':orderId')? vm.defaultData.orderID='' : vm.defaultData.orderID=vm.$route.params.orderId;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
-            vm.getZlists();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';

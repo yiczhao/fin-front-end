@@ -25,7 +25,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                        <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" v-limitnumber="defaultData.accountNumber">
                     </div>
                     <div class="form-group">
                         <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
@@ -84,8 +84,8 @@
                 </div>
                 <div class="datatable-footer">
                     <page :all="pageall"
-                          :cur.sync="pagecur"
-                          :page_size.sync="page_size">
+                          :cur.sync="defaultData.pageIndex"
+                          :page_size.sync="defaultData.pageSize">
                     </page>
                 </div>
             </div>
@@ -259,14 +259,11 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/AccountManagement/account_model'
     export default{
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 10},
@@ -333,6 +330,7 @@
             initList(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 $(".modal").modal("hide");
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             rewrite(_list){
@@ -445,24 +443,17 @@
         },
         ready: function () {
             (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
-            this.initList();
             this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
+            this.initList();
             let vm=this;
             $('#modal_fzr,#modal_add').on('show.bs.modal', function () {
                 this.fire=false;
                 vm.$resetValidation();
             })
         },
-        components:{
-            'datepicker': datepicker
-        },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         },

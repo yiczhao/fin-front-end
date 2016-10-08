@@ -34,6 +34,7 @@
                         .then(function (response) {
                             if(response.data.code===0){
                                 sessionStorage.removeItem('userData');
+                                removeCookie();
                                 // 注销 cookie
                                 if (window.KSAuthKit) {
                                     window.KSAuthKit.destroy()

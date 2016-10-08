@@ -31,7 +31,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID" v-limitnumber="defaultData.operationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">
@@ -83,8 +83,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -203,15 +203,12 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/Transaction/white_model.js'
     export default{
         data(){
             this.model =model(this)
             return{
                 origin:window.origin,
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 companylists:[],
                 startDate:'',
@@ -222,7 +219,7 @@
                     'operationID': '',
                     'name': '',
                     'pageIndex': 1,
-                    mid:JSON.parse(sessionStorage.getItem('userData')).authToken,
+                    'mid':'',
                     'pageSize': 10
                 },
                 zdlists:[],
@@ -259,10 +256,7 @@
             },
             getClist(){
                 // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
-                this.$common_model.getcompany(data)
+                this.$common_model.getcompany()
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
@@ -270,18 +264,12 @@
             },
             initList(){
                 $('.modal').modal('hide');
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
-                }
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             abnormalWhiteexcel(){
                 if(!this.zdlists.length>0)return;
-                if (this.startDate=="" && this.endDate=="") {
-                    this.startDate=init_date('1')[0];
-                    this.endDate=init_date('1')[1];
-                }
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.abnormalWhiteexcel+ $.param(this.defaultData));
             },
             gettoday(){
@@ -418,7 +406,6 @@
             },
             queryId(){
                 if(this.redata.operationID=='')return;
-
                 if(this.redata.type=='2'){
                     let data={
                         operationID:this.redata.operationID
@@ -447,16 +434,14 @@
         },
         ready() {
             var vm=this;
-            vm.initList();
             vm.getClist();
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
             $('#add_white').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';
                 vm.redata.certificateID='';
             })
-        },
-        components:{
-            'datepicker': datepicker
         },
         watch:{
             startDate(){
@@ -466,12 +451,7 @@
                     this.redata.startDate=this.startDate;
                 }
             },
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         }

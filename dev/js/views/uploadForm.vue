@@ -57,6 +57,13 @@
 										<input type="button" class="btn btn-primary" value="提交" @click="revokeTradeDetail($event)"/>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成预付款账户明细" data-toggle="modal" data-target="#modal_advance_account_waring"/>
+									</td>
+									<td>
+									</td>
+								</tr>
                             </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
@@ -90,6 +97,22 @@
 									</div>
 								</div>
 							</div>
+							<div data-backdrop="static"  id="modal_advance_account_waring" class="modal fade" style="display: none;">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">×</button>
+											<h5 class="modal-title">你确认生成预付款账户明细吗？</h5>
+										</div>
+										<div class="modal-body">
+											<div class="form-group tc">
+												<button type="button" @click="createAdvancePaymentAccountDetail" class="btn btn-primary">确认</button>
+												<button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</form>
 					</div>
 				 </div>
@@ -117,7 +140,6 @@
 	}
 </style>
 <script>
-	import datepicker from './components/datepicker.vue'
     export default{
         props:{
         },
@@ -135,9 +157,6 @@
 				serialNumber :''
             }
         },
-		components:{
-			'datepicker': datepicker,
-		},
         methods:{
 			uploads(e){
 				if(e.target.value==''){
@@ -224,6 +243,12 @@
 				this.$http.post('./dev/tool/tradeDetail/revoke',data)
 						.then((response)=>{
 							dialogs('success','撤销成功！');
+						})
+			},
+			createAdvancePaymentAccountDetail(e){
+				this.$http.post('./dev/tool/advancePayment/accountDetail/create')
+						.then((response)=>{
+					dialogs('success','生成成功！');
 						})
 			}
         },

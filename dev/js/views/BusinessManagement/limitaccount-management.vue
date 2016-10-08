@@ -55,8 +55,8 @@
                             </tbody>
                         </table>
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                     <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
@@ -213,8 +213,6 @@
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 loginList:{},
                 accountName:'',
@@ -257,6 +255,7 @@
                             'remarks':'',
                             'certificatesID':''
                 };
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             selectRecharge(_id){
@@ -324,6 +323,7 @@
             let vm=this;
             (this.$route.params.limitPurchaseMerchantInfoID != ':limitPurchaseMerchantInfoID') ? this.defaultData.limitPurchaseMerchantInfoID = this.$route.params.limitPurchaseMerchantInfoID : null;
             (this.$route.params.accountName != ':accountName') ? this.accountName = this.$route.params.accountName : null;
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
             $('#modal_pay').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
@@ -345,12 +345,7 @@
                 this.nums.val2=(this.nums.val1-this.nums.val4).toFixed(2);
                 (this.nums.val1!='0.00')?this.nums.val3=((this.nums.val2/this.nums.val1)*100).toFixed(2):null;
             },
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageSize+defaultData.pageIndex'(){
                 this.initList();
             }
         },

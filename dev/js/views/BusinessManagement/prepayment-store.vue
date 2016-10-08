@@ -13,7 +13,7 @@
                             <a class="btn btn-info" @click="addUser" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -55,8 +55,8 @@
                     </div>
                     <div class="datatable-footer">
                         <page :all="pageall"
-                              :cur.sync="pagecur"
-                              :page_size.sync="page_size">
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
                         </page>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" >
+                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID" v-limitnumber="shdata.merchantOperationID">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
@@ -249,14 +249,11 @@
     }
 </style>
 <script>
-    import datepicker from '../components/datepicker.vue'
     import model from '../../ajax/BusinessManagement/store_model'
     export default{
         data(){
             this.model =model(this)
             return{
-                pagecur:1,
-                page_size:10,
                 pageall:1,
                 merchantName:'',
                 city:[],
@@ -316,6 +313,7 @@
             },
             initList(){
                 $('.modal').modal('hide');
+                back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
@@ -369,8 +367,8 @@
                 this.addId=[];
             },
             delTrue(e){
-                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
-                    _table=$(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
+                let _ul=$(e.target).parent('.col-md-2').next('.col-md-4').children('ul'),
+                    _table=$(e.target).parent('.col-md-2').prev('.col-md-7').children('table').find('tr:hidden'),
                     _li= _ul.find('.check-li');
                 for(let i=0;i<_li.length;i++){
                     _table.eq(_li.eq(i).index()).show();
@@ -379,7 +377,7 @@
             },
             submitTrue(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
+                let _li=$(e.target).parent('.col-md-2').next('.col-md-4').children('ul').children('li');
                 if(!_li.length>0)return;
                 let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
                 this.model.store_add(data)
@@ -408,19 +406,12 @@
             var vm=this;
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
             (vm.$route.params.storeMerchantName!=':storeMerchantName')?vm.merchantName=vm.$route.params.storeMerchantName:null;
-            vm.initList();
             vm.getClist();
-        },
-        components:{
-            'datepicker': datepicker
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.initList();
         },
         watch:{
-            pagecur(){
-                this.defaultData.pageIndex=this.pagecur;
-                this.initList();
-            },
-            page_size(){
-                this.defaultData.pageSize=this.page_size;
+            'defaultData.pageSize+defaultData.pageIndex'(){
                 this.initList();
             }
         }

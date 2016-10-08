@@ -42,6 +42,22 @@ export default function install(Vue) {
             return Vue.http.get('reserveCashOrder/skipToOrder?' + $.param(data))
         },
         /**
+         * @description 查看当前订单号及付款方式
+         * @param {data}
+         * @returns {*}
+         */
+        skipToOrderById(id){
+            return Vue.http.get('reserveCashOrder/info/' + id)
+        },
+        /**
+         * @description 获取复核ID
+         * @param {data}
+         * @returns {*}
+         */
+        skipToRecheck(data){
+            return Vue.http.get('payRecheck/skipToPayRecheck?' + $.param(data))
+        },
+        /**
          * @description 获取商户数据
          * @param {data}
          * @returns {*}
@@ -50,7 +66,6 @@ export default function install(Vue) {
             return Vue.http.get('./merchant/list?' + $.param(data))
         }
     };
-
     Object.defineProperties(Vue.prototype, {
         $common_model: {get(){return _m}}
     })
