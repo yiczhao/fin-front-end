@@ -1,9 +1,12 @@
 @import
-'../css/icons/icomoon/styles.css',
-'../css/bootstrap.css',
-'../css/core.css',
-'../css/components.css',
-'../css/colors.css',
+'./lib/icons/icomoon/styles.css',
+'./lib/bootstrap.css',
+'./lib/core.css',
+'./lib/components.css',
+'./lib/colors.css',
 './lib/zxx.lib.scss',
 	// 单独页面
-'./style/app';
+'./view/compents.scss',
+'./view/login.scss',
+'./view/account-management.scss',
+'./compents/index.scss';

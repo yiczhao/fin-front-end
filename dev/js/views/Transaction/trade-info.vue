@@ -173,34 +173,6 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             </tbody>
-                            <tr role="row">
-                                <th></th>
-                                <th>合计：</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th><b>{{nums.consumptionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.payAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.limitDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.principalDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></th>
-                                <th><b>{{nums.suspensionTax/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountDiff/100 | currency ''}}</b></th>
-                                <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
-                                <th><b>{{nums.entryAmount/100 | currency ''}}</b></td>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
                         </table>
                     </div>
                     <div class="datatable-footer">
@@ -208,6 +180,45 @@
                               :cur.sync="checkForm.pageIndex"
                               :page_size.sync="checkForm.pageSize">
                         </page>
+                    </div>
+                    <div class="nums">
+                        <div>合计：</div>
+                        <div>
+                            <span>消费金额:</span>
+                            <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                            <span>折扣金额:</span>
+                            <span>{{nums.discountAmount/100 | currency ''}}</span>
+                            <span>实付金额:</span>
+                            <span>{{nums.payAmount/100 | currency ''}}</span>
+                        </div>
+                        <div>
+                            <span>额度抵扣:</span>
+                            <span>{{nums.limitDeduct/100 | currency ''}}</span>
+                            <span>本金抵扣:</span>
+                            <span>{{nums.principalDeduct/100 | currency ''}}</span>
+                            <span>三方应收:</span>
+                            <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
+                        </div>
+                        <div>
+                            <span>商户应补:</span>
+                            <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
+                            <span>退税款:</span>
+                            <span>{{nums.suspensionTax/100 | currency ''}}</span>
+                            <span>商户实补:</span>
+                            <span>{{nums.merchantSubsidyActual/100 | currency ''}}</span>
+                        </div>
+                        <div>
+                            <span>折扣差:</span>
+                            <span>{{nums.discountDiff/100 | currency ''}}</span>
+                            <span>扣收金额:</span>
+                            <span>{{nums.collectionAmount/100 | currency ''}}</span>
+                            <span>33211佣金:</span>
+                            <span>{{nums.commission33211/100 | currency ''}}</span>
+                        </div>
+                         <div>
+                            <span>入账金额:</span>
+                            <span>{{nums.entryAmount/100 | currency ''}}</span>
+                        </div>
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
@@ -331,7 +342,9 @@
     .modal-body button{
         width:35%;
     }
-
+    .nums div{
+        display: inline-block;
+    }
 </style>
 <script>
     import model from '../../ajax/Transaction/trade_model'
