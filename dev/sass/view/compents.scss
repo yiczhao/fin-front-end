@@ -46,6 +46,9 @@
   h6{
     font-size: 12px;
   }
+  .kdialog__content{
+    font-size: 13px;
+  }
   .navbar-inverse{
     padding: 1px 20px;
   }
@@ -94,7 +97,7 @@
   .modal .form-group{
     margin-bottom: 30px;
   }
-  table{
+  .table{
     td,th{
       text-align: left;
       white-space: nowrap;
@@ -102,9 +105,11 @@
       overflow: hidden;
       color: #444;
       font-size: 13px;
+      line-height:100%;
+      padding: 15px 20px;
     }
   }
-  .datatable-scroll table{
+  .datatable-scroll .table{
     thead{
       th{
         border-color:#999;

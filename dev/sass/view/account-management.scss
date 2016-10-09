@@ -1,8 +1,13 @@
 .account-management{
-  .modal-body {
+  .kdialog__content{
+    .datetime-picker{
+      .form-control{
+        width:100%;
+      }
+    }
     .form-control{
       text-align: left;
-      width:67%;
+      width:79%;
       display: inline-block;
     }
     label{
