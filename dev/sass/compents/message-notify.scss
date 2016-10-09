@@ -1,0 +1,73 @@
+/**
+ * notify 通知组件
+ */
+.message-notify {
+  display: none;
+  position: fixed;z-index:10000;
+  top:-40px;left:0;
+  width:100%;
+  text-align: center;
+  transition:.3s;
+  &.show {
+    display: block;
+    top:6px;
+  }
+  .message-notify-content  {
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.17);
+    background: #fff;
+    display: inline-block;
+  }
+  &.message-error-notify {
+    .message-notify-content{
+      //background:#fdeeed;
+    }
+  }
+  &.message-success-notify {
+    .message-notify-content{
+      //background:#f4faf0;
+    }
+  }
+  @mixin messageIcon{
+    margin-right: 8px;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .message-success-icon {
+    @include messageIcon;
+    color: #87D068 !important;
+    &:before {
+      content: "\f058"
+    }
+  }
+  .message-info-icon {
+    @include messageIcon;
+    color: #57c5f7 !important;
+    &:before {
+      content: "\f05a"
+    }
+  }
+  .message-error-icon {
+    @include messageIcon;
+    color: #FF6600 !important;
+    &:before {
+      content: "\f06a"
+    }
+  }
+  .message-loading-icon {
+    @include messageIcon;
+    color: #57c5f7 !important;
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear;
+    &:before {
+      content: "\f110"
+    }
+  }
+}

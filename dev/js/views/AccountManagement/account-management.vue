@@ -3,38 +3,26 @@
            :ptitle="'财务处理'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content account-management" slot="content">
         <div class="panel panel-flat">
-            <div class="panel-heading">
-                <form class="form-inline manage-form">
-                    <div>
-                        <div class="form-group">
-                            <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.companyId">
-                                <option value="">全部分公司</option>
-                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.accountType">
-                                <option value="">请选择类型</option>
-                                <option value="1">备付金</option>
-                                <option value="2">本金</option>
-                                <option value="3">佣金</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" v-limitnumber="defaultData.accountNumber">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
-                        </div>
-                    </div>
-                </form>
+            <div class="heading">
+                <div class="heading-left">
+                    <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
+                </div>
+                <div class="heading-right">
+                    <select class="form-control" v-model="defaultData.companyId">
+                        <option value="">全部分公司</option>
+                        <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                    </select>
+                    <select class="form-control" v-model="defaultData.accountType">
+                        <option value="">请选择类型</option>
+                        <option value="1">备付金</option>
+                        <option value="2">本金</option>
+                        <option value="3">佣金</option>
+                    </select>
+                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" v-limitnumber="defaultData.accountNumber">
+                    <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
+                </div>
             </div>
             <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
@@ -53,7 +41,7 @@
                             </tr>
                         </thead>
                     <tbody>
-                        <tr role="row" v-for="(index,trlist) in zdlists">
+                        <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                             <td>{{trlist.companyName}}</td>
                             <td>{{trlist.shortName}}</td>
                             <td>{{trlist.accountName}}</td>
@@ -86,14 +74,14 @@
                     </tbody>
                 </table>
                 </div>
-                <div class="datatable-footer">
+                <div class="table-footer">
                     <page :all="pageall"
                           :cur.sync="defaultData.pageIndex"
                           :page_size.sync="defaultData.pageSize">
                     </page>
                 </div>
             </div>
-            <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+            <div class="no-list" v-else>
                 未找到数据
             </div>
         </div>
@@ -219,49 +207,6 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-     .validation-error-label{
-        margin-left: 20%;
-    }
-     .timeerror,.suberror,.suberror1{
-        display: none;
-    }
-     .suberror,.suberror1{
-        padding-top: 3px;
-    }
-      .form-group{
-        text-align: left;
-    }
-      .form-group.tc{
-        text-align: center;
-    }
-     .modal-body .form-control{
-        text-align: left;
-        width:67%;
-        display: inline-block;
-    }
-     .modal-body label{
-        width:20%;
-        display: inline-block;
-    }
-     .modal-body label i{
-        color:red;
-    }
-      .modal-body .waring{
-        color: red;
-        margin-left: 5px;
-    }
-      .modal-body button{
-        width:35%;
-    }
-     td span{
-        cursor: pointer;
-        color: #3c8dbc;
-    }
-     td span:hover{
-        opacity: 80;
-    }
-</style>
 <script>
     import model from '../../ajax/AccountManagement/account_model'
     export default{

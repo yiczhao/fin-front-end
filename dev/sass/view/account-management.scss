@@ -1,0 +1,32 @@
+.account-management{
+  .modal-body {
+    .form-control{
+      text-align: left;
+      width:67%;
+      display: inline-block;
+    }
+    label{
+      width:20%;
+      display: inline-block;
+      i{
+        color:red;
+      }
+    }
+    .waring{
+      color: red;
+      margin-left: 5px;
+    }
+    button{
+      width:35%;
+    }
+  }
+  .validation-error-label{
+    margin-left: 20%;
+  }
+  .timeerror,.suberror,.suberror1{
+    display: none;
+  }
+  .suberror,.suberror1{
+    padding-top: 3px;
+  }
+}

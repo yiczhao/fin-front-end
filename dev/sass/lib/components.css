@@ -5320,8 +5320,8 @@ legend.alpaca-container-label {
   font-family: "summernote";
   font-style: normal;
   font-weight: normal;
-  src: url("../css/icons/summernote//summernote.eot");
-  src: url("../css/icons/summernote//summernote.eot?#iefix") format("embedded-opentype"), url("../css/icons/summernote//summernote.woff") format("woff"), url("../css/icons/summernote//summernote.ttf") format("truetype");
+  src: url("./lib/icons/summernote//summernote.eot");
+  src: url("./lib/icons/summernote//summernote.eot?#iefix") format("embedded-opentype"), url("./lib/icons/summernote//summernote.woff") format("woff"), url("./lib/icons/summernote//summernote.ttf") format("truetype");
 }
 [class^="note-icon-"]:before,
 [class*=" note-icon-"]:before {

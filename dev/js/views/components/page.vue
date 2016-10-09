@@ -4,7 +4,7 @@
         padding: 0px;
     }
     .page-bar {
-        margin: 25px auto;
+        margin: 20px auto;
         text-align: center;
     }
     .page-bar li{
