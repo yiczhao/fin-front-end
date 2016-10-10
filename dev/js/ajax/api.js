@@ -527,6 +527,13 @@ export default function install(Vue) {
      */
     _o.activity_save = './activity/thirdPartyAccount/config';
 
+    /**
+     * @description 查询税率管理列表i
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.taxRate_list = './taxRate/list?';
+
     //- todo  系统配置-系统日志 log-management
     /**
      * @description 系统日志列表接口地址

@@ -225,6 +225,13 @@ export default function(router){
             component:function () {
                 router.go({name:'login'})
             }
+        },
+        // 税率管理
+        '/taxRate/':{
+            name:'taxRate',
+            component:function (resolve) {
+                require(['./views/TaxRate/taxRate.vue'],resolve);
+            }
         }
     })
     router.beforeEach(transition =>{
