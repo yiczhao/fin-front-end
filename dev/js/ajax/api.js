@@ -162,11 +162,11 @@ export default function install(Vue) {
      */
     _o.tradedetail = './tradeDetail/list?';
     /**
-     * @description 添加交易接口地址
-     * @author 冷艳君
+     * @description 添加手工单接口地址
+     * @author 洪钢
      * @method POST
      */
-    _o.addtrade = './tradeDetail/add';
+    _o.addtrade = './manualTradeDetail/add';
     /**
      * @description 合计接口地址
      * @author 冷艳君
@@ -185,6 +185,14 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getBalance = './bankAccount/reserveCash/info/';
+
+    //- todo 交易管理-手工单管理 manual-trade-detail
+    /**
+     * @description 交易单列表接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.getManualTradeDetailList = './manualTradeDetail/list?';
 
     //- todo 交易管理-手工结算 manually-settlement
     /**

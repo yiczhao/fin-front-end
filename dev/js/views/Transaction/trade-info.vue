@@ -7,9 +7,6 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <form class="form-inline manage-form">
-                       <div class="form-group">
-                           <a class="btn btn-info" v-on:click="addTradeInfo" data-ksa="trade_detail_manage.add">添加交易</a>
-                        </div>
                         <div class="form-group">
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                 <option value="">全部分公司</option>
@@ -224,79 +221,6 @@
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到交易明细数据！
                 </div>
-                <validator name="vali">
-                    <form novalidate>
-                        <div id="modal_trade_info" data-backdrop="static" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3>添加交易</h3>
-                                        <button type="button" class="close" data-dismiss="modal">×</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>
-                                                <i class="aaaa">*</i>商户ID：
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']" v-limitnumber="tradeInfo.merchantOperationID">
-                                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>参与活动：</label>
-                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityOperationID" v-validate:val2="['required']" v-limitnumber="tradeInfo.activityOperationID">
-                                            <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>消费金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']" v-limitprice="tradeInfo.consumptionAmount">
-                                            <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>折扣金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" v-limitprice="tradeInfo.discountAmount">
-                                            <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>实付金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.payAmount" v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount">
-                                            <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>三方应收：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']" v-limitprice="tradeInfo.thirdPartyReceivable">
-                                            <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>退税款：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" v-limitprice="tradeInfo.suspensionTax">
-                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>商户实补：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']" v-limitprice="tradeInfo.merchantSubsidyActual">
-                                            <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>上传凭证：</label>
-                                            <input type="file" style="display: none;" @change="uploads($event)">
-                                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                                            <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                            <span v-if="tradeInfo.certificateId=='' && fire" class="validation-error-label">请选择凭证</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="position: relative;top: -40px;">备注:</label>
-                                            <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group tc">
-                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                        <button type="button" @click="saveTradeInfo" class="btn btn-primary">保存</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </validator>
             </div>
         </div>
     </index>
@@ -377,23 +301,9 @@
                 subcompanyList:[],
                 pageall:1,
                 select_merchantId:'',
-                fire:false,
-                tradeInfo:{
-                    merchantOperationID:'',
-                    activityOperationID:'',
-                    consumptionAmount:'',         
-                    discountAmount:'',
-                    payAmount:'',
-                    thirdPartyReceivable:'',    
-                    suspensionTax:'', 
-                    merchantSubsidyActual:'',
-                    certificateId:'',
-                    remarks:''
-                },
                 tradeList:[],
                 cityList:[],
                 merchantList:[],
-                uploadText:'',
                 nums:{
                     "consumptionAmount":"",
                     "discountAmount":"",
@@ -448,65 +358,9 @@
                         }
                     });
             },
-            addTradeInfo(){
-                this.errorHideL();
-                this.select_merchantId='';
-                this.tradeInfo.merchantOperationID='';
-                this.tradeInfo.activityOperationID='';
-                this.tradeInfo.consumptionAmount='';         
-                this.tradeInfo.discountAmount='';    
-                this.tradeInfo.payAmount='';
-                this.tradeInfo.thirdPartyReceivable='';    
-                this.tradeInfo.suspensionTax=''; 
-                this.tradeInfo.merchantSubsidyActual='';
-                this.tradeInfo.certificateId='';
-                this.tradeInfo.remarks='';
-                this.uploadText='';
-                $('#modal_trade_info').modal('show');
-            },
-            checkInfo(){
-                this.select_merchantId;
-                this.tradeInfo.consumptionAmount       
-                this.tradeInfo.discountAmount
-                this.tradeInfo.payAmount
-                this.tradeInfo.thirdPartyReceivable 
-                this.tradeInfo.suspensionTax
-                this.tradeInfo.merchantSubsidyActual
-            },
-            errorHideL(){
-                $('.suberror,.timeerror').hide();
-                this.fire=false;
-            },
-            saveTradeInfo(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                //隐藏非空提示
-                this.errorHideL();
-                //验证非空
-                if(!this.$vali.valid||this.tradeInfo.certificateId==''){
-                    this.fire=true;
-                    return;
-                }
-                let data={};
-                $.extend(true,data,this.tradeInfo);
-                data.consumptionAmount= accMul(this.tradeInfo.consumptionAmount,100);
-                data.discountAmount=accMul(this.tradeInfo.discountAmount,100);
-                data.payAmount=accMul(this.tradeInfo.payAmount,100);
-                data.thirdPartyReceivable=accMul(this.tradeInfo.thirdPartyReceivable,100);
-                data.suspensionTax=accMul(this.tradeInfo.suspensionTax,100);
-                data.merchantSubsidyActual=accMul(this.tradeInfo.merchantSubsidyActual,100);
-                this.model.addtrade(data)
-                    .then((response)=>{
-                        if(response.data.code==0){
-                            this.query();
-                            dialogs();
-                            $(".modal").modal("hide");
-                        }
-                    })
-            },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
-                this.clear();
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
             },
@@ -515,55 +369,6 @@
                 //初始化
                 this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.tradeDetailexcel+ $.param(this.checkForm));
-            },
-            //初始化
-            clear(){
-                this.tradeInfo={
-                    merchantOperationID:'',
-                    activityOperationID:'',
-                    consumptionAmount:'',         
-                    discountAmount:'',
-                    payAmount:'',
-                    thirdPartyReceivable:'',    
-                    suspensionTax:'', 
-                    merchantSubsidyActual:'',
-                    certificateId:'',
-                    remarks:''
-                },
-                this.uploadText='';
-            },
-            uploadClick(){
-                $('input[type="file"]').val('');
-                $('input[type="file"]').click();
-            },
-            uploads(e){
-                if(e.target.value==''&&this.uploadText!=''){
-                    return;
-                }
-                let files=e.target.files[0];
-                let vm=this;
-                var reader = new FileReader();
-                if(!check_upload(files.name)){
-                    return;
-                }
-                reader.readAsDataURL(files);
-                reader.onload = function(e){
-                    let datas={
-                        name:files.name,
-                        data:this.result.split(',')[1]
-                    }
-                    vm.$common_model.upload(datas)
-                        .then((response)=>{
-                            if(response.data.code==0){
-                                vm.tradeInfo.certificateId=response.data.data;
-                                vm.uploadText=files.name;
-                                dialogs('success','上传成功！');
-                            }
-                        })
-                }
-            },
-            errorDialog(msg){
-                dialogs('error',msg);
             },
             goThird(_id,_serialNumber){
                 this.model.skipToThird(_id)
@@ -594,11 +399,6 @@
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
-       },
-        validators: {
-            numeric(val) {
-                return /^[-+]?[0-9]+$/.test(val)
-            }
-        }
+       }
     }
 </script>

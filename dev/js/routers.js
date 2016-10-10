@@ -59,6 +59,13 @@ export default function(router){
                 require(['./views/Transaction/Abnormal-transaction.vue'],resolve);
             }
         },
+        //手工单管理-列表查询
+        '/manual-trade-detail/':{
+            name:'manual-trade-detail',
+            component: function(resolve){
+                require(['./views/Transaction/manual-trade-detail.vue'],resolve);
+            }
+        },
         //备付金支出-付款明细
         '/payment-details/:reserveCashOrderNumber/:payType/:merchantOperationIDs':{
             name:'payment-details',

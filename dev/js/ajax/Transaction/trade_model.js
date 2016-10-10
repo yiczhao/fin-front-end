@@ -14,14 +14,6 @@ function model(_this) {
             return _this.$http.get(_this.$API.tradedetail + $.param(data))
         },
         /**
-         * @description 添加交易
-         * @param data
-         * @returns {*}
-         */
-        addtrade(data){
-            return _this.$http.post(_this.$API.addtrade,data);
-        },
-        /**
          * @description 获取交易合计
          * @param data
          * @returns {*}
