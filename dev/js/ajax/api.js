@@ -542,6 +542,28 @@ export default function install(Vue) {
      */
     _o.taxRate_list = './taxRate/list?';
 
+    
+    //- todo  活动管理-活动列表-计算公式 activity-lists
+    /**
+     * @description 查询活动计算公式接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.activityformulae_list = './activity/info/';
+    /**
+     * @description 设为默认公式接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.defaultFormulae = './activity/defaultFormulae';
+    /**
+     * @description 保存公式接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.saveFormulae = './activity/saveFormulae';
+
+
     //- todo  系统配置-系统日志 log-management
     /**
      * @description 系统日志列表接口地址

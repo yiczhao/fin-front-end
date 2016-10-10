@@ -5,54 +5,115 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <div class="panel-title"><span class="btn btn-primary">使用默认公式</span></div>
                 <div class="panel-row">
-                    <div class="col">公式状态</div>
-                    <div class="col red">未提交</div>
+                    <div class="col">
+                        <div>实际广告费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.actualAdvertisementFee" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>合同广告费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.contractAdvertisementFee" :options="chooseData"></v-select>
+                    </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
-                        计算公式
-                        <span class="btn btn-primary">使用默认公式</span>
+                        <div>实际物料费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.actualMaterialFee" :options="chooseData"></v-select>
                     </div>
-                    <div class="col red">
-                        <span @click="choose($event)" class="btn btn-infos">三方应收</span>
-                        <span @click="choose($event)" class="btn btn-infos">苏州卡说税率</span>
+                    <div class="col">
+                        <div>合同物料费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.contractMaterialFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
-                    <span v-for="n in chooseData" @click="choose($event)" class="btn btn-infos">{{n}}</span>
-                </div>
-                <div class="panel-row">
-                    <div class="col">实际广告费=</div>
-                    <div class="col write-div">
-                        <template v-for="m in thirdData">
-                            <span  @click="choose($event)" class="btn btn-infos">{{m.val}}</span>
-                            <input type="text" class="form-control" @focus="chooseInput($index)">
-                        </template>
-                        <input type="text" class="form-control" @focus="chooseInput($index)" v-show="!thirdData.length">
+                    <div class="col">
+                        <div>实际微信营销费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.actualWeixinMarketFee" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>合同微信营销费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.contractWeixinMarketFee" :options="chooseData"></v-select>
                     </div>
                 </div>
-                <!--<div class="panel-row" v-for="n in chooseData">-->
-                    <!--<div>{{n}}=</div>-->
-                    <!--<div class="write-div">-->
-                        <!--<span v-for="m in writeData[$index]" @click="choose($event)" class="btn btn-info">{{m}}</span>-->
-                        <!--<input type="text" class="form-control" @focus="chooseInput($index)">-->
-                    <!--</div>-->
-                <!--</div>-->
+                <div class="panel-row">
+                    <div class="col">
+                        <div>实际服务费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.actualServiceFee" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>合同服务费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.contractServiceFee" :options="chooseData"></v-select>
+                    </div>
+                </div>
+                <div class="panel-row">
+                    <div class="col">
+                        <div><i>*</i>实际税费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.actualTaxFee" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>合同税费=</div>
+                        <v-select multiple taggable :value.sync="defaultData.contractTaxFee" :options="chooseData"></v-select>
+                    </div>
+                </div>
+                <div class="panel-row">
+                    <div class="col">
+                        <div><i>*</i>实际结算金额=</div>
+                        <v-select multiple taggable :value.sync="defaultData.actualSettlementFee" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>合同结算金额=</div>
+                        <v-select multiple taggable :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <span class="btn btn-primary" @click="defaultFormulae">设为默认公式</span>
+                    <span class="btn btn-primary" @click="submit">保存</span>
+                </div>
             </div>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
+<style lang="sass">
     .panel{
         padding:20px;
+        .panel-title{
+            margin:0px 20px 25px;
+            padding: 5px 0 25px;
+            border-bottom: 1px solid #ededed;
+        }
+        .panel-footer{
+            text-align: center;
+            padding-top: 20px;
+        }
         .panel-row{
             display: table;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            width:100%;
         }
         .col{
+            width: 50%;
             display: table-cell;
             vertical-align: middle;
+            &>div{
+                display: table-cell;
+                vertical-align: middle;
+            }
+            div:first-child{
+                min-width: 135px;
+                padding-right: 20px;
+                text-align: right;
+                i{
+                    color:red;
+                }
+            }
+            .v-select{
+                min-height: 38px;
+                .dropdown-toggle{
+                    min-height:38px;
+                    width: 600px;
+                }
+            }
         }
         .btn-infos{
             border: 1px solid #ddd;
@@ -81,10 +142,16 @@
     }
 </style>
 <script>
+    import vSelect from "../components/vue-select/vue-select.vue"
+    import model from '../../ajax/Activity/activityformulae_model'
     export default{
+        components: {vSelect},
         data(){
+            this.model =model(this)
             return{
                 chooseData:[
+                    '三方应收',
+                    '苏州卡说税率',
                     '实际广告费',
                     '实际物料费',
                     '实际微信营销费',
@@ -96,35 +163,87 @@
                     '合同微信营销费',
                     '合同服务费',
                     '合同税费',
-                    '合同结算金额'
+                    '合同结算金额',
                 ],
-                writeData:[],
-                index:'',
-                thirdData:[]
-            }
-        },
-        methods:{
-            chooseInput(index){
-              this.index=index;
-            },
-            choose(e){
-                let text=e.target.textContent;
-                var ishas=false;
-                this.thirdData.map((value)=>{
-                    if(value.val==text){
-                        ishas=true;
-                    }
-                })
-                if(!ishas){
-                    e.target.classList.toggle('checked')
-                    this.thirdData.push({
-                        'val':text,
-                        'index':this.thirdData.length
-                    })
+                defaultData:{
+                    actualAdvertisementFee:[],
+                    actualMaterialFee:[],
+                    actualWeixinMarketFee:[],
+                    actualServiceFee:[],
+                    actualTaxFee:[],
+                    actualSettlementFee:[],
+                    contractAdvertisementFee:[],
+                    contractMaterialFee:[],
+                    contractWeixinMarketFee:[],
+                    contractServiceFee:[],
+                    contractTaxFee:[],
+                    contractSettlementFee:[],
+                    used:false,
+                    defaultFormulae:false,
+                    refuseReason:'',
                 }
             }
         },
+        methods:{
+            toStrings(value){
+                let a=[];
+                value.map((val,index)=>{
+                    a[index]='【'+val+'】'
+                })
+                return a.join("")
+            },
+            getsubitData(){
+                let data={};
+                _.forEach(this.defaultData,(value,key)=>{
+                    (key!='used'&& key!='defaultFormulae' && key!='refuseReason')?data[key]=this.toStrings(value):data[key]=value;
+                })
+                return data;
+            },
+            enString(value){
+                let a=_.split(value,'】');
+                _.remove(a,(n)=>{return n==''});
+                let b=a.map(function (val){ return val.replace('【','')})
+                return b;
+            },
+            getList(){
+                this.model.activityformulae_list(this.$route.params.activityFormulaeId).then((res)=>{
+                    if(res.data.code==0){
+                        let data={};
+                        _.forEach(res.data.data,(value,key)=>{
+                            (key!='used'&&key!='defaultFormulae'&&key!='refuseReason')?data[key]=this.enString(value):data[key]=value;
+                        })
+                        this.$set('defaultData',data);
+                    }
+                })
+            },
+            defaultFormulae(){
+                if(this.defaultData.actualTaxFee==''||this.defaultData.actualSettlementFee==''){
+                    dialogs('info','请填写实际税费及实际结算金额');
+                    return;
+                }
+                let data=this.getsubitData();
+                this.model.defaultFormulae(data).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('success','设置成功！');
+                    }
+                })
+            },
+            submit() {
+                if(this.defaultData.actualTaxFee==''||this.defaultData.actualSettlementFee==''){
+                    dialogs('info','请填写实际税费及实际结算金额');
+                    return;
+                }
+                let data=this.getsubitData();
+                data.activityID=this.$route.params.activityFormulaeId;
+                this.model.saveFormulae(data).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('success','设置成功！');
+                    }
+                })
+            }
+        },
         ready() {
+
         },
         watch:{
         }

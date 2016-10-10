@@ -78,8 +78,8 @@
                         </div>
                     </form>
                 </div>
-                <div v-if="recheckLists.length>0" class="dataTables_wrapper">
-                    <div class="datatable-scroll" v-show="!!recheckLists.length">
+                <div class="dataTables_wrapper">
+                    <div class="datatable-scroll">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -106,7 +106,7 @@
                                     <th>不通过原因</th>
                                 </tr>
                             </thead>
-                            <tr v-for="n in recheckLists">
+                            <tr v-if="recheckLists.length>0" v-for="n in recheckLists">
                                 <td><input v-if="n.status==7" type="checkbox" @click="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
                                 <td>{{n.id }}</td>
                                 <td>{{n.createTime | datetime}}</td>
@@ -154,11 +154,6 @@
                                 <td>{{n.remarks}}</td>
                                 <td>{{n.refuseReason}}</td>
                             </tr>
-                            <tr><td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                                <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
-                                <td>{{total.payAmount/100 | currency ''}}</td>
-                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td>
-                                <td></td><td></td><td></td><td></td></tr>
                         </table>
                     </div>
                 </div>
@@ -166,8 +161,15 @@
                       :cur.sync="checkForm.pageIndex"
                       :page_size.sync="checkForm.pageSize">
                 </page>
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!recheckLists.length>0" v-cloak>
+                <div class="no-list" v-if="!recheckLists.length>0" v-cloak>
                     未找到数据
+                </div>
+                <div class="all-nums">
+                    合计：
+                        {{total.thirdPartySubsidyShould/100 | currency ''}}
+                        {{total.payAmount/100 | currency ''}}
+                        {{total.suspensionTaxAmount/100 | currency ''}}
+
                 </div>
             </div>
             <content-dialog
@@ -189,7 +191,7 @@
                     :title.sync="'详情'"
             >
                 <div class="form-group dcontent">
-                    <table class="table main-table" v-if="listinfos!=''">
+                    <table class="table main-table">
                         <thead>
                         <tr role="row">
                             <th>生成日期</th>
@@ -201,7 +203,7 @@
                             <th>备注</th>
                         </tr>
                         </thead>
-                        <tr class="div-table" v-for="trlist in listinfos">
+                        <tr v-if="listinfos!=''" class="div-table" v-for="trlist in listinfos">
                             <td>{{trlist.createTime | datetimes}}</td>
                             <td>{{trlist.payAmount/100 | currency '' }}</td>
                             <td  v-if="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
@@ -235,8 +237,7 @@
                             <td>{{trlist.remarks}}</td>
                         </tr>
                     </table>
-
-                    <div style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                    <div class="no-list"  v-if="!listinfos.length" v-cloak>
                         未找到数据
                     </div>
                 </div>
@@ -244,29 +245,6 @@
         </div>
     </index>
 </template>
-<style lang="sass">
-    .dcontent{
-        overflow: hidden;
-        margin-bottom: 0px;
-        .dtitle{
-            text-align: center;
-            padding-bottom: 15px;
-            color:black;
-        }
-        .control-label {
-            i{
-                color:red
-            }
-        }
-        .error{
-            border-color:red;
-        }
-        .validation-error-label{
-            font-size: 13px;
-            margin-top: 15px;
-        }
-    }
-</style>
 <script>
     import model from '../../ajax/PaymentOfPayment/payrecheck_model'
 
