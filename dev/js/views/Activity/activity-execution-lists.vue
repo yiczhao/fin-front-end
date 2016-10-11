@@ -37,23 +37,11 @@
                                 <th rowspan="2">活动时间</th>
                                 <th rowspan="2">活动说明 </th>
                                 <th colspan="2">结算金额</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
                                 <th colspan="2">服务费</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
                                 <th colspan="2">广告费</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
                                 <th colspan="2">物料费</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
                                 <th colspan="2">微信营销费</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
                                 <th colspan="2">税费</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
                                 <th rowspan="2">回款金额</th>
                                 <th rowspan="2">开票金额 </th>
                                 <th rowspan="2">三方应收 </th>
@@ -67,6 +55,20 @@
                                 <th rowspan="2">活动毛利率 </th>
                                 <th rowspan="2">回款账期 </th>
                                 <th rowspan="2">备注 </th>
+                            </tr>
+                            <tr role="row">
+                                <th>合同金额</th>
+                                <th >实际金额</th>
+                                <th>合同金额</th>
+                                <th >实际金额</th>
+                                <th>合同金额</th>
+                                <th >实际金额</th>
+                                <th>合同金额</th>
+                                <th >实际金额</th>
+                                <th>合同金额</th>
+                                <th >实际金额</th>
+                                <th>合同金额</th>
+                                <th >实际金额</th>
                             </tr>
                             </thead>
                             <tbody>
