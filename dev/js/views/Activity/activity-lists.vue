@@ -90,7 +90,7 @@
                                 <td>{{trlist.commissionAmount/100 | currency ''}}</td>
                                 <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
                                 <td>
-                                    <a v-link="{'name':'activity-formulae','params':{'activityFormulaeId':trlist.operationID}}">计算公式</a>
+                                    <a v-link="{'name':'activity-formulae','params':{'activityID':trlist.id, 'subCompanyID':trlist.subCompanyID}}">计算公式</a>
                                     <a @click="">其他信息</a>
                                 </td>
                             </tr>

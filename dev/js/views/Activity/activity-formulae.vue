@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <span class="btn btn-primary" @click="defaultFormulae">设为默认公式</span>
+                    <span class="btn btn-primary" @click="setdefaultFormulae">设为默认公式</span>
                     <span class="btn btn-primary" @click="submit">保存</span>
                 </div>
             </div>
@@ -206,22 +206,18 @@
                 return b;
             },
             getList(){
-                this.model.activityformulae_list(this.$route.params.activityFormulaeId).then((res)=>{
+                this.model.activityformulae_list(this.$route.params.activityID, this.$route.params.subCompanyID).then((res)=>{
                     if(res.data.code==0){
                         let data={};
-                        _.forEach(res.data.data,(value,key)=>{
-                            (key!='used'&&key!='defaultFormulae'&&key!='refuseReason')?data[key]=this.enString(value):data[key]=value;
-                        })
                         this.$set('defaultData',data);
                     }
                 })
             },
-            defaultFormulae(){
-                if(this.defaultData.actualTaxFee==''||this.defaultData.actualSettlementFee==''){
-                    dialogs('info','请填写实际税费及实际结算金额');
-                    return;
-                }
-                let data=this.getsubitData();
+            setdefaultFormulae(){
+                let data={
+                    activityID:this.$route.params.activityID,
+                    subCompanyID:this.$route.params.subCompanyID
+                };
                 this.model.defaultFormulae(data).then((res)=>{
                     if(res.data.code==0){
                         dialogs('success','设置成功！');
@@ -234,7 +230,8 @@
                     return;
                 }
                 let data=this.getsubitData();
-                data.activityID=this.$route.params.activityFormulaeId;
+                data.activityID=this.$route.params.activityID;
+                data.subCompanyID=this.$route.params.subCompanyID;
                 this.model.saveFormulae(data).then((res)=>{
                     if(res.data.code==0){
                         dialogs('success','设置成功！');

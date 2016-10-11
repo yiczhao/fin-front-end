@@ -200,7 +200,7 @@ export default function(router){
             }
         },
         /* 活动管理-活动列表-计算公式 */
-        '/activity-formulae/:activityFormulaeId':{
+        '/activity-formulae/:activityID/:subCompanyID':{
             name:'activity-formulae',
             component: function(resolve){
                 require(['./views/Activity/activity-formulae.vue'],resolve);
