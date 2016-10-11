@@ -28,7 +28,6 @@
   export default{
     props: {
       value: { type: String, default: '' },
-      readonly: { type: Boolean, default: false },
     },
     data(){
       return{

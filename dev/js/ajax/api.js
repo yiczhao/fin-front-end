@@ -568,7 +568,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.saveFormulae = './activity/formulae/save';
-
+    /**
+     * @description 使用默认接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.formulaedefault = './activity/formulae/default?';
 
     //- todo  系统配置-系统日志 log-management
     /**

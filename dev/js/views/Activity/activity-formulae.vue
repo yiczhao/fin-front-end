@@ -5,7 +5,7 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-title"><span class="btn btn-primary">使用默认公式</span></div>
+                <div class="panel-title"><span class="btn btn-primary" @click="usedefalut">使用默认公式</span></div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际广告费=</div>
@@ -211,6 +211,20 @@
                     subCompanyID:this.$route.params.subCompanyID
                 };
                 this.model.activityformulae_list(data).then((res)=>{
+                    if(res.data.code==0){
+                        let data={};
+                        _.forEach(res.data.data,(value,key)=>{
+                            (key!='used'&&key!='defaultFormulae'&&key!='refuseReason')?data[key]=this.enString(value):data[key]=value;
+                        })
+                        this.$set('defaultData',data);
+                    }
+                })
+            },
+            usedefalut(){
+                let data={
+                    subCompanyID:this.$route.params.subCompanyID
+                };
+                this.model.formulaedefault(data).then((res)=>{
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{

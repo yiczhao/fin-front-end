@@ -29,6 +29,14 @@ function model(_this){
         saveFormulae(data){
             return _this.$http.post(_this.$API.saveFormulae,data)
         },
+        /**
+         * @description 使用默认公式
+         * @params {data}
+         * @returns {*}
+         * */
+        formulaedefault(data){
+            return _this.$http.get(_this.$API.formulaedefault+$.param(data))
+        }
     }
 }
 module.exports=model;
