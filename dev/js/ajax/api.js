@@ -536,12 +536,18 @@ export default function install(Vue) {
     _o.activity_save = './activity/thirdPartyAccount/config';
 
     /**
-     * @description 查询税率管理列表i
+     * @description 查询税率管理列表
      * @author 于凯乐
      * @method GET
      */
     _o.taxRate_list = './taxRate/list?';
 
+    /**
+     * @description 获取编辑弹框税率信息
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.edit_list = './taxRate/info?';
     
     //- todo  活动管理-活动列表-计算公式 activity-lists
     /**
@@ -549,19 +555,19 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.activityformulae_list = './activity/info/';
+    _o.activityformulae_list = './activity/formulae/info?';
     /**
      * @description 设为默认公式接口地址
      * @author 于凯乐
      * @method POST
      */
-    _o.defaultFormulae = './activity/defaultFormulae';
+    _o.defaultFormulae = './activity/formulae/default';
     /**
      * @description 保存公式接口地址
      * @author 于凯乐
      * @method POST
      */
-    _o.saveFormulae = './activity/saveFormulae';
+    _o.saveFormulae = './activity/formulae/save';
 
 
     //- todo  系统配置-系统日志 log-management

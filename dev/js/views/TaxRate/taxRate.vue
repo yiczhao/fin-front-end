@@ -28,7 +28,7 @@
                                     <template v-if="trList.payTaxType==2">一般纳税人</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a data-ksa="" v-link="">操作</a></td>
+                                <td><a @click="edit(trList.subCompanyID)" data-ksa="">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>
@@ -60,65 +60,42 @@
                 </div>
 
                 <!--编辑税率dialog-->
-                <!--<div data-backdrop="static"  id="modal_taxRate" class="modal fade" style="display: none;">-->
-                    <!--<div class="modal-dialog">-->
-                        <!--<div class="modal-content">-->
-                            <!--<div class="modal-header">-->
-                                <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
-                                <!--<h5 class="modal-title">编辑税率</h5>-->
-                            <!--</div>-->
-                            <!--<div class="modal-body">-->
-                                <!--<div class="addtop">-->
-                                    <!--<div class="col-md-3">-->
-                                        <!--<select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">-->
-                                            <!--<option value="">全部分公司</option>-->
-                                            <!--<option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3">-->
-                                        <!--<select class="form-control" v-model="shdata.cityID">-->
-                                            <!--<option value="">全部城市</option>-->
+                <content-dialog
+                        :show.sync="show" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'编辑税率'" @kok="" @kcancel="show = false"
+                >
+                                <div class="addtop">
+                                    <div class="form-group">
+                                        <label>分公司</label>
+                                        <label>{{editData.subCompanyName}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"><i>* </i>税率月份</label>
+                                        <select class="form-control" v-model="editData.rateDate">
+                                            <option value="2016年3月">2016年3月</option>
+                                            <option value="">2016年9月</option>
+                                            <option value="">2016年8月</option>
+                                            <option value="">2016年7月</option>
                                             <!--<option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3">-->
-                                        <!--<input type="text" class="form-control" v-model="shdata.accountName" placeholder="名称">-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3">-->
-                                        <!--<input type="button" class="btn btn-info" @click="searchDigest" value="查询">-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="addbottom">-->
-                                    <!--<div class="col-md-12">-->
-                                        <!--<table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">-->
-                                            <!--<thead>-->
-                                            <!--<tr role="row">-->
-                                                <!--<th></th>-->
-                                                <!--<th>分公司</th>-->
-                                                <!--<th>城市</th>-->
-                                                <!--<th>第三方名称</th>-->
-                                                <!--<th>操作</th>-->
-                                            <!--</tr>-->
-                                            <!--</thead>-->
-                                            <!--<tbody>-->
-                                            <!--<tr role="row" v-for="n in xhlist">-->
-                                                <!--<td>{{$index+1}}</td>-->
-                                                <!--<td>{{n.subCompanyName}}</td>-->
-                                                <!--<td>{{n.cityName}}</td>-->
-                                                <!--<td>{{n.accountName}}</td>-->
-                                                <!--<td><a @click="checkTrue(n.id)">选择</a></td>-->
-                                            <!--</tr>-->
-                                            <!--</tbody>-->
-                                        <!--</table>-->
-                                        <!--<span v-if="firstAdd && !xhlist.length>0">-->
-                                            <!--无可添加数据-->
-                                        <!--</span>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"><i>*</i>纳税类型</label>
+                                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editData.payTaxType">
+                                        <label>小规模纳税人（/1.03）</label>
+                                        <input type="radio" id="normalTaxPayer" value="2" v-model="editData.payTaxType">
+                                        <label> 一般纳税人（/1.06）</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"><i>*</i>税率</label>
+                                        <input class="form-control" type="text" placeholder="主税率和附加税" v-model="editData.taxRate"><span>%</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"><i>*</i>备注：</label>
+                                        <textarea rows="5" cols="5" class="form-control" v-model="editData.remarks"></textarea>
+                                    </div>
+                                </div>
+                </content-dialog>
             </div>
         </div>
 
@@ -142,7 +119,17 @@
                     'pageSize': 10
 
                 },
-                taxRateList:[]
+                editData:{
+                    subCompanyName:'',
+                    effectiveYear:'',
+                    effectiveMonth:'',
+                    payTaxType:'',
+                    taxRate:'',
+                    remarks:'',
+                    rateDate:''
+                },
+                taxRateList:[],
+                show:false
             }
 
         },
@@ -157,6 +144,22 @@
                         this.$set('taxRateList', response.data.data)
                     }
                 });
+            },
+            edit(_subCompanyID){
+                let editForm={
+                    'subCompanyID':_subCompanyID,
+                    'effectiveYear':2016,
+                    'effectiveMonth':3
+                }
+                this.model.edit_list(editForm).then((response) => {
+                // *** 判断请求是否成功如若成功则填充数据到模型
+                    if(response.data.code == 0){
+                        this.$set('editData', response.data.data);
+                        this.editData.rateDate = this.editData.effectiveYear+'年'+this.editData.effectiveMonth+'月'
+                        this.show=true;
+                    }
+                });
+
             },
             initList(){
                 $('.modal').modal('hide');

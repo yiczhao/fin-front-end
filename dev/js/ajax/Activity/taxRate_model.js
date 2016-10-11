@@ -15,6 +15,9 @@ function model(_this){
         taxRate_list(data){
             return _this.$http.get(_this.$API.taxRate_list+ $.param(data))
         },
+        edit_list(data){
+            return _this.$http.get(_this.$API.edit_list+ $.param(data))
+        }
     }
 }
 module.exports=model;
