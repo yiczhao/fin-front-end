@@ -573,7 +573,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.formulaedefault = './activity/formulae/default?';
+    _o.useDefault = './activity/formulae/useDefault?';
 
     //- todo  系统配置-系统日志 log-management
     /**

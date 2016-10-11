@@ -224,7 +224,7 @@
                 let data={
                     subCompanyID:this.$route.params.subCompanyID
                 };
-                this.model.formulaedefault(data).then((res)=>{
+                this.model.useDefault(data).then((res)=>{
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
