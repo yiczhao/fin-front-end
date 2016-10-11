@@ -221,10 +221,7 @@
                 })
             },
             usedefalut(){
-                let data={
-                    subCompanyID:this.$route.params.subCompanyID
-                };
-                this.model.useDefault(data).then((res)=>{
+                this.model.useDefault(this.$route.params.subCompanyID).then((res)=>{
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{

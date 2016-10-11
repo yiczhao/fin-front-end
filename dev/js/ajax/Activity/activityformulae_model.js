@@ -31,11 +31,11 @@ function model(_this){
         },
         /**
          * @description 使用默认公式
-         * @params {data}
+         * @params {_id}
          * @returns {*}
          * */
-        useDefault(data){
-            return _this.$http.get(_this.$API.useDefault+$.param(data))
+        useDefault(_id){
+            return _this.$http.get(_this.$API.useDefault+_id)
         }
     }
 }
