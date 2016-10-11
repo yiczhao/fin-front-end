@@ -10,8 +10,8 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        activityformulae_list(_id){
-            return _this.$http.get(_this.$API.activityformulae_list+_id)
+        activityformulae_list(data){
+            return _this.$http.get(_this.$API.activityformulae_list+$.param(data))
         },
         /**
          * @description 设为默认公式

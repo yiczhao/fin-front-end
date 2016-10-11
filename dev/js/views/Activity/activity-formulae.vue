@@ -206,9 +206,16 @@
                 return b;
             },
             getList(){
-                this.model.activityformulae_list(this.$route.params.activityID, this.$route.params.subCompanyID).then((res)=>{
+                let data={
+                    activityID:this.$route.params.activityID,
+                    subCompanyID:this.$route.params.subCompanyID
+                };
+                this.model.activityformulae_list(data).then((res)=>{
                     if(res.data.code==0){
                         let data={};
+                        _.forEach(res.data.data,(value,key)=>{
+                            (key!='used'&&key!='defaultFormulae'&&key!='refuseReason')?data[key]=this.enString(value):data[key]=value;
+                        })
                         this.$set('defaultData',data);
                     }
                 })
@@ -240,7 +247,7 @@
             }
         },
         ready() {
-
+            this.getList();
         },
         watch:{
         }
