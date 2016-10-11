@@ -941,6 +941,13 @@ export default function install(Vue) {
      */
     _o.getthirdinfo_total = './thirdParty/account/total?';
 
+    /**
+     * @description 活动执行表列表数据接口地址
+     * @author 冷艳君
+     * @method get
+     */
+    _o.activity_execution_list = './activityExecutionList/list?';
+
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

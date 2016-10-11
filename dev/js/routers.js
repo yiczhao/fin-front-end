@@ -206,6 +206,13 @@ export default function(router){
                 require(['./views/Activity/activity-formulae.vue'],resolve);
             }
         },
+        // 活动执行表管理
+        '/activity-execution-lists/': {
+            name: 'activity-execution-lists',
+            component: function (resolve) {
+                require(['./views/Activity/activity-execution-lists.vue'], resolve);
+            }
+        },
         /* 系统配置-员工管理 */
         '/user-managerment/':{
             name:'user-managerment',
