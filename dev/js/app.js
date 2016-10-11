@@ -16,6 +16,7 @@ import interceptor from './interceptor.js'
 import Index from './views/components/index.vue'
 import page from './views/components/page.vue'
 import datepicker from './views/components/datepicker.vue'
+import getmonth from './views/components/vue-picker/picker.vue'
 import ContentDialog from './views/components/ContentDialog.vue'
 import common from  './utils/common'
 import store from './utils/store.js'
@@ -24,6 +25,7 @@ import common_model from './ajax/components/model.js'
 import notify_instance from './views/components/notify'
 Vue.component('index', Index);
 Vue.component('datepicker', datepicker);
+Vue.component('getmonth', getmonth);
 Vue.component('page', page);
 Vue.component('ContentDialog', ContentDialog);
 // *** 引入filter
