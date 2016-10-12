@@ -177,10 +177,7 @@
                     contractWeixinMarketFee:[],
                     contractServiceFee:[],
                     contractTaxFee:[],
-                    contractSettlementFee:[],
-                    used:false,
-                    defaultFormulae:false,
-                    refuseReason:'',
+                    contractSettlementFee:[]
                 }
             }
         },
@@ -195,7 +192,7 @@
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
-                    (key!='used'&& key!='defaultFormulae' && key!='refuseReason')?data[key]=this.toStrings(value):data[key]=value;
+                    (value!='null')?data[key]=this.toStrings(value):data[key]=[];
                 })
                 return data;
             },
@@ -214,7 +211,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (key!='used'&&key!='defaultFormulae'&&key!='refuseReason')?data[key]=this.enString(value):data[key]=value;
+                            (value!='null')?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
@@ -225,7 +222,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (key!='used'&&key!='defaultFormulae'&&key!='refuseReason')?data[key]=this.enString(value):data[key]=value;
+                            (value!='null')?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
