@@ -14,8 +14,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <getmonth  :value.sync="defaultData.startDate" ></getmonth>至
-                            <getmonth  :value.sync="defaultData.endDate"></getmonth>
+                            <getmonth :value.sync="defaultData.startDate"></getmonth>
+                            <span class="getmonth-span">至</span>
+                            <getmonth :value.sync="defaultData.endDate"></getmonth>
                         </div>
                         <div class="form-group">
                             <a class="btn btn-info" @click="initList" data-ksa="activity_effect_manage.search">查询</a>
@@ -27,48 +28,70 @@
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
-                                <th rowspan="2">分公司 </th>
-                                <th rowspan="2">合同编号</th>
-                                <th rowspan="2">活动ID</th>
-                                <th rowspan="2">三方名称</th>
-                                <th rowspan="2">活动归属</th>
-                                <th rowspan="2">经办人</th>
-                                <th rowspan="2">活动名称</th>
-                                <th rowspan="2">活动时间</th>
-                                <th rowspan="2">活动说明 </th>
-                                <th colspan="2">结算金额</th>
-                                <th colspan="2">服务费</th>
-                                <th colspan="2">广告费</th>
-                                <th colspan="2">物料费</th>
-                                <th colspan="2">微信营销费</th>
-                                <th colspan="2">税费</th>
-                                <th rowspan="2">回款金额</th>
-                                <th rowspan="2">开票金额 </th>
-                                <th rowspan="2">三方应收 </th>
-                                <th rowspan="2">商户应补 </th>
-                                <th rowspan="2">三方折扣差 </th>
-                                <th rowspan="2">佣金 </th>
-                                <th rowspan="2">市场毛利 </th>
-                                <th rowspan="2">商合毛利 </th>
-                                <th rowspan="2">市场毛利率 </th>
-                                <th rowspan="2">商合毛利率 </th>
-                                <th rowspan="2">活动毛利率 </th>
-                                <th rowspan="2">回款账期 </th>
-                                <th rowspan="2">备注 </th>
-                            </tr>
-                            <tr role="row">
-                                <th>合同金额</th>
-                                <th >实际金额</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
-                                <th>合同金额</th>
-                                <th >实际金额</th>
+                                <th>分公司 </th>
+                                <th>合同编号</th>
+                                <th>活动ID</th>
+                                <th>三方名称</th>
+                                <th>活动归属</th>
+                                <th>经办人</th>
+                                <th>活动名称</th>
+                                <th>活动时间</th>
+                                <th>活动说明 </th>
+                                <th width="200">
+                                    <div>结算金额</div>
+                                    <div>
+                                        <span>合同金额</span>
+                                        <span>实际金额</span>
+                                    </div>
+                                </th>
+                                <th width="200">
+                                    <div>服务费</div>
+                                    <div>
+                                        <span>合同金额</span>
+                                        <span>实际金额</span>
+                                    </div>
+                                </th>
+                                <th width="200">
+                                    <div>广告费</div>
+                                    <div>
+                                        <span>合同金额</span>
+                                        <span>实际金额</span>
+                                    </div>
+                                </th>
+                                <th width="200">
+                                    <div>物料费</div>
+                                     <div>
+                                        <span>合同金额</span>
+                                        <span>实际金额</span>
+                                    </div>
+                                </th>
+                                <th width="200">
+                                    <div>微信营销费</div>
+                                     <div>
+                                        <span>合同金额</span>
+                                        <span>实际金额</span>
+                                    </div>
+                                </th>
+                                <th width="200">
+                                    <div>税费</div>
+                                     <div>
+                                        <span>合同金额</span>
+                                        <span>实际金额</span>
+                                    </div>
+                                </th>
+                                <th>回款金额</th>
+                                <th>开票金额 </th>
+                                <th>三方应收 </th>
+                                <th>商户应补 </th>
+                                <th>三方折扣差 </th>
+                                <th>佣金 </th>
+                                <th>市场毛利 </th>
+                                <th>商合毛利 </th>
+                                <th>市场毛利率 </th>
+                                <th>商合毛利率 </th>
+                                <th>活动毛利率 </th>
+                                <th>回款账期 </th>
+                                <th>备注 </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -82,18 +105,30 @@
                                 <td>{{trlist.activityName}}</td>
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
                                 <td>{{trlist.description}}</td>
-                                <td>{{trlist.contractSettlementFee/100 | currency ''}}</td>
-                                <td>{{trlist.actualSettlementFee/100 | currency ''}}</td>
-                                <td>{{trlist.contractServiceFee/100 | currency ''}}</td>
-                                <td>{{trlist.actualServiceFee/100 | currency ''}}</td>
-                                <td>{{trlist.contractAdvertisementFee/100 | currency ''}}</td>
-                                <td>{{trlist.actualAdvertisementFee/100 | currency ''}}</td>
-                                <td>{{trlist.contractMaterialFee/100 | currency ''}}</td>
-                                <td>{{trlist.actualMaterialFee/100 | currency ''}}</td>
-                                <td>{{trlist.contractWeixinMarketFee/100 | currency ''}}</td>
-                                <td>{{trlist.actualWeixinMarketFee/100 | currency ''}}</td>
-                                <td>{{trlist.contractTaxFee/100 | currency ''}}</td>
-                                <td>{{trlist.actualTaxFee/100 | currency ''}}</td>
+                                <td>
+                                    <span>{{trlist.contractSettlementFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualSettlementFee/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{trlist.contractServiceFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualServiceFee/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{trlist.contractAdvertisementFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualAdvertisementFee/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{trlist.contractMaterialFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualMaterialFee/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{trlist.contractWeixinMarketFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualWeixinMarketFee/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{trlist.contractTaxFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualTaxFee/100 | currency ''}}</span>
+                                </td>
                                 <td>{{trlist.collectAmount/100 | currency ''}}</td>
                                 <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
@@ -127,32 +162,38 @@
                 <div class="no-list" v-show="!zdlists.length" >
                     未找到数据
                 </div>
-
             </div>
         </div>
     </index>
 </template>
 <style lang="sass" scoped>
-    table tr{
-        td,th{
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        span{
-            cursor: pointer;
-            color: #3c8dbc;
-        &:hover{
-             opacity: 80;
-         }
+    .form-group{
+        div{
+            margin-right: 0
+        }
+        .getmonth-span{
+            position: relative;
+            top: -5px;
+            margin: 0 5px;
         }
     }
-
-    .form-group{
-        overflow: hidden;
-        line-height: 36px;
+    th{
+        div{
+            text-align: center;
+            span{
+                display: inline-block;
+                padding: 10px 10px 0;
+            }
+        }
     }
-    }
+        td{
+            span{
+                color:#444;
+                display: inline-block;
+                width: 50%;
+                text-align: center;
+            }
+        }
 </style>
 <script>
     import model from '../../ajax/Activity/activity_effect_model'
@@ -167,8 +208,8 @@
                     'year':'',
                     'startMonth':'',
                     'endMonth':'',
-                    'startDate':new Date().getFullYear()+'-'+(new Date().getMonth() + 1),
-                    'endDate':new Date().getFullYear()+'-'+(new Date().getMonth() + 1),
+                    'startDate':'',
+                    'endDate':'',
                     'pageIndex': 1,
                     'pageSize': 10
                 },
