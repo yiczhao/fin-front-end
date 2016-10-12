@@ -127,7 +127,7 @@
                                        data-ksa="pay_recheck.pass">删除</a>
                                 </td>
                                 <td>
-                                    {{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}
+                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:manualTradeDetail.activityOperationID,name:manualTradeDetail.activityName}}">{{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}</a>
                                 </td>
                                 <td>
                                     <a href="{{origin}}/file/download/{{manualTradeDetail.certificateID}}">下载</a>

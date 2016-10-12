@@ -193,7 +193,7 @@ export default function install(Vue) {
      * @author 洪钢
      * @method POST
      */
-    _o.addtrade = './manualTradeDetail/add';
+    _o.addtrade = './manualTradeDetail/save';
 
     /**
      * @description 查询手工单接口地址
@@ -989,7 +989,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method get
      */
-    _o.activity_execution_list = './activityExecutionList/list?';
+    _o.activity_effect_list = './activityEffect/list?';
 
 
     Object.defineProperties(Vue.prototype, {

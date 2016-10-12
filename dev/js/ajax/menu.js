@@ -62,7 +62,7 @@ module.exports = [
         sub_menu: [
             {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'},
             {name: '税率管理', link: 'taxRate'},
-            {name: '活动执行表', link: 'activity-execution-lists'}
+            {name: '活动执行表', link: 'activity-effect-lists'}
         ]
     },
     {
