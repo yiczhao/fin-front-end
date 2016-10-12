@@ -24,8 +24,8 @@
                                 <td>{{trList.id}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>
-                                    <template v-if="trList.payTaxType==1">小规模纳税人</template>
-                                    <template v-if="trList.payTaxType==2">一般纳税人</template>
+                                    <template v-if="trList.payTaxType==1">{{'小规模纳税人（/1.03）'}}</template>
+                                    <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
                                 <td><a @click="editDetail(trList.id)" data-ksa="">编辑</a></td>
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"><i>* </i>税率月份</label>
-                                        <getmonth :value.sync="editData.rateDate"></getmonth>
+                                        <getmonth :value.sync="currentYM"></getmonth>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"><i>*</i>纳税类型</label>
@@ -103,6 +103,8 @@
             this.model = model(this)
             return{
                 pageall:1,
+                first:1,
+                currentYM:'',
                 defaultData:{
                     'id':'',
                     'subCompanyID':'',
@@ -124,8 +126,7 @@
                     effectiveMonth:'',
                     payTaxType:'',
                     taxRate:'',
-                    remarks:'',
-                    rateDate:''
+                    remarks:''
                 },
                 taxRateList:[],
                 show:false
@@ -150,13 +151,30 @@
                 // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code == 0){
                         this.$set('editData', response.data.data);
-                        this.editData.rateDate = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                        this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
                         this.show=true;
                     }
                 });
 
             },
-            editInfo(_id){
+            editInfo(){
+                let data = {
+                    'subCompanyID':this.editData.subCompanyID,
+                    'effectiveYear':this.currentYM.split('-')[0],
+                    'effectiveMonth':this.currentYM.split('-')[1]
+                }
+                this.model.editInfo(data).then((response) => {
+                    if(response.data.code == 0){
+                    let responseData = response.data.data;
+                    if(typeof(responseData) != "undefined"){
+                        this.$set('editData', responseData);
+                        this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                    }else{
+                        this.$set('editData', "");
+                    }
+
+                }
+                });
 
             },
             initList(){
@@ -173,9 +191,13 @@
             vm.initList();
         },
         watch:{
+            'currentYM'(){
+                this.first==1?this.first++:this.editInfo();
+            },
             'defaultData.pageIndex + defaultData.pageSize'(){
                 this.initList();
             }
         }
+
     }
 </script>

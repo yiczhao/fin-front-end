@@ -23,6 +23,15 @@ function model(_this){
          * */
         editDetail(_id){
             return _this.$http.get(_this.$API.edit_detail+ _id)
+        },
+
+        /**
+         * @description 根据年月查询税率信息
+         * @params {data}
+         * @returns {*}
+         * */
+        editInfo(data){
+            return _this.$http.get(_this.$API.edit_info+ $.param(data))
         }
     }
 }

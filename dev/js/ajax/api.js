@@ -590,7 +590,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.edit_list = './taxRate/info/';
+    _o.edit_info = './taxRate/info?';
     
     //- todo  活动管理-活动列表-计算公式 activity-lists
     /**
