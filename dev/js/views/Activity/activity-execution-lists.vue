@@ -14,8 +14,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <datepicker  :readonly="true" :value.sync="defaultData.startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="defaultData.endDate" format="YYYY-MM-DD"></datepicker>
+                            <getmonth  :value.sync="defaultData.startDate" ></getmonth>至
+                            <getmonth  :value.sync="defaultData.endDate"></getmonth>
                         </div>
                         <div class="form-group">
                             <a class="btn btn-info" @click="initList" data-ksa="activity_execution_list_manage.search">查询</a>
@@ -102,9 +102,15 @@
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td>{{trlist.marketGrossProfit/100 | currency ''}}</td>
                                 <td>{{trlist.merchantCooperationGrossProfit/100 | currency ''}}</td>
-                                <td>{{trlist.marketGrossProfitRate | currency ''}}</td>
-                                <td>{{trlist.merchantCooperationGrossProfitRate | currency ''}}</td>
-                                <td>{{trlist.activityGrossProfitRate | currency ''}}</td>
+                                <td>
+                                    <template v-if="trlist.marketGrossProfitRate">{{trlist.marketGrossProfitRate}}%</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.merchantCooperationGrossProfitRate">{{trlist.merchantCooperationGrossProfitRate}}%</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.activityGrossProfitRate">{{trlist.activityGrossProfitRate}}%</template>
+                                </td>
                                 <td>{{trlist.collectPeriod}}</td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -118,7 +124,7 @@
                         </page>
                     </div>
                 </div>
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-show="!zdlists.length" >
                     未找到数据
                 </div>
 
@@ -127,47 +133,6 @@
     </index>
 </template>
 <style lang="sass" scoped>
-    .addtop,  .addbottom{
-        overflow: hidden;
-        .form-control{
-            padding: 7px;
-        }
-    }
-    .addbottom{
-        margin-top: 15px;
-        .col-md-2{
-            text-align: center;
-        input{
-            margin-bottom: 10px;
-        }
-    }
-    .col-md-12{
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-    .col-md-1{
-        padding-top: 40px;
-        text-align: center;
-        input{
-            margin:15px 0;
-        }
-        }
-        .col-md-4{
-            border: 1px solid #ccc;
-            padding:10px;
-        }
-        ul{
-            list-style: none;
-            height: 278px;
-            overflow: auto;
-            li{
-                margin:5px 0;
-                cursor: pointer;
-                padding-left:3px;
-            }
-        }
-    }
     table tr{
         td,th{
             text-align: center;
@@ -182,32 +147,10 @@
          }
         }
     }
-    input[type="checkbox"]{
-        position: relative;
-        top: 2px;
-        left: -2px;
-    }
-    }
-    .addbottom table tr td,  .addbottom table tr th{
-        padding:10px 5px;
-    }
-    #modal_update{
-    table tr td{
-        padding: 10px 2px;
-    }
+
     .form-group{
         overflow: hidden;
         line-height: 36px;
-    }
-    }
-    .pull-left label i{
-        color:red;
-    }
-    .pull-left{
-    .validation-error-label{
-        line-height: 20px;
-        padding-left: 18px;
-        margin-top: 10px;
     }
     }
 </style>
@@ -224,8 +167,8 @@
                     'year':'',
                     'startMonth':'',
                     'endMonth':'',
-                    'startDate':'',
-                    'endDate':'',
+                    'startDate':new Date().getFullYear()+'-'+(new Date().getMonth() + 1),
+                    'endDate':new Date().getFullYear()+'-'+(new Date().getMonth() + 1),
                     'pageIndex': 1,
                     'pageSize': 10
                 },
@@ -243,14 +186,36 @@
             // *** 请求活动执行表列表数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                var startDate = data.startDate.split('-');
+                var startYear = parseInt(startDate[0]);
+                var startMonth = parseInt(startDate[1]);
+
+                var endDate = data.endDate.split('-');
+                var endYear = parseInt(endDate[0]);
+                var endMonth = parseInt(endDate[1]);
+                if(startYear > endYear || (startYear == endYear && startMonth > endMonth)){
+                    dialogs('error','开始年月不能大于结束年月！');
+                    return;
+                }
+                if(startYear != endYear){
+                    dialogs('error','不能跨年查询！');
+                    return;
+                }
+                if(startMonth != 1 && startMonth != endMonth){
+                    dialogs('error','只能查询某个月份的数据或者从一月份开始的多个月份累计的数据！');
+                    return;
+                }
+                data.year = startYear;
+                data.startMonth = startMonth;
+                data.endMonth = endMonth;
                 this.model.activity_execution_list(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
-                                this.$set('zdlists', response.data.data)
-                                this.$set('pageall', response.data.total)
-                            }
-                        });
+                .then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if(response.data.code==0){
+                        this.$set('zdlists', response.data.data)
+                        this.$set('pageall', response.data.total)
+                    }
+                });
             },
             getClist(){
                 // *** 请求公司数据
@@ -276,9 +241,6 @@
         },
         ready() {
             var vm=this;
-            vm.defaultData.year = 2016;
-            vm.defaultData.startMonth = 9;
-            vm.defaultData.endMonth = 9;
             vm.getClist();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
