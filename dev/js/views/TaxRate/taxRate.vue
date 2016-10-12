@@ -21,25 +21,23 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trList) in taxRateList">
-                                <td>{{trList.id}}</td>
+                                <td>{{trList.subCompanyID}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>
                                     <template v-if="trList.payTaxType==1">{{'小规模纳税人（/1.03）'}}</template>
                                     <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a @click="editDetail(trList.id, trList.subCompanyID)" data-ksa="">编辑</a></td>
+                                <td><a @click="editDetail(trList.subCompanyID)" data-ksa="">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
-                    </div>
+                    <page :all="pageall"
+                          :cur.sync="defaultData.pageIndex"
+                          :page_size.sync="defaultData.pageSize">
+                    </page>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     <table id="table2" class="table datatable-selection-single dataTable no-footer">
@@ -178,18 +176,21 @@
                     }
                 });
             },
-            editDetail(_id, _subcompanyID){
-                this.model.editDetail(_id).then((response) => {
+            editDetail(_subcompanyID){
+                this.model.editDetail(_subcompanyID).then((response) => {
                 // *** 判断请求是否成功如若成功则填充数据到模型
+                    this.subCompanyID = _subcompanyID;
                     if(response.data.code == 0){
-                        this.$set('editData', response.data.data);
-                        this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
-                        this.subCompanyID = _subcompanyID;
-                        this.show=true;
-                    }
-                });
-
-            },
+                        let responseData = response.data.data;
+                        if(responseData.effectiveMonth != null && responseData.effectiveYear != null){
+                            this.$set('editData', response.data.data);
+                            this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                        }else{
+                            this.$set('editData', "");
+                        }
+                    this.show=true;
+                }
+            })},
             editInfo(){
                 let data = {
                     'subCompanyID':this.subCompanyID,
@@ -199,12 +200,12 @@
                 this.model.editInfo(data).then((response) => {
                     if(response.data.code == 0){
                     let responseData = response.data.data;
-                    if(typeof(responseData) != "undefined"){
-                        this.$set('editData', responseData);
-                        this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
-                    }else{
-                        this.$set('editData', "");
-                    }
+                        if(typeof(responseData) != "undefined"){
+                            this.$set('editData', responseData);
+                            this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                        }else{
+                            this.$set('editData', "");
+                        }
 
                 }
                 });
@@ -237,7 +238,7 @@
             var vm=this;
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
-            vm.initList();
+            this.initList();
         },
         watch:{
             'currentYM'(){
