@@ -1,7 +1,7 @@
 <template>
     <index :title="'活动执行表'"
            :ptitle="'活动执行表列表'"
-           :hname="'activity-execution-lists'"
+           :hname="'activity-effect-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
@@ -18,7 +18,7 @@
                             <getmonth  :value.sync="defaultData.endDate"></getmonth>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="activity_execution_list_manage.search">查询</a>
+                            <a class="btn btn-info" @click="initList" data-ksa="activity_effect_manage.search">查询</a>
                         </div>
                     </form>
                 </div>
@@ -155,7 +155,7 @@
     }
 </style>
 <script>
-    import model from '../../ajax/Activity/activity_execution_list_model'
+    import model from '../../ajax/Activity/activity_effect_model'
     export default{
         data(){
             this.model =model(this)
@@ -208,7 +208,7 @@
                 data.year = startYear;
                 data.startMonth = startMonth;
                 data.endMonth = endMonth;
-                this.model.activity_execution_list(data)
+                this.model.activity_effect_list(data)
                 .then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code==0){

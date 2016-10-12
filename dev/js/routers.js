@@ -207,10 +207,10 @@ export default function(router){
             }
         },
         // 活动执行表管理
-        '/activity-execution-lists/': {
-            name: 'activity-execution-lists',
+        '/activity-effect-lists/': {
+            name: 'activity-effect-lists',
             component: function (resolve) {
-                require(['./views/Activity/activity-execution-lists.vue'], resolve);
+                require(['./views/Activity/activity-effect-lists.vue'], resolve);
             }
         },
         /* 系统配置-员工管理 */

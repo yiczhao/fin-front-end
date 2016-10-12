@@ -10,8 +10,8 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        activity_execution_list(data){
-            return _this.$http.get(_this.$API.activity_execution_list+ $.param(data))
+        activity_effect_list(data){
+            return _this.$http.get(_this.$API.activity_effect_list+ $.param(data))
         }
     }
 }
