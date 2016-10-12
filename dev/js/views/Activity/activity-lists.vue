@@ -182,7 +182,6 @@
                         </div>
                 </content-dialog>
 
-                <!--添加商户dialog-->
                 <content-dialog
                         :show.sync="modal_other" :type.sync="'infos'" :is-cancel="true"
                         :title.sync="'录入数据'" @kok="saveOther" @kcancel="modal_other=false"

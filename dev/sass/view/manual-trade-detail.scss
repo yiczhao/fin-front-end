@@ -1,0 +1,34 @@
+.manual-trade-detail{
+  .kdialog__content{
+    .dialog-row{
+      margin-bottom: 10px;
+      padding-left: 10px;
+      input,textarea,select {
+        display: inline-block;
+        width: 350px;
+      }
+      label{
+        display: inline-block;
+        width: 72px;
+        text-align: right;
+        i{
+          color:red;
+        }
+      }
+      textarea{
+        width: 350px;
+      }
+      .validation-error-label, .validation-valid-label {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        display: inline-block;
+        color: #F44336;
+        position: relative;
+        padding-left: 19px;
+      }
+      .error-input{
+        border-color: #F44336;
+      }
+    }
+  }
+}

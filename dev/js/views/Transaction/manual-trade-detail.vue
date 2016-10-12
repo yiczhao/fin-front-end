@@ -1,10 +1,8 @@
 <template>
     <index :title="'手工单'"
            :ptitle="'交易管理'"
-
-
            :isshow="'isshow'">
-        <div class="content account-management" slot="content">
+        <div class="content manual-trade-detail" slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
@@ -152,101 +150,95 @@
                 <div class="no-list" v-show="!manualTradeDetailList.length">
                     未找到数据
                 </div>
-                <validator name="vali">
-                    <form novalidate>
-                        <div id="modal_trade_info" data-backdrop="static" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3>添加交易</h3>
-                                        <button type="button" class="close" data-dismiss="modal">×</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>
-                                                <i class="aaaa">*</i>商户ID：
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="商户ID"
-                                                   v-model="tradeInfo.merchantOperationID"
-                                                   v-validate:val1="['required']"
-                                                   v-limitnumber="tradeInfo.merchantOperationID">
-                                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>参与活动：</label>
-                                            <input type="text" class="form-control" placeholder="活动ID"
-                                                   v-model="tradeInfo.activityOperationID"
-                                                   v-validate:val2="['required']"
-                                                   v-limitnumber="tradeInfo.activityOperationID">
-                                            <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>消费金额：</label>
-                                            <input type="text" class="form-control"
-                                                   v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"
-                                                   v-limitprice="tradeInfo.consumptionAmount">
-                                            <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>折扣金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.discountAmount"
-                                                   v-validate:val4="['required']"
-                                                   v-limitprice="tradeInfo.discountAmount">
-                                            <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>实付金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.payAmount"
-                                                   v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount">
-                                            <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>三方应收：</label>
-                                            <input type="text" class="form-control"
-                                                   v-model="tradeInfo.thirdPartyReceivable"
-                                                   v-validate:val6="['required']"
-                                                   v-limitprice="tradeInfo.thirdPartyReceivable">
-                                            <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>退税款：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
-                                                   v-validate:val7="['required']"
-                                                   v-limitprice="tradeInfo.suspensionTax">
-                                            <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>商户实补：</label>
-                                            <input type="text" class="form-control"
-                                                   v-model="tradeInfo.merchantSubsidyActual"
-                                                   v-validate:val8="['required']"
-                                                   v-limitprice="tradeInfo.merchantSubsidyActual">
-                                            <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i>*</i>上传凭证：</label>
-                                            <input type="file" style="display: none;" @change="uploads($event)">
-                                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                                            <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                            <span v-if="tradeInfo.certificateID=='' && fire"
-                                                  class="validation-error-label">请选择凭证</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="position: relative;top: -40px;">备注:</label>
-                                            <textarea class="form-control" id="remarks"
-                                                      v-model="tradeInfo.remarks"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group tc">
-                                        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                        <button type="button" @click="saveTradeInfo" class="btn btn-primary">保存</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </validator>
             </div>
+            <content-dialog
+                    :show.sync="modal_add" :type.sync="'infos'" :is-cancel="true"
+                    :title.sync="'添加手工单'" @kok="saveTradeInfo" @kcancel="modal_add=false"
+            >
+                <validator name="vali">
+                    <div class="dialog-row">
+                        <label><i>*</i>商户ID：</label>
+                        <input type="text" class="form-control" placeholder="商户ID"
+                               v-model="tradeInfo.merchantOperationID"
+                               v-validate:val1="['required']"
+                               v-limitnumber="tradeInfo.merchantOperationID"
+                               v-bind:class="{'error-input':$vali.val1.required && fire}"
+                        >
+                        <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>参与活动：</label>
+                        <input type="text" class="form-control" placeholder="活动ID"
+                               v-model="tradeInfo.activityOperationID"
+                               v-validate:val2="['required']"
+                               v-limitnumber="tradeInfo.activityOperationID"
+                               v-bind:class="{'error-input':$vali.val2.required && fire}">
+                        <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>消费金额：</label>
+                        <input type="text" class="form-control"
+                               v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"
+                               v-limitprice="tradeInfo.consumptionAmount"
+                               v-bind:class="{'error-input':$vali.val3.required && fire}">
+                        <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>折扣金额：</label>
+                        <input type="text" class="form-control" v-model="tradeInfo.discountAmount"
+                               v-validate:val4="['required']"
+                               v-limitprice="tradeInfo.discountAmount"
+                               v-bind:class="{'error-input':$vali.val4.required && fire}">
+                        <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>实付金额：</label>
+                        <input type="text" class="form-control" v-model="tradeInfo.payAmount"
+                               v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount"
+                               v-bind:class="{'error-input':$vali.val5.required && fire}">
+                        <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>三方应收：</label>
+                        <input type="text" class="form-control"
+                               v-model="tradeInfo.thirdPartyReceivable"
+                               v-validate:val6="['required']"
+                               v-limitprice="tradeInfo.thirdPartyReceivable"
+                               v-bind:class="{'error-input':$vali.val6.required && fire}">
+                        <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>退税款：</label>
+                        <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
+                               v-validate:val7="['required']"
+                               v-limitprice="tradeInfo.suspensionTax"
+                               v-bind:class="{'error-input':$vali.val7.required && fire}">
+                        <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>商户实补：</label>
+                        <input type="text" class="form-control"
+                               v-model="tradeInfo.merchantSubsidyActual"
+                               v-validate:val8="['required']"
+                               v-limitprice="tradeInfo.merchantSubsidyActual"
+                               v-bind:class="{'error-input':$vali.val8.required && fire}">
+                        <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label><i>*</i>上传凭证：</label>
+                        <input type="file" style="display: none;" @change="uploads($event)">
+                        <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                        <span v-text="uploadText" v-show="uploadText!=''"></span>
+                        <span v-if="tradeInfo.certificateID=='' && fire"
+                              class="validation-error-label">请选择凭证</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label style="position: relative;top: -40px;">备注:</label>
+                        <textarea class="form-control" id="remarks"
+                                  v-model="tradeInfo.remarks"></textarea>
+                    </div>
+                </validator>
+            </content-dialog>
             <content-dialog
                     :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="dtitle" @kok="processManualTradeDetail" @kcancel="show = false"
@@ -306,6 +298,7 @@
                 },
                 refuseReason: '',
                 uploadText: '',
+                modal_add: false,
             }
         },
         methods: {
@@ -353,7 +346,7 @@
                 this.tradeInfo.certificateID = '';
                 this.tradeInfo.remarks = '';
                 this.uploadText = '';
-                $('#modal_trade_info').modal('show');
+                this.modal_add=true;
             },
             processManualTradeDetail(){
                 if (sessionStorage.getItem('isHttpin') == 1)return;
@@ -473,7 +466,7 @@
                             if (response.data.code == 0) {
                                 this.getManualTradeDetailData();
                                 dialogs(response.data.message);
-                                $(".modal").modal("hide");
+                                this.modal_add=false;
                             }
                         })
             },
@@ -490,8 +483,8 @@
                     merchantSubsidyActual: '',
                     certificateID: '',
                     remarks: ''
-                },
-                        this.uploadText = '';
+                };
+                this.uploadText = '';
             },
             uploadClick(){
                 $('input[type="file"]').val('');
