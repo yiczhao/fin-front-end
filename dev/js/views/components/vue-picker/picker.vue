@@ -31,7 +31,7 @@
     },
     data(){
       return{
-        yText:'2016',
+        yText:'',
         ydata:[],
         showgetmonth:false,
         showyear:false,
@@ -39,7 +39,7 @@
     },
     methods:{
       showDatePicker(){
-        (this.showgetmonth)? this.resetDate() : this.showgetmonth=true;
+        this.showgetmonth? this.resetDate() : this.showgetmonth=true;
       },
       resetDate(){
         this.showgetmonth=false;
@@ -71,7 +71,6 @@
         this.showyear=true
       },
       nextyear(){
-        this.yText=parseInt(this.yText)+12;
         let data=[];
         for(let i=0;i<12;i++){
           data[i]=parseInt(this.yText)+i

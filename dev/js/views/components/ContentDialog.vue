@@ -1,5 +1,5 @@
 <template>
-  <div class="kdialog-mask" v-if="show">
+  <div class="kdialog-mask" v-show="show">
     <background-mask :class="!mask && 'kno-mask'">
       <div class="kdialog-mask-shadow">
         <div class="kdialog">
