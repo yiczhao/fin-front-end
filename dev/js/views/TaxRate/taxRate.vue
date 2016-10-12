@@ -105,7 +105,8 @@
                 pageall:1,
                 first:1,
                 currentYM:'',
-                'subCompanyID':'',
+                subCompanyID:'',
+                taxRateList:[],
                 defaultData:{
                     'id':'',
                     'subCompanyName':'',
