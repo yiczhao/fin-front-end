@@ -192,7 +192,7 @@
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
-                    (value!=null)?data[key]=this.toStrings(value):data[key]=[];
+                    (value!=null)?data[key]=this.toStrings(value):data[key]="";
                 })
                 return data;
             },
