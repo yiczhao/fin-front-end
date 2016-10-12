@@ -192,7 +192,7 @@
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
-                    (value!='null')?data[key]=this.toStrings(value):data[key]=[];
+                    (value!=null)?data[key]=this.toStrings(value):data[key]=[];
                 })
                 return data;
             },
@@ -211,7 +211,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!='null')?data[key]=this.enString(value):data[key]=[];
+                            (value!=null)?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
@@ -222,7 +222,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!='null')?data[key]=this.enString(value):data[key]=[];
+                            (value!=null)?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
