@@ -91,7 +91,7 @@
                                 <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
                                 <td>
                                     <a v-link="{'name':'activity-formulae','params':{'activityID':trlist.id, 'subCompanyID':trlist.subCompanyID}}">计算公式</a>
-                                    <a @click="">其他信息</a>
+                                    <a @click="otherInfo(trlist.id)">其他信息</a>
                                 </td>
                             </tr>
                             <tr>
@@ -133,7 +133,6 @@
                         :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
                         :title.sync="'配置第三方'"
                 >
-                    <div class="modal-body">
                         <div class="addtop">
                             <div class="col-md-3">
                                 <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
@@ -181,9 +180,61 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
                 </content-dialog>
 
+                <!--添加商户dialog-->
+                <content-dialog
+                        :show.sync="modal_other" :type.sync="'infos'" :is-cancel="true"
+                        :title.sync="'录入数据'" @kok="saveOther" @kcancel="modal_other=false"
+                >
+                    <div class="dialog-row">
+                        <span>
+                             <label>合同编号：</label>
+                             <input type="text" class="form-control" v-model="redata.contractNumber" v-limitnumber="redata.contractNumber" placeholder="请输入合同编号">
+                        </span>
+                        <span>
+                             <label>活动归属：</label>
+                            <select class="form-control" v-model="redata.activityAttribution">
+                                <option value="">请选择活动归属</option>
+                                <option value="0">分-分</option>
+                                <option value="1">总-总</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="dialog-row">
+                        <span>
+                            <label>经办人：</label>
+                             <input type="text" class="form-control" v-model="redata.operator" placeholder="请输入经办人">
+                        </span>
+                        <span>
+                            <label>回款帐期：</label>
+                           <input type="text" class="form-control" v-model="redata.collectPeriod" v-limitnumber="redata.collectPeriod" placeholder="请输入回款帐期">
+                            个月
+                        </span>
+                    </div>
+                    <div class="dialog-row">
+                         <span>
+                             <label>回款金额：</label>
+                             <input type="text" class="form-control" v-model="redata.collectAmount" v-limitprice="redata.collectAmount" placeholder="请输入回款金额">
+                        </span>
+                        <span>
+                            <label>开票金额：</label>
+                           <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitprice="redata.invoiceAmount" placeholder="请输入开票金额">
+                        </span>
+                    </div>
+                    <div class="dialog-row">
+                         <span>
+                             <label class="tlabel"><i>*</i>活动说明：</label>
+                             <textarea rows="3" class="form-control" v-model="redata.description"></textarea>
+                         </span>
+                    </div>
+                    <div class="dialog-row">
+                         <span>
+                             <label class="tlabel">备注：</label>
+                             <textarea rows="3" class="form-control" v-model="redata.remarks"></textarea>
+                        </span>
+                    </div>
+                </content-dialog>
             </div>
         </div>
     </index>
@@ -196,24 +247,24 @@
         }
     }
     .addbottom{
-        margin-top: 15px;
+        margin: 20px 0;
         .col-md-2{
             text-align: center;
-        input{
-            margin-bottom: 10px;
+            input{
+                margin-bottom: 10px;
+            }
         }
-    }
-    .col-md-12{
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-    .col-md-1{
-        padding-top: 40px;
-        text-align: center;
-        input{
-            margin:15px 0;
+        .col-md-12{
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
         }
+        .col-md-1{
+            padding-top: 40px;
+            text-align: center;
+            input{
+                margin:15px 0;
+            }
         }
         .col-md-4{
             border: 1px solid #ccc;
@@ -230,47 +281,49 @@
             }
         }
     }
-    table tr{
-        td,th{
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        span{
-            cursor: pointer;
-            color: #3c8dbc;
-        &:hover{
-             opacity: 80;
-         }
-        }
-    }
     input[type="checkbox"]{
         position: relative;
         top: 2px;
         left: -2px;
     }
-    }
     .addbottom table tr td,  .addbottom table tr th{
         padding:10px 5px;
-    }
-    #modal_update{
-    table tr td{
-        padding: 10px 2px;
-    }
-    .form-group{
-        overflow: hidden;
-        line-height: 36px;
-    }
     }
     .pull-left label i{
         color:red;
     }
     .pull-left{
-    .validation-error-label{
-        line-height: 20px;
-        padding-left: 18px;
-        margin-top: 10px;
+        .validation-error-label{
+            line-height: 20px;
+            padding-left: 18px;
+            margin-top: 10px;
+        }
     }
+    .dialog-row{
+        margin-bottom: 10px;
+        span{
+            display: inline-block;
+            min-width: 300px;
+            input,textarea,select {
+                display: inline-block;
+                width: 190px;
+            }
+            label{
+                display: inline-block;
+                width: 72px;
+                text-align: right;
+            }
+            textarea{
+                width: 495px;
+            }
+            .tlabel{
+                position: relative;
+                top: -55px;
+                i{
+                    color:red;
+                }
+            }
+        }
     }
 </style>
 <script>
@@ -313,7 +366,20 @@
                 addId:[],
                 id:'',
                 firstAdd:false,
-                modal_add:false
+                modal_add:false,
+                modal_other:false,
+                redata:{
+                    "id": '',
+                    "activityId": '',
+                    "contractNumber": '',
+                    "activityAttribution": '',
+                    "operator": '',
+                    "collectPeriod": '',
+                    "collectAmount": '',
+                    "invoiceAmount": '',
+                    "description": '',
+                    "remarks": '',
+                }
             }
         },
         methods:{
@@ -379,6 +445,7 @@
             },
             initList(){
                 this.modal_add=false;
+                this.modal_other=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
@@ -424,6 +491,29 @@
                             this.initList();
                         }
                     })
+            },
+            otherInfo(_id){
+                this.redata.id=_id;
+                this.model.otherInfo(_id)
+                        .then((res)=> {
+                            if(res.data.code==0){
+                                this.modal_other=true;
+                            }
+                        })
+
+            },
+            saveOther(){
+                if(this.redata.description==''){
+                    dialogs('info','请输入活动说明！');
+                    return;
+                }
+                this.model.saveOther(this.redata)
+                        .then((res)=> {
+                            if(res.data.code==0){
+                                dialogs();
+                                this.initList();
+                            }
+                        })
             }
         },
         ready() {

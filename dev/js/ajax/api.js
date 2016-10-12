@@ -570,6 +570,18 @@ export default function install(Vue) {
      * @method POST
      */
     _o.activity_save = './activity/thirdPartyAccount/config';
+    /**
+     * @description 保存其他信息接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.saveOther = './activity/otherInfo/save';
+    /**
+     * @description 查询其他信息接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.otherInfo = './activity/otherInfo/';
 
     /**
      * @description 查询税率管理列表
