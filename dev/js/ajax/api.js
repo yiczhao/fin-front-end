@@ -193,7 +193,7 @@ export default function install(Vue) {
      * @author 洪钢
      * @method POST
      */
-    _o.addtrade = './manualTradeDetail/add';
+    _o.addtrade = './manualTradeDetail/save';
 
     /**
      * @description 查询手工单接口地址
