@@ -89,7 +89,7 @@
       }
     },
     ready() {
-      (this.value!='')?this.yText=this.value.split('-')[0]:null;
+      !this.value?this.value=getNow():this.yText=this.value.split('-')[0];
       document.addEventListener('click', (e) => {
         if (this.$el && !this.$el.contains(e.target)) {
           this.resetDate();
