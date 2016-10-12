@@ -43,8 +43,8 @@
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
-                                <th>ID</th>
-                                <th>名称</th>
+                                <th>活动ID</th>
+                                <th>活动名称</th>
                                 <th>补贴第三方</th>
                                 <th>分公司 </th>
                                 <th>城市</th>
