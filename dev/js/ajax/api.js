@@ -82,6 +82,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.manuallyexcel = '/data/export/excel/manuallySettle?';
+    /**
+     * @description 活动执行效果页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.activityEffectExcel = '/data/export/excel/activityEffect?';
 
 
     //- todo 财务处理-账户列表 account-management
@@ -1009,6 +1015,7 @@ export default function install(Vue) {
      * @method get
      */
     _o.activity_effect_list = './activityEffect/list?';
+
 
 
     Object.defineProperties(Vue.prototype, {

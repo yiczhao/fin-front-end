@@ -21,6 +21,9 @@
                         <div class="form-group">
                             <a class="btn btn-info" @click="initList" data-ksa="activity_effect_manage.search">查询</a>
                         </div>
+                        <div class="form-group">
+                            <a class="btn btn-info" v-on:click="export" data-ksa="pay_recheck.export">导出</a>
+                        </div>
                     </form>
                 </div>
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
@@ -211,7 +214,8 @@
                     'startDate':'',
                     'endDate':'',
                     'pageIndex': 1,
-                    'pageSize': 10
+                    'pageSize': 10,
+                    'mid': ''
                 },
                 shdata:{
                     'subCompanyID':'',
@@ -224,6 +228,32 @@
             }
         },
         methods:{
+            export(){
+                var startDate =  this.defaultData.startDate.split('-');
+                var startYear = parseInt(startDate[0]);
+                var startMonth = parseInt(startDate[1]);
+
+                var endDate =  this.defaultData.endDate.split('-');
+                var endYear = parseInt(endDate[0]);
+                var endMonth = parseInt(endDate[1]);
+                if(startYear > endYear || (startYear == endYear && startMonth > endMonth)){
+                    dialogs('error','开始年月不能大于结束年月！');
+                    return;
+                }
+                if(startYear != endYear){
+                    dialogs('error','不能跨年查询！');
+                    return;
+                }
+                if(startMonth != 1 && startMonth != endMonth){
+                    dialogs('error','只能查询某个月份的数据或者从一月份开始的多个月份累计的数据！');
+                    return;
+                }
+                this.defaultData.year = startYear;
+                this.defaultData.startMonth = startMonth;
+                this.defaultData.endMonth = endMonth;
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
+            },
             // *** 请求活动执行表列表数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
