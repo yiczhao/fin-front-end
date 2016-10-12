@@ -2,78 +2,73 @@
     <index title="补贴退税" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <form class="form-inline manage-form">
-                                <div class="form-group">
-                                    <select class="form-control" v-model="checkForm.subCompanyID"  @change="getCity(checkForm.subCompanyID)">
-                                        <option value="">全部分公司</option>
-                                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="checkForm.cityID">
-                                        <option value="">全部城市</option>
-                                        <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="checkForm.timeRange">
-                                        <option value="5">今天</option>
-                                        <option value="0">昨天</option>
-                                        <option value="1">最近一周</option>
-                                        <option value="2">最近一个月</option>
-                                        <option value="3">最近三个月</option>
-                                        <option value="4">自定义时间</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" v-show="checkForm.timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.id" v-limitnumber="checkForm.id" placeholder="ID">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="checkForm.createType">
-                                        <option value="">请选择生成方式</option>
-                                        <option value="1">系统生成</option>
-                                        <option value="2">手工单</option>
-                                        <option value="3">手工结算</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="checkForm.status">
-                                        <option value="">请选择状态</option>
-                                        <option value="1">等待审核</option>
-                                        <option value="7">等待复核</option>
-                                        <option value="2">等待划付</option>
-                                        <option value="3">转账中</option>
-                                        <option value="4">等待对账</option>
-                                        <option value="5">对账成功</option>
-                                        <option value="6">划付失败</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
-                                </div>
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
-                                </div>
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="subsidyTaxexcel" data-ksa="subsidy_tax_rebate_detail_manage.export">导出</a>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <a class="btn btn-info" data-toggle="modal"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
-                                </div>
-                            </form> 
+
+
+                        <div class="heading">
+                            <div class="heading-left">
+                                <a class="btn btn-add add-top" data-toggle="modal"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
+                            </div>
+
+                            <div class="heading-right">
+                                <form class="form-inline manage-form">
+                                        <select class="form-control" v-model="checkForm.subCompanyID"  @change="getCity(checkForm.subCompanyID)">
+                                            <option value="">全部分公司</option>
+                                            <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                        </select>
+
+                                        <select class="form-control" v-model="checkForm.cityID">
+                                            <option value="">全部城市</option>
+                                            <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                                        </select>
+
+                                        <select class="form-control" v-model="checkForm.timeRange">
+                                            <option value="5">今天</option>
+                                            <option value="0">昨天</option>
+                                            <option value="1">最近一周</option>
+                                            <option value="2">最近一个月</option>
+                                            <option value="3">最近三个月</option>
+                                            <option value="4">自定义时间</option>
+                                        </select>
+
+                                    <div  v-show="checkForm.timeRange==4">
+                                        <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                        <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                                    </div>
+
+                                        <input type="text" class="form-control" v-model="checkForm.id" v-limitnumber="checkForm.id" placeholder="ID">
+
+                                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
+
+                                        <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
+
+                                        <select class="form-control" v-model="checkForm.createType">
+                                            <option value="">请选择生成方式</option>
+                                            <option value="1">系统生成</option>
+                                            <option value="2">手工单</option>
+                                            <option value="3">手工结算</option>
+                                        </select>
+
+                                        <select class="form-control" v-model="checkForm.status">
+                                            <option value="">请选择状态</option>
+                                            <option value="1">等待审核</option>
+                                            <option value="7">等待复核</option>
+                                            <option value="2">等待划付</option>
+                                            <option value="3">转账中</option>
+                                            <option value="4">等待对账</option>
+                                            <option value="5">对账成功</option>
+                                            <option value="6">划付失败</option>
+                                        </select>
+
+                                        <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
+                                </form> 
+                            </div>
+
+                            <div class="heading-middle">
+                                <a class="btn btn-info add-top" v-on:click="query" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
+                            </div>
                         </div>
+
+
                         <div v-show="!!subsidyTaxRebateDetailList.length"  class="dataTables_wrapper no-footer">
                             <div class="datatable-scroll">
                             <table id="table1" class="table">
@@ -96,7 +91,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="strd in subsidyTaxRebateDetailList">
+                                    <tr v-for="(index,strd) in subsidyTaxRebateDetailList" v-bind:class="{'odd':(index%2==0)}">
                                         <td>
                                             <template v-if="strd.status!=1">
                                                 <input type="checkbox" disabled="true" name="ckbox-disabled" :id="strd.id"/>{{strd.id}}
@@ -180,12 +175,22 @@
                         <div  v-else style="padding: 30px;font-size: 16px;text-align: center" >
                             未查询到补贴退税信息！
                         </div>
-                        <div v-show="!!subsidyTaxRebateDetailList.length" class="datatable-footer">
-                            <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
-                            </page>
+
+
+                        <div class="datatable-bottom">
+                           <div class="left">
+                                <a class="icon-file-excel" style="line-height: 30px;" v-on:click="subsidyTaxexcel" data-ksa="subsidy_tax_rebate_detail_manage.export">Excel导出</a>
+                           </div>
+
+                           <div class="right" v-show="!!subsidyTaxRebateDetailList.length">
+                                <page :all="pageall"
+                                      :cur.sync="checkForm.pageIndex"
+                                      :page_size.sync="checkForm.pageSize">
+                                </page>
+                           </div>
                         </div>
+
+
             </div>
 
             <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">

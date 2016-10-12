@@ -5,9 +5,10 @@
            :isshow="'isshow'">
         <div class="content account-management" slot="content">
         <div class="panel panel-flat">
+
             <div class="heading">
                 <div class="heading-left">
-                    <a data-toggle="modal" data-target="#modal_add"  class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
+                    <a data-toggle="modal" data-target="#modal_add"  class="btn btn-add" @click="addUser" data-ksa="account_manage.add">添加账户</a>
                 </div>
                 <div class="heading-right">
                     <select class="form-control" v-model="defaultData.companyId">
@@ -24,6 +25,7 @@
                     <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                 </div>
             </div>
+
             <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
                     <table class="table">
@@ -74,12 +76,22 @@
                     </tbody>
                 </table>
                 </div>
-                <div class="table-footer">
-                    <page :all="pageall"
-                          :cur.sync="defaultData.pageIndex"
-                          :page_size.sync="defaultData.pageSize">
-                    </page>
+
+
+                <div class="datatable-bottom">
+                   <div class="left">
+                        <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
+                   </div>
+
+                   <div class="right">
+                        <page :all="pageall"
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
+                        </page>
+                   </div>
                 </div>
+
+
             </div>
             <div class="no-list" v-else>
                 未找到数据

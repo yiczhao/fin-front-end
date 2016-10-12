@@ -1,0 +1,83 @@
+.business-lists{
+      .form-group{
+        text-align: left;
+    }
+      .form-group.tc{
+        text-align: center;
+    }
+      .modal-body .form-control{
+        text-align: left;
+        width:67%;
+        display: inline-block;
+    }
+      .modal-body label{
+        width:20%;
+        display: inline-block;
+    }
+      .modal-body label i{
+        color:red;
+    }
+      .modal-body .waring{
+        color: red;
+        margin-left: 5px;
+    }
+      .modal-body button{
+        width:35%;
+    }
+      table tr td,  table tr th{
+         text-align: center;
+         text-overflow: ellipsis;
+         overflow: hidden;
+         white-space: nowrap;
+     }
+      td span{
+        cursor: pointer;
+        color: #3c8dbc;
+    }
+      td span:hover{
+        opacity: 80;
+    }
+      .modal-body .mt35{
+         border: 1px solid #ddd;
+         margin-top: 35px;
+         position: relative;
+         padding-top: 15px;
+    }
+      .modal-body .mt35 table{
+         border-top: 1px solid #ddd;
+     }
+      .modal-body .mt35 .togglebtn{
+         display: block;
+         position: absolute;
+         width: 80px;
+         line-height: 25px;
+         height: 25px;
+         top:-25px;
+         left: -1px;
+         background: #dadada;
+         text-align: center;
+         border: 1px solid #ccc;
+         border-radius: 15px 15px 0 0;
+         cursor: pointer;
+     }
+      .modal-body .mt35 .active{
+        color:#1E88E5;
+         top: -30px;
+         height: 30px;
+         line-height: 30px;
+    }
+      .modal-body .mt35 div{
+         margin-bottom: 10px;
+     }
+      .modal-body .mt35 div span{
+         margin: 0 30px 0 15px;
+     }
+      .modal-body .mt35 .updatebtn{
+         position: absolute;
+         right: 20px;
+         top: 45px;
+     }
+    .validation-error-label{
+        display: inline-block;
+    }
+}

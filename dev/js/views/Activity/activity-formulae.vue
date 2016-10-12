@@ -3,27 +3,40 @@
            :ptitle="'活动列表'"
            :hname="'activity-lists'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content activity-formulae" slot="content">
             <div class="panel panel-flat">
+
                 <div class="panel-row">
                     <div class="col">公式状态</div>
                     <div class="col red">未提交</div>
                 </div>
+
                 <div class="panel-row">
                     <div class="col">
                         计算公式
-                        <span class="btn btn-primary">使用默认公式</span>
+                        
                     </div>
+                </div>
+
+                <div class="panel-row">
                     <div class="col red">
+                        <span class="btn btn-primary" >使用默认公式</span>
+                    </div>
+                </div>
+
+                <div class="panel-row">
+                    
+
+                    <div class="col">
+                        <span v-for="n in chooseData" @click="choose($event)" class="btn btn-infos">{{n}}</span>
                         <span @click="choose($event)" class="btn btn-infos">三方应收</span>
                         <span @click="choose($event)" class="btn btn-infos">苏州卡说税率</span>
                     </div>
                 </div>
-                <div class="panel-row">
-                    <span v-for="n in chooseData" @click="choose($event)" class="btn btn-infos">{{n}}</span>
-                </div>
+
                 <div class="panel-row">
                     <div class="col">实际广告费=</div>
+                    
                     <div class="col write-div">
                         <template v-for="m in thirdData">
                             <span  @click="choose($event)" class="btn btn-infos">{{m.val}}</span>
@@ -32,6 +45,7 @@
                         <input type="text" class="form-control" @focus="chooseInput($index)" v-show="!thirdData.length">
                     </div>
                 </div>
+
                 <!--<div class="panel-row" v-for="n in chooseData">-->
                     <!--<div>{{n}}=</div>-->
                     <!--<div class="write-div">-->
@@ -43,43 +57,7 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    .panel{
-        padding:20px;
-        .panel-row{
-            display: table;
-            margin-bottom: 20px;
-        }
-        .col{
-            display: table-cell;
-            vertical-align: middle;
-        }
-        .btn-infos{
-            border: 1px solid #ddd;
-            margin-left: 20px;
-            background: #fff;
-        }
-        .checked{
-            border-color:#2196F3;
-            color:#2196F3;
-        }
-    }
-    .write-div{
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        padding: 10px;
-        width: 500px;
-        .btn-infos,.form-control{
-            margin-left: 5px;
-            margin-bottom: 5px;
-            float: left;
-        }
-        .form-control{
-            width: 50px;
-            border: 1px solid #ddd;
-        }
-    }
-</style>
+
 <script>
     export default{
         data(){

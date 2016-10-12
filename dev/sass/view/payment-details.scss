@@ -1,0 +1,98 @@
+.payment-details {
+     .f20{
+        font-size: 20px;
+        font-weight: bolder;
+    }
+       .modal-body label i{
+        color:red;
+    }
+      .modal-body button{
+        width:35%;
+    }
+      .m20{
+        margin-bottom:20px;
+    }
+      .mt0{
+        margin-top: 0
+    }
+     .panel-title p span{
+        width: 24%;
+        margin-bottom: 3px;
+        display: inline-block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 13px;
+    }
+     .datatable-scroll{
+         overflow: auto;
+        padding-bottom: 20px;
+        background:#fff;
+         .main-table{
+             .bgddd{
+                 background: #ECECEC;
+             }
+            .morebtn{
+                cursor: pointer;
+                line-height: 18px;
+                position: relative;
+                left: 8px;
+                i{
+                    color: rgb(0, 188, 212);
+                    font-size: 14px;
+                }
+            }
+             tr{
+                 td,th{
+                     padding: 15px 10px;
+                     text-align:center;
+                 }
+                 .lists{
+                     border-bottom: 1px solid #ccc;
+                 }
+                 .title,.lists{
+                    overflow:hidden;
+                     border-right: 1px solid #ccc;
+                     display: table-row;
+                     span{
+                         display: table-cell;
+                         padding: 0 15px;
+                         height: 30px;
+                         line-height: 30px;
+                         border: 1px solid #ccc;
+                         border-bottom: 0;
+                         border-right: 0;
+                     }
+                 }
+             }
+             .redrow{
+                 display: inline-block;
+                 padding:6px;
+                 border-radius: 6px;
+                 background: rgb(253,110,73);
+                 color: #fff;
+                 font-size: 12px;
+             }
+         }
+   }
+     .div-table{
+         td{
+             position: relative;
+             .pull-left{
+                 margin: 10px;
+             }
+
+         }
+     }
+     .modal-body tr td, .modal-body tr th{
+        padding: 10px;
+    }
+    .tc .validation-error-label{
+        display: inline-block;
+    }
+    .modal-body{
+        .form-group{
+            overflow: hidden;
+        }
+    }
+}

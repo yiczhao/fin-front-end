@@ -3,47 +3,41 @@
            :ptitle="'交易管理'"
            :hname="'trade-info'"  
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content white-lists" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="addWhite" data-target="#modal_waring" data-ksa="exception_trade_white_list_manage.add">添加</a>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.subCompanyID">
-                                <option value="">全部分公司</option>
-                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.type">
-                                <option value="">请选择类型</option>
-                                <option value="2">活动</option>
-                                <option value="1">商户</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.status">
-                                <option value="">请选择状态</option>
-                                <option value="true">正常</option>
-                                <option value="false">已失效</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID" v-limitnumber="defaultData.operationID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="exception_trade_white_list_manage.search">查询</a>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="abnormalWhiteexcel" data-ksa="exception_trade_white_list_manage.export">导出</a>
-                        </div>
-                    </form>
+
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add" @click="addWhite" data-target="#modal_waring" data-ksa="exception_trade_white_list_manage.add">添加</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <select class="form-control" v-model="defaultData.subCompanyID">
+                            <option value="">全部分公司</option>
+                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                        </select> 
+
+                        <select class="form-control" v-model="defaultData.type">
+                            <option value="">请选择类型</option>
+                            <option value="2">活动</option>
+                            <option value="1">商户</option>
+                        </select>
+
+                        <select class="form-control" v-model="defaultData.status">
+                            <option value="">请选择状态</option>
+                            <option value="true">正常</option>
+                            <option value="false">已失效</option>
+                        </select>
+
+                        <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID" v-limitnumber="defaultData.operationID">
+                        
+                        <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">
+
+                        <a class="btn btn-info" @click="initList" data-ksa="exception_trade_white_list_manage.search">查询</a>
+                    </div>
                 </div>
+
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -60,7 +54,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.operationID }}</td>
                                 <td>{{trlist.name }}</td>
                                 <td>{{trlist.subCompanyName }}</td>
@@ -81,12 +75,22 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="abnormalWhiteexcel" data-ksa="exception_trade_white_list_manage.export">导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
@@ -175,33 +179,7 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    .form-group{
-        text-align: left;
-    }
-    .form-group.tc{
-        text-align: center;
-    }
-    .modal-body .form-control{
-        text-align: left;
-        width:85%;
-        display: inline-block;
-    }
-    .modal-body label{
-        width:13%;
-        display: inline-block;
-        text-align: right;
-    }
-    .modal-body label i{
-        color:red;
-    }
-    .modal-body button{
-        width:35%;
-    }
-    .validation-error-label{
-        display: inline-block;
-    }
-</style>
+
 <script>
     import model from '../../ajax/Transaction/white_model.js'
     export default{

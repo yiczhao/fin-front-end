@@ -3,44 +3,46 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content blists" slot="content">
+        <div class="content prepayment-lists" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
+
+
+            <div class="heading">
+                <div class="heading-left">
+                    <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
+                </div>
+
+                <div class="heading-right">
                     <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <a class="btn btn-info" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
-                        </div>
-                        <div class="form-group">
                             <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">账户状态</option>
                                 <option value="0">停用</option>
                                 <option value="1">正常</option>
                                 <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="query" data-ksa="advance_payment_merchant_manage.search">查询</a>
-                        </div>
                     </form>
                 </div>
+
+                <div class="heading-middle">
+                    <a class="btn btn-info add-top" @click="query" data-ksa="advance_payment_merchant_manage.search" style="margin-left: -21px;">查询</a>
+                </div>
+            </div>
+
+
 
                 <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
                      class="dataTables_wrapper no-footer">
@@ -62,7 +64,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(index,prepayment) in prepaymentList">
+                            <tr v-for="(index,prepayment) in prepaymentList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{prepayment.merchantOperationID}}</td>
                                 <td>{{prepayment.merchantName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
@@ -110,12 +112,24 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
+
+
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
+
                 </div>
                 <div v-else style="padding: 30px;font-size: 16px;text-align: center">
                     未查询到预付款商户信息！
@@ -270,90 +284,7 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-.w{
-    background:none;
-    border:0;
-    padding:3px;
-    text-align:center;
-    &:focus{
-        border:1px solid #999;
-    }
-}
-    .prepayment-modal-btns {
-        text-align: center;
-    }
 
-    .collectionAccount-bgcolor {
-        margin-left: 30px;
-        background-color: #c0c0c0;
-    }
-
-    #modal_prepayment_recharge .form-control {
-        width: 86%;
-        display: inline-block;
-    }
-
-    .btns {
-        text-align: center;
-    }
-
-    .addbottom {
-        margin-top: 15px;
-
-        .col-md-2 {
-            text-align: center;
-            width: 113px;
-            padding: 0;
-            input {
-                margin-bottom: 10px;
-            }
-        }
-        .col-md-7 {
-            height: 300px;
-            overflow: auto;
-            border: 1px solid #ccc;
-        }
-        .col-md-4 {
-            width: 243px;
-            height: 300px;
-            padding: 0;
-            input {
-                margin: 15px 0;
-            }
-        }
-        ul {
-            list-style: none;
-            border: 1px solid #ccc;
-            padding: 10px;
-            height: 300px;
-            overflow: auto;
-            li {
-                margin: 5px 0;
-                cursor: pointer;
-                padding-left: 3px;
-            }
-            li.check-li {
-                background: #ccc;
-            }
-        }
-    }
-    .btn.btn-info {
-        margin: 2px;
-    }
-
-    .tc {
-        text-align: center;
-
-    .validation-error-label {
-        display: inline-block;
-    }
-
-    }
-table tr td,table tr th{
-    text-align: center;
-}
-</style>
 <script>
     import model from '../../ajax/BusinessManagement/prepayment_model'
     export default{

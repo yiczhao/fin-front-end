@@ -1,0 +1,23 @@
+.pay-recheck {
+    .dcontent{
+      overflow: hidden;
+      margin-bottom: 0px;
+      .dtitle{
+          text-align: center;
+          padding-bottom: 15px;
+          color:black;
+      }
+      .control-label {
+          i{
+              color:red
+          }
+      }
+      .error{
+          border-color:red;
+      }
+      .validation-error-label{
+          font-size: 13px;
+          margin-top: 15px;
+      }
+    }
+}

@@ -3,38 +3,42 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content business-lists" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
+
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.cityId">
                                 <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.startValue" placeholder="佣金值">
-                            -
+
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="checkNew" data-ksa="merchant_manage.search">查询</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" style="margin-left: -13px;" @click="checkNew" data-ksa="merchant_manage.search">查询</a>
+                    </div>
                 </div>
+
+
                 <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
@@ -65,7 +69,7 @@
                                 </tr>
                             </thead>
                         <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
@@ -130,12 +134,22 @@
                         </tbody>
                     </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
@@ -312,89 +326,7 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-      .form-group{
-        text-align: left;
-    }
-      .form-group.tc{
-        text-align: center;
-    }
-      .modal-body .form-control{
-        text-align: left;
-        width:67%;
-        display: inline-block;
-    }
-      .modal-body label{
-        width:20%;
-        display: inline-block;
-    }
-      .modal-body label i{
-        color:red;
-    }
-      .modal-body .waring{
-        color: red;
-        margin-left: 5px;
-    }
-      .modal-body button{
-        width:35%;
-    }
-      table tr td,  table tr th{
-         text-align: center;
-         text-overflow: ellipsis;
-         overflow: hidden;
-         white-space: nowrap;
-     }
-      td span{
-        cursor: pointer;
-        color: #3c8dbc;
-    }
-      td span:hover{
-        opacity: 80;
-    }
-      .modal-body .mt35{
-         border: 1px solid #ddd;
-         margin-top: 35px;
-         position: relative;
-         padding-top: 15px;
-    }
-      .modal-body .mt35 table{
-         border-top: 1px solid #ddd;
-     }
-      .modal-body .mt35 .togglebtn{
-         display: block;
-         position: absolute;
-         width: 80px;
-         line-height: 25px;
-         height: 25px;
-         top:-25px;
-         left: -1px;
-         background: #dadada;
-         text-align: center;
-         border: 1px solid #ccc;
-         border-radius: 15px 15px 0 0;
-         cursor: pointer;
-     }
-      .modal-body .mt35 .active{
-        color:#1E88E5;
-         top: -30px;
-         height: 30px;
-         line-height: 30px;
-    }
-      .modal-body .mt35 div{
-         margin-bottom: 10px;
-     }
-      .modal-body .mt35 div span{
-         margin: 0 30px 0 15px;
-     }
-      .modal-body .mt35 .updatebtn{
-         position: absolute;
-         right: 20px;
-         top: 45px;
-     }
-    .validation-error-label{
-        display: inline-block;
-    }
-</style>
+
 <script>
     import model from '../../ajax/BusinessManagement/buslists_model'
     export default{

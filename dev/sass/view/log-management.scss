@@ -1,0 +1,22 @@
+.log-management{
+    body{
+        background-color:#fff;
+    }
+    .datatable-scroll{
+        overflow:auto;
+    }
+    .page-bar{
+        margin: 25px auto;
+        text-align: center;
+    }
+    .box-body #table1 th{
+        min-width: 85px;
+    }
+    .textarea-w{
+        width: 500px;
+        height: 40px;
+    }
+    .textarea-h{
+        height: 100px;
+    }  
+}
