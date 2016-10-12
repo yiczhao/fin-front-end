@@ -15,8 +15,14 @@ function model(_this){
         taxRate_list(data){
             return _this.$http.get(_this.$API.taxRate_list+ $.param(data))
         },
-        edit_list(data){
-            return _this.$http.get(_this.$API.edit_list+ $.param(data))
+
+        /**
+         * @description 查询税率管理数据详细信息
+         * @params {_id}
+         * @returns {*}
+         * */
+        editDetail(_id){
+            return _this.$http.get(_this.$API.edit_detail+ _id)
         }
     }
 }

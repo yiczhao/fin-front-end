@@ -547,7 +547,14 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.edit_list = './taxRate/info?';
+    _o.edit_detail = './taxRate/detail/';
+
+    /**
+     * @description 获取编辑弹框税率信息
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.edit_list = './taxRate/info/';
     
     //- todo  活动管理-活动列表-计算公式 activity-lists
     /**

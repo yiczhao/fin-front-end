@@ -31,7 +31,7 @@
     },
     data(){
       return{
-        yText:'2015',
+        yText:'2016',
         ydata:[],
         showgetmonth:false,
         showyear:false,
@@ -90,6 +90,7 @@
       }
     },
     ready() {
+      (this.value!='')?this.yText=this.value.split('-')[0]:null;
       document.addEventListener('click', (e) => {
         if (this.$el && !this.$el.contains(e.target)) {
           this.resetDate();

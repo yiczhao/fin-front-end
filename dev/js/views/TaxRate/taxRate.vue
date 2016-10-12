@@ -28,7 +28,7 @@
                                     <template v-if="trList.payTaxType==2">一般纳税人</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a @click="edit(trList.subCompanyID)" data-ksa="">编辑</a></td>
+                                <td><a @click="editDetail(trList.id)" data-ksa="">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>
@@ -71,13 +71,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"><i>* </i>税率月份</label>
-                                        <select class="form-control" v-model="editData.rateDate">
-                                            <option value="2016年3月">2016年3月</option>
-                                            <option value="">2016年9月</option>
-                                            <option value="">2016年8月</option>
-                                            <option value="">2016年7月</option>
-                                            <!--<option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>-->
-                                        </select>
+                                        <getmonth :value.sync="editData.rateDate"></getmonth>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"><i>*</i>纳税类型</label>
@@ -111,15 +105,20 @@
                 pageall:1,
                 defaultData:{
                     'id':'',
+                    'subCompanyID':'',
                     'subCompanyName':'',
                     'payTaxType':'',
                     'taxRate':'',
                     'remarks':'',
+                    'effectiveYear':'',
+                    'effectiveMonth':'',
+                    'rateDate':'',
                     'pageIndex': 1,
                     'pageSize': 10
 
                 },
                 editData:{
+                    subCompanyID:'',
                     subCompanyName:'',
                     effectiveYear:'',
                     effectiveMonth:'',
@@ -141,24 +140,23 @@
                         .then((response) => {
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code == 0){
-                        this.$set('taxRateList', response.data.data)
+                        this.$set('taxRateList', response.data.data);
+                        this.defaultData.rateDate = this.defaultData.effectiveYear+'-'+this.defaultData.effectiveMonth;
                     }
                 });
             },
-            edit(_subCompanyID){
-                let editForm={
-                    'subCompanyID':_subCompanyID,
-                    'effectiveYear':2016,
-                    'effectiveMonth':3
-                }
-                this.model.edit_list(editForm).then((response) => {
+            editDetail(_id){
+                this.model.editDetail(_id).then((response) => {
                 // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code == 0){
                         this.$set('editData', response.data.data);
-                        this.editData.rateDate = this.editData.effectiveYear+'年'+this.editData.effectiveMonth+'月'
+                        this.editData.rateDate = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
                         this.show=true;
                     }
                 });
+
+            },
+            editInfo(_id){
 
             },
             initList(){
