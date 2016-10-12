@@ -64,38 +64,71 @@
                         :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                         :title.sync="'编辑税率'" @kok="save" @kcancel="show = false"
                 >
-                                <div class="addtop">
-                                    <div class="form-group">
-                                        <label>分公司</label>
-                                        <label>{{editData.subCompanyName}}</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label"><i>* </i>税率月份</label>
-                                        <getmonth :value.sync="currentYM"></getmonth>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label"><i>*</i>纳税类型</label>
-                                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editData.payTaxType">
-                                        <label>小规模纳税人（/1.03）</label>
-                                        <input type="radio" id="normalTaxPayer" value="2" v-model="editData.payTaxType">
-                                        <label> 一般纳税人（/1.06）</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label"><i>*</i>税率</label>
-                                        <input class="form-control" type="text" placeholder="主税率和附加税" v-model="editData.taxRate" v-limitnumber="editData.taxRate"><span>%</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label"><i>*</i>备注：</label>
-                                        <textarea rows="5" cols="5" class="form-control" v-model="editData.remarks"></textarea>
-                                    </div>
-                                </div>
+                    <div class="dialog-row">
+                        <label class="control-label">分公司</label>
+                        <label>{{editData.subCompanyName}}</label>
+                    </div>
+                    <div class="dialog-row">
+                        <label class="control-label"><i>*</i>税率月份</label>
+                        <getmonth :value.sync="currentYM"></getmonth>
+                    </div>
+                    <div class="dialog-row">
+                        <label class="control-label"><i>*</i>纳税类型</label>
+                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editData.payTaxType">
+                        <label for="tinyTaxPayer">小规模纳税人（/1.03）</label>
+                        <input type="radio" id="normalTaxPayer" value="2" v-model="editData.payTaxType">
+                        <label for="normalTaxPayer"> 一般纳税人（/1.06）</label>
+                    </div>
+                    <div class="dialog-row">
+                        <label class="control-label"><i>*</i>税率</label>
+                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editData.taxRate" v-limitnumber="editData.taxRate"><span>%</span>
+                    </div>
+                    <div class="dialog-row">
+                        <label class="control-label posre"><i>*</i>备注：</label>
+                        <textarea rows="5" cols="5" class="form-control" v-model="editData.remarks"></textarea>
+                    </div>
                 </content-dialog>
             </div>
         </div>
 
     </index>
 </template>
-
+<style lang="sass" scope>
+    .dialog-row{
+        margin-bottom: 10px;
+        padding-left: 10px;
+        input,textarea,select {
+            display: inline-block;
+        }
+        .w350{
+            width: 350px;
+        }
+        label{
+            display: inline-block;
+            text-align: right;
+            i{
+                color:red;
+            }
+        }
+        .posre{
+            position: relative;
+            top: -95px;
+        }
+        .control-label{
+            width: 60px;
+            margin-right: 10px;
+        }
+        textarea{
+            width: 350px;
+        }
+        .error-input{
+            border-color: #F44336;
+        }
+    }
+    .kdialog__btnwrap{
+        padding-top: 0
+    }
+</style>
 <script>
     import model from '../../ajax/Activity/taxRate_model'
     export default{
