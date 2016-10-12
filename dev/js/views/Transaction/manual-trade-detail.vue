@@ -27,6 +27,13 @@
                             <option value="3">最近三个月</option>
                             <option value="4">自定义时间</option>
                         </select>
+                        <select class="form-control" v-model="defaultData.status">
+                            <option value="">全部手工单状态</option>
+                            <option value="1">未提交</option>
+                            <option value="2">待审核</option>
+                            <option value="3">审核通过</option>
+                            <option value="4">审核不通过</option>
+                        </select>
                         <datepicker v-show="defaultData.timeRange==4" :readonly="true"
                                     :value.sync="defaultData.startDate"
                                     format="YYYY-MM-DD"></datepicker>
@@ -162,7 +169,7 @@
                                v-model="tradeInfo.merchantOperationID"
                                v-validate:val1="['required']"
                                v-limitnumber="tradeInfo.merchantOperationID"
-                               v-bind:class="{'error-input':$vali.val1.required && fire}"
+                               v-bind:class="{'error-input':fire && $vali.val1.required}"
                         >
                         <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                     </div>
@@ -172,7 +179,7 @@
                                v-model="tradeInfo.activityOperationID"
                                v-validate:val2="['required']"
                                v-limitnumber="tradeInfo.activityOperationID"
-                               v-bind:class="{'error-input':$vali.val2.required && fire}">
+                               v-bind:class="{'error-input':fire && $vali.val2.required}">
                         <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
                     </div>
                     <div class="dialog-row">
@@ -180,7 +187,8 @@
                         <input type="text" class="form-control"
                                v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"
                                v-limitprice="tradeInfo.consumptionAmount"
-                               v-bind:class="{'error-input':$vali.val3.required && fire}">
+                               v-bind:class="{'error-input':fire && $vali.val3.required}"
+                               min="0">
                         <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
                     </div>
                     <div class="dialog-row">
@@ -188,14 +196,16 @@
                         <input type="text" class="form-control" v-model="tradeInfo.discountAmount"
                                v-validate:val4="['required']"
                                v-limitprice="tradeInfo.discountAmount"
-                               v-bind:class="{'error-input':$vali.val4.required && fire}">
+                               min="0"
+                               v-bind:class="{'error-input':fire && $vali.val4.required}">
                         <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
                     </div>
                     <div class="dialog-row">
                         <label><i>*</i>实付金额：</label>
                         <input type="text" class="form-control" v-model="tradeInfo.payAmount"
                                v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount"
-                               v-bind:class="{'error-input':$vali.val5.required && fire}">
+                               min="0"
+                               v-bind:class="{'error-input':fire && $vali.val5.required}">
                         <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                     </div>
                     <div class="dialog-row">
@@ -204,7 +214,8 @@
                                v-model="tradeInfo.thirdPartyReceivable"
                                v-validate:val6="['required']"
                                v-limitprice="tradeInfo.thirdPartyReceivable"
-                               v-bind:class="{'error-input':$vali.val6.required && fire}">
+                               min="0"
+                               v-bind:class="{'error-input':fire && $vali.val6.required}">
                         <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                     </div>
                     <div class="dialog-row">
@@ -212,7 +223,8 @@
                         <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
                                v-validate:val7="['required']"
                                v-limitprice="tradeInfo.suspensionTax"
-                               v-bind:class="{'error-input':$vali.val7.required && fire}">
+                               min="0"
+                               v-bind:class="{'error-input':fire && $vali.val7.required}">
                         <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
                     </div>
                     <div class="dialog-row">
@@ -221,7 +233,7 @@
                                v-model="tradeInfo.merchantSubsidyActual"
                                v-validate:val8="['required']"
                                v-limitprice="tradeInfo.merchantSubsidyActual"
-                               v-bind:class="{'error-input':$vali.val8.required && fire}">
+                               v-bind:class="{'error-input':fire && $vali.val8.required}">
                         <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
                     </div>
                     <div class="dialog-row">
@@ -243,8 +255,8 @@
                     :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="dtitle" @kok="processManualTradeDetail" @kcancel="show = false"
             >
-                <div class="form-group dcontent" v-show="dtitle=='审核退回'">
-                    <label class="col-lg-3 control-label"><i>*</i>退回原因：</label>
+                <div class="form-group" style="overflow:hidden" v-show="dtitle=='审核退回'">
+                    <label class="col-lg-3 control-label"><i style="color:red">*</i>退回原因：</label>
                     <div class="col-lg-9">
                         <textarea rows="5" cols="5" class="form-control" v-bind:class="{ 'error': !refuseReason&&fires}"
                                   v-model="refuseReason" placeholder=""></textarea>
@@ -263,6 +275,7 @@
         data(){
             this.model = model(this);
             return {
+                origin:origin,
                 defaultData: {
                     subCompanyID: "",
                     pageIndex: 1,
@@ -275,12 +288,15 @@
                     tradeDetailID: "",
                     serialNumber: "",
                     activityOperationID: '',
+                    status:'',
                     timeRange: '3'
                 },
+                pageall:1,
                 manualTradeDetailList: [],
                 cityList: [],
                 subCompanyList: [],
                 fire: false,
+                fires: false,
                 show: false,
                 dtitle: '',
                 tradeInfo: {
@@ -307,6 +323,7 @@
                 this.model.getManualTradeDetailList(this.defaultData).then((response)=> {
                     if (response.data.code == 0) {
                         this.$set('manualTradeDetailList', response.data.data);
+                        this.$set('pageall', response.data.total);
                     }
                 })
             },
@@ -416,7 +433,7 @@
                             if (response.data.code == 0) {
                                 this.$set('tradeInfo', response.data.data);
                                 this.errorHideL();
-                                $('#modal_trade_info').modal('show');
+                                this.modal_add=true;
                             }
                         });
             },
@@ -433,6 +450,7 @@
             refused(_id){
                 this.id = _id;
                 this.dtitle = '审核退回';
+                this.refuseReason = '';
                 this.show = true;
             },
             deleteManualTradeDetail(_id){
@@ -441,7 +459,6 @@
                 this.show = true;
             },
             errorHideL(){
-                $('.suberror,.timeerror').hide();
                 this.fire = false;
             },
             saveTradeInfo(){
@@ -518,6 +535,8 @@
             },
         },
         ready: function () {
+            this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
+            this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
             (back_json.isback && back_json.fetchArray(this.$route.path) != '') ? this.checkForm = back_json.fetchArray(this.$route.path) : null;
             this.getSubCompanyData();
             this.getCityData();
