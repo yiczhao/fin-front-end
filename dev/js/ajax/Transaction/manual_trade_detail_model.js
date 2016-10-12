@@ -35,7 +35,7 @@ function model(_this) {
          * @returns {*}
          */
         applyManualTradeDetail(data){
-            return _this.$http.post(_this.$API.applyManualTradeDetail,data);
+            return _this.$http.post(_this.$API.applyManualTradeDetail+$.param(data));
         },
         /**
          * @description 审核退回手工单
@@ -43,7 +43,7 @@ function model(_this) {
          * @returns {*}
          */
         refusedManualTradeDetail(data){
-            return _this.$http.post(_this.$API.refusedManualTradeDetail,data);
+            return _this.$http.post(_this.$API.refusedManualTradeDetail+$.param(data));
         },
         /**
          * @description 审核通过手工单
@@ -51,7 +51,7 @@ function model(_this) {
          * @returns {*}
          */
         approvedManualTradeDetail(data){
-            return _this.$http.post(_this.$API.approvedManualTradeDetail,data);
+            return _this.$http.post(_this.$API.approvedManualTradeDetail+$.param(data));
         },
         /**
          * @description 删除手工单
@@ -59,7 +59,7 @@ function model(_this) {
          * @returns {*}
          */
         deleteManualTradeDetail(data){
-            return _this.$http.delete(_this.$API.deleteManualTradeDetail,data);
+            return _this.$http.delete(_this.$API.deleteManualTradeDetail+$.param(data));
         },
 
 

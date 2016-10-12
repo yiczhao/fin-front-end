@@ -12,7 +12,8 @@
                            data-ksa="manual_trade_detail.add">录入手工单</a>
                     </div>
                     <div class="heading-right">
-                        <select class="form-control" v-model="defaultData.subCompanyID" title="" @change="getCityData(defaultData.subCompanyID)">
+                        <select class="form-control" v-model="defaultData.subCompanyID" title=""
+                                @change="getCityData(defaultData.subCompanyID)">
                             <option value="">全部分公司</option>
                             <option v-for="(index,n) in subCompanyList" v-text="n.name"
                                     :value="n.subCompanyID"></option>
@@ -28,11 +29,12 @@
                             <option value="3">最近三个月</option>
                             <option value="4">自定义时间</option>
                         </select>
-                        <datepicker v-show="defaultData.timeRange==4" :readonly="true" :value.sync="defaultData.startDate"
-                                        format="YYYY-MM-DD"></datepicker>
+                        <datepicker v-show="defaultData.timeRange==4" :readonly="true"
+                                    :value.sync="defaultData.startDate"
+                                    format="YYYY-MM-DD"></datepicker>
                         <span v-show="defaultData.timeRange==4">至</span>
                         <datepicker v-show="defaultData.timeRange==4" :readonly="true" :value.sync="defaultData.endDate"
-                                        format="YYYY-MM-DD"></datepicker>
+                                    format="YYYY-MM-DD"></datepicker>
                         <input type="text" class="form-control" v-model="defaultData.merchantOperationID"
                                placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                         <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
@@ -42,7 +44,8 @@
                         <input type="text" class="form-control" v-model="defaultData.tradeDetailID"
                                v-limitnumber="defaultData.tradeDetailID" placeholder="交易ID">
                         <input type="text" class="form-control" v-model="defaultData.serialNumber" placeholder="交易流水号">
-                        <a class="btn btn-info" @click="getManualTradeDetailData()" data-ksa="manual_trade_detail.search">查询</a>
+                        <a class="btn btn-info" @click="getManualTradeDetailData()"
+                           data-ksa="manual_trade_detail.search">查询</a>
                     </div>
                 </div>
                 <div id="DataTables_Table_0_wrapper"
@@ -77,7 +80,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-show="!!manualTradeDetailList.length" role="row" v-for="(index,manualTradeDetail) in manualTradeDetailList" v-bind:class="{'odd':(index%2==0)}">
+                            <tr v-show="!!manualTradeDetailList.length" role="row"
+                                v-for="(index,manualTradeDetail) in manualTradeDetailList"
+                                v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{manualTradeDetail.tradeDetailID}}</td>
                                 <td>{{manualTradeDetail.serialNumber}}</td>
                                 <td>{{manualTradeDetail.subCompanyName}}</td>
@@ -108,12 +113,18 @@
                                         审核不通过
                                     </template>
                                 </td>
-                                <td>编辑、提交、通过、退回、删除
-                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4" @click="editTradeInfo(manualTradeDetail.id)" data-ksa="pay_recheck.edit">编辑</a>
-                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4" @click="apply(manualTradeDetail.id)" data-ksa="pay_recheck.pass">提交</a>
-                                    <a v-if="manualTradeDetail.status==2" @click="approved(manualTradeDetail.id)" data-ksa="pay_recheck.pass">通过</a>
-                                    <a v-if="manualTradeDetail.status==2" @click="refused(manualTradeDetail.id)" data-ksa="pay_recheck.pass">退回</a>
-                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4" @click="deleteManualTradeDetail(manualTradeDetail.id)" data-ksa="pay_recheck.pass">删除</a>
+                                <td>
+                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
+                                       @click="editTradeInfo(manualTradeDetail.id)" data-ksa="pay_recheck.edit">编辑</a>
+                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
+                                       @click="apply(manualTradeDetail.id)" data-ksa="pay_recheck.pass">提交</a>
+                                    <a v-if="manualTradeDetail.status==2" @click="approved(manualTradeDetail.id)"
+                                       data-ksa="pay_recheck.pass">通过</a>
+                                    <a v-if="manualTradeDetail.status==2" @click="refused(manualTradeDetail.id)"
+                                       data-ksa="pay_recheck.pass">退回</a>
+                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
+                                       @click="deleteManualTradeDetail(manualTradeDetail.id)"
+                                       data-ksa="pay_recheck.pass">删除</a>
                                 </td>
                                 <td>
                                     {{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}
@@ -138,7 +149,7 @@
                         </page>
                     </div>
                 </div>
-                <div class="no-list" v-show="!manualTradeDetailList.length" >
+                <div class="no-list" v-show="!manualTradeDetailList.length">
                     未找到数据
                 </div>
                 <validator name="vali">
@@ -155,42 +166,61 @@
                                             <label>
                                                 <i class="aaaa">*</i>商户ID：
                                             </label>
-                                            <input type="text" class="form-control" placeholder="商户ID" v-model="tradeInfo.merchantOperationID" v-validate:val1="['required']" v-limitnumber="tradeInfo.merchantOperationID">
+                                            <input type="text" class="form-control" placeholder="商户ID"
+                                                   v-model="tradeInfo.merchantOperationID"
+                                                   v-validate:val1="['required']"
+                                                   v-limitnumber="tradeInfo.merchantOperationID">
                                             <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>参与活动：</label>
-                                            <input type="text" class="form-control" placeholder="活动ID" v-model="tradeInfo.activityOperationID" v-validate:val2="['required']" v-limitnumber="tradeInfo.activityOperationID">
+                                            <input type="text" class="form-control" placeholder="活动ID"
+                                                   v-model="tradeInfo.activityOperationID"
+                                                   v-validate:val2="['required']"
+                                                   v-limitnumber="tradeInfo.activityOperationID">
                                             <span v-if="$vali.val2.required && fire" class="validation-error-label">请输入活动ID</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>消费金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']" v-limitprice="tradeInfo.consumptionAmount">
+                                            <input type="text" class="form-control"
+                                                   v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"
+                                                   v-limitprice="tradeInfo.consumptionAmount">
                                             <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>折扣金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.discountAmount" v-validate:val4="['required']" v-limitprice="tradeInfo.discountAmount">
+                                            <input type="text" class="form-control" v-model="tradeInfo.discountAmount"
+                                                   v-validate:val4="['required']"
+                                                   v-limitprice="tradeInfo.discountAmount">
                                             <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>实付金额：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.payAmount" v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount">
+                                            <input type="text" class="form-control" v-model="tradeInfo.payAmount"
+                                                   v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount">
                                             <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>三方应收：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.thirdPartyReceivable" v-validate:val6="['required']" v-limitprice="tradeInfo.thirdPartyReceivable">
+                                            <input type="text" class="form-control"
+                                                   v-model="tradeInfo.thirdPartyReceivable"
+                                                   v-validate:val6="['required']"
+                                                   v-limitprice="tradeInfo.thirdPartyReceivable">
                                             <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>退税款：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.suspensionTax" v-validate:val7="['required']" v-limitprice="tradeInfo.suspensionTax">
+                                            <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
+                                                   v-validate:val7="['required']"
+                                                   v-limitprice="tradeInfo.suspensionTax">
                                             <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
                                         </div>
                                         <div class="form-group">
                                             <label><i>*</i>商户实补：</label>
-                                            <input type="text" class="form-control" v-model="tradeInfo.merchantSubsidyActual" v-validate:val8="['required']" v-limitprice="tradeInfo.merchantSubsidyActual">
+                                            <input type="text" class="form-control"
+                                                   v-model="tradeInfo.merchantSubsidyActual"
+                                                   v-validate:val8="['required']"
+                                                   v-limitprice="tradeInfo.merchantSubsidyActual">
                                             <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
                                         </div>
                                         <div class="form-group">
@@ -198,11 +228,13 @@
                                             <input type="file" style="display: none;" @change="uploads($event)">
                                             <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                             <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                            <span v-if="tradeInfo.certificateID=='' && fire" class="validation-error-label">请选择凭证</span>
+                                            <span v-if="tradeInfo.certificateID=='' && fire"
+                                                  class="validation-error-label">请选择凭证</span>
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -40px;">备注:</label>
-                                            <textarea class="form-control"  id="remarks" v-model="tradeInfo.remarks"></textarea>
+                                            <textarea class="form-control" id="remarks"
+                                                      v-model="tradeInfo.remarks"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group tc">
@@ -222,7 +254,8 @@
                 <div class="form-group dcontent" v-show="dtitle=='审核退回'">
                     <label class="col-lg-3 control-label"><i>*</i>退回原因：</label>
                     <div class="col-lg-9">
-                        <textarea rows="5" cols="5" class="form-control" v-bind:class="{ 'error': !refuseReason&&fires}" v-model="refuseReason" placeholder=""></textarea>
+                        <textarea rows="5" cols="5" class="form-control" v-bind:class="{ 'error': !refuseReason&&fires}"
+                                  v-model="refuseReason" placeholder=""></textarea>
                         <span v-show="!refuseReason&&fires" class="validation-error-label">
                             请填写退回原因
                         </span>
@@ -255,29 +288,29 @@
                 manualTradeDetailList: [],
                 cityList: [],
                 subCompanyList: [],
-                fire:false,
-                show:false,
-                dtitle:'',
-                tradeInfo:{
-                    id:'',
-                    merchantOperationID:'',
-                    activityOperationID:'',
-                    consumptionAmount:'',
-                    discountAmount:'',
-                    payAmount:'',
-                    thirdPartyReceivable:'',
-                    suspensionTax:'',
-                    merchantSubsidyActual:'',
-                    certificateID:'',
-                    remarks:''
+                fire: false,
+                show: false,
+                dtitle: '',
+                tradeInfo: {
+                    id: '',
+                    merchantOperationID: '',
+                    activityOperationID: '',
+                    consumptionAmount: '',
+                    discountAmount: '',
+                    payAmount: '',
+                    thirdPartyReceivable: '',
+                    suspensionTax: '',
+                    merchantSubsidyActual: '',
+                    certificateID: '',
+                    remarks: ''
                 },
-                refuseReason:'',
-                uploadText:'',
+                refuseReason: '',
+                uploadText: '',
             }
         },
         methods: {
             getManualTradeDetailData(){
-                back_json.saveArray(this.$route.path,this.defaultData);
+                back_json.saveArray(this.$route.path, this.defaultData);
                 this.model.getManualTradeDetailList(this.defaultData).then((response)=> {
                     if (response.data.code == 0) {
                         this.$set('manualTradeDetailList', response.data.data);
@@ -308,135 +341,136 @@
             },
             addTradeInfo(){
                 this.errorHideL();
-                this.select_merchantId='';
-                this.tradeInfo.merchantOperationID='';
-                this.tradeInfo.activityOperationID='';
-                this.tradeInfo.consumptionAmount='';
-                this.tradeInfo.discountAmount='';
-                this.tradeInfo.payAmount='';
-                this.tradeInfo.thirdPartyReceivable='';
-                this.tradeInfo.suspensionTax='';
-                this.tradeInfo.merchantSubsidyActual='';
-                this.tradeInfo.certificateID='';
-                this.tradeInfo.remarks='';
-                this.uploadText='';
+                this.select_merchantId = '';
+                this.tradeInfo.merchantOperationID = '';
+                this.tradeInfo.activityOperationID = '';
+                this.tradeInfo.consumptionAmount = '';
+                this.tradeInfo.discountAmount = '';
+                this.tradeInfo.payAmount = '';
+                this.tradeInfo.thirdPartyReceivable = '';
+                this.tradeInfo.suspensionTax = '';
+                this.tradeInfo.merchantSubsidyActual = '';
+                this.tradeInfo.certificateID = '';
+                this.tradeInfo.remarks = '';
+                this.uploadText = '';
                 $('#modal_trade_info').modal('show');
             },
             processManualTradeDetail(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.dtitle=='提交审核'){
-                    let data={
+                if (sessionStorage.getItem('isHttpin') == 1)return;
+                if (this.dtitle == '提交审核') {
+                    let data = {
                         "id": this.id
                     };
                     this.model.applyManualTradeDetail(data)
-                        .then((response)=> {
-                            if (response.data.code == 0) {
-                                dialogs(response.data.message);
-                            }
-                        });
+                            .then((response)=> {
+                                if (response.data.code == 0) {
+                                    this.getManualTradeDetailData();
+                                    this.show = false;
+                                    dialogs("success", response.data.message);
+                                }
+                            });
                 }
-                else if(this.dtitle=='审核退回'){
-                    if(this.refuseReason==''){
-                        this.fires=true;
+                else if (this.dtitle == '审核退回') {
+                    if (this.refuseReason == '') {
+                        this.fires = true;
                         return;
                     }
-                    let data={
-                        'id':this.id,
-                        'refuseReason':this.refuseReason
+                    let data = {
+                        'id': this.id,
+                        'refuseReason': this.refuseReason
                     }
                     this.model.refusedManualTradeDetail(data)
-                            .then( (response)=> {
-                                if(response.data.code==0){
-                                    this.query();
-                                    dialogs('success','已退回！');
+                            .then((response)=> {
+                                if (response.data.code == 0) {
+                                    this.getManualTradeDetailData();
+                                    this.show = false;
+                                    dialogs('success', response.data.message);
                                 }
                             })
                 }
-                else if(this.dtitle=='审核通过'){
-                    let data={
+                else if (this.dtitle == '审核通过') {
+                    let data = {
                         "id": this.id
                     };
                     this.model.approvedManualTradeDetail(data)
-                        .then((response)=> {
-                            if (response.data.code == 0) {
-                                dialogs(response.data.message);
-                            }
-                        });
-                }else if (this.dtitle=='删除手工单'){
-                    let data={
+                            .then((response)=> {
+                                if (response.data.code == 0) {
+                                    this.getManualTradeDetailData();
+                                    this.show = false;
+                                    dialogs("success", response.data.message);
+                                }
+                            });
+                } else if (this.dtitle == '删除手工单') {
+                    let data = {
                         "id": this.id
                     };
-                    this.model.refusedManualTradeDetail(data)
-                        .then((response)=> {
-                            if (response.data.code == 0) {
-                                dialogs(response.data.message);
-                            }
-                        });
+                    this.model.deleteManualTradeDetail(data)
+                            .then((response)=> {
+                                if (response.data.code == 0) {
+                                    this.getManualTradeDetailData();
+                                    this.show = false;
+                                    dialogs("success", response.data.message);
+                                }
+                            });
                 }
             },
             editTradeInfo(_id){
-                let data={
+                let data = {
                     "id": _id
                 };
                 this.model.searchManualTradeDetail(data)
-                    .then((response)=> {
-                        if (response.data.code == 0) {
-                        this.$set('tradeInfo', response.data.data);
-                        this.tradeInfo.consumptionAmount=this.tradeInfo.consumptionAmount/100;
-                        this.tradeInfo.discountAmount=this.tradeInfo.discountAmount/100;
-                        this.tradeInfo.payAmount=this.tradeInfo.payAmount/100;
-                        this.tradeInfo.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable/100;
-                        this.tradeInfo.suspensionTax=this.tradeInfo.suspensionTax/100;
-                        this.tradeInfo.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual/100;
-                        this.errorHideL();
-                        $('#modal_trade_info').modal('show');
-                    }
-                });
+                        .then((response)=> {
+                            if (response.data.code == 0) {
+                                this.$set('tradeInfo', response.data.data);
+                                this.errorHideL();
+                                $('#modal_trade_info').modal('show');
+                            }
+                        });
             },
             apply(_id){
-                this.id=_id;
-                this.dtitle='提交审核';
-                this.show=true;
+                this.id = _id;
+                this.dtitle = '提交审核';
+                this.show = true;
             },
             approved(_id){
-                this.id=_id;
-                this.dtitle='审核通过';
-                this.show=true;
+                this.id = _id;
+                this.dtitle = '审核通过';
+                this.show = true;
             },
             refused(_id){
-                this.id=_id;
-                this.dtitle='审核退回';
-                this.show=true;
+                this.id = _id;
+                this.dtitle = '审核退回';
+                this.show = true;
             },
             deleteManualTradeDetail(_id){
-                this.id=_id;
-                this.dtitle='删除手工单';
-                this.show=true;
+                this.id = _id;
+                this.dtitle = '删除手工单';
+                this.show = true;
             },
             errorHideL(){
                 $('.suberror,.timeerror').hide();
-                this.fire=false;
+                this.fire = false;
             },
             saveTradeInfo(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if (sessionStorage.getItem('isHttpin') == 1)return;
                 //隐藏非空提示
                 this.errorHideL();
                 //验证非空
-                if(!this.$vali.valid||this.tradeInfo.certificateID==''){
-                    this.fire=true;
+                if (!this.$vali.valid || this.tradeInfo.certificateID == '') {
+                    this.fire = true;
                     return;
                 }
-                let data={};
-                $.extend(true,data,this.tradeInfo);
-                data.consumptionAmount= accMul(this.tradeInfo.consumptionAmount,100);
-                data.discountAmount=accMul(this.tradeInfo.discountAmount,100);
-                data.payAmount=accMul(this.tradeInfo.payAmount,100);
-                data.thirdPartyReceivable=accMul(this.tradeInfo.thirdPartyReceivable,100);
-                data.suspensionTax=accMul(this.tradeInfo.suspensionTax,100);
-                data.merchantSubsidyActual=accMul(this.tradeInfo.merchantSubsidyActual,100);
+                let data = {};
+                $.extend(true, data, this.tradeInfo);
+                data.consumptionAmount = this.tradeInfo.consumptionAmount;
+                data.discountAmount = this.tradeInfo.discountAmount;
+                data.payAmount = this.tradeInfo.payAmount;
+                data.thirdPartyReceivable = this.tradeInfo.thirdPartyReceivable;
+                data.suspensionTax = this.tradeInfo.suspensionTax;
+                data.merchantSubsidyActual = this.tradeInfo.merchantSubsidyActual;
                 this.model.addtrade(data)
-                        .then((response)=>{
-                            if(response.data.code==0){
+                        .then((response)=> {
+                            if (response.data.code == 0) {
                                 this.getManualTradeDetailData();
                                 dialogs(response.data.message);
                                 $(".modal").modal("hide");
@@ -445,53 +479,53 @@
             },
             //初始化
             clear(){
-                this.tradeInfo={
-                    merchantOperationID:'',
-                    activityOperationID:'',
-                    consumptionAmount:'',
-                    discountAmount:'',
-                    payAmount:'',
-                    thirdPartyReceivable:'',
-                    suspensionTax:'',
-                    merchantSubsidyActual:'',
-                    certificateID:'',
-                    remarks:''
+                this.tradeInfo = {
+                    merchantOperationID: '',
+                    activityOperationID: '',
+                    consumptionAmount: '',
+                    discountAmount: '',
+                    payAmount: '',
+                    thirdPartyReceivable: '',
+                    suspensionTax: '',
+                    merchantSubsidyActual: '',
+                    certificateID: '',
+                    remarks: ''
                 },
-                        this.uploadText='';
+                        this.uploadText = '';
             },
             uploadClick(){
                 $('input[type="file"]').val('');
                 $('input[type="file"]').click();
             },
             uploads(e){
-                if(e.target.value==''&&this.uploadText!=''){
+                if (e.target.value == '' && this.uploadText != '') {
                     return;
                 }
-                let files=e.target.files[0];
-                let vm=this;
+                let files = e.target.files[0];
+                let vm = this;
                 var reader = new FileReader();
-                if(!check_upload(files.name)){
+                if (!check_upload(files.name)) {
                     return;
                 }
                 reader.readAsDataURL(files);
-                reader.onload = function(e){
-                    let datas={
-                        name:files.name,
-                        data:this.result.split(',')[1]
+                reader.onload = function (e) {
+                    let datas = {
+                        name: files.name,
+                        data: this.result.split(',')[1]
                     }
                     vm.$common_model.upload(datas)
-                            .then((response)=>{
-                                if(response.data.code==0){
-                                    vm.tradeInfo.certificateID=response.data.data;
-                                    vm.uploadText=files.name;
-                                    dialogs('success','上传成功！');
+                            .then((response)=> {
+                                if (response.data.code == 0) {
+                                    vm.tradeInfo.certificateID = response.data.data;
+                                    vm.uploadText = files.name;
+                                    dialogs('success', '上传成功！');
                                 }
                             })
                 }
             },
         },
         ready: function () {
-            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            (back_json.isback && back_json.fetchArray(this.$route.path) != '') ? this.checkForm = back_json.fetchArray(this.$route.path) : null;
             this.getSubCompanyData();
             this.getCityData();
             this.getManualTradeDetailData();

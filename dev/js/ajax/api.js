@@ -214,14 +214,14 @@ export default function install(Vue) {
      * @author 洪钢
      * @method POST
      */
-    _o.refusedManualTradeDetail = './manualTradeDetail/refused';
+    _o.refusedManualTradeDetail = './manualTradeDetail/refused?';
 
     /**
      * @description 审核通过手工单接口地址
      * @author 洪钢
      * @method POST
      */
-    _o.approvedManualTradeDetail = './manualTradeDetail/approved';
+    _o.approvedManualTradeDetail = './manualTradeDetail/approved?';
 
     /**
      * @description 删除手工单接口地址
