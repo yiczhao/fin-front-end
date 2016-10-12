@@ -591,6 +591,13 @@ export default function install(Vue) {
      * @method GET
      */
     _o.edit_info = './taxRate/info?';
+
+    /**
+     * @description 保存税率信息
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.edit_save = './taxRate/save?';
     
     //- todo  活动管理-活动列表-计算公式 activity-lists
     /**

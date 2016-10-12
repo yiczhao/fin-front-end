@@ -28,7 +28,7 @@
                                     <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a @click="editDetail(trList.id)" data-ksa="">编辑</a></td>
+                                <td><a @click="editDetail(trList.id, trList.subCompanyID)" data-ksa="">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>
@@ -62,7 +62,7 @@
                 <!--编辑税率dialog-->
                 <content-dialog
                         :show.sync="show" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'编辑税率'" @kok="" @kcancel="show = false"
+                        :title.sync="'编辑税率'" @kok="save" @kcancel="show = false"
                 >
                                 <div class="addtop">
                                     <div class="form-group">
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"><i>*</i>税率</label>
-                                        <input class="form-control" type="text" placeholder="主税率和附加税" v-model="editData.taxRate"><span>%</span>
+                                        <input class="form-control" type="text" placeholder="主税率和附加税" v-model="editData.taxRate" v-limitnumber="editData.taxRate"><span>%</span>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label"><i>*</i>备注：</label>
@@ -105,9 +105,9 @@
                 pageall:1,
                 first:1,
                 currentYM:'',
+                'subCompanyID':'',
                 defaultData:{
                     'id':'',
-                    'subCompanyID':'',
                     'subCompanyName':'',
                     'payTaxType':'',
                     'taxRate':'',
@@ -120,7 +120,6 @@
 
                 },
                 editData:{
-                    subCompanyID:'',
                     subCompanyName:'',
                     effectiveYear:'',
                     effectiveMonth:'',
@@ -128,7 +127,6 @@
                     taxRate:'',
                     remarks:''
                 },
-                taxRateList:[],
                 show:false
             }
 
@@ -146,12 +144,13 @@
                     }
                 });
             },
-            editDetail(_id){
+            editDetail(_id, _subcompanyID){
                 this.model.editDetail(_id).then((response) => {
                 // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code == 0){
                         this.$set('editData', response.data.data);
                         this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                        this.subCompanyID = _subcompanyID;
                         this.show=true;
                     }
                 });
@@ -159,7 +158,7 @@
             },
             editInfo(){
                 let data = {
-                    'subCompanyID':this.editData.subCompanyID,
+                    'subCompanyID':this.subCompanyID,
                     'effectiveYear':this.currentYM.split('-')[0],
                     'effectiveMonth':this.currentYM.split('-')[1]
                 }
@@ -176,6 +175,22 @@
                 }
                 });
 
+            },
+            save(){
+                let data = {
+                    'subCompanyID':this.subCompanyID,
+                    'effectiveYear':this.currentYM.split('-')[0],
+                    'effectiveMonth':this.currentYM.split('-')[1],
+                    'payTaxType':this.editData.payTaxType,
+                    'taxRate':this.editData.taxRate,
+                    'remarks':this.editData.remarks
+                }
+                this.model.editSave(data).then((response) => {
+                    if(response.data.code == 0){
+                        dialogs();
+                        this.initList();
+                    }
+                });
             },
             initList(){
                 $('.modal').modal('hide');

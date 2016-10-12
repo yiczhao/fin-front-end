@@ -32,7 +32,16 @@ function model(_this){
          * */
         editInfo(data){
             return _this.$http.get(_this.$API.edit_info+ $.param(data))
+        },
+        /**
+         * @description 根据年月查询税率信息
+         * @params {data}
+         * @returns {*}
+         * */
+        editSave(data){
+            return _this.$http.get(_this.$API.edit_save+ $.param(data))
         }
+
     }
 }
 module.exports=model;
