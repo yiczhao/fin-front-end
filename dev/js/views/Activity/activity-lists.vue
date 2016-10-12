@@ -133,7 +133,6 @@
                         :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
                         :title.sync="'配置第三方'"
                 >
-                    <div class="modal-body">
                         <div class="addtop">
                             <div class="col-md-3">
                                 <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
@@ -181,7 +180,6 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
                 </content-dialog>
 
                 <!--添加商户dialog-->
@@ -249,24 +247,24 @@
         }
     }
     .addbottom{
-        margin-top: 15px;
+        margin: 20px 0;
         .col-md-2{
             text-align: center;
-        input{
-            margin-bottom: 10px;
+            input{
+                margin-bottom: 10px;
+            }
         }
-    }
-    .col-md-12{
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-    .col-md-1{
-        padding-top: 40px;
-        text-align: center;
-        input{
-            margin:15px 0;
+        .col-md-12{
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
         }
+        .col-md-1{
+            padding-top: 40px;
+            text-align: center;
+            input{
+                margin:15px 0;
+            }
         }
         .col-md-4{
             border: 1px solid #ccc;
@@ -283,37 +281,13 @@
             }
         }
     }
-    table tr{
-        td,th{
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        span{
-            cursor: pointer;
-            color: #3c8dbc;
-        &:hover{
-             opacity: 80;
-         }
-        }
-    }
     input[type="checkbox"]{
         position: relative;
         top: 2px;
         left: -2px;
     }
-    }
     .addbottom table tr td,  .addbottom table tr th{
         padding:10px 5px;
-    }
-    #modal_update{
-    table tr td{
-        padding: 10px 2px;
-    }
-    .form-group{
-        overflow: hidden;
-        line-height: 36px;
-    }
     }
     .pull-left label i{
         color:red;
