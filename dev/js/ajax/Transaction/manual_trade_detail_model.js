@@ -21,6 +21,48 @@ function model(_this) {
         addtrade(data){
             return _this.$http.post(_this.$API.addtrade,data);
         },
+        /**
+         * @description 查询手工单
+         * @param data
+         * @returns {*}
+         */
+        searchManualTradeDetail(data){
+            return _this.$http.get(_this.$API.searchManualTradeDetail+$.param(data));
+        },
+        /**
+         * @description 提交手工单审核
+         * @param data
+         * @returns {*}
+         */
+        applyManualTradeDetail(data){
+            return _this.$http.post(_this.$API.applyManualTradeDetail,data);
+        },
+        /**
+         * @description 审核退回手工单
+         * @param data
+         * @returns {*}
+         */
+        refusedManualTradeDetail(data){
+            return _this.$http.post(_this.$API.refusedManualTradeDetail,data);
+        },
+        /**
+         * @description 审核通过手工单
+         * @param data
+         * @returns {*}
+         */
+        approvedManualTradeDetail(data){
+            return _this.$http.post(_this.$API.approvedManualTradeDetail,data);
+        },
+        /**
+         * @description 删除手工单
+         * @param data
+         * @returns {*}
+         */
+        deleteManualTradeDetail(data){
+            return _this.$http.delete(_this.$API.deleteManualTradeDetail,data);
+        },
+
+
     }
 }
 module.exports = model

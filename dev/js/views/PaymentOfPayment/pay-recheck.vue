@@ -173,7 +173,7 @@
                 </div>
             </div>
             <content-dialog
-                    :show.sync="show" :is-cancel="true" :type.sync="'primary'"
+                    :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="dtitle" @kok="backPass" @kcancel="show = false"
             >
                 <div class="form-group dcontent" v-show="dtitle=='退回'">
@@ -187,7 +187,7 @@
                 </div>
             </content-dialog>
             <content-dialog
-                    :show.sync="detailshow" :is-button="false" :type.sync="'primary'"
+                    :show.sync="detailshow" :is-button="false" :type.sync="'infos'"
                     :title.sync="'详情'"
             >
                 <div class="form-group dcontent">

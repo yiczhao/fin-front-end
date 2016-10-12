@@ -162,12 +162,6 @@ export default function install(Vue) {
      */
     _o.tradedetail = './tradeDetail/list?';
     /**
-     * @description 添加手工单接口地址
-     * @author 洪钢
-     * @method POST
-     */
-    _o.addtrade = './manualTradeDetail/add';
-    /**
      * @description 合计接口地址
      * @author 冷艳君
      * @method GET
@@ -193,6 +187,48 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getManualTradeDetailList = './manualTradeDetail/list?';
+
+    /**
+     * @description 添加手工单接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.addtrade = './manualTradeDetail/add';
+
+    /**
+     * @description 查询手工单接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.searchManualTradeDetail = './manualTradeDetail/item?';
+
+    /**
+     * @description 提交手工单审核接口地址
+     * @author
+     * @method POST
+     */
+    _o.applyManualTradeDetail = './manualTradeDetail/apply?';
+
+    /**
+     * @description 审核退回手工单接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.refusedManualTradeDetail = './manualTradeDetail/refused';
+
+    /**
+     * @description 审核通过手工单接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.approvedManualTradeDetail = './manualTradeDetail/approved';
+
+    /**
+     * @description 删除手工单接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.deleteManualTradeDetail = './manualTradeDetail/delete?';
 
     //- todo 交易管理-手工结算 manually-settlement
     /**
@@ -947,6 +983,13 @@ export default function install(Vue) {
      * @method get
      */
     _o.getthirdinfo_total = './thirdParty/account/total?';
+
+    /**
+     * @description 活动执行表列表数据接口地址
+     * @author 冷艳君
+     * @method get
+     */
+    _o.activity_execution_list = './activityExecutionList/list?';
 
 
     Object.defineProperties(Vue.prototype, {

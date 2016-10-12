@@ -108,7 +108,13 @@
                                         审核不通过
                                     </template>
                                 </td>
-                                <td>编辑、提交、通过、退回、删除</td>
+                                <td>编辑、提交、通过、退回、删除
+                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4" @click="editTradeInfo(manualTradeDetail.id)" data-ksa="pay_recheck.edit">编辑</a>
+                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4" @click="apply(manualTradeDetail.id)" data-ksa="pay_recheck.pass">提交</a>
+                                    <a v-if="manualTradeDetail.status==2" @click="approved(manualTradeDetail.id)" data-ksa="pay_recheck.pass">通过</a>
+                                    <a v-if="manualTradeDetail.status==2" @click="refused(manualTradeDetail.id)" data-ksa="pay_recheck.pass">退回</a>
+                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4" @click="deleteManualTradeDetail(manualTradeDetail.id)" data-ksa="pay_recheck.pass">删除</a>
+                                </td>
                                 <td>
                                     {{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}
                                 </td>
@@ -209,6 +215,20 @@
                     </form>
                 </validator>
             </div>
+            <content-dialog
+                    :show.sync="show" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="dtitle" @kok="processManualTradeDetail" @kcancel="show = false"
+            >
+                <div class="form-group dcontent" v-show="dtitle=='审核退回'">
+                    <label class="col-lg-3 control-label"><i>*</i>退回原因：</label>
+                    <div class="col-lg-9">
+                        <textarea rows="5" cols="5" class="form-control" v-bind:class="{ 'error': !refuseReason&&fires}" v-model="refuseReason" placeholder=""></textarea>
+                        <span v-show="!refuseReason&&fires" class="validation-error-label">
+                            请填写退回原因
+                        </span>
+                    </div>
+                </div>
+            </content-dialog>
         </div>
     </index>
 </template>
@@ -236,7 +256,10 @@
                 cityList: [],
                 subCompanyList: [],
                 fire:false,
+                show:false,
+                dtitle:'',
                 tradeInfo:{
+                    id:'',
                     merchantOperationID:'',
                     activityOperationID:'',
                     consumptionAmount:'',
@@ -248,6 +271,7 @@
                     certificateID:'',
                     remarks:''
                 },
+                refuseReason:'',
                 uploadText:'',
             }
         },
@@ -298,6 +322,97 @@
                 this.uploadText='';
                 $('#modal_trade_info').modal('show');
             },
+            processManualTradeDetail(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(this.dtitle=='提交审核'){
+                    let data={
+                        "id": this.id
+                    };
+                    this.model.applyManualTradeDetail(data)
+                        .then((response)=> {
+                            if (response.data.code == 0) {
+                                dialogs(response.data.message);
+                            }
+                        });
+                }
+                else if(this.dtitle=='审核退回'){
+                    if(this.refuseReason==''){
+                        this.fires=true;
+                        return;
+                    }
+                    let data={
+                        'id':this.id,
+                        'refuseReason':this.refuseReason
+                    }
+                    this.model.refusedManualTradeDetail(data)
+                            .then( (response)=> {
+                                if(response.data.code==0){
+                                    this.query();
+                                    dialogs('success','已退回！');
+                                }
+                            })
+                }
+                else if(this.dtitle=='审核通过'){
+                    let data={
+                        "id": this.id
+                    };
+                    this.model.approvedManualTradeDetail(data)
+                        .then((response)=> {
+                            if (response.data.code == 0) {
+                                dialogs(response.data.message);
+                            }
+                        });
+                }else if (this.dtitle=='删除手工单'){
+                    let data={
+                        "id": this.id
+                    };
+                    this.model.refusedManualTradeDetail(data)
+                        .then((response)=> {
+                            if (response.data.code == 0) {
+                                dialogs(response.data.message);
+                            }
+                        });
+                }
+            },
+            editTradeInfo(_id){
+                let data={
+                    "id": _id
+                };
+                this.model.searchManualTradeDetail(data)
+                    .then((response)=> {
+                        if (response.data.code == 0) {
+                        this.$set('tradeInfo', response.data.data);
+                        this.tradeInfo.consumptionAmount=this.tradeInfo.consumptionAmount/100;
+                        this.tradeInfo.discountAmount=this.tradeInfo.discountAmount/100;
+                        this.tradeInfo.payAmount=this.tradeInfo.payAmount/100;
+                        this.tradeInfo.thirdPartyReceivable=this.tradeInfo.thirdPartyReceivable/100;
+                        this.tradeInfo.suspensionTax=this.tradeInfo.suspensionTax/100;
+                        this.tradeInfo.merchantSubsidyActual=this.tradeInfo.merchantSubsidyActual/100;
+                        this.errorHideL();
+                        $('#modal_trade_info').modal('show');
+                    }
+                });
+            },
+            apply(_id){
+                this.id=_id;
+                this.dtitle='提交审核';
+                this.show=true;
+            },
+            approved(_id){
+                this.id=_id;
+                this.dtitle='审核通过';
+                this.show=true;
+            },
+            refused(_id){
+                this.id=_id;
+                this.dtitle='审核退回';
+                this.show=true;
+            },
+            deleteManualTradeDetail(_id){
+                this.id=_id;
+                this.dtitle='删除手工单';
+                this.show=true;
+            },
             errorHideL(){
                 $('.suberror,.timeerror').hide();
                 this.fire=false;
@@ -323,7 +438,7 @@
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.getManualTradeDetailData();
-                                dialogs();
+                                dialogs(response.data.message);
                                 $(".modal").modal("hide");
                             }
                         })

@@ -129,65 +129,61 @@
                 </div>
 
                 <!--添加商户dialog-->
-                <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">配置第三方</h5>
+                <content-dialog
+                        :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
+                        :title.sync="'配置第三方'"
+                >
+                    <div class="modal-body">
+                        <div class="addtop">
+                            <div class="col-md-3">
+                                <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
                             </div>
-                            <div class="modal-body">
-                                <div class="addtop">
-                                    <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
-                                            <option value="">全部分公司</option>
-                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.cityID">
-                                            <option value="">全部城市</option>
-                                            <option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" v-model="shdata.accountName" placeholder="名称">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
-                                    </div>
-                                </div>
-                                <div class="addbottom">
-                                    <div class="col-md-12">
-                                        <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
-                                            <thead>
-                                            <tr role="row">
-                                                <th></th>
-                                                <th>分公司</th>
-                                                <th>城市</th>
-                                                <th>第三方名称</th>
-                                                <th>操作</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr role="row" v-for="n in xhlist">
-                                                <td>{{$index+1}}</td>
-                                                <td>{{n.subCompanyName}}</td>
-                                                <td>{{n.cityName}}</td>
-                                                <td>{{n.accountName}}</td>
-                                                <td><a @click="checkTrue(n.id)">选择</a></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <span v-if="firstAdd && !xhlist.length>0">
-                                            无可添加数据
-                                        </span>
-                                    </div>
-                                </div>
+                            <div class="col-md-3">
+                                <select class="form-control" v-model="shdata.cityID">
+                                    <option value="">全部城市</option>
+                                    <option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" v-model="shdata.accountName" placeholder="名称">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
+                            </div>
+                        </div>
+                        <div class="addbottom">
+                            <div class="col-md-12">
+                                <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
+                                    <thead>
+                                    <tr role="row">
+                                        <th></th>
+                                        <th>分公司</th>
+                                        <th>城市</th>
+                                        <th>第三方名称</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr role="row" v-for="n in xhlist">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{n.subCompanyName}}</td>
+                                        <td>{{n.cityName}}</td>
+                                        <td>{{n.accountName}}</td>
+                                        <td><a @click="checkTrue(n.id)">选择</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <span v-if="firstAdd && !xhlist.length>0">
+                                    无可添加数据
+                                </span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </content-dialog>
+
             </div>
         </div>
     </index>
@@ -316,7 +312,8 @@
                 xhlist:[],
                 addId:[],
                 id:'',
-                firstAdd:false
+                firstAdd:false,
+                modal_add:false
             }
         },
         methods:{
@@ -381,7 +378,7 @@
                             });
             },
             initList(){
-                $('.modal').modal('hide');
+                this.modal_add=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
@@ -397,7 +394,7 @@
                 this.id=_id;
                 this.firstAdd=false;
                 this.getshCity();
-                $('#modal_add').modal('show');
+                this.modal_add=true;
                 this.clearUl();
             },
             searchDigest(){
