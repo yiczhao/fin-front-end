@@ -190,7 +190,7 @@
                     @keydown.up.prevent="typeAheadUp"
                     @keydown.down.prevent="typeAheadDown"
                     @keyup.enter.prevent="typeAheadSelect"
-                    @blur="open = false"
+                    @blur="blurinput"
                     @focus="open = true"
                     type="search"
                     class="form-control"
@@ -423,6 +423,10 @@
                 });
                 this.value=data;
                 console.log(this.value)
+            },
+            blurinput(){
+                this.open=false;
+                this.search='';
             },
             /**
              * Select a given option.
