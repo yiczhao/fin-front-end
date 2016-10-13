@@ -74,14 +74,14 @@
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>纳税类型</label>
-                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editData.payTaxType">
+                        <input type="radio" id="tinyTaxPayer" value="1" v-model="payTaxType">
                         <label for="tinyTaxPayer">小规模纳税人（/1.03）</label>
-                        <input type="radio" id="normalTaxPayer" value="2" v-model="editData.payTaxType">
+                        <input type="radio" id="normalTaxPayer" value="2" v-model="payTaxType">
                         <label for="normalTaxPayer"> 一般纳税人（/1.06）</label>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率</label>
-                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editData.taxRate" v-limitnumber="editData.taxRate"><span>%</span>
+                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editData.taxRate" v-limitprice="editData.taxRate"><span>%</span>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label posre"><i>*</i>备注：</label>
@@ -154,11 +154,11 @@
                     'pageSize': 10
 
                 },
+                payTaxType:'1',
                 editData:{
                     subCompanyName:'',
                     effectiveYear:'',
                     effectiveMonth:'',
-                    payTaxType:'',
                     taxRate:'',
                     remarks:''
                 },
@@ -237,7 +237,7 @@
                     'subCompanyID':this.subCompanyID,
                     'effectiveYear':this.currentYM.split('-')[0],
                     'effectiveMonth':this.currentYM.split('-')[1],
-                    'payTaxType':this.editData.payTaxType,
+                    'payTaxType':this.payTaxType,
                     'taxRate':this.editData.taxRate,
                     'remarks':this.editData.remarks
                 }
