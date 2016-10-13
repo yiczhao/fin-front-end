@@ -77,7 +77,7 @@
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率月份</label>
-                        <select class="form-control" v-model="currentYM">
+                        <select class="form-control" v-model="currentYM" @change="editInfo()">
                             <option v-for="n in currentList" :value="n">{{n}}</option>
                         </select>
                     </div>
@@ -145,7 +145,6 @@
             this.model = model(this)
             return{
                 pageall:1,
-                first:1,
                 currentYM:'',
                 taxRateList:[],
                 currentList:[],
@@ -285,9 +284,6 @@
             this.initList();
         },
         watch:{
-            'currentYM'(){
-                this.first==1?this.first++:this.editInfo();
-            },
             'defaultData.pageIndex + defaultData.pageSize'(){
                 this.initList();
             }
