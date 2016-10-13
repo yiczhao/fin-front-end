@@ -222,6 +222,7 @@
                             this.currentYM = this.editDialog.editData.effectiveYear+'-'+this.editDialog.editData.effectiveMonth;
                         }else{
                             this.$set('editDialog.editData', "");
+                            this.currentYM = getNow();
                         }
                     this.show=true;
                 }
