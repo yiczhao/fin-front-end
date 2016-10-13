@@ -8,7 +8,6 @@
 
                  <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" v-on:click="addTradeInfo" data-ksa="trade_detail_manage.add">添加交易</a>
                     </div>
 
                     <div class="heading-right">

@@ -196,7 +196,7 @@
                         <label><i>*</i>消费金额：</label>
                         <input type="text" class="form-control"
                                v-model="tradeInfo.consumptionAmount" v-validate:val3="['required']"
-                               v-limitprice="tradeInfo.consumptionAmount"
+                               v-limitaddprice="tradeInfo.consumptionAmount"
                                v-bind:class="{'error-input':fire && $vali.val3.required}"
                                min="0">
                         <span v-if="$vali.val3.required && fire" class="validation-error-label">请输入消费金额</span>
@@ -205,7 +205,7 @@
                         <label><i>*</i>折扣金额：</label>
                         <input type="text" class="form-control" v-model="tradeInfo.discountAmount"
                                v-validate:val4="['required']"
-                               v-limitprice="tradeInfo.discountAmount"
+                               v-limitaddprice="tradeInfo.discountAmount"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val4.required}">
                         <span v-if="$vali.val4.required && fire" class="validation-error-label">请输入折扣金额</span>
@@ -213,7 +213,7 @@
                     <div class="dialog-row">
                         <label><i>*</i>实付金额：</label>
                         <input type="text" class="form-control" v-model="tradeInfo.payAmount"
-                               v-validate:val5="['required']" v-limitprice="tradeInfo.payAmount"
+                               v-validate:val5="['required']" v-limitaddprice="tradeInfo.payAmount"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val5.required}">
                         <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
@@ -223,7 +223,7 @@
                         <input type="text" class="form-control"
                                v-model="tradeInfo.thirdPartyReceivable"
                                v-validate:val6="['required']"
-                               v-limitprice="tradeInfo.thirdPartyReceivable"
+                               v-limitaddprice="tradeInfo.thirdPartyReceivable"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val6.required}">
                         <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
@@ -232,7 +232,7 @@
                         <label><i>*</i>退税款：</label>
                         <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
                                v-validate:val7="['required']"
-                               v-limitprice="tradeInfo.suspensionTax"
+                               v-limitaddprice="tradeInfo.suspensionTax"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val7.required}">
                         <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
@@ -242,7 +242,7 @@
                         <input type="text" class="form-control"
                                v-model="tradeInfo.merchantSubsidyActual"
                                v-validate:val8="['required']"
-                               v-limitprice="tradeInfo.merchantSubsidyActual"
+                               v-limitaddprice="tradeInfo.merchantSubsidyActual"
                                v-bind:class="{'error-input':fire && $vali.val8.required}">
                         <span v-if="$vali.val8.required && fire" class="validation-error-label">请输入商户实补</span>
                     </div>
