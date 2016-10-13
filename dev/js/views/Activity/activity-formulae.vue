@@ -3,7 +3,7 @@
            :ptitle="'活动列表'"
            :hname="'activity-lists'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content activity-formulae" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-title"><span class="btn btn-primary" @click="usedefalut">使用默认公式</span></div>
                 <div class="panel-row">
@@ -74,73 +74,6 @@
         </div>
     </index>
 </template>
-<style lang="sass">
-    .panel{
-        padding:20px;
-        .panel-title{
-            margin:0px 20px 25px;
-            padding: 5px 0 25px;
-            border-bottom: 1px solid #ededed;
-        }
-        .panel-footer{
-            text-align: center;
-            padding-top: 20px;
-        }
-        .panel-row{
-            display: table;
-            margin-bottom: 25px;
-            width:100%;
-        }
-        .col{
-            width: 50%;
-            display: table-cell;
-            vertical-align: middle;
-            &>div{
-                display: table-cell;
-                vertical-align: middle;
-            }
-            div:first-child{
-                min-width: 135px;
-                padding-right: 20px;
-                text-align: right;
-                i{
-                    color:red;
-                }
-            }
-            .v-select{
-                min-height: 38px;
-                .dropdown-toggle{
-                    min-height:38px;
-                    width: 600px;
-                }
-            }
-        }
-        .btn-infos{
-            border: 1px solid #ddd;
-            margin-left: 20px;
-            background: #fff;
-        }
-        .checked{
-            border-color:#2196F3;
-            color:#2196F3;
-        }
-    }
-    .write-div{
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        padding: 10px;
-        width: 500px;
-        .btn-infos,.form-control{
-            margin-left: 5px;
-            margin-bottom: 5px;
-            float: left;
-        }
-        .form-control{
-            width: 50px;
-            border: 1px solid #ddd;
-        }
-    }
-</style>
 <script>
     import vSelect from "../components/vue-select/vue-select.vue"
     import model from '../../ajax/Activity/activityformulae_model'

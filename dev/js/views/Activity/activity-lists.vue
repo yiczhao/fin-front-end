@@ -5,39 +5,43 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
+
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID" v-limitnumber="defaultData.operationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="活动名称">
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
                                 <option value="1">待上线</option>
                                 <option value="2">运行中</option>
                                 <option value="3">已结束</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="activity_manage.search">查询</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="activity_manage.search">查询</a>
+                    </div>
                 </div>
+
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -64,7 +68,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.operationID}}</td>
                                 <td>{{trlist.name}}</td>
                                 <td>
@@ -117,12 +121,22 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
+
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据

@@ -1,8 +1,10 @@
 <template>
     <div class="navbar navbar-inverse">
+
         <div class="navbar-header" style="font-size: 24px;line-height: 24px;padding: 10px 18px;">
             财务管理系统
         </div>
+
         <ul class="nav navbar-nav">
             <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
         </ul>

@@ -5,65 +5,65 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.merchantId">
-                                    <option value="">请选择账户</option>
-                                    <option value="0">南昌备付金</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="dateS">
-                                    <option value="0">昨天</option>
-                                    <option value="1">最近一周</option>
-                                    <option value="2">最近一个月</option>
-                                    <option value="3">最近三个月</option>
-                                    <option value="4">自定义时间</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="dateS==4">
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="checkForm.merchantId">
+                                <option value="">请选择账户</option>
+                                <option value="0">南昌备付金</option>
+                            </select>
+
+                            <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号">
+
+                            <select class="form-control" v-model="dateS">
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+
+                            <div  v-show="dateS==4">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="银行凭证号">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.status">
-                                    <option value="">请选择对账状态</option>
-                                    <option value="2">等待划付</option>
-                                    <option value="3">等待对账</option>
-                                    <option value="4">对账成功</option>
-                                    <option value="5">划付失败</option>
-                                    <option value="0">已关闭</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.purpose">
-                                    <option value="">请选择用途</option>
-                                    <option value="1">补贴划付</option>
-                                    <option value="2">额度采购</option>
-                                    <option value="3">退税划付</option>
-                                    <option value="4">预付款</option>
-                                    <option value="5">供货商划付</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
-                            </div>
-                            <div class="form-group">
-                                <input type="button" class="btn btn-info" @click="initList" value="查询">
-                            </div>
-                    </form>
+
+                            <input type="text" class="form-control" v-model="checkForm.certificate" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" placeholder="银行凭证号">
+
+                            <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
+
+                            <select class="form-control" v-model="checkForm.status">
+                                <option value="">请选择对账状态</option>
+                                <option value="2">等待划付</option>
+                                <option value="3">等待对账</option>
+                                <option value="4">对账成功</option>
+                                <option value="5">划付失败</option>
+                                <option value="0">已关闭</option>
+                            </select>
+
+                            <select class="form-control" v-model="checkForm.purpose">
+                                <option value="">请选择用途</option>
+                                <option value="1">补贴划付</option>
+                                <option value="2">额度采购</option>
+                                <option value="3">退税划付</option>
+                                <option value="4">预付款</option>
+                                <option value="5">供货商划付</option>
+                            </select>
+
+                            <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                            <input type="button" class="btn btn-info add-top" @click="initList" value="查询">
+                    </div>
                 </div>
             </div>
+
             <div v-if="zdlists.length>0" class="panel panel-flat panel-collapsed"   v-for="(index,n) in zdlists">
                 <div class="panel-heading bgddd">
                     <div class="panel-title">
@@ -126,7 +126,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr role="row" v-for="trlist in listinfos[index]">
+                                <tr role="row" v-for="trlist in listinfos[index]" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{trlist.createAt | datetime}}</td>
                                     <td>{{trlist.merchantName}}</td>
                                     <td>{{trlist.amount/100 | currency '' }}</td>

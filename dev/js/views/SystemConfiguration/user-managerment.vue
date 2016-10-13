@@ -1,26 +1,29 @@
 <template>
     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
-        <div class="content" slot="content">
+        <div class="content user-managerment" slot="content">
             <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <form class="form-inline manage-form">
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
-                                </div>
-                                <div class="form-group">
+
+                        <div class="heading">
+                            <div class="heading-left">
+                                <a class="btn btn-add add-top" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
+                            </div>
+
+                            <div class="heading-right">
+                                <form class="form-inline manage-form">
                                     <select class="form-control" v-model="checkForm.subCompanyID" >
                                         <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
-                                </div>
-                                <div class="form-group">
+
                                     <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、手机号、姓名">
-                                </div>
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query" data-ksa="user_manage.search">查询</a>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+
+                            <div class="heading-middle">
+                                <a class="btn btn-info add-top" v-on:click="query" data-ksa="user_manage.search">查询</a>
+                            </div>
                         </div>
+
                         <div v-cloak v-show="!!userList.length" class="dataTables_wrapper no-footer">
                             <div class="datatable-scroll">
                                 <table id="table1" class="table">
@@ -36,7 +39,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(index,user) in userList">
+                                <tr v-for="(index,user) in userList" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{user.subCompanyName}}</td>
                                     <td>{{user.name}}</td>
@@ -50,12 +53,23 @@
                                 </tbody>
                             </table>
                             </div>
-                            <div class="datatable-footer">
+
+
+                        <div class="datatable-bottom">
+                           <div class="left">
+                                <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                           </div>
+
+                           <div class="right">
                                 <page :all="pageall"
                                       :cur.sync="checkForm.pageIndex"
                                       :page_size.sync="checkForm.pageSize">
                                 </page>
-                            </div>
+                           </div>
+                        </div>
+
+
+
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到员工数据信息！
@@ -121,7 +135,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr role="row" v-for="n in userlists">
+                                            <tr role="row" v-for="(index,n) in userlists" v-bind:class="{'odd':(index%2==0)}">
                                                 <td>
                                                     <label>
                                                         <input :value="n.operationID"
@@ -161,79 +175,7 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    body{
-        background-color:#fff;
-    }
-    [v-cloak]{
-        display: none;
-    }
-    .datatable-scroll{
-        overflow:auto;
-    }
-    .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
-    .box-body #table1 th{
-        min-width: 85px;
-    }
-    .controlSpan{
-        display: inline-block;
-        margin-right: 10px;
-    }
-    .modal-foot{
-        margin-bottom: 30px;
-        clear:both;
-        text-align: center;
-    }
-    .addbottom{
-        margin-top: 15px;
-        .col-md-2{
-            text-align: center;
-            input{
-                margin-bottom: 10px;
-            }
-        }
-        .col-md-7{
-            height: 300px;
-            overflow: auto;
-            border: 1px solid #ccc;
-        }
-        .col-md-1{
-            padding-top: 40px;
-            text-align: center;
-            width: 113px;
-            input{
-                margin:15px 0;
-            }
-        }
-        .col-md-4{
-            border: 1px solid #ccc;
-            padding:10px;
-            width: 243px;
-        }
-        ul{
-            list-style: none;
-            height: 278px;
-            overflow: auto;
-            li{
-                margin:5px 0;
-                cursor: pointer;
-                padding-left:3px;
-            }
-        }
-    }
-    .addbottom table tr td,  .addbottom table tr th{
-        padding: 2px;
-    }
-    .addtop,  .addbottom{
-        overflow: hidden;
-        .form-control{
-            padding: 7px;
-        }
-    }
-</style>
+
 <script>
     import model from '../../ajax/SystemConfiguration/user_model'
 
@@ -263,6 +205,7 @@
                 firstAdd:false
             }
         },
+
         methods:{
             //获取员工数据
              getUserList(data){

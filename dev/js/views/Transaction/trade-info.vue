@@ -3,75 +3,68 @@
            :ptitle="'交易管理'"
            :hname="'trade-info'"  
            :isshow="'isshow'">
-        <div class="content blists" slot="content">
+        <div class="content trade-info" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
-                                <option value="">全部分公司</option>
-                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.cityID">
-                                <option value="">全部城市</option>
-                                <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.type">
-                            <option value="">请选择交易类型</option>
-                            <option value="1">正常交易</option>
-                            <option value="2">手工单</option>
-                                <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.timeRange">
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                        </div>
-                        <div class="form-group" v-show="checkForm.timeRange==4">
+
+                 <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" v-on:click="addTradeInfo" data-ksa="trade_detail_manage.add">添加交易</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
+                            <option value="">全部分公司</option>
+                            <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                        </select>
+
+                        <select class="form-control" v-model="checkForm.cityID">
+                            <option value="">全部城市</option>
+                            <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                        </select>
+
+                        <select class="form-control" v-model="checkForm.type">
+                        <option value="">请选择交易类型</option>
+                        <option value="1">正常交易</option>
+                        <option value="2">手工单</option>
+                            <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                        </select>
+
+                        <select class="form-control" v-model="checkForm.timeRange">
+                            <option value="0">昨天</option>
+                            <option value="1">最近一周</option>
+                            <option value="2">最近一个月</option>
+                            <option value="3">最近三个月</option>
+                            <option value="4">自定义时间</option>
+                        </select>
+
+                        <div  v-show="checkForm.timeRange==4">
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.subsidyPayId" v-limitnumber="checkForm.subsidyPayId" placeholder="补贴划付ID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.subsidyTaxRebateId" v-limitnumber="checkForm.subsidyTaxRebateId" placeholder="补贴退税ID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.tradeDetailID" v-limitnumber="checkForm.tradeDetailID" placeholder="交易ID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="query" data-ksa="trade_detail_manage.search">查询</a>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">导出</a>
-                        </div>
-                    </form>
+
+                        <input type="text" class="form-control" v-model="checkForm.subsidyPayId" v-limitnumber="checkForm.subsidyPayId" placeholder="补贴划付ID">
+
+                        <input type="text" class="form-control" v-model="checkForm.subsidyTaxRebateId" v-limitnumber="checkForm.subsidyTaxRebateId" placeholder="补贴退税ID">
+
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
+
+                        <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+
+                        <input type="text" class="form-control" v-model="checkForm.tradeDetailID" v-limitnumber="checkForm.tradeDetailID" placeholder="交易ID">
+
+                        <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
+
+                        <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
+
+                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID" >  
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="trade_detail_manage.search">查询</a>
+                    </div>
                 </div>
+
+
                 <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
@@ -106,7 +99,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr  v-for="trlist in tradeList">
+                            <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.id}}</td>
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
@@ -172,12 +165,22 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
+
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall" 
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
                     <div class="nums">
                         <div>合计：</div>
                         <div>
@@ -225,51 +228,7 @@
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    .validation-error-label{
-        margin-left: 20%;
-    }
-    .timeerror,.suberror,.suberror1{
-        display: none;
-    }
-     .suberror,.suberror1{
-        padding-top: 3px;
-    }
-    .datatable-scroll{
-        overflow: auto;
-    }
-    label i{
-        color: red;
-    }
-    .btns{
-        text-align: center;
-    }
 
-    .form-group{
-        text-align: left;
-    }
-      .form-group.tc{
-        text-align: center;
-    }
-     .modal-body .form-control{
-        text-align: left;
-        width:83%;
-        display: inline-block;
-    }
-     .modal-body label{
-        width:15%;
-        display: inline-block;
-    }
-     .modal-body label i{
-        color:red;
-    }
-    .modal-body button{
-        width:35%;
-    }
-    .nums div{
-        display: inline-block;
-    }
-</style>
 <script>
     import model from '../../ajax/Transaction/trade_model'
     export default{

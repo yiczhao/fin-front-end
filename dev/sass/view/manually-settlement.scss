@@ -1,0 +1,43 @@
+.manually-settlement {
+    .validation-error-label{
+        margin-left: 20%;
+    }
+    .timeerror,.suberror,.suberror1{
+        display: none;
+    }
+     .suberror,.suberror1{
+        padding-top: 3px;
+    }
+    .datatable-scroll{
+        overflow: auto;
+    }
+    label i{
+        color: red;
+    }
+    .btns{
+        text-align: center;
+    }
+
+    .form-group{
+        text-align: left;
+    }
+      .form-group.tc{
+        text-align: center;
+    }
+     .modal-body .form-control{
+        text-align: left;
+        width:83%;
+        display: inline-block;
+    }
+     .modal-body label{
+        display: inline-block;
+         font-size:13px;
+    }
+     .modal-body label i{
+        color:red;
+    }
+    .modal-body button{
+        width:35%;
+    }
+
+}

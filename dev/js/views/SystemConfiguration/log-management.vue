@@ -1,19 +1,22 @@
 <template>
     <index title="日志管理" ptitle="系统配置"  isshow="isshow">
-        <div class="content" slot="content">
+        <div class="content log-management" slot="content">
             <div class="panel panel-flat">
-                        <div class="panel-heading">
+
+                    <div class="heading">
+                        <div class="heading-left">
+
+                        </div>
+
+                        <div class="heading-right">
                             <form class="form-inline manage-form">
-                                <div class="form-group">
                                     <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、姓名、描述">
-                                </div>
-                                <div class="form-group">
+
                                     <select class="form-control" v-model="checkForm.subCompanyID" >
                                     <option value="">全部分公司</option>
                                         <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                     </select>
-                                </div>
-                                <div class="form-group">
+
                                     <select class="form-control" v-model="checkForm.timeRange">
                                         <option value="5">今天</option>
                                         <option value="0">昨天</option>
@@ -22,16 +25,20 @@
                                         <option value="3">最近三个月</option>
                                         <option value="4">自定义时间</option>
                                     </select>
-                                </div>
-                                <div class="form-group" v-show="checkForm.timeRange==4">
-                                    <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                                </div>
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query" data-ksa="system_log_manage.search">查询</a>
-                                </div>
+
+                                    <div v-show="checkForm.timeRange==4">
+                                        <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                        <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                                    </div>
                             </form>
                         </div>
+
+                        <div class="heading-middle">
+                            <a class="btn btn-info add-top" v-on:click="query" data-ksa="system_log_manage.search">查询</a>
+                        </div>
+                    </div>
+
+
                         <div v-show="!!logList.length" class="dataTables_wrapper no-footer">
                             <div class="datatable-scroll">
                                 <table class="table">
@@ -48,7 +55,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-if="!!logList.length" v-for="(index,log) in logList">
+                                <tr v-if="!!logList.length" v-for="(index,log) in logList" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{log.userName}}</td>
                                     <td>{{log.name}}</td>
@@ -65,12 +72,21 @@
                                 </tbody>
                             </table>
                             </div>
-                            <div class="datatable-footer">
+
+
+                        <div class="datatable-bottom">
+                           <div class="left">
+                                <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                           </div>
+
+                           <div class="right">
                                 <page :all="pageall"
                                       :cur.sync="checkForm.pageIndex"
                                       :page_size.sync="checkForm.pageSize">
                                 </page>
-                            </div>
+                           </div>
+                        </div>
+
                         </div>
                         <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                             未查询到日志数据！
@@ -107,28 +123,7 @@
         </div>
     </index>
 </template>
-<style scoped>
-    body{
-        background-color:#fff;
-    }
-    .datatable-scroll{
-        overflow:auto;
-    }
-    .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
-    .box-body #table1 th{
-        min-width: 85px;
-    }
-    .textarea-w{
-        width: 500px;
-        height: 40px;
-    }
-    .textarea-h{
-        height: 100px;
-    }
-</style>
+
 <script>
     import model from '../../ajax/SystemConfiguration/log_model'
     export default{

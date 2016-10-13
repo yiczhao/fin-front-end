@@ -5,9 +5,10 @@
            :isshow="'isshow'">
         <div class="content account-management" slot="content">
         <div class="panel panel-flat">
+
             <div class="heading">
                 <div class="heading-left">
-                    <a class="btn btn-info" @click="addUser" data-ksa="account_manage.add">添加账户</a>
+                    <a data-toggle="modal" data-target="#modal_add"  class="btn btn-add" @click="addUser" data-ksa="account_manage.add">添加账户</a>
                 </div>
                 <div class="heading-right">
                     <select class="form-control" v-model="defaultData.companyId">
@@ -77,12 +78,17 @@
                         未找到数据
                     </div>
                 </div>
-                <div class="table-footer">
-                    <page :all="pageall"
-                          :cur.sync="defaultData.pageIndex"
-                          :page_size.sync="defaultData.pageSize">
-                    </page>
+
+
+                <div class="datatable-bottom">
+                   <div class="right">
+                        <page :all="pageall"
+                              :cur.sync="defaultData.pageIndex"
+                              :page_size.sync="defaultData.pageSize">
+                        </page>
+                   </div>
                 </div>
+
             </div>
         </div>
 

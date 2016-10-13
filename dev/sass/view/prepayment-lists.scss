@@ -1,0 +1,84 @@
+.prepayment-lists{
+  .w{
+    background:none;
+    border:0;
+    padding:3px;
+    text-align:center;
+    &:focus{
+        border:1px solid #999;
+    }
+}
+    .prepayment-modal-btns {
+        text-align: center;
+    }
+
+    .collectionAccount-bgcolor {
+        margin-left: 30px;
+        background-color: #c0c0c0;
+    }
+
+    #modal_prepayment_recharge .form-control {
+        width: 86%;
+        display: inline-block;
+    }
+
+    .btns {
+        text-align: center;
+    }
+
+    .addbottom {
+        margin-top: 15px;
+
+        .col-md-2 {
+            text-align: center;
+            width: 113px;
+            padding: 0;
+            input {
+                margin-bottom: 10px;
+            }
+        }
+        .col-md-7 {
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+        .col-md-4 {
+            width: 243px;
+            height: 300px;
+            padding: 0;
+            input {
+                margin: 15px 0;
+            }
+        }
+        ul {
+            list-style: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow: auto;
+            li {
+                margin: 5px 0;
+                cursor: pointer;
+                padding-left: 3px;
+            }
+            li.check-li {
+                background: #ccc;
+            }
+        }
+    }
+    .btn.btn-info {
+        margin: 2px;
+    }
+
+    .tc {
+        text-align: center;
+
+    .validation-error-label {
+        display: inline-block;
+    }
+
+    }
+  table tr td,table tr th{
+      text-align: center;
+  }
+}
