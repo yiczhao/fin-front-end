@@ -7,22 +7,26 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="addUser" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
-                        </div>
-                    </form>
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add addd-top" @click="addUser" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <div class="form-group">
+                                <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
+
+                                <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
+                    </div>
                 </div>
+
                 <div style="margin-bottom: 20px;padding-left: 20px;font-size: 16px;">
                     <span>预付款账户名：{{merchantName}}</span>
                 </div>
@@ -41,7 +45,7 @@
                                 </tr>
                             </thead>
                         <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td><a @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring" data-ksa="advance_payment_merchant_store_manage.delete">删除</a></td>
@@ -53,11 +57,18 @@
                         </tbody>
                     </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>

@@ -7,56 +7,57 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                            <div class="form-group">
-                                <a data-toggle="modal" data-target="#modal_add" class="btn btn-info"
-                                @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="defaultData.dateS">
-                                    <option value="0">昨天</option>
-                                    <option value="1">最近一周</option>
-                                    <option value="2">最近一个月</option>
-                                    <option value="3">最近三个月</option>
-                                    <option value="4">自定义时间</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="defaultData.dateS==4">
+
+                <div class="heading">
+                    <div class="heading-left">
+                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-add"
+                        @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="defaultData.dateS">
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+
+                            <div  v-show="defaultData.dateS==4">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
                                 <datepicker :readonly="true" :value.sync="defaultData.endDate"
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantName"
-                                   placeholder="商户名">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.status">
-                                <option value="">请选择状态</option>
-                                <option value="7">等待复核</option>
-                                <option value="8">复核不通过</option>
-                                <option value="2">等待划付</option>
-                                <option value="3">转账中</option>
-                                <option value="4">等待对账</option>
-                                <option value="5">对账成功</option>
-                                <option value="6">划付失败</option>
-                                <option value="0">已关闭</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="advance_payment_account_manage.search">查询</a>
-                        </div>
-                    </form>
+
+                        <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
+
+                        <input type="text" class="form-control" v-model="defaultData.merchantName"
+                               placeholder="商户名">
+
+                        <select class="form-control" v-model="defaultData.status">
+                            <option value="">请选择状态</option>
+                            <option value="7">等待复核</option>
+                            <option value="8">复核不通过</option>
+                            <option value="2">等待划付</option>
+                            <option value="3">转账中</option>
+                            <option value="4">等待对账</option>
+                            <option value="5">对账成功</option>
+                            <option value="6">划付失败</option>
+                            <option value="0">已关闭</option>
+                        </select>
+
+                        <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="advance_payment_account_manage.search">查询</a>
+                    </div>
                 </div>
+
                 <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
                     <div class="datatable-header" v-if="!!blanceList">
@@ -78,7 +79,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.orderNumber}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td>
@@ -128,11 +129,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>

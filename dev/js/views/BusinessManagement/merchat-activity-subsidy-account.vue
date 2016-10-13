@@ -7,30 +7,34 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <input type="number" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID" v-limitnumber="defaultData.activityOperationID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.activityStatus">
-                                <option value="">请选择状态</option>
-                                <option value="1">待上线</option>
-                                <option value="2">运行中</option>
-                                <option value="3">已结束</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="subsidy_account_manage.search">查询</a>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="excel" data-ksa="subsidy_account_manage.export">导出</a>
-                        </div>
-                    </form>
+
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+
+                                <input type="number" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID" v-limitnumber="defaultData.activityOperationID">
+
+                                <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
+
+                                <select class="form-control" v-model="defaultData.activityStatus">
+                                    <option value="">请选择状态</option>
+                                    <option value="1">待上线</option>
+                                    <option value="2">运行中</option>
+                                    <option value="3">已结束</option>
+                                </select>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="subsidy_account_manage.search">查询</a>
+                    </div>
                 </div>
+
+
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantOperationID}}</span>
                     <span>商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
@@ -52,7 +56,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.activityOperationID }}</td>
                                 <td>{{trlist.activityName }}</td>
                                 <td>{{trlist.startDate | datetimes}}--{{trlist.endDate  | datetimes}}</td>
@@ -85,12 +89,20 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="defaultData.pageTotal"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="subsidy_account_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="defaultData.pageTotal"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
+
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据

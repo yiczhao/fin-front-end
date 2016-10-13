@@ -7,61 +7,63 @@
            :isshow="'isshow'">
         <div class="content " slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.dateS">
-                                    <option value="0">昨天</option>
-                                    <option value="1">最近一周</option>
-                                    <option value="2">最近一个月</option>
-                                    <option value="3">最近三个月</option>
-                                    <option value="4">自定义时间</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="checkForm.dateS==4">
+
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="checkForm.dateS">
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+
+                            <div v-show="checkForm.dateS==4">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.status">
-                                    <option value="">请选择状态</option>
-                                    <option value="1">成功</option>
-                                    <option value="0">待对账</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.purpose">
-                                    <option value="">请选择用途</option>
-                                    <option value="1">补贴划付</option>
-                                    <option value="2">额度采购</option>
-                                    <option value="3">退税划付</option>
-                                    <option value="4">预付款</option>
-                                    <option value="5">供货商划付</option>
-                                    <option value="6">往来款</option>
-                                    <option value="7">转账退款</option>
-                                    <option value="8">账户费用</option>
-                                    <option value="10">税金提现</option>
-                                    <option value="9">其它</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
-                            </div>
-                            <div class="form-group">
-                                <a class="btn btn-info" @click="checkNew" data-ksa="reserve_cash_detail_manage.search">查询</a>
-                            </div>
-                            <!--<div class="form-group">-->
-                            <!--<input type="button" class="btn btn-info" value="导出">-->
-                            <!--</div>-->
-                    </form>
+
+                            <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+
+                            <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
+
+                            <select class="form-control" v-model="checkForm.status">
+                                <option value="">请选择状态</option>
+                                <option value="1">成功</option>
+                                <option value="0">待对账</option>
+                            </select>
+
+                            <select class="form-control" v-model="checkForm.purpose">
+                                <option value="">请选择用途</option>
+                                <option value="1">补贴划付</option>
+                                <option value="2">额度采购</option>
+                                <option value="3">退税划付</option>
+                                <option value="4">预付款</option>
+                                <option value="5">供货商划付</option>
+                                <option value="6">往来款</option>
+                                <option value="7">转账退款</option>
+                                <option value="8">账户费用</option>
+                                <option value="10">税金提现</option>
+                                <option value="9">其它</option>
+                            </select>
+
+                            <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="reserve_cash_detail_manage.search">查询</a>
+                    </div>
                 </div>
-                <div style="margin: 0 0 20px 20px;font-size: 18px;">
+
+
+                </div>
+                <div style="margin: 0 20px 20px 0;font-size: 18px;">
                     <span>账户简称：</span><span style="margin-right: 10px;">{{aname}}</span>
                     <span>余额：</span><span style="margin-right: 10px;">{{balance/100 | currency ''}}</span>
                     <span  v-if="zdlists.length>0">总收入：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{shouru/100 | currency ''}}元</span>
@@ -123,12 +125,19 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
-                    </div>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
+                    </div>                    
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else v-cloak>
                     未找到数据

@@ -79,8 +79,11 @@
                     </div>
                 </div>
 
-
                 <div class="datatable-bottom">
+                   <div class="left">
+                        <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                   </div>
+
                    <div class="right">
                         <page :all="pageall"
                               :cur.sync="defaultData.pageIndex"
@@ -88,6 +91,7 @@
                         </page>
                    </div>
                 </div>
+
 
             </div>
         </div>
