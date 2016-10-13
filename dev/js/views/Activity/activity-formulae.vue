@@ -172,7 +172,7 @@
                 };
                 this.model.defaultFormulae(data).then((res)=>{
                     if(res.data.code==0){
-                        dialogs()
+                        dialogs('success','设置成功！')
                     }
                 })
             },
