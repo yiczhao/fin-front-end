@@ -28,7 +28,7 @@
                                     <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a @click="editDetail(trList.subCompanyID)" data-ksa="">编辑</a></td>
+                                <td><a @click="editDetail(trList.subCompanyID, trList.subCompanyName)" data-ksa="">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>
@@ -64,7 +64,7 @@
                 >
                     <div class="dialog-row">
                         <label class="control-label">分公司</label>
-                        <label>{{editData.subCompanyName}}</label>
+                        <label>{{editDialog.subCompany.subCompanyName}}</label>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率月份</label>
@@ -74,18 +74,18 @@
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>纳税类型</label>
-                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editData.payTaxType">
+                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editDialog.editData.payTaxType">
                         <label for="tinyTaxPayer">小规模纳税人（/1.03）</label>
-                        <input type="radio" id="normalTaxPayer" value="2" v-model="editData.payTaxType">
+                        <input type="radio" id="normalTaxPayer" value="2" v-model="editDialog.editData.payTaxType">
                         <label for="normalTaxPayer"> 一般纳税人（/1.06）</label>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率</label>
-                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editData.taxRate" v-limitnumber="editData.taxRate"><span>%</span>
+                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editDialog.editData.taxRate" v-limitnumber="editDialog.editData.taxRate"><span>%</span>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label posre"><i>*</i>备注：</label>
-                        <textarea rows="5" cols="5" class="form-control" v-model="editData.remarks"></textarea>
+                        <textarea rows="5" cols="5" class="form-control" v-model="editDialog.editData.remarks"></textarea>
                     </div>
                 </content-dialog>
             </div>
@@ -138,7 +138,6 @@
                 pageall:1,
                 first:1,
                 currentYM:'',
-                subCompanyID:'',
                 taxRateList:[],
                 currentList:[],
                 defaultData:{
@@ -154,13 +153,18 @@
                     'pageSize': 10
 
                 },
-                editData:{
-                    subCompanyName:'',
-                    effectiveYear:'',
-                    effectiveMonth:'',
-                    payTaxType:'',
-                    taxRate:'',
-                    remarks:''
+                editDialog:{
+                    subCompany:{
+                        subCompanyID:'',
+                        subCompanyName:''
+                    },
+                    editData:{
+                        effectiveYear:'',
+                        effectiveMonth:'',
+                        payTaxType:'',
+                        taxRate:'',
+                        remarks:''
+                    }
                 },
                 show:false
             }
@@ -196,25 +200,26 @@
                 }
                 this.currentList=data;
             },
-            editDetail(_subcompanyID){
+            editDetail(_subcompanyID, _subCompanyName){
                 this.getcurrentList();
                 this.model.editDetail(_subcompanyID).then((response) => {
                 // *** 判断请求是否成功如若成功则填充数据到模型
-                    this.subCompanyID = _subcompanyID;
+                    this.editDialog.subCompany.subCompanyID = _subcompanyID;
+                    this.editDialog.subCompany.subCompanyName = _subCompanyName;
                     if(response.data.code == 0){
                         let responseData = response.data.data;
                         if(responseData.effectiveMonth != null && responseData.effectiveYear != null){
-                            this.$set('editData', response.data.data);
-                            this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                            this.$set('editDialog.editData', response.data.data);
+                            this.currentYM = this.editDialog.editData.effectiveYear+'-'+this.editDialog.editData.effectiveMonth;
                         }else{
-                            this.$set('editData', "");
+                            this.$set('editDialog.editData', "");
                         }
                     this.show=true;
                 }
             })},
             editInfo(){
                 let data = {
-                    'subCompanyID':this.subCompanyID,
+                    'subCompanyID':this.editDialog.subCompany.subCompanyID,
                     'effectiveYear':this.currentYM.split('-')[0],
                     'effectiveMonth':this.currentYM.split('-')[1]
                 }
@@ -222,10 +227,10 @@
                     if(response.data.code == 0){
                     let responseData = response.data.data;
                         if(typeof(responseData) != "undefined"){
-                            this.$set('editData', responseData);
-                            this.currentYM = this.editData.effectiveYear+'-'+this.editData.effectiveMonth;
+                            this.$set('editDialog.editData', responseData);
+                            this.currentYM = this.editDialog.editData.effectiveYear+'-'+this.editDialog.editData.effectiveMonth;
                         }else{
-                            this.$set('editData', "");
+                            this.$set('editDialog.editData', "");
                         }
 
                 }
@@ -234,12 +239,12 @@
             },
             save(){
                 let data = {
-                    'subCompanyID':this.subCompanyID,
+                    'subCompanyID':this.editDialog.subCompany.subCompanyID,
                     'effectiveYear':this.currentYM.split('-')[0],
                     'effectiveMonth':this.currentYM.split('-')[1],
-                    'payTaxType':this.editData.payTaxType,
-                    'taxRate':this.editData.taxRate,
-                    'remarks':this.editData.remarks
+                    'payTaxType':this.editDialog.editData.payTaxType,
+                    'taxRate':this.editDialog.editData.taxRate,
+                    'remarks':this.editDialog.editData.remarks
                 }
                 this.model.editSave(data).then((response) => {
                     if(response.data.code == 0){
