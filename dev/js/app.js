@@ -78,6 +78,3 @@ $(document).on('click','a', function () {
 		back_json.num++;
 	}
 });
-window.onbeforeunload=()=>{
-	localStorage.clear();
-}

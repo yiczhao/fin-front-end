@@ -548,10 +548,9 @@
                         .then((res)=> {
                             if(res.data.code==0){
                                 this.modal_other=true;
-                                this.$set('redata', res.data.data);
+                                (typeof res.data.data !='undefined')?this.$set('redata', res.data.data):null;
                             }
                         })
-
             },
             saveOther(){
                 if(this.redata.description==''){
