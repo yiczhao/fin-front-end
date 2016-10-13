@@ -178,6 +178,7 @@
                     return;
                 }
                 let data=this.getsubitData();
+                data.id = '';
                 data.activityID=this.$route.params.activityID;
                 data.subCompanyID=this.$route.params.subCompanyID;
                 this.model.saveFormulae(data).then((res)=>{
