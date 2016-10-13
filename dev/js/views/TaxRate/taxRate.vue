@@ -1,6 +1,6 @@
 <template>
     <index :title="'税率管理'"
-           :ptitle="'税率列表'"
+           :ptitle="'活动管理'"
            :hname="'taxRate'"
            :isshow="'isshow'">
 
@@ -68,7 +68,9 @@
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率月份</label>
-                        <getmonth :value.sync="currentYM"></getmonth>
+                        <select class="form-control" v-model="currentYM">
+                            <option v-for="n in currentList" :value="n">{{n}}</option>
+                        </select>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>纳税类型</label>
@@ -116,7 +118,7 @@
             width: 60px;
             margin-right: 10px;
         }
-        textarea{
+        textarea,select{
             width: 350px;
         }
         .error-input{
@@ -138,6 +140,7 @@
                 currentYM:'',
                 subCompanyID:'',
                 taxRateList:[],
+                currentList:[],
                 defaultData:{
                     'id':'',
                     'subCompanyName':'',
@@ -172,11 +175,29 @@
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code == 0){
                         this.$set('taxRateList', response.data.data);
+                        this.$set('pageall', response.data.total);
                         this.defaultData.rateDate = this.defaultData.effectiveYear+'-'+this.defaultData.effectiveMonth;
                     }
                 });
             },
+            formateDate(date){
+                if(date instanceof Date){
+                    return date.getFullYear() + "-" + (date.getMonth() + 1);
+                } else {
+                    return "Error Date";
+                }
+            },
+            getcurrentList(){
+                let data=[];
+                let date = new Date();
+                for(var i = 0;i < 6; i++){
+                    data[i]=this.formateDate(date);
+                    date.setMonth(date.getMonth() - 1);
+                }
+                this.currentList=data;
+            },
             editDetail(_subcompanyID){
+                this.getcurrentList();
                 this.model.editDetail(_subcompanyID).then((response) => {
                 // *** 判断请求是否成功如若成功则填充数据到模型
                     this.subCompanyID = _subcompanyID;
