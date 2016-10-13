@@ -548,6 +548,7 @@
                         .then((res)=> {
                             if(res.data.code==0){
                                 this.modal_other=true;
+                                this.$set('redata', response.data.data);
                             }
                         })
 
