@@ -249,7 +249,7 @@
                 });
             },
             initList(){
-                $('.modal').modal('hide');
+                this.show=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getTaxRateList(this.defaultData);
             }
