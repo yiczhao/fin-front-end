@@ -5,27 +5,30 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
+                <div class="heading">
+                    <div class="heading-left">
+                        
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
                             <select class="form-control" v-model="defaultData.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <getmonth :value.sync="defaultData.startDate"></getmonth>
-                            <span class="getmonth-span">至</span>
+                            <span class="getmonth-span" style="margin-right: 20px;">至</span>
                             <getmonth :value.sync="defaultData.endDate"></getmonth>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="activity_effect_manage.search">查询</a>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="export" data-ksa="pay_recheck.export">导出</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="activity_effect_manage.search" style="margin-left: -60px;">查询</a>
+                    </div>
                 </div>
+
+
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -98,7 +101,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.contractNumber}}</td>
                                 <td>{{trlist.activityOperationID}}</td>
@@ -155,12 +158,21 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="export" data-ksa="pay_recheck.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
                 </div>
                 <div class="no-list" v-show="!zdlists.length" >
                     未找到数据

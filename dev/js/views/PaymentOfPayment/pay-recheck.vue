@@ -167,12 +167,25 @@
                 </div>
 
 
-                <div class="all-nums">
-                    合计：
-                        {{total.thirdPartySubsidyShould/100 | currency ''}}
-                        {{total.payAmount/100 | currency ''}}
-                        {{total.suspensionTaxAmount/100 | currency ''}}
+                <div class="nums">
+                    <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                        <tr>
+                            <td >
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>{{total.thirdPartySubsidyShould/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>{{total.payAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+
             </div>
             <content-dialog
                     :show.sync="show" :is-cancel="true" :type.sync="'infos'"

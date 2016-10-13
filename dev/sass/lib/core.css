@@ -3101,7 +3101,10 @@ li + .dropdown-header.highlight,
   width: 100%;
 }
 .navbar-header {
-  min-width: 260px;
+  min-width: 120px;
+}
+.navbar-header1{
+  
 }
 .navbar-collapse > .navbar-header {
   margin-left: 0;

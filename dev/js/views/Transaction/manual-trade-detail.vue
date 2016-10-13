@@ -1,4 +1,4 @@
-<template>
+ <template>
     <index :title="'手工单'"
            :ptitle="'交易管理'"
            :isshow="'isshow'">
@@ -6,7 +6,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-info" @click="addTradeInfo"
+                        <a  class="btn btn-add add-top" data-toggle="modal" data-target="#modal_add" @click="addTradeInfo"
                            data-ksa="manual_trade_detail.add">录入手工单</a>
                     </div>
                     <div class="heading-right">
@@ -49,8 +49,9 @@
                         <input type="text" class="form-control" v-model="defaultData.tradeDetailID"
                                v-limitnumber="defaultData.tradeDetailID" placeholder="交易ID">
                         <input type="text" class="form-control" v-model="defaultData.serialNumber" placeholder="交易流水号">
-                        <a class="btn btn-info" @click="getManualTradeDetailData()"
-                           data-ksa="manual_trade_detail.search">查询</a>
+                    </div>
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="getManualTradeDetailData()" data-ksa="manual_trade_detail.search">查询</a>
                     </div>
                 </div>
                 <div id="DataTables_Table_0_wrapper"
@@ -147,12 +148,21 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="table-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
+
+
                 </div>
                 <div class="no-list" v-show="!manualTradeDetailList.length">
                     未找到数据

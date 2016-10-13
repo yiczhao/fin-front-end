@@ -39,7 +39,13 @@
     .modal-body button{
         width:35%;
     }
-    .nums div{
+    .nums{
         display: inline-block;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        table tr td {
+            height: 44px; 
+            padding: 0 20px;
+        }
     }
 }

@@ -20,7 +20,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trList) in taxRateList">
+                            <tr role="row" v-for="(index,trList) in taxRateList" v-bind:class="{'odd':(index52==0)}">
                                 <td>{{trList.subCompanyID}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>
@@ -34,10 +34,19 @@
                             </tbody>
                         </table>
                     </div>
-                    <page :all="pageall"
-                          :cur.sync="defaultData.pageIndex"
-                          :page_size.sync="defaultData.pageSize">
-                    </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
+                    </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     <table id="table2" class="table datatable-selection-single dataTable no-footer">

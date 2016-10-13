@@ -180,45 +180,74 @@
                        </div>
                     </div>
 
-
                     <div class="nums">
-                        <div>合计：</div>
-                        <div>
-                            <span>消费金额:</span>
-                            <span>{{nums.consumptionAmount/100 | currency ''}}</span>
-                            <span>折扣金额:</span>
-                            <span>{{nums.discountAmount/100 | currency ''}}</span>
-                            <span>实付金额:</span>
-                            <span>{{nums.payAmount/100 | currency ''}}</span>
-                        </div>
-                        <div>
-                            <span>额度抵扣:</span>
-                            <span>{{nums.limitDeduct/100 | currency ''}}</span>
-                            <span>本金抵扣:</span>
-                            <span>{{nums.principalDeduct/100 | currency ''}}</span>
-                            <span>三方应收:</span>
-                            <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
-                        </div>
-                        <div>
-                            <span>商户应补:</span>
-                            <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
-                            <span>退税款:</span>
-                            <span>{{nums.suspensionTax/100 | currency ''}}</span>
-                            <span>商户实补:</span>
-                            <span>{{nums.merchantSubsidyActual/100 | currency ''}}</span>
-                        </div>
-                        <div>
-                            <span>折扣差:</span>
-                            <span>{{nums.discountDiff/100 | currency ''}}</span>
-                            <span>扣收金额:</span>
-                            <span>{{nums.collectionAmount/100 | currency ''}}</span>
-                            <span>33211佣金:</span>
-                            <span>{{nums.commission33211/100 | currency ''}}</span>
-                        </div>
-                         <div>
-                            <span>入账金额:</span>
-                            <span>{{nums.entryAmount/100 | currency ''}}</span>
-                        </div>
+                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                            <tr>
+                                <td rowspan="4">
+                                    <span>合计： </span>
+                                </td>
+                                <td>
+                                    <span>消费金额:</span>
+                                    <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>折扣金额:</span>
+                                    <span>{{nums.discountAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>实付金额:</span>
+                                    <span>{{nums.payAmount/100 | currency ''}}</span>  
+                                </td>
+                                <td>
+                                    <span>额度抵扣:</span>
+                                    <span>{{nums.limitDeduct/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>本金抵扣:</span>
+                                    <span>{{nums.principalDeduct/100 | currency ''}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span>三方应收:</span>
+                                    <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span> 
+                                </td>
+                                <td>
+                                    <span>商户应补:</span>
+                                    <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>退税款:</span>
+                                    <span>{{nums.suspensionTax/100 | currency ''}}</span>
+                                </td>
+
+                                <td>
+                                    <span>商户实补:</span>
+                                    <span>{{nums.merchantSubsidyActual/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>折扣差:</span>
+                                    <span>{{nums.discountDiff/100 | currency ''}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span>扣收金额:</span>
+                                    <span>{{nums.collectionAmount/100 | currency ''}}</span>
+                                </td>                                <td>
+                                    <span>佣金:</span>
+                                    <span>{{nums.commission33211/100 | currency ''}}</span> 
+                                </td>
+                                <td>
+                                    <span>入账金额:</span>
+                                    <span>{{nums.entryAmount/100 | currency ''}}</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
