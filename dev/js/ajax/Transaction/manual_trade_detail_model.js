@@ -61,8 +61,14 @@ function model(_this) {
         deleteManualTradeDetail(data){
             return _this.$http.delete(_this.$API.deleteManualTradeDetail+$.param(data));
         },
-
-
+        /**
+         * @description 删除手工单
+         * @param data
+         * @returns {*}
+         */
+        getManualTradeDetailSum(data){
+            return _this.$http.get(_this.$API.getManualTradeDetailSum+$.param(data));
+        }
     }
 }
 module.exports = model

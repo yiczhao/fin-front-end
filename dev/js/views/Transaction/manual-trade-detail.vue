@@ -167,6 +167,57 @@
                 <div class="no-list" v-show="!manualTradeDetailList.length">
                     未找到数据
                 </div>
+                <div class="nums">
+                    <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                        <tr>
+                            <td rowspan="4">
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>消费金额:</span>
+                                <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>折扣金额:</span>
+                                <span>{{nums.discountAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>实付金额:</span>
+                                <span>{{nums.payAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>额度抵扣:</span>
+                                <span>{{nums.limitDeduct/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>本金抵扣:</span>
+                                <span>{{nums.principalDeduct/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>三方应收:</span>
+                                <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>商户应补:</span>
+                                <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>退税款:</span>
+                                <span>{{nums.suspensionTax/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>商户实补:</span>
+                                <span>{{nums.merchantSubsidyActual/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>折扣差:</span>
+                                <span>{{nums.discountDiff/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <content-dialog
                     :show.sync="modal_add" :type.sync="'infos'" :is-cancel="true"
@@ -325,11 +376,30 @@
                 refuseReason: '',
                 uploadText: '',
                 modal_add: false,
+                nums:{
+                    "consumptionAmount":"",
+                    "discountAmount":"",
+                    "payAmount":"",
+                    "limitDeduct":"",
+                    "principalDeduct":"",
+                    "thirdPartyReceivable":"",
+                    "merchantSubsidyShould":"",
+                    "suspensionTax":"",
+                    "merchantSubsidyActual":"",
+                    "discountDiff":"",
+                    "collectionAmount":"",
+                    "commission33211":"",
+                    "entryAmount":""
+                }
             }
         },
         methods: {
             getManualTradeDetailData(){
                 back_json.saveArray(this.$route.path, this.defaultData);
+                this.model.getManualTradeDetailSum(this.defaultData)
+                        .then((response)=>{
+                            (response.data.code==0)?this.$set('nums',response.data.data):null;
+                        });
                 this.model.getManualTradeDetailList(this.defaultData).then((response)=> {
                     if (response.data.code == 0) {
                         this.$set('manualTradeDetailList', response.data.data);

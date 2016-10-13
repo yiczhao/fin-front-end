@@ -193,6 +193,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getManualTradeDetailList = './manualTradeDetail/list?';
+    /**
+     * @description 交易单合计接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.getManualTradeDetailSum = './manualTradeDetail/total?';
 
     /**
      * @description 添加手工单接口地址

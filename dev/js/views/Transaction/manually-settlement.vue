@@ -120,31 +120,31 @@
                             </tr>
                             </tbody>
                             <tr role="row" v-if="nums!=''" >
-                                <th>合计：</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th><b>{{nums.consumptionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.payAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.limitDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.principalDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></th>
-                                <th><b>{{nums.suspensionTax/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountDiff/100 | currency ''}}</b></th>
-                                <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
-                                <th><b>{{nums.entryAmount/100 | currency ''}}</b></td>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b>{{nums.consumptionAmount/100 | currency ''}}</b></td>
+                                <td><b>{{nums.discountAmount/100 | currency ''}}</b></td>
+                                <td><b>{{nums.payAmount/100 | currency ''}}</b></td>
+                                <td><b>{{nums.limitDeduct/100 | currency ''}}</b></td>
+                                <td><b>{{nums.principalDeduct/100 | currency ''}}</b></td>
+                                <td><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></td>
+                                <td><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></td>
+                                <td><b>{{nums.suspensionTax/100 | currency ''}}</b></td>
+                                <td><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></td>
+                                <td><b>{{nums.discountDiff/100 | currency ''}}</b></td>
+                                <td><b>{{nums.collectionAmount/100 | currency ''}}</b></td>
+                                <td><b>{{nums.commission33211/100 | currency ''}}</b></td>
+                                <td><b>{{nums.entryAmount/100 | currency ''}}</b></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </table>
                     </div>
