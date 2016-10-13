@@ -47,11 +47,11 @@ function model(_this){
         },
         /**
          * @description 查询其他信息数据
-         * @params {id}
+         * @params {data}
          * @returns {*}
          * */
-        otherInfo(_id){
-            return _this.$http.get(_this.$API.otherInfo+_id)
+        otherInfo(data){
+            return _this.$http.get(_this.$API.otherInfo+ $.param(data))
         },
     }
 }

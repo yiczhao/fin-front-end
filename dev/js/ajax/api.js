@@ -587,7 +587,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.otherInfo = './activity/otherInfo/';
+    _o.otherInfo = './activity/otherInfo/detail?';
 
     /**
      * @description 查询税率管理列表

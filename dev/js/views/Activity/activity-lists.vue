@@ -95,7 +95,7 @@
                                 <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
                                 <td>
                                     <a v-link="{'name':'activity-formulae','params':{'activityID':trlist.id, 'subCompanyID':trlist.subCompanyID}}">计算公式</a>
-                                    <a @click="otherInfo(trlist.id)">其他信息</a>
+                                    <a @click="otherInfo(trlist.subCompanyID,trlist.id)">其他信息</a>
                                 </td>
                             </tr>
                             <tr>
@@ -505,9 +505,12 @@
                         }
                     })
             },
-            otherInfo(_id){
-                this.redata.id=_id;
-                this.model.otherInfo(_id)
+            otherInfo(subCompanyID,_id){
+                let data={
+                    subCompanyID:subCompanyID,
+                    activityID:_id
+                }
+                this.model.otherInfo(data)
                         .then((res)=> {
                             if(res.data.code==0){
                                 this.modal_other=true;
