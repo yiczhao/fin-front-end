@@ -74,14 +74,14 @@
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>纳税类型</label>
-                        <input type="radio" id="tinyTaxPayer" value="1" v-model="editDialog.editData.payTaxType">
+                        <input type="radio" id="tinyTaxPayer" value="1" v-model="payTaxType">
                         <label for="tinyTaxPayer">小规模纳税人（/1.03）</label>
-                        <input type="radio" id="normalTaxPayer" value="2" v-model="editDialog.editData.payTaxType">
+                        <input type="radio" id="normalTaxPayer" value="2" v-model="payTaxType">
                         <label for="normalTaxPayer"> 一般纳税人（/1.06）</label>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率</label>
-                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editDialog.editData.taxRate" v-limitnumber="editDialog.editData.taxRate"><span>%</span>
+                        <input class="form-control w350" type="text" placeholder="主税率和附加税" v-model="editDialog.editData.taxRate" v-limitprice="editDialog.editData.taxRate"><span>%</span>
                     </div>
                     <div class="dialog-row">
                         <label class="control-label posre"><i>*</i>备注：</label>
@@ -153,19 +153,19 @@
                     'pageSize': 10
 
                 },
-                editDialog:{
-                    subCompany:{
-                        subCompanyID:'',
-                        subCompanyName:''
+                editDialog: {
+                    subCompany: {
+                        subCompanyID: '',
+                        subCompanyName: ''
                     },
-                    editData:{
-                        effectiveYear:'',
-                        effectiveMonth:'',
-                        payTaxType:'',
-                        taxRate:'',
-                        remarks:''
-                    }
+                    editData: {
+                        effectiveYear: '',
+                        effectiveMonth: '',
+                        taxRate: '',
+                        remarks: ''
+                    },
                 },
+                payTaxType:'1',
                 show:false
             }
 
@@ -242,9 +242,17 @@
                     'subCompanyID':this.editDialog.subCompany.subCompanyID,
                     'effectiveYear':this.currentYM.split('-')[0],
                     'effectiveMonth':this.currentYM.split('-')[1],
-                    'payTaxType':this.editDialog.editData.payTaxType,
+                    'payTaxType':this.payTaxType,
                     'taxRate':this.editDialog.editData.taxRate,
                     'remarks':this.editDialog.editData.remarks
+                }
+                let num=0;
+                _.map(data,(value)=>{
+                    (typeof value=='undefined'||value=='')?num++:null;
+                })
+                if(num>0){
+                    dialogs('info','请填写所有必填项!');
+                    return
                 }
                 this.model.editSave(data).then((response) => {
                     if(response.data.code == 0){

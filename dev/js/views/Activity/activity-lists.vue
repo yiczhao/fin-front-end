@@ -506,6 +506,18 @@
                     })
             },
             otherInfo(subCompanyID,_id){
+                this.redata={
+                    "id":_id,
+                    "activityId": '',
+                    "contractNumber": '',
+                    "activityAttribution": '',
+                    "operator": '',
+                    "collectPeriod": '',
+                    "collectAmount": '',
+                    "invoiceAmount": '',
+                    "description": '',
+                    "remarks": '',
+                }
                 let data={
                     subCompanyID:subCompanyID,
                     activityID:_id

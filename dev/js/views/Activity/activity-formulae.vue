@@ -144,7 +144,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null)?data[key]=this.enString(value):data[key]=[];
+                            (value!=null||key!='activityID'||key!='id'||key!='subCompanyID')?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
@@ -153,6 +153,10 @@
             usedefalut(){
                 this.model.useDefault(this.$route.params.subCompanyID).then((res)=>{
                     if(res.data.code==0){
+                        if(typeof res.data.data=='undefined'){
+                            dialogs('info','无默认公式！')
+                            return;
+                        }
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
                             (value!=null)?data[key]=this.enString(value):data[key]=[];
@@ -168,7 +172,7 @@
                 };
                 this.model.defaultFormulae(data).then((res)=>{
                     if(res.data.code==0){
-                        dialogs('success','设置成功！');
+                        dialogs()
                     }
                 })
             },
