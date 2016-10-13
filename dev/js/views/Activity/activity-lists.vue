@@ -96,7 +96,7 @@
                                 <td>{{trlist.commissionAmount/100 | currency ''}}</td>
                                 <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
                                 <td>
-                                    <a v-link="{'name':'activity-formulae','params':{'activityID':trlist.id, 'subCompanyID':trlist.subCompanyID}}">计算公式</a>
+                                    <a @click="checkformulae(trlist)">计算公式</a>
                                     <a @click="otherInfo(trlist.subCompanyID,trlist.id)">其他信息</a>
                                 </td>
                             </tr>
@@ -144,6 +144,20 @@
                     未找到数据
                 </div>
 
+                <content-dialog
+                        :show.sync="companymodal" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'选择分公司'"  @kok="goformulae" @kcancel="companymodal=false"
+                >
+                    <div class="dialog-row">
+                        <span>
+                             <label>分公司：</label>
+                              <select class="form-control" v-model="goformulaeData.subCompanyID">
+                                  <option value="">请选择分公司</option>
+                                <option v-for="(index,n) in usercompanylists" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+                        </span>
+                    </div>
+                </content-dialog>
                 <!--添加商户dialog-->
                 <content-dialog
                         :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
@@ -350,6 +364,7 @@
                 pageall:1,
                 city:[],
                 companylists:[],
+                usercompanylists:[],
                 defaultData:{
                     'operationID': '',
                     'name': '',
@@ -383,6 +398,11 @@
                 firstAdd:false,
                 modal_add:false,
                 modal_other:false,
+                companymodal:false,
+                goformulaeData:{
+                    'id':'',
+                    'subCompanyID':''
+                },
                 redata:{
                     "id": '',
                     "activityId": '',
@@ -509,8 +529,8 @@
             },
             otherInfo(subCompanyID,_id){
                 this.redata={
-                    "id":_id,
-                    "activityId": '',
+                    "subCompanyID":subCompanyID,
+                    "activityID": _id,
                     "contractNumber": '',
                     "activityAttribution": '',
                     "operator": '',
@@ -544,6 +564,30 @@
                                 this.initList();
                             }
                         })
+            },
+            checkformulae({id,subCompanyID}){
+                let uid=JSON.parse(sessionStorage.getItem('userData')).subCompanyID;
+                if(subCompanyID==1&&subCompanyID==uid){
+                    this.$common_model.getcompany({}).then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.companymodal=true;
+                            this.goformulaeData={
+                                'id':id,
+                                'subCompanyID':''
+                            }
+                            this.$set('usercompanylists', response.data.data)
+                        }
+                    });
+                }else{
+                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':subCompanyID}});
+                }
+            },
+            goformulae(){
+                if(this.goformulaeData.subCompanyID==''){
+                    return;
+                }
+                this.$router.go({'name':'activity-formulae','params':{'activityID':this.goformulaeData.id, 'subCompanyID':this.goformulaeData.user_subCompanyID}});
             }
         },
         ready() {
