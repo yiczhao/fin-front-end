@@ -64,6 +64,14 @@
 									<td>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="text" class="form-control" v-model="jobID" placeholder="jobID"/>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="执行" @click="excuteJob()"/>
+									</td>
+								</tr>
                             </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
@@ -154,7 +162,8 @@
 				endID:'',
                 bankAccountID:'',
 				flowID:'',
-				serialNumber :''
+				serialNumber :'',
+				jobID:''
             }
         },
         methods:{
@@ -250,7 +259,14 @@
 						.then((response)=>{
 					dialogs('success','生成成功！');
 						})
+			},
+			excuteJob(){
+				this.$http.get('./job/'+this.jobID)
+						.then((response)=>{
+					dialogs('success',response.data.message);
+			})
 			}
+
         },
         ready() {
         },
