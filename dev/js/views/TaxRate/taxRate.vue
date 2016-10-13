@@ -241,6 +241,14 @@
                     'taxRate':this.editData.taxRate,
                     'remarks':this.editData.remarks
                 }
+                let num=0;
+                _.map(data,(value)=>{
+                    (typeof value=='undefined'||value=='')?num++:null;
+                })
+                if(num>0){
+                    dialogs('info','请填写所有必填项!');
+                    return
+                }
                 this.model.editSave(data).then((response) => {
                     if(response.data.code == 0){
                         dialogs();
