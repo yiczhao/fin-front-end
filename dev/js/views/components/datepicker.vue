@@ -1,4 +1,5 @@
-<style scoped>
+<style lang="sass" scoped>
+#app{
 .datetime-picker {
     position: relative;
     display: inline-block;
@@ -110,7 +111,7 @@
     position: absolute;
     top: 8px;
     right:10px;
-}
+}}
 </style>
 
 <template>

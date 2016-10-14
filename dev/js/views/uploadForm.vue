@@ -130,6 +130,7 @@
     </index>
 </template>
 <style lang="sass" scoped>
+	#app{
 	table td, table th{
 		overflow: visible;
 	}
@@ -145,6 +146,7 @@
                 width:150px;
             }
         }
+	}
 	}
 </style>
 <script>
