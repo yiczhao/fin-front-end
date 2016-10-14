@@ -29,11 +29,11 @@
                 <div class="panel-row">
                     <div class="col">
                         <div>实际微信营销费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualWeixinMarketFee" :options="chooseData"></v-select>
+                        <v-select multiple taggable :value.sync="defaultData.actualWeChatMarketFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同微信营销费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractWeixinMarketFee" :options="chooseData"></v-select>
+                        <v-select multiple taggable :value.sync="defaultData.contractWeChatMarketFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
@@ -101,13 +101,13 @@
                 defaultData:{
                     actualAdvertisementFee:[],
                     actualMaterialFee:[],
-                    actualWeixinMarketFee:[],
+                    actualWeChatMarketFee:[],
                     actualServiceFee:[],
                     actualTaxFee:[],
                     actualSettlementFee:[],
                     contractAdvertisementFee:[],
                     contractMaterialFee:[],
-                    contractWeixinMarketFee:[],
+                    contractWeChatMarketFee:[],
                     contractServiceFee:[],
                     contractTaxFee:[],
                     contractSettlementFee:[]

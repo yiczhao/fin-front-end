@@ -127,8 +127,8 @@
                                     <span>{{trlist.actualMaterialFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <span>{{trlist.contractWeixinMarketFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualWeixinMarketFee/100 | currency ''}}</span>
+                                    <span>{{trlist.contractWeChatMarketFee/100 | currency ''}}</span>
+                                    <span>{{trlist.actualWeChatMarketFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
                                     <span>{{trlist.contractTaxFee/100 | currency ''}}</span>
