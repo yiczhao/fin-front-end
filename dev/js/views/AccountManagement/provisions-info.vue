@@ -115,7 +115,7 @@
                                     <span v-else>待对账</span>
                                 </td>
                                 <td>
-                                    <a data-ksa="reserve_cash_detail_manage.check" href="javascript:void(0);" data-toggle="modal" data-target="#modal_fzr"  @click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
+                                    <a data-ksa="reserve_cash_detail_manage.check"   @click="duizhang(trlist)" v-if="trlist.status==0">对账</a>
                                     <a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details',params:{reserveCashOrderNumber:trlist.reserveCashOrderNumber}}" v-if="trlist.status==1&&trlist.checkType==1">详情</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
@@ -142,13 +142,10 @@
                 未找到数据
             </div>
 
-            <div data-backdrop="static"  id="modal_fzr" class="modal fade" style="display: none;">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title">交易对账</h5>
-                        </div>
+            <content-dialog
+                    :show.sync="modal_fzr" :is-button="false" :type.sync="'infos'"
+                    :title.sync="'交易对账'"
+            >
                         <div class="modal-body">
                             <div class="modal-body member_rules_modal-body">
                                 <div class="form-group">
@@ -230,65 +227,60 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+            </content-dialog>
 
-            <div data-backdrop="static"  id="modal_dzone" class="modal fade" v-cloak>
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title">交易对账</h5>
-                        </div>
+            <content-dialog
+                    :show.sync="modal_dzone" :is-button="false" :type.sync="'infos'"
+                    :title.sync="'交易对账'" 
+            >
                         <div class="modal-body">
-                    <table v-show="gllists.length>0" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>订单号</th>
-                            <th>付款时间</th>
-                            <th>收款方</th>
-                            <th>收款信息</th>
-                            <th>付款金额</th>
-                            <th>用途</th>
-                            <th>备注 </th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="n in gllists">
-                            <td>{{n.orderId}}</td>
-                            <td>{{n.payTime | datetime}}</td>
-                            <td :title="n.displayName">{{n.displayName | filterlength}}</td>
-                            <td :title="n.collectionAccountName+n.collectionAccountNumber">
-                                {{n.collectionAccountName | filterlength}}
-                                </br>
-                                {{n.collectionAccountNumber}}
-                            </td>
-                            <td>{{n.payAmount/100 | currency '' }}</td>
-                            <td>
-                                <template v-if="n.purpose==1"> 补贴划付</template>
-                                <template v-if="n.purpose==2"> 额度采购</template>
-                                <template v-if="n.purpose==3"> 退税划付</template>
-                                <template v-if="n.purpose==4"> 预付款</template>
-                                <template v-if="n.purpose==5"> 供货商划付</template>
-                                <template v-if="n.purpose==6"> 往来款</template>
-                                <template v-if="n.purpose==7"> 转账退款</template>
-                                <template v-if="n.purpose==8"> 账户费用</template>
-                                <template v-if="n.purpose==9"> 其它</template>
-                                <template v-if="n.purpose==10">税金提现</template>
-                            </td>
-                            <td :title="n.remarks">{{n.remarks | filterlength}}</td>
-                            <td><a href="javascript:void(0);" @click="checkDz(n.purpose,n.remarks,n.id)">选择</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                        <div v-else>
-                            未查询到对账数据
+                            <table v-show="gllists.length>0" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>付款时间</th>
+                                    <th>收款方</th>
+                                    <th>收款信息</th>
+                                    <th>付款金额</th>
+                                    <th>用途</th>
+                                    <th>备注 </th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="n in gllists">
+                                    <td>{{n.orderId}}</td>
+                                    <td>{{n.payTime | datetime}}</td>
+                                    <td :title="n.displayName">{{n.displayName | filterlength}}</td>
+                                    <td :title="n.collectionAccountName+n.collectionAccountNumber">
+                                        {{n.collectionAccountName | filterlength}}
+                                        </br>
+                                        {{n.collectionAccountNumber}}
+                                    </td>
+                                    <td>{{n.payAmount/100 | currency '' }}</td>
+                                    <td>
+                                        <template v-if="n.purpose==1"> 补贴划付</template>
+                                        <template v-if="n.purpose==2"> 额度采购</template>
+                                        <template v-if="n.purpose==3"> 退税划付</template>
+                                        <template v-if="n.purpose==4"> 预付款</template>
+                                        <template v-if="n.purpose==5"> 供货商划付</template>
+                                        <template v-if="n.purpose==6"> 往来款</template>
+                                        <template v-if="n.purpose==7"> 转账退款</template>
+                                        <template v-if="n.purpose==8"> 账户费用</template>
+                                        <template v-if="n.purpose==9"> 其它</template>
+                                        <template v-if="n.purpose==10">税金提现</template>
+                                    </td>
+                                    <td :title="n.remarks">{{n.remarks | filterlength}}</td>
+                                    <td><a href="javascript:void(0);" @click="checkDz(n.purpose,n.remarks,n.id)">选择</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div v-else>
+                                未查询到对账数据
+                            </div>
                         </div>
-                        </div>
-                    </div>
-                </div>
+            </content-dialog>
+
             </div>
             </div>
         </div>
@@ -372,20 +364,6 @@
      .modal-header{
         margin-bottom: 20px;
     }
-    #modal_dzone{
-        margin-top: 140px;
-        table{
-            padding: 10px;
-            tr{
-                td,th{
-                    padding: 5px;
-                }
-            }
-        }
-        .modal-body{
-            padding: 0 20px 20px;
-        }
-    }
      .validation-error-label{
          display: inline-block;
      }
@@ -398,6 +376,8 @@
         data(){
             this.model=model(this);
             return{
+                modal_fzr: false,//
+                modal_dzone: false,
                 loginList:{},
                 zdlists:[],
                 dzList:{},
@@ -474,6 +454,7 @@
                 this.cleardz();
                 this.$set('dzList', a);
                 this.dz_show=true;
+                this.modal_fzr=true;//
             },
             checkNew(){
                 this.initList();
@@ -482,7 +463,8 @@
                 this.dz_show = false;
             },
             initList(){
-                $(".modal").modal("hide");
+                this.modal_fzr = false;//
+                this.modal_dzone = false;//
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);
             },
@@ -495,7 +477,7 @@
                             if(response.data.code==0){
                                 this.$set('gllists', response.data.data);
                                 (this.checkOne)?this.checkOne=false:this.checkOne=true;
-                                $('#modal_dzone').modal('show');
+                                this.modal_dzone = true;//
                             }
                         });
             },
@@ -505,7 +487,7 @@
                       remarks:remarks,
                   }
                   this.associateCheck.orderID=_id;
-                  $('#modal_dzone').modal('hide');
+                  this.modal_dzone = false;
             },
             dzTrue(_id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -564,15 +546,7 @@
             }else{
                 vm.initList();
             }
-            $('#modal_dzone').on('hidden.bs.modal',function(){
-                if(!$('#modal_fzr').is(':hidden')){
-                    $('#app').addClass('modal-open');
-                }
-                $('body').css('padding-right',0);
-            })
-            $('#modal_fzr').on('show.bs.modal',function(){
-                vm.errortext='';
-            })
+
         },
         watch:{
             zdlists(){

@@ -384,6 +384,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -402,6 +403,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <!--查看账户dialog-->
                 <div data-backdrop="static"  id="modal_see" class="modal fade" style="display: none;">
                     <div class="modal-dialog">

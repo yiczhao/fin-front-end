@@ -236,7 +236,7 @@
                                     <th>备注</th>
                                 </tr>
                             </thead>
-                            <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
+                            <tr v-show="listinfos!=''&&listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createDate | datetimes}}</td>
                                 <td>{{trlist.payAmount/100 | currency '' }}</td>
                                 <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>

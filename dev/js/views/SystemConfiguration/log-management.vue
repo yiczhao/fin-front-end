@@ -64,7 +64,7 @@
                             </td>
                             <td>{{log.createTime | datetime}}</td>
                             <td>
-                                <a data-toggle="modal" data-target="#modal_logInfo" v-on:click="showLog(log.id)" data-ksa="system_log_manage.detail">详情</a>
+                                <a v-on:click="showLog(log.id)" data-ksa="system_log_manage.detail">详情</a>
                             </td>
                         </tr>
                         </tbody>
@@ -88,34 +88,34 @@
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到日志数据！
                 </div>
-                        
-                <div id="modal_logInfo" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog mg">
-                        <div class="modal-content">
-                             <div class="modal-header">
-                                <h3>日志详情</h3>
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                             </div>
-                             <div class="modal-body">
-                                <div>
-                                    <div><label>用户名：</label>{{log.userName}}</div>
-                                    <div><label>姓名：</label>{{log.name}}</div>
-                                    <div><label style="position: relative;top: -25px;">URL：</label>
-                                        <textarea class="textarea-w">{{log.website}}{{log.uri}}</textarea>
-                                    </div>
-                                    <div><label style="position: relative;top: -25px;">描述：</label>
-                                        <textarea  v-if="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
-                                    </div>
-                                    <div><label style="position: relative;top: -80px;">详情：</label>
-                                        <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
-                                    </div>
-                                    <div><label>创建IP：</label>{{log.createIp}}</div>
-                                    <div><label>创建时间：</label>{{log.createTime | datetime}}</div>
-                                </div>
-                             </div>
+
+                <content-dialog
+                        :show.sync="modal_logInfo" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'日志详情'" 
+                >
+                    <div class="modal-body">
+                        <div>
+                            <div><label>用户名：</label>{{log.userName}}</div>
+                            <div><label>姓名：</label>{{log.name}}</div>
+                            <div>
+                                <label style="position: relative;top: -25px;">URL：</label>
+                                <textarea class="textarea-w">{{log.website}}{{log.uri}}</textarea>
+                            </div>
+                            <div>
+                                <label style="position: relative;top: -25px;">描述：</label>
+                                <textarea  v-if="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
+                            </div>
+                            <div>
+                                <label style="position: relative;top: -80px;">详情：</label>
+                                <textarea class="textarea-w textarea-h">{{log.logInfo}}</textarea>
+                            </div>
+                            <div><label>创建IP：</label>{{log.createIp}}</div>
+                            <div><label>创建时间：</label>{{log.createTime | datetime}}</div>
                         </div>
                     </div>
-                </div>
+                </content-dialog>
+
+
             </div>
         </div>
     </index>
@@ -127,6 +127,7 @@
         data(){
             this.model =model(this)
             return{
+                modal_logInfo: false,
                 checkForm:{
                     subCompanyID:"",
                     keywords:"",
@@ -157,7 +158,8 @@
         methods:{
             //获取员工数据
              getLogList(data){
-                 if(sessionStorage.getItem('isHttpin')==1)return;
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.modal_logInfo=false;
                 this.model.log_list(data)
                     .then((response)=>{
                         (response.data.code==0) ? this.$set('logList', response.data.data) : null;
@@ -183,6 +185,7 @@
                 this.model.log_info(id)
                     .then((response)=>{
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
+                            this.modal_logInfo=true;
                         })
             },
             query() {
