@@ -45,6 +45,13 @@ export default function(router){
                 require(['./views/Transaction/manually-settlement.vue'],resolve);
             }
         },
+        //交易处理-手工结算
+        '/adjust-trade-detailpre/':{
+            name:'adjust-trade-detailpre',
+            component: function(resolve){
+                require(['./views/Transaction/adjust-trade-detailpre.vue'],resolve);
+            }
+        },
         //交易处理-交易白名单
         '/white-lists/':{
             name:'white-lists',

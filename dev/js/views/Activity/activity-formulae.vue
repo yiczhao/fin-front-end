@@ -84,7 +84,7 @@
             return{
                 chooseData:[
                     '三方应收',
-                    '苏州卡说税率',
+                    '税率',
                     '实际广告费',
                     '实际物料费',
                     '实际微信营销费',
@@ -187,7 +187,7 @@
                 data.subCompanyID=this.$route.params.subCompanyID;
                 this.model.saveFormulae(data).then((res)=>{
                     if(res.data.code==0){
-                        dialogs('success','设置成功！');
+                        dialogs('success','保存成功！');
                     }
                 })
             }

@@ -242,6 +242,33 @@ export default function install(Vue) {
      */
     _o.deleteManualTradeDetail = './manualTradeDetail/delete?';
 
+    //- todo 交易管理-调账管理 manually-settlement
+    /**
+     * @description 调账管理列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_list = './adjustTradeDetailPre/list?';
+    /**
+     * @description 调账管理合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_total = './adjustTradeDetailPre/tradeCountAndAmount?';
+    /**
+     * @description 调账管理编辑接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_item = './adjustTradeDetailPre/item/';
+    /**
+     * @description 调账管理添加接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_save = './adjustTradeDetailPre/save';
+
+
     //- todo 交易管理-手工结算 manually-settlement
     /**
      * @description 手工结算列表接口地址

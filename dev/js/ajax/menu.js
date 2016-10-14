@@ -19,8 +19,8 @@ module.exports = [
         icon: 'icon-transmission',
         sub_menu: [
             {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
+            {name: '调账管理', link: 'adjust-trade-detailpre',ksa:''},
             {name: '手工单管理', link: 'manual-trade-detail',ksa:'manual_trade_detail'},
-
             {name: '手工结算', link: 'manually-settlement',ksa:'manually_settlement'},
             {name: '异常交易', link: 'Abnormal-transaction',ksa:'exception_trade_manage'},
             {name: '异常白名单', link: 'white-lists',ksa:'exception_trade_white_list_manage'}

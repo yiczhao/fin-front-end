@@ -101,9 +101,6 @@
                     </div>
 
                     <div class="datatable-bottom">
-                       <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
-                       </div>
 
                        <div class="right">
                             <page :all="pageall"
@@ -570,7 +567,13 @@
                         .then((res)=> {
                             if(res.data.code==0){
                                 this.modal_other=true;
-                                (typeof res.data.data !='undefined')?this.$set('redata', res.data.data):null;
+                                if(typeof res.data.data !='undefined'){
+                                    let data=_.cloneDeep(res.data.data);
+                                    data.collectAmount=data.collectAmount/100;
+                                    data.invoiceAmount=data.invoiceAmount/100;
+                                    this.$set('redata',data )
+                                }
+
                             }
                         })
             },
@@ -579,7 +582,10 @@
                     dialogs('info','请输入活动说明！');
                     return;
                 }
-                this.model.saveOther(this.redata)
+                let data=_.cloneDeep(this.redata);
+                data.collectAmount=accMul(data.collectAmount,100);
+                data.invoiceAmount=accMul(data.invoiceAmount,100);
+                this.model.saveOther(data)
                         .then((res)=> {
                             if(res.data.code==0){
                                 dialogs();

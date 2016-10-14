@@ -530,6 +530,7 @@
                 this.id = _id;
                 this.dtitle = '审核退回';
                 this.refuseReason = '';
+                this.fires =false;
                 this.show = true;
             },
             deleteManualTradeDetail(_id){

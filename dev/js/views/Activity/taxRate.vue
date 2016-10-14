@@ -217,12 +217,14 @@
                     this.editDialog.subCompany.subCompanyName = _subCompanyName;
                     if(response.data.code == 0){
                         let responseData = response.data.data;
+                        this.payTaxType=responseData.payTaxType;
                         if(responseData.effectiveMonth != null && responseData.effectiveYear != null){
                             this.$set('editDialog.editData', response.data.data);
                             this.currentYM = this.editDialog.editData.effectiveYear+'-'+this.editDialog.editData.effectiveMonth;
                         }else{
                             this.$set('editDialog.editData', "");
                             this.currentYM = getNow();
+                            this.payTaxType='1';
                         }
                     this.show=true;
                 }
