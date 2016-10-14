@@ -5,7 +5,6 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" @click="recharge()" data-toggle="modal" data-target="#modal_submit" data-ksa="third_party_account_manage.recharge">回款充值</a>
@@ -50,15 +49,11 @@
                     </div>
                 </div>
 
-
-
-
-
-
                 <div class="datatable-header">
                     <span>账户名：{{blanceList.accountName}}</span>
                     <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                 </div>
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -118,9 +113,8 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

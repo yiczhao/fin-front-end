@@ -34,11 +34,11 @@
                     </div>
                 </div>
 
-
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantOperationID}}</span>
                     <span>商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                 </div>
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -102,8 +102,8 @@
                             </page>
                        </div>
                     </div>
-
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

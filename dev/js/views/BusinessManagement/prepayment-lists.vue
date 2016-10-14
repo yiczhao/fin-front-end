@@ -5,46 +5,42 @@
            :isshow="'isshow'">
         <div class="content prepayment-lists" slot="content">
             <div class="panel panel-flat">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
+                    </div>
 
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
 
-            <div class="heading">
-                <div class="heading-left">
-                    <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
+                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+
+                                <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
+
+                                <select class="form-control" v-model="checkForm.cityID">
+                                    <option value="">全部城市</option>
+                                    <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                                </select>
+
+                                <select class="form-control" v-model="checkForm.status">
+                                    <option value="">账户状态</option>
+                                    <option value="0">停用</option>
+                                    <option value="1">正常</option>
+                                    <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                </select>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="query" data-ksa="advance_payment_merchant_manage.search" style="margin-left: -21px;">查询</a>
+                    </div>
                 </div>
 
-                <div class="heading-right">
-                    <form class="form-inline manage-form">
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
-                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
-                                <option value="">全部分公司</option>
-                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-
-                            <select class="form-control" v-model="checkForm.cityID">
-                                <option value="">全部城市</option>
-                                <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                            </select>
-
-                            <select class="form-control" v-model="checkForm.status">
-                                <option value="">账户状态</option>
-                                <option value="0">停用</option>
-                                <option value="1">正常</option>
-                                <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-                            </select>
-                    </form>
-                </div>
-
-                <div class="heading-middle">
-                    <a class="btn btn-info add-top" @click="query" data-ksa="advance_payment_merchant_manage.search" style="margin-left: -21px;">查询</a>
-                </div>
-            </div>
-
-
-
-                <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
+                <div v-if="!!zdlists.length" v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
                      class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -113,8 +109,6 @@
                         </table>
                     </div>
 
-
-
                     <div class="datatable-bottom">
                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
@@ -127,10 +121,8 @@
                             </page>
                        </div>
                     </div>
-
-
-
                 </div>
+
                 <div v-else style="padding: 30px;font-size: 16px;text-align: center">
                     未查询到预付款商户信息！
                 </div>

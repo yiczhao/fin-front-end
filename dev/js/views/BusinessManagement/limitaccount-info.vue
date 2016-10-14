@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <div v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
+                <div  v-if="!!zdlists.length" v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -141,8 +141,8 @@
                             </page>
                        </div>
                     </div>
-
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

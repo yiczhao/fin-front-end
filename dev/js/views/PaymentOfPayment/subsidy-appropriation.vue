@@ -2,8 +2,6 @@
     <index title="补贴划付" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-
-
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" data-toggle="modal" @click="batchs()" data-ksa="subsidy_pay_detail_manage.apply_pay">一键审核</a>
@@ -70,8 +68,7 @@
                     </div>
                 </div>
 
-
-                <div v-show="!!subsidyAppropriationList.length" class="dataTables_wrapper no-footer">
+                <div v-if="!!zdlists.length" v-show="!!subsidyAppropriationList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                             <table   id="table1" class="table">
                                 <thead>
@@ -162,31 +159,9 @@
                                         </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>合计</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
-                                        <td>{{total.payAmount/100 | currency ''}}</td>
-                                        <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
                                 </tbody>
                             </table>
                     </div>
-
 
                     <div class="datatable-bottom">
                        <div class="left">
@@ -201,11 +176,32 @@
                        </div>
                     </div>
 
+                    <div class="nums">
+                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                            <tr>
+                                <td rowspan="4">
+                                    <span>合计： </span>
+                                </td>
+                                <td>
+                                    <span>三方应收:</span>
+                                    <span>{{total.thirdPartySubsidyShould/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>划付金额:</span>
+                                    <span>{{total.payAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>退税款:</span>
+                                    <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>  
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
-                        </div>
-                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
-                            未查询到补贴划付信息！
-                        </div>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                    未查询到补贴划付信息！
+                </div>
             </div>
 
             <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">

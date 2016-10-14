@@ -2,7 +2,6 @@
     <index title="额度采购" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
 
@@ -61,80 +60,88 @@
                     </div>
                 </div>
 
-                <div v-show="!!limitPurchaseDetailList.length" class="dataTables_wrapper no-footer">
+                <div v-if="!!zdlists.length" v-show="!!limitPurchaseDetailList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
-                        <thead>
-                            <tr>
-                                <th>编号</th>
-                                <th>采购时间</th>
-                                <th>分公司</th>
-                                <th>城市</th>
-                                <th>付款账户</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
-                                <th>收款账户信息</th>
-                                <th>采购额度</th>
-                                <th>采购成本</th>
-                                <th>账户详情</th>
-                                <th>状态</th>
-                                <th>付款方式</th>
-                                <th>付款流水</th>
-                                <th>备注</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(index,lpd) in limitPurchaseDetailList">
-                                <td>{{index+1}}</td>
-                                <td>{{lpd.purchaseTime | datetime}}</td>
-                                <td>{{lpd.subCompanyName}}</td>
-                                <td>{{lpd.cityName}}</td>
-                                <td>{{lpd.payAccount}}</td>
-                                <td>{{lpd.merchantOperationID}}</td>
-                                <td>{{lpd.merchantName}}</td>
-                                <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
-                                <td>{{lpd.purchaseLimit/100 | currency ''}}</td>
-                                <td>{{lpd.purchaseCost/100 | currency ''}}</td>
-                                <td><a  @click="goinfo(lpd.limitPurchaseAccountInfoID,lpd.merchantName)" data-ksa="limit_purchase_account_manage.search">查看</a></td>
-                                <td>
-                                    <template v-if="lpd.status==1">
-                                        已关闭
-                                    </template>
-                                    <template v-if="lpd.status==2">
-                                        等待划付
-                                    </template>
-                                    <template v-if="lpd.status==3">
-                                        转账中
-                                    </template>
-                                    <template v-if="lpd.status==4">
-                                        等待对账
-                                    </template>
-                                    <template v-if="lpd.status==5">
-                                        对账成功
-                                    </template>
-                                    <template v-if="lpd.status==6">
-                                        对账失败
-                                    </template>
-                                    <template v-if="lpd.status==7">等待复核</template>
-                                    <template v-if="lpd.status==8">复核不通过</template>
-                                </td>
-                                <td>
-                                    <template v-if="lpd.payType==1">现金购买</template>
-                                    <template v-if="lpd.payType==2">刷卡购买</template>
-                                </td>
-                                <td><a @click="gopayment(lpd.id,2)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
-                                <td>{{lpd.remarks}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>采购时间</th>
+                                    <th>分公司</th>
+                                    <th>城市</th>
+                                    <th>付款账户</th>
+                                    <th>商户ID</th>
+                                    <th>商户名称</th>
+                                    <th>收款账户信息</th>
+                                    <th>采购额度</th>
+                                    <th>采购成本</th>
+                                    <th>账户详情</th>
+                                    <th>状态</th>
+                                    <th>付款方式</th>
+                                    <th>付款流水</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(index,lpd) in limitPurchaseDetailList">
+                                    <td>{{index+1}}</td>
+                                    <td>{{lpd.purchaseTime | datetime}}</td>
+                                    <td>{{lpd.subCompanyName}}</td>
+                                    <td>{{lpd.cityName}}</td>
+                                    <td>{{lpd.payAccount}}</td>
+                                    <td>{{lpd.merchantOperationID}}</td>
+                                    <td>{{lpd.merchantName}}</td>
+                                    <td>{{lpd.collectionAccountName}}<br/>{{lpd.collectionAccountNumber}}</td>
+                                    <td>{{lpd.purchaseLimit/100 | currency ''}}</td>
+                                    <td>{{lpd.purchaseCost/100 | currency ''}}</td>
+                                    <td><a  @click="goinfo(lpd.limitPurchaseAccountInfoID,lpd.merchantName)" data-ksa="limit_purchase_account_manage.search">查看</a></td>
+                                    <td>
+                                        <template v-if="lpd.status==1">
+                                            已关闭
+                                        </template>
+                                        <template v-if="lpd.status==2">
+                                            等待划付
+                                        </template>
+                                        <template v-if="lpd.status==3">
+                                            转账中
+                                        </template>
+                                        <template v-if="lpd.status==4">
+                                            等待对账
+                                        </template>
+                                        <template v-if="lpd.status==5">
+                                            对账成功
+                                        </template>
+                                        <template v-if="lpd.status==6">
+                                            对账失败
+                                        </template>
+                                        <template v-if="lpd.status==7">等待复核</template>
+                                        <template v-if="lpd.status==8">复核不通过</template>
+                                    </td>
+                                    <td>
+                                        <template v-if="lpd.payType==1">现金购买</template>
+                                        <template v-if="lpd.payType==2">刷卡购买</template>
+                                    </td>
+                                    <td><a @click="gopayment(lpd.id,2)" data-ksa="reserve_cash_order_manage.search">查看</a></td>
+                                    <td>{{lpd.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到额度采购数据！
                 </div>

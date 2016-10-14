@@ -48,6 +48,7 @@
                        </div>
                     </div>
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     <table id="table2" class="table datatable-selection-single dataTable no-footer">
                         <thead>

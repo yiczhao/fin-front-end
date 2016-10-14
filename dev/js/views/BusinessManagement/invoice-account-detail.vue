@@ -64,6 +64,7 @@
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
                     <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}元</span>
                 </div>
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -129,9 +130,8 @@
                             </page>
                        </div>
                     </div>
-           
-
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

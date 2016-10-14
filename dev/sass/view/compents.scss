@@ -168,23 +168,37 @@
   .datatable-bottom{
     width: 100%;
     height: auto;
-    //background: pink;
+    //background: orange;
     overflow: hidden;
+    margin: 20px 0;
     .left {
+      width: 120px;
+      position: absolute;
       padding: 0 20px;
-      height: 30px;
+      height: 33px;
       border-right: 1px solid #ccc; 
       text-align: center;
       float: left;
-      margin-top: 27px;
+      .icon-file-excel{
+        top: 3px;
+      }
     }
     .right{
-      float: left;
-      margin-left: 20px;
+      //background: pink;
+      margin:0 20px 0 140px;
     }
   }
-
-
-
+  .nums{
+      display: inline-block;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      table tr td {
+          height: 44px; 
+          padding: 0 20px;
+          span{
+            color: #000;
+          }
+      }
+  }
 
 }

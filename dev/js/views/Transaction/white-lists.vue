@@ -76,7 +76,6 @@
                         </table>
                     </div>
 
-
                     <div class="datatable-bottom">
                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" @click="abnormalWhiteexcel" data-ksa="exception_trade_white_list_manage.export">导出</a>
@@ -89,9 +88,8 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

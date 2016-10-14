@@ -75,65 +75,65 @@
                                     <th>工作人员</th>
                                 </tr>
                             </thead>
-                        <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
-                                <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.totalLimit/100 | currency ''}}</td>
-                                <td>{{trlist.totalPrincipal/100 | currency '' }} </td>
-                                <td>{{trlist.usedLimit/100 | currency '' }} </td>
-                                <td>{{trlist.usedLimitPercentage}}</td>
-                                <td>{{trlist.balanceLimit/100 | currency ''}}</td>
-                                <td>{{trlist.cycleNumber}}</td>
-                                <td>{{trlist.firstRechargeTime | datetime}}</td>
-                                <td>
-                                    <template v-if="trlist.discountType==1">全单</template>
-                                    <template v-if="trlist.discountType==2">可打折</template>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.isAutoPay==0">关闭</template>
-                                    <template v-if="trlist.isAutoPay==1">开启</template>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.status==0">停用</template>
-                                    <template v-else>正常</template>
-                                </td>
-                                <td>
-                                    <a @click="updateNew(trlist.id)" data-ksa="limit_purchase_merchant_manage.update">编辑</a>
-                                    <a data-ksa="limit_purchase_account_manage.detail" v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">明细</a>
-                                    <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" data-ksa="limit_purchase_merchant_manage.enable">启用</a></template>
-                                    <a data-ksa="limit_purchase_account_manage.search" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
-                                </td>
-                                <td><a @click="seexh(trlist.id,true)" data-ksa="limit_purchase_merchant_manage.search_digest">查看</a></td>
-                                <td>{{trlist.contactsPerson}}</td>
-                                <td>{{trlist.contactsPhone}}</td>
-                                <td>{{trlist.servicePerson}}</td>
-                            </tr>
-                             <tr>
-                                 <td></td>
-                                 <td></td>
-                                 <td>合计：</td>
-                                 <td></td>
-                                 <td>{{nums.totalLimit}}</td>
-                                 <td>{{nums.totalPrincipal}}</td>
-                                 <td>{{nums.usedLimit}}</td>
-                                 <td></td>
-                                 <td>{{nums.balanceLimit}}</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                             </tr>
-                        </tbody>
-                    </table>
+                            <tbody>
+                                <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                    <td>{{trlist.merchantOperationID}}</td>
+                                    <td>{{trlist.merchantName}}</td>
+                                    <td>{{trlist.subCompanyName}}</td>
+                                    <td>{{trlist.cityName}}</td>
+                                    <td>{{trlist.totalLimit/100 | currency ''}}</td>
+                                    <td>{{trlist.totalPrincipal/100 | currency '' }} </td>
+                                    <td>{{trlist.usedLimit/100 | currency '' }} </td>
+                                    <td>{{trlist.usedLimitPercentage}}</td>
+                                    <td>{{trlist.balanceLimit/100 | currency ''}}</td>
+                                    <td>{{trlist.cycleNumber}}</td>
+                                    <td>{{trlist.firstRechargeTime | datetime}}</td>
+                                    <td>
+                                        <template v-if="trlist.discountType==1">全单</template>
+                                        <template v-if="trlist.discountType==2">可打折</template>
+                                    </td>
+                                    <td>
+                                        <template v-if="trlist.isAutoPay==0">关闭</template>
+                                        <template v-if="trlist.isAutoPay==1">开启</template>
+                                    </td>
+                                    <td>
+                                        <template v-if="trlist.status==0">停用</template>
+                                        <template v-else>正常</template>
+                                    </td>
+                                    <td>
+                                        <a @click="updateNew(trlist.id)" data-ksa="limit_purchase_merchant_manage.update">编辑</a>
+                                        <a data-ksa="limit_purchase_account_manage.detail" v-link="{'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">明细</a>
+                                        <template v-if="trlist.status==0"><a data-toggle="modal" data-target="#modal_waring" @click="changeDiscount(trlist.id,1)" data-ksa="limit_purchase_merchant_manage.enable">启用</a></template>
+                                        <a data-ksa="limit_purchase_account_manage.search" v-link="{'name':'limitaccount-management',params:{'limitPurchaseMerchantInfoID':trlist.id,'accountName':trlist.merchantName}}">账户</a>
+                                    </td>
+                                    <td><a @click="seexh(trlist.id,true)" data-ksa="limit_purchase_merchant_manage.search_digest">查看</a></td>
+                                    <td>{{trlist.contactsPerson}}</td>
+                                    <td>{{trlist.contactsPhone}}</td>
+                                    <td>{{trlist.servicePerson}}</td>
+                                </tr>
+                                 <tr>
+                                     <td></td>
+                                     <td></td>
+                                     <td>合计：</td>
+                                     <td></td>
+                                     <td>{{nums.totalLimit}}</td>
+                                     <td>{{nums.totalPrincipal}}</td>
+                                     <td>{{nums.usedLimit}}</td>
+                                     <td></td>
+                                     <td>{{nums.balanceLimit}}</td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                     <td></td>
+                                 </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="datatable-bottom">
@@ -148,9 +148,8 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

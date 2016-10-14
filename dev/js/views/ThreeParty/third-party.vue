@@ -5,7 +5,6 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-info add-top" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
@@ -39,9 +38,6 @@
                         <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
                     </div>
                 </div>
-
-
-
 
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -100,7 +96,6 @@
                         </table>
                     </div>
 
-
                     <div class="datatable-bottom">
                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
@@ -113,9 +108,8 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

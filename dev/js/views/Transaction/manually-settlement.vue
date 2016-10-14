@@ -5,7 +5,6 @@
            :isshow="'isshow'">
         <div class="content manually-settlement" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">生成划付</a>
@@ -52,8 +51,6 @@
                         <a class="btn btn-info add-top" v-on:click="query" data-ksa="manually_settlement.search">查询</a>
                     </div>
                 </div>
-
-
 
                 <div v-cloak v-show="tradeList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -149,7 +146,6 @@
                         </table>
                     </div>
 
-
                     <div class="datatable-bottom">
                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="manuallyexcel" data-ksa="manually_settlement.export">Excel导出</a>
@@ -162,9 +158,8 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到手工结算数据！
                 </div>

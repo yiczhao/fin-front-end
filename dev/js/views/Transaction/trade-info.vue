@@ -165,7 +165,6 @@
                         </table>
                     </div>
 
-
                     <div class="datatable-bottom">
                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
@@ -236,7 +235,7 @@
                                     <span>扣收金额:</span>
                                     <span>{{nums.collectionAmount/100 | currency ''}}</span>
                                 </td>                                <td>
-                                    <span>佣金:</span>
+                                    <span>33211佣金:</span>
                                     <span>{{nums.commission33211/100 | currency ''}}</span> 
                                 </td>
                                 <td>
@@ -249,6 +248,7 @@
                         </table>
                     </div>
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到交易明细数据！
                 </div>

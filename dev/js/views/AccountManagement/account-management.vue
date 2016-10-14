@@ -25,7 +25,8 @@
                     <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                 </div>
             </div>
-            <div class="dataTables_wrapper no-footer" v-cloak>
+
+            <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
                     <table class="table">
                         <thead>
@@ -91,8 +92,6 @@
                         </page>
                    </div>
                 </div>
-
-
             </div>
         </div>
 

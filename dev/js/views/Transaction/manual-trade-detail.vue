@@ -54,9 +54,8 @@
                         <a class="btn btn-info add-top" @click="getManualTradeDetailData()" data-ksa="manual_trade_detail.search">查询</a>
                     </div>
                 </div>
-                <div id="DataTables_Table_0_wrapper"
-                     class="dataTables_wrapper no-footer"
-                     v-cloak>
+
+                <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -161,12 +160,12 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+
                 <div class="no-list" v-show="!manualTradeDetailList.length">
                     未找到数据
                 </div>
+                
                 <div class="nums">
                     <table cellspacing="0" cellpadding="0" border="1px solid #000;">
                         <tr>

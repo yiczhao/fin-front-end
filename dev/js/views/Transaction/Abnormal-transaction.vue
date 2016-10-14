@@ -5,7 +5,6 @@
            :isshow="'isshow'">
         <div class="content Abnormal-transaction" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
 
@@ -60,7 +59,6 @@
                         <a class="btn btn-info add-top" v-on:click="query" data-ksa="exception_trade_manage.search">查询</a>
                     </div>
                 </div>
-
 
                 <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -136,31 +134,6 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             </tbody>
-                            <tr role="row">
-                                <th></th>
-                                <th>合计：</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th><b>{{nums.consumptionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.payAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.limitDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.principalDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountDiff/100 | currency ''}}</b></th>
-                                <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
                         </table>
                     </div>
 
@@ -177,8 +150,62 @@
                        </div>
                     </div>
 
+                    <div class="nums">
+                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                            <tr>
+                                <td rowspan="4">
+                                    <span>合计： </span>
+                                </td>
+                                <td>
+                                    <span>消费金额:</span>
+                                    <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>折扣金额:</span>
+                                    <span>{{nums.discountAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>实付金额:</span>
+                                    <span>{{nums.payAmount/100 | currency ''}}</span>  
+                                </td>
+                                <td>
+                                    <span>额度抵扣:</span>
+                                    <span>{{nums.limitDeduct/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>本金抵扣:</span>
+                                    <span>{{nums.principalDeduct/100 | currency ''}}</span>
+                                </td>
+                            </tr>
 
+                            <tr>
+                                <td>
+                                    <span>三方应收:</span>
+                                    <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span> 
+                                </td>
+                                <td>
+                                    <span>商户应补:</span>
+                                    <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>折扣差:</span>
+                                    <span>{{nums.discountDiff/100 | currency ''}}</span>
+                                </td>
+
+                                <td>
+                                    <span>扣收金额:</span>
+                                    <span>{{nums.collectionAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>33211佣金:</span>
+                                    <span>{{nums.commission33211/100 | currency ''}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到交易明细数据！
                 </div>

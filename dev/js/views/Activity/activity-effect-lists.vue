@@ -28,8 +28,7 @@
                     </div>
                 </div>
 
-
-                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                <div  v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -171,9 +170,8 @@
                             </page>
                        </div>
                     </div>
-
-
                 </div>
+                
                 <div class="no-list" v-show="!zdlists.length" >
                     未找到数据
                 </div>

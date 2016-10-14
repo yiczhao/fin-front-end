@@ -5,7 +5,6 @@
            :isshow="'isshow'">
         <div class="content payment-details" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" @click="batchs()" data-ksa="reserve_cash_order_manage.pay">一键划付</a>
@@ -74,10 +73,9 @@
                     </div>
                 </div>
 
-
-
-                <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
-                    <table class="table main-table">
+                <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                    <div class="datatable-scroll">
+                        <table class="table main-table">
                         <thead>
                             <tr role="row">
                                 <th><input type="checkbox" class="check-all" @change="addAll($event)"></th>
@@ -175,45 +173,41 @@
                                 <td>{{n.refuseReason }}</td>
                             </tr>
                         </template>
-                        <tr role="row">
-                            <td></td>
-                            <td>合计：</td>
-                            <td></td>
-                            <td></td>
-                            <td>{{total.payoutAmount/100 | currency ''}}</td>
-                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td> </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="payDetailexcel" data-ksa="reserve_cash_order_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page v-if="zdlists.length>0" :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
+                    </div>
+
+                    <div class="nums">
+                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                            <tr>
+                                <td rowspan="4">
+                                    <span>合计： </span>
+                                </td>
+                                <td>
+                                    <span>划付金额:</span>
+                                    <span>{{total.payoutAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>退税款:</span>
+                                    <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-
-
-                <div class="datatable-bottom">
-                   <div class="left">
-                        <a class="icon-file-excel" style="line-height: 30px;" @click="payDetailexcel" data-ksa="reserve_cash_order_manage.export">Excel导出</a>
-                   </div>
-
-                   <div class="right">
-                        <page v-if="zdlists.length>0" :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
-                   </div>
-                </div>
-
 
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                     未找到数据

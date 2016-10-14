@@ -16,8 +16,9 @@
                         <span v-if="zdlists.length>0">剩余额度：{{nums.val4}}</span>
                     </div>
                 </div>
-                <div class="dataTables_wrapper no-footer">
-                    <div v-if="zdlists.length>0"  class="datatable-scroll">
+
+                <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer">
+                    <div  class="datatable-scroll">
                         <table class="table">
                             <thead>
                             <tr role="row">
@@ -73,6 +74,7 @@
                     </div>
                 </div>
             </div>
+
             <validator name="vali">
                 <form novalidate>
                     <div id="modal_pay" data-backdrop="static"  class="modal fade" style="display: none;">

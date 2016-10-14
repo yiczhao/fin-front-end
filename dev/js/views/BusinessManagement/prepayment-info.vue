@@ -7,7 +7,6 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
                         <a data-toggle="modal" data-target="#modal_add" class="btn btn-add"
@@ -58,12 +57,13 @@
                     </div>
                 </div>
 
-                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
+                <div v-if="!!zdlists.length" v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
                     <div class="datatable-header" v-if="!!blanceList">
                         <span>账户名：{{blanceList.merchantName}}</span>
                         <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
+
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -143,6 +143,7 @@
                        </div>
                     </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

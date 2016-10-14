@@ -168,13 +168,25 @@
                     </div>
                 </div>
             </div>
+            
             <div class="panel panel-flat panel-collapsed" style="padding: 30px;font-size: 16px;text-align: center" v-if="zdlists.length!>0" >
                 未找到数据
             </div>
-            <page :all="pageall"
-                  :cur.sync="pagecur"
-                  :page_size.sync="page_size">
-            </page>
+
+            <div class="datatable-bottom">
+               <div class="left">
+                    <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+               </div>
+
+               <div class="right">
+                    <page :all="pageall"
+                          :cur.sync="pagecur"
+                          :page_size.sync="page_size">
+                    </page>
+               </div>
+            </div>
+
+
             <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">

@@ -5,7 +5,6 @@
            :isshow="'isshow'">
         <div class="content business-lists" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
                     <div class="heading-left">
 
@@ -38,7 +37,6 @@
                     </div>
                 </div>
 
-
                 <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
@@ -68,73 +66,50 @@
                                     <th>电话 </th>
                                 </tr>
                             </thead>
-                        <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
-                                <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.consumptionCount}}</td>
-                                <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
-                                <td>{{trlist.payAmount/100 | currency '' }} </td>
-                                <td>{{trlist.commission33211/100 | currency '' }} </td>
-                                <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
-                                <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
-                                <td><a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
-                                <td>{{trlist.commission/100 | currency '' }} </td>
-                                <td>
-                                    <template v-if="trlist.settlementCycle==1">日结</template>
-                                    <template v-if="trlist.settlementCycle==2">周结</template>
-                                    <template v-if="trlist.settlementCycle==3">月结</template>
-                                    <template v-if="trlist.settlementCycle==4">手工结算</template>
-                                </td>
-                                <td>{{trlist.subsidyRate}}%</td>
-                                <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
-                                </template>
-                                <template v-else>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                </template>
-                                    <!--<td>-->
-                                    <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>-->
-                                <!--<td>-->
-                                <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
-                                <td>{{trlist.contactsPerson}}</td>
-                                <td>{{trlist.contactsPhone}}</td>
-                            </tr>
-                             <tr>
-                                 <td></td>
-                                 <td>合计：</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td>{{nums.consumptionCount}}</td>
-                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
-                                 <td>{{nums.payAmount/100 | currency ''}}</td>
-                                 <td>{{nums.commission33211/100 | currency ''}}</td>
-                                 <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
-                                 <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                             </tr>
-                        </tbody>
-                    </table>
-                    </div>
 
+                            <tbody>
+                                <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                    <td>{{trlist.merchantOperationID}}</td>
+                                    <td>{{trlist.merchantName}}</td>
+                                    <td>{{trlist.subCompanyName}}</td>
+                                    <td>{{trlist.cityName}}</td>
+                                    <td>{{trlist.consumptionCount}}</td>
+                                    <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
+                                    <td>{{trlist.payAmount/100 | currency '' }} </td>
+                                    <td>{{trlist.commission33211/100 | currency '' }} </td>
+                                    <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
+                                    <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
+                                    <td><a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
+                                    <td>{{trlist.commission/100 | currency '' }} </td>
+                                    <td>
+                                        <template v-if="trlist.settlementCycle==1">日结</template>
+                                        <template v-if="trlist.settlementCycle==2">周结</template>
+                                        <template v-if="trlist.settlementCycle==3">月结</template>
+                                        <template v-if="trlist.settlementCycle==4">手工结算</template>
+                                    </td>
+                                    <td>{{trlist.subsidyRate}}%</td>
+                                    <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                    </template>
+                                    <template v-else>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </template>
+                                        <!--<td>-->
+                                        <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>-->
+                                    <!--<td>-->
+                                    <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
+                                    <td>{{trlist.contactsPerson}}</td>
+                                    <td>{{trlist.contactsPhone}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div class="datatable-bottom">
                        <div class="left">
@@ -149,8 +124,42 @@
                        </div>
                     </div>
 
+                    <div class="nums">
+                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                            <tr>
+                                <td rowspan="4">
+                                    <span>合计： </span>
+                                </td>
+                                <td>
+                                    <span>消费总笔数:</span>
+                                    <span>{{nums.consumptionCount}}</span>
+                                </td>
+                                <td>
+                                    <span>消费总金额:</span>
+                                    <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>实付总金额:</span>
+                                    <span>{{nums.payAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>33211总佣金:</span>
+                                    <span>{{nums.commission33211/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>三方折扣差:</span>
+                                    <span>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>额采折扣差:</span>
+                                    <span>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</span>
+                                </td>
+                            </tr>
 
+                        </table>
+                    </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>

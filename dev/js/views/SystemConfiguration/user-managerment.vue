@@ -2,32 +2,31 @@
     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
         <div class="content user-managerment" slot="content">
             <div class="panel panel-flat">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
+                    </div>
 
-                        <div class="heading">
-                            <div class="heading-left">
-                                <a class="btn btn-add add-top" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
-                            </div>
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="checkForm.subCompanyID" >
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
 
-                            <div class="heading-right">
-                                <form class="form-inline manage-form">
-                                    <select class="form-control" v-model="checkForm.subCompanyID" >
-                                        <option value="">全部分公司</option>
-                                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                                    </select>
+                            <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、手机号、姓名">
+                        </form>
+                    </div>
 
-                                    <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、手机号、姓名">
-                                </form>
-                            </div>
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="user_manage.search">查询</a>
+                    </div>
+                </div>
 
-                            <div class="heading-middle">
-                                <a class="btn btn-info add-top" v-on:click="query" data-ksa="user_manage.search">查询</a>
-                            </div>
-                        </div>
-
-                        <div v-cloak v-show="!!userList.length" class="dataTables_wrapper no-footer">
-                            <div class="datatable-scroll">
-                                <table id="table1" class="table">
-                                <thead>
+                <div v-if="!!zdlists.length" v-cloak v-show="!!userList.length" class="dataTables_wrapper no-footer">
+                    <div class="datatable-scroll">
+                        <table id="table1" class="table">
+                            <thead>
                                 <tr>
                                     <th>序号</th>
                                     <th>分公司</th>
@@ -37,8 +36,8 @@
                                     <th>最后登录时间</th>
                                     <th>操作</th>
                                 </tr>
-                                </thead>
-                                <tbody>
+                            </thead>
+                            <tbody>
                                 <tr v-for="(index,user) in userList" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{user.subCompanyName}}</td>
@@ -50,53 +49,51 @@
                                         <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)" data-ksa="user_manage.control_span">管辖范围</a>
                                     </td>
                                 </tr>
-                                </tbody>
-                            </table>
-                            </div>
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                       </div>
 
-                        <div class="datatable-bottom">
-                           <div class="left">
-                                <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
-                           </div>
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
+                    </div>
+                </div>
 
-                           <div class="right">
-                                <page :all="pageall"
-                                      :cur.sync="checkForm.pageIndex"
-                                      :page_size.sync="checkForm.pageSize">
-                                </page>
-                           </div>
-                        </div>
-
-
-
-                        </div>
-                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到员工数据信息！
                 </div>
-                        <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
-                            <div class="modal-dialog mg">
-                                <div class="modal-content">
-                                     <div class="modal-header">
-                                        <h3>管辖范围</h3>
-                                        <button type="button" class="close" data-dismiss="modal">×</button>
-                                     </div>
-                                     <div class="modal-body">
-                                         <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
-                                         <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
-                                         <hr/>
-                                         <div class="controlSpan" v-for="controlSpan in controlSpanList">
-                                             <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
-                                             <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
-                                         </div>
-                                     </div>
-                                     <div class="modal-foot">
-                                        <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
-                                        <input type="button" class="btn btn-gray" data-dismiss="modal" value="取消">
-                                     </div>
-                                </div>
-                            </div>
+
+                <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
+                    <div class="modal-dialog mg">
+                        <div class="modal-content">
+                             <div class="modal-header">
+                                <h3>管辖范围</h3>
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                             </div>
+                             <div class="modal-body">
+                                 <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                                 <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
+                                 <hr/>
+                                 <div class="controlSpan" v-for="controlSpan in controlSpanList">
+                                     <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+                                     <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
+                                 </div>
+                             </div>
+                             <div class="modal-foot">
+                                <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
+                                <input type="button" class="btn btn-gray" data-dismiss="modal" value="取消">
+                             </div>
                         </div>
+                    </div>
+                </div>
 
                 <!--导入员工dialog-->
                 <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
