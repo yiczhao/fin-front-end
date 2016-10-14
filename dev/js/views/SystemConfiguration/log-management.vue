@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" v-show="!!logList.length" class="dataTables_wrapper no-footer">
+                <div v-show="!!logList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table class="table">
                         <thead>

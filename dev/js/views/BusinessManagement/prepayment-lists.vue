@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
+                <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
                      class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">

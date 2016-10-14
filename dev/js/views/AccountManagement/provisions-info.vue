@@ -60,8 +60,6 @@
                     </div>
                 </div>
 
-            </div>
-
             <div style="margin: 0 20px 20px 0;font-size: 18px;">
                 <span>账户简称：</span><span style="margin-right: 10px;">{{aname}}</span>
                 <span>余额：</span><span style="margin-right: 10px;">{{balance/100 | currency ''}}</span>
@@ -244,7 +242,7 @@
                             <h5 class="modal-title">交易对账</h5>
                         </div>
                         <div class="modal-body">
-                    <table v-show="gllists.length>0" id="table2" class="table table-bordered table-hover">
+                    <table v-show="gllists.length>0" class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>订单号</th>
@@ -359,10 +357,6 @@
              width: 18%;
              i{color: red}
          }
-    }
-     .page-bar{
-        margin: 25px auto;
-        text-align: center;
     }
      .datatable-scroll{
         overflow:auto;

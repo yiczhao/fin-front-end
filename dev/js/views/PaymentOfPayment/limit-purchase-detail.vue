@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" v-show="!!limitPurchaseDetailList.length" class="dataTables_wrapper no-footer">
+                <div v-show="!!limitPurchaseDetailList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
                             <thead>

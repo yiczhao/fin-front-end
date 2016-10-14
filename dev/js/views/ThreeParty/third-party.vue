@@ -7,7 +7,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-info add-top" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
+                        <a class="btn btn-add add-top" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
                     </div>
 
                     <div class="heading-right">

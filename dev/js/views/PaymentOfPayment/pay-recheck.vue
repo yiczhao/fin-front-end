@@ -69,8 +69,8 @@
                     </div>
                 </div>
 
-                <div v-if="recheckLists.length>0" class="dataTables_wrapper">
-                    <div class="datatable-scroll" v-show="!!recheckLists.length">
+                <div v-show="recheckLists.length>0" class="dataTables_wrapper">
+                    <div class="datatable-scroll">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -148,7 +148,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="no-list" v-if="!recheckLists.length>0" v-cloak></div>
+                <div class="no-list" v-show="!recheckLists.length>0" v-cloak></div>
 
                 <div class="datatable-bottom">
                    <div class="left">
@@ -156,7 +156,7 @@
                    </div>
 
                    <div class="right">
-                        <page v-if="recheckLists.length>0" :all="pageall"
+                        <page v-show="recheckLists.length>0" :all="pageall"
                               :cur.sync="checkForm.pageIndex"
                               :page_size.sync="checkForm.pageSize">
                         </page>

@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                <div v-if="!!manualTradeDetailList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>

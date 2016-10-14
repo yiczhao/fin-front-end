@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" v-show="!!advancePaymentDetailList.length" class="dataTables_wrapper no-footer">
+                <div v-show="!!advancePaymentDetailList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
                             <thead>
@@ -136,15 +136,6 @@
         </div>
     </index>
 </template>
-<style>
-    .datatable-scroll{
-        overflow:auto;
-    }
-    .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
-</style>
 <script>
     import model from '../../ajax/PaymentOfPayment/advance_model'
     export default{
