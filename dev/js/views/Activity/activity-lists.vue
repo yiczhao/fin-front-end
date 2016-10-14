@@ -566,22 +566,27 @@
                         })
             },
             checkformulae({id,subCompanyID}){
-                let uid=JSON.parse(sessionStorage.getItem('userData')).subCompanyID;
-                if(subCompanyID==1&&subCompanyID==uid){
-                    this.$common_model.getcompany({}).then((response)=>{
-                        // *** 判断请求是否成功如若成功则填充数据到模型
-                        if(response.data.code==0){
-                            this.companymodal=true;
-                            this.goformulaeData={
-                                'id':id,
-                                'subCompanyID':''
-                            }
-                            this.$set('usercompanylists', response.data.data)
-                        }
-                    });
-                }else{
-                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':subCompanyID}});
+                // *** 请求公司数据
+                let data={
+                    'type':'activity',
+                    'activityID':id
                 }
+                this.$common_model.getcompany(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                if(typeof response.data.data=='undefined'||response.data.data==''){
+                                    dialogs('info','该计算公式尚不可编辑！');
+                                    return
+                                }
+                                else if(response.data.data.length==1){
+                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data.subCompanyID}});
+                                }
+                                else{
+                                    this.$set('companylists', response.data.data)
+                                }
+                            }
+                        });
             },
             goformulae(){
                 if(this.goformulaeData.subCompanyID==''){
