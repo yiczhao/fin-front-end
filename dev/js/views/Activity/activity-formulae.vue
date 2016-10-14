@@ -130,7 +130,7 @@
                 return data;
             },
             enString(value){
-                let a=_.split(value,'】');
+                let a=value.split('】');
                 _.remove(a,(n)=>{return n==''});
                 let b=a.map(function (val){ return val.replace('【','')})
                 return b;
