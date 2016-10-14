@@ -125,9 +125,9 @@
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>
                                     <a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                    <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
                                     <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
-                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax>0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
                                 </td>
                                 <td>
                                     <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
