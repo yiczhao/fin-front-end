@@ -244,7 +244,7 @@ export default function(router){
         '/taxRate/':{
             name:'taxRate',
             component:function (resolve) {
-                require(['./views/TaxRate/taxRate.vue'],resolve);
+                require(['./views/Activity/taxRate.vue'],resolve);
             }
         }
     })
