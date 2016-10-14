@@ -144,7 +144,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null||key!='activityID'||key!='id'||key!='subCompanyID')?data[key]=this.enString(value):data[key]=[];
+                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
@@ -159,7 +159,7 @@
                         }
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null)?data[key]=this.enString(value):data[key]=[];
+                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
                     }
