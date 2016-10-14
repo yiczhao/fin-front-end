@@ -5,7 +5,7 @@
            :isshow="'isshow'">
         <div class="content activity-formulae" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-title"><span class="btn btn-primary" @click="usedefalut">使用默认公式</span></div>
+                <div class="panel-title"><span class="btn btn-primary" @click="usedefalut">加载默认公式</span></div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际广告费=</div>

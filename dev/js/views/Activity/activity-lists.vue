@@ -565,10 +565,10 @@
                             }
                         })
             },
-            checkformulae({id,subCompanyID}){
+            checkformulae({id}){
                 // *** 请求公司数据
                 let data={
-                    'type':'activity',
+                    'type':'Activity',
                     'activityID':id
                 }
                 this.$common_model.getcompany(data)
@@ -580,10 +580,12 @@
                                     return
                                 }
                                 else if(response.data.data.length==1){
-                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data.subCompanyID}});
+                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data[0].subCompanyID}});
                                 }
                                 else{
-                                    this.$set('companylists', response.data.data)
+                                    this.$set('usercompanylists', response.data.data);
+                                    this.goformulaeData.id=id;
+                                    this.companymodal=true;
                                 }
                             }
                         });
@@ -592,7 +594,7 @@
                 if(this.goformulaeData.subCompanyID==''){
                     return;
                 }
-                this.$router.go({'name':'activity-formulae','params':{'activityID':this.goformulaeData.id, 'subCompanyID':this.goformulaeData.user_subCompanyID}});
+                this.$router.go({'name':'activity-formulae','params':{'activityID':this.goformulaeData.id, 'subCompanyID':this.goformulaeData.subCompanyID}});
             }
         },
         ready() {
