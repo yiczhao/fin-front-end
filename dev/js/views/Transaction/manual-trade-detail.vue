@@ -220,7 +220,7 @@
             </div>
             <content-dialog
                     :show.sync="modal_add" :type.sync="'infos'" :is-cancel="true"
-                    :title.sync="'添加手工单'" @kok="saveTradeInfo" @kcancel="modal_add=false"
+                    :title.sync="addtitle" @kok="saveTradeInfo" @kcancel="modal_add=false"
             >
                 <validator name="vali">
                     <div class="dialog-row">
@@ -305,7 +305,7 @@
                               class="validation-error-label">请选择凭证</span>
                     </div>
                     <div class="dialog-row">
-                        <label style="position: relative;top: -40px;">备注:</label>
+                        <label style="position: relative;top: -40px;">备注：</label>
                         <textarea class="form-control" id="remarks"
                                   v-model="tradeInfo.remarks"></textarea>
                     </div>
@@ -374,6 +374,7 @@
                 },
                 refuseReason: '',
                 uploadText: '',
+                addtitle:'',
                 modal_add: false,
                 nums:{
                     "consumptionAmount":"",
@@ -442,6 +443,7 @@
                 this.tradeInfo.certificateID = '';
                 this.tradeInfo.remarks = '';
                 this.uploadText = '';
+                this.addtitle='添加手工单';
                 this.modal_add=true;
             },
             processManualTradeDetail(){
@@ -513,6 +515,7 @@
                                 this.$set('tradeInfo', response.data.data);
                                 this.errorHideL();
                                 this.modal_add=true;
+                                this.addtitle='编辑手工单';
                             }
                         });
             },
