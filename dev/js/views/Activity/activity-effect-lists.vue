@@ -111,31 +111,49 @@
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
                                 <td>{{trlist.description}}</td>
                                 <td>
-                                    <span>{{trlist.contractSettlementFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualSettlementFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.contractSettlementFee==null">--</span>
+                                    <span v-else>{{trlist.contractSettlementFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.actualSettlementFee==null">--</span>
+                                    <span v-else>{{trlist.actualSettlementFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <span>{{trlist.contractServiceFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualServiceFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.contractServiceFee==null">--</span>
+                                    <span v-else>{{trlist.contractServiceFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.actualServiceFee==null">--</span>
+                                    <span v-else>{{trlist.actualServiceFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <span>{{trlist.contractAdvertisementFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualAdvertisementFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.contractAdvertisementFee==null">--</span>
+                                    <span v-else>{{trlist.contractAdvertisementFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.actualAdvertisementFee==null">--</span>
+                                    <span v-else>{{trlist.actualAdvertisementFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <span>{{trlist.contractMaterialFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualMaterialFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.contractMaterialFee==null">--</span>
+                                    <span v-else>{{trlist.contractMaterialFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.actualMaterialFee==null">--</span>
+                                    <span v-else>{{trlist.actualMaterialFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <span>{{trlist.contractWeChatMarketFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualWeChatMarketFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.contractWeChatMarketFee==null">--</span>
+                                    <span v-else>{{trlist.contractWeChatMarketFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.actualWeChatMarketFee==null">--</span>
+                                    <span v-else>{{trlist.actualWeChatMarketFee/100 | currency ''}}</span>
                                 </td>
                                 <td>
-                                    <span>{{trlist.contractTaxFee/100 | currency ''}}</span>
-                                    <span>{{trlist.actualTaxFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.contractTaxFee==null">--</span>
+                                    <span v-else>{{trlist.contractTaxFee/100 | currency ''}}</span>
+                                    <span v-if="trlist.actualTaxFee==null">--</span>
+                                    <span v-else>{{trlist.actualTaxFee/100 | currency ''}}</span>
                                 </td>
-                                <td>{{trlist.collectAmount/100 | currency ''}}</td>
-                                <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
+                                <td>
+                                    <template v-if="trlist.collectAmount==null">--</template>
+                                    <template v-else>{{trlist.collectAmount/100 | currency ''}}</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.invoiceAmount==null">--</template>
+                                    <template v-else>{{trlist.invoiceAmount/100 | currency ''}}</template>
+                                </td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyDiscountDiff/100 | currency ''}}</td>

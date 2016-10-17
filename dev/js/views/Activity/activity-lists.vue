@@ -263,11 +263,11 @@
                     <div class="dialog-row">
                          <span>
                              <label>回款金额：</label>
-                             <input type="text" class="form-control" v-model="redata.collectAmount" v-limitprice="redata.collectAmount" placeholder="请输入回款金额">
+                             <input type="text" class="form-control" v-model="redata.collectAmount" v-limitaddprice="redata.collectAmount" placeholder="请输入回款金额">
                         </span>
                         <span>
                             <label>开票金额：</label>
-                           <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitprice="redata.invoiceAmount" placeholder="请输入开票金额">
+                           <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitaddprice="redata.invoiceAmount" placeholder="请输入开票金额">
                         </span>
                     </div>
                     <div class="dialog-row">
