@@ -129,7 +129,7 @@
 
                     <div class="datatable-bottom">
                        <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="manuallyexcel" data-ksa="manually_settlement.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="adjustTradeDetailPre" data-ksa="manually_settlement.export">Excel导出</a>
                        </div>
 
                        <div class="right">
@@ -560,6 +560,12 @@
                         }
                     })
                 }
+            },
+            adjustTradeDetailPre() {
+                if(!this.tradeList.length>0)return;
+                //初始化
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.adjustTradeDetailPre+ $.param(this.checkForm));
             }
         },
         ready() {
