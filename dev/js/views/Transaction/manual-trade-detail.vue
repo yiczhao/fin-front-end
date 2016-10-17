@@ -302,7 +302,7 @@
                         <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                         <span v-text="uploadText" v-show="uploadText!=''"></span>
                         <span v-if="tradeInfo.certificateID=='' && fire"
-                              class="validation-error-label">请选择凭证</span>
+                              class="validation-error-label">请上传凭证</span>
                     </div>
                     <div class="dialog-row">
                         <label style="position: relative;top: -40px;">备注：</label>

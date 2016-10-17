@@ -22,12 +22,12 @@ function model(_this) {
             return _this.$http.post(_this.$API.adjustTradeDetailPre_save,data);
         },
         /**
-         * @description 调账合计
+         * @description 根据调账的交易流水号查询交易笔数和消费金额
          * @param data
          * @returns {*}
          */
-        adjustTradeDetailPre_total(data){
-            return _this.$http.get(_this.$API.adjustTradeDetailPre_total+$.param(data));
+        getTradeData(data){
+            return _this.$http.get(_this.$API.getTradeData+$.param(data));
         },
         /**
          * @description 调账编辑
@@ -36,6 +36,37 @@ function model(_this) {
          */
         adjustTradeDetailPre_item(_id){
             return _this.$http.get(_this.$API.adjustTradeDetailPre_item+_id);
+        },
+        /**
+         * @description 提交调账
+         * @param data
+         * @returns {*}
+         */
+        adjustTradeDetailPre_apply(_id){
+            return _this.$http.post(_this.$API.adjustTradeDetailPre_apply+_id);
+        },
+        /**
+         * @description 通过调账
+         * @param data
+         * @returns {*}
+         */
+        adjustTradeDetailPre_approved(_id){
+            return _this.$http.post(_this.$API.adjustTradeDetailPre_approved+_id);
+        },
+        /**
+         * @description 退回调账
+         * @param data
+         * @returns {*}
+         */
+        adjustTradeDetailPre_back(data){
+            return _this.$http.post(_this.$API.adjustTradeDetailPre_back,data);
+        },/**
+         * @description 删除调账
+         * @param data
+         * @returns {*}
+         */
+        adjustTradeDetailPre_delete(_id){
+            return _this.$http.post(_this.$API.adjustTradeDetailPre_delete+_id);
         },
     }
 }

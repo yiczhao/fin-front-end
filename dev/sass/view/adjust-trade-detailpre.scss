@@ -1,0 +1,31 @@
+.adjust-trade-detailpre{
+  .dialog-row{
+    margin-bottom: 15px;
+    span{
+      display: inline-block;
+      min-width: 300px;
+      input,textarea,select {
+        display: inline-block;
+        width: 190px;
+      }
+      label{
+        display: inline-block;
+        width: 95px;
+        text-align: right;
+        i{
+          color:red;
+        }
+      }
+      textarea{
+        width: 495px;
+      }
+      .tlabel{
+        position: relative;
+        top: -55px;
+      }
+    }
+    .pl95{
+      padding-left: 95px;
+    }
+  }
+}

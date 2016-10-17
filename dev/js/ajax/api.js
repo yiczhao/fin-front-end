@@ -250,11 +250,11 @@ export default function install(Vue) {
      */
     _o.adjustTradeDetailPre_list = './adjustTradeDetailPre/list?';
     /**
-     * @description 调账管理合计接口地址
+     * @description 根据调账的交易流水号查询交易笔数和消费金额接口地址
      * @author 冷艳君
      * @method GET
      */
-    _o.adjustTradeDetailPre_total = './adjustTradeDetailPre/tradeCountAndAmount?';
+    _o.getTradeData = './adjustTradeDetailPre/tradeCountAndAmount?';
     /**
      * @description 调账管理编辑接口地址
      * @author 冷艳君
@@ -267,6 +267,30 @@ export default function install(Vue) {
      * @method POST
      */
     _o.adjustTradeDetailPre_save = './adjustTradeDetailPre/save';
+    /**
+     * @description 调账管理提交接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_apply = './adjustTradeDetailPre/apply/';
+    /**
+     * @description 调账管理通过接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_approved = './adjustTradeDetailPre/approved/';
+    /**
+     * @description 调账管理退回接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_back = './adjustTradeDetailPre/back';
+    /**
+     * @description 调账管理删除接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_delete = './adjustTradeDetailPre/delete/';
 
 
     //- todo 交易管理-手工结算 manually-settlement
