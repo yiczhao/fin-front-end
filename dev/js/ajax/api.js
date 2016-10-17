@@ -262,6 +262,12 @@ export default function install(Vue) {
      */
     _o.getTradeData = './adjustTradeDetailPre/tradeCountAndAmount?';
     /**
+     * @description 合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_total = './adjustTradeDetailPre/total?';
+    /**
      * @description 调账管理编辑接口地址
      * @author 冷艳君
      * @method GET

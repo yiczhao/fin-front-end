@@ -152,21 +152,21 @@
                             </td>
                             <td>
                                 <span>额度抵扣:</span>
-                                <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                                <span>{{nums.limitDeduct/100 | currency ''}}</span>
                             </td>
                             <td>
                                 <span>本金抵扣:</span>
-                                <span>{{nums.discountAmount/100 | currency ''}}</span>
+                                <span>{{nums.principalDeduct/100 | currency ''}}</span>
                             </td>
                             <td>
                                 <span>三方应收:</span>
-                                <span>{{nums.payAmount/100 | currency ''}}</span>
+                                <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <span>33211佣金:</span>
-                                <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
+                                <span>{{nums.commission33211/100 | currency ''}}</span>
                             </td>
                             <td>
                                 <span>商户应补:</span>
@@ -174,7 +174,7 @@
                             </td>
                             <td>
                                 <span>扣收金额:</span>
-                                <span>{{nums.suspensionTax/100 | currency ''}}</span>
+                                <span>{{nums.collectionAmount/100 | currency ''}}</span>
                             </td>
                         </tr>
                     </table>
@@ -359,10 +359,10 @@
         methods:{
             //获取交易记录
              getTradeList(data){
-//                 this.model.adjustTradeDetailPre_total(data)
-//                         .then((response)=>{
-//                             (response.data.code==0)?this.$set('nums',response.data.data):null;
-//                         });
+                 this.model.adjustTradeDetailPre_total(data)
+                         .then((response)=>{
+                             (response.data.code==0)?this.$set('nums',response.data.data):null;
+                         });
                  this.model.adjustTradeDetailPre_list(data)
                     .then((response)=>{
                          if(response.data.code==0){

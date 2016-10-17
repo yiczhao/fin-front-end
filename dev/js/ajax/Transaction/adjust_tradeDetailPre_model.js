@@ -14,6 +14,14 @@ function model(_this) {
             return _this.$http.get(_this.$API.adjustTradeDetailPre_list+$.param(data))
         },
         /**
+         * @description 合计
+         * @param data
+         * @returns {*}
+         */
+        adjustTradeDetailPre_total(data) {
+            return _this.$http.get(_this.$API.adjustTradeDetailPre_total+$.param(data))
+        },
+        /**
          * @description 添加调账
          * @param data
          * @returns {*}
