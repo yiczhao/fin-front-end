@@ -162,6 +162,7 @@
                             (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
                         })
                         this.$set('defaultData',data);
+                        dialogs('success','加载成功！')
                     }
                 })
             },
