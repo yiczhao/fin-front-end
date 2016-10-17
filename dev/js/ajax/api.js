@@ -303,6 +303,18 @@ export default function install(Vue) {
      * @method POST
      */
     _o.adjustTradeDetailPre_delete = './adjustTradeDetailPre/delete/';
+    /**
+     * @description 调账管理明细接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_detail = './adjustTradeDetailPre/detail/list/';
+    /**
+     * @description 调账管理明细接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_detailtotal = './adjustTradeDetailPre/detail/total/';
 
 
     //- todo 交易管理-手工结算 manually-settlement

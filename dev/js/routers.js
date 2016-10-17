@@ -45,11 +45,18 @@ export default function(router){
                 require(['./views/Transaction/manually-settlement.vue'],resolve);
             }
         },
-        //交易处理-手工结算
+        //交易处理-调账管理
         '/adjust-trade-detailpre/':{
             name:'adjust-trade-detailpre',
             component: function(resolve){
                 require(['./views/Transaction/adjust-trade-detailpre.vue'],resolve);
+            }
+        },
+        //交易处理-调账管理-调账明细
+        '/adjust-trade-detailpre-list/:adjustTradeDetailPreId':{
+            name:'adjust-trade-detailpre-list',
+            component: function(resolve){
+                require(['./views/Transaction/adjust-trade-detailpre-list.vue'],resolve);
             }
         },
         //交易处理-交易白名单

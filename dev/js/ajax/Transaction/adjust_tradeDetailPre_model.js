@@ -68,7 +68,8 @@ function model(_this) {
          */
         adjustTradeDetailPre_back(data){
             return _this.$http.post(_this.$API.adjustTradeDetailPre_back,data);
-        },/**
+        },
+        /**
          * @description 删除调账
          * @param data
          * @returns {*}
@@ -76,6 +77,22 @@ function model(_this) {
         adjustTradeDetailPre_delete(_id){
             return _this.$http.post(_this.$API.adjustTradeDetailPre_delete+_id);
         },
+        /**
+         * @description 调账管理明细
+         * @param id
+         * @returns {*}
+         */
+        adjustTradeDetailPre_detail(_id){
+            return _this.$http.get(_this.$API.adjustTradeDetailPre_detail+_id);
+        },
+        /**
+         * @description 调账管理明细合计
+         * @param id
+         * @returns {*}
+         */
+        adjustTradeDetailPre_detailtotal(_id){
+            return _this.$http.get(_this.$API.adjustTradeDetailPre_detailtotal+_id);
+        }
     }
 }
 module.exports = model

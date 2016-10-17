@@ -111,7 +111,7 @@
                                     <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
                                 </td>
                                 <td>
-                                    <a>明细</a>
+                                    <a v-link="{'name':'adjust-trade-detailpre-list','params':{'adjustTradeDetailPreId':trlist.id}}">明细</a>
                                 </td>
                                 <td>
                                     <a href="{{origin}}/file/download/{{trlist.certificateID}}">下载</a>
