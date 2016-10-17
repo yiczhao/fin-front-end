@@ -18,11 +18,11 @@ function model(_this){
 
         /**
          * @description 查询税率管理数据详细信息
-         * @params {_id}
+         * @params {data}
          * @returns {*}
          * */
-        editDetail(_id){
-            return _this.$http.get(_this.$API.edit_detail+ _id)
+        editDetail(data){
+            return _this.$http.get(_this.$API.edit_detail + $.param(data))
         },
 
         /**
@@ -34,12 +34,12 @@ function model(_this){
             return _this.$http.get(_this.$API.edit_info+ $.param(data))
         },
         /**
-         * @description 根据年月查询税率信息
+         * @description 根据年月保存税率信息
          * @params {data}
          * @returns {*}
          * */
         editSave(data){
-            return _this.$http.get(_this.$API.edit_save+ $.param(data))
+            return _this.$http.post(_this.$API.edit_save, data)
         }
 
     }

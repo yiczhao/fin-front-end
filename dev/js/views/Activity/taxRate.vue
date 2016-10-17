@@ -28,7 +28,7 @@
                                     <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a @click="editDetail(trList.subCompanyID, trList.subCompanyName)" data-ksa="">编辑</a></td>
+                                <td><a @click="editDetail(trList.subCompanyID, trList.subCompanyName, trList.effectiveYear, trList.effectiveMonth)" data-ksa="">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>
@@ -206,18 +206,25 @@
                 }
                 this.currentList=data;
             },
-            editDetail(_subcompanyID, _subCompanyName){
+            editDetail(_subcompanyID, _subCompanyName, _year, _month){
                 this.getcurrentList();
-                this.model.editDetail(_subcompanyID).then((response) => {
+                let data={
+                    'subCompanyID':_subcompanyID,
+                    'effectiveYear':_year,
+                    'effectiveMonth':_month
+                }
+                this.model.editDetail(data).then((response) => {
                 // *** 判断请求是否成功如若成功则填充数据到模型
                     this.editDialog.subCompany.subCompanyID = _subcompanyID;
                     this.editDialog.subCompany.subCompanyName = _subCompanyName;
                     if(response.data.code == 0){
                         let responseData = response.data.data;
-                        this.payTaxType=responseData.payTaxType;
-                        if(responseData.effectiveMonth != null && responseData.effectiveYear != null){
-                            this.$set('editDialog.editData', response.data.data);
-                            this.currentYM = this.editDialog.editData.effectiveYear+'-'+this.editDialog.editData.effectiveMonth;
+                        if(typeof(responseData) != "undefined"){
+                            if(responseData.effectiveMonth != null && responseData.effectiveYear != null){
+                                this.$set('editDialog.editData', response.data.data);
+                                this.currentYM = this.editDialog.editData.effectiveYear+'-'+this.editDialog.editData.effectiveMonth;
+                                this.payTaxType=responseData.payTaxType;
+                            }
                         }else{
                             this.$set('editDialog.editData', "");
                             this.currentYM = getNow();
