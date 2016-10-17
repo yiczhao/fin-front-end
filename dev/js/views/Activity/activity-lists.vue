@@ -238,7 +238,7 @@
                     <div class="dialog-row">
                         <span>
                              <label>合同编号：</label>
-                             <input type="text" class="form-control" v-model="redata.contractNumber" v-limitnumber="redata.contractNumber" placeholder="请输入合同编号">
+                             <input type="text" class="form-control" v-model="redata.contractNumber" placeholder="请输入合同编号">
                         </span>
                         <span>
                              <label>活动归属：</label>

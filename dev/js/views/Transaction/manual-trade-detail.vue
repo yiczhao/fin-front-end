@@ -234,7 +234,7 @@
                         <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
                     </div>
                     <div class="dialog-row">
-                        <label><i>*</i>参与活动：</label>
+                        <label><i>*</i>参与活动ID：</label>
                         <input type="text" class="form-control" placeholder="活动ID"
                                v-model="tradeInfo.activityOperationID"
                                v-validate:val2="['required']"

@@ -25,9 +25,7 @@
                                 <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
-
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.startValue" placeholder="佣金值">
-
                             <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
                         </form>
                     </div>
@@ -415,6 +413,8 @@
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
+                    let a=data.endValue,b=data.startValue;
+                    this.defaultData.startValue=a;
                     this.defaultData.endValue=b;
                     data.startValue=a;
                     data.endValue=b;
