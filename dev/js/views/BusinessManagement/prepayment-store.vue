@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
+                        <a class="btn btn-info add-top" style="margin-top: 25px;" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
-                                <td><a @click="delstore(trlist.id)" data-toggle="modal" data-target="#modal_waring" data-ksa="advance_payment_merchant_store_manage.delete">删除</a></td>
+                                <td><a @click="delstore(trlist.id)" data-ksa="advance_payment_merchant_store_manage.delete">删除</a></td>
                                 <td>{{trlist.updateAt | datetime}}</td>
                                 <td>{{trlist.connectionPerson}}</td>
                                 <td>{{trlist.connectionPhone}} </td>
@@ -77,7 +77,84 @@
                     未找到数据
                 </div>
 
-                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
+                <!--添加商户dialog-->
+                <content-dialog
+                        :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'添加商户'" 
+                        >
+                        <div class="modal-body" style=" width: 900px;">
+                            <div class="addtop">
+                                <div class="col-md-3">
+                                    <select class="form-control" v-model="shdata.companyId" @change="getCity(shdata.companyId)">
+                                        <option value="">全部分公司</option>
+                                        <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" v-model="shdata.cityId">
+                                        <option value="">全部城市</option>
+                                        <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID" v-limitnumber="shdata.merchantOperationID">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
+                                </div>
+                            </div>
+                            <div class="addbottom">
+                                <div style="text-indent: 68%">已选择：</div>
+                                <div class="col-md-7">
+                                    <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
+                                        <thead>
+                                        <tr role="row">
+                                            <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
+                                            <th>分公司</th>
+                                            <th>城市</th>
+                                            <th>商户名</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" v-for="n in xhlist">
+                                            <td>
+                                                <label>
+                                                    <input :value="n.merchantID" type="checkbox">{{$index+1}}
+                                                </label>
+                                            </td>
+                                            <td>{{n.subCompanyName}}</td>
+                                            <td>{{n.cityName}}</td>
+                                            <td>{{n.merchantName}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <span v-if="firstAdd && !xhlist.length>0">
+                                        无可添加数据
+                                    </span>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                    <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
+                                    <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
+                                </div>
+                                <div class="col-md-4">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                </content-dialog>
+
+                <!-- 删除 -->
+                <content-dialog
+                        :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'你确定删除该商户？'" @kok="del_true" @kcancel="modal_waring = false"
+                        >
+                </content-dialog>
+
+<!--                 <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -92,81 +169,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--添加商户dialog-->
-                <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">添加商户</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="addtop">
-                                    <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.companyId" @change="getCity(shdata.companyId)">
-                                            <option value="">全部分公司</option>
-                                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-control" v-model="shdata.cityId">
-                                            <option value="">全部城市</option>
-                                            <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantOperationID" placeholder="商户ID" v-limitnumber="shdata.merchantOperationID">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" v-model="shdata.merchantName" placeholder="商户名">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
-                                    </div>
-                                </div>
-                                <div class="addbottom">
-                                    <div style="text-indent: 68%">已选择：</div>
-                                    <div class="col-md-7">
-                                        <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
-                                            <thead>
-                                            <tr role="row">
-                                                <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
-                                                <th>分公司</th>
-                                                <th>城市</th>
-                                                <th>商户名</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr role="row" v-for="n in xhlist">
-                                                <td>
-                                                    <label>
-                                                        <input :value="n.merchantID" type="checkbox">{{$index+1}}
-                                                    </label>
-                                                </td>
-                                                <td>{{n.subCompanyName}}</td>
-                                                <td>{{n.cityName}}</td>
-                                                <td>{{n.merchantName}}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <span v-if="firstAdd && !xhlist.length>0">
-                                            无可添加数据
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
-                                        <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
-                                        <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <ul></ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </index>
@@ -267,6 +270,8 @@
         data(){
             this.model =model(this)
             return{
+                modal_add: false,
+                modal_waring: false,
                 pageall:1,
                 merchantName:'',
                 city:[],
@@ -346,7 +351,7 @@
                 this.clearUl();
                 this.getCity();
                 this.firstAdd=false;
-                $('#modal_add').modal('show');
+                this.modal_add = true;
             },
             searchDigest(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -398,11 +403,13 @@
                             if(response.data.code == 0){
                                 this.initList();
                                 dialogs('success','已添加！');
+                                this.modal_add = false;
                             }
                         })
             },
             delstore(_id){
                 this.id=_id;
+                this.modal_waring = true;
             },
             del_true(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -411,6 +418,7 @@
                             if(res.data.code==0){
                                 dialogs('success','已删除');
                                 this.initList();
+                                this.modal_waring = false;
                             }
                         })
             }

@@ -311,6 +311,7 @@
                     </div>
                 </validator>
             </content-dialog>
+            
             <content-dialog
                     :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="dtitle" @kok="processManualTradeDetail" @kcancel="show = false"

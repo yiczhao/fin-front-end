@@ -72,7 +72,7 @@
                                 <td>
                                     <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':balance.merchantOperationID}}">交易明细</a>
                                     <a @click="applyPay(trlist)" data-ksa="subsidy_account_manage.with_draw">税金提现</a>
-                                    <a @click="recharge(trlist)" data-toggle="modal" data-target="#modal_recharge" data-ksa="subsidy_account_manage.recharge">发票充值</a>
+                                    <a @click="recharge(trlist)" data-ksa="subsidy_account_manage.recharge">发票充值</a>
                                 </td>
                             </tr>
                             <tr role="row">
@@ -267,6 +267,7 @@ table tr th,table tr td{
                             if(response.data.code==0){
                                 this.$set('zdlists', response.data.data)
                                 this.defaultData.pageTotal=response.data.total
+                                
                             }
                         });
                 this.model.subsidyAccount_total(this.defaultData)
@@ -274,6 +275,7 @@ table tr th,table tr td{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('total', response.data.data)
+
                             }
                         });
             },
@@ -347,6 +349,7 @@ table tr th,table tr td{
                 this.rechargeInfo.val1=this.balance.merchantName;
                 this.rechargeInfo.val2=activityName;
                 this.rechargeInfo.val3=invoiceAmount;
+                this.modal_recharge = true;
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -360,6 +363,7 @@ table tr th,table tr td{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
                                 this.initList();
+                                 this.modal_recharge = false;
                             }
                         });
             },
@@ -407,12 +411,12 @@ table tr th,table tr td{
             (vm.$route.params.merchantOperationID1==':merchantOperationID1')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID1;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
-            //  $('#modal_recharge').on('hidden.bs.modal', function () {
-            //      $('body').css('padding-right',0);
-            //     vm.uploadText='';
-            //    vm.rechargeData.certificateId='';
-            // })
-            this.modal_recharge = true;
+             $('#modal_recharge').on('hidden.bs.modal', function () {
+                 $('body').css('padding-right',0);
+                vm.uploadText='';
+               vm.rechargeData.certificateId='';
+            })
+           
         }
     }
 </script>

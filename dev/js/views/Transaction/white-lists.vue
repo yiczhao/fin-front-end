@@ -8,7 +8,7 @@
 
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add" @click="addWhite" data-target="#modal_waring" data-ksa="exception_trade_white_list_manage.add">添加</a>
+                        <a class="btn btn-add" @click="addWhite" data-ksa="exception_trade_white_list_manage.add">添加</a>
                     </div>
 
                     <div class="heading-right">
@@ -67,7 +67,7 @@
                                 </td>
                                 <td>{{trlist.remarks }}</td>
                                 <td>
-                                    <a v-if="trlist.status==1" @click="whiteexpired(trlist.id)" data-toggle="modal" data-target="#modal_waring" data-ksa="exception_trade_white_list_manage.expired">失效</a>
+                                    <a v-if="trlist.status==1" @click="whiteexpired(trlist.id)" data-ksa="exception_trade_white_list_manage.expired">失效</a>
                                     <a href="{{origin}}/file/download/{{trlist.certificateID}}">下载</a>
                                 </td>
                                 <td>{{trlist.createUserName }}</td>
@@ -93,69 +93,62 @@
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
-                <validator name="vali">
-                    <form novalidate>
-                        <div data-backdrop="static"  id="add_white" class="modal fade" style="display: none;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">×</button>
-                                        <h5 class="modal-title">添加白名单</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label class="control-label"><i>*</i>类型：</label>
-                                            <select class="form-control"  v-model="redata.type"  v-validate:type="['required']">
-                                                <option value="2">活动</option>
-                                                <option value="1">商户</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><i>*</i>ID：</label>
-                                            <input style="width: 66%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
-                                            <input style="margin-left: 10px;margin-top: -4px;"  type="button" class="btn btn-info" @click="queryId" value="查询">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">名称：</label>
-                                            {{redata.listName}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">分公司：</label>
-                                            {{redata.subCompanyName}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label"><i>*</i>有效期：</label>
-                                            <input type="radio" id="one" value="2" v-model="redata.validType" v-validate:isCcb="['required']">
-                                            <label style="text-align: left;" for="one">永久</label>
-                                            <input type="radio" id="two" value="1" v-model="redata.validType" v-validate:isCcb="['required']">
-                                            <label style="text-align: left;" for="two">自定义</label>
-                                            <div v-show="redata.validType=='1'" style="padding-left: 75px;">
-                                                <datepicker :width="'215px'" :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                                <datepicker :width="'215px'" :readonly="true" :value.sync="redata.endDate" format="YYYY-MM-DD"></datepicker>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="w28"><i>*</i>上传凭证：</label>
-                                            <input style="display:none" type="file" @change="uploads($event)">
-                                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                                            <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
-                                            <textarea rows="5" cols="5" class="form-control" v-model="redata.remarks" v-validate:val2="['required']"></textarea>
-                                        </div>
-                                        <div class="form-group tc">
-                                            <button  type="button" @click="addTrue" class="btn btn-primary">添加</button>
-                                        </div>
-                                        <div class="form-group tc">
-                                            <span v-show="saveerror!=''|| (!$vali.valid&&updataerror)" class="validation-error-label" v-text="saveerror"></span>
-                                        </div>
-                                    </div>
+
+                <content-dialog
+                        :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'添加白名单'" @kok="addTrue" @kcancel="modal_waring = false"
+                        >
+                    <validator name="vali">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label"><i>*</i>类型：</label>
+                                <select class="form-control"  v-model="redata.type"  v-validate:type="['required']">
+                                    <option value="2">活动</option>
+                                    <option value="1">商户</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"><i>*</i>ID：</label>
+                                <input style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                <input style="margin-left: 10px;margin-top: -4px;"  type="button" class="btn btn-info" @click="queryId" value="查询">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">名称：</label>
+                                {{redata.listName}}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">分公司：</label>
+                                {{redata.subCompanyName}}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label"><i>*</i>有效期：</label>
+                                <input type="radio" id="one" value="2" v-model="redata.validType" v-validate:isCcb="['required']">
+                                <label style="text-align: left;" for="one">永久</label>
+                                <input type="radio" id="two" value="1" v-model="redata.validType" v-validate:isCcb="['required']">
+                                <label style="text-align: left;" for="two">自定义</label>
+                                <div v-show="redata.validType=='1'" style="padding-left: 75px;">
+                                    <datepicker :width="'215px'" :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
+                                    <datepicker :width="'215px'" :readonly="true" :value.sync="redata.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="w28" style="width: 15%;"><i>*</i>上传凭证：</label>
+                                <input style="display:none" type="file" @change="uploads($event)">
+                                <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                <span v-text="uploadText" v-show="uploadText!=''"></span>
+                            </div>
+                            <div class="form-group">
+                                <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
+                                <textarea rows="5" cols="5" class="form-control" v-model="redata.remarks" v-validate:val2="['required']"></textarea>
+                            </div>
+                            <div class="form-group tc">
+                                <span v-show="saveerror!=''|| (!$vali.valid&&updataerror)" class="validation-error-label" v-text="saveerror"></span>
+                            </div>
                         </div>
-                    </form>
-                </validator>
+                    </validator>
+                </content-dialog>
+
+
 
                 <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog">
@@ -164,7 +157,7 @@
                                 <button type="button" class="close" data-dismiss="modal">×</button>
                                 <h5 class="modal-title">你确定失效该账户？</h5>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" style="width: 600px;">
                                 <div class="form-group tc">
                                     <button type="button" @click="whiteexpiredTrue" class="btn btn-primary">确认</button>
                                     <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
@@ -184,6 +177,7 @@
         data(){
             this.model =model(this)
             return{
+                modal_waring: false,
                 origin:window.origin,
                 pageall:1,
                 companylists:[],
@@ -239,7 +233,7 @@
                         });
             },
             initList(){
-                $('.modal').modal('hide');
+                this.add_white = false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
@@ -275,7 +269,7 @@
                 var m = time.getMonth()+1;
                 var d = time.getDate();
                 this.startDate=this.redata.startDate=this.gettoday();
-                $('#add_white').modal('show');
+                this.modal_waring = true;
             },
             add0(m){return m<10?'0'+m:m },
             startParty(_id, status){
@@ -364,7 +358,8 @@
                         .then((res) => {
                             if(res.data.code == 0){
                                 this.initList()
-                                dialogs('success','已添加！')
+                                dialogs('success','已添加！') 
+                                this.modal_waring = false;
                             }
                         })
             },

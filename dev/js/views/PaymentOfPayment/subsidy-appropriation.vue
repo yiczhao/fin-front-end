@@ -204,42 +204,35 @@
                 </div>
             </div>
 
-            <div id="modal_applyPay" data-backdrop="static" class="modal fade" style="display: none;">
-                <div class="modal-dialog mg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3>{{dialogTitle}}</h3>
-                            <button type="button" class="close" data-dismiss="modal">×</button>
+
+            <content-dialog
+                    :show.sync="modal_applyPay" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="''" @kok="submit" @kcancel="modal_applyPay = false"
+                    >
+                    <div class="modal-body">
+                        <div class="form-group">
+                            您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，
+                            共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔，
+                            三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartySubsidyShould/100 | currency ''}}</span>  元，
+                            补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元，
+                            暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTaxAmount/100 | currency ''}}</span>  元
                         </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，
-                                共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔，
-                                三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartySubsidyShould/100 | currency ''}}</span>  元，
-                                补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元，
-                                暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTaxAmount/100 | currency ''}}</span>  元
-                            </div>
-                            <div class="form-group">
-                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
-                                    <option value="">请选择付款方式</option>
-                                    <option value="1">备付金账户</option>
-                                    <option value="2">商户预付款账户</option>
-                                    <option value="3">银行结算</option>
-                                </select>
-                            </div>
-                            <div class="form-group"  v-show="payTypes==1">
-                                <label><input type="checkbox" v-model="mergePay"/>
-                                    相同账户合并付款</label>
-                            </div>
-                            <div class="form-group" style="text-align: center">
-                                <input type="button" class="btn btn-info btn-primary" @click="submit()" value="提交">
-                                <input type="button" class="btn btn-gray" @click="" data-dismiss="modal" value="取消">
-                            </div>
+                        <div class="form-group">
+                            <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                            <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
+                                <option value="">请选择付款方式</option>
+                                <option value="1">备付金账户</option>
+                                <option value="2">商户预付款账户</option>
+                                <option value="3">银行结算</option>
+                            </select>
+                        </div>
+                        <div class="form-group"  v-show="payTypes==1">
+                            <label><input type="checkbox" v-model="mergePay"/>
+                                相同账户合并付款</label>
                         </div>
                     </div>
-                </div>
-            </div>
+            </content-dialog>
+
 
 
         </div>
@@ -256,6 +249,7 @@
         data(){
             this.model =model(this)
             return{
+                modal_applyPay: false,
                 checkForm:{
                     id:"",
                     subCompanyID:"",
@@ -394,7 +388,7 @@
                             // *** 判断请求是否成功如若
                             if(response.data.code==0){
                                 this.$set('applyPayInfo', response.data.data)
-                                $('#modal_applyPay').modal('show');
+                                this.modal_applyPay = true;
                             }
                         });
             },
@@ -412,13 +406,15 @@
                         // *** 判断请求是否成功如若
                                 if(response.data.code==0){
                                     dialogs('success',mes);
+                                    this.modal_applyPay = false;
                                 }
                                 this.query();
                             });
             },
             query() {
                 $(".check-boxs").prop({'checked':false})
-                $('.modal').modal('hide');
+                //$('.modal').modal('hide');
+                this.modal_applyPay = false;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
                     this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];

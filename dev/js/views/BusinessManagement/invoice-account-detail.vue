@@ -14,8 +14,6 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <a @click="recharge()" data-toggle="modal" data-target="#modal_recharge" class="btn btn-info" data-ksa="subsidy_account_manage.recharge">充值</a>
-
                             <select class="form-control" v-model="dateS">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>

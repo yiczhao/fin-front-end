@@ -169,14 +169,15 @@
                 >
                     <div class="dialog-row">
                         <span>
-                             <label>分公司：</label>
-                              <select class="form-control" v-model="goformulaeData.subCompanyID">
-                                  <option value="">请选择分公司</option>
+                            <label>分公司：</label>
+                            <select class="form-control" v-model="goformulaeData.subCompanyID">
+                                <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in usercompanylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </span>
                     </div>
                 </content-dialog>
+                
                 <!--添加商户dialog-->
                 <content-dialog
                         :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
@@ -261,13 +262,17 @@
                         </span>
                     </div>
                     <div class="dialog-row">
-                         <span>
+                        <span>
                              <label>回款金额：</label>
                              <input type="text" class="form-control" v-model="redata.collectAmount" v-limitaddprice="redata.collectAmount" placeholder="请输入回款金额">
                         </span>
                         <span>
                             <label>开票金额：</label>
+
                            <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitaddprice="redata.invoiceAmount" placeholder="请输入开票金额">
+
+                            <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitprice="redata.invoiceAmount" placeholder="请输入开票金额">
+
                         </span>
                     </div>
                     <div class="dialog-row">
@@ -277,7 +282,7 @@
                          </span>
                     </div>
                     <div class="dialog-row">
-                         <span>
+                        <span>
                              <label class="tlabel">备注：</label>
                              <textarea rows="3" class="form-control" v-model="redata.remarks"></textarea>
                         </span>

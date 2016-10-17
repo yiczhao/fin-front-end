@@ -5,8 +5,7 @@
            :isshow="'isshow'">
         <div class="content trade-info" slot="content">
             <div class="panel panel-flat">
-
-                 <div class="heading">
+                <div class="heading">
                     <div class="heading-left">
                     </div>
 
@@ -62,7 +61,6 @@
                         <a class="btn btn-info add-top" v-on:click="query" data-ksa="trade_detail_manage.search">查询</a>
                     </div>
                 </div>
-
 
                 <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">

@@ -128,7 +128,7 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.isHandled==0">
-                                        <a data-toggle="modal" data-target="#modal_waring" type="button" @click="back(trlist.id)"  data-ksa="exception_trade_manage.handle">处理异常</a>
+                                        <a type="button" @click="back(trlist.id)"  data-ksa="exception_trade_manage.handle">处理异常</a>
                                     </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
@@ -210,32 +210,24 @@
                     未查询到交易明细数据！
                 </div>
 
-                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">处理异常</h5>
+                <content-dialog
+                        :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'处理异常'" @kok="backTrue" @kcancel="modal_waring = false"
+                        >
+                        <div class="modal-body">
+                            <div class="form-group" style="overflow: hidden;">
+                                <label class="col-lg-3 control-label"><i>*</i>备注</label>
+                                <div class="col-lg-10">
+                                    <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group" style="overflow: hidden;">
-                                    <label class="col-lg-3 control-label"><i>*</i>备注</label>
-                                    <div class="col-lg-10">
-                                        <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group tc">
-                                    <button type="button" @click="backTrue" class="btn btn-primary">确认</button>
-                                </div>
-                                <div class="form-group tc">
-                                    <span v-show="!remarks&&fires" class="validation-error-label">
-                                      请填写备注
-                                    </span>
-                                </div>
+                            <div class="form-group tc">
+                                <span v-show="!remarks&&fires" class="validation-error-label">
+                                  请填写备注
+                                </span>
                             </div>
                         </div>
-                    </div>
-                </div>
+                </content-dialog>
             </div>
         </div>
     </index>
@@ -247,6 +239,7 @@
         data(){
             this.model=model(this);
             return{
+                modal_waring: false,
                 checkForm:{
                     subCompanyID:"",
                     cityID:"",
@@ -334,6 +327,7 @@
                 }
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
+
             },
             excel(){
                 if(!this.tradeList.length>0)return;
@@ -344,6 +338,7 @@
                 this.remarks='';
                 this.fires=false;
                 this.accountId=a;
+                this.modal_waring = true;
             },
             backTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -357,6 +352,7 @@
                             if(response.data.code==0){
                                 this.query();
                                 dialogs('success','已处理！');
+                                this.modal_waring = false;
                             }
                     })
             }

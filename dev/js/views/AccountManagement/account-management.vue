@@ -29,7 +29,7 @@
             <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
                     <table class="table">
-                        <thead>
+                        <thead
                             <tr role="row">
                                 <th>分公司</th>
                                 <th>简称</th>
@@ -98,7 +98,7 @@
             <content-dialog
                     :show.sync="personshow" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="'负责人'" @kok="personTrue(person.id)" @kcancel="personshow = false"
-            >
+                    >
                 <validator name="vali2">
                     <div class="form-group">
                         <label><i>*</i>负责人</label>
@@ -117,12 +117,14 @@
                     </div>
                 </validator>
             </content-dialog>
+
             <content-dialog
                     :show.sync="waringshow" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="'操作提示'" @kok="waringBtn" @kcancel="waringshow = false"
             >
                 <div class="form-group">{{waring}}</div>
             </content-dialog>
+
             <content-dialog
                     :show.sync="addshow" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="addtitle" @kok="addBtn" @kcancel="addshow = false"

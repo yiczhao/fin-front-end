@@ -46,7 +46,7 @@
                                     <td>{{user.name}}</td>
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)" data-ksa="user_manage.control_span">管辖范围</a>
+                                        <a  @click="showCS(user.id)" data-ksa="user_manage.control_span">管辖范围</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -71,7 +71,22 @@
                     未查询到员工数据信息！
                 </div>
 
-                <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
+                <content-dialog
+                        :show.sync="modal_ControlSpan" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'管辖范围'" @kok="submit" @kcancel="modal_ControlSpan = false"
+                        >
+                         <div class="modal-body">
+                             <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                             <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
+                             <hr/>
+                             <div class="controlSpan" v-for="controlSpan in controlSpanList">
+                                 <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+                                 <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
+                             </div>
+                         </div>
+                </content-dialog>
+
+<!--                 <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
                     <div class="modal-dialog mg">
                         <div class="modal-content">
                              <div class="modal-header">
@@ -94,16 +109,13 @@
                         </div>
                     </div>
                 </div>
-
+ -->
                 <!--导入员工dialog-->
-                <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">导入员工</h5>
-                            </div>
-                            <div class="modal-body">
+                <content-dialog
+                        :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'导入员工'"  
+                >
+                            <div class="modal-body" style="width: 900px;">
                                 <div class="addtop">
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="userdata.subCompanyID">
@@ -165,9 +177,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                </content-dialog>
                 
             </div>
         </div>
@@ -181,6 +191,8 @@
         data(){
             this.model =model(this)
             return{
+                modal_add: false,
+                modal_ControlSpan: false,
                 checkForm:{
                     subCompanyID:"",
                     keywords:"",
@@ -238,6 +250,7 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('controlSpanList', response.data.data) : null;
                         });
+                this.modal_ControlSpan = true;
             },
             checkAll(){
                 $("input[name='ckbox']").prop({'checked':true});
@@ -263,13 +276,14 @@
                         if (response.data.code==0)
                         {
                             dialogs("保存成功！");
+                            this.modal_ControlSpan = false;
                         }
                     });
                     //关闭弹出层
-                    $(".modal").modal("hide");
+                    //$(".modal").modal("hide");
             },
             addUser(){
-                $('#modal_add').modal('show');
+                this.modal_add = true;
                 this.firstAdd=false;
                 this.clearUl();
             },
@@ -350,7 +364,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 this.query();
-                                $('#modal_add').modal('hide');
+                                this.modal_add = false;
                                 dialogs('success','已添加！');
                             }
                         })

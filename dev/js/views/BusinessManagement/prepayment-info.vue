@@ -9,7 +9,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-add"
+                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"
                         @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
                     </div>
 
@@ -149,7 +149,49 @@
                 </div>
             </div>
 
-            <validator name="vali">
+            <content-dialog
+                    :show.sync="modal_prepayment_recharge" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'预付充值'" @kok="subApplyAdvancePay" @kcancel="modal_prepayment_recharge = false"
+                    >
+                    <validator name="vali">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>商户名：</label>{{applyAdvancePay.merchantName}}
+                            </div>
+                            <div class="form-group">
+                                <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label><i style="color:red">*</i>金额：</label>
+                                <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
+                                       v-model="applyAdvancePay.advancePaymentAmount"  v-limitprice="applyAdvancePay.advancePaymentAmount"/>
+                            </div>
+                            <div class="form-group">
+                                <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
+                                    <textarea v-validate:val2="['required']" class="form-control" name="remarks"
+                                              v-model="applyAdvancePay.remarks"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>收款信息：</label>
+                                <br/>
+                                <div class="collectionAccount-bgcolor">
+                                    <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
+                                    <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
+                                    <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
+                                    <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
+                                </div>
+                            </div>
+                            <div class="form-group tc">
+                                <span v-show="$vali.invalid&&saveerror" class="validation-error-label">您的信息未填写完整</span>
+                            </div>
+                        </div>
+                    </validator>
+            </content-dialog>        
+
+<!--             <validator name="vali">
                 <form novalidate>
             <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
                 <div class="modal-dialog modal-mg">
@@ -200,9 +242,10 @@
                     </div>
                 </div>
             </div>
-
             </form>
-            </validator>
+            </validator> -->
+
+
 
 
         </div>
@@ -333,6 +376,7 @@
         data(){
             this.model = model(this)
             return {
+                modal_prepayment_recharge: false,
                 pageall: 1,
                 blanceList:{},
                 total: {},
@@ -425,7 +469,7 @@
                                 } else {
                                     //显示窗口
                                     this.saveerror=false;
-                                    $("#modal_prepayment_recharge").modal('show');
+                                    this.modal_prepayment_recharge = true;
                                 }
                             }
                         });
@@ -445,10 +489,11 @@
                             if (response.data.code == 0) {
                                 dialogs('success','提交成功！');
                                 this.initList();
+                                this.modal_prepayment_recharge = false;
                             }
                         });
                 //关闭弹出层
-                $(".modal").modal("hide");
+                this.modal_prepayment_recharge = false;
             },
             getTime(){
                 this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
@@ -461,6 +506,7 @@
             this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
+
         },
         watch: {
             'defaultData.dataS'(){
