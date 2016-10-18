@@ -94,6 +94,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.adjustTradeDetailPre = '/data/export/excel/adjustTradeDetailPre?';
+    /**
+     * @description 手工单页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.manualTradeDetailExcel = '/data/export/excel/manualTradeDetail?';
 
 
     //- todo 财务处理-账户列表 account-management

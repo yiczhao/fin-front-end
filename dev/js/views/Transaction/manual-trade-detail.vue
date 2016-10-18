@@ -150,7 +150,7 @@
 
                     <div class="datatable-bottom">
                        <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                            <a class="icon-file-excel" @click="manualTradeDetailExcel" style="line-height: 30px;" >Excel导出</a>
                        </div>
 
                        <div class="right">
@@ -617,6 +617,12 @@
                             })
                 }
             },
+            manualTradeDetailExcel(){
+                if(!this.manualTradeDetailList.length>0)return;
+                //初始化
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.manualTradeDetailExcel+ $.param(this.defaultData));
+            }
         },
         ready: function () {
             this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
