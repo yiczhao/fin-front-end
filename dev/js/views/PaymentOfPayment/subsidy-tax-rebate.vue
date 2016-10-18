@@ -159,7 +159,7 @@
                 </div>
 
 
-                <div class="datatable-bottom">
+                <div v-show="!!subsidyTaxRebateDetailList.length" class="datatable-bottom">
                    <div class="left">
                         <a class="icon-file-excel" style="line-height: 30px;" v-on:click="subsidyTaxexcel" data-ksa="subsidy_tax_rebate_detail_manage.export">Excel导出</a>
                    </div>
@@ -172,7 +172,7 @@
                    </div>
                 </div>
 
-                <div class="nums">
+                <div v-show="!!subsidyTaxRebateDetailList.length" class="nums">
                     <table cellspacing="0" cellpadding="0" border="1px solid #000;">
                         <tr>
                             <td rowspan="4">
@@ -190,7 +190,7 @@
 
             <content-dialog
                     :show.sync="modal_applyPay" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="''" @kok="submit" @kcancel="modal_applyPay = false"
+                    :title.sync="dialogTitle" @kok="submit" @kcancel="modal_applyPay = false"
                     >
                     <div class="modal-body">
                         <div class="form-group">

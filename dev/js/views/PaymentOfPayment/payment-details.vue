@@ -272,8 +272,8 @@
             </content-dialog>
 
             <content-dialog
-                    :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="'详情'"  @kcancel="modal_waring = false"
+                    :show.sync="modal_waring" :is-button="false" :type.sync="'infos'"
+                    :title.sync="waring"
                     >
                     <div class="modal-body">
                         <div class="form-group tc">
@@ -282,7 +282,7 @@
                             <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
                             <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
                             <!--<button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>-->
-                            <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-gray" @click="modal_waring=false">取消</button>
                         </div>
                     </div>
             </content-dialog>

@@ -147,39 +147,42 @@
                             </tr>
                         </table>
                     </div>
+
+                    <div class="datatable-bottom">
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="payRecheckexcel" data-ksa="pay_recheck.export">Excel导出</a>
+                        </div>
+
+                        <div class="right">
+                            <page v-show="recheckLists.length>0" :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                        </div>
+                    </div>
+
+                    <div class="nums">
+                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                            <tr>
+                                <td >
+                                    <span>合计： </span>
+                                </td>
+                                <td>
+                                    <span>{{total.thirdPartySubsidyShould/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{total.payAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>
+                                    <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="no-list" v-show="!recheckLists.length>0" v-cloak></div>
 
-                <div class="datatable-bottom">
-                   <div class="left">
-                        <a class="icon-file-excel" style="line-height: 30px;" v-on:click="payRecheckexcel" data-ksa="pay_recheck.export">Excel导出</a>
-                   </div>
-
-                   <div class="right">
-                        <page v-show="recheckLists.length>0" :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
-                   </div>
-                </div>
-
-                <div class="nums">
-                    <table cellspacing="0" cellpadding="0" border="1px solid #000;">
-                        <tr>
-                            <td >
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>{{total.thirdPartySubsidyShould/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>{{total.payAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="no-list" v-show="!recheckLists.length>0" v-cloak>
+                    未查询到数据！
                 </div>
             </div>
             <content-dialog

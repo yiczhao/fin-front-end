@@ -26,10 +26,10 @@
                 </div>
             </div>
 
-            <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
+            <div  v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
                     <table class="table">
-                        <thead
+                        <thead>
                             <tr role="row">
                                 <th>分公司</th>
                                 <th>简称</th>
@@ -43,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-show="!!zdlists.length"  v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                            <tr v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.companyName}}</td>
                                 <td>{{trlist.shortName}}</td>
                                 <td>{{trlist.accountName}}</td>
@@ -75,11 +75,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="no-list" v-show="!zdlists.length">
-                        未找到数据
-                    </div>
                 </div>
-
                 <div class="datatable-bottom">
                    <div class="left">
                         <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
@@ -92,6 +88,10 @@
                         </page>
                    </div>
                 </div>
+            </div>
+
+            <div class="no-list" v-show="!zdlists.length">
+                未找到数据
             </div>
         </div>
 

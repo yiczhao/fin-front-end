@@ -207,7 +207,7 @@
 
             <content-dialog
                     :show.sync="modal_applyPay" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="''" @kok="submit" @kcancel="modal_applyPay = false"
+                    :title.sync="dialogTitle" @kok="submit" @kcancel="modal_applyPay = false"
                     >
                     <div class="modal-body">
                         <div class="form-group">

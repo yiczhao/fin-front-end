@@ -271,8 +271,6 @@
 
                            <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitaddprice="redata.invoiceAmount" placeholder="请输入开票金额">
 
-                            <input type="text" class="form-control" v-model="redata.invoiceAmount" v-limitprice="redata.invoiceAmount" placeholder="请输入开票金额">
-
                         </span>
                     </div>
                     <div class="dialog-row">
