@@ -131,9 +131,6 @@
                     </div>
 
                     <div class="datatable-bottom">
-                       <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
-                       </div>
 
                        <div class="right">
                             <page :all="pageall"
