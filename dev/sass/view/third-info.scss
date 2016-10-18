@@ -1,0 +1,97 @@
+.third-info{
+    .datatable-header{
+        padding-bottom: 20px;
+        span{
+            margin-right: 20px;
+        }
+    }
+    .m20{
+        margin-bottom: 20px;
+    }
+    .addtop,  .addbottom{
+        overflow: hidden;
+    .form-control{
+        padding: 7px;
+    }
+    }
+    .addbottom{
+        margin-top: 15px;
+    .col-md-2{
+        text-align: center;
+    input{
+        margin-bottom: 10px;
+    }
+    }
+    .col-md-7{
+        height: 300px;
+        overflow: auto;
+        border: 1px solid #ccc;
+    }
+    .col-md-1{
+        padding-top: 40px;
+        text-align: center;
+    input{
+        margin:15px 0;
+    }
+    }
+    .col-md-4{
+        border: 1px solid #ccc;
+        padding:10px;
+    }
+    ul{
+        list-style: none;
+        height: 278px;
+        overflow: auto;
+    li{
+        margin:5px 0;
+        cursor: pointer;
+        padding-left:3px;
+    }
+    }
+    }
+    table tr{
+    td,th{
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    span{
+        cursor: pointer;
+        color: #3c8dbc;
+    &:hover{
+         opacity: 80;
+     }
+    }
+    }
+    input[type="checkbox"]{
+        position: relative;
+        top: 2px;
+        left: -2px;
+    }
+    }
+    .addbottom table tr td,  .addbottom table tr th{
+        padding: 2px;
+    }
+    #modal_submit{
+        label i{
+            color: red;
+        }
+        .form-control{
+            width: 80%;
+            display: inline-block;
+        }
+    }
+    .pull-left label i{
+        color:red;
+    }
+    .pull-left{
+        .validation-error-label{
+            line-height: 20px;
+            padding-left: 18px;
+            margin-top: 10px;
+        }
+    }
+    .validation-error-label{
+        display: inline;
+    }
+}
