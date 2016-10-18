@@ -175,9 +175,8 @@
                             </page>
                        </div>
                     </div>
-
                     <div class="nums">
-                        <table cellspacing="0" cellpadding="0" border="1px solid #000;">
+                        <table cellspacing="0" cellpadding="0">
                             <tr>
                                 <td rowspan="4">
                                     <span>合计： </span>
