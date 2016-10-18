@@ -3,11 +3,11 @@
            :ptitle="'三方管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
-        <div class="content third-info" slot="content">
+        <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="recharge()" data-ksa="third_party_account_manage.recharge">回款充值</a>
+                        <a class="btn btn-add add-top" @click="recharge()" data-toggle="modal" data-target="#modal_submit" data-ksa="third_party_account_manage.recharge">回款充值</a>
                     </div>
 
                     <div class="heading-right">
@@ -116,12 +116,15 @@
                     未找到数据
                 </div>
 
-                <!-- 回款充值 -->
-                <content-dialog
-                        :show.sync="modal_submit" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'回款充值'" @kok="rechargeTrue" @kcancel="modal_submit = false"
-                        >
-                        <validator name="vali">
+                <validator name="vali">
+                    <form novalidate>
+                <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">回款充值</h5>
+                            </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label class="control-label">名称：{{blanceList.accountName}}</label>
@@ -134,8 +137,11 @@
                                     <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
                                 </div>
                                 <div class="form-group">
-                                    <label style="position: relative;" class="control-label"><i>*</i>备注：</label>
+                                    <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
                                     <textarea rows="5" cols="5" class="form-control" v-model="redata.remarks" v-validate:val2="['required']"></textarea>
+                                </div>
+                                <div class="form-group tc">
+                                    <button  type="button" @click="rechargeTrue" class="btn btn-primary">确认回款</button>
                                 </div>
                                 <div class="form-group tc">
                                     <span v-show="$vali.invalid&&saveerror" class="validation-error-label">
@@ -143,21 +149,119 @@
                                     </span>
                                 </div>
                             </div>
-                        </validator>
-                </content-dialog>
-            
+                        </div>
+                    </div>
+                </div>
+                    </form>
+                </validator>
+
             </div>
         </div>
     </index>
 </template>
-
+<style lang="sass" scoped>
+    .datatable-header{
+        padding-bottom: 20px;
+        span{
+            margin-right: 20px;
+        }
+    }
+    .m20{
+        margin-bottom: 20px;
+    }
+    .addtop,  .addbottom{
+        overflow: hidden;
+    .form-control{
+        padding: 7px;
+    }
+    }
+    .addbottom{
+        margin-top: 15px;
+    .col-md-2{
+        text-align: center;
+    input{
+        margin-bottom: 10px;
+    }
+    }
+    .col-md-7{
+        height: 300px;
+        overflow: auto;
+        border: 1px solid #ccc;
+    }
+    .col-md-1{
+        padding-top: 40px;
+        text-align: center;
+    input{
+        margin:15px 0;
+    }
+    }
+    .col-md-4{
+        border: 1px solid #ccc;
+        padding:10px;
+    }
+    ul{
+        list-style: none;
+        height: 278px;
+        overflow: auto;
+    li{
+        margin:5px 0;
+        cursor: pointer;
+        padding-left:3px;
+    }
+    }
+    }
+    table tr{
+    td,th{
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    span{
+        cursor: pointer;
+        color: #3c8dbc;
+    &:hover{
+         opacity: 80;
+     }
+    }
+    }
+    input[type="checkbox"]{
+        position: relative;
+        top: 2px;
+        left: -2px;
+    }
+    }
+    .addbottom table tr td,  .addbottom table tr th{
+        padding: 2px;
+    }
+    #modal_submit{
+        label i{
+            color: red;
+        }
+        .form-control{
+            width: 80%;
+            display: inline-block;
+        }
+    }
+    .pull-left label i{
+        color:red;
+    }
+    .pull-left{
+        .validation-error-label{
+            line-height: 20px;
+            padding-left: 18px;
+            margin-top: 10px;
+        }
+    }
+    .validation-error-label{
+        display: inline;
+    }
+</style>
 <script>
     import model from '../../ajax/ThreeParty/thirdinfo_model'
     export default{
         data(){
             this.model =model(this)
             return{
-                modal_submit: false,
                 blanceList:{
                     accountName:'',
                     balanceAmount:'',
@@ -261,7 +365,6 @@
             },
             recharge(){
                 this.saveerror=false;
-                this.modal_submit = true;
                 this.redata={
                     id:this.defaultData.thirdPartyAccountID,
                     money:'',
@@ -286,7 +389,6 @@
                                 if(res.data.code == 0){
                                     this.initList()
                                     dialogs('success','已充值！')
-                                    this.modal_submit = false;
                                 }
                             })
             }

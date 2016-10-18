@@ -435,7 +435,7 @@
                     });
             },
             initList(){
-                //$(".modal").modal("hide");
+                $(".modal").modal("hide");
                 $(".check-boxs").prop({'checked':false})
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date('1')[0];

@@ -221,7 +221,7 @@
                             <a class="btn btn-info" @click="getTradeData" data-ksa="manually_settlement.search">查询</a>
                         </div>
                     </div>
-                    <div class="dialog-row" v-show="redata.tradeCount!=null||redata.consumptionAmount!=null">
+                    <div class="dialog-row" v-show="!!redata.tradeCount||!!redata.consumptionAmount">
                         <span class="pl95">交易笔数：{{redata.tradeCount}}笔</span>
                         <span>消费金额：{{redata.consumptionAmount | currency ''}}元</span>
                     </div>
@@ -266,7 +266,7 @@
                              <input type="file" style="display: none;" @change="uploads($event)">
                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                              <span v-text="uploadText" v-show="uploadText!=''"></span>
-                            <span v-if="(redata.certificateID==''||certificateID == null) && fire"
+                            <span v-if="redata.certificateID=='' && fire"
                                       class="validation-error-label">请上传凭证</span>
                         </span>
                     </div>
@@ -339,7 +339,7 @@
                     "certificateID": '',
                     "collectionAmount": '',
                     "commission33211": '',
-                    "consumptionAmount": null,
+                    "consumptionAmount": '',
                     "id": '',
                     "limitDeduct": '',
                     "merchantOperationID": '',
@@ -348,7 +348,7 @@
                     "remarks": '',
                     "serialNumber": '',
                     "thirdPartyReceivable": '',
-                    "tradeCount": null
+                    "tradeCount": ''
                 },
                 waringshow:false,
                 waringtitle:'',
@@ -420,7 +420,7 @@
                     "certificateID": '',
                     "collectionAmount": '',
                     "commission33211": '',
-                    "consumptionAmount": null,
+                    "consumptionAmount": '',
                     "id": '',
                     "limitDeduct": '',
                     "merchantOperationID": '',
@@ -429,7 +429,7 @@
                     "remarks": '',
                     "serialNumber": '',
                     "thirdPartyReceivable": '',
-                    "tradeCount": null
+                    "tradeCount": ''
                 }
                 this.addShow=true;
             },
@@ -488,7 +488,7 @@
                 });
             },
             saveAdd(){
-                if (!this.$vali.valid || this.redata.certificateID == null || this.redata.certificateID == '') {
+                if (!this.$vali.valid || this.redata.certificateID == '') {
                     this.fire = true;
                     return;
                 }

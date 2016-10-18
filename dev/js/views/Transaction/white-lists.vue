@@ -149,13 +149,23 @@
                 </content-dialog>
 
 
-                <content-dialog
-                        :show.sync="modal_waring1" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'添加白名单'" @kok="whiteexpiredTrue" @kcancel="modal_waring1 = false"
-                        >
-                        <div class="modal-body" style="width: 600px;">
+
+                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h5 class="modal-title">你确定失效该账户？</h5>
+                            </div>
+                            <div class="modal-body" style="width: 600px;">
+                                <div class="form-group tc">
+                                    <button type="button" @click="whiteexpiredTrue" class="btn btn-primary">确认</button>
+                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
                         </div>
-                </content-dialog>
+                    </div>
+                </div>
             </div>
         </div>
     </index>
@@ -168,7 +178,6 @@
             this.model =model(this)
             return{
                 modal_waring: false,
-                modal_waring1: false,
                 origin:window.origin,
                 pageall:1,
                 companylists:[],
@@ -356,7 +365,6 @@
             },
             whiteexpired(_id){
                 this.id=_id
-                this.modal_waring1 = true;
             },
             whiteexpiredTrue(){
                 this.model.whiteexpired(this.id)
@@ -364,7 +372,6 @@
                                 if(res.data.code == 0){
                                 this.initList()
                                 dialogs('success','已失效！')
-                                this.modal_waring1 = false;
                             }
                         })
             },

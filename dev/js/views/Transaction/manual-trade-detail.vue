@@ -166,7 +166,7 @@
                     未找到数据
                 </div>
                 
-                <div class="nums">
+                <div class="nums" v-show="manualTradeDetailList.length">
                     <table cellspacing="0" cellpadding="0" border="1px solid #000;">
                         <tr>
                             <td rowspan="4">
