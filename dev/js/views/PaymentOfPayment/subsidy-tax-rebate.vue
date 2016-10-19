@@ -80,7 +80,7 @@
                                     <th>商户名称</th>
                                     <th>收款账户信息</th>
                                     <th>生成方式</th>
-                                    <th>退税金额</th>
+                                    <th>退税款</th>
                                     <th>交易</th>
                                     <th>状态</th>
                                     <th>付款流水</th>
@@ -196,7 +196,7 @@
                         <div class="form-group">
                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，
                             共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔，
-                            <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeAmount/100 | currency ''}}</span>  元
+                            <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTaxAmount/100 | currency ''}}</span>  元
                         </div>
                         <div class="form-group">
                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>

@@ -192,8 +192,8 @@
                                     class="form-control"
                                     v-model="redata.merchantOperationID "
                                     v-validate:val1="['required']"
-                                    v-limitnumber="redata.merchantOperationID"
                                     v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                    v-limitnumber="redata.merchantOperationID"
                                     placeholder="请输入商户ID">
                         </span>
                         <span>
@@ -227,37 +227,68 @@
                     </div>
                     <div class="dialog-row">
                         <span>
-                             <label>额度抵扣：</label>
+                             <label><i>*</i>额度抵扣：</label>
                              <input
                                      v-model="redata.limitDeduct"
+                                     v-validate:val4="['required']"
+                                     v-bind:class="{'error-input':fire && $vali.val4.required}"
+                                     v-addprice="redata.limitDeduct"
                                      type="text" class="form-control" placeholder="额度抵扣">
                         </span>
                         <span>
-                             <label>商户应补：</label>
+                             <label><i>*</i>商户应补：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.merchantSubsidyShould"
+                                    v-validate:val5="['required']"
+                                    v-bind:class="{'error-input':fire && $vali.val5.required}"
+                                    v-addprice="redata.merchantSubsidyShould"
                                     placeholder="商户应补">
                         </span>
                     </div>
                     <div class="dialog-row">
                         <span>
-                             <label>本金抵扣：</label>
-                             <input type="text" class="form-control" v-model="redata.principalDeduct" placeholder="本金抵扣">
+                             <label><i>*</i>本金抵扣：</label>
+                             <input type="text"
+                                    class="form-control"
+                                    v-model="redata.principalDeduct"
+                                    v-validate:val6="['required']"
+                                    v-bind:class="{'error-input':fire && $vali.val6.required}"
+                                    v-addprice="redata.principalDeduct"
+                                    placeholder="本金抵扣">
                         </span>
                         <span>
-                             <label>扣收金额：</label>
-                             <input type="text" class="form-control" v-model="redata.collectionAmount" placeholder="扣收金额">
+                             <label><i>*</i>扣收金额：</label>
+                             <input type="text"
+                                    class="form-control"
+                                    v-model="redata.collectionAmount"
+                                    v-validate:val7="['required']"
+                                    v-bind:class="{'error-input':fire && $vali.val7.required}"
+                                    v-addprice="redata.collectionAmount"
+                                    placeholder="扣收金额">
                         </span>
                     </div>
                     <div class="dialog-row">
                         <span>
-                             <label>三方应收：</label>
-                             <input type="text" class="form-control" v-model="redata.thirdPartyReceivable" placeholder="三方应收">
+                             <label><i>*</i>三方应收：</label>
+                             <input type="text"
+                                    class="form-control"
+                                    v-model="redata.thirdPartyReceivable"
+                                    v-validate:val8="['required']"
+                                    v-bind:class="{'error-input':fire && $vali.val8.required}"
+                                    v-addprice="redata.thirdPartyReceivable"
+                                    placeholder="三方应收">
                         </span>
                         <span>
-                             <label>卡说佣金：</label>
-                             <input type="text" class="form-control" v-model="redata.commission33211" placeholder="卡说佣金">
+                             <label><i>*</i>卡说佣金：</label>
+                             <input type="text"
+                                    class="form-control"
+                                    v-model="redata.commission33211"
+                                    v-model="redata.thirdPartyReceivable"
+                                    v-validate:val9="['required']"
+                                    v-bind:class="{'error-input':fire && $vali.val9.required}"
+                                    v-addprice="redata.commission33211"
+                                    placeholder="卡说佣金">
                         </span>
                     </div>
                     <div class="dialog-row">
@@ -272,8 +303,13 @@
                     </div>
                     <div class="dialog-row">
                          <span>
-                             <label class="tlabel">备注：</label>
-                             <textarea rows="3" class="form-control" v-model="redata.remarks"></textarea>
+                             <label class="tlabel"><i>*</i>备注：</label>
+                             <textarea rows="3"
+                                       class="form-control"
+                                       v-model="redata.remarks"
+                                       v-validate:val10="['required']"
+                                       v-bind:class="{'error-input':fire && $vali.val10.required}"
+                             ></textarea>
                         </span>
                     </div>
                     <div class="form-group tc">
@@ -490,6 +526,12 @@
             saveAdd(){
                 if (!this.$vali.valid || this.redata.certificateID == '') {
                     this.fire = true;
+                    dialogs('info','请完善信息！')
+                    return;
+                }
+                if (this.redata.certificateID == null) {
+                    this.fire = true;
+                    this.redata.certificateID = '';
                     return;
                 }
                 this.model.adjustTradeDetailPre_save(this.redata).then((res)=>{
