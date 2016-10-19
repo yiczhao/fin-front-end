@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-            <div style="margin: 0 20px 20px 0;font-size: 18px;">
+            <div style="margin: 0 20px 20px;font-size: 18px;">
                 <span>账户简称：</span><span style="margin-right: 10px;">{{aname}}</span>
                 <span>余额：</span><span style="margin-right: 10px;">{{balance/100 | currency ''}}</span>
                 <span  v-if="zdlists.length>0">总收入：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{shouru/100 | currency ''}}元</span>
@@ -138,7 +138,7 @@
                 </div>                    
             </div>
 
-            <div style="padding: 30px;font-size: 16px;text-align: center" v-else v-cloak>
+            <div class="no-list" v-else v-cloak>
                 未找到数据
             </div>
 
@@ -327,14 +327,6 @@
     }
      .content{
         padding: 0 15px;
-         #table1{
-             tr{
-                 td,th{
-                     padding-left: 5px;
-                     padding-right: 5px;
-                 }
-             }
-         }
     }
       .datetime-picker{
         margin:0 15px;

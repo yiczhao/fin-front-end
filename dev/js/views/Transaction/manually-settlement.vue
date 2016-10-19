@@ -52,9 +52,9 @@
                     </div>
                 </div>
 
-                <div v-cloak v-show="tradeList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>交易ID</th>
@@ -116,33 +116,6 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             </tbody>
-                            <tr role="row" v-if="nums!=''" >
-                                <td>合计：</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><b>{{nums.consumptionAmount/100 | currency ''}}</b></td>
-                                <td><b>{{nums.discountAmount/100 | currency ''}}</b></td>
-                                <td><b>{{nums.payAmount/100 | currency ''}}</b></td>
-                                <td><b>{{nums.limitDeduct/100 | currency ''}}</b></td>
-                                <td><b>{{nums.principalDeduct/100 | currency ''}}</b></td>
-                                <td><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></td>
-                                <td><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></td>
-                                <td><b>{{nums.suspensionTax/100 | currency ''}}</b></td>
-                                <td><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></td>
-                                <td><b>{{nums.discountDiff/100 | currency ''}}</b></td>
-                                <td><b>{{nums.collectionAmount/100 | currency ''}}</b></td>
-                                <td><b>{{nums.commission33211/100 | currency ''}}</b></td>
-                                <td><b>{{nums.entryAmount/100 | currency ''}}</b></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                         </table>
                     </div>
 
@@ -160,8 +133,73 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到手工结算数据！
+                </div>
+                <div class="nums" v-show="tradeList.length>0">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="4">
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>消费金额:</span>
+                                <span>{{nums.consumptionAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>折扣金额:</span>
+                                <span>{{nums.discountAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>实付金额:</span>
+                                <span>{{nums.payAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>额度抵扣:</span>
+                                <span>{{nums.limitDeduct/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>本金抵扣:</span>
+                                <span>{{nums.principalDeduct/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>三方应收:</span>
+                                <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>商户应补:</span>
+                                <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>退税款:</span>
+                                <span>{{nums.suspensionTax/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>商户实补:</span>
+                                <span>{{nums.merchantSubsidyActual/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>折扣差:</span>
+                                <span>{{nums.discountDiff/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>扣收金额:</span>
+                                <span>{{nums.collectionAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>33211佣金:</span>
+                                <span>{{nums.commission33211/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>入账金额:</span>
+                                <span>{{nums.entryAmount/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <content-dialog

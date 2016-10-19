@@ -63,7 +63,7 @@
                     <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}元</span>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -102,16 +102,6 @@
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
-                            <tr role="row">
-                                <td>合计：</td>
-                                <td>{{total.incomeAmount/100 | currency ''}}</td>
-                                <td>{{total.payoutAmount/100 | currency ''}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -130,10 +120,26 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
-
+                <div class="nums" v-show="zdlists.length>0">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="4">
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>欠发票增加:</span>
+                                <span>{{total.incomeAmount/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>收发票:</span>
+                                <span>{{total.payoutAmount/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <validator name="vali">
                     <form novalidate>
                         <div id="modal_recharge" data-backdrop="static"  class="modal fade" style="display: none;">

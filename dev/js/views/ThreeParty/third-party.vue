@@ -39,9 +39,9 @@
                     </div>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>账户ID</th>
@@ -79,19 +79,6 @@
                                     <td>{{trlist.contactNumber}} </td>
                                     <td>{{trlist.staffName}} </td>
                                 </tr>
-                                <tr role="row">
-                                    <td></td>
-                                    <td>合计：</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{total/100 | currency ''}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -107,10 +94,23 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
+                <div class="nums" v-show="zdlists.length>0">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="4">
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>金额:</span>
+                                <span>{{total/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <validator name="vali">
                     <form novalidate>
                 <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">

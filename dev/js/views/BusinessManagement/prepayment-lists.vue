@@ -40,12 +40,11 @@
                     </div>
                 </div>
 
-                <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
-                     class="dataTables_wrapper no-footer">
+                <div v-show="!!prepaymentList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
-                            <tr role="row">
+                            <tr>
                                 <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>分公司</th>
@@ -93,19 +92,6 @@
                                 <td>{{prepayment.servicePerson}}</td>
                             </tr>
                             </tbody>
-                            <tr role="row">
-                                <th></th>
-                                <th></th>
-                                <th>合计：</th>
-                                <th></th>
-                                <th><B>{{total/100 | currency ''}}</B></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
                         </table>
                     </div>
 
@@ -120,8 +106,21 @@
                     </div>
                 </div>
 
-                <div v-else style="padding: 30px;font-size: 16px;text-align: center">
+                <div v-else class="no-list">
                     未查询到预付款商户信息！
+                </div>
+                <div class="nums" v-show="!!prepaymentList.length">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="4">
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>余额:</span>
+                                <span>{{total/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 
                 <!-- 添加商户 -->

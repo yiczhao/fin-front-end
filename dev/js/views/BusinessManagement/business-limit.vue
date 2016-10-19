@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -111,27 +111,6 @@
                                     <td>{{trlist.contactsPhone}}</td>
                                     <td>{{trlist.servicePerson}}</td>
                                 </tr>
-                                 <tr>
-                                     <td></td>
-                                     <td></td>
-                                     <td>合计：</td>
-                                     <td></td>
-                                     <td>{{nums.totalLimit}}</td>
-                                     <td>{{nums.totalPrincipal}}</td>
-                                     <td>{{nums.usedLimit}}</td>
-                                     <td></td>
-                                     <td>{{nums.balanceLimit}}</td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                     <td></td>
-                                 </tr>
                             </tbody>
                         </table>
                     </div>
@@ -150,10 +129,34 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
-
+                <div class="nums" v-show="zdlists.length>0">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="4">
+                                <span>合计： </span>
+                            </td>
+                            <td>
+                                <span>总额度:</span>
+                                <span>{{nums.totalLimit/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>总本金:</span>
+                                <span>{{nums.totalPrincipal/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>使用额度:</span>
+                                <span>{{nums.usedLimit/100 | currency ''}}</span>
+                            </td>
+                            <td>
+                                <span>剩余额度:</span>
+                                <span>{{nums.balanceLimit/100 | currency ''}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <!--编辑账户dialog-->
                 <validator name="vali">
                     <form novalidate>
