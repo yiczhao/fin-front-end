@@ -28,7 +28,7 @@
                                     <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
                                 <td>{{trList.taxRate}}</td>
-                                <td><a @click="editDetail(trList.subCompanyID, trList.subCompanyName, trList.effectiveYear, trList.effectiveMonth)" data-ksa="">编辑</a></td>
+                                <td><a @click="editDetail(trList.subCompanyID, trList.subCompanyName, trList.effectiveYear, trList.effectiveMonth)" data-ksa="tax_rate.update">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
                             </tbody>

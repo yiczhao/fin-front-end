@@ -4,7 +4,7 @@
   "description": "Fin",
   "main": "null",
   "scripts": {
-    "hot": "webpack-dev-server --inline --hot",
+    "pro": "webpack -p",
     "watch": "webpack --watch --display-error-details"
   },
   "repository": {

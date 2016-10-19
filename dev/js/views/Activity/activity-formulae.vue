@@ -5,7 +5,7 @@
            :isshow="'isshow'">
         <div class="content activity-formulae" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-title"><span class="btn btn-primary" @click="usedefalut">加载默认公式</span></div>
+                <div class="panel-title"><span class="btn btn-primary" data-ksa="activity_manage.config" @click="usedefalut">加载默认公式</span></div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际广告费=</div>
@@ -67,8 +67,8 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <span class="btn btn-primary" @click="setdefaultFormulae">设为默认公式</span>
-                    <span class="btn btn-primary" @click="submit">保存</span>
+                    <span class="btn btn-primary" data-ksa="activity_manage.config" @click="setdefaultFormulae">设为默认公式</span>
+                    <span class="btn btn-primary" data-ksa="activity_manage.config" @click="submit">保存</span>
                 </div>
             </div>
         </div>

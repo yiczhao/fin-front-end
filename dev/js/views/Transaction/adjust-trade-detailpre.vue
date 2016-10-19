@@ -8,7 +8,7 @@
 
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="addTrade" data-ksa="">添加调账交易</a>
+                        <a class="btn btn-add add-top" @click="addTrade" data-ksa="adjust_trade_detail_pre_manage.add">添加调账交易</a>
                     </div>
 
                     <div class="heading-right">
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="manually_settlement.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="adjust_trade_detail_pre_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -98,11 +98,11 @@
                                     <template v-if="trlist.status==4">审核不通过</template>
                                 </td>
                                 <td>
-                                    <a @click="editAdd(trlist.id)" v-if="trlist.status==1||trlist.status==4">编辑</a>
-                                    <a @click="apply(trlist.id)" v-if="trlist.status==1||trlist.status==4">提交</a>
-                                    <a @click="approved(trlist.id)" v-if="trlist.status==2">通过</a>
-                                    <a @click="back(trlist.id)" v-if="trlist.status==2">退回</a>
-                                    <a @click="deleteTrade(trlist.id)" v-if="trlist.status==4">删除</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.update" @click="editAdd(trlist.id)" v-if="trlist.status==1||trlist.status==4">编辑</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.apply" @click="apply(trlist.id)" v-if="trlist.status==1||trlist.status==4">提交</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.review" @click="approved(trlist.id)" v-if="trlist.status==2">通过</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.review" @click="back(trlist.id)" v-if="trlist.status==2">退回</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.delete" @click="deleteTrade(trlist.id)" v-if="trlist.status==4">删除</a>
                                 </td>
                                 <td>
                                     <template v-if="!trlist.activityName">
@@ -111,7 +111,7 @@
                                     <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
                                 </td>
                                 <td>
-                                    <a v-link="{'name':'adjust-trade-detailpre-list','params':{'adjustTradeDetailPreId':trlist.id}}">明细</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.search" v-link="{'name':'adjust-trade-detailpre-list','params':{'adjustTradeDetailPreId':trlist.id}}">明细</a>
                                 </td>
                                 <td>
                                     <a href="{{origin}}/file/download/{{trlist.certificateID}}">下载</a>

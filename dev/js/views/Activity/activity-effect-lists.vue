@@ -178,7 +178,7 @@
 
                     <div class="datatable-bottom">
                        <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="export" data-ksa="pay_recheck.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="export" data-ksa="activity_effect_manage.export">Excel导出</a>
                        </div>
 
                        <div class="right">

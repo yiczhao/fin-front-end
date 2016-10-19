@@ -19,7 +19,7 @@ module.exports = [
         icon: 'icon-transmission',
         sub_menu: [
             {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
-            {name: '调账管理', link: 'adjust-trade-detailpre',ksa:''},
+            {name: '调账管理', link: 'adjust-trade-detailpre',ksa:'adjust_trade_detail_pre_manage'},
             {name: '手工单管理', link: 'manual-trade-detail',ksa:'manual_trade_detail'},
             {name: '手工结算', link: 'manually-settlement',ksa:'manually_settlement'},
             {name: '异常交易', link: 'Abnormal-transaction',ksa:'exception_trade_manage'},
@@ -61,8 +61,8 @@ module.exports = [
         ksa:'activity_manage',
         sub_menu: [
             {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'},
-            {name: '税率管理', link: 'taxRate'},
-            {name: '活动执行表', link: 'activity-effect-lists'}
+            {name: '税率管理', link: 'tax_rate'},
+            {name: '活动执行表', link: 'activity_effect_manage'}
         ]
     },
     {

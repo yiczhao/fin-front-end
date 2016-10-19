@@ -120,16 +120,16 @@
                                 </td>
                                 <td>
                                     <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
-                                       @click="editTradeInfo(manualTradeDetail.id)" data-ksa="pay_recheck.edit">编辑</a>
+                                       @click="editTradeInfo(manualTradeDetail.id)" data-ksa="manual_trade_detail.update">编辑</a>
                                     <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
-                                       @click="apply(manualTradeDetail.id)" data-ksa="pay_recheck.pass">提交</a>
+                                       @click="apply(manualTradeDetail.id)" data-ksa="manual_trade_detail.apply">提交</a>
                                     <a v-if="manualTradeDetail.status==2" @click="approved(manualTradeDetail.id)"
-                                       data-ksa="pay_recheck.pass">通过</a>
+                                       data-ksa="manual_trade_detail.review">通过</a>
                                     <a v-if="manualTradeDetail.status==2" @click="refused(manualTradeDetail.id)"
-                                       data-ksa="pay_recheck.pass">退回</a>
+                                       data-ksa="manual_trade_detail.review">退回</a>
                                     <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
                                        @click="deleteManualTradeDetail(manualTradeDetail.id)"
-                                       data-ksa="pay_recheck.pass">删除</a>
+                                       data-ksa="manual_trade_detail.delete">删除</a>
                                 </td>
                                 <td>
                                     <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:manualTradeDetail.activityOperationID,name:manualTradeDetail.activityName}}">{{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}</a>
