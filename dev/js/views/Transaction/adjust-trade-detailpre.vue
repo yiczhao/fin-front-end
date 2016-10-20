@@ -79,7 +79,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.tradeDetailID}}</td>
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
