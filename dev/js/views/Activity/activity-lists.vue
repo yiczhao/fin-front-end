@@ -218,8 +218,8 @@
                              <label>活动归属：</label>
                             <select class="form-control" v-model="redata.activityAttribution">
                                 <option value="">请选择活动归属</option>
-                                <option value="0">分-分</option>
-                                <option value="1">总-总</option>
+                                <option value="1">分-分</option>
+                                <option value="2">总-总</option>
                             </select>
                         </span>
                     </div>
