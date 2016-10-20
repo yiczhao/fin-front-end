@@ -75,7 +75,7 @@ function model(_this) {
          * @returns {*}
          */
         adjustTradeDetailPre_delete(_id){
-            return _this.$http.post(_this.$API.adjustTradeDetailPre_delete+_id);
+            return _this.$http.delete(_this.$API.adjustTradeDetailPre_delete+_id);
         },
         /**
          * @description 调账管理明细
