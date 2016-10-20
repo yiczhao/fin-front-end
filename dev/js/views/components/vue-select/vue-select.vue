@@ -422,7 +422,6 @@
                     return (index === _i&&option===val);
                 });
                 this.value=data;
-                console.log(this.value)
             },
             blurinput(){
                 this.open=false;

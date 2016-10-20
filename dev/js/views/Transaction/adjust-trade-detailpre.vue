@@ -79,7 +79,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.tradeDetailID}}</td>
+                                <td>{{trlist.id}}</td>
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
@@ -139,7 +139,7 @@
 
                     <div class="datatable-bottom">
                        <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="adjustTradeDetailPre" data-ksa="manually_settlement.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="adjustTradeDetailPre" data-ksa="adjust_trade_detail_pre_manage.export">Excel导出</a>
                        </div>
 
                        <div class="right">
@@ -207,7 +207,7 @@
                                      v-model="redata.limitDeduct"
                                      v-validate:val4="['required']"
                                      v-bind:class="{'error-input':fire && $vali.val4.required}"
-                                     v-addprice="redata.limitDeduct"
+                                     v-limitaddprice="redata.limitDeduct"
                                      type="text" class="form-control" placeholder="额度抵扣">
                         </span>
                         <span>
@@ -217,7 +217,7 @@
                                     v-model="redata.merchantSubsidyShould"
                                     v-validate:val5="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val5.required}"
-                                    v-addprice="redata.merchantSubsidyShould"
+                                    v-limitaddprice="redata.merchantSubsidyShould"
                                     placeholder="商户应补">
                         </span>
                     </div>
@@ -229,7 +229,7 @@
                                     v-model="redata.principalDeduct"
                                     v-validate:val6="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val6.required}"
-                                    v-addprice="redata.principalDeduct"
+                                    v-limitaddprice="redata.principalDeduct"
                                     placeholder="本金抵扣">
                         </span>
                         <span>
@@ -239,7 +239,7 @@
                                     v-model="redata.collectionAmount"
                                     v-validate:val7="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val7.required}"
-                                    v-addprice="redata.collectionAmount"
+                                    v-limitaddprice="redata.collectionAmount"
                                     placeholder="扣收金额">
                         </span>
                     </div>
@@ -251,7 +251,7 @@
                                     v-model="redata.thirdPartyReceivable"
                                     v-validate:val8="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val8.required}"
-                                    v-addprice="redata.thirdPartyReceivable"
+                                    v-limitaddprice="redata.thirdPartyReceivable"
                                     placeholder="三方应收">
                         </span>
                         <span>
@@ -262,7 +262,7 @@
                                     v-model="redata.thirdPartyReceivable"
                                     v-validate:val9="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val9.required}"
-                                    v-addprice="redata.commission33211"
+                                    v-limitaddprice="redata.commission33211"
                                     placeholder="卡说佣金">
                         </span>
                     </div>
@@ -529,7 +529,9 @@
             back(_id){
                 this.id=_id;
                 this.waringshow=true;
-                this.waringtitle='确定退回调账交易？'
+                this.refuseReason = '';
+                this.fires = false;
+                this.waringtitle='确定退回调账交易？';
             },
             deleteTrade(_id){
                 this.id=_id;
