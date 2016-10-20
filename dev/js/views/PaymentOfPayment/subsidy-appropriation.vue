@@ -159,6 +159,13 @@
                                         </td>
                                         <td>{{sa.remarks}}</td>
                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                        <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
+                                        <td>{{total.payAmount/100 | currency ''}}</td>
+                                        <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                     </div>
@@ -174,28 +181,6 @@
                                   :page_size.sync="checkForm.pageSize">
                             </page>
                        </div>
-                    </div>
-
-                    <div class="nums">
-                        <table cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td rowspan="4">
-                                    <span>合计： </span>
-                                </td>
-                                <td>
-                                    <span>三方应收:</span>
-                                    <span>{{total.thirdPartySubsidyShould/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>划付金额:</span>
-                                    <span>{{total.payAmount/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>退税款:</span>
-                                    <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>  
-                                </td>
-                            </tr>
-                        </table>
                     </div>
                 </div>
 

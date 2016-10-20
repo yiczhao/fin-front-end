@@ -123,6 +123,16 @@
                                     {{trlist.refuseReason}}
                                 </td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>{{nums.limitDeduct/100 | currency ''}}</td>
+                                <td>{{nums.principalDeduct/100 | currency ''}}</td>
+                                <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td>{{nums.commission33211/100 | currency ''}}</td>
+                                <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{nums.collectionAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -143,41 +153,6 @@
                 </div>
                 <div class="no-list" v-else>
                     未查询到数据！
-                </div>
-                <div class="nums" v-show="tradeList.length>0">
-                    <table cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td rowspan="4">
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>额度抵扣:</span>
-                                <span>{{nums.limitDeduct/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>本金抵扣:</span>
-                                <span>{{nums.principalDeduct/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>三方应收:</span>
-                                <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>33211佣金:</span>
-                                <span>{{nums.commission33211/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>商户应补:</span>
-                                <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>扣收金额:</span>
-                                <span>{{nums.collectionAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
 
                 <content-dialog

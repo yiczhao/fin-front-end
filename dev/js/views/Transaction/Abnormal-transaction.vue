@@ -133,6 +133,27 @@
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                <td>{{nums.discountAmount/100 | currency ''}}</td>
+                                <td>{{nums.payAmount/100 | currency ''}}</td>
+                                <td>{{nums.limitDeduct/100 | currency ''}}</td>
+                                <td>{{nums.principalDeduct/100 | currency ''}}</td>
+                                <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{nums.discountDiff/100 | currency ''}}</td>
+                                <td>{{nums.collectionAmount/100 | currency ''}}</td>
+                                <td>{{nums.commission33211/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -148,61 +169,6 @@
                                   :page_size.sync="checkForm.pageSize">
                             </page>
                        </div>
-                    </div>
-
-                    <div class="nums">
-                        <table cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td rowspan="4">
-                                    <span>合计： </span>
-                                </td>
-                                <td>
-                                    <span>消费金额:</span>
-                                    <span>{{nums.consumptionAmount/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>折扣金额:</span>
-                                    <span>{{nums.discountAmount/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>实付金额:</span>
-                                    <span>{{nums.payAmount/100 | currency ''}}</span>  
-                                </td>
-                                <td>
-                                    <span>额度抵扣:</span>
-                                    <span>{{nums.limitDeduct/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>本金抵扣:</span>
-                                    <span>{{nums.principalDeduct/100 | currency ''}}</span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <span>三方应收:</span>
-                                    <span>{{nums.thirdPartyReceivable/100 | currency ''}}</span> 
-                                </td>
-                                <td>
-                                    <span>商户应补:</span>
-                                    <span>{{nums.merchantSubsidyShould/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>折扣差:</span>
-                                    <span>{{nums.discountDiff/100 | currency ''}}</span>
-                                </td>
-
-                                <td>
-                                    <span>扣收金额:</span>
-                                    <span>{{nums.collectionAmount/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>33211佣金:</span>
-                                    <span>{{nums.commission33211/100 | currency ''}}</span>
-                                </td>
-                            </tr>
-
-                        </table>
                     </div>
                 </div>
                 

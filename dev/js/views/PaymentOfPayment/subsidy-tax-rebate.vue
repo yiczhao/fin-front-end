@@ -149,6 +149,16 @@
                                     </td>
                                     <td>{{strd.remarks}}</td>
                                 </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{total.taxRebateAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -171,21 +181,6 @@
                         </page>
                    </div>
                 </div>
-
-                <div v-show="!!subsidyTaxRebateDetailList.length" class="nums">
-                    <table cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td rowspan="4">
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>退税金额:</span>
-                                <span>{{total.taxRebateAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
             </div>
 
             <content-dialog

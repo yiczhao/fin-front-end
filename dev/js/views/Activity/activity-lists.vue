@@ -96,6 +96,26 @@
                                     <a data-ksa="activity_manage.config" @click="otherInfo(trlist.subCompanyID,trlist.id)">其他信息</a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{total.consumptionTotalNumber}}</td>
+                                <td>{{total.consumptionTotalAmount/100 | currency ''}}</td>
+                                <td>{{total.thirdPartySettlementAmount/100 | currency ''}}</td>
+                                <td>{{total.merchantSettlementAmount/100 | currency ''}}</td>
+                                <td>{{total.merchantPaidAmount/100 | currency ''}}</td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{total.purchaseDiscountDiff/100 | currency ''}}</td>
+                                <td>{{total.thirdPartyDiscountDiff/100 | currency ''}}</td>
+                                <td>{{total.commissionAmount/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -110,53 +130,6 @@
                        </div>
                     </div>
 
-                    <div class="nums">
-                        <table cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td rowspan="4">
-                                    <span>合计： </span>
-                                </td>
-                                <td>
-                                    <span>消费总笔数:</span>
-                                    <span>{{total.consumptionTotalNumber}}</span>
-                                </td>
-                                <td>
-                                    <span>消费总金额:</span>
-                                    <span>{{total.consumptionTotalAmount/100 | currency ''}}</span>
-                                </td>  
-                                <td>
-                                    <span>三方结算金额:</span>
-                                    <span>{{total.thirdPartySettlementAmount/100 | currency ''}}</span>
-                                </td>  
-                                <td>
-                                    <span>商户结算金额:</span>
-                                    <span>{{total.merchantSettlementAmount/100 | currency ''}}</span>
-                                </td> 
-                                <td>
-                                    <span>商户已付金额:</span>
-                                    <span>{{total.merchantPaidAmount/100 | currency ''}}</span>
-                                </td> 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>退税款:</span>
-                                    <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <span>额采折扣差:</span>
-                                    <span>{{total.purchaseDiscountDiff/100 | currency ''}}</span>
-                                </td> 
-                                <td>
-                                    <span>三方折扣差:</span>
-                                    <span>{{total.thirdPartyDiscountDiff/100 | currency ''}}</span>
-                                </td> 
-                                <td>
-                                    <span>佣金:</span>
-                                    <span>{{total.commissionAmount/100 | currency ''}}</span>
-                                </td> 
-                            </tr>
-                        </table>
-                    </div>
                 </div>
                 
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
