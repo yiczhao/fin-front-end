@@ -519,7 +519,7 @@
                         });
             },
             initList(){
-                $('.modal').modal('hide');
+                this.modal_add=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
