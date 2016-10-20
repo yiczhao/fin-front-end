@@ -78,7 +78,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="trlist in tradeList" v-bind:class="{'odd':(index%2==0)}">
+                            <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.tradeDetailID}}</td>
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
@@ -100,8 +100,8 @@
                                 <td>
                                     <a data-ksa="adjust_trade_detail_pre_manage.update" @click="editAdd(trlist.id)" v-if="trlist.status==1||trlist.status==4">编辑</a>
                                     <a data-ksa="adjust_trade_detail_pre_manage.apply" @click="apply(trlist.id)" v-if="trlist.status==1||trlist.status==4">提交</a>
-                                    <a data-ksa="adjust_trade_detail_pre_manage.review" @click="approved(trlist.id)" v-if="trlist.status==2">通过</a>
-                                    <a data-ksa="adjust_trade_detail_pre_manage.review" @click="back(trlist.id)" v-if="trlist.status==2">退回</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.pass" @click="approved(trlist.id)" v-if="trlist.status==2">通过</a>
+                                    <a data-ksa="adjust_trade_detail_pre_manage.back" @click="back(trlist.id)" v-if="trlist.status==2">退回</a>
                                     <a data-ksa="adjust_trade_detail_pre_manage.delete" @click="deleteTrade(trlist.id)" v-if="trlist.status==4">删除</a>
                                 </td>
                                 <td>

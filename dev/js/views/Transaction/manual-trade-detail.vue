@@ -124,9 +124,9 @@
                                     <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
                                        @click="apply(manualTradeDetail.id)" data-ksa="manual_trade_detail.apply">提交</a>
                                     <a v-if="manualTradeDetail.status==2" @click="approved(manualTradeDetail.id)"
-                                       data-ksa="manual_trade_detail.review">通过</a>
+                                       data-ksa="manual_trade_detail.pass">通过</a>
                                     <a v-if="manualTradeDetail.status==2" @click="refused(manualTradeDetail.id)"
-                                       data-ksa="manual_trade_detail.review">退回</a>
+                                       data-ksa="manual_trade_detail.back">退回</a>
                                     <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
                                        @click="deleteManualTradeDetail(manualTradeDetail.id)"
                                        data-ksa="manual_trade_detail.delete">删除</a>

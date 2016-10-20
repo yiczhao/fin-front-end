@@ -51,9 +51,9 @@
                                 <td>{{nums.limitDeduct/100 | currency ''}}</td>
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
-                                <td>{{nums.commission33211/100 | currency ''}}</td>
                                 <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
                                 <td>{{nums.collectionAmount/100 | currency ''}}</td>
+                                <td>{{nums.commission33211/100 | currency ''}}</td>
                             </tr>
                             </tbody>
                         </table>
