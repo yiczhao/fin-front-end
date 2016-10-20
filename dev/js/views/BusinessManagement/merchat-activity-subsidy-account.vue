@@ -39,9 +39,9 @@
                     <span>商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                 </div>
 
-                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
+                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table class="table datatable-selection-single dataTable no-footer">
+                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
                                 <th>ID</th>
@@ -75,6 +75,17 @@
                                     <a @click="recharge(trlist)" data-ksa="subsidy_account_manage.recharge">发票充值</a>
                                 </td>
                             </tr>
+                            <tr role="row">
+                                <td></td>
+                                <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{total.paidAmount/100 | currency ''}}</td>
+                                <td>{{total.unpaidAmount/100 | currency ''}}</td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{total.invoiceAmount/100 | currency ''}}</td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -93,33 +104,8 @@
                     </div>
                 </div>
                 
-                <div class="no-list" v-else>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
-                </div>
-                <div class="nums" v-show="zdlists.length>0" >
-                    <table cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td rowspan="4">
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>已划付金额:</span>
-                                <span>{{total.paidAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>待划付金额:</span>
-                                <span>{{total.unpaidAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>退税款:</span>
-                                <span>{{total.suspensionTaxAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>欠发票金额:</span>
-                                <span>{{total.invoiceAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
 
                 <content-dialog

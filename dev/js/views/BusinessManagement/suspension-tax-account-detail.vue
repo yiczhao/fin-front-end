@@ -65,9 +65,9 @@
                     <span>退税款：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100| currency '' }}元</span>
                 </div>
 
-                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
+                <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table class="table">
+                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
                                 <th>订单号</th>
@@ -106,6 +106,16 @@
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
+                            <tr role="row">
+                                <td>合计：</td>
+                                <td>{{total.incomeAmount/100 | currency ''}}</td>
+                                <td>{{total.payoutAmount/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -125,26 +135,10 @@
                     </div>
                 </div>
                 
-                <div class="no-list" v-else>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
-                <div class="nums" v-show="zdlists.length>0">
-                    <table cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td rowspan="4">
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>收入:</span>
-                                <span>{{total.incomeAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>支出:</span>
-                                <span>{{total.payoutAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+
                 <div data-backdrop="static"  id="modal_applyPay" class="modal fade" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">

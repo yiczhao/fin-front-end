@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <div  v-show="!!zdlists.length" v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
+                <div  v-if="!!zdlists.length" v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -111,6 +111,20 @@
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>合计：</td>
+                                    <td></td>
+                                    <td>{{nums.purchaseLimitAmount/100 | currency ''}}</td>
+                                    <td>{{nums.purchaseCostAmount/100 | currency ''}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -129,25 +143,8 @@
                     </div>
                 </div>
                 
-                <div class="no-list" v-else>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
-                </div>
-                <div class="nums" v-show="!!zdlists.length">
-                    <table cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td rowspan="4">
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>额度:</span>
-                                <span>{{nums.purchaseLimitAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>本金:</span>
-                                <span>{{nums.purchaseCostAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
         </div>

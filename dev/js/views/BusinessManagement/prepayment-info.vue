@@ -57,9 +57,9 @@
                     </div>
                 </div>
 
-                <div v-show="!!zdlists.length" class="dataTables_wrapper no-footer"
+                <div v-if="!!zdlists.length" v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
-                    <div class="datatable-header" v-show="!!blanceList">
+                    <div class="datatable-header" v-if="!!blanceList">
                         <span>账户名：{{blanceList.merchantName}}</span>
                         <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
@@ -115,6 +115,17 @@
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td>
+                                <td>{{total.incomeAmount/100| currency '' }}</td>
+                                <td>{{total.payoutAmount/100| currency '' }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -130,25 +141,8 @@
                     </div>
                 </div>
 
-                <div class="no-list" v-else>
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
-                </div>
-                <div class="nums" v-show="!!zdlists.length">
-                    <table cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td rowspan="4">
-                                <span>合计： </span>
-                            </td>
-                            <td>
-                                <span>收入:</span>
-                                <span>{{total.incomeAmount/100 | currency ''}}</span>
-                            </td>
-                            <td>
-                                <span>支出:</span>
-                                <span>{{total.payoutAmount/100 | currency ''}}</span>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
 
