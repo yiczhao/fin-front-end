@@ -207,7 +207,7 @@
                                      v-model="redata.limitDeduct"
                                      v-validate:val4="['required']"
                                      v-bind:class="{'error-input':fire && $vali.val4.required}"
-                                     v-limitaddprice="redata.limitDeduct"
+                                     v-limitprice="redata.limitDeduct"
                                      type="text" class="form-control" placeholder="额度抵扣">
                         </span>
                         <span>
@@ -217,7 +217,7 @@
                                     v-model="redata.merchantSubsidyShould"
                                     v-validate:val5="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val5.required}"
-                                    v-limitaddprice="redata.merchantSubsidyShould"
+                                    v-limitprice="redata.merchantSubsidyShould"
                                     placeholder="商户应补">
                         </span>
                     </div>
@@ -229,7 +229,7 @@
                                     v-model="redata.principalDeduct"
                                     v-validate:val6="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val6.required}"
-                                    v-limitaddprice="redata.principalDeduct"
+                                    v-limitprice="redata.principalDeduct"
                                     placeholder="本金抵扣">
                         </span>
                         <span>
@@ -239,7 +239,7 @@
                                     v-model="redata.collectionAmount"
                                     v-validate:val7="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val7.required}"
-                                    v-limitaddprice="redata.collectionAmount"
+                                    v-limitprice="redata.collectionAmount"
                                     placeholder="扣收金额">
                         </span>
                     </div>
@@ -251,7 +251,7 @@
                                     v-model="redata.thirdPartyReceivable"
                                     v-validate:val8="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val8.required}"
-                                    v-limitaddprice="redata.thirdPartyReceivable"
+                                    v-limitprice="redata.thirdPartyReceivable"
                                     placeholder="三方应收">
                         </span>
                         <span>
@@ -262,7 +262,7 @@
                                     v-model="redata.thirdPartyReceivable"
                                     v-validate:val9="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val9.required}"
-                                    v-limitaddprice="redata.commission33211"
+                                    v-limitprice="redata.commission33211"
                                     placeholder="卡说佣金">
                         </span>
                     </div>
