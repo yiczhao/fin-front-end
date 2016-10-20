@@ -105,7 +105,10 @@
                                 <td>{{trlist.contractNumber}}</td>
                                 <td>{{trlist.activityOperationID}}</td>
                                 <td>{{trlist.thirdPartyAccountName}}</td>
-                                <td>{{trlist.activityAttribution}}</td>
+                                <td>
+                                    <span v-if="trlist.activityAttribution==1">分-分</span>
+                                    <span v-if="trlist.activityAttribution==2">总-总</span>
+                                </td>
                                 <td>{{trlist.operator}}</td>
                                 <td>{{trlist.activityName}}</td>
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
