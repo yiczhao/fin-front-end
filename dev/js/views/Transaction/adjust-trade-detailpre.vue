@@ -35,7 +35,6 @@
                         <datepicker v-show="checkForm.timeRange==4" :readonly="true" :value.sync="checkForm.endDate" style="margin-right:20px" format="YYYY-MM-DD"></datepicker>
 
                         <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
                         <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         <select class="form-control" v-model="checkForm.status">
                             <option value="">全部交易状态</option>
@@ -129,9 +128,9 @@
                                 <td>{{nums.limitDeduct/100 | currency ''}}</td>
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
-                                <td>{{nums.commission33211/100 | currency ''}}</td>
                                 <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
-                                <td>{{nums.collectionAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{nums.collectionAmount/100 | currency ''}}</td>
+                                <td>{{nums.commission33211/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                             </tbody>
                         </table>
