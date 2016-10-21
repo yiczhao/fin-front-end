@@ -152,6 +152,9 @@
                                     <template v-if="trlist.type==2">
                                         手工单
                                     </template>
+                                    <template v-if="trlist.type==3">
+                                        调账
+                                    </template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.type==2">
