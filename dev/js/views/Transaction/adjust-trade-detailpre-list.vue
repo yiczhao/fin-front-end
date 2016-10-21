@@ -27,7 +27,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="trlist in tradeList" v-bind:class="{'odd':(index%2==0)}">
+                            <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.tradeDetailID}}</td>
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>

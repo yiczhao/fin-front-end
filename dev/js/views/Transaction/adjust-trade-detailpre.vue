@@ -38,7 +38,7 @@
 
                         <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         <select class="form-control" v-model="checkForm.status">
-                            <option value="">全部手工单状态</option>
+                            <option value="">全部交易状态</option>
                             <option value="1">未提交</option>
                             <option value="2">待审核</option>
                             <option value="3">审核通过</option>
