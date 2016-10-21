@@ -117,6 +117,7 @@
                                             <template v-if="sa.createType==1">系统生成</template>
                                             <template v-if="sa.createType==2">手工单</template>
                                             <template v-if="sa.createType==3">手工结算</template>
+                                            <template v-if="sa.createType==4">调账</template>
                                         </td>
                                         <td>{{sa.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{sa.payAmount/100 | currency ''}}</td>
