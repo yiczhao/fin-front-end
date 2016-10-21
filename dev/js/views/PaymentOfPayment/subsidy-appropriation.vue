@@ -44,6 +44,7 @@
                                     <option value="1">系统生成</option>
                                     <option value="2">手工单</option>
                                     <option value="3">手工结算</option>
+                                    <option value="4">调账</option>
                                 </select>
 
                                 <input type="text" style="width: 100px" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">

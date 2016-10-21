@@ -24,6 +24,7 @@
                         <option value="">请选择交易类型</option>
                         <option value="1">正常交易</option>
                         <option value="2">手工单</option>
+                        <option value="3">调账</option>
                             <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                         </select>
 
