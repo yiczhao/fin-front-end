@@ -13,6 +13,6 @@ export default {
 			this.el.value = num;
 			this.set(num)
 		}.bind(this)
-		this.el.addEventListener('input', this.handler)
+		this.el.addEventListener('keyup', this.handler)
 	}
 }
