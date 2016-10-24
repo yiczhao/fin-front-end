@@ -405,6 +405,7 @@
                 this.tradeInfo.merchantSubsidyActual = '';
                 this.tradeInfo.certificateID = '';
                 this.tradeInfo.remarks = '';
+                this.tradeInfo.id = '';
                 this.uploadText = '';
                 this.addtitle='添加手工单';
                 this.modal_add=true;
