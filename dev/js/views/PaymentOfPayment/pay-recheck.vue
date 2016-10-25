@@ -191,6 +191,7 @@
                     :show.sync="detailshow" :is-button="false" :type.sync="'infos'"
                     :title.sync="'详情'"
             >
+                <template  v-if="listinfos!=''">
                 <div class="form-group dcontent">
                     <table class="table main-table">
                         <thead>
@@ -204,7 +205,7 @@
                             <th>备注</th>
                         </tr>
                         </thead>
-                        <tr v-if="listinfos!=''" class="div-table" v-for="trlist in listinfos">
+                        <tr class="div-table" v-for="trlist in listinfos">
                             <td>{{trlist.createTime | datetimes}}</td>
                             <td>{{trlist.payAmount/100 | currency '' }}</td>
                             <td  v-if="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
@@ -242,6 +243,7 @@
                         未找到数据
                     </div>
                 </div>
+                </template>
             </content-dialog>
         </div>
     </index>
