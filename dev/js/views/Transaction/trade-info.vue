@@ -157,7 +157,7 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <template v-if="trlist.type==2">
+                                    <template v-if="trlist.type==2||trlist.type==3">
                                         <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
                                     </template>
                                 </td>

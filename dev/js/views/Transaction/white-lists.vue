@@ -78,7 +78,7 @@
 
                     <div class="datatable-bottom">
                        <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="abnormalWhiteexcel" data-ksa="exception_trade_white_list_manage.export">导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="abnormalWhiteexcel" data-ksa="exception_trade_white_list_manage.export">Excel导出</a>
                        </div>
 
                        <div class="right">
@@ -150,22 +150,17 @@
 
 
 
-                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">你确定失效该账户？</h5>
-                            </div>
-                            <div class="modal-body" style="width: 600px;">
-                                <div class="form-group tc">
-                                    <button type="button" @click="whiteexpiredTrue" class="btn btn-primary">确认</button>
-                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                </div>
-                            </div>
+                <content-dialog
+                        :show.sync="modal_expired" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'你确定失效该账户？'"
+                >
+                    <div class="modal-body">
+                        <div class="form-group tc">
+                            <a type="button" @click="whiteexpiredTrue" class="btn btn-primary">确认</a>
+                            <a class="btn btn-default" @click="modal_waring = false">取消</a>
                         </div>
                     </div>
-                </div>
+                </content-dialog>
             </div>
         </div>
     </index>
@@ -178,6 +173,7 @@
             this.model =model(this)
             return{
                 modal_waring: false,
+                modal_expired: false,
                 origin:window.origin,
                 pageall:1,
                 companylists:[],
@@ -233,7 +229,8 @@
                         });
             },
             initList(){
-                this.add_white = false;
+                this.modal_waring = false;
+                this.modal_expired = false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
@@ -263,6 +260,7 @@
                     validType:'2'
                 };
                 this.saveerror='';
+                this.uploadText='';
                 this.updataerror=false;
                 var time = new Date();
                 var y = time.getFullYear();
@@ -364,7 +362,8 @@
                         })
             },
             whiteexpired(_id){
-                this.id=_id
+                this.id=_id;
+                this.modal_expired=true;
             },
             whiteexpiredTrue(){
                 this.model.whiteexpired(this.id)

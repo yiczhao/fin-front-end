@@ -157,7 +157,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{total.taxRebateAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
+                                    <td></td><td></td>
+                                    <td>{{total.taxRebateAmount/100 | currency ''}}</td><td></td><td></td><td></td>
                                 </tr>
                             </tbody>
                         </table>
