@@ -94,6 +94,13 @@ export default function(router){
                 require(['./views/PaymentOfPayment/limit-purchase-detail.vue'],resolve);
             }
         },
+        //备付金支出-退税管理
+        '/subsidy-management':{
+            name:'subsidy-management',
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/subsidy-management.vue'],resolve);
+            }
+        },
         //备付金支出-预付款划付
         '/advance-payment-detail/:advanceId':{
             name:'advance-payment-detail',
@@ -227,6 +234,13 @@ export default function(router){
                 require(['./views/Activity/activity-effect-lists.vue'], resolve);
             }
         },
+        // 税率管理
+        '/taxRate/':{
+            name:'taxRate',
+            component:function (resolve) {
+                require(['./views/Activity/taxRate.vue'],resolve);
+            }
+        },
         /* 系统配置-员工管理 */
         '/user-managerment/':{
             name:'user-managerment',
@@ -253,21 +267,13 @@ export default function(router){
             component:function () {
                 router.go({name:'login'})
             }
-        },
-        // 税率管理
-        '/taxRate/':{
-            name:'taxRate',
-            component:function (resolve) {
-                require(['./views/Activity/taxRate.vue'],resolve);
-            }
         }
     })
     router.beforeEach(transition =>{
         if(!sessionStorage.getItem('userData')){
             router.go({name:'login'})
         }
-        $(".modal").modal("hide");
-        $("body").scrollTop(0);
+        document.querySelector('body').scrollTop=0;
         transition.next();
     });
     router.afterEach((transition) =>{
