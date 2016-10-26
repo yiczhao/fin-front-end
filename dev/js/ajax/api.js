@@ -638,6 +638,38 @@ export default function install(Vue) {
      */
     _o.rebate_total = './subsidyTaxRebateDetail/total?';
 
+    //- todo  备付金支出-退税管理 subsidy-management
+    /**
+     * @description 退税管理数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyManagement_list = './subsidyAccount/list?';
+    /**
+     * @description 退税管理合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyManagement_total = './subsidyAccount/total?';
+    /**
+     * @description 退税管理发票充值接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidyManagement_recharge = './subsidyAccount/recharge';
+    /**
+     * @description 退税管理申请提现接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.subsidyManagement_applyPay = './subsidyAccount/applyPay';
+    /**
+     * @description 退税管理申请提现页面税金池和可提现金额 接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyManagement_info = './subsidyAccount/info?';
+
     //- todo  活动管理-活动列表 activity-lists
     /**
      * @description 查询活动列表接口地址

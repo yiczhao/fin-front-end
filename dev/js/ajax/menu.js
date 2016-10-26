@@ -35,6 +35,7 @@ module.exports = [
             {name: '补贴划付', link: 'subsidy-appropriation',ksa:'subsidy_pay_detail_manage'},
             // {name: '额度采购', link: 'limit-purchase-detail'},
             {name: '补贴退税', link: 'subsidy-tax-rebate',ksa:'subsidy_tax_rebate_detail_manage'},
+            {name: '退税管理', link: 'subsidy-management',ksa:''},
             {name: '预付款划付', link: 'advance-payment-detail',ksa:'advance_payment_detail_manage'}
         ]
     },

@@ -1,87 +1,104 @@
 <template>
     <index :title="'退税管理'"
            :ptitle="'备付金支出'"
-           :hname="'payment-detail'"
+           :hname="'payment-details'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-
                 <div class="heading">
-                    <div class="heading-left">
-
+                    <div class="heading-left" style="width: 204px;">
+                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;">批量提现</a>
+                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;">发票充值</a>
                     </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-
-                                <input type="number" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID" v-limitnumber="defaultData.activityOperationID">
-
-                                <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
-
-                                <select class="form-control" v-model="defaultData.activityStatus">
-                                    <option value="">请选择状态</option>
-                                    <option value="1">待上线</option>
-                                    <option value="2">运行中</option>
-                                    <option value="3">已结束</option>
-                                </select>
+                            <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+                            <select class="form-control" v-model="defaultData.cityID">
+                                <option value="">全部城市</option>
+                                <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                            </select>
+                            <input type="text" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
+                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="商户名称">
                         </form>
                     </div>
-
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="subsidy_account_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="">查询</a>
                     </div>
                 </div>
-
-                <div style="margin: 0 0 20px 20px;font-size: 18px;">
-                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantOperationID}}</span>
-                    <span>商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                </div>
-
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
-                            <tr role="row">
-                                <th>ID</th>
-                                <th>名称</th>
-                                <th>起止时间</th>
-                                <th>状态 </th>
-                                <th>已划付金额</th>
-                                <th>待划付金额</th>
+                            <tr>
+                                <th>分公司</th>
+                                <th>城市</th>
+                                <th>活动ID</th>
+                                <th>活动名称</th>
+                                <th>商户ID</th>
+                                <th>商户名称</th>
+                                <th>交易笔数</th>
+                                <th>三方应收</th>
+                                <th>商户应补</th>
+                                <th>商户实补</th>
+                                <th>暂扣税金</th>
+                                <th>佣金</th>
+                                <th>已划付</th>
+                                <th>待划付</th>
                                 <th>退税款</th>
                                 <th>欠发票金额</th>
+                                <th>交易</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.activityOperationID }}</td>
-                                <td>{{trlist.activityName }}</td>
-                                <td>{{trlist.startDate | datetimes}}--{{trlist.endDate  | datetimes}}</td>
+                            <tr v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                <td>{{trlist.subCompanyName}}</td>
+                                <td>{{trlist.cityName}}</td>
+                                <td>{{trlist.activityOperationID}}</td>
+                                <td>{{trlist.activityName}}</td>
+                                <td>{{trlist.merchantOperationID}}</td>
+                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.consumptionCount}}</td>
+                                <td>{{trlist.thirdPartyReceivable | currency ''}}</td>
+                                <td>{{trlist.merchantSubsidyShould | currency ''}}</td>
+                                <td>{{trlist.merchantSubsidyActual | currency ''}}</td>
+                                <td>{{trlist.suspensionTax | currency ''}}</td>
+                                <td>{{trlist.commission33211 | currency ''}}</td>
+                                <td><a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details',params:{merchantOperationIDs:trlist.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
+                                <td><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidySHid:trlist.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
+                                <td><a data-ksa="suspension_tax_account_detail_manage.search" v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:trlist.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a data-ksa="invoice_account_detail.search" v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
-                                    <template v-if="trlist.activityStatus==1">待上线</template>
-                                    <template v-if="trlist.activityStatus==2">运行中</template>
-                                    <template v-if="trlist.activityStatus==3">已结束</template>
+                                    <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':trlist.merchantOperationID}}">明细</a>
                                 </td>
-                                <td><a data-ksa="reserve_cash_order_manage.search" v-link="{name:'payment-details',params:{merchantOperationIDs:balance.merchantOperationID}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
-                                <td><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidySHid:balance.merchantOperationID,subsidyHDid:trlist.activityOperationID}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td><a data-ksa="suspension_tax_account_detail_manage.search" v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:defaultData.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:balance.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                <td><a data-ksa="invoice_account_detail.search" v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:defaultData.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:balance.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
-                                    <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':balance.merchantOperationID}}">交易明细</a>
-                                    <a @click="applyPay(trlist)" data-ksa="subsidy_account_manage.with_draw">税金提现</a>
                                     <a @click="recharge(trlist)" data-ksa="subsidy_account_manage.recharge">发票充值</a>
+                                    <a @click="applyPay(trlist)" data-ksa="subsidy_account_manage.with_draw">税金提现</a>
                                 </td>
                             </tr>
-                            <tr role="row">
+                            <tr role="row" v-show="total!=''">
                                 <td></td>
                                 <td>合计：</td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{total.consumptionCount}}</td>
+                                <td>{{total.thirdPartyReceivable | currency ''}}</td>
+                                <td>{{total.merchantSubsidyShould | currency ''}}</td>
+                                <td>{{total.merchantSubsidyActual | currency ''}}</td>
+                                <td>{{total.suspensionTax | currency ''}}</td>
+                                <td>{{total.commission33211 | currency ''}}</td>
                                 <td>{{total.paidAmount/100 | currency ''}}</td>
                                 <td>{{total.unpaidAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{total.invoiceAmount/100 | currency ''}}</td>
+                                <td></td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -102,13 +119,13 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
                 <content-dialog
                         :show.sync="modal_applyPay" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'划款账户'" 
+                        :title.sync="'申请提现'"
                 >
                     <div class="modal-body">
                         <div class="form-group">
@@ -184,21 +201,12 @@
                     </validator>
                 </content-dialog>
 
-
             </div>
         </div>
     </index>
 </template>
-<style>
-.validation-error-label{
-    display: inline;
-}
-table tr th,table tr td{
-    text-align: center;
-}
-</style>
 <script>
-    import model from '../../ajax/BusinessManagement/merchat-activity-subsidy-account'
+    import model from '../../ajax/PaymentOfPayment/subsidy_management_model'
     export default{
         data(){
             this.model =model(this)
@@ -206,9 +214,11 @@ table tr th,table tr td{
                 modal_applyPay: false,
                 modal_recharge: false,
                 defaultData:{
-                    'merchantID': '',
+                    'subCompanyID': '',
+                    'cityID': '',
+                    'merchantOperationID': '',
                     'activityOperationID': '',
-                    'activityStatus': '',
+                    'merchantName': '',
                     'activityName': '',
                     'pageTotal': 1,
                     'pageIndex': 1,
@@ -216,18 +226,9 @@ table tr th,table tr td{
                     mid:''
                 },
                 zdlists:[],
-                total:{
-                    'unpaidAmount': '',
-                    'suspensionTaxAmount': '',
-                    'paidAmount': '',
-                    'invoiceAmount': '',
-                    'consumptionTotalNumber': '',
-                    'consumptionTotalAmount':'',
-                },
-                balance:{
-                    merchantName:'',
-                    merchantOperationID:''
-                },
+                subcompanyList:[],
+                cityList:[],
+                total:{},
                 redata:{
                     suspensionTaxAmount:'',
                     withdrawCashAmount:''
@@ -259,7 +260,7 @@ table tr th,table tr td{
             // *** 请求账户数据
             getZlists(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.subsidyAccount_list(this.defaultData)
+                this.model.subsidyManagement_list(this.defaultData)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
@@ -268,12 +269,34 @@ table tr th,table tr td{
                                 
                             }
                         });
-                this.model.subsidyAccount_total(this.defaultData)
+                this.model.subsidyManagement_total(this.defaultData)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('total', response.data.data)
 
+                            }
+                        });
+            },
+            //获取分公司数据
+            getSubcompany(){
+                this.$common_model.getcompany()
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('subcompanyList', response.data.data)
+                            }
+                        });
+            },
+            //获取城市数据
+            getCity(_id){
+                this.cityID='';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.$common_model.getcity(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('cityList', response.data.data)
                             }
                         });
             },
@@ -287,7 +310,7 @@ table tr th,table tr td{
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                window.open(window.origin+this.$API.subsidyAccountexcel+ $.param(this.defaultData));
+                window.open(window.origin+this.$API.subsidyManagementexcel+ $.param(this.defaultData));
             },
             applyPay({id}){
                 this.applyData={
@@ -301,7 +324,7 @@ table tr th,table tr td{
                 let data={
                     id:id,
                 }
-                this.model.subsidyAccount_info(data)
+                this.model.subsidyManagement_info(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
@@ -325,10 +348,9 @@ table tr th,table tr td{
                     this.applyText='请选择付款方式！';
                     return;
                 }
-                let data={};
-                $.extend(true, data,this.applyData);
+                let data=_.cloneDeep(this.applyData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
-                this.model.subsidyAccount_applyPay(data)
+                this.model.subsidyManagement_applyPay(data)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
@@ -336,7 +358,7 @@ table tr th,table tr td{
                             }
                         });
             },
-            recharge({id,activityName,invoiceAmount}){
+            recharge({id,merchantName,activityName,invoiceAmount}){
                 this.rechargeData={
                     subsidyAccountID:'',
                     payoutAmount:'',
@@ -344,9 +366,10 @@ table tr th,table tr td{
                     certificateId:''
                 },
                 this.rechargeData.subsidyAccountID=id;
-                this.rechargeInfo.val1=this.balance.merchantName;
+                this.rechargeInfo.val1=merchantName;
                 this.rechargeInfo.val2=activityName;
                 this.rechargeInfo.val3=invoiceAmount;
+                this.uploadText='';
                 this.modal_recharge = true;
             },
             rechargeTrue(){
@@ -356,7 +379,7 @@ table tr th,table tr td{
                 let data={};
                 $.extend(true, data,this.rechargeData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
-                this.model.subsidyAccount_recharge(data)
+                this.model.subsidyManagement_recharge(data)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
@@ -404,17 +427,10 @@ table tr th,table tr td{
         },
         ready(){
             let vm=this;
-            (vm.$route.params.merchantID1==':merchantID1')?vm.defaultData.merchantID= '' : vm.defaultData.merchantID=vm.$route.params.merchantID1;
-            (vm.$route.params.merchantName1==':merchantName1')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.merchantName1;
-            (vm.$route.params.merchantOperationID1==':merchantOperationID1')? vm.balance.merchantOperationID='' : vm.balance.merchantOperationID=vm.$route.params.merchantOperationID1;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
+            vm.getSubcompany();
+            vm.getCity();
             vm.getZlists();
-             $('#modal_recharge').on('hidden.bs.modal', function () {
-                 $('body').css('padding-right',0);
-                vm.uploadText='';
-               vm.rechargeData.certificateId='';
-            })
-           
         }
     }
 </script>
