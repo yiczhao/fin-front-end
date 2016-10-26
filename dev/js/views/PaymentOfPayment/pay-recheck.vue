@@ -191,14 +191,14 @@
                     :show.sync="detailshow" :is-button="false" :type.sync="'infos'"
                     :title.sync="'详情'"
             >
-                <template  v-if="listinfos!=''">
+                <template  v-show="listinfos!=''">
                 <div class="form-group dcontent">
                     <table class="table main-table">
                         <thead>
                         <tr role="row">
                             <th>生成日期</th>
                             <th>划付金额</th>
-                            <th  v-if="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
+                            <th  v-show="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
                             <th>用途</th>
                             <th>操作</th>
                             <th>状态</th>
@@ -208,7 +208,7 @@
                         <tr class="div-table" v-for="trlist in listinfos">
                             <td>{{trlist.createTime | datetimes}}</td>
                             <td>{{trlist.payAmount/100 | currency '' }}</td>
-                            <td  v-if="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                            <td  v-show="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                             <td>
                                 <template v-if="trlist.purpose==1">补贴划付</template>
                                 <template v-if="trlist.purpose==2">额度采购</template>
@@ -239,7 +239,7 @@
                             <td>{{trlist.remarks}}</td>
                         </tr>
                     </table>
-                    <div class="no-list"  v-if="!listinfos.length" v-cloak>
+                    <div class="no-list"  v-show="!listinfos.length" v-cloak>
                         未找到数据
                     </div>
                 </div>
