@@ -44,7 +44,15 @@ function model(_this){
          * */
         subsidyManagement_applyPay(data){
             return _this.$http.post(_this.$API.subsidyManagement_applyPay,data)
-        }
+        },
+        /**
+         * @description 商户补贴账户管理批量提现
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidyManagement_batch(data){
+            return _this.$http.get(_this.$API.subsidyManagement_batch+ $.param(data))
+        },
     }
 }
 module.exports=model;

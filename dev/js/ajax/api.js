@@ -669,6 +669,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.subsidyManagement_info = './subsidyAccount/info?';
+    /**
+     * @description 退税管理批量提现接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyManagement_batch = './subsidyAccount/batchApplyPay/list?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

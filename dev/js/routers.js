@@ -101,6 +101,13 @@ export default function(router){
                 require(['./views/PaymentOfPayment/subsidy-management.vue'],resolve);
             }
         },
+        //备付金支出-退税管理-批量提现
+        '/subsidy-management-batchpay':{
+            name:'subsidy-management-batchpay',
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/subsidy-management-batchpay.vue'],resolve);
+            }
+        },
         //备付金支出-预付款划付
         '/advance-payment-detail/:advanceId':{
             name:'advance-payment-detail',

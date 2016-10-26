@@ -1,0 +1,186 @@
+<template>
+    <index title="批量提现"
+           ptitle="备付金支出"
+           isshow="isshow">
+        <div class="content pay-recheck" slot="content">
+            <div class="panel panel-flat">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" @click="batchsBtn" data-ksa="" style="margin-top:20px;">确定提现</a>
+                    </div>
+                    <div class="heading-middle" style="padding-right: 20px;">
+                        共{{recheckLists.length}}条记录，已选{{checkedIds.length}}个记录，合计可提现{{withdrawCashAmounts/100 | currency ''}}元
+                    </div>
+                </div>
+                <div v-show="recheckLists.length>0" class="dataTables_wrapper">
+                    <div class="datatable-scroll">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" v-model="checkAll" @click="chooseAll"></th>
+                                    <th>活动ID</th>
+                                    <th>活动名称</th>
+                                    <th>商户ID</th>
+                                    <th>商户名称</th>
+                                    <th>收款账号</th>
+                                    <th>退税款</th>
+                                    <th>可提现金额</th>
+                                </tr>
+                            </thead>
+                            <tr v-for="(index,n) in recheckLists" v-bind:class="{'odd':(index%2==0)}">
+                                <td><input type="checkbox" @click="checked(n.ischeck,n.id,n.withdrawCashAmount)" v-model="n.ischeck"/></td>
+                                <td>{{n.activityOperationID}}</td>
+                                <td>{{n.activityName}}</td>
+                                <td>{{n.merchantOperationID}}</td>
+                                <td>{{n.merchantName}}</td>
+                                <td>{{n.receiptAccountNumber}}</td>
+                                <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{n.withdrawCashAmount/100 | currency ''}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="no-list" v-show="!recheckLists.length>0" v-cloak>
+                    未查询到数据！
+                </div>
+            </div>
+            <content-dialog
+                    :show.sync="show" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="dtitle" @kok="batchs" @kcancel="show = false"
+            >
+                <div class="form-group">
+                    <label class="control-label">合计提现金额 {{withdrawCashAmounts/100 | currency ''}} 元元</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
+                    <select class="form-control" v-model="batchsData.payType" style="display: inline-block;width: 80%;">
+                        <option value="">请选择付款方式</option>
+                        <option value="1">备付金账户</option>
+                        <option value="2">商户预付款账户</option>
+                    </select>
+                </div>
+                <div class="form-group" v-show="batchsData.payType==1">
+                    <label style="padding-left: 13%"><input type="checkbox" v-model="batchsData.mergePay"/>
+                        相同账户合并付款</label>
+                </div>
+                <div class="form-group">
+                    <label style="width:13%;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
+                    <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="batchsData.remarks"></textarea>
+                </div>
+            </content-dialog>
+        </div>
+    </index>
+</template>
+<script>
+    import model from '../../ajax/PaymentOfPayment/subsidy_management_model'
+
+    export default {
+        data(){
+            this.model =model(this)
+            return {
+                show:false,
+                total:{
+                    thirdPartySubsidyShould:0,
+                    payAmount:0,
+                    suspensionTaxAmount:0
+                },
+                batchsData:{
+                    mergePay:false,
+                    remarks:'',
+                    payType:''
+                },
+                recheckLists:[],
+                checkedIds:[],
+                id:'',
+                dtitle:'',
+                remarks:'',
+                withdrawCashAmounts:0,
+                fires:false
+            }
+        },
+        methods:{
+            getLists(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.subsidyManagement_batch(JSON.parse(sessionStorage.getItem('batchData')))
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.$set('recheckLists', response.data.data)
+                            }
+                        });
+            },
+            query(){
+                this.show=false;
+                this.checkedIds=[];
+                this.getLists();
+            },
+            chooseAll(){
+                this.checkedIds=[];
+                let cloneData=_.cloneDeep(this.recheckLists);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                        this.withdrawCashAmounts=0;
+                    }else{
+                        this.checkedIds.push(value.id);
+                        this.withdrawCashAmounts+=value.withdrawCashAmount;
+                        value.ischeck=true;
+                    }
+                })
+                this.recheckLists=cloneData;
+            },
+            checked(bool,_id,withdrawCashAmount){
+                if(!bool){
+                    this.checkedIds.push(_id);
+                    this.withdrawCashAmounts+=withdrawCashAmount;
+                }else{
+                    this.withdrawCashAmounts-=withdrawCashAmount;
+                    _.remove(this.checkedIds, function(n) {
+                        return n==_id;
+                    })
+                }
+            },
+            batchsBtn(){
+                if(!this.checkedIds.length){
+                    dialogs('info','未勾选提现信息！');
+                    return;
+                }
+                if(this.withdrawCashAmounts==0){
+                    dialogs('info','可提现金额为0！');
+                    return;
+                }
+                this.dtitle='批量提现';
+                this.show=true;
+            },
+            batchs(){
+                this.model.payrecheck_pass(this.batchsData)
+                        .then( (response)=> {
+                            if(response.data.code==0){
+                                this.query();
+                                dialogs('success','已通过！');
+                            }
+                        })
+            }
+        },
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.recheckLists.map((value)=>{
+                    (!value.ischeck)?clength++:null;
+                })
+                return !clength
+            }
+        },
+        ready(){
+            this.query();
+        },
+        watch:{
+        }
+    }
+</script>

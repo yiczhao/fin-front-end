@@ -7,7 +7,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left" style="width: 204px;">
-                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;">批量提现</a>
+                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="batchApply">批量提现</a>
                         <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;">发票充值</a>
                     </div>
                     <div class="heading-right">
@@ -162,7 +162,7 @@
 
                 <content-dialog
                         :show.sync="modal_recharge" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'发票充值'" 
+                        :title.sync="'发票充值'"
                 >
                     <validator name="vali">
                         <div class="modal-body">
@@ -201,6 +201,23 @@
                     </validator>
                 </content-dialog>
 
+                <content-dialog
+                        :show.sync="modal_batch" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'批量提现'"
+                >
+                    <div class="form-group">
+                        <label style="position: relative;top: -95px;" class="control-label">活动ID：</label>
+                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-model="batchData.activityOperationID"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="position: relative;top: -95px;" class="control-label">商户ID：</label>
+                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-model="batchData.merchantOperationID"></textarea>
+                    </div>
+                    <div class="form-group tc">
+                        <a @click="batchApplyNext" class="btn btn-primary">下一步</a>
+                    </div>
+                </content-dialog>
+
             </div>
         </div>
     </index>
@@ -213,6 +230,7 @@
             return{
                 modal_applyPay: false,
                 modal_recharge: false,
+                modal_batch: false,
                 defaultData:{
                     'subCompanyID': '',
                     'cityID': '',
@@ -232,6 +250,10 @@
                 redata:{
                     suspensionTaxAmount:'',
                     withdrawCashAmount:''
+                },
+                batchData:{
+                    activityOperationID:'',
+                    merchantOperationID:''
                 },
                 rechargeData:{
                     subsidyAccountID:'',
@@ -419,6 +441,27 @@
                             })
                 }
             },
+            batchApply(){
+                this.batchData={
+                    activityOperationID:'',
+                    merchantOperationID:''
+                }
+                this.modal_batch=true;
+            },
+            batchApplyNext(){
+                if(this.batchData.activityOperationID==''&&this.batchData.merchantOperationID==''){
+                    dialogs('info','活动ID及商户ID不能都为空！');
+                    return;
+                }
+                this.model.subsidyManagement_batch(this.batchData)
+                        .then((res)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(res.data.code==0){
+                                sessionStorage.setItem('batchData',JSON.stringify(this.batchData));
+                                this.$router.go({'name':'subsidy-management-batchpay'});
+                            }
+                        });
+            }
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
