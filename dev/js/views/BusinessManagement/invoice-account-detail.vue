@@ -118,7 +118,7 @@
 
                     <div class="datatable-bottom">
                        <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="invoice_account_detail.search.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="invoice_account_detail.export">Excel导出</a>
                        </div>
 
                        <div class="right">

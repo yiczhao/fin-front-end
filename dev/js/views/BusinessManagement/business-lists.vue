@@ -14,9 +14,9 @@
                         <form class="form-inline manage-form">
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                            <input type="text" debounce="300" class="form-control" v-model="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
+                            <input type="text" class="form-control" v-model="defaultData.startValue" v-limitnumber="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
                             <span>至</span>
-                            <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
+                            <input type="text" class="form-control" v-model="defaultData.endValue" v-limitnumber="defaultData.endValue" placeholder="佣金值">
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
