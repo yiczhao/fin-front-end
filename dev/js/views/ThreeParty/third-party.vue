@@ -520,6 +520,7 @@
             },
             initList(){
                 this.modal_add=false;
+                $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
