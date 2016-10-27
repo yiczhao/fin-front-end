@@ -425,7 +425,10 @@
                     });
             },
             initList(){
-                $(".modal").modal("hide");
+                this.modal_waring = false;
+                this.modal_submit= false;
+                this.list_info= false;
+                this.modal_checking=false;
                 $(".check-boxs").prop({'checked':false})
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date('1')[0];
@@ -497,7 +500,7 @@
             update(a){
                 this.waring = '你确认更新账单？';
                 this.accountId=a;
-                this.modal_waring
+                this.modal_waring= true;
             },
             pay(a){
                 this.waring = '你确认划付账单？';
@@ -523,12 +526,12 @@
                     return;
                 }
                 this.waring = '你确认一键划付？';
-                this.modal_waring = false;
+                this.modal_waring = true;
             },
             close(a){
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
-                this.modal_waring = false;
+                this.modal_waring = true;
             },
 //            delBtn(a,b){
 //                this.waring = '你确认删除该订单流水？';
@@ -688,11 +691,4 @@
             this.initList();
         }
     }
-    // Collapse on click
-    $(document).on('click','.table .morebtn',function (e) {
-        e.preventDefault();
-        var $categoryCollapse = $(this).closest('tr').next();
-        $(this).find('i').toggleClass('glyphicon-minus');
-        $categoryCollapse.slideToggle(150);
-    });
 </script>
