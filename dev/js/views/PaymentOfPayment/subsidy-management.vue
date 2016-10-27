@@ -234,7 +234,7 @@
                         </div>
                         <div class="form-group">
                             <label class="labels"><i>*</i>金额：</label>
-                            <input type="text" v-validate:val3="['required']" class="form-control input" v-model="rechargesData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
+                            <input type="text" v-validate:val3="['required']" class="form-control input" v-model="rechargesData.incomeAmount" v-limitprice="rechargeData.incomeAmount">
                         </div>
                         <div class="form-group" v-else>
                             <label class="labels">上传凭证：</label>
@@ -322,7 +322,7 @@
                 rechargesData:{
                     activityID:'',
                     merchantID:'',
-                    payoutAmount:'',
+                    incomeAmount:'',
                     remarks:'',
                     certificateId:''
                 },
@@ -533,7 +533,7 @@
                 this.rechargesData={
                     activityID:'',
                     merchantID:'',
-                    payoutAmount:'',
+                    incomeAmount:'',
                     remarks:'',
                     certificateId:''
                 };
@@ -544,7 +544,7 @@
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
                 let data=_.cloneDeep(this.rechargesData);
-                data.payoutAmount=accMul(data.payoutAmount,100);
+                data.incomeAmount=accMul(data.incomeAmount,100);
                 this.model.rechargeByMerchantAndActivity(data)
                         .then((response)=>{
                             if(response.data.code == 0){
