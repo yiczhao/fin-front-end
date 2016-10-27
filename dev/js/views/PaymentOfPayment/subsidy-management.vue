@@ -226,11 +226,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="labels"><i>*</i>商户ID：</label>
-                            <input type="text" v-validate:val1="['required']" class="form-control input" v-model="rechargesData.activityID" v-limitnumber="rechargeData.activityID">
+                            <input type="text" v-validate:val1="['required']" class="form-control input" v-model="rechargesData.merchantID" v-limitnumber="rechargeData.activityID">
                         </div>
                         <div class="form-group">
                             <label class="labels"><i>*</i>活动ID：</label>
-                            <input  type="text" v-validate:val2="['required']" class="form-control input" v-model="rechargesData.merchantID" v-limitnumber="rechargeData.merchantID">
+                            <input  type="text" v-validate:val2="['required']" class="form-control input" v-model="rechargesData.activityID" v-limitnumber="rechargeData.merchantID">
                         </div>
                         <div class="form-group">
                             <label class="labels"><i>*</i>金额：</label>
@@ -247,7 +247,7 @@
                             <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargesData.remarks"></textarea>
                         </div>
                         <div class="form-group tc">
-                            <a @click="rechargeTrue" class="btn btn-primary">保存并继续</a>
+                            <a @click="rechargesTrue" class="btn btn-primary">保存并继续</a>
                             <a @click="modal_recharges=false" class="btn btn-default">取消</a>
                         </div>
                         <div class="form-group tc">
@@ -465,8 +465,7 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
                 if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
-                let data={};
-                $.extend(true, data,this.rechargeData);
+                let data=_.cloneDeep(this.rechargeData);
                 data.payoutAmount=accMul(data.payoutAmount,100);
                 this.model.subsidyManagement_recharge(data)
                         .then((response)=>{
@@ -539,7 +538,22 @@
                     certificateId:''
                 };
                 this.modal_recharges=true;
-            }
+            },
+            rechargesTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.errortext='';
+                if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
+                let data=_.cloneDeep(this.rechargesData);
+                data.payoutAmount=accMul(data.payoutAmount,100);
+                this.model.rechargeByMerchantAndActivity(data)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                dialogs('success',response.data.message);
+                                this.initList();
+                                this.modal_recharge = false;
+                            }
+                        });
+            },
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
