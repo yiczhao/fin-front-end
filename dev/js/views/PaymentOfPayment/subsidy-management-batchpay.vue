@@ -41,7 +41,7 @@
                                 <td></td>
                                 <td>合计：</td>
                                 <td></td><td></td><td></td><td></td><td></td>
-                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{total/100 | currency ''}}</td>
                             </tr>
                         </table>
                     </div>
@@ -87,11 +87,7 @@
             this.model =model(this)
             return {
                 show:false,
-                total:{
-                    thirdPartySubsidyShould:0,
-                    payAmount:0,
-                    suspensionTaxAmount:0
-                },
+                total:0,
                 batchsData:{
                     mergePay:false,
                     remarks:'',
@@ -115,7 +111,10 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
-                                this.$set('recheckLists', response.data.data)
+                                this.$set('recheckLists', response.data.data);
+                                response.data.data.map((value)=>{
+                                    this.total+=value.withdrawCashAmount;
+                                })
                             }
                         });
             },
