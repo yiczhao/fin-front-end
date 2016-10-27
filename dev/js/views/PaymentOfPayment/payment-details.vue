@@ -627,7 +627,6 @@
                                 if(response.data.code==0){
                                     this.initList();
                                     dialogs('success','已申请！');
-                                    this.modal_waring = true;
                                 }
                         })
             },
