@@ -46,12 +46,20 @@ function model(_this){
             return _this.$http.post(_this.$API.subsidyManagement_applyPay,data)
         },
         /**
-         * @description 商户补贴账户管理批量提现
+         * @description 商户补贴账户管理申请提现页面税金池和可提现金额
          * @params {data}
          * @returns {*}
          * */
         subsidyManagement_batch(data){
             return _this.$http.get(_this.$API.subsidyManagement_batch+ $.param(data))
+        },
+        /**
+         * @description 商户补贴账户管理批量提现
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidyManagement_batchs(data){
+            return _this.$http.post(_this.$API.subsidyManagement_batchs,data)
         },
     }
 }

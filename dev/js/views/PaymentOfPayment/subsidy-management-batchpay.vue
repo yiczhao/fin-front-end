@@ -9,7 +9,7 @@
                         <a class="btn btn-add add-top" @click="batchsBtn" data-ksa="" style="margin-top:20px;">确定提现</a>
                     </div>
                     <div class="heading-middle" style="padding-right: 20px;">
-                        共{{recheckLists.length}}条记录，已选{{checkedIds.length}}个记录，合计可提现{{withdrawCashAmounts/100 | currency ''}}元
+                        共{{recheckLists.length}}条记录，已选{{checkedIds.lengths}}个记录，合计可提现{{withdrawCashAmounts/100 | currency ''}}元
                     </div>
                 </div>
                 <div v-show="recheckLists.length>0" class="dataTables_wrapper">
@@ -28,7 +28,7 @@
                                 </tr>
                             </thead>
                             <tr v-for="(index,n) in recheckLists" v-bind:class="{'odd':(index%2==0)}">
-                                <td><input type="checkbox" @click="checked(n.ischeck,n.id,n.withdrawCashAmount)" v-model="n.ischeck"/></td>
+                                <td><input type="checkbox" @click="checked(n)" v-model="n.ischeck"/></td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.merchantOperationID}}</td>
@@ -54,12 +54,13 @@
                     :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="dtitle" @kok="batchs" @kcancel="show = false"
             >
+                <validator name="vali">
                 <div class="form-group">
                     <label class="control-label">合计提现金额 {{withdrawCashAmounts/100 | currency ''}} 元元</label>
                 </div>
                 <div class="form-group">
                     <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
-                    <select class="form-control" v-model="batchsData.payType" style="display: inline-block;width: 80%;">
+                    <select v-validate:val1="['required']" class="form-control" v-model="batchsData.payType" style="display: inline-block;width: 80%;">
                         <option value="">请选择付款方式</option>
                         <option value="1">备付金账户</option>
                         <option value="2">商户预付款账户</option>
@@ -71,8 +72,9 @@
                 </div>
                 <div class="form-group">
                     <label style="width:13%;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
-                    <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="batchsData.remarks"></textarea>
+                    <textarea v-validate:val2="['required']" style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="batchsData.remarks"></textarea>
                 </div>
+                </validator>
             </content-dialog>
         </div>
     </index>
@@ -96,12 +98,14 @@
                     payType:''
                 },
                 recheckLists:[],
-                checkedIds:[],
+                checkedIds:{
+                    ids:[],
+                    lengths:0
+                },
                 id:'',
                 dtitle:'',
                 remarks:'',
-                withdrawCashAmounts:0,
-                fires:false
+                withdrawCashAmounts:0
             }
         },
         methods:{
@@ -117,37 +121,46 @@
             },
             query(){
                 this.show=false;
-                this.checkedIds=[];
+                this.checkedIds={
+                    ids:[],
+                    lengths:0
+                };
                 this.getLists();
             },
             chooseAll(){
-                this.checkedIds=[];
+                this.checkedIds={
+                    ids:[],
+                    lengths:0
+                };
                 let cloneData=_.cloneDeep(this.recheckLists);
                 cloneData.map((value)=>{
                     if(this.checkAll){
                         value.ischeck=false;
                         this.withdrawCashAmounts=0;
                     }else{
-                        this.checkedIds.push(value.id);
+                        this.checkedIds.ids.push(value.id);
+                        this.checkedIds.lengths++;
                         this.withdrawCashAmounts+=value.withdrawCashAmount;
                         value.ischeck=true;
                     }
                 })
                 this.recheckLists=cloneData;
             },
-            checked(bool,_id,withdrawCashAmount){
-                if(!bool){
-                    this.checkedIds.push(_id);
+            checked({check,id,withdrawCashAmount}){
+                if(!check){
+                    this.checkedIds.ids.push(id);
                     this.withdrawCashAmounts+=withdrawCashAmount;
+                    this.checkedIds.lengths++;
                 }else{
                     this.withdrawCashAmounts-=withdrawCashAmount;
-                    _.remove(this.checkedIds, function(n) {
-                        return n==_id;
+                    this.checkedIds.lengths--;
+                    _.remove(this.checkedIds.ids, function(n) {
+                        return n==id;
                     })
                 }
             },
             batchsBtn(){
-                if(!this.checkedIds.length){
+                if(!this.checkedIds.lengths){
                     dialogs('info','未勾选提现信息！');
                     return;
                 }
@@ -159,11 +172,21 @@
                 this.show=true;
             },
             batchs(){
-                this.model.payrecheck_pass(this.batchsData)
+                if(!this.$vali.valid){
+                    dialogs('info','请填写必填信息！');
+                    return;
+                }
+                let data={
+                    'payType':this.batchsData.payType,
+                    'remarks':this.batchsData.remarks,
+                    'mergePay':this.batchsData.mergePay,
+                    'ids':this.checkedIds.ids,
+                }
+                this.model.subsidyManagement_batchs(data)
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.query();
-                                dialogs('success','已通过！');
+                                dialogs('success','提现成功！');
                             }
                         })
             }

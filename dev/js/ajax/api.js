@@ -675,6 +675,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.subsidyManagement_batch = './subsidyAccount/batchApplyPay/list?';
+    /**
+     * @description 退税管理批量提现接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.subsidyManagement_batchs = './subsidyAccount/batchApplyPay/applyPay';
 
     //- todo  活动管理-活动列表 activity-lists
     /**
