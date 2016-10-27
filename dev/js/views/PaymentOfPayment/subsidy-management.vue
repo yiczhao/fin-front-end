@@ -3,12 +3,12 @@
            :ptitle="'备付金支出'"
            :hname="'payment-details'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content subsidy-management" slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left" style="width: 204px;">
                         <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="batchApply">批量提现</a>
-                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;">发票充值</a>
+                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="recharges">发票充值</a>
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
@@ -89,11 +89,11 @@
                                 <td></td>
                                 <td></td>
                                 <td>{{total.consumptionCount}}</td>
-                                <td>{{total.thirdPartyReceivable | currency ''}}</td>
-                                <td>{{total.merchantSubsidyShould | currency ''}}</td>
-                                <td>{{total.merchantSubsidyActual | currency ''}}</td>
-                                <td>{{total.suspensionTax | currency ''}}</td>
-                                <td>{{total.commission33211 | currency ''}}</td>
+                                <td>{{total.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td>{{total.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{total.merchantSubsidyActual/100 | currency ''}}</td>
+                                <td>{{total.suspensionTax/100 | currency ''}}</td>
+                                <td>{{total.commission33211/100 | currency ''}}</td>
                                 <td>{{total.paidAmount/100 | currency ''}}</td>
                                 <td>{{total.unpaidAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
@@ -218,10 +218,67 @@
                     </div>
                 </content-dialog>
 
+                <content-dialog
+                        :show.sync="modal_recharges" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'发票充值'"
+                >
+                    <validator name="valis">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="labels"><i>*</i>商户ID：</label>
+                            <input type="text" v-validate:val1="['required']" class="form-control input" v-model="rechargesData.activityID" v-limitnumber="rechargeData.activityID">
+                        </div>
+                        <div class="form-group">
+                            <label class="labels"><i>*</i>活动ID：</label>
+                            <input  type="text" v-validate:val2="['required']" class="form-control input" v-model="rechargesData.merchantID" v-limitnumber="rechargeData.merchantID">
+                        </div>
+                        <div class="form-group">
+                            <label class="labels"><i>*</i>金额：</label>
+                            <input type="text" v-validate:val3="['required']" class="form-control input" v-model="rechargesData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
+                        </div>
+                        <div class="form-group" v-else>
+                            <label class="labels">上传凭证：</label>
+                            <input  style="display:none" @change="uploads($event)" type="file">
+                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick($event)">上传凭证</a>
+                            <span v-text="uploadText" v-show="uploadText!=''"></span>
+                        </div>
+                        <div class="form-group">
+                            <label style="position: relative;top: -95px;" class="control-label labels">备注：</label>
+                            <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargesData.remarks"></textarea>
+                        </div>
+                        <div class="form-group tc">
+                            <a @click="rechargeTrue" class="btn btn-primary">保存并继续</a>
+                            <a @click="modal_recharges=false" class="btn btn-default">取消</a>
+                        </div>
+                        <div class="form-group tc">
+                            <span v-show="($valis.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                        </div>
+                    </div>
+                    </validator>
+                </content-dialog>
             </div>
         </div>
     </index>
 </template>
+<style lang="sass">
+    .subsidy-management{
+        .form-group{
+            .labels{
+                display: inline-block;
+                width: 15%;
+                i{
+                    color:red;
+                }
+            }
+            .input{
+                width: 80%;display: inline-block
+            }
+        }
+            .validation-error-label, .validation-valid-label{
+                display: inline-block;
+        }
+    }
+</style>
 <script>
     import model from '../../ajax/PaymentOfPayment/subsidy_management_model'
     export default{
@@ -231,6 +288,7 @@
                 modal_applyPay: false,
                 modal_recharge: false,
                 modal_batch: false,
+                modal_recharges: false,
                 defaultData:{
                     'subCompanyID': '',
                     'cityID': '',
@@ -257,6 +315,13 @@
                 },
                 rechargeData:{
                     subsidyAccountID:'',
+                    payoutAmount:'',
+                    remarks:'',
+                    certificateId:''
+                },
+                rechargesData:{
+                    activityID:'',
+                    merchantID:'',
                     payoutAmount:'',
                     remarks:'',
                     certificateId:''
@@ -325,6 +390,8 @@
             initList(){
                 this.modal_applyPay = false;
                 this.modal_recharge = false;
+                this.modal_batch = false;
+                this.modal_recharges = false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this. getZlists();
             },
@@ -410,9 +477,9 @@
                             }
                         });
             },
-            uploadClick(){
-                $('input[type="file"]').val('');
-                $('input[type="file"]').click();
+            uploadClick(e){
+                $(e.target).siblings('input[type="file"]').val('');
+                $(e.target).siblings('input[type="file"]').click();
             },
             uploads(e){
                 if(e.target.value==''&&this.uploadText!=''){
@@ -434,6 +501,7 @@
                             .then((response)=>{
                                 if(response.data.code == 0){
                                     vm.rechargeData.certificateId=response.data.data;
+                                    vm.rechargesData.certificateId=response.data.data;
                                     vm.saveerror='';
                                     vm.uploadText=files.name;
                                     dialogs('success','上传成功！');
@@ -461,6 +529,16 @@
                                 this.$router.go({'name':'subsidy-management-batchpay'});
                             }
                         });
+            },
+            recharges(){
+                this.rechargesData={
+                    activityID:'',
+                    merchantID:'',
+                    payoutAmount:'',
+                    remarks:'',
+                    certificateId:''
+                };
+                this.modal_recharges=true;
             }
         },
         watch:{
