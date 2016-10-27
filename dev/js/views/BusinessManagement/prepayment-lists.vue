@@ -239,13 +239,8 @@
                 <!-- 启用/停用 -->
                 <content-dialog
                         :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="''"   @kok="change_status" @kcancel="modal_waring=false" 
+                        :title.sync="dtitle"   @kok="change_status" @kcancel="modal_waring=false"
                 >
-                        <div class="modal-body">
-                            <button type="button" class="close" >×</button>
-                            <h5 v-if="isEnable==0" class="modal-title">你确定启用该账户？</h5>
-                            <h5 v-if="isEnable==1" class="modal-title">你确定停用该账户？</h5>
-                        </div>
                 </content-dialog>
 
             </div>
@@ -306,6 +301,7 @@
                 isEnable: 0,
                 _id: '',
                 total: [],
+                dtitle:'',
                 saveerror: false,
                 firstAdd: false
             }
@@ -501,6 +497,7 @@
             show_waring(_id, status){
                 this._id = _id;
                 this.isEnable = status;
+                status==0?this.dtitle='你确定启用该账户？':this.dtitle='你确定停用该账户？'
                 this.modal_waring = true;
             },
             change_status(){

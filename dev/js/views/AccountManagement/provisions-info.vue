@@ -125,10 +125,6 @@
                 </div>
 
                 <div class="datatable-bottom">
-                   <div class="left">
-                        <a class="icon-file-excel" style="line-height: 30px;">Excel导出</a>
-                   </div>
-
                    <div class="right">
                         <page :all="pageall"
                               :cur.sync="checkForm.pageIndex"
@@ -381,7 +377,6 @@
                 loginList:{},
                 zdlists:[],
                 dzList:{},
-                dz_show:false,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
@@ -453,14 +448,11 @@
             duizhang(a){
                 this.cleardz();
                 this.$set('dzList', a);
-                this.dz_show=true;
+                this.errortext='';
                 this.modal_fzr=true;//
             },
             checkNew(){
                 this.initList();
-            },
-            close_dialog() {
-                this.dz_show = false;
             },
             initList(){
                 this.modal_fzr = false;//
