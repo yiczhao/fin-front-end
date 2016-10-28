@@ -21,12 +21,10 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-
-                            <div v-show="checkForm.dateS==4">
+                            <div v-show="checkForm.dateS==4" class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-
                             <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
 
                             <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
@@ -363,6 +361,9 @@
      .validation-error-label{
          display: inline-block;
      }
+         .inline{
+            display:inline-block;
+         }
 </style>
 <script>
     import model from '../../ajax/AccountManagement/provisions_model'

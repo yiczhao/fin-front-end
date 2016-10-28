@@ -157,7 +157,7 @@
                     <div class="modal-body">
                         <div class="form-group tc">
                             <a type="button" @click="whiteexpiredTrue" class="btn btn-primary">确认</a>
-                            <a class="btn btn-default" @click="modal_waring = false">取消</a>
+                            <a class="btn btn-default" @click="modal_expired = false">取消</a>
                         </div>
                     </div>
                 </content-dialog>

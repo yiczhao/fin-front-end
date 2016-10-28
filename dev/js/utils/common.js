@@ -182,7 +182,13 @@ var removeCookie=()=> {
 window.getNow=()=>{
     var time = new Date();
     var y = time.getFullYear();
-    var m = time.getMonth()+1;
+    var m = time.getMonth();
+    return y+'-'+m;
+};
+window.firstMonth=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = 1;
     return y+'-'+m;
 };
 var _i={};
