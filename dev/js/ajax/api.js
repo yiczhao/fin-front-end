@@ -100,7 +100,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.manualTradeDetailExcel = '/data/export/excel/manualTradeDetail?';
-
+    /**
+     * @description 退税管理页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyAccountExcel = '/data/export/excel/subsidyAccount?';
 
     //- todo 财务处理-账户列表 account-management
     /**

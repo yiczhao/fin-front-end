@@ -399,7 +399,7 @@
                 if(!this.zdlists.length>0||sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                window.open(window.origin+this.$API.subsidyManagementexcel+ $.param(this.defaultData));
+                window.open(window.origin+this.$API.subsidyAccountExcel+ $.param(this.defaultData));
             },
             applyPay({id}){
                 this.applyData={
