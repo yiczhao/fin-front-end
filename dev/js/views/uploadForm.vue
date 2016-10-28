@@ -66,6 +66,13 @@
 								</tr>
 								<tr>
 									<td>
+										<input type="button" class="btn btn-primary" value="计算补贴账户交易统计信息" data-toggle="modal" @click="caculateSubsidyAccountTradeData($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
 										<input type="text" class="form-control" v-model="jobID" placeholder="jobID"/>
 									</td>
 									<td>
@@ -260,6 +267,12 @@
 				this.$http.post('./dev/tool/advancePayment/accountDetail/create')
 						.then((response)=>{
 					dialogs('success','生成成功！');
+						})
+			},
+			caculateSubsidyAccountTradeData(e){
+				this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
+						.then((response)=>{
+					dialogs('success','处理成功！');
 						})
 			},
 			excuteJob(){
