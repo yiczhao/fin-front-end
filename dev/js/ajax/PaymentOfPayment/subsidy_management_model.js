@@ -77,6 +77,30 @@ function model(_this){
         unpaidAmount_list(data){
             return _this.$http.get(_this.$API.unpaidAmount_list+ $.param(data))
         },
+        /**
+         * @description 待划付金额明细合计
+         * @params {data}
+         * @returns {*}
+         * */
+        unpaidAmount_total(data){
+            return _this.$http.get(_this.$API.unpaidAmount_total+ $.param(data))
+        },
+        /**
+         * @description 已划付金额明细列表
+         * @params {data}
+         * @returns {*}
+         * */
+        paidAmount_list(data){
+            return _this.$http.get(_this.$API.paidAmount_list+ $.param(data))
+        },
+        /**
+         * @description 已划付金额明细合计
+         * @params {data}
+         * @returns {*}
+         * */
+        paidAmount_total(data){
+            return _this.$http.get(_this.$API.paidAmount_total+ $.param(data))
+        },
     }
 }
 module.exports=model;

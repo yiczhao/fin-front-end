@@ -693,6 +693,24 @@ export default function install(Vue) {
      * @method GET
      */
     _o.unpaidAmount_list = './subsidyAccount/unpaidAmount/detail?';
+    /**
+     * @description 待划付金额明细列表合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.unpaidAmount_total = './subsidyAccount/unpaidAmount/total?';
+    /**
+     * @description 已划付金额明细列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.paidAmount_list = './subsidyAccount/paidAmount/detail?';
+    /**
+     * @description 已划付金额明细列表合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.paidAmount_total = './subsidyAccount/paidAmount/total?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

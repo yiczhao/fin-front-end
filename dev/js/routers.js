@@ -101,11 +101,18 @@ export default function(router){
                 require(['./views/PaymentOfPayment/subsidy-management.vue'],resolve);
             }
         },
-        //备付金支出-退税管理
+        //备付金支出-退税管理-待划付明细
         '/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs':{
             name:'unpaid-amount',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/unpaid-amount.vue'],resolve);
+            }
+        },
+        //备付金支出-退税管理-已划付明细
+        '/paid-amount/:paidId/:paidHd/:paidSh':{
+            name:'paid-amount',
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/paid-amount.vue'],resolve);
             }
         },
         //备付金支出-退税管理-批量提现
