@@ -538,6 +538,7 @@
                 this.waringtitle='确定删除调账交易？'
             },
             waringbtn(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.waringtitle=='确定提交调账交易？'){
                     this.model.adjustTradeDetailPre_apply(this.id).then((res)=>{
                         if(res.data.code==0){
