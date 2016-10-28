@@ -337,7 +337,7 @@
                 },
                 applyData:{
                     remarks:'',
-                    id:'',
+                    ids:'',
                     payoutAmount:'',
                     mergePay:false,
                     payType:''
@@ -413,12 +413,12 @@
             applyPay({id}){
                 this.applyData={
                     remarks:'',
-                    id:'',
+                    ids:'',
                     payoutAmount:'',
                     mergePay:false,
                     payType:''
                 };
-                this.applyData.id=id;
+                this.applyData.ids=id;
                 let data={
                     id:id,
                 }
