@@ -703,7 +703,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.unpaidAmount_total = './subsidyAccount/unpaidAmount/total?';
+    _o.unpaidAmount_total = './subsidyAccount/unpaidAmount/detail/total?';
     /**
      * @description 已划付金额明细列表接口地址
      * @author 于凯乐

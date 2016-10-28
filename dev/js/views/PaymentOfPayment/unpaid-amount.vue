@@ -101,7 +101,6 @@
         </div>
     </index>
 </template>
-
 <script>
 import model from '../../ajax/PaymentOfPayment/subsidy_management_model'
 export default{
@@ -124,7 +123,7 @@ export default{
         methods:{
             //获取交易记录
              getTradeList(){
-                 this.model.unpaidAmount_list(this.defaultData)
+                 this.model.unpaidAmount_total(this.defaultData)
                          .then((response)=>{
                              if(response.data.code==0){
                                  this.$set('nums', response.data.data)

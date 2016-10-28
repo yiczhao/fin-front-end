@@ -15,7 +15,7 @@
                     <li><a v-link="{name:'advance-payment-detail'}" data-ksa="advance_payment_detail_manage">预付款划付</a></li>
                 </ul>
                 <div class="heading">
-                    <div class="heading-left" style="width: 204px;">
+                    <div class="heading-left" style="width: 225px;">
                         <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="batchApply">批量提现</a>
                         <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="recharges">发票充值</a>
                     </div>
@@ -337,7 +337,7 @@
                 },
                 applyData:{
                     remarks:'',
-                    ids:'',
+                    ids:[],
                     payoutAmount:'',
                     mergePay:false,
                     payType:''
@@ -413,12 +413,12 @@
             applyPay({id}){
                 this.applyData={
                     remarks:'',
-                    ids:'',
+                    ids:[],
                     payoutAmount:'',
                     mergePay:false,
                     payType:''
                 };
-                this.applyData.ids=id;
+                this.applyData.ids=[id];
                 let data={
                     id:id,
                 }
