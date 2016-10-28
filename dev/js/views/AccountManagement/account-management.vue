@@ -65,12 +65,12 @@
                                     <a data-ksa="reserve_cash_detail_manage.search" v-link="{name:'provisions-info',params:{accountId:trlist.id,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                                 </td>
                                 <td v-if="trlist.status==0">
-                                    <span data-ksa="account_manage.add" @click="rewrite(trlist)">编辑</span>
-                                    <span data-ksa="account_manage.enable" @click="start(trlist.id)">启用</span>
-                                    <span data-ksa="account_manage.enable" @click="delBtn(trlist.id)">删除</span>
+                                    <a data-ksa="account_manage.add" @click="rewrite(trlist)">编辑</a>
+                                    <a data-ksa="account_manage.enable" @click="start(trlist.id)">启用</a>
+                                    <a data-ksa="account_manage.enable" @click="delBtn(trlist.id)">删除</a>
                                 </td>
                                 <td v-else>
-                                    <span chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)" data-ksa="charge_person_manage.add">负责人</span>
+                                    <a chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)" data-ksa="charge_person_manage.add">负责人</a>
                                 </td>
                             </tr>
                         </tbody>
