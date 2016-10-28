@@ -68,7 +68,15 @@ function model(_this){
          * */
         rechargeByMerchantAndActivity(data){
             return _this.$http.post(_this.$API.rechargeByMerchantAndActivity,data)
-        }
+        },
+        /**
+         * @description 待划付金额明细列表
+         * @params {data}
+         * @returns {*}
+         * */
+        unpaidAmount_list(data){
+            return _this.$http.get(_this.$API.unpaidAmount_list+ $.param(data))
+        },
     }
 }
 module.exports=model;

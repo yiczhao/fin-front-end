@@ -687,6 +687,12 @@ export default function install(Vue) {
      * @method POST
      */
     _o.rechargeByMerchantAndActivity = './subsidyAccount/rechargeByMerchantAndActivity';
+    /**
+     * @description 待划付金额明细列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.unpaidAmount_list = './subsidyAccount/unpaidAmount/detail?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

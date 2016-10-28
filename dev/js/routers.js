@@ -101,6 +101,13 @@ export default function(router){
                 require(['./views/PaymentOfPayment/subsidy-management.vue'],resolve);
             }
         },
+        //备付金支出-退税管理
+        '/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs':{
+            name:'unpaid-amount',
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/unpaid-amount.vue'],resolve);
+            }
+        },
         //备付金支出-退税管理-批量提现
         '/subsidy-management-batchpay':{
             name:'subsidy-management-batchpay',
