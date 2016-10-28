@@ -32,7 +32,7 @@
                             <input type="text" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）">
                             <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
-                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="商户名称">
+                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名称">
                         </form>
                     </div>
                     <div class="heading-middle">
