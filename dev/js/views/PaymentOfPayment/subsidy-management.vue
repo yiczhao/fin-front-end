@@ -235,15 +235,15 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="labels"><i>*</i>商户ID：</label>
-                            <input type="text" v-validate:val1="['required']" class="form-control input" v-model="rechargesData.merchantID" v-limitnumber="rechargeData.activityID">
+                            <input type="text" v-validate:val1="['required']" class="form-control input" v-model="rechargesData.merchantID" v-limitnumber="rechargesData.merchantID">
                         </div>
                         <div class="form-group">
                             <label class="labels"><i>*</i>活动ID：</label>
-                            <input  type="text" v-validate:val2="['required']" class="form-control input" v-model="rechargesData.activityID" v-limitnumber="rechargeData.merchantID">
+                            <input  type="text" v-validate:val2="['required']" class="form-control input" v-model="rechargesData.activityID" v-limitnumber="rechargesData.activityID">
                         </div>
                         <div class="form-group">
                             <label class="labels"><i>*</i>金额：</label>
-                            <input type="text" v-validate:val3="['required']" class="form-control input" v-model="rechargesData.incomeAmount" v-limitprice="rechargeData.incomeAmount">
+                            <input type="text" v-validate:val3="['required']" class="form-control input" v-model="rechargesData.incomeAmount" v-limitprice="rechargesData.incomeAmount">
                         </div>
                         <div class="form-group" v-else>
                             <label class="labels">上传凭证：</label>
