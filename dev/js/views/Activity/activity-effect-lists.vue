@@ -5,11 +5,14 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li><a v-link="{name:'activity-lists'}" data-ksa="activity_manage">活动管理</a></li>
+                    <li><a v-link="{name:'taxRate'}" data-ksa="activity_manage">税率管理</a></li>
+                    <li class="active"><a v-link="{name:'activity-effect-lists'}" data-ksa="activity_manage">活动执行表</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        
                     </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <select class="form-control" v-model="defaultData.subCompanyID">

@@ -2,6 +2,15 @@
     <index title="补贴退税" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li><a v-link="{name:'payment-details'}" data-ksa="reserve_cash_detail_manage">付款明细</a></li>
+                    <li><a v-link="{name:'pay-recheck'}" data-ksa="pay_recheck">划付复核</a></li>
+                    <li><a v-link="{name:'subsidy-appropriation'}" data-ksa="subsidy_pay_detail_manage">补贴划付</a></li>
+                    <!--<li><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
+                    <li class="active"><a v-link="{name:'subsidy-tax-rebate'}" data-ksa="subsidy_tax_rebate_detail_manage">补贴退税</a></li>
+                    <li><a v-link="{name:'subsidy-management'}" data-ksa="">退税管理</a></li>
+                    <li><a v-link="{name:'advance-payment-detail'}" data-ksa="advance_payment_detail_manage">预付款划付</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" data-toggle="modal"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>

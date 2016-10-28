@@ -2,6 +2,10 @@
     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
         <div class="content user-managerment" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li class="active"><a>员工管理</a></li>
+                    <li><a v-link="{name:'log-management'}" data-ksa='system_log_manage'>系统日志</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>

@@ -5,11 +5,15 @@
            :isshow="'isshow'">
         <div class="content Abnormal-transaction" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li><a v-link="{name:'trade-info'}" data-ksa="trade_detail_manage">交易明细</a></li>
+                    <li><a v-link="{name:'adjust-trade-detailpre'}" data-ksa="adjust_trade_detail_pre_manage">调账管理</a></li>
+                    <li><a v-link="{name:'manual-trade-detail'}" data-ksa="manual_trade_detail">手工单管理</a></li>
+                    <li><a v-link="{name:'manually-settlement'}" data-ksa="manually_settlement">手工结算</a></li>
+                    <li class="active"><a v-link="{name:'Abnormal-transaction'}" data-ksa="exception_trade_manage">异常交易</a></li>
+                    <li><a v-link="{name:'white-lists'}" data-ksa="exception_trade_white_list_manage">异常白名单</a></li>
+                </ul>
                 <div class="heading">
-                    <div class="heading-left">
-
-                    </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">

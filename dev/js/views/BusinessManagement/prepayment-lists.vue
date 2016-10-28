@@ -5,15 +5,18 @@
            :isshow="'isshow'">
         <div class="content prepayment-lists" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li><a v-link="{name:'business-lists'}" data-ksa="merchant_manage">商户管理</a></li>
+                    <!--<li><a v-link="{name:'business-limit'}" data-ksa="activity_manage">额度采购</a></li>-->
+                    <li class="active"><a v-link="{name:'prepayment-lists'}" data-ksa="advance_payment_account_manage">预付款</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
                     </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                                 <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
                                 <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
 
                                 <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">

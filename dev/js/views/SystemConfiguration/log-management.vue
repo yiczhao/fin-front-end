@@ -2,6 +2,10 @@
     <index title="日志管理" ptitle="系统配置"  isshow="isshow">
         <div class="content log-management" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li><a v-link="{name:'user-managerment'}" data-ksa='user_manage'>员工管理</a></li>
+                    <li class="active"><a>系统日志</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
 
