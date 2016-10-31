@@ -136,6 +136,7 @@
                     ids:[],
                     lengths:0
                 };
+                this.withdrawCashAmounts=0;
                 let cloneData=_.cloneDeep(this.recheckLists);
                 cloneData.map((value)=>{
                     if(this.checkAll){
