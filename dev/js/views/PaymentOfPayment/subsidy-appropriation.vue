@@ -380,7 +380,11 @@
                         });
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(this.payTypes==''){
+                    dialogs('info','请选择付款方式！');
+                    return;
+                }
                 let data={
                     ids:this.submitId,
                     payType:this.payTypes,
