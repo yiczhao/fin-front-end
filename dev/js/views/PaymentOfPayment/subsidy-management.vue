@@ -257,7 +257,7 @@
                         </div>
                         <div class="form-group tc">
                             <a @click="rechargesTrue" class="btn btn-primary">保存并继续</a>
-                            <a @click="modal_recharges=false" class="btn btn-default">取消</a>
+                            <a @click="initList" class="btn btn-default">取消</a>
                         </div>
                         <div class="form-group tc">
                             <span v-show="$valis.invalid && fire" class="validation-error-label" v-text="errortext"></span>
@@ -564,8 +564,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
-                                this.initList();
-                                this.modal_recharge = false;
+                                this.recharges();
                             }
                         });
             },
