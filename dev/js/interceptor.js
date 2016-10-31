@@ -29,7 +29,7 @@ export default function install(Vue,router_proto) {
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			Message.hide();
+			response.request.url.indexOf('/total')<=0? Message.hide():null;
 			// *** 拦截session过期
 			if(response.data.code === 50000){
 			  setTimeout(()=>{
