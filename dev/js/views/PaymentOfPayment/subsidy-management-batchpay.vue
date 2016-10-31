@@ -43,6 +43,7 @@
                                 <td></td>
                                 <td>合计：</td>
                                 <td></td><td></td><td></td><td></td><td></td>
+                                <td>{{suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{total/100 | currency ''}}</td>
                             </tr>
                         </table>
@@ -58,7 +59,7 @@
             >
                 <validator name="vali">
                 <div class="form-group">
-                    <label class="control-label">合计提现金额 {{withdrawCashAmounts/100 | currency ''}} 元元</label>
+                    <label class="control-label">合计提现金额 {{withdrawCashAmounts/100 | currency ''}} 元</label>
                 </div>
                 <div class="form-group">
                     <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
@@ -103,7 +104,8 @@
                 id:'',
                 dtitle:'',
                 remarks:'',
-                withdrawCashAmounts:0
+                withdrawCashAmounts:0,
+                suspensionTaxAmount:0
             }
         },
         methods:{
@@ -116,6 +118,7 @@
                                 this.$set('recheckLists', response.data.data);
                                 response.data.data.map((value)=>{
                                     this.total+=value.withdrawCashAmount;
+                                    this.suspensionTaxAmount+=value.suspensionTaxAmount;
                                 })
                             }
                         });
@@ -147,8 +150,8 @@
                 })
                 this.recheckLists=cloneData;
             },
-            checked({check,id,withdrawCashAmount}){
-                if(!check){
+            checked({ischeck,id,withdrawCashAmount}){
+                if(!ischeck){
                     this.checkedIds.ids.push(id);
                     this.withdrawCashAmounts+=withdrawCashAmount;
                     this.checkedIds.lengths++;
