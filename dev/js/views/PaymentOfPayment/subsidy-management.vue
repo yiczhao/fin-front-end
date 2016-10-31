@@ -260,7 +260,7 @@
                             <a @click="modal_recharges=false" class="btn btn-default">取消</a>
                         </div>
                         <div class="form-group tc">
-                            <span v-show="($valis.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                            <span v-show="$valis.invalid && fire" class="validation-error-label" v-text="errortext"></span>
                         </div>
                     </div>
                     </validator>
@@ -349,6 +349,7 @@
                 },
                 errortext:'',
                 applyText:'',
+                fire:false,
                 uploadText:''
             }
         },
@@ -550,11 +551,13 @@
                     certificateId:''
                 };
                 this.modal_recharges=true;
+                this.fire=false;
+                this.errortext='';
             },
             rechargesTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.errortext='';
-                if(!this.$vali.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
+                if(!this.$valis.valid){this.fire=true;this.errortext='您的信息未填写完整';return;}
                 let data=_.cloneDeep(this.rechargesData);
                 data.incomeAmount=accMul(data.incomeAmount,100);
                 this.model.rechargeByMerchantAndActivity(data)
