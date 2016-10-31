@@ -23,6 +23,7 @@
                                     <th>商户ID</th>
                                     <th>商户名称</th>
                                     <th>收款账号</th>
+                                    <th>收款账户名</th>
                                     <th>退税款</th>
                                     <th>可提现金额</th>
                                 </tr>
@@ -34,6 +35,7 @@
                                 <td>{{n.merchantOperationID}}</td>
                                 <td>{{n.merchantName}}</td>
                                 <td>{{n.receiptAccountNumber}}</td>
+                                <td>{{n.receiptAccountName}}</td>
                                 <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{n.withdrawCashAmount/100 | currency ''}}</td>
                             </tr>
