@@ -81,7 +81,7 @@
                     <div class="dialog-row">
                         <label class="control-label"><i>*</i>税率月份</label>
                         <select class="form-control" v-model="currentYM" @change="editInfo()">
-                            <option v-for="n in currentList" :value="n">{{n}}</option>
+                            <option v-for="n in currentList" track-by="$index" :value="n">{{n}}</option>
                         </select>
                     </div>
                     <div class="dialog-row">

@@ -499,6 +499,9 @@
                 if(!check_upload(files.name)){
                     return;
                 }
+                if(check_upload_size(files.size)){
+                    return;
+                }
                 reader.readAsDataURL(files);
                 reader.onload = function(e){
                     let datas={

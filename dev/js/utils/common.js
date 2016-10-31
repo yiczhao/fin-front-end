@@ -14,6 +14,18 @@ var check_upload=((names)=>{
         return false;
     }
 })
+window.check_upload_size=((size)=>{
+    if(size > 3*1024*1024 ){  //用size属性判断文件大小不能超过5M
+        swal({
+            title: "文件必须小于3M！",
+            type:"error",
+            confirmButtonColor: "#EF5350"
+        });
+        return true;
+    }else{
+        return false;
+    }
+})
 var datetime=((value)=>{
     if(value==null || value=='')return '';
     var time = new Date(value);
