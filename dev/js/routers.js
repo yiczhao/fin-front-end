@@ -179,14 +179,14 @@ export default function(router){
             }
         },
         /* 商户管理-商户列表-活动管理-发票账户明细 */
-        '/invoice-account-detail/:invoiceHDid/:invoiceZHname/:invoiceSHname/:invoiceZHbalance/:invoiceBTid':{
+        '/invoice-account-detail/:invoiceHDid/:invoiceBTid':{
             name:'invoice-account',
             component: function(resolve){
                 require(['./views/BusinessManagement/invoice-account-detail.vue'],resolve);
             }
         },
         /* 商户管理-商户列表-活动管理-暂扣税金账户明细 */
-        '/suspension-tax-account-detail/:orderId/:suspensionHDid/:suspensionZHname/:suspensionSHname/:suspensionZHbalance/:suspensionBTid':{
+        '/suspension-tax-account-detail/:suspensionHDid/:suspensionBTid':{
             name:'suspension-tax',
             component: function(resolve){
                 require(['./views/BusinessManagement/suspension-tax-account-detail.vue'],resolve);

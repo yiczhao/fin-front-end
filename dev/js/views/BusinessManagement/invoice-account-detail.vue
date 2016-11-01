@@ -59,8 +59,8 @@
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}元</span>
+                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
+                    <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.invoiceAmount/100 | currency ''}}元</span>
                 </div>
 
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -214,9 +214,9 @@
                     'payoutAmount': '',
                 },
                 balance:{
-                    accountName:'',
+                    activityName:'',
                     merchantName:'',
-                    balanceAmount:''
+                    invoiceAmount:''
                 },
                 rechargeData:{
                     subsidyAccountID:'',
@@ -260,6 +260,22 @@
                             }
                         });
             },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.invoiceHDid
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.balance={
+                                    activityName:response.data.data.activity.name,
+                                    merchantName:response.data.data.merchant.name,
+                                    invoiceAmount:response.data.data.subsidyAccount.invoiceAmount
+                                }
+                            }
+                        });
+            },
             initList(){
                 $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
@@ -274,9 +290,9 @@
                 this.rechargeData.payoutAmount='';
                 this.rechargeData.remarks='';
                 this.rechargeData.certificateId='';
-                this.rechargeInfo.val1=this.balance.accountName;
+                this.rechargeInfo.val1=this.balance.activityName;
                 this.rechargeInfo.val2=this.balance.merchantName;
-                this.rechargeInfo.val3=this.balance.balanceAmount;
+                this.rechargeInfo.val3=this.balance.invoiceAmount;
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -289,7 +305,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
-                                this.balance.balanceAmount=response.data.data;
+                                this.balance.invoiceAmount=response.data.data;
                                 this.initList();
                             }
                         });
@@ -343,14 +359,12 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.invoiceZHname==':invoiceZHname')?vm.balance.accountName= '' : vm.balance.accountName=vm.$route.params.invoiceZHname;
-            (vm.$route.params.invoiceSHname==':invoiceSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.invoiceSHname;
-            (vm.$route.params.invoiceZHbalance==':invoiceZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.invoiceZHbalance;
             (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
             (vm.$route.params.invoiceHDid==':invoiceHDid')? vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID='' : vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID=vm.$route.params.invoiceHDid;
             vm.getTime();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
+            vm.getBlance();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';

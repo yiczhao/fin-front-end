@@ -61,8 +61,8 @@
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>退税款：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100| currency '' }}元</span>
+                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
+                    <span>退税款：</span><span style="margin-right: 10px;">{{balance.suspensionTaxAmount/100| currency '' }}元</span>
                 </div>
 
                 <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
@@ -215,9 +215,9 @@
                     'payoutAmount': '',
                 },
                 balance:{
-                    accountName:'',
+                    activityName:'',
                     merchantName:'',
-                    balanceAmount:''
+                    suspensionTaxAmount:''
                 },
                 redata:{
                     suspensionTaxAmount:'',
@@ -256,6 +256,22 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('total', response.data.data)
+                            }
+                        });
+            },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.suspensionHDid
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.balance={
+                                    activityName:response.data.data.activity.name,
+                                    merchantName:response.data.data.merchant.name,
+                                    suspensionTaxAmount:response.data.data.subsidyAccount.suspensionTaxAmount
+                                }
                             }
                         });
             },
@@ -309,7 +325,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
-                                this.balance.balanceAmount=response.data.data;
+                                this.balance.suspensionTaxAmount=response.data.data;
                                 this.initList();
                             }
                         });
@@ -329,20 +345,12 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.suspensionZHname==':suspensionZHname')?vm.balance.accountName= '' : vm.balance.accountName=vm.$route.params.suspensionZHname;
-            (vm.$route.params.suspensionSHname==':suspensionSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.suspensionSHname;
-            (vm.$route.params.suspensionZHbalance==':suspensionZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.suspensionZHbalance;
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
-            (vm.$route.params.orderId==':orderId')? vm.defaultData.orderID='' : vm.defaultData.orderID=vm.$route.params.orderId;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
-            $('#modal_recharge').on('hidden.bs.modal', function () {
-                $('body').css('padding-right',0);
-                vm.uploadText='';
-                vm.recharge.certificatesID='';
-            })
+            vm.getBlance();
         }
     }
 </script>

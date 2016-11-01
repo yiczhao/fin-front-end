@@ -80,8 +80,8 @@
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td><a data-ksa="" v-link="{name:'paid-amount',params:{paidId:trlist.id,paidHd:trlist.activityName,paidSh:trlist.merchantName}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a data-ksa="" v-link="{name:'unpaid-amount',params:{unpaidId:trlist.id,unpaidHd:trlist.activityName,unpaidSh:trlist.merchantName,unpaidTs:trlist.suspensionTaxAmount}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
-                                <td><a data-ksa="suspension_tax_account_detail_manage.search" v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:trlist.merchantID,suspensionZHname:trlist.activityName,suspensionSHid:trlist.merchantID,suspensionZHbalance:trlist.suspensionTaxAmount,suspensionSHname:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                <td><a data-ksa="invoice_account_detail.search" v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID,invoiceZHname:trlist.activityName,invoiceSHid:trlist.merchantID,invoiceZHbalance:trlist.invoiceAmount,invoiceSHname:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                <td><a data-ksa="suspension_tax_account_detail_manage.search" v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:trlist.merchantID,suspensionSHid:trlist.merchantID}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                <td><a data-ksa="invoice_account_detail.search" v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
                                     <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':trlist.merchantOperationID}}">明细</a>
                                 </td>

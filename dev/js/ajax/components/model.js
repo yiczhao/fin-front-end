@@ -64,6 +64,14 @@ export default function install(Vue) {
          */
         getmerchant_list(data){
             return Vue.http.get('./merchant/list?' + $.param(data))
+        },
+        /**
+         * @description 暂扣税金账户明细 商户名、活动名、退税款信息展示
+         * @param {data}
+         * @returns {*}
+         */
+        suspensionTaxAccountDetail_info(data){
+            return Vue.http.get('./subsidyAccount/suspensionTaxAccountDetail/info?' + $.param(data))
         }
     };
     Object.defineProperties(Vue.prototype, {
