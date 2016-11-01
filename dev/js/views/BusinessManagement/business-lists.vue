@@ -134,46 +134,46 @@
                     未找到数据
                 </div>
 
-                <content-dialog
-                        :show.sync="modal_checking" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'额度采购消化账户'" 
-                >
-                    <div class="modal-body">
-                        <div v-if="checkLists.length>0">
-                            <span>商户ID：{{id}}</span>
-                            <span>商户名：{{merchantName}}</span>
-                            <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>
-                        </div>
-                        <div style="padding: 10px 0;">历史记录：</div>
-                        <div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">
-                            无历史记录
-                        </div>
-                        <table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">
-                            <thead>
-                            <tr role="row">
-                                <th>ID</th>
-                                <th>账户名</th>
-                                <th>开始时间</th>
-                                <th>结束时间</th>
-                                <th>更新人</th>
-                                <th>变更凭证</th>
-                                <th>更新备注</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr role="row" v-for="n in checkLists">
-                                <td>{{n.merchantID}}</td>
-                                <td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>
-                                <td>{{n.startDate | datetime}}</td>
-                                <td>{{n.closeTime | datetime}}</td>
-                                <td>{{n.updateBy}}</td>
-                                <td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>
-                                <td>{{n.remarks}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </content-dialog>
+                <!--<content-dialog-->
+                        <!--:show.sync="modal_checking" :is-button="false" :type.sync="'infos'"-->
+                        <!--:title.sync="'额度采购消化账户'" -->
+                <!--&gt;-->
+                    <!--<div class="modal-body">-->
+                        <!--<div v-if="checkLists.length>0">-->
+                            <!--<span>商户ID：{{id}}</span>-->
+                            <!--<span>商户名：{{merchantName}}</span>-->
+                            <!--<span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>-->
+                        <!--</div>-->
+                        <!--<div style="padding: 10px 0;">历史记录：</div>-->
+                        <!--<div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">-->
+                            <!--无历史记录-->
+                        <!--</div>-->
+                        <!--<table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">-->
+                            <!--<thead>-->
+                            <!--<tr role="row">-->
+                                <!--<th>ID</th>-->
+                                <!--<th>账户名</th>-->
+                                <!--<th>开始时间</th>-->
+                                <!--<th>结束时间</th>-->
+                                <!--<th>更新人</th>-->
+                                <!--<th>变更凭证</th>-->
+                                <!--<th>更新备注</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr role="row" v-for="n in checkLists">-->
+                                <!--<td>{{n.merchantID}}</td>-->
+                                <!--<td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>-->
+                                <!--<td>{{n.startDate | datetime}}</td>-->
+                                <!--<td>{{n.closeTime | datetime}}</td>-->
+                                <!--<td>{{n.updateBy}}</td>-->
+                                <!--<td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>-->
+                                <!--<td>{{n.remarks}}</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</content-dialog>-->
 
                 <content-dialog
                         :show.sync="modal_control" :is-button="false" :type.sync="'infos'"
