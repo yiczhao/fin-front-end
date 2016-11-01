@@ -88,12 +88,12 @@ export default function(router){
             }
         },
         //备付金支出-额度采购
-        '/limit-purchase-detail/:id':{
-            name:'limit-purchase-detail',
-            component: function(resolve){
-                require(['./views/PaymentOfPayment/limit-purchase-detail.vue'],resolve);
-            }
-        },
+        // '/limit-purchase-detail/:id':{
+        //     name:'limit-purchase-detail',
+        //     component: function(resolve){
+        //         require(['./views/PaymentOfPayment/limit-purchase-detail.vue'],resolve);
+        //     }
+        // },
         //备付金支出-退税管理
         '/subsidy-management':{
             name:'subsidy-management',
@@ -171,13 +171,13 @@ export default function(router){
                 require(['./views/BusinessManagement/business-lists.vue'],resolve);
             }
         },
-        /* 商户管理-商户列表-活动管理 */
-        '/merchat-activity-subsidy-account/:merchantID1/:merchantName1/:merchantOperationID1':{
-            name:'merchat-activity',
-            component: function(resolve){
-                require(['./views/BusinessManagement/merchat-activity-subsidy-account.vue'],resolve);
-            }
-        },
+        // /* 商户管理-商户列表-活动管理 */
+        // '/merchat-activity-subsidy-account/:merchantID1/:merchantName1/:merchantOperationID1':{
+        //     name:'merchat-activity',
+        //     component: function(resolve){
+        //         require(['./views/BusinessManagement/merchat-activity-subsidy-account.vue'],resolve);
+        //     }
+        // },
         /* 商户管理-商户列表-活动管理-发票账户明细 */
         '/invoice-account-detail/:invoiceHDid/:invoiceBTid':{
             name:'invoice-account',
@@ -193,26 +193,26 @@ export default function(router){
             }
         },
         /* 商户管理-额度采购 */
-        '/business-limit/:id':{
-            name:'business-limit',
-            component: function(resolve){
-                require(['./views/BusinessManagement/business-limit.vue'],resolve);
-            }
-        },
+        // '/business-limit/:id':{
+        //     name:'business-limit',
+        //     component: function(resolve){
+        //         require(['./views/BusinessManagement/business-limit.vue'],resolve);
+        //     }
+        // },
         /* 商户管理-额度采购账户列表 */
-        '/limitaccount-management/:limitPurchaseMerchantInfoID/:accountName':{
-            name:'limitaccount-management',
-            component: function(resolve){
-                require(['./views/BusinessManagement/limitaccount-management.vue'],resolve);
-            }
-        },
+        // '/limitaccount-management/:limitPurchaseMerchantInfoID/:accountName':{
+        //     name:'limitaccount-management',
+        //     component: function(resolve){
+        //         require(['./views/BusinessManagement/limitaccount-management.vue'],resolve);
+        //     }
+        // },
         /* 商户管理-额度采购账户明细 */
-        '/limitaccount-info/:limitPurchaseMerchantInfoID/:accountName':{
-            name:'limitaccount-info',
-            component: function(resolve){
-                require(['./views/BusinessManagement/limitaccount-info.vue'],resolve);
-            }
-        },
+        // '/limitaccount-info/:limitPurchaseMerchantInfoID/:accountName':{
+        //     name:'limitaccount-info',
+        //     component: function(resolve){
+        //         require(['./views/BusinessManagement/limitaccount-info.vue'],resolve);
+        //     }
+        // },
         /* 商户管理-预付款 */
         '/prepayment-lists/':{
             name:'prepayment-lists',
