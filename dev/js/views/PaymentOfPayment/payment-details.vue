@@ -35,7 +35,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
 
-                            <div v-show="checkForm.dateS==4">
+                            <div v-show="checkForm.dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>

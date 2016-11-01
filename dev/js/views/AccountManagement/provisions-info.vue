@@ -8,20 +8,16 @@
         <div class="content " slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
-                    <div class="heading-left">
-
-                    </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.dateS">
+                            <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                            <div v-show="checkForm.dateS==4" class="inline">
+                            <div v-show="dateS==4" class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -361,9 +357,6 @@
      .validation-error-label{
          display: inline-block;
      }
-         .inline{
-            display:inline-block;
-         }
 </style>
 <script>
     import model from '../../ajax/AccountManagement/provisions_model'
@@ -387,8 +380,8 @@
                 aname:'',
                 balance:'',
                 subCompanyID:'',
+                dateS:'3',
                 checkForm:{
-                    dateS:'3',
                     accountId:'',
                     certificate:'',
                     keyword:'',
@@ -509,8 +502,8 @@
                 }
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
-                this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
             },
             getBalance(){
                 this.model.getBalance(this.subCompanyID).then((res)=>{
@@ -542,7 +535,7 @@
 
         },
         watch:{
-            zdlists(){
+            'zdlists'(){
                 this.model.incomeAndPayoutAmount(this.checkForm)
                         .then((response)=>{
                             if(response.data.code==0){
@@ -553,13 +546,7 @@
             },
             'checkForm.pageSize + checkForm.pageIndex'(){
                 this.initList();
-            },
-            'checkForm.dataS'(){
-                this.getTime();
             }
-        },
-        validators: {
-
         }
     }
 </script>
