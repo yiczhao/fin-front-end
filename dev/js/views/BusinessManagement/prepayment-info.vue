@@ -15,7 +15,7 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="defaultData.dateS">
+                            <select class="form-control" v-model="defaultData.dateS" @change="getTime">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -23,7 +23,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
 
-                            <div  v-show="defaultData.dateS==4">
+                            <div  v-show="defaultData.dateS==4" class="inline">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
@@ -506,9 +506,6 @@
 
         },
         watch: {
-            'defaultData.dataS'(){
-                this.getTime();
-            },
             'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
