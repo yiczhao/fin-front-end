@@ -532,7 +532,7 @@
                     return;
                 }
                 this.waring = '你确认一键划付？';
-                this.modal_waring = false;
+                this.modal_waring = true;
             },
             close(a){
                 this.waring = '你确认关闭该账单？';
