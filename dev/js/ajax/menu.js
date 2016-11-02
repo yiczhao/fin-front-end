@@ -18,14 +18,14 @@ module.exports = [
         name: '交易管理',
         icon: 'icon-transmission',
         sub_menu: [
-            {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
+            {name: '交易管理', link: 'trade-info',ksa:'trade_detail_manage'},
         ]
     },
     {
         name: '备付金支出',
         icon: 'icon-coin-yen',
         sub_menu: [
-            {name: '付款明细', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
+            {name: '备付金支出', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
         ]
     },
     {

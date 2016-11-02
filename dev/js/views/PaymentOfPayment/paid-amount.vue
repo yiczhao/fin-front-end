@@ -1,7 +1,7 @@
 <template>
     <index :title="'已划付金额'"
-           :ptitle="'退税管理'"
-           :p2title="'备付金支出'"
+           :ptitle="'备付金支出'"
+           :p2title="'退税管理'"
            :hname="'subsidy-management'"
            :h2name="'payment-details'"
            :isshow="'isshow'">

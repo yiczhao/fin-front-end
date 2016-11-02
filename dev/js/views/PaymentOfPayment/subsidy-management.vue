@@ -138,6 +138,14 @@
                 >
                     <div class="modal-body">
                         <div class="form-group">
+                            <label style="width: 15%;text-align: right;">商户：</label>
+                            <span>{{rechargeInfo.val1}}</span><span>({{rechargeInfo.val4}})</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;">活动：</label>
+                            <span>{{rechargeInfo.val2}}</span><span>({{rechargeInfo.val5}})</span>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label">税金池余额：{{redata.suspensionTaxAmount/100 | currency ''}} 元</label>
                             <label class="control-label">可提现金额：{{redata.withdrawCashAmount/100 | currency ''}} 元</label>
                         </div>
@@ -154,10 +162,12 @@
                                 相同账户合并付款</label>
                         </div>
                         <div class="form-group">
-                            <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                            <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount"></div>
+                            <label style="width: 15%;text-align: right;"><i style="color:red;">*</i>金额：</label>
+                            <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount">
+                            元
+                        </div>
                         <div class="form-group">
-                            <label style="width:13%;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
+                            <label style="width: 15%;text-align: right;position: relative;top: -95px;" class="control-label"><i style="color:red;">*</i>备注：</label>
                             <textarea  style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
                         </div>
                         <div class="form-group tc">
@@ -176,28 +186,30 @@
                     <validator name="vali">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>商户名：</label>
-                                <span>{{rechargeInfo.val1}}</span>
+                                <label style="width: 15%;text-align: right;">商户：</label>
+                               <span>{{rechargeInfo.val1}}</span><span>({{rechargeInfo.val4}})</span>
                             </div>
                             <div class="form-group">
-                                <label>活动名：</label>
-                                <span>{{rechargeInfo.val2}}</span>
+                                <label style="width: 15%;text-align: right;">活动：</label>
+                                <span>{{rechargeInfo.val2}}</span><span>({{rechargeInfo.val5}})</span>
                             </div>
                             <div class="form-group">
-                                <label>余额：</label>
-                                <span>{{rechargeInfo.val3/100 | currency '' }}</span>
+                                <label style="width: 15%;text-align: right;">余额：</label>
+                                <span>{{rechargeInfo.val3/100 | currency '' }}元</span>
                             </div>
                             <div class="form-group">
-                                <label><i style="color:red;">*</i>金额：</label>
-                                <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount"></div>
+                                <label style="width: 15%;text-align: right;"><i style="color:red;">*</i>金额：</label>
+                                <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
+                                元
+                            </div>
                             <div class="form-group" v-else>
-                                <label>上传凭证：</label>
+                                <label style="width: 15%;text-align: right;">上传凭证：</label>
                                 <input  style="display:none" @change="uploads($event)" type="file">
                                 <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                                 <span v-text="uploadText" v-show="uploadText!=''"></span>
                             </div>
                             <div class="form-group">
-                                <label style="position: relative;top: -95px;" class="control-label">备注：</label>
+                                <label style="width: 15%;text-align: right;position: relative;top: -95px;" class="control-label">备注：</label>
                                 <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
                             </div>
                             <div class="form-group tc">
@@ -244,6 +256,7 @@
                         <div class="form-group">
                             <label class="labels"><i>*</i>金额：</label>
                             <input type="text" v-validate:val3="['required']" class="form-control input" v-model="rechargesData.incomeAmount" v-limitprice="rechargesData.incomeAmount">
+                            元
                         </div>
                         <div class="form-group" v-else>
                             <label class="labels">上传凭证：</label>
@@ -346,6 +359,8 @@
                     val1:'',
                     val2:'',
                     val3:'',
+                    val4:'',
+                    val5:'',
                 },
                 errortext:'',
                 applyText:'',
@@ -411,7 +426,7 @@
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.subsidyAccountExcel+ $.param(this.defaultData));
             },
-            applyPay({id}){
+            applyPay({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID}){
                 this.applyData={
                     remarks:'',
                     ids:[],
@@ -419,6 +434,11 @@
                     mergePay:false,
                     payType:''
                 };
+                this.rechargeInfo.val1=merchantName;
+                this.rechargeInfo.val2=activityName;
+                this.rechargeInfo.val3=invoiceAmount;
+                this.rechargeInfo.val4=merchantOperationID;
+                this.rechargeInfo.val5=activityOperationID;
                 this.applyData.ids=[id];
                 let data={
                     id:id,
@@ -457,7 +477,7 @@
                             }
                         });
             },
-            recharge({id,merchantName,activityName,invoiceAmount}){
+            recharge({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID}){
                 this.rechargeData={
                     subsidyAccountID:'',
                     payoutAmount:'',
@@ -468,6 +488,8 @@
                 this.rechargeInfo.val1=merchantName;
                 this.rechargeInfo.val2=activityName;
                 this.rechargeInfo.val3=invoiceAmount;
+                this.rechargeInfo.val4=merchantOperationID;
+                this.rechargeInfo.val5=activityOperationID;
                 this.uploadText='';
                 this.modal_recharge = true;
             },

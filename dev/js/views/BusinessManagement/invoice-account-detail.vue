@@ -1,9 +1,9 @@
 <template>
     <index :title="'发票账户明细'"
-           :ptitle="'商户管理'"
-           :p2title="'商户列表'"
-           :hname="'business-lists'"
-           :h2name="'business-lists'"
+           :ptitle="'备付金支出'"
+           :p2title="'退税管理'"
+           :hname="'subsidy-management'"
+           :h2name="'subsidy-management'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
@@ -58,7 +58,9 @@
                 </div>
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
                     <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.invoiceAmount/100 | currency ''}}元</span>
                 </div>
@@ -158,7 +160,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount"></div>
+                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
+                                            元
+                                        </div>
                                         <div class="form-group" v-else>
                                             <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
@@ -215,7 +219,9 @@
                 },
                 balance:{
                     activityName:'',
+                    activityId:'',
                     merchantName:'',
+                    merchantId:'',
                     invoiceAmount:''
                 },
                 rechargeData:{
@@ -269,7 +275,9 @@
                         .then((response)=>{
                             if(response.data.code==0){
                                 this.balance={
+                                    activityId:response.data.data.activity.operationId,
                                     activityName:response.data.data.activity.name,
+                                    merchantId:response.data.data.merchant.operationId,
                                     merchantName:response.data.data.merchant.name,
                                     invoiceAmount:response.data.data.subsidyAccount.invoiceAmount
                                 }

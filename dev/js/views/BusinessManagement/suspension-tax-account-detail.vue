@@ -1,9 +1,9 @@
 <template>
     <index :title="'暂扣税金账户明细'"
-           :ptitle="'商户管理'"
-           :p2title="'商户列表'"
-           :hname="'business-lists'"
-           :h2name="'business-lists'"
+           :ptitle="'备付金支出'"
+           :p2title="'退税管理'"
+           :hname="'subsidy-management'"
+           :h2name="'subsidy-management'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
@@ -60,7 +60,9 @@
                 </div>
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
                     <span>退税款：</span><span style="margin-right: 10px;">{{balance.suspensionTaxAmount/100| currency '' }}元</span>
                 </div>
@@ -165,7 +167,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount"></div>
+                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount">
+                                    元
+                                </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
@@ -216,7 +220,9 @@
                 },
                 balance:{
                     activityName:'',
+                    activityId:'',
                     merchantName:'',
+                    merchantId:'',
                     suspensionTaxAmount:''
                 },
                 redata:{
@@ -269,6 +275,8 @@
                             if(response.data.code==0){
                                 this.balance={
                                     activityName:response.data.data.activity.name,
+                                    activityId:response.data.data.activity.operationId,
+                                    merchantId:response.data.data.merchant.operationId,
                                     merchantName:response.data.data.merchant.name,
                                     suspensionTaxAmount:response.data.data.subsidyAccount.suspensionTaxAmount
                                 }
