@@ -104,13 +104,13 @@
                                     <td>合计：</td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>{{nums.consumptionCount}}</td>
                                     <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                     <td>{{nums.payAmount/100 | currency ''}}</td>
                                     <td>{{nums.commission33211/100 | currency ''}}</td>
                                     <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                     <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
