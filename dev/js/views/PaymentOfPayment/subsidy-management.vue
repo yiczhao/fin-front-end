@@ -542,8 +542,8 @@
             },
             batchApply(){
                 this.batchData={
-                    activityOperationID:'',
-                    merchantOperationID:''
+                    activityOperationID:this.defaultData.activityOperationID,
+                    merchantOperationID:this.defaultData.merchantOperationID
                 }
                 this.modal_batch=true;
             },
