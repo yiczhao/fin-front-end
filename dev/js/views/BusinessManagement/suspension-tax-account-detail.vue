@@ -2,7 +2,7 @@
     <index :title="'暂扣税金账户明细'"
            :ptitle="'备付金支出'"
            :p2title="'退税管理'"
-           :hname="'subsidy-management'"
+           :hname="'payment-details'"
            :h2name="'subsidy-management'"
            :isshow="'isshow'">
         <div class="content" slot="content">
