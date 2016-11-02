@@ -35,7 +35,7 @@
                             <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                         </select>
 
-                        <select class="form-control" v-model="checkForm.timeRange">
+                        <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -327,6 +327,10 @@
                                 this.$router.go({'name':'third-info',params:{'id':response.data.data,'serialNumber':_serialNumber}});
                             }
                         })
+            },
+            getTime(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             }
         },
         ready() {
@@ -338,14 +342,11 @@
             (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
             this.getSubcompany();
             this.getCity();
+            this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
        watch:{
-            'checkForm.timeRange'(){
-                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

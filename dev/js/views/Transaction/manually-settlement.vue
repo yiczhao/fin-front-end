@@ -29,7 +29,7 @@
                             <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                         </select>
 
-                        <select class="form-control" v-model="checkForm.timeRange">
+                        <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -336,14 +336,11 @@
         ready() {
             this.getSubcompany();
             this.getCity();
+            this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
-            this.getTime()
             this.query();
         },
        watch:{
-            'checkForm.timeRange'(){
-                this.getTime()
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

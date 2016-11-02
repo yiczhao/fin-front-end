@@ -14,7 +14,7 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.dateS">
+                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -560,9 +560,6 @@
             },
             'checkForm.pageSize + checkForm.pageIndex'(){
                 this.initList();
-            },
-            'checkForm.dataS'(){
-                this.getTime();
             }
         },
         validators: {

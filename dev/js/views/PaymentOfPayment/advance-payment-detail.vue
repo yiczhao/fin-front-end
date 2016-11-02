@@ -24,7 +24,7 @@
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
 
-                            <select class="form-control" v-model="checkForm.timeRange">
+                            <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -205,8 +205,7 @@
             query() {
                 // let data=this.data;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
-                    this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-                    this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
+                   this.getTime();
                 }
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getadvancePaymentDetailList(this.checkForm);
@@ -219,6 +218,10 @@
                             }
 
                     })
+            },
+            getTime(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             }
         },
         ready() {
@@ -229,10 +232,6 @@
             this.query();
         },
          watch:{
-            'checkForm.timeRange'(){
-                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

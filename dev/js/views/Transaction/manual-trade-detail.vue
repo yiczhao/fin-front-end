@@ -28,7 +28,7 @@
                             <option value="">全部城市</option>
                             <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                         </select>
-                        <select class="form-control" v-model="defaultData.timeRange">
+                        <select class="form-control" v-model="defaultData.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -596,21 +596,20 @@
                 //初始化
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.manualTradeDetailExcel+ $.param(this.defaultData));
+            },
+            getTime(){
+                this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
+                this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
             }
         },
         ready: function () {
-            this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
-            this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
+            this.getTime();
             (back_json.isback && back_json.fetchArray(this.$route.path) != '') ? this.checkForm = back_json.fetchArray(this.$route.path) : null;
             this.getSubCompanyData();
             this.getCityData();
             this.getManualTradeDetailData();
         },
         watch: {
-            'defaultData.timeRange'(){
-                this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
-                this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
-            },
             'defaultData.pageIndex+defaultData.pageSize'(){
                 this.getManualTradeDetailData();
             }

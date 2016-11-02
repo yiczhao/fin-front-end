@@ -35,7 +35,7 @@
 
                             <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号" v-limitnumber="checkForm.orderNumber">
 
-                            <select class="form-control" v-model="checkForm.dateS">
+                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -682,9 +682,6 @@
         watch:{
             'checkForm.pageSize+checkForm.pageIndex'(){
                 this.initList();
-            },
-            'checkForm.dateS'(){
-                this.getTime();
             }
         },
         ready(){

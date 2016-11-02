@@ -14,7 +14,7 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                                <select class="form-control" v-model="defaultData.dateS">
+                                <select class="form-control" v-model="defaultData.dateS" @change="getTime">
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
                                     <option value="2">最近一个月</option>
@@ -345,9 +345,6 @@
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList()
-            },
-            'defaultData.dateS'(){
-                this.getTime()
             }
         },
         ready(){

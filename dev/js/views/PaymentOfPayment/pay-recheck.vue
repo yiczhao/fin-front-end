@@ -47,7 +47,7 @@
                                 <option value="8">复核不通过</option>
                             </select>
 
-                            <select class="form-control" v-model="checkForm.timeRange">
+                            <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -472,17 +472,14 @@
         },
         ready(){
             (this.$route.params.recheckId==':recheckId')?this.checkForm.id='':this.checkForm.id=this.$route.params.recheckId;
-            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.getTime();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.getSubcompany();
             this.query();
         },
         watch:{
             'checkForm.pageSize+checkForm.pageIndex'(){
                 this.query();
-            },
-            'checkForm.timeRange'(){
-                this.getTime();
             }
         }
     }
