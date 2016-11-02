@@ -8,9 +8,9 @@
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <span v-show="unpaidHd!=''">活动名称：{{unpaidHd}}</span>
-                    <span v-show="unpaidSh!=''">商户名称：{{unpaidSh}}</span>
-                    <span v-show="unpaidTs!=''"> (含退税款：{{unpaidTs/100 | currency ''}}元)</span>
+                    <span class="mr20" v-show="unpaidHd!=''">活动名称：{{unpaidHd}}</span>
+                    <span class="mr20" v-show="unpaidSh!=''">商户名称：{{unpaidSh}}</span>
+                    <span v-show="unpaidYe!=''">待划付：{{unpaidYe/100 | currency ''}}(含退税款：{{unpaidTs/100 | currency ''}})元</span>
                 </div>
                 <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -116,6 +116,7 @@ export default{
                 unpaidHd:'',
                 unpaidSh:'',
                 unpaidTs:'',
+                unpaidYe:'',
                 tradeList:[],
                 nums:{}
             }
@@ -143,6 +144,7 @@ export default{
             (this.$route.params.unpaidHd!=':unpaidHd')?this.unpaidHd=this.$route.params.unpaidHd:null;
             (this.$route.params.unpaidSh!=':unpaidSh')?this.unpaidSh=this.$route.params.unpaidSh:null;
             (this.$route.params.unpaidTs!=':unpaidTs')?this.unpaidTs=this.$route.params.unpaidTs:null;
+            (this.$route.params.unpaidYe!=':unpaidYe')?this.unpaidYe=this.$route.params.unpaidYe:null;
             this.getTradeList();
         },
         watch:{

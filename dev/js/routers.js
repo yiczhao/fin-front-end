@@ -102,7 +102,7 @@ export default function(router){
             }
         },
         //备付金支出-退税管理-待划付明细
-        '/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs':{
+        '/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs/:unpaidYe':{
             name:'unpaid-amount',
             component: function(resolve){
                 require(['./views/PaymentOfPayment/unpaid-amount.vue'],resolve);
