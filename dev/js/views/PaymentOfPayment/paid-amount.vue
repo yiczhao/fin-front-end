@@ -2,8 +2,8 @@
     <index :title="'已划付金额'"
            :ptitle="'备付金支出'"
            :p2title="'退税管理'"
-           :hname="'subsidy-management'"
-           :h2name="'payment-details'"
+           :hname="'payment-details'"
+           :h2name="'subsidy-management'"
            :isshow="'isshow'">
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">

@@ -160,8 +160,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
-                                            元
+                                            <input style="width: 70%;display: inline-block" placeholder="单位：元" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
                                         </div>
                                         <div class="form-group" v-else>
                                             <label>上传凭证：</label>
@@ -171,7 +170,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -95px;" class="control-label">备注：</label>
-                                            <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
+                                            <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
                                         </div>
                                         <div class="form-group tc">
                                             <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>

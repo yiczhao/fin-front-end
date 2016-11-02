@@ -167,8 +167,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount">
-                                    元
+                                    <input style="width: 80%;display: inline-block" placeholder="单位：元" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
