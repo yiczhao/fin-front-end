@@ -193,7 +193,7 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.query();
-                                dialogs('success','提现成功！');
+                                dialogs('success',response.data.message);
                             }
                         })
             }
