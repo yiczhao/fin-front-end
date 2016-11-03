@@ -11,5 +11,8 @@ exports.limitprice = limitprice
 import limitaddprice from './limit-addprice'
 exports.limitaddprice = limitaddprice
 
+import limitids from './limit-ids'
+exports.limitids = limitids
+
 import auth from './auth'
 exports.auth = auth

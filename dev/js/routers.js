@@ -45,6 +45,13 @@ export default function(router){
                 require(['./views/Transaction/manually-settlement.vue'],resolve);
             }
         },
+        //交易处理-手工结算
+        '/manually-settlement-batchpay/':{
+            name:'manually-settlement-batchpay',
+            component: function(resolve){
+                require(['./views/Transaction/manually-settlement-batchpay.vue'],resolve);
+            }
+        },
         //交易处理-调账管理
         '/adjust-trade-detailpre/':{
             name:'adjust-trade-detailpre',

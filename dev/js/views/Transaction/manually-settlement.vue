@@ -15,20 +15,17 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">生成划付</a>
+                        <a class="btn btn-add add-top" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">申请划付</a>
                     </div>
-
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                             <option value="">全部分公司</option>
                             <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
-
                         <select class="form-control" v-model="checkForm.cityID">
                             <option value="">全部城市</option>
                             <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                         </select>
-
                         <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
@@ -36,23 +33,16 @@
                             <option value="3">最近三个月</option>
                             <option value="4">自定义时间</option>
                         </select>
-
                         <div  v-show="checkForm.timeRange==4">
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
-
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）" v-limitids="checkForm.merchantOperationID">
                         <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-
                         <input type="text" class="form-control" v-model="checkForm.tradeDetailID" placeholder="交易ID" v-limitnumber="checkForm.tradeDetailID">
-
                         <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
-
                         <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
-
-                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
+                        <input type="text" class="form-control" placeholder="活动ID（多个ID以逗号隔开）" v-limitids="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                     </div>
 
                     <div class="heading-middle">
@@ -199,14 +189,42 @@
                         </div>
                     </div>
                 </content-dialog>
-
+                <content-dialog
+                        :show.sync="modal_batch" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'申请划付'"
+                >
+                    <div class="form-group">
+                        <label style="width:18%;text-align:right;" class="control-label">时间：</label>
+                        <select class="form-control" style="display: inline-block;width: 80%;" v-model="batchData.timeRange" @change="getbatchDataTime">
+                            <option value="0">昨天</option>
+                            <option value="1">最近一周</option>
+                            <option value="2">最近一个月</option>
+                            <option value="3">最近三个月</option>
+                            <option value="4">自定义时间</option>
+                        </select>
+                        <div style="width: 80%;margin: 15px 0 0 19%;" v-show="batchData.timeRange==4">
+                            <datepicker  :readonly="true" :value.sync="batchData.startDate" format="YYYY-MM-DD"></datepicker>至
+                            <datepicker  :readonly="true" :value.sync="batchData.endDate" format="YYYY-MM-DD"></datepicker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">活动ID：</label>
+                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationID" v-model="batchData.activityOperationID"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">商户ID：</label>
+                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationID" v-model="batchData.merchantOperationID"></textarea>
+                    </div>
+                    <div class="form-group tc">
+                        <a @click="payApplyTrue" class="btn btn-primary">下一步</a>
+                    </div>
+                </content-dialog>
             </div>
         </div>
     </index>
 </template>
 
 <script>
-    import ContentDialog from '../components/ContentDialog.vue'
     import model from '../../ajax/Transaction/manually_model'
     export default{
         components: { ContentDialog },
@@ -242,8 +260,16 @@
 
                 },
                 show:false,
+                modal_batch:false,
                 submitId:[],
                 payTypes:'',
+                batchData:{
+                    timeRange:'3',
+                    startDate:'',
+                    endDate:'',
+                    activityOperationID:'',
+                    merchantOperationID:''
+                },
                 mergePay:''
             }
         },
@@ -298,22 +324,24 @@
                 window.open(window.origin+this.$API.manuallyexcel+ $.param(this.checkForm));
             },
             payApply(){
+                this.batchData={
+                    timeRange:'3',
+                    startDate:'',
+                    endDate:'',
+                    activityOperationID:this.checkForm.activityOperationID,
+                    merchantOperationID:this.checkForm.merchantOperationID
+                }
+                this.getbatchDataTime();
+                this.modal_batch=true;
+            },
+            payApplyTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.checkForm.merchantOperationID==''||this.checkForm.activityOperationID==''){
-                    dialogs('info','必须填写商户ID及活动ID！');
+                if(this.batchData.merchantOperationID==''&&this.batchData.activityOperationID==''){
+                    dialogs('info','商户ID和活动ID不能都为空！');
                     return false
                 }
-                this.payTypes='';
-                this.mergePay=false;
-                this.model.select_manuallypay(this.checkForm)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若
-                            // *** 判断请求是否成功如若
-                            if(response.data.code==0){
-                                this.$set('applyPayInfo', response.data.data)
-                                this.show=true;
-                            }
-                        });
+                sessionStorage.setItem('manuallybatchData',JSON.stringify(this.batchData));
+                this.$router.go({'name':'manually-settlement-batchpay'});
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
@@ -332,6 +360,10 @@
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
                 this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             },
+            getbatchDataTime(){
+                this.batchData.startDate=init_date(this.batchData.timeRange)[0];
+                this.batchData.endDate=init_date(this.batchData.timeRange)[1];
+            }
         },
         ready() {
             this.getSubcompany();
