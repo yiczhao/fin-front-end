@@ -79,6 +79,13 @@
 										<input type="button" class="btn btn-primary" value="执行" @click="excuteJob()"/>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成商户已划付数据" @click="generateMerchantSubsidyPaidDetail()"/>
+									</td>
+									<td>
+									</td>
+								</tr>
                             </table>
 							<div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
 								<div class="modal-dialog">
@@ -266,22 +273,27 @@
 			createAdvancePaymentAccountDetail(e){
 				this.$http.post('./dev/tool/advancePayment/accountDetail/create')
 						.then((response)=>{
-					dialogs('success','生成成功！');
+							dialogs('success','生成成功！');
 						})
 			},
 			caculateSubsidyAccountTradeData(e){
 				this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
 						.then((response)=>{
-					dialogs('success','处理成功！');
+							dialogs('success','处理成功！');
 						})
 			},
 			excuteJob(){
 				this.$http.get('./job/'+this.jobID)
 						.then((response)=>{
-					dialogs('success',response.data.message);
-			})
+							dialogs('success',response.data.message);
+						})
+			},
+			generateMerchantSubsidyPaidDetail(){
+				this.$http.post('./dev/tool/subsidyAccount/generateMerchantSubsidyPaidDetail')
+						.then((response)=>{
+							dialogs('success',response.data.message);
+						})
 			}
-
         },
         ready() {
         },
