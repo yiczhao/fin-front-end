@@ -60,14 +60,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                        <select class="form-control" v-model="batchsData.payTypes" style="width: 80%;display: inline-block;">
+                        <select class="form-control" v-model="batchsData.payType" style="width: 80%;display: inline-block;">
                             <option value="">请选择付款方式</option>
                             <option value="1">备付金账户</option>
                             <option value="2">商户预付款账户</option>
                             <option value="3">银行结算</option>
                         </select>
                     </div>
-                    <div class="form-group" v-show="batchsData.payTypes==1">
+                    <div class="form-group" v-show="batchsData.payType==1">
                         <label><input type="checkbox" v-model="batchsData.mergePay"/>
                             相同账户合并付款</label>
                     </div>
@@ -92,7 +92,7 @@
                 },
                 batchsData:{
                     mergePay:false,
-                    payTypes:''
+                    payType:''
                 },
                 recheckLists:[],
                 id:''
@@ -122,19 +122,19 @@
             payApply(){
                 this.batchsData={
                     mergePay:false,
-                    payTypes:''
+                    payType:''
                 }
                 this.show=true;
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.batchsData.payTypes==''){
+                if(this.batchsData.payType==''){
                     dialogs('info','请选择付款方式！');
                     return false
                 }
                 let data=_.cloneDeep(JSON.parse(sessionStorage.getItem('manuallybatchData')));
                 data.mergePay=this.batchsData.mergePay;
-                data.payTypes=this.batchsData.payTypes;
+                data.payType=this.batchsData.payType;
                 this.model.manuallypay(data)
                         .then((response)=>{
                             if(response.data.code==0){
