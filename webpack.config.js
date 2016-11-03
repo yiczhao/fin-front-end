@@ -3,6 +3,7 @@
  */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+
 module.exports = {
 	resolve: {
 		alias: {
@@ -58,6 +59,12 @@ module.exports = {
     },
 	plugins:[
 		new ExtractTextPlugin('app.css'),
+		new webpack.optimize.UglifyJsPlugin({
+			minimize: true,
+			compress: {
+				warnings: false,
+			},
+		}),
 		new webpack.ProvidePlugin({
 			_: 'lodash',
 			swal: 'sweetalert',
