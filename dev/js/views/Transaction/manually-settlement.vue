@@ -37,12 +37,12 @@
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）" v-limitids="checkForm.merchantOperationID">
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationIDs" placeholder="商户ID（多个ID以逗号隔开）" v-limitids="checkForm.merchantOperationIDs">
                         <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
                         <input type="text" class="form-control" v-model="checkForm.tradeDetailID" placeholder="交易ID" v-limitnumber="checkForm.tradeDetailID">
                         <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
                         <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
-                        <input type="text" class="form-control" placeholder="活动ID（多个ID以逗号隔开）" v-limitids="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
+                        <input type="text" class="form-control" placeholder="活动ID（多个ID以逗号隔开）" v-limitids="checkForm.activityOperationIDs" v-model="checkForm.activityOperationIDs">
                     </div>
 
                     <div class="heading-middle">
@@ -50,9 +50,9 @@
                     </div>
                 </div>
 
-                <div v-cloak v-show="tradeList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>交易ID</th>
@@ -163,33 +163,6 @@
                 </div>
 
                 <content-dialog
-                        :show.sync="show" :is-cancel="true" :type.sync="'primary'"
-                        :title.sync="'申请划付'" @kok="submit" @kcancel="show = false"
-                >
-                    <div class="modal-body">
-                        <div class="form-group">
-                            您目前选择了
-                            <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeSize}}</span>笔交易记录，
-                            三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartyReceivable/100 | currency ''}}</span>  元，
-                            补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.merchantSubsidyActual/100 | currency ''}}</span>  元，
-                            暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTax/100 | currency ''}}</span>  元
-                        </div>
-                        <div class="form-group">
-                            <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                            <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
-                                <option value="">请选择付款方式</option>
-                                <option value="1">备付金账户</option>
-                                <option value="2">商户预付款账户</option>
-                                <option value="3">银行结算</option>
-                            </select>
-                        </div>
-                        <div class="form-group" v-show="payTypes==1">
-                            <label><input type="checkbox" v-model="mergePay"/>
-                                相同账户合并付款</label>
-                        </div>
-                    </div>
-                </content-dialog>
-                <content-dialog
                         :show.sync="modal_batch" :is-button="false" :type.sync="'infos'"
                         :title.sync="'申请划付'"
                 >
@@ -209,11 +182,11 @@
                     </div>
                     <div class="form-group">
                         <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">活动ID：</label>
-                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationID" v-model="batchData.activityOperationID"></textarea>
+                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationIDs" v-model="batchData.activityOperationIDs"></textarea>
                     </div>
                     <div class="form-group">
                         <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">商户ID：</label>
-                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationID" v-model="batchData.merchantOperationID"></textarea>
+                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationIDs" v-model="batchData.merchantOperationIDs"></textarea>
                     </div>
                     <div class="form-group tc">
                         <a @click="payApplyTrue" class="btn btn-primary">下一步</a>
@@ -227,9 +200,6 @@
 <script>
     import model from '../../ajax/Transaction/manually_model'
     export default{
-        components: { ContentDialog },
-        computed:{
-        },
         data(){
             this.model=model(this);
             return{
@@ -240,12 +210,12 @@
                     cityID:"",
                     startDate:"",
                     endDate:"",
-                    merchantOperationID:"",
+                    merchantOperationIDs:"",
                     merchantName:"",
                     tradeDetailID:"",
                     serialNumber:"",
                     phone:"",
-                    activityOperationID:'',
+                    activityOperationIDs:'',
                     pageIndex:1,
                     timeRange:'3',
                     pageSize:10
@@ -267,8 +237,8 @@
                     timeRange:'3',
                     startDate:'',
                     endDate:'',
-                    activityOperationID:'',
-                    merchantOperationID:''
+                    activityOperationIDs:'',
+                    merchantOperationIDs:''
                 },
                 mergePay:''
             }
@@ -328,33 +298,20 @@
                     timeRange:'3',
                     startDate:'',
                     endDate:'',
-                    activityOperationID:this.checkForm.activityOperationID,
-                    merchantOperationID:this.checkForm.merchantOperationID
+                    activityOperationIDs:this.checkForm.activityOperationIDs,
+                    merchantOperationIDs:this.checkForm.merchantOperationIDs
                 }
                 this.getbatchDataTime();
                 this.modal_batch=true;
             },
             payApplyTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.batchData.merchantOperationID==''&&this.batchData.activityOperationID==''){
+                if(this.batchData.merchantOperationIDs==''&&this.batchData.activityOperationIDs==''){
                     dialogs('info','商户ID和活动ID不能都为空！');
                     return false
                 }
                 sessionStorage.setItem('manuallybatchData',JSON.stringify(this.batchData));
                 this.$router.go({'name':'manually-settlement-batchpay'});
-            },
-            submit(){
-                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
-                let data=_.cloneDeep(this.checkForm);
-                data.payType=this.payTypes;
-                data.mergePay=this.mergePay;
-                this.model.manuallypay(data)
-                        .then((response)=>{
-                            if(response.data.code==0){
-                                dialogs('success',response.data.message);
-                                this.query();
-                            }
-                        });
             },
             getTime(){
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];

@@ -9,7 +9,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="batchsBtn" data-ksa="" style="margin-top:20px;">确定提现</a>
+                        <a class="btn btn-add add-top" @click="payApply" data-ksa="" style="margin-top:20px;">申请划付</a>
                         <span class="btn btn-add add-top" v-link="{name:'manually-settlement'}" data-ksa="" style="margin-top:20px;">返回上一步</span>
                     </div>
                 </div>
@@ -29,21 +29,22 @@
                                 </tr>
                             </thead>
                             <tr v-for="(index,n) in recheckLists" v-bind:class="{'odd':(index%2==0)}">
-                                <td></td>
-                                <td>{{n.activityOperationID}}</td>
-                                <td>{{n.activityName}}</td>
                                 <td>{{n.merchantOperationID}}</td>
                                 <td>{{n.merchantName}}</td>
-                                <td>{{n.receiptAccountNumber}}</td>
-                                <td>{{n.receiptAccountName}}</td>
-                                <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
+                                <td>{{n.activityOperationID}}</td>
+                                <td>{{n.activityName}}</td>
+                                <td>{{n.tradeSize}}</td>
+                                <td>{{n.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td>{{n.merchantSubsidyActual/100 | currency ''}}</td>
+                                <td>{{n.suspensionTax/100 | currency ''}}</td>
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td>
-                                <td>{{suspensionTaxAmount/100 | currency ''}}</td>
-                                <td>{{suspensionTaxAmount/100 | currency ''}}</td>
-                                <td>{{total/100 | currency ''}}</td>
+                                <td></td><td></td><td></td>
+                                <td>{{total.tradeSize}}</td>
+                                <td>{{total.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td>{{total.merchantSubsidyActual/100 | currency ''}}</td>
+                                <td>{{total.suspensionTax/100 | currency ''}}</td>
                             </tr>
                         </table>
                     </div>
@@ -53,13 +54,13 @@
                 </div>
             </div>
             <content-dialog
-                    :show.sync="show" :is-cancel="true" :type.sync="'primary'"
+                    :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="'申请划付'" @kok="submit" @kcancel="show = false"
             >
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                        <select class="form-control" v-model="batchsData.payTypes" style="width: 30%;display: inline-block;">
+                        <select class="form-control" v-model="batchsData.payTypes" style="width: 80%;display: inline-block;">
                             <option value="">请选择付款方式</option>
                             <option value="1">备付金账户</option>
                             <option value="2">商户预付款账户</option>
@@ -83,10 +84,15 @@
             this.model =model(this)
             return {
                 show:false,
-                total:0,
+                total:{
+                    tradeSize:0,
+                    suspensionTax:0,
+                    thirdPartyReceivable:0,
+                    merchantSubsidyActual:0,
+                },
                 batchsData:{
                     mergePay:false,
-                    payType:''
+                    payTypes:''
                 },
                 recheckLists:[],
                 id:''
@@ -95,15 +101,16 @@
         methods:{
             getLists(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.total=this.suspensionTaxAmount=0;
-                this.model.subsidyManagement_batch(JSON.parse(sessionStorage.getItem('manuallybatchData')))
+                this.model.manuallySettlement_list(JSON.parse(sessionStorage.getItem('manuallybatchData')))
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('recheckLists', response.data.data);
                                 response.data.data.map((value)=>{
-                                    this.total+=value.withdrawCashAmount;
-                                    this.suspensionTaxAmount+=value.suspensionTaxAmount;
+                                    this.total.tradeSize+=value.tradeSize;
+                                    this.total.suspensionTax+=value.suspensionTax;
+                                    this.total.thirdPartyReceivable+=value.thirdPartyReceivable;
+                                    this.total.merchantSubsidyActual+=value.merchantSubsidyActual;
                                 })
                             }
                         });
@@ -113,19 +120,22 @@
                 this.getLists();
             },
             payApply(){
-                this.batchData={
+                this.batchsData={
                     mergePay:false,
-                    payType:''
+                    payTypes:''
                 }
                 this.show=true;
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.batchData.payTypes==''){
+                if(this.batchsData.payTypes==''){
                     dialogs('info','请选择付款方式！');
                     return false
                 }
-                this.model.manuallypay(this.batchData)
+                let data=_.cloneDeep(JSON.parse(sessionStorage.getItem('manuallybatchData')));
+                data.mergePay=this.batchsData.mergePay;
+                data.payTypes=this.batchsData.payTypes;
+                this.model.manuallypay(data)
                         .then((response)=>{
                             if(response.data.code==0){
                                 dialogs('success',response.data.message);
