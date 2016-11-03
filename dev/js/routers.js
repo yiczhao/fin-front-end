@@ -13,6 +13,7 @@ export default function(router){
         /* 首页 */
         '/default':{
             name:'default',
+            router_type:"default",
             component: function(resolve){
                 require(['./views/default.vue'],resolve);
             }
@@ -20,6 +21,7 @@ export default function(router){
         //账户列表
         '/account-management':{
             name:'account-management',
+            router_type:"account",
             component: function(resolve){
                 require(['./views/AccountManagement/account-management.vue'],resolve);
             }
@@ -27,6 +29,7 @@ export default function(router){
         //账户明细
         '/provisions-info/:accountId/:certificate/:aname/:balance/:subCompanyID':{
             name:'provisions-info',
+            router_type:"account",
             component: function(resolve){
                 require(['./views/AccountManagement/provisions-info.vue'],resolve);
             }
@@ -34,6 +37,7 @@ export default function(router){
         //交易处理-交易明细
         '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber':{
             name:'trade-info',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/trade-info.vue'],resolve);
             }
@@ -41,6 +45,7 @@ export default function(router){
         //交易处理-手工结算
         '/manually-settlement/':{
             name:'manually-settlement',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/manually-settlement.vue'],resolve);
             }
@@ -48,6 +53,7 @@ export default function(router){
         //交易处理-手工结算
         '/manually-settlement-batchpay/':{
             name:'manually-settlement-batchpay',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/manually-settlement-batchpay.vue'],resolve);
             }
@@ -55,6 +61,7 @@ export default function(router){
         //交易处理-调账管理
         '/adjust-trade-detailpre/':{
             name:'adjust-trade-detailpre',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/adjust-trade-detailpre.vue'],resolve);
             }
@@ -62,6 +69,7 @@ export default function(router){
         //交易处理-调账管理-调账明细
         '/adjust-trade-detailpre-list/:adjustTradeDetailPreId':{
             name:'adjust-trade-detailpre-list',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/adjust-trade-detailpre-list.vue'],resolve);
             }
@@ -69,6 +77,7 @@ export default function(router){
         //交易处理-交易白名单
         '/white-lists/':{
             name:'white-lists',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/white-lists.vue'],resolve);
             }
@@ -76,6 +85,7 @@ export default function(router){
         //交易处理-异常交易
         '/Abnormal-transaction/':{
             name:'Abnormal-transaction',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/Abnormal-transaction.vue'],resolve);
             }
@@ -83,6 +93,7 @@ export default function(router){
         //手工单管理-列表查询
         '/manual-trade-detail/':{
             name:'manual-trade-detail',
+            router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/manual-trade-detail.vue'],resolve);
             }
@@ -90,6 +101,7 @@ export default function(router){
         //备付金支出-付款明细
         '/payment-details/:reserveCashOrderNumber/:payType/:merchantOperationIDs':{
             name:'payment-details',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/payment-details.vue'],resolve);
             }
@@ -97,6 +109,7 @@ export default function(router){
         //备付金支出-额度采购
         // '/limit-purchase-detail/:id':{
         //     name:'limit-purchase-detail',
+        //      router_type:"payment",
         //     component: function(resolve){
         //         require(['./views/PaymentOfPayment/limit-purchase-detail.vue'],resolve);
         //     }
@@ -104,6 +117,7 @@ export default function(router){
         //备付金支出-退税管理
         '/subsidy-management':{
             name:'subsidy-management',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/subsidy-management.vue'],resolve);
             }
@@ -111,6 +125,7 @@ export default function(router){
         //备付金支出-退税管理-待划付明细
         '/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs/:unpaidYe':{
             name:'unpaid-amount',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/unpaid-amount.vue'],resolve);
             }
@@ -118,6 +133,7 @@ export default function(router){
         //备付金支出-退税管理-已划付明细
         '/paid-amount/:paidId/:paidHd/:paidSh':{
             name:'paid-amount',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/paid-amount.vue'],resolve);
             }
@@ -125,6 +141,7 @@ export default function(router){
         //备付金支出-退税管理-批量提现
         '/subsidy-management-batchpay':{
             name:'subsidy-management-batchpay',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/subsidy-management-batchpay.vue'],resolve);
             }
@@ -132,6 +149,7 @@ export default function(router){
         //备付金支出-预付款划付
         '/advance-payment-detail/:advanceId':{
             name:'advance-payment-detail',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/advance-payment-detail.vue'],resolve);
             }
@@ -139,6 +157,7 @@ export default function(router){
         //备付金支出-划付复核
         '/pay-recheck/:recheckId':{
             name:'pay-recheck',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/pay-recheck.vue'],resolve);
             }
@@ -146,6 +165,7 @@ export default function(router){
         //备付金支出-补贴划付
         '/subsidy-appropriation/:subsidyPayID/:subsidySHid/:subsidyHDid':{
             name:'subsidy-appropriation',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/subsidy-appropriation.vue'],resolve);
             }
@@ -153,6 +173,7 @@ export default function(router){
         //备付金支出-补贴退税
         '/subsidy-tax-rebate/:subsidyTaxRebateID':{
             name:'subsidy-tax-rebate',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/PaymentOfPayment/subsidy-tax-rebate.vue'],resolve);
             }
@@ -160,6 +181,7 @@ export default function(router){
         /* 三方管理-账户列表 */
         '/third-party/':{
             name:'third-party',
+            router_type:"third",
             component: function(resolve){
                 require(['./views/ThreeParty/third-party.vue'],resolve);
             }
@@ -167,6 +189,7 @@ export default function(router){
         /* 三方管理-账户明细 */
         '/third-info/:id/:serialNumber':{
             name:'third-info',
+            router_type:"third",
             component: function(resolve){
                 require(['./views/ThreeParty/third-info.vue'],resolve);
             }
@@ -174,6 +197,7 @@ export default function(router){
         /* 商户管理-商户列表 */
         '/business-lists/':{
             name:'business-lists',
+            router_type:"business",
             component: function(resolve){
                 require(['./views/BusinessManagement/business-lists.vue'],resolve);
             }
@@ -188,6 +212,7 @@ export default function(router){
         /* 商户管理-商户列表-活动管理-发票账户明细 */
         '/invoice-account-detail/:invoiceHDid/:invoiceBTid':{
             name:'invoice-account',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/BusinessManagement/invoice-account-detail.vue'],resolve);
             }
@@ -195,6 +220,7 @@ export default function(router){
         /* 商户管理-商户列表-活动管理-暂扣税金账户明细 */
         '/suspension-tax-account-detail/:suspensionHDid/:suspensionBTid':{
             name:'suspension-tax',
+            router_type:"payment",
             component: function(resolve){
                 require(['./views/BusinessManagement/suspension-tax-account-detail.vue'],resolve);
             }
@@ -223,6 +249,7 @@ export default function(router){
         /* 商户管理-预付款 */
         '/prepayment-lists/':{
             name:'prepayment-lists',
+            router_type:"business",
             component: function(resolve){
                 require(['./views/BusinessManagement/prepayment-lists.vue'],resolve);
             }
@@ -230,6 +257,7 @@ export default function(router){
         /* 商户管理-预付款门店管理 */
         '/prepayment-store/:id/:storeMerchantName':{
             name:'prepayment-store',
+            router_type:"business",
             component: function(resolve){
                 require(['./views/BusinessManagement/prepayment-store.vue'],resolve);
             }
@@ -237,6 +265,7 @@ export default function(router){
         /* 商户管理-预付款账户明细 */
         '/prepayment-info/:id/:orderNumber':{
             name:'prepayment-info',
+            router_type:"business",
             component: function(resolve){
                 require(['./views/BusinessManagement/prepayment-info.vue'],resolve);
             }
@@ -244,6 +273,7 @@ export default function(router){
         /* 活动管理-活动列表 */
         '/activity-lists/:operationID/:name':{
             name:'activity-lists',
+            router_type:"activity",
             component: function(resolve){
                 require(['./views/Activity/activity-lists.vue'],resolve);
             }
@@ -251,6 +281,7 @@ export default function(router){
         /* 活动管理-活动列表-计算公式 */
         '/activity-formulae/:activityID/:subCompanyID':{
             name:'activity-formulae',
+            router_type:"activity",
             component: function(resolve){
                 require(['./views/Activity/activity-formulae.vue'],resolve);
             }
@@ -258,6 +289,7 @@ export default function(router){
         // 活动执行表管理
         '/activity-effect-lists/': {
             name: 'activity-effect-lists',
+            router_type:"activity",
             component: function (resolve) {
                 require(['./views/Activity/activity-effect-lists.vue'], resolve);
             }
@@ -265,6 +297,7 @@ export default function(router){
         // 税率管理
         '/taxRate/':{
             name:'taxRate',
+            router_type:"activity",
             component:function (resolve) {
                 require(['./views/Activity/taxRate.vue'],resolve);
             }
@@ -272,6 +305,7 @@ export default function(router){
         /* 系统配置-员工管理 */
         '/user-managerment/':{
             name:'user-managerment',
+            router_type:"user",
             component: function(resolve){
                 require(['./views/SystemConfiguration/user-managerment.vue'],resolve);
             }
@@ -279,6 +313,7 @@ export default function(router){
         /* 系统配置-日志管理 */
         '/log-management/':{
             name:'log-management',
+            router_type:"user",
             component: function(resolve){
                 require(['./views/SystemConfiguration/log-management.vue'],resolve);
             }
@@ -286,6 +321,7 @@ export default function(router){
         /* 系统配置-日志管理 */
         '/uploadForm/':{
             name:'uploadForm',
+            router_type:"user",
             component: function(resolve){
                 require(['./views/uploadForm.vue'],resolve);
             }
@@ -306,6 +342,7 @@ export default function(router){
     });
     router.afterEach((transition) =>{
         Message.hide();
+        window.routerType = transition.to.matched[0].handler.router_type
         if(back_json.num==0){
             back_json.isback=true;
         }
