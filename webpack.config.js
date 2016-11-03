@@ -57,12 +57,12 @@ module.exports = {
 	plugins:[
 		// new ProgressBarPlugin(),
 		new ExtractTextPlugin('app.css'),
-		new webpack.optimize.UglifyJsPlugin({
-			minimize: true,
-			compress: {
-				warnings: false,
-			},
-		}),
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	minimize: true,
+		// 	compress: {
+		// 		warnings: false,
+		// 	},
+		// }),
 		new webpack.ProgressPlugin(function (percentage, msg) {
 	      console.log( Math.round(percentage * 100) + '% ---> ' + msg)
 	    }),
