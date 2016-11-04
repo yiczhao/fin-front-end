@@ -2,6 +2,7 @@ module.exports = [
     {
         name: '首页',
         icon: 'icon-home',
+        type:'default',
         sub_menu: [
             {name: '首页', link: 'default'}
         ]
@@ -10,6 +11,7 @@ module.exports = [
         name: '账户管理',
         icon: ' icon-user',
         ksa:'account_manage',
+        type:'account',
         sub_menu: [
             {name: '账户管理', link: 'account-management',ksa:'account_manage'}
         ]
@@ -17,6 +19,7 @@ module.exports = [
     {
         name: '交易管理',
         icon: 'icon-transmission',
+        type:'trade',
         sub_menu: [
             {name: '交易管理', link: 'trade-info',ksa:'trade_detail_manage'},
         ]
@@ -24,6 +27,7 @@ module.exports = [
     {
         name: '备付金支出',
         icon: 'icon-coin-yen',
+        type:'payment',
         sub_menu: [
             {name: '备付金支出', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
         ]
@@ -31,6 +35,7 @@ module.exports = [
     {
         name: '商户管理',
         icon: 'icon-table2',
+        type:'business',
         sub_menu: [
             {name: '商户管理', link: 'business-lists',ksa:'merchant_manage'},
         ]
@@ -38,6 +43,7 @@ module.exports = [
     {
         name: '三方管理',
         icon: ' icon-users4',
+        type:'third',
         ksa:'third_party_account_manage',
         sub_menu: [
             {name: '三方管理', link: 'third-party',ksa:'third_party_account_manage'}
@@ -46,6 +52,7 @@ module.exports = [
     {
         name: '活动管理',
         icon: 'icon-flag3',
+        type:'activity',
         ksa:'activity_manage',
         sub_menu: [
             {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'},
@@ -54,6 +61,7 @@ module.exports = [
     {
         name: '系统配置',
         icon: ' icon-wrench',
+        type:'user',
         sub_menu: [
             {name: '员工管理', link: 'user-managerment',ksa:'user_manage'},
         ]

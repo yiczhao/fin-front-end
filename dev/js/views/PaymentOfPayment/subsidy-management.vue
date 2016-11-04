@@ -29,8 +29,8 @@
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                            <input type="text" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.activityOperationID" v-limitids="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" v-limitids="defaultData.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）">
                             <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名称">
                         </form>
@@ -226,11 +226,11 @@
                 >
                     <div class="form-group">
                         <label style="position: relative;top: -95px;" class="control-label">活动ID：</label>
-                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-model="batchData.activityOperationID"></textarea>
+                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationID" v-model="batchData.activityOperationID"></textarea>
                     </div>
                     <div class="form-group">
                         <label style="position: relative;top: -95px;" class="control-label">商户ID：</label>
-                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-model="batchData.merchantOperationID"></textarea>
+                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationID" v-model="batchData.merchantOperationID"></textarea>
                     </div>
                     <div class="form-group tc">
                         <a @click="batchApplyNext" class="btn btn-primary">下一步</a>
