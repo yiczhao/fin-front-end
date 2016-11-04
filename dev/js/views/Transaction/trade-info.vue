@@ -43,7 +43,7 @@
                             <option value="4">自定义时间</option>
                         </select>
 
-                        <div  v-show="checkForm.timeRange==4">
+                        <div  v-show="checkForm.timeRange==4" class="inline">
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
@@ -164,7 +164,7 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <template v-if="trlist.type==2">
+                                    <template v-if="trlist.type==2||trlist.type==3">
                                         <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
                                     </template>
                                 </td>

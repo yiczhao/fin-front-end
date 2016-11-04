@@ -28,7 +28,7 @@
                                 <option value="4">其他</option>
                             </select>
 
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(subCompanyID)">
+                            <select class="form-control" v-model="checkForm.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
@@ -44,7 +44,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
 
-                            <div v-show="checkForm.dateS==4">
+                            <div v-show="checkForm.dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -235,7 +235,10 @@
                             </thead>
                             <tr v-show="listinfos!=''&&listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createDate | datetimes}}</td>
-                                <td>{{trlist.payAmount/100 | currency '' }}</td>
+                                <td>
+                                    <span v-if="listinfos[0].purpose=='3'">{{trlist.suspensionTaxAmount/100 | currency '' }}</span>
+                                    <span v-else>{{trlist.payAmount/100 | currency '' }}</span>
+                                </td>
                                 <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                                 <td>
                                     <template v-if="trlist.purpose==1"> 补贴划付</template>
@@ -434,7 +437,10 @@
                     });
             },
             initList(){
-                $(".modal").modal("hide");
+                this.modal_waring = false;
+                this.modal_submit= false;
+                this.list_info= false;
+                this.modal_checking=false;
                 $(".check-boxs").prop({'checked':false})
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date('1')[0];
@@ -506,7 +512,7 @@
             update(a){
                 this.waring = '你确认更新账单？';
                 this.accountId=a;
-                this.modal_waring
+                this.modal_waring= true;
             },
             pay(a){
                 this.waring = '你确认划付账单？';
@@ -537,7 +543,7 @@
             close(a){
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
-                this.modal_waring = false;
+                this.modal_waring = true;
             },
 //            delBtn(a,b){
 //                this.waring = '你确认删除该订单流水？';
@@ -630,7 +636,6 @@
                                 if(response.data.code==0){
                                     this.initList();
                                     dialogs('success','已申请！');
-                                    this.modal_waring = true;
                                 }
                         })
             },
@@ -694,11 +699,4 @@
             this.initList();
         }
     }
-    // Collapse on click
-    $(document).on('click','.table .morebtn',function (e) {
-        e.preventDefault();
-        var $categoryCollapse = $(this).closest('tr').next();
-        $(this).find('i').toggleClass('glyphicon-minus');
-        $categoryCollapse.slideToggle(150);
-    });
 </script>

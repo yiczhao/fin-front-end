@@ -135,7 +135,7 @@
                                        data-ksa="manual_trade_detail.pass">通过</a>
                                     <a v-if="manualTradeDetail.status==2" @click="refused(manualTradeDetail.id)"
                                        data-ksa="manual_trade_detail.back">退回</a>
-                                    <a v-if="manualTradeDetail.status==1 || manualTradeDetail.status==4"
+                                    <a v-if="manualTradeDetail.status==4"
                                        @click="deleteManualTradeDetail(manualTradeDetail.id)"
                                        data-ksa="manual_trade_detail.delete">删除</a>
                                 </td>

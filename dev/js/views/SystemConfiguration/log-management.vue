@@ -29,7 +29,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
 
-                                <div v-show="checkForm.timeRange==4">
+                                <div v-show="checkForm.timeRange==4" class="inline">
                                     <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                     <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                                 </div>
@@ -57,7 +57,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-if="!!logList.length" v-for="(index,log) in logList" v-bind:class="{'odd':(index%2==0)}">
+                        <tr v-for="(index,log) in logList" v-bind:class="{'odd':(index%2==0)}">
                             <td>{{index+1}}</td>
                             <td>{{log.userName}}</td>
                             <td>{{log.name}}</td>
@@ -104,7 +104,7 @@
                             </div>
                             <div>
                                 <label style="position: relative;top: -25px;">描述：</label>
-                                <textarea  v-if="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
+                                <textarea  v-show="log.uri!=''" class="textarea-w">{{log.uri | geturl descriptions}}</textarea>
                             </div>
                             <div>
                                 <label style="position: relative;top: -80px;">详情：</label>

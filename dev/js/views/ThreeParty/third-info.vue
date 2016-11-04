@@ -20,7 +20,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
 
-                            <div  v-show="defaultData.dateS==4">
+                            <div  v-show="defaultData.dateS==4" class="inline">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitaddprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>

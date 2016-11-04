@@ -110,7 +110,7 @@
 
                 <content-dialog
                         :show.sync="modal_applyPay" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'划款账户'" 
+                        :title.sync="'税金提现'"
                 >
                     <div class="modal-body">
                         <div class="form-group">
@@ -144,7 +144,6 @@
                         </div>
                     </div>
                 </content-dialog>
-
                 <content-dialog
                         :show.sync="modal_recharge" :is-button="false" :type.sync="'infos'"
                         :title.sync="'发票充值'" 
@@ -185,7 +184,6 @@
                         </div>
                     </validator>
                 </content-dialog>
-
 
             </div>
         </div>
@@ -300,6 +298,7 @@ table tr th,table tr td{
                     payType:''
                 };
                 this.applyData.id=id;
+                this.applyText='';
                 let data={
                     id:id,
                 }
@@ -346,6 +345,9 @@ table tr th,table tr td{
                     certificateId:''
                 },
                 this.rechargeData.subsidyAccountID=id;
+                this.uploadText='';
+                this.errortext='';
+                this.fire=false;
                 this.rechargeInfo.val1=this.balance.merchantName;
                 this.rechargeInfo.val2=activityName;
                 this.rechargeInfo.val3=invoiceAmount;

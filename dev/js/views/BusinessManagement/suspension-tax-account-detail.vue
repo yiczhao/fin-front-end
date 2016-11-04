@@ -22,7 +22,7 @@
                                     <option value="4">自定义时间</option>
                                 </select>
 
-                                <div  v-show="defaultData.dateS==4">
+                                <div  v-show="defaultData.dateS==4" class="inline">
                                     <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                                 format="YYYY-MM-DD"></datepicker>
                                     至

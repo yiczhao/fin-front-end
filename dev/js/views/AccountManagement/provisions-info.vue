@@ -8,25 +8,19 @@
         <div class="content " slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
-                    <div class="heading-left">
-
-                    </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
+                            <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-
-                            <div v-show="checkForm.dateS==4">
+                            <div v-show="dateS==4" class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-
                             <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
 
                             <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="收款方、账户名、账号">
@@ -125,10 +119,6 @@
                 </div>
 
                 <div class="datatable-bottom">
-                   <div class="left">
-                        <a class="icon-file-excel" style="line-height: 30px;">Excel导出</a>
-                   </div>
-
                    <div class="right">
                         <page :all="pageall"
                               :cur.sync="checkForm.pageIndex"
@@ -282,7 +272,6 @@
             </content-dialog>
 
             </div>
-            </div>
         </div>
     </index>
 </template>
@@ -381,7 +370,6 @@
                 loginList:{},
                 zdlists:[],
                 dzList:{},
-                dz_show:false,
                 pageall:1,
                 accountId:'',
                 checkOne:false,
@@ -391,8 +379,8 @@
                 aname:'',
                 balance:'',
                 subCompanyID:'',
+                dateS:'3',
                 checkForm:{
-                    dateS:'3',
                     accountId:'',
                     certificate:'',
                     keyword:'',
@@ -453,14 +441,11 @@
             duizhang(a){
                 this.cleardz();
                 this.$set('dzList', a);
-                this.dz_show=true;
+                this.errortext='';
                 this.modal_fzr=true;//
             },
             checkNew(){
                 this.initList();
-            },
-            close_dialog() {
-                this.dz_show = false;
             },
             initList(){
                 this.modal_fzr = false;//
@@ -516,8 +501,8 @@
                 }
             },
             getTime(){
-                this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
-                this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
             },
             getBalance(){
                 this.model.getBalance(this.subCompanyID).then((res)=>{
@@ -549,7 +534,7 @@
 
         },
         watch:{
-            zdlists(){
+            'zdlists'(){
                 this.model.incomeAndPayoutAmount(this.checkForm)
                         .then((response)=>{
                             if(response.data.code==0){
@@ -561,9 +546,6 @@
             'checkForm.pageSize + checkForm.pageIndex'(){
                 this.initList();
             }
-        },
-        validators: {
-
         }
     }
 </script>

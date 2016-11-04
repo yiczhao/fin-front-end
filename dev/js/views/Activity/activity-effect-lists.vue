@@ -245,7 +245,7 @@
                     'year':'',
                     'startMonth':'',
                     'endMonth':'',
-                    'startDate':'',
+                    'startDate':firstMonth(),
                     'endDate':'',
                     'pageIndex': 1,
                     'pageSize': 10,

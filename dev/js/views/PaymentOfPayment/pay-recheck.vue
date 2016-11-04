@@ -26,7 +26,7 @@
                                 <option value="4">其他</option>
                             </select>
 
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(subCompanyID)">
+                            <select class="form-control" v-model="checkForm.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
@@ -56,7 +56,7 @@
                                 <option value="4">自定义时间</option>
                             </select>
 
-                            <div v-show="checkForm.timeRange==4">
+                            <div v-show="checkForm.timeRange==4" class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -200,23 +200,24 @@
                     :show.sync="detailshow" :is-button="false" :type.sync="'infos'"
                     :title.sync="'详情'"
             >
+                <template  v-show="listinfos!=''">
                 <div class="form-group dcontent">
                     <table class="table main-table">
                         <thead>
                         <tr role="row">
                             <th>生成日期</th>
                             <th>划付金额</th>
-                            <th  v-if="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
+                            <th  v-show="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
                             <th>用途</th>
                             <th>操作</th>
                             <th>状态</th>
                             <th>备注</th>
                         </tr>
                         </thead>
-                        <tr v-if="listinfos!=''" class="div-table" v-for="trlist in listinfos">
+                        <tr class="div-table" v-for="trlist in listinfos">
                             <td>{{trlist.createTime | datetimes}}</td>
                             <td>{{trlist.payAmount/100 | currency '' }}</td>
-                            <td  v-if="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                            <td  v-show="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                             <td>
                                 <template v-if="trlist.purpose==1">补贴划付</template>
                                 <template v-if="trlist.purpose==2">额度采购</template>
@@ -247,10 +248,11 @@
                             <td>{{trlist.remarks}}</td>
                         </tr>
                     </table>
-                    <div class="no-list"  v-if="!listinfos.length" v-cloak>
+                    <div class="no-list"  v-show="!listinfos.length" v-cloak>
                         未找到数据
                     </div>
                 </div>
+                </template>
             </content-dialog>
         </div>
     </index>

@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitaddprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -437,6 +437,7 @@
             },
             initList(){
                 this.modal_add=false;
+                $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },

@@ -3,12 +3,10 @@
  */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
-module.exports = {
-	resolve: {
-		alias: {
+// var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
-		}
-	},
+module.exports = {
+	
 	entry:{
 		app:__dirname+'/dev/js/app.js',
 		jquery: __dirname+'/dev/js/assets/jQuery.min.js',
@@ -21,7 +19,7 @@ module.exports = {
 		publicPath: '/dist/'
 	},
 	module:{
-		noParse: [],
+
 		loaders:[
 			{
                 test: /\.scss$/,
@@ -41,6 +39,7 @@ module.exports = {
 		        // for normal use cases only node_modules is needed.
 		        exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
 		        loader: 'babel'
+		        
 	        },
             // {test: /\.(js|tag)$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
@@ -49,15 +48,24 @@ module.exports = {
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/octet-stream"},
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
-		],
-		devtool: 'source-map'
+		]
 	},
 	babel: {
         presets: ['es2015', 'stage-0'],
         plugins: ['transform-runtime']
     },
 	plugins:[
+		// new ProgressBarPlugin(),
 		new ExtractTextPlugin('app.css'),
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	minimize: true,
+		// 	compress: {
+		// 		warnings: false,
+		// 	},
+		// }),
+		new webpack.ProgressPlugin(function (percentage, msg) {
+	      console.log( Math.round(percentage * 100) + '% ---> ' + msg)
+	    }),
 		new webpack.ProvidePlugin({
 			_: 'lodash',
 			swal: 'sweetalert',

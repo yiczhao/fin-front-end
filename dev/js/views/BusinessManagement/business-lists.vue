@@ -17,9 +17,9 @@
                         <form class="form-inline manage-form">
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                            <input type="text" debounce="300" class="form-control" v-model="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
+                            <input type="text" class="form-control" v-model="defaultData.startValue" v-limitnumber="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
                             <span>至</span>
-                            <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
+                            <input type="text" class="form-control" v-model="defaultData.endValue" v-limitnumber="defaultData.endValue" placeholder="佣金值">
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
@@ -179,13 +179,13 @@
                         :show.sync="modal_control" :is-button="false" :type.sync="'infos'"
                         :title.sync="'划款账户'" 
                 >
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding-top: 0;">
                         <div>
                             <span>商户ID：{{controllist.merchantOperationID}}</span>
                             <span>商户名：{{controllist.merchantName}}</span>
                             <a class="updatebtn" @click="modal_updata" href="javascript:void(0);">更新</a>
                         </div>
-                        <div  v-if="relist!=''" class="mt35">
+                        <div  v-if="relist!=''" class="mt35" style="margin-top: 5px;">
                             <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
                             <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
                             <table v-if="index!=0&&relist.length>0" class="table dataTable">
@@ -472,6 +472,7 @@
             },
             modal_updata(){
                 this.errortext='';
+                this.updateBtn(this.relist[0]);
                 this.modal_updatas = true;
             },
             uploadClick(){
