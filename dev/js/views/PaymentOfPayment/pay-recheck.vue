@@ -1,10 +1,14 @@
 <template>
     <index title="划付复核" ptitle="备付金支出"  isshow="isshow">
-        <div class="content" slot="content">
+        <div class="content pay-recheck" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" @click="batchsBtn" data-ksa="pay_recheck.pass">批量复核</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form"> 
                             <select class="form-control" v-model="checkForm.payType">
                                 <option value="">全部付款方式</option>
                                 <option value="1">备付金账户</option>
@@ -12,14 +16,12 @@
                                 <option value="3">银行结算</option>
                                 <option value="4">其他</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(subCompanyID)">
+
+                            <select class="form-control" v-model="checkForm.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.purpose">
                                 <option value="">全部用途</option>
                                 <option value="1">补贴划付</option>
@@ -28,16 +30,14 @@
                                 <option value="4">预付款</option>
                                 <option value="2">额度采购</option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">全部状态</option>
                                 <option value="7">等待复核</option>
                                 <option value="9">复核通过</option>
                                 <option value="8">复核不通过</option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.timeRange">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
@@ -46,40 +46,31 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                        </div>
-                        <div class="form-group" v-show="checkForm.timeRange==4">
-                            <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                        </div>
-                        <div class="form-group">
+
+                            <div v-show="checkForm.timeRange==4" class="inline">
+                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                            </div>
+
                             <input type="text" class="form-control" v-model="checkForm.id" placeholder="请输入ID" v-limitnumber="checkForm.id">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="请输入商户ID" v-limitnumber="checkForm.merchantOperationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.keywords"  placeholder="商户名/收款账户名/账号">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="请输入备注关键词">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" placeholder="请输入活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="query" data-ksa="pay_recheck.search">查询</a>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="payRecheckexcel" data-ksa="pay_recheck.export">导出</a>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="batchsBtn" data-ksa="pay_recheck.pass">批量复核</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="pay_recheck.search">查询</a>
+                    </div>
                 </div>
-                <div v-if="recheckLists.length>0" class="dataTables_wrapper">
-                    <div class="datatable-scroll" v-show="!!recheckLists.length">
+
+                <div v-show="recheckLists.length>0" class="dataTables_wrapper">
+                    <div class="datatable-scroll">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -106,7 +97,7 @@
                                     <th>不通过原因</th>
                                 </tr>
                             </thead>
-                            <tr v-for="n in recheckLists">
+                            <tr v-for="(index,n) in recheckLists" v-bind:class="{'odd':(index%2==0)}">
                                 <td><input v-if="n.status==7" type="checkbox" @click="checked(n.ischeck,n.id)" v-model="n.ischeck"/></td>
                                 <td>{{n.id }}</td>
                                 <td>{{n.createTime | datetime}}</td>
@@ -154,24 +145,36 @@
                                 <td>{{n.remarks}}</td>
                                 <td>{{n.refuseReason}}</td>
                             </tr>
-                            <tr><td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
-                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td>
-                                <td></td><td></td><td></td><td></td></tr>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
                         </table>
                     </div>
+
+                    <div class="datatable-bottom">
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="payRecheckexcel" data-ksa="pay_recheck.export">Excel导出</a>
+                        </div>
+
+                        <div class="right">
+                            <page v-show="recheckLists.length>0" :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                        </div>
+                    </div>
                 </div>
-                <page v-if="recheckLists.length>0" :all="pageall"
-                      :cur.sync="checkForm.pageIndex"
-                      :page_size.sync="checkForm.pageSize">
-                </page>
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!recheckLists.length>0" v-cloak>
-                    未找到数据
+
+                <div class="no-list" v-show="!recheckLists.length>0" v-cloak>
+                    未查询到数据！
                 </div>
             </div>
             <content-dialog
-                    :show.sync="show" :is-cancel="true" :type.sync="'primary'"
+                    :show.sync="show" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="dtitle" @kok="backPass" @kcancel="show = false"
             >
                 <div class="form-group dcontent" v-show="dtitle=='退回'">
@@ -185,16 +188,17 @@
                 </div>
             </content-dialog>
             <content-dialog
-                    :show.sync="detailshow" :is-button="false" :type.sync="'primary'"
+                    :show.sync="detailshow" :is-button="false" :type.sync="'infos'"
                     :title.sync="'详情'"
             >
+                <template  v-show="listinfos!=''">
                 <div class="form-group dcontent">
-                    <table class="table main-table" v-if="listinfos!=''">
+                    <table class="table main-table">
                         <thead>
                         <tr role="row">
                             <th>生成日期</th>
                             <th>划付金额</th>
-                            <th  v-if="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
+                            <th  v-show="listinfos!=''&&(listinfos[0].purpose==1||listinfos[0].purpose==3)">暂扣税金</th>
                             <th>用途</th>
                             <th>操作</th>
                             <th>状态</th>
@@ -204,7 +208,7 @@
                         <tr class="div-table" v-for="trlist in listinfos">
                             <td>{{trlist.createTime | datetimes}}</td>
                             <td>{{trlist.payAmount/100 | currency '' }}</td>
-                            <td  v-if="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                            <td  v-show="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                             <td>
                                 <template v-if="trlist.purpose==1">补贴划付</template>
                                 <template v-if="trlist.purpose==2">额度采购</template>
@@ -235,38 +239,15 @@
                             <td>{{trlist.remarks}}</td>
                         </tr>
                     </table>
-
-                    <div style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                    <div class="no-list"  v-show="!listinfos.length" v-cloak>
                         未找到数据
                     </div>
                 </div>
+                </template>
             </content-dialog>
         </div>
     </index>
 </template>
-<style lang="sass">
-    .dcontent{
-        overflow: hidden;
-        margin-bottom: 0px;
-        .dtitle{
-            text-align: center;
-            padding-bottom: 15px;
-            color:black;
-        }
-        .control-label {
-            i{
-                color:red
-            }
-        }
-        .error{
-            border-color:red;
-        }
-        .validation-error-label{
-            font-size: 13px;
-            margin-top: 15px;
-        }
-    }
-</style>
 <script>
     import model from '../../ajax/PaymentOfPayment/payrecheck_model'
 

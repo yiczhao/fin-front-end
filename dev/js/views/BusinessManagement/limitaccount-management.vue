@@ -16,8 +16,9 @@
                         <span v-if="zdlists.length>0">剩余额度：{{nums.val4}}</span>
                     </div>
                 </div>
-                <div class="dataTables_wrapper no-footer">
-                    <div v-if="zdlists.length>0"  class="datatable-scroll">
+
+                <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer">
+                    <div  class="datatable-scroll">
                         <table class="table">
                             <thead>
                             <tr role="row">
@@ -37,7 +38,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="trlist in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.id}}</td>
                                 <td>{{trlist.accountName}}</td>
                                 <td>{{ trlist.totalLimit/100 | currency '' }}</td>
@@ -54,16 +55,26 @@
                             </tr>
                             </tbody>
                         </table>
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                        <div class="datatable-bottom">
+                           <div class="left">
+                                <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
+                           </div>
+
+                           <div class="right">
+                                <page :all="pageall"
+                                      :cur.sync="defaultData.pageIndex"
+                                      :page_size.sync="defaultData.pageSize">
+                                </page>
+                           </div>
+                        </div>
                     </div>
                     <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                         未找到数据
                     </div>
                 </div>
             </div>
+
             <validator name="vali">
                 <form novalidate>
                     <div id="modal_pay" data-backdrop="static"  class="modal fade" style="display: none;">

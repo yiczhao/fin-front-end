@@ -1,30 +1,32 @@
 <template>
     <index title="员工管理" ptitle="系统配置"  isshow="isshow">
-        <div class="content" slot="content">
+        <div class="content user-managerment" slot="content">
             <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <form class="form-inline manage-form">
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" v-model="checkForm.subCompanyID" >
-                                        <option value="">全部分公司</option>
-                                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、手机号、姓名">
-                                </div>
-                                <div class="form-group">
-                                    <a class="btn btn-info" v-on:click="query" data-ksa="user_manage.search">查询</a>
-                                </div>
-                            </form>
-                        </div>
-                        <div v-cloak v-show="!!userList.length" class="dataTables_wrapper no-footer">
-                            <div class="datatable-scroll">
-                                <table id="table1" class="table">
-                                <thead>
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" v-on:click="addUser" data-ksa="user_manage.import">导入员工</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="checkForm.subCompanyID" >
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+
+                            <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="用户名、手机号、姓名">
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="user_manage.search">查询</a>
+                    </div>
+                </div>
+
+                <div v-show="!!userList.length" class="dataTables_wrapper no-footer">
+                    <div class="datatable-scroll">
+                        <table id="table1" class="table">
+                            <thead>
                                 <tr>
                                     <th>序号</th>
                                     <th>分公司</th>
@@ -34,9 +36,9 @@
                                     <th>最后登录时间</th>
                                     <th>操作</th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(index,user) in userList">
+                            </thead>
+                            <tbody>
+                                <tr v-for="(index,user) in userList" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{user.subCompanyName}}</td>
                                     <td>{{user.name}}</td>
@@ -44,55 +46,73 @@
                                     <td>{{user.name}}</td>
                                     <td>{{user.loginTime | datetime}}</td>
                                     <td>
-                                        <a data-toggle="modal" data-target="#modal_ControlSpan" @click="showCS(user.id)" data-ksa="user_manage.control_span">管辖范围</a>
+                                        <a  @click="showCS(user.id)" data-ksa="user_manage.control_span">管辖范围</a>
                                     </td>
                                 </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                            <div class="datatable-footer">
-                                <page :all="pageall"
-                                      :cur.sync="checkForm.pageIndex"
-                                      :page_size.sync="checkForm.pageSize">
-                                </page>
-                            </div>
-                        </div>
-                        <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="datatable-bottom">
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
+                    </div>
+                </div>
+
+                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到员工数据信息！
                 </div>
-                        <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
-                            <div class="modal-dialog mg">
-                                <div class="modal-content">
-                                     <div class="modal-header">
-                                        <h3>管辖范围</h3>
-                                        <button type="button" class="close" data-dismiss="modal">×</button>
-                                     </div>
-                                     <div class="modal-body">
-                                         <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
-                                         <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
-                                         <hr/>
-                                         <div class="controlSpan" v-for="controlSpan in controlSpanList">
-                                             <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
-                                             <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
-                                         </div>
-                                     </div>
-                                     <div class="modal-foot">
-                                        <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
-                                        <input type="button" class="btn btn-gray" data-dismiss="modal" value="取消">
-                                     </div>
-                                </div>
-                            </div>
-                        </div>
 
-                <!--导入员工dialog-->
-                <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
+                <content-dialog
+                        :show.sync="modal_ControlSpan" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'管辖范围'" @kok="submit" @kcancel="modal_ControlSpan = false"
+                        >
+                         <div class="modal-body">
+                             <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                             <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
+                             <hr/>
+                             <div class="controlSpan" v-for="controlSpan in controlSpanList">
+                                 <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+                                 <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
+                             </div>
+                         </div>
+                </content-dialog>
+
+<!--                 <div id="modal_ControlSpan" data-backdrop="static" class="modal fade" style="display: none;">
+                    <div class="modal-dialog mg">
                         <div class="modal-content">
-                            <div class="modal-header">
+                             <div class="modal-header">
+                                <h3>管辖范围</h3>
                                 <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">导入员工</h5>
-                            </div>
-                            <div class="modal-body">
+                             </div>
+                             <div class="modal-body">
+                                 <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                                 <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
+                                 <hr/>
+                                 <div class="controlSpan" v-for="controlSpan in controlSpanList">
+                                     <input type="checkbox" :id="controlSpan.subCompanyID" name="ckbox"  :checked="controlSpan.selected"/>
+                                     <label :for="controlSpan.subCompanyID">{{controlSpan.name}}</label>   
+                                 </div>
+                             </div>
+                             <div class="modal-foot">
+                                <input type="button" class="btn btn-primary" v-on:click="submit" value="提交">
+                                <input type="button" class="btn btn-gray" data-dismiss="modal" value="取消">
+                             </div>
+                        </div>
+                    </div>
+                </div>
+ -->
+                <!--导入员工dialog-->
+                <content-dialog
+                        :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'导入员工'"  
+                >
+                            <div class="modal-body" style="width: 900px;">
                                 <div class="addtop">
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="userdata.subCompanyID">
@@ -121,7 +141,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr role="row" v-for="n in userlists">
+                                            <tr role="row" v-for="(index,n) in userlists" v-bind:class="{'odd':(index%2==0)}">
                                                 <td>
                                                     <label>
                                                         <input :value="n.operationID"
@@ -154,86 +174,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                </content-dialog>
+                
             </div>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    body{
-        background-color:#fff;
-    }
-    [v-cloak]{
-        display: none;
-    }
-    .datatable-scroll{
-        overflow:auto;
-    }
-    .page-bar{
-        margin: 25px auto;
-        text-align: center;
-    }
-    .box-body #table1 th{
-        min-width: 85px;
-    }
-    .controlSpan{
-        display: inline-block;
-        margin-right: 10px;
-    }
-    .modal-foot{
-        margin-bottom: 30px;
-        clear:both;
-        text-align: center;
-    }
-    .addbottom{
-        margin-top: 15px;
-        .col-md-2{
-            text-align: center;
-            input{
-                margin-bottom: 10px;
-            }
-        }
-        .col-md-7{
-            height: 300px;
-            overflow: auto;
-            border: 1px solid #ccc;
-        }
-        .col-md-1{
-            padding-top: 40px;
-            text-align: center;
-            width: 113px;
-            input{
-                margin:15px 0;
-            }
-        }
-        .col-md-4{
-            border: 1px solid #ccc;
-            padding:10px;
-            width: 243px;
-        }
-        ul{
-            list-style: none;
-            height: 278px;
-            overflow: auto;
-            li{
-                margin:5px 0;
-                cursor: pointer;
-                padding-left:3px;
-            }
-        }
-    }
-    .addbottom table tr td,  .addbottom table tr th{
-        padding: 2px;
-    }
-    .addtop,  .addbottom{
-        overflow: hidden;
-        .form-control{
-            padding: 7px;
-        }
-    }
-</style>
+
 <script>
     import model from '../../ajax/SystemConfiguration/user_model'
 
@@ -241,6 +188,8 @@
         data(){
             this.model =model(this)
             return{
+                modal_add: false,
+                modal_ControlSpan: false,
                 checkForm:{
                     subCompanyID:"",
                     keywords:"",
@@ -263,6 +212,7 @@
                 firstAdd:false
             }
         },
+
         methods:{
             //获取员工数据
              getUserList(data){
@@ -297,6 +247,7 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('controlSpanList', response.data.data) : null;
                         });
+                this.modal_ControlSpan = true;
             },
             checkAll(){
                 $("input[name='ckbox']").prop({'checked':true});
@@ -322,13 +273,14 @@
                         if (response.data.code==0)
                         {
                             dialogs("保存成功！");
+                            this.modal_ControlSpan = false;
                         }
                     });
                     //关闭弹出层
-                    $(".modal").modal("hide");
+                    //$(".modal").modal("hide");
             },
             addUser(){
-                $('#modal_add').modal('show');
+                this.modal_add = true;
                 this.firstAdd=false;
                 this.clearUl();
             },
@@ -409,7 +361,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 this.query();
-                                $('#modal_add').modal('hide');
+                                this.modal_add = false;
                                 dialogs('success','已添加！');
                             }
                         })

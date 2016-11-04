@@ -3,86 +3,79 @@
            :ptitle="'备付金支出'"
            :hname="'account-management'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content payment-details" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.payType">
-                                    <option value="1">备付金账户</option>
-                                    <option value="2">商户预付款账户</option>
-                                    <option value="3">银行结算</option>
-                                    <option value="4">其他</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(subCompanyID)">
-                                    <option value="">全部分公司</option>
-                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号" v-limitnumber="checkForm.orderNumber">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.dateS">
-                                    <option value="5">今天</option>
-                                    <option value="0">昨天</option>
-                                    <option value="1">最近一周</option>
-                                    <option value="2">最近一个月</option>
-                                    <option value="3">最近三个月</option>
-                                    <option value="4">自定义时间</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="checkForm.dateS==4">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" @click="batchs()" data-ksa="reserve_cash_order_manage.pay">一键划付</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="checkForm.payType">
+                                <option value="1">备付金账户</option>
+                                <option value="2">商户预付款账户</option>
+                                <option value="3">银行结算</option>
+                                <option value="4">其他</option>
+                            </select>
+
+                            <select class="form-control" v-model="checkForm.subCompanyID">
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+
+                            <input type="text" class="form-control" v-model="checkForm.orderNumber" placeholder="订单号" v-limitnumber="checkForm.orderNumber">
+
+                            <select class="form-control" v-model="checkForm.dateS">
+                                <option value="5">今天</option>
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+
+                            <div v-show="checkForm.dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.status">
-                                    <option value="">请选择对账状态</option>
-                                    <option value="2">等待划付</option>
-                                    <option value="3">转账中</option>
-                                    <option value="4">等待对账</option>
-                                    <option value="5">对账成功</option>
-                                    <option value="6">划付失败</option>
-                                    <option value="0">已关闭</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="checkForm.purpose">
-                                    <option value="">请选择用途</option>
-                                    <option value="1">补贴划付</option>
-                                    <!--<option value="2">额度采购</option>-->
-                                    <option value="3">退税划付</option>
-                                    <option value="4">预付款</option>
-                                    <option value="5">供货商划付</option>
-                                    <option value="10">税金提现</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
-                            </div>
-                            <div class="form-group">
-                                <a class="btn btn-info" @click="initList" data-ksa="reserve_cash_order_manage.search">查询</a>
-                            </div>
-                            <div class="form-group">
-                                <a class="btn btn-info" @click="payDetailexcel" data-ksa="reserve_cash_order_manage.export">导出</a>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <a class="btn btn-info" @click="batchs()" data-ksa="reserve_cash_order_manage.pay">一键划付</a>
-                            </div>
-                    </form>
+
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
+
+                            <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">
+
+                            <select class="form-control" v-model="checkForm.status">
+                                <option value="">请选择对账状态</option>
+                                <option value="2">等待划付</option>
+                                <option value="3">转账中</option>
+                                <option value="4">等待对账</option>
+                                <option value="5">对账成功</option>
+                                <option value="6">划付失败</option>
+                                <option value="0">已关闭</option>
+                            </select>
+
+                            <select class="form-control" v-model="checkForm.purpose">
+                                <option value="">请选择用途</option>
+                                <option value="1">补贴划付</option>
+                                <!--<option value="2">额度采购</option>-->
+                                <option value="3">退税划付</option>
+                                <option value="4">预付款</option>
+                                <option value="5">供货商划付</option>
+                                <option value="10">税金提现</option>
+                            </select>
+
+                            <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="reserve_cash_order_manage.search">查询</a>
+                    </div>
                 </div>
-                <div  v-if="zdlists.length>0" class="datatable-scroll" v-cloak>
-                    <table class="table main-table">
+
+                <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
+                    <div class="datatable-scroll">
+                        <table class="table main-table">
                         <thead>
                             <tr role="row">
                                 <th><input type="checkbox" class="check-all" @change="addAll($event)"></th>
@@ -108,7 +101,7 @@
                         </thead>
                         <tbody>
                         <template v-for="(index,n) in zdlists">
-                            <tr role="row">
+                            <tr role="row" v-bind:class="{'odd':(index%2==0)}">
                                 <td>
                                     <template v-if="n.status==2"><input type="checkbox" class="check-boxs" @change="addorderIDs($event,n.id)" :value="n.id"></template>
                                 </td>
@@ -149,16 +142,16 @@
                                         <a @click="getInfo(n)" data-ksa="reserve_cash_order_manage.detail">详情</a>
                                     </template>
                                     <template v-if="n.status==2">
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="pay(n.id)" data-ksa="reserve_cash_order_manage.pay">确认划付</a>
-                                        <a data-toggle="modal" data-target="#modal_submit" @click="back(n.id)" data-ksa="reserve_cash_order_manage.retrial">退回重审</a>
+                                        <a @click="pay(n.id)" data-ksa="reserve_cash_order_manage.pay">确认划付</a>
+                                        <a @click="back(n.id)" data-ksa="reserve_cash_order_manage.retrial">退回重审</a>
                                     </template>
                                     <template v-if="n.status==4">
-                                        <a data-toggle="modal" data-target="#modal_checking" @click="checking(n.id)" data-ksa="reserve_cash_order_manage.check">对账</a>
+                                        <a @click="checking(n.id)" data-ksa="reserve_cash_order_manage.check">对账</a>
                                     </template>
                                     <template v-if="n.status==6">
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="update(n.id)" data-ksa="reserve_cash_order_manage.update">更新订单</a>
+                                        <a @click="update(n.id)" data-ksa="reserve_cash_order_manage.update">更新订单</a>
                                         <a @click="applyTrue(n.id)" data-ksa="reserve_cash_order_manage.apply_pay">申请划付</a>
-                                        <a data-toggle="modal" data-target="#modal_waring" @click="close(n.id)" data-ksa="reserve_cash_order_manage.close">关闭订单</a>
+                                        <a @click="close(n.id)" data-ksa="reserve_cash_order_manage.close">关闭订单</a>
                                     </template>
                                 </td>
                                 <td>{{n.remarks}}</td>
@@ -180,46 +173,42 @@
                                 <td>{{n.refuseReason }}</td>
                             </tr>
                         </template>
-                        <tr role="row">
+                        <tr>
                             <td></td>
                             <td>合计：</td>
                             <td></td>
                             <td></td>
                             <td>{{total.payoutAmount/100 | currency ''}}</td>
-                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td> </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                         </tr>
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="payDetailexcel" data-ksa="reserve_cash_order_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page v-if="zdlists.length>0" :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
+                    </div>
                 </div>
-                <page v-if="zdlists.length>0" :all="pageall"
-                      :cur.sync="checkForm.pageIndex"
-                      :page_size.sync="checkForm.pageSize">
-                </page>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
                     未找到数据
                 </div>
             </div>
 
-            <div data-backdrop="static"  id="list_info" class="modal fade" style="display: none;">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                        </div>
-                        <div class="modal-body">
+            <content-dialog
+                    :show.sync="list_info" :is-button="false" :type.sync="'infos'"
+                    :title.sync="'详情'"
+                    >
+                    <div class="modal-body">
                         <table class="table main-table">
                             <thead>
                                 <tr role="row">
@@ -235,9 +224,12 @@
                                     <th>备注</th>
                                 </tr>
                             </thead>
-                            <tr v-if="listinfos!=null" class="div-table" v-for="trlist in listinfos">
+                            <tr v-show="listinfos!=''&&listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td>{{trlist.createDate | datetimes}}</td>
-                                <td>{{trlist.payAmount/100 | currency '' }}</td>
+                                <td>
+                                    <span v-if="listinfos[0].purpose=='3'">{{trlist.suspensionTaxAmount/100 | currency '' }}</span>
+                                    <span v-else>{{trlist.payAmount/100 | currency '' }}</span>
+                                </td>
                                 <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                                 <td>
                                     <template v-if="trlist.purpose==1"> 补贴划付</template>
@@ -269,216 +261,104 @@
                                 <td>未找到数据</td>
                             </tr>
                         </table>
-                        </div>
                     </div>
-                </div>
-            </div>
+            </content-dialog>
 
-            <div data-backdrop="static"  id="modal_waring" class="modal fade" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title" v-text="waring"></h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group tc">
-                                <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认划付账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
-                                <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
-                                <!--<button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>-->
-                                <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                            </div>
+            <content-dialog
+                    :show.sync="modal_waring" :is-button="false" :type.sync="'infos'"
+                    :title.sync="waring"
+                    >
+                    <div class="modal-body">
+                        <div class="form-group tc">
+                            <button  v-if="waring=='你确认更新账单？'" type="button" @click="updateTrue" class="btn btn-primary">确认</button>
+                            <button  v-if="waring=='你确认划付账单？'" type="button" @click="payTrue" class="btn btn-primary">确认</button>
+                            <button  v-if="waring=='你确认一键划付？'" type="button" @click="batchPay" class="btn btn-primary">确认</button>
+                            <button  v-if="waring=='你确认关闭该账单？'" type="button" @click="closeTrue" class="btn btn-primary">确认</button>
+                            <!--<button  v-if="waring=='你确认删除该订单流水？'" type="button" @click="delTrue" class="btn btn-primary">确认</button>-->
+                            <button type="button" class="btn btn-gray" @click="modal_waring=false">取消</button>
                         </div>
                     </div>
-                </div>
-            </div>
+            </content-dialog>
 
-            <div data-backdrop="static"  id="modal_submit" class="modal fade" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title" v-text="title"></h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" v-if="subtitle=='退回重审'"><i>*</i>退回原因</label>
-                                <div class="col-lg-9">
-                                    <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group tc">
-                                <button  v-if="subtitle=='退回重审'" type="button" @click="backTrue" class="btn btn-primary">退回</button>
-                            </div>
-                            <div class="form-group tc">
-                                <span v-show="!remarks&&fires" class="validation-error-label">
-                                    <template v-if="subtitle=='退回重审'">请填写退回原因</template>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div data-backdrop="static"  id="modal_checking" class="modal fade" style="display: none;">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h5 class="modal-title">对账</h5>
-                        </div>
-                        <div  v-if="!!checkLists.length&&checkLists != ''" class="modal-body">
-                            <div class="tc f20">
-                                请选择备付金银行流水
+            <content-dialog
+                    :show.sync="modal_submit" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'退回重审'" @kok="backTrue" @kcancel="modal_submit = false"
+                    >
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" v-if="subtitle=='退回重审'"><i>*</i>退回原因</label>
+                            <div class="col-lg-9">
+                                <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
                             </div>
-                            <table class="table" style="border: 1px solid #ccc;">
-                                <thead>
-                                    <tr role="row">
-                                        <th>凭证号</th>
-                                        <th>交易时间</th>
-                                        <th>收款方</th>
-                                        <th>收款信息</th>
-                                        <th>付款金额</th>
-                                        <th>用途</th>
-                                        <th>备注</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr role="row"  v-for="n in checkLists">
-                                        <td>{{n.certificate}}</td>
-                                        <td>{{n.tradeTime | datetime}}</td>
-                                        <td :title = "n.collectionName">{{n.collectionName}}</td>
-                                        <td :title = "n.accountName">{{n.accountName | filterlength}}</br>{{n.accountNumber}}</td>
-                                        <td>{{n.payoutAmount/100 | currency '' }}</td>
-                                        <td>
-                                            <template v-if="n.purpose==1"> 补贴划付</template>
-                                            <template v-if="n.purpose==2"> 额度采购</template>
-                                            <template v-if="n.purpose==3"> 退税划付</template>
-                                            <template v-if="n.purpose==4"> 预付款</template>
-                                            <template v-if="n.purpose==5"> 供货商划付</template>
-                                        </td>
-                                        <td>{{n.remarks}}</td>
-                                        <td><a href="javascript:void(0)" @click="checkTrue(n.reserveCashId)">选择</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                        <div class="modal-body" v-else>
-                            未找到对账数据
+                        <div class="form-group tc">
+                            <span v-show="!remarks&&fires" class="validation-error-label">
+                                <template v-if="subtitle=='退回重审'">请填写退回原因</template>
+                            </span>
                         </div>
                     </div>
-                </div>
-            </div>
+            </content-dialog>
+
+            <content-dialog
+                    :show.sync="modal_checking" :is-button="false" :type.sync="'infos'"
+                    :title.sync="'对账'" 
+                    >
+                    <div  v-if="!!checkLists.length&&checkLists != ''" class="modal-body">
+                        <div class="tc f20">
+                            请选择备付金银行流水
+                        </div>
+                        <table class="table" style="border: 1px solid #ccc;">
+                            <thead>
+                                <tr role="row">
+                                    <th>凭证号</th>
+                                    <th>交易时间</th>
+                                    <th>收款方</th>
+                                    <th>收款信息</th>
+                                    <th>付款金额</th>
+                                    <th>用途</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row"  v-for="n in checkLists">
+                                    <td>{{n.certificate}}</td>
+                                    <td>{{n.tradeTime | datetime}}</td>
+                                    <td :title = "n.collectionName">{{n.collectionName}}</td>
+                                    <td :title = "n.accountName">{{n.accountName | filterlength}}</br>{{n.accountNumber}}</td>
+                                    <td>{{n.payoutAmount/100 | currency '' }}</td>
+                                    <td>
+                                        <template v-if="n.purpose==1"> 补贴划付</template>
+                                        <template v-if="n.purpose==2"> 额度采购</template>
+                                        <template v-if="n.purpose==3"> 退税划付</template>
+                                        <template v-if="n.purpose==4"> 预付款</template>
+                                        <template v-if="n.purpose==5"> 供货商划付</template>
+                                    </td>
+                                    <td>{{n.remarks}}</td>
+                                    <td><a href="javascript:void(0)" @click="checkTrue(n.reserveCashId)">选择</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-body" v-else>
+                        未找到对账数据
+                    </div>
+            </content-dialog>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-     .f20{
-        font-size: 20px;
-        font-weight: bolder;
-    }
-       .modal-body label i{
-        color:red;
-    }
-      .modal-body button{
-        width:35%;
-    }
-      .m20{
-        margin-bottom:20px;
-    }
-      .mt0{
-        margin-top: 0
-    }
-     .panel-title p span{
-        width: 24%;
-        margin-bottom: 3px;
-        display: inline-block;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 13px;
-    }
-     .datatable-scroll{
-         overflow: auto;
-        padding-bottom: 20px;
-        background:#fff;
-         .main-table{
-             .bgddd{
-                 background: #ECECEC;
-             }
-            .morebtn{
-                cursor: pointer;
-                line-height: 18px;
-                position: relative;
-                left: 8px;
-                i{
-                    color: rgb(0, 188, 212);
-                    font-size: 14px;
-                }
-            }
-             tr{
-                 td,th{
-                     padding: 15px 10px;
-                     text-align:center;
-                 }
-                 .lists{
-                     border-bottom: 1px solid #ccc;
-                 }
-                 .title,.lists{
-                    overflow:hidden;
-                     border-right: 1px solid #ccc;
-                     display: table-row;
-                     span{
-                         display: table-cell;
-                         padding: 0 15px;
-                         height: 30px;
-                         line-height: 30px;
-                         border: 1px solid #ccc;
-                         border-bottom: 0;
-                         border-right: 0;
-                     }
-                 }
-             }
-             .redrow{
-                 display: inline-block;
-                 padding:6px;
-                 border-radius: 6px;
-                 background: rgb(253,110,73);
-                 color: #fff;
-                 font-size: 12px;
-             }
-         }
-   }
-     .div-table{
-         td{
-             position: relative;
-             .pull-left{
-                 margin: 10px;
-             }
 
-         }
-     }
-     .modal-body tr td, .modal-body tr th{
-        padding: 10px;
-    }
-    .tc .validation-error-label{
-        display: inline-block;
-    }
-    .modal-body{
-        .form-group{
-            overflow: hidden;
-        }
-    }
-</style>
 <script>
     import model from '../../ajax/PaymentOfPayment/payment_model'
     export default{
         data(){
             this.model =model(this)
             return{
+                modal_submit: false,
+                list_info: false,
+                modal_waring: false,
+                modal_checking: false,
                 id:'',
                 pageall:1,
                 waring:'',
@@ -548,7 +428,10 @@
                     });
             },
             initList(){
-                $(".modal").modal("hide");
+                this.modal_waring = false;
+                this.modal_submit= false;
+                this.list_info= false;
+                this.modal_checking=false;
                 $(".check-boxs").prop({'checked':false})
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date('1')[0];
@@ -577,7 +460,7 @@
                                 .then( (response)=> {
                                     if(response.data.code==0) {
                                         this.$set('listinfos',response.data.data);
-                                        $('#list_info').modal('show');
+                                        this.list_info = true;
                                     }
                                 });
                         break;
@@ -586,7 +469,7 @@
                                 .then( (response)=> {
                                     if(response.data.code==0) {
                                         this.$set('listinfos',response.data.data);
-                                        $('#list_info').modal('show');
+                                        this.list_info = true;
                                     }
                                 });
                         break;
@@ -595,7 +478,7 @@
                                 .then( (response)=> {
                                     if(response.data.code==0) {
                                         this.$set('listinfos',response.data.data);
-                                        $('#list_info').modal('show');
+                                        this.list_info = true;
                                     }
                                 });
                         break;
@@ -604,7 +487,7 @@
                                 .then( (response)=> {
                                     if(response.data.code==0) {
                                         this.$set('listinfos',response.data.data);
-                                        $('#list_info').modal('show');
+                                        this.list_info = true;
                                     }
                                 });
                         break;
@@ -615,14 +498,17 @@
                 this.remarks='';
                 this.fires=false;
                 this.accountId=a;
+                this.modal_submit = true;
             },
             update(a){
                 this.waring = '你确认更新账单？';
                 this.accountId=a;
+                this.modal_waring= true;
             },
             pay(a){
                 this.waring = '你确认划付账单？';
                 this.accountId=a;
+                this.modal_waring = true;
             },
             payTrue(){
                 this.orderIDs=[];
@@ -632,20 +518,23 @@
                             if(response.data.code==0){
                                     this.initList();
                                     dialogs('success','划付成功！');
+                                    this.modal_waring = false;
                                 }
                             })
             },
             batchs(){
                 if(this.orderIDs==''){
                     dialogs('info','请勾选划付信息！');
+                    this.modal_waring = false;
                     return;
                 }
                 this.waring = '你确认一键划付？';
-                $('#modal_waring').modal('show');
+                this.modal_waring = true;
             },
             close(a){
                 this.waring = '你确认关闭该账单？';
                 this.accountId=a;
+                this.modal_waring = true;
             },
 //            delBtn(a,b){
 //                this.waring = '你确认删除该订单流水？';
@@ -659,6 +548,7 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 this.$set('checkLists',response.data.data)
+                                this.modal_checking = true;
                             }
             })
             },
@@ -683,6 +573,7 @@
                         if(response.data.code==0){
                             this.initList()
                             dialogs('success','已更新！');
+                            this.modal_waring = false;
                         }
                     })
             },
@@ -722,6 +613,7 @@
                                 if(response.data.code==0){
                                     this.initList();
                                     dialogs('success','已退回！');
+                                    this.modal_submit = false;
                                 }
                             })
             },
@@ -765,7 +657,7 @@
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
                                 if(response.data.code==0){
-                                     $("#modal_waring").modal("hide");
+                                     this.modal_waring = false;
                                     dialogs('success','划付成功！');
                                 }
                                 this.orderIDs=[];
@@ -801,11 +693,4 @@
             this.initList();
         }
     }
-    // Collapse on click
-    $(document).on('click','.table .morebtn',function (e) {
-        e.preventDefault();
-        var $categoryCollapse = $(this).closest('tr').next();
-        $(this).find('i').toggleClass('glyphicon-minus');
-        $categoryCollapse.slideToggle(150);
-    });
 </script>

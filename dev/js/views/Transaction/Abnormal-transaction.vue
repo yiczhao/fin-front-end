@@ -3,30 +3,31 @@
            :ptitle="'交易管理'"
            :hname="'trade-info'"  
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content Abnormal-transaction" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
                             <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.isHandled">
                                 <option value="">请选择状态</option>
                                 <option value="0">待处理</option>
                                 <option value="1">已处理</option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="checkForm.timeRange">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -34,37 +35,31 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                        </div>
-                        <div class="form-group" v-show="checkForm.timeRange==4">
-                            <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                        </div>
-                        <div class="form-group">
+
+                            <div class="inline" v-show="checkForm.timeRange==4">
+                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
+                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                            </div>
+
                             <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.tradeDetailID" v-limitnumber="checkForm.tradeDetailID" placeholder="交易ID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
-                        </div>
-                        <div class="form-group">
+
                             <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="query" data-ksa="exception_trade_manage.search">查询</a>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" v-on:click="excel" data-ksa="exception_trade_manage.export">导出</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="exception_trade_manage.search">查询</a>
+                    </div>
                 </div>
+
                 <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
@@ -96,7 +91,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr  v-for="trlist in tradeList">
+                            <tr  v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.tradeDetailID}}</td>
                                 <td><a v-link="{name:'trade-info',params:{serialNumber:trlist.serialNumber}}">{{trlist.serialNumber}}</a></td>
                                 <td>{{trlist.subCompanyName}}</td>
@@ -133,112 +128,84 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.isHandled==0">
-                                        <a data-toggle="modal" data-target="#modal_waring" type="button" @click="back(trlist.id)"  data-ksa="exception_trade_manage.handle">处理异常</a>
+                                        <a type="button" @click="back(trlist.id)"  data-ksa="exception_trade_manage.handle">处理异常</a>
                                     </template>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
-                            </tbody>
-                            <tr role="row">
-                                <th></th>
-                                <th>合计：</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th><b>{{nums.consumptionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.payAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.limitDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.principalDeduct/100 | currency ''}}</b></th>
-                                <th><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></th>
-                                <th><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></th>
-                                <th><b>{{nums.discountDiff/100 | currency ''}}</b></th>
-                                <th><b>{{nums.collectionAmount/100 | currency ''}}</b></th>
-                                <th><b>{{nums.commission33211/100 | currency ''}}</b></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                <td>{{nums.discountAmount/100 | currency ''}}</td>
+                                <td>{{nums.payAmount/100 | currency ''}}</td>
+                                <td>{{nums.limitDeduct/100 | currency ''}}</td>
+                                <td>{{nums.principalDeduct/100 | currency ''}}</td>
+                                <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
+                                <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{nums.discountDiff/100 | currency ''}}</td>
+                                <td>{{nums.collectionAmount/100 | currency ''}}</td>
+                                <td>{{nums.commission33211/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="left">
+                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="excel" data-ksa="exception_trade_manage.export">Excel导出</a>
+                       </div>
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+                
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未查询到交易明细数据！
                 </div>
 
-                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">处理异常</h5>
+                <content-dialog
+                        :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'处理异常'" @kok="backTrue" @kcancel="modal_waring = false"
+                        >
+                        <div class="modal-body">
+                            <div class="form-group" style="overflow: hidden;">
+                                <label class="col-lg-3 control-label"><i>*</i>备注</label>
+                                <div class="col-lg-10">
+                                    <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group" style="overflow: hidden;">
-                                    <label class="col-lg-3 control-label"><i>*</i>备注</label>
-                                    <div class="col-lg-10">
-                                        <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group tc">
-                                    <button type="button" @click="backTrue" class="btn btn-primary">确认</button>
-                                </div>
-                                <div class="form-group tc">
-                                    <span v-show="!remarks&&fires" class="validation-error-label">
-                                      请填写备注
-                                    </span>
-                                </div>
+                            <div class="form-group tc">
+                                <span v-show="!remarks&&fires" class="validation-error-label">
+                                  请填写备注
+                                </span>
                             </div>
                         </div>
-                    </div>
-                </div>
+                </content-dialog>
             </div>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    .form-group{
-        text-align: left;
-    }
-    .form-group.tc{
-        text-align: center;
-    }
-    .modal-body .form-control{
-        text-align: left;
-        display: inline-block;
-    }
-    .modal-body label{
-        width:13%;
-        display: inline-block;
-        text-align: right;
-    }
-    .modal-body label i{
-        color:red;
-    }
-    .modal-body button{
-        width:35%;
-    }
-    .validation-error-label{
-        display: inline-block;
-    }
-</style>
+
 <script>
     import model from '../../ajax/Transaction/abnormal'
     export default{
         data(){
             this.model=model(this);
             return{
+                modal_waring: false,
                 checkForm:{
                     subCompanyID:"",
                     cityID:"",
@@ -326,6 +293,7 @@
                 }
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
+
             },
             excel(){
                 if(!this.tradeList.length>0)return;
@@ -336,6 +304,7 @@
                 this.remarks='';
                 this.fires=false;
                 this.accountId=a;
+                this.modal_waring = true;
             },
             backTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -349,6 +318,7 @@
                             if(response.data.code==0){
                                 this.query();
                                 dialogs('success','已处理！');
+                                this.modal_waring = false;
                             }
                     })
             }

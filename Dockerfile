@@ -27,7 +27,7 @@
 # USER 为运行镜像时或者任何接下来的RUN指令指定运行用户名或UID
 # USER <username>
 
-FROM jnginx:1.10.1-alpine
+FROM nginx:1.10.1-alpine
 MAINTAINER chenyongbing
 
 ENV KS_PROJECT_NAME fin-front-end

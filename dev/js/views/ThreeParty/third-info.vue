@@ -5,55 +5,55 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                            <div class="form-group">
-                                <a @click="recharge()" data-toggle="modal" data-target="#modal_submit" class="btn btn-info" data-ksa="third_party_account_manage.recharge">回款充值</a>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="defaultData.dateS">
-                                    <option value="0">昨天</option>
-                                    <option value="1">最近一周</option>
-                                    <option value="2">最近一个月</option>
-                                    <option value="3">最近三个月</option>
-                                    <option value="4">自定义时间</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="defaultData.dateS==4">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" @click="recharge()" data-toggle="modal" data-target="#modal_submit" data-ksa="third_party_account_manage.recharge">回款充值</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="defaultData.dateS">
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+
+                            <div  v-show="defaultData.dateS==4" class="inline">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
                                 <datepicker :readonly="true" :value.sync="defaultData.endDate"
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
-                        <div class="form-group">
+
                             <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="defaultData.serialNumber" placeholder="订单号、交易流水号">
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.type">
                                 <option value="">请选择类型</option>
                                 <option value="2">三方补贴</option>
                                 <option value="1">回款充值</option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="third_party_account_manage.detail">查询</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.detail">查询</a>
+                    </div>
                 </div>
+
                 <div class="datatable-header">
                     <span>账户名：{{blanceList.accountName}}</span>
                     <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                 </div>
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -70,7 +70,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr role="row" v-for="(index,trlist) in zdlists">
+                                <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{trlist.serialNumber}}</td>
                                     <td><template v-if="trlist.type==2">{{trlist.merchantOperationID}}</template></td>
                                     <td><template v-if="trlist.type==2">{{trlist.merchantName}}</template></td>
@@ -100,13 +100,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
@@ -129,7 +134,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitaddprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>

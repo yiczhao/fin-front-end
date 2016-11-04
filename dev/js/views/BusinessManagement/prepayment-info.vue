@@ -7,62 +7,63 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                            <div class="form-group">
-                                <a data-toggle="modal" data-target="#modal_add" class="btn btn-info"
-                                @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
-                            </div>
-                            <div class="form-group">
-                                <select class="form-control" v-model="defaultData.dateS">
-                                    <option value="0">昨天</option>
-                                    <option value="1">最近一周</option>
-                                    <option value="2">最近一个月</option>
-                                    <option value="3">最近三个月</option>
-                                    <option value="4">自定义时间</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="defaultData.dateS==4">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"
+                        @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="defaultData.dateS" @change="getTime">
+                                <option value="0">昨天</option>
+                                <option value="1">最近一周</option>
+                                <option value="2">最近一个月</option>
+                                <option value="3">最近三个月</option>
+                                <option value="4">自定义时间</option>
+                            </select>
+
+                            <div  v-show="defaultData.dateS==4" class="inline">
                                 <datepicker :readonly="true" :value.sync="defaultData.startDate"
                                             format="YYYY-MM-DD"></datepicker>
                                 至
                                 <datepicker :readonly="true" :value.sync="defaultData.endDate"
                                             format="YYYY-MM-DD"></datepicker>
                             </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.merchantName"
-                                   placeholder="商户名">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="defaultData.status">
-                                <option value="">请选择状态</option>
-                                <option value="7">等待复核</option>
-                                <option value="8">复核不通过</option>
-                                <option value="2">等待划付</option>
-                                <option value="3">转账中</option>
-                                <option value="4">等待对账</option>
-                                <option value="5">对账成功</option>
-                                <option value="6">划付失败</option>
-                                <option value="0">已关闭</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="advance_payment_account_manage.search">查询</a>
-                        </div>
-                    </form>
+
+                        <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
+
+                        <input type="text" class="form-control" v-model="defaultData.merchantName"
+                               placeholder="商户名">
+
+                        <select class="form-control" v-model="defaultData.status">
+                            <option value="">请选择状态</option>
+                            <option value="7">等待复核</option>
+                            <option value="8">复核不通过</option>
+                            <option value="2">等待划付</option>
+                            <option value="3">转账中</option>
+                            <option value="4">等待对账</option>
+                            <option value="5">对账成功</option>
+                            <option value="6">划付失败</option>
+                            <option value="0">已关闭</option>
+                        </select>
+
+                        <input type="text" class="form-control" v-model="defaultData.remarks" placeholder="备注">
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="advance_payment_account_manage.search">查询</a>
+                    </div>
                 </div>
-                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
+
+                <div v-if="!!zdlists.length" v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
                     <div class="datatable-header" v-if="!!blanceList">
                         <span>账户名：{{blanceList.merchantName}}</span>
                         <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
+
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -78,7 +79,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.orderNumber}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td>
@@ -128,19 +129,66 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
             </div>
 
-            <validator name="vali">
+            <content-dialog
+                    :show.sync="modal_prepayment_recharge" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'预付充值'" @kok="subApplyAdvancePay" @kcancel="modal_prepayment_recharge = false"
+                    >
+                    <validator name="vali">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>商户名：</label>{{applyAdvancePay.merchantName}}
+                            </div>
+                            <div class="form-group">
+                                <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label><i style="color:red">*</i>金额：</label>
+                                <input v-validate:val1="['required']" type="text" class="form-control" name="advancePaymentAmount"
+                                       v-model="applyAdvancePay.advancePaymentAmount"  v-limitprice="applyAdvancePay.advancePaymentAmount"/>
+                            </div>
+                            <div class="form-group">
+                                <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
+                                    <textarea v-validate:val2="['required']" class="form-control" name="remarks"
+                                              v-model="applyAdvancePay.remarks"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>收款信息：</label>
+                                <br/>
+                                <div class="collectionAccount-bgcolor">
+                                    <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
+                                    <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
+                                    <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
+                                    <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
+                                </div>
+                            </div>
+                            <div class="form-group tc">
+                                <span v-show="$vali.invalid&&saveerror" class="validation-error-label">您的信息未填写完整</span>
+                            </div>
+                        </div>
+                    </validator>
+            </content-dialog>        
+
+<!--             <validator name="vali">
                 <form novalidate>
             <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade" style="display: none;">
                 <div class="modal-dialog modal-mg">
@@ -191,9 +239,10 @@
                     </div>
                 </div>
             </div>
-
             </form>
-            </validator>
+            </validator> -->
+
+
 
 
         </div>
@@ -324,6 +373,7 @@
         data(){
             this.model = model(this)
             return {
+                modal_prepayment_recharge: false,
                 pageall: 1,
                 blanceList:{},
                 total: {},
@@ -416,7 +466,7 @@
                                 } else {
                                     //显示窗口
                                     this.saveerror=false;
-                                    $("#modal_prepayment_recharge").modal('show');
+                                    this.modal_prepayment_recharge = true;
                                 }
                             }
                         });
@@ -436,10 +486,11 @@
                             if (response.data.code == 0) {
                                 dialogs('success','提交成功！');
                                 this.initList();
+                                this.modal_prepayment_recharge = false;
                             }
                         });
                 //关闭弹出层
-                $(".modal").modal("hide");
+                this.modal_prepayment_recharge = false;
             },
             getTime(){
                 this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
@@ -452,11 +503,9 @@
             this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
+
         },
         watch: {
-            'defaultData.dataS'(){
-                this.getTime();
-            },
             'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }

@@ -8,5 +8,8 @@ exports.limitnumber = limitnumber
 import limitprice from './limit-price'
 exports.limitprice = limitprice
 
+import limitaddprice from './limit-addprice'
+exports.limitaddprice = limitaddprice
+
 import auth from './auth'
 exports.auth = auth

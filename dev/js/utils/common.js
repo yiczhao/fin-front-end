@@ -178,7 +178,19 @@ var removeCookie=()=> {
     Cookie.set('JSESSID', '', {domain:'.kashuo.net',maxage: -1})
     // noinspection JSUnresolvedVariable
     Cookie.set('XSRF-TOKEN', '', {domain:'.kashuo.net',maxage: -1})
-}
+};
+window.getNow=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = time.getMonth();
+    return y+'-'+m;
+};
+window.firstMonth=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = 1;
+    return y+'-'+m;
+};
 var _i={};
 _i.fetchArray=(key)=>{
     if(localStorage.getItem(key)){

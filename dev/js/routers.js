@@ -45,6 +45,20 @@ export default function(router){
                 require(['./views/Transaction/manually-settlement.vue'],resolve);
             }
         },
+        //交易处理-调账管理
+        '/adjust-trade-detailpre/':{
+            name:'adjust-trade-detailpre',
+            component: function(resolve){
+                require(['./views/Transaction/adjust-trade-detailpre.vue'],resolve);
+            }
+        },
+        //交易处理-调账管理-调账明细
+        '/adjust-trade-detailpre-list/:adjustTradeDetailPreId':{
+            name:'adjust-trade-detailpre-list',
+            component: function(resolve){
+                require(['./views/Transaction/adjust-trade-detailpre-list.vue'],resolve);
+            }
+        },
         //交易处理-交易白名单
         '/white-lists/':{
             name:'white-lists',
@@ -57,6 +71,13 @@ export default function(router){
             name:'Abnormal-transaction',
             component: function(resolve){
                 require(['./views/Transaction/Abnormal-transaction.vue'],resolve);
+            }
+        },
+        //手工单管理-列表查询
+        '/manual-trade-detail/':{
+            name:'manual-trade-detail',
+            component: function(resolve){
+                require(['./views/Transaction/manual-trade-detail.vue'],resolve);
             }
         },
         //备付金支出-付款明细
@@ -192,6 +213,20 @@ export default function(router){
                 require(['./views/Activity/activity-lists.vue'],resolve);
             }
         },
+        /* 活动管理-活动列表-计算公式 */
+        '/activity-formulae/:activityID/:subCompanyID':{
+            name:'activity-formulae',
+            component: function(resolve){
+                require(['./views/Activity/activity-formulae.vue'],resolve);
+            }
+        },
+        // 活动执行表管理
+        '/activity-effect-lists/': {
+            name: 'activity-effect-lists',
+            component: function (resolve) {
+                require(['./views/Activity/activity-effect-lists.vue'], resolve);
+            }
+        },
         /* 系统配置-员工管理 */
         '/user-managerment/':{
             name:'user-managerment',
@@ -217,6 +252,13 @@ export default function(router){
         '*':{
             component:function () {
                 router.go({name:'login'})
+            }
+        },
+        // 税率管理
+        '/taxRate/':{
+            name:'taxRate',
+            component:function (resolve) {
+                require(['./views/Activity/taxRate.vue'],resolve);
             }
         }
     })

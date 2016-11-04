@@ -5,41 +5,40 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
-                        </div>
-                        <div class="form-group">
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID" v-limitnumber="defaultData.operationID">
-                        </div>
-                        <div class="form-group">
+
                             <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="名称">
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.cityID">
                                 <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.status">
                                 <option value="">请选择状态</option>
                                 <option value="1">正常</option>
                                 <option value="0">停用</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="initList" data-ksa="third_party_account_manage.search">查询</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
+                    </div>
                 </div>
+
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
@@ -59,7 +58,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr role="row" v-for="(index,trlist) in zdlists">
+                                <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{trlist.operationID}}</td>
                                     <td>{{trlist.accountName}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
@@ -96,13 +95,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
@@ -125,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i>*</i>金额：</label>
-                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitprice="redata.money">
+                                    <input type="text" v-validate:val1="['required']" class="form-control" v-model="redata.money" v-limitaddprice="redata.money">
                                 </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备注：</label>
@@ -163,7 +167,87 @@
                         </div>
                     </div>
                 </div>
+
                 <!--添加商户dialog-->
+                <content-dialog
+                        :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'添加账户'" 
+                        >
+                        <div class="modal-body" style="width: 900px;">
+                            <div class="addtop">
+                                <div class="col-md-3">
+                                    <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
+                                        <option value="">全部分公司</option>
+                                        <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" v-model="shdata.cityID">
+                                        <option value="">全部城市</option>
+                                        <option v-for="(index,n) in shcity" v-text="n.name" :value="n.cityID"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-control" v-model="shdata.type">
+                                        <option value="">请选择类型</option>
+                                        <option value="1">银行</option>
+                                        <option value="2">运营商</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" v-model="shdata.name" placeholder="名称">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
+                                </div>
+                            </div>
+                            <div class="addbottom">
+                                <div style="text-indent: 68%">已选择：</div>
+                                <div class="col-md-7">
+                                    <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
+                                        <thead>
+                                        <tr role="row">
+                                            <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
+                                            <th>分公司</th>
+                                            <th>城市</th>
+                                            <th>商户名</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" v-for="n in xhlist">
+                                            <td>
+                                                <label>
+                                                    <input :value="n.id"
+                                                           type="checkbox"
+                                                           :name="n.name"
+                                                           :subCompanyID="n.subCompanyOperationID"
+                                                           :cityID="n.cityID"
+                                                           :_type="n.type"
+                                                    >{{$index+1}}
+                                                </label>
+                                            </td>
+                                            <td>{{n.subCompanyName}}</td>
+                                            <td>{{n.cityName}}</td>
+                                            <td>{{n.name}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <span v-if="!xhlist.length>0&&firstAdd">
+                                        无可添加数据
+                                    </span>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                    <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
+                                    <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
+                                </div>
+                                <div class="col-md-4">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                </content-dialog>
+
                 <div data-backdrop="static"  id="modal_add" class="modal fade" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -347,6 +431,7 @@
         data(){
             this.model =model(this)
             return{
+                modal_add: false,
                 pageall:1,
                 city:[],
                 shcity:[],
@@ -434,6 +519,7 @@
                         });
             },
             initList(){
+                this.modal_add=false;
                 $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
@@ -453,7 +539,7 @@
                 this.getshCity();
                 this.clearUl();
                 this.firstAdd=false;
-                $('#modal_add').modal('show');
+                this.modal_add = true;
             },
             searchDigest(){
                 if(sessionStorage.getItem('isHttpin')==1)return;

@@ -1,10 +1,10 @@
 <template>
-  <div class="kdialog-mask" v-if="show">
+  <div class="kdialog-mask" v-show="show">
     <background-mask :class="!mask && 'kno-mask'">
       <div class="kdialog-mask-shadow">
         <div class="kdialog">
         <div :class="'kdialog__header kdialog__header--' + type">
-          <h3 class="title" v-text="title">标题</h3>
+          <h2 class="title" v-text="title">标题</h2>
           <div class="kdialog__close icon-cross2"
                @click="show = false"
           ></div>
@@ -13,7 +13,7 @@
           <slot></slot>
         </p>
         <div class="kdialog__btnwrap" v-if="isButton">
-          <k-button class="r" :type="type" size="xl"
+          <k-button class="r" type="primary" size="xl"
                     style="width: 90px;margin-left: 5px;"
                     @kclick="$emit('kok')"
           >确定</k-button>
@@ -95,7 +95,7 @@
       // 标题样式
       .title {
         margin: 0;
-
+        line-height: 100%;
         @include inline-block();
     }
   }
@@ -117,10 +117,23 @@
       @include size($kdialog-close-size);
   }
 
+  .kdialog__header--infos{
+    margin: 0 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e0e0e0;
+     .title,.kdialog__close{
+      color:#444;
+       &:hover {background: #fff;color: #444}
+       &:active {background: #fff;color: #444}
+     }
+    .kdialog__close{
+      right: 0;
+    }
+  }
     // 内容区样式
     @include e(content) {
       padding: 20px 20px 0 20px;margin: 0;
-      color: $global-text-light;font-size: 17px;
+      color: $global-text-light;font-size: 13px;
   }
 
     // button 区域

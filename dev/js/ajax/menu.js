@@ -16,9 +16,11 @@ module.exports = [
     },
     {
         name: '交易管理',
-        icon: 'icon-table2',
+        icon: 'icon-transmission',
         sub_menu: [
             {name: '交易明细', link: 'trade-info',ksa:'trade_detail_manage'},
+            {name: '调账管理', link: 'adjust-trade-detailpre',ksa:'adjust_trade_detail_pre_manage'},
+            {name: '手工单管理', link: 'manual-trade-detail',ksa:'manual_trade_detail'},
             {name: '手工结算', link: 'manually-settlement',ksa:'manually_settlement'},
             {name: '异常交易', link: 'Abnormal-transaction',ksa:'exception_trade_manage'},
             {name: '异常白名单', link: 'white-lists',ksa:'exception_trade_white_list_manage'}
@@ -26,7 +28,7 @@ module.exports = [
     },
     {
         name: '备付金支出',
-        icon: 'icon-table2',
+        icon: 'icon-coin-yen',
         sub_menu: [
             {name: '付款明细', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
             {name: '划付复核', link: 'pay-recheck',ksa:'pay_recheck'},
@@ -58,7 +60,9 @@ module.exports = [
         icon: 'icon-flag3',
         ksa:'activity_manage',
         sub_menu: [
-            {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'}
+            {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'},
+            {name: '税率管理', link: 'taxRate',ksa:'activity_manage'},
+            {name: '活动执行表', link: 'activity-effect-lists',ksa:'activity_manage'}
         ]
     },
     {

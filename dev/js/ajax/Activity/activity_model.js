@@ -37,6 +37,22 @@ function model(_this){
         activity_save(data){
             return _this.$http.post(_this.$API.activity_save,data)
         },
+        /**
+         * @description 保存其他信息数据
+         * @params {data}
+         * @returns {*}
+         * */
+        saveOther(data){
+            return _this.$http.post(_this.$API.saveOther,data)
+        },
+        /**
+         * @description 查询其他信息数据
+         * @params {data}
+         * @returns {*}
+         * */
+        otherInfo(data){
+            return _this.$http.get(_this.$API.otherInfo+ $.param(data))
+        },
     }
 }
 module.exports=model;

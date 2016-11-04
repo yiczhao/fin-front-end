@@ -4,7 +4,7 @@
         padding: 0px;
     }
     .page-bar {
-        margin: 25px auto;
+        margin: 0 auto;
         text-align: center;
     }
     .page-bar li{
@@ -67,16 +67,18 @@
 
 <template>
     <div class="page-bar" v-show="all>0">
-        <ul>
+        <ul style="float:left;">
             <li v-show="islength">
+                共<i v-text="all"></i>条
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 每页展示
                 <select v-model="page_size" class="page_length">
                     <option v-for="n in pageSizeList" :value="+n" v-text="n"></option>
                 </select>条
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                共<i v-text="all"></i>条
-                &nbsp;&nbsp;&nbsp;&nbsp;
             </li>
+        </ul>
+        <ul style="float:right;">
             <li v-show="page_total>1"><a v-on:click="jump('first')">首页</a></li>
             <li v-if="page_total>1 && showFirst"><a v-on:click="curs('prev')">上一页</a></li>
             <li v-for="index in indexs"  v-bind:class="{ 'active': cur == index}">
@@ -86,8 +88,7 @@
             <li v-show="page_total>1"><a v-on:click="jump('last')">尾页</a></li>
             <li>共<i v-text="page_total"></i>页</li>
             <li v-show="page_total>page_size">&nbsp;&nbsp;&nbsp;&nbsp;第<input type="text" class="jump-input form-control" v-model="jump_val | filter_number 1 ">页 <input type="button" value="确定" class="jump-button" @click="jump()" vaule="确定"></li>
-
-        </ul>
+         </ul>
     </div>
 </template>
 

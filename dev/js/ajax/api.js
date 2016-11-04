@@ -82,6 +82,24 @@ export default function install(Vue) {
      * @method GET
      */
     _o.manuallyexcel = '/data/export/excel/manuallySettle?';
+    /**
+     * @description 活动执行效果页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.activityEffectExcel = '/data/export/excel/activityEffect?';
+    /**
+     * @description 调账页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre = '/data/export/excel/adjustTradeDetailPre?';
+    /**
+     * @description 手工单页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.manualTradeDetailExcel = '/data/export/excel/manualTradeDetail?';
 
 
     //- todo 财务处理-账户列表 account-management
@@ -162,12 +180,6 @@ export default function install(Vue) {
      */
     _o.tradedetail = './tradeDetail/list?';
     /**
-     * @description 添加交易接口地址
-     * @author 冷艳君
-     * @method POST
-     */
-    _o.addtrade = './tradeDetail/add';
-    /**
      * @description 合计接口地址
      * @author 冷艳君
      * @method GET
@@ -185,6 +197,131 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getBalance = './bankAccount/reserveCash/info/';
+
+    //- todo 交易管理-手工单管理 manual-trade-detail
+    /**
+     * @description 交易单列表接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.getManualTradeDetailList = './manualTradeDetail/list?';
+    /**
+     * @description 交易单合计接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.getManualTradeDetailSum = './manualTradeDetail/total?';
+
+    /**
+     * @description 添加手工单接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.addtrade = './manualTradeDetail/save';
+
+    /**
+     * @description 查询手工单接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.searchManualTradeDetail = './manualTradeDetail/item?';
+
+    /**
+     * @description 提交手工单审核接口地址
+     * @author
+     * @method POST
+     */
+    _o.applyManualTradeDetail = './manualTradeDetail/apply?';
+
+    /**
+     * @description 审核退回手工单接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.refusedManualTradeDetail = './manualTradeDetail/refused?';
+
+    /**
+     * @description 审核通过手工单接口地址
+     * @author 洪钢
+     * @method POST
+     */
+    _o.approvedManualTradeDetail = './manualTradeDetail/approved?';
+
+    /**
+     * @description 删除手工单接口地址
+     * @author 洪钢
+     * @method GET
+     */
+    _o.deleteManualTradeDetail = './manualTradeDetail/delete?';
+
+    //- todo 交易管理-调账管理 manually-settlement
+    /**
+     * @description 调账管理列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_list = './adjustTradeDetailPre/list?';
+    /**
+     * @description 根据调账的交易流水号查询交易笔数和消费金额接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getTradeData = './adjustTradeDetailPre/tradeCountAndAmount?';
+    /**
+     * @description 合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_total = './adjustTradeDetailPre/total?';
+    /**
+     * @description 调账管理编辑接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_item = './adjustTradeDetailPre/item/';
+    /**
+     * @description 调账管理添加接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_save = './adjustTradeDetailPre/save';
+    /**
+     * @description 调账管理提交接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_apply = './adjustTradeDetailPre/apply/';
+    /**
+     * @description 调账管理通过接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_approved = './adjustTradeDetailPre/approved/';
+    /**
+     * @description 调账管理退回接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_back = './adjustTradeDetailPre/back';
+    /**
+     * @description 调账管理删除接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.adjustTradeDetailPre_delete = './adjustTradeDetailPre/delete/';
+    /**
+     * @description 调账管理明细接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_detail = './adjustTradeDetailPre/detail/list/';
+    /**
+     * @description 调账管理明细接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.adjustTradeDetailPre_detailtotal = './adjustTradeDetailPre/detail/total/';
+
 
     //- todo 交易管理-手工结算 manually-settlement
     /**
@@ -526,6 +663,72 @@ export default function install(Vue) {
      * @method POST
      */
     _o.activity_save = './activity/thirdPartyAccount/config';
+    /**
+     * @description 保存其他信息接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.saveOther = './activity/otherInfo/save';
+    /**
+     * @description 查询其他信息接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.otherInfo = './activity/otherInfo/detail?';
+
+    /**
+     * @description 查询税率管理列表
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.taxRate_list = './taxRate/list?';
+
+    /**
+     * @description 获取编辑弹框税率信息
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.edit_detail = './taxRate/detail?';
+
+    /**
+     * @description 获取编辑弹框税率信息
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.edit_info = './taxRate/info?';
+
+    /**
+     * @description 保存税率信息
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.edit_save = './taxRate/save';
+    
+    //- todo  活动管理-活动列表-计算公式 activity-lists
+    /**
+     * @description 查询活动计算公式接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.activityformulae_list = './activity/formulae/info?';
+    /**
+     * @description 设为默认公式接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.defaultFormulae = './activity/formulae/default';
+    /**
+     * @description 保存公式接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.saveFormulae = './activity/formulae/save';
+    /**
+     * @description 使用默认接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.useDefault = './activity/formulae/useDefault/';
 
     //- todo  系统配置-系统日志 log-management
     /**
@@ -892,6 +1095,14 @@ export default function install(Vue) {
      * @method get
      */
     _o.getthirdinfo_total = './thirdParty/account/total?';
+
+    /**
+     * @description 活动执行表列表数据接口地址
+     * @author 冷艳君
+     * @method get
+     */
+    _o.activity_effect_list = './activityEffect/list?';
+
 
 
     Object.defineProperties(Vue.prototype, {

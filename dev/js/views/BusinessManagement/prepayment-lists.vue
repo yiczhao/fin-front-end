@@ -3,43 +3,41 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content blists" slot="content">
+        <div class="content prepayment-lists" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
-                            <a class="btn btn-info" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
-                                <option value="">全部分公司</option>
-                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.cityID">
-                                <option value="">全部城市</option>
-                                <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control" v-model="checkForm.status">
-                                <option value="">账户状态</option>
-                                <option value="0">停用</option>
-                                <option value="1">正常</option>
-                                <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="query" data-ksa="advance_payment_merchant_manage.search">查询</a>
-                        </div>
-                    </form>
+                <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
+
+                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+
+                                <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
+
+                                <select class="form-control" v-model="checkForm.cityID">
+                                    <option value="">全部城市</option>
+                                    <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+                                </select>
+
+                                <select class="form-control" v-model="checkForm.status">
+                                    <option value="">账户状态</option>
+                                    <option value="0">停用</option>
+                                    <option value="1">正常</option>
+                                    <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
+                                </select>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="query" data-ksa="advance_payment_merchant_manage.search" style="margin-left: -21px;">查询</a>
+                    </div>
                 </div>
 
                 <div v-show="!!prepaymentList.length" id="DataTables_Table_0_wrapper"
@@ -62,7 +60,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(index,prepayment) in prepaymentList">
+                            <tr v-for="(index,prepayment) in prepaymentList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{prepayment.merchantOperationID}}</td>
                                 <td>{{prepayment.merchantName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
@@ -84,9 +82,9 @@
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
                                        v-if="prepayment.status==1" data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
-                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"  data-toggle="modal" data-target="#modal_waring"
+                                    <a data-ksa="advance_payment_merchant_manage.enable_disable" 
                                        @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
-                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"  data-toggle="modal" data-target="#modal_waring"
+                                    <a data-ksa="advance_payment_merchant_manage.enable_disable" 
                                        @click="show_waring(prepayment.id,1)" v-if="prepayment.status==1">停用</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>
@@ -110,256 +108,155 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="checkForm.pageIndex"
-                              :page_size.sync="checkForm.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="checkForm.pageIndex"
+                                  :page_size.sync="checkForm.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+
                 <div v-else style="padding: 30px;font-size: 16px;text-align: center">
                     未查询到预付款商户信息！
                 </div>
+                
+                <!-- 添加商户 -->
+                <content-dialog
+                        :show.sync="modal_prepayment_info" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'添加商户'"  
+                >
+                        <div class="modal-body" style="width: 900px;">
+                            <form class="form-inline manage-form">
+                                    <input type="text" class="form-control"
+                                           v-model="merchantInfo.merchantOperationID" placeholder="商户ID" v-limitnumber="merchantInfo.merchantOperationID">
+                                    <input type="text" class="form-control" v-model="merchantInfo.merchantName"
+                                           placeholder="商户名">
+                                    <select class="form-control" v-model="merchantInfo.companyId"
+                                            @change="getshCity(merchantInfo.companyId)">
+                                        <option value="">全部分公司</option>
+                                        <option v-for="n in subcompanyList" v-text="n.name"
+                                                :value="n.subCompanyID"></option>
+                                    </select>
+                                    <select class="form-control" v-model="merchantInfo.cityId">
+                                        <option value="">全部城市
+                                        </option>
+                                        <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
+                                    </select>
+                                    <input type="button" class="btn btn-info" @click="getMerchantList"
+                                           value="查询">
+                            </form>
 
-                <div id="modal_prepayment_info" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5>添加商户</h5>
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="form-inline manage-form">
-                                        <input type="text" class="form-control"
-                                               v-model="merchantInfo.merchantOperationID" placeholder="商户ID" v-limitnumber="merchantInfo.merchantOperationID">
-                                        <input type="text" class="form-control" v-model="merchantInfo.merchantName"
-                                               placeholder="商户名">
-                                        <select class="form-control" v-model="merchantInfo.companyId"
-                                                @change="getshCity(merchantInfo.companyId)">
-                                            <option value="">全部分公司</option>
-                                            <option v-for="n in subcompanyList" v-text="n.name"
-                                                    :value="n.subCompanyID"></option>
-                                        </select>
-                                        <select class="form-control" v-model="merchantInfo.cityId">
-                                            <option value="">全部城市
-                                            </option>
-                                            <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
-                                        </select>
-                                        <input type="button" class="btn btn-info" @click="getMerchantList"
-                                               value="查询">
-                                </form>
-
-                                <div class="dataTables_wrapper no-footer addbottom">
-                                    <div style="text-indent: 68%">已选择：</div>
-                                    <div class="col-md-7" style="height:300px;overflow: auto;border: 1px solid #ccc;">
-                                        <table v-if="merchantList.length>0"
-                                               class="table datatable-selection-single dataTable no-footer">
-                                            <thead>
-                                            <tr role="row">
-                                                <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
-                                                <th>分公司</th>
-                                                <th>城市</th>
-                                                <th>商户名</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr v-for="(index,merchant) in merchantList">
-                                                <td>
-                                                    <input type="checkbox" :value="merchant.merchantID"
-                                                           :id="merchant.merchantID" name="ckbox"/>
-                                                    {{index+1}}
-                                                </td>
-                                                <td>{{merchant.subCompanyName}}</td>
-                                                <td>{{merchant.cityName}}</td>
-                                                <td>{{merchant.merchantName}}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <span v-if="!merchantList.length>0 && firstAdd">
-                                            未查询到商户数据！
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
-                                        <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
-                                        <input type="button" class="btn btn-info" @click="submit()" value="确认">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <ul id="IDS"></ul>
-                                    </div>
+                            <div class="dataTables_wrapper no-footer addbottom">
+                                <div style="text-indent: 68%">已选择：</div>
+                                <div class="col-md-7" style="height:300px;overflow: auto;border: 1px solid #ccc;">
+                                    <table v-if="merchantList.length>0"
+                                           class="table datatable-selection-single dataTable no-footer">
+                                        <thead>
+                                        <tr role="row">
+                                            <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
+                                            <th>分公司</th>
+                                            <th>城市</th>
+                                            <th>商户名</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(index,merchant) in merchantList">
+                                            <td>
+                                                <input type="checkbox" :value="merchant.merchantID"
+                                                       :id="merchant.merchantID" name="ckbox"/>
+                                                {{index+1}}
+                                            </td>
+                                            <td>{{merchant.subCompanyName}}</td>
+                                            <td>{{merchant.cityName}}</td>
+                                            <td>{{merchant.merchantName}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <span v-if="!merchantList.length>0 && firstAdd">
+                                        未查询到商户数据！
+                                    </span>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
+                                    <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
+                                    <input type="button" class="btn btn-info" @click="submit()" value="确认">
+                                </div>
+                                <div class="col-md-4">
+                                    <ul id="IDS"></ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                </content-dialog>
 
-                <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 v-if="isEnable==0" class="modal-title">你确定启用该账户？</h5>
-                                <h5 v-if="isEnable==1" class="modal-title">你确定停用该账户？</h5>
+                <!-- 预付 -->
+                <content-dialog
+                        :show.sync="modal_prepayment_recharge" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'预付充值'" @kok="subApplyAdvancePay" @kcancel="modal_prepayment_recharge = false"  
+                >
+                    <validator name="vali">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>商户名：</label>{{applyAdvancePay.merchantName}}
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group tc">
-                                    <button type="button" @click="change_status" class="btn btn-primary">确认</button>
-                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+                            <div class="form-group">
+                                <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label><i style="color:red">*</i>金额：</label>
+                                <input v-validate:val1="['required']" type="text" class="form-control"
+                                       name="advancePaymentAmount"
+                                       v-model="applyAdvancePay.advancePaymentAmount" v-limitprice="applyAdvancePay.advancePaymentAmount"/>
+                            </div>
+                            <div class="form-group">
+                                <label style="position: relative;top: 0px;"><i style="color:red">*</i>备注：</label>
+                            <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
+                                      v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>收款信息：</label>
+                                <br/>
+                                <div class="collectionAccount-bgcolor">
+                                    <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
+                                    <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
+                                    <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
+                                    <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <validator name="vali">
-                    <form novalidate>
-                        <div id="modal_prepayment_recharge" data-backdrop="static" class="modal fade"
-                             style="display: none;">
-                            <div class="modal-dialog modal-mg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3>预付充值</h3>
-                                        <button type="button" class="close" data-dismiss="modal">×</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>商户名：</label>{{applyAdvancePay.merchantName}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><i style="color:red">*</i>金额：</label>
-                                            <input v-validate:val1="['required']" type="text" class="form-control"
-                                                   name="advancePaymentAmount"
-                                                   v-model="applyAdvancePay.advancePaymentAmount" v-limitprice="applyAdvancePay.advancePaymentAmount"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>
-                                        <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
-                                                  v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>收款信息：</label>
-                                            <br/>
-                                            <div class="collectionAccount-bgcolor">
-                                                <label>账户名：</label> {{applyAdvancePay.collectionAccountName}}<br/>
-                                                <label>账号：</label>{{applyAdvancePay.collectionAccountNumber}}<br/>
-                                                <label>开户行：</label>{{applyAdvancePay.collectionBankName}}<br/>
-                                                <label>提入行号：</label>{{applyAdvancePay.collectionBankNumber}}
-                                            </div>
-                                        </div>
-                                        <div class="modal-foot btns">
-                                            <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                            <button type="button" @click="subApplyAdvancePay()" class="btn btn-primary">
-                                                提交
-                                            </button>
-                                        </div>
-                                        <div class="form-group tc">
-                                            <span v-show="$vali.invalid&&saveerror" class="validation-error-label">您的信息未填写完整</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group tc">
+                                <span v-show="$vali.invalid&&saveerror" class="validation-error-label">您的信息未填写完整</span>
                             </div>
                         </div>
-                    </form>
-                </validator>
+                    </validator>
+                </content-dialog>
+
+                <!-- 启用/停用 -->
+                <content-dialog
+                        :show.sync="modal_waring" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="dtitle"   @kok="change_status" @kcancel="modal_waring=false"
+                >
+                </content-dialog>
+
             </div>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-.w{
-    background:none;
-    border:0;
-    padding:3px;
-    text-align:center;
-    &:focus{
-        border:1px solid #999;
-    }
-}
-    .prepayment-modal-btns {
-        text-align: center;
-    }
 
-    .collectionAccount-bgcolor {
-        margin-left: 30px;
-        background-color: #c0c0c0;
-    }
-
-    #modal_prepayment_recharge .form-control {
-        width: 86%;
-        display: inline-block;
-    }
-
-    .btns {
-        text-align: center;
-    }
-
-    .addbottom {
-        margin-top: 15px;
-
-        .col-md-2 {
-            text-align: center;
-            width: 113px;
-            padding: 0;
-            input {
-                margin-bottom: 10px;
-            }
-        }
-        .col-md-7 {
-            height: 300px;
-            overflow: auto;
-            border: 1px solid #ccc;
-        }
-        .col-md-4 {
-            width: 243px;
-            height: 300px;
-            padding: 0;
-            input {
-                margin: 15px 0;
-            }
-        }
-        ul {
-            list-style: none;
-            border: 1px solid #ccc;
-            padding: 10px;
-            height: 300px;
-            overflow: auto;
-            li {
-                margin: 5px 0;
-                cursor: pointer;
-                padding-left: 3px;
-            }
-            li.check-li {
-                background: #ccc;
-            }
-        }
-    }
-    .btn.btn-info {
-        margin: 2px;
-    }
-
-    .tc {
-        text-align: center;
-
-    .validation-error-label {
-        display: inline-block;
-    }
-
-    }
-table tr td,table tr th{
-    text-align: center;
-}
-</style>
 <script>
     import model from '../../ajax/BusinessManagement/prepayment_model'
     export default{
         data(){
             this.model = model(this)
             return {
+                modal_prepayment_info: false,
+                modal_prepayment_recharge: false,
+                modal_waring: false,
                 pageall: 1,
                 checkForm:{
                     subCompanyID: "",
@@ -404,11 +301,19 @@ table tr td,table tr th{
                 isEnable: 0,
                 _id: '',
                 total: [],
+                dtitle:'',
                 saveerror: false,
                 firstAdd: false
             }
         },
         methods: {
+            initList(){
+                this.modal_prepayment_info=false;
+                this.modal_prepayment_recharge=false;
+                this.modal_waring=false;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists(this.defaultData);
+            },
             //获取预付款商户数据
             getPrepaymentList(data) {
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -447,7 +352,7 @@ table tr td,table tr th{
                                 } else {
                                     //显示窗口
                                     this.saveerror = false;
-                                    $("#modal_prepayment_recharge").modal('show');
+                                    this.modal_prepayment_recharge = true;
                                 }
                             }
                         });
@@ -510,7 +415,7 @@ table tr td,table tr th{
                 //设置全选属性
                 this.clear();
                 this.getshCity();
-                $("#modal_prepayment_info").modal('show');
+                this.modal_prepayment_info = true;
             },
             subApplyAdvancePay() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -530,7 +435,7 @@ table tr td,table tr th{
                             }
                         });
                 //关闭弹出层
-                $(".modal").modal("hide");
+                this.modal_prepayment_recharge = false;
             },
             //清除
             clear() {
@@ -580,16 +485,20 @@ table tr td,table tr th{
                             }
                         });
                 //关闭弹出层
-                $(".modal").modal("hide");
+                //$(".modal").modal("hide");
+                this.modal_prepayment_info = false;
+
             },
             query() {
-                $('.modal').modal('hide');
+                //$('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getPrepaymentList(this.checkForm);
             },
             show_waring(_id, status){
                 this._id = _id;
                 this.isEnable = status;
+                status==0?this.dtitle='你确定启用该账户？':this.dtitle='你确定停用该账户？'
+                this.modal_waring = true;
             },
             change_status(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -603,10 +512,12 @@ table tr td,table tr th{
                                 {
                                     this.query()
                                     dialogs('success', '已启用！')
+                                    this.modal_waring = false;
                                 }
                             else if (res.data.code == 0 && this.isEnable == 1) {
                                     this.query()
                                     dialogs('success', '已停用！')
+                                    this.modal_waring = false;
                             }
                         })
             }

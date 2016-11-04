@@ -1,4 +1,5 @@
-<style scoped>
+<style lang="sass" scoped>
+#app{
 .datetime-picker {
     position: relative;
     display: inline-block;
@@ -14,7 +15,7 @@
 .datetime-picker input {
     width: 100%;
     padding: 6px 12px;
-    height: 34px;
+    height: 36px;
     outline: 0 none;
     border: 1px solid #ccc;
     font-size: 14px;
@@ -46,10 +47,10 @@
 .datetime-picker th, .datetime-picker td {
     user-select: none;
     width: 34px;
-    height: 34px;
+    height: 36px;
     padding: 0;
     border: 0 none;
-    line-height: 34px;
+    line-height: 36px;
     text-align: center;
 }
 
@@ -110,7 +111,7 @@
     position: absolute;
     top: 8px;
     right:10px;
-}
+}}
 </style>
 
 <template>
@@ -157,7 +158,7 @@
 <script>
     export default {
         props: {
-            width: { type: String, default: '150px' },
+            width: { type: String, default: '194px' },
             readonly: { type: Boolean, default: false },
             value: { type: String, default: '' },
             valueDefault: { type: String, default: '' },

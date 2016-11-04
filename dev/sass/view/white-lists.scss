@@ -1,0 +1,27 @@
+.white-lists {
+	.form-group{
+        text-align: left;
+    }
+    .form-group.tc{
+        text-align: center;
+    }
+    .modal-body .form-control{
+        text-align: left;
+        width:85%;
+        display: inline-block;
+    }
+    .modal-body label{
+        width:13%;
+        display: inline-block;
+        text-align: right;
+    }
+    .modal-body label i{
+        color:red;
+    }
+    .modal-body button{
+        width:35%;
+    }
+    .validation-error-label{
+        display: inline-block;
+    }
+}

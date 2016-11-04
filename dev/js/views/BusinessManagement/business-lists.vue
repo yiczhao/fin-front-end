@@ -3,38 +3,37 @@
            :ptitle="'商户管理'"
            :hname="'business-lists'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content business-lists" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <form class="form-inline manage-form">
-                        <div class="form-group">
+                <div class="heading">
+                    <div class="heading-left">
+
+                    </div>
+
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                        </div>
-                        <div class="form-group">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                        </div>
-                        <div class="form-group">
+                            <input type="text" class="form-control" v-model="defaultData.startValue" v-limitnumber="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
+                            <span>至</span>
+                            <input type="text" class="form-control" v-model="defaultData.endValue" v-limitnumber="defaultData.endValue" placeholder="佣金值">
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
+
                             <select class="form-control" v-model="defaultData.cityId">
                                 <option value="">全部城市</option>
                                 <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" debounce="300" class="form-control" v-model="defaultData.startValue" placeholder="佣金值">
-                            -
-                            <input type="text" debounce="300" class="form-control" v-model="defaultData.endValue" placeholder="佣金值">
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-info" @click="checkNew" data-ksa="merchant_manage.search">查询</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" style="margin-left: -13px;" @click="checkNew" data-ksa="merchant_manage.search">查询</a>
+                    </div>
                 </div>
+
                 <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
@@ -64,343 +63,255 @@
                                     <th>电话 </th>
                                 </tr>
                             </thead>
-                        <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
-                                <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.consumptionCount}}</td>
-                                <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
-                                <td>{{trlist.payAmount/100 | currency '' }} </td>
-                                <td>{{trlist.commission33211/100 | currency '' }} </td>
-                                <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
-                                <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
-                                <td><a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
-                                <td>{{trlist.commission/100 | currency '' }} </td>
-                                <td>
-                                    <template v-if="trlist.settlementCycle==1">日结</template>
-                                    <template v-if="trlist.settlementCycle==2">周结</template>
-                                    <template v-if="trlist.settlementCycle==3">月结</template>
-                                    <template v-if="trlist.settlementCycle==4">手工结算</template>
-                                </td>
-                                <td>{{trlist.subsidyRate}}%</td>
-                                <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                    <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
-                                </template>
-                                <template v-else>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                </template>
-                                    <!--<td>-->
-                                    <!--<a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>-->
-                                <!--<td>-->
-                                <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
-                                <td>{{trlist.contactsPerson}}</td>
-                                <td>{{trlist.contactsPhone}}</td>
-                            </tr>
-                             <tr>
-                                 <td></td>
-                                 <td>合计：</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td>{{nums.consumptionCount}}</td>
-                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
-                                 <td>{{nums.payAmount/100 | currency ''}}</td>
-                                 <td>{{nums.commission33211/100 | currency ''}}</td>
-                                 <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
-                                 <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                             </tr>
-                        </tbody>
-                    </table>
+
+                            <tbody>
+                                <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                    <td>{{trlist.merchantOperationID}}</td>
+                                    <td>{{trlist.merchantName}}</td>
+                                    <td>{{trlist.subCompanyName}}</td>
+                                    <td>{{trlist.cityName}}</td>
+                                    <td>{{trlist.consumptionCount}}</td>
+                                    <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
+                                    <td>{{trlist.payAmount/100 | currency '' }} </td>
+                                    <td>{{trlist.commission33211/100 | currency '' }} </td>
+                                    <td>{{trlist.thirdPartyDiscountDiff/100 | currency '' }} </td>
+                                    <td>{{trlist.limitPurchaseDiscountDiff/100 | currency '' }} </td>
+                                    <td><a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a></td>
+                                    <td>{{trlist.commission/100 | currency '' }} </td>
+                                    <td>
+                                        <template v-if="trlist.settlementCycle==1">日结</template>
+                                        <template v-if="trlist.settlementCycle==2">周结</template>
+                                        <template v-if="trlist.settlementCycle==3">月结</template>
+                                        <template v-if="trlist.settlementCycle==4">手工结算</template>
+                                    </td>
+                                    <td>{{trlist.subsidyRate}}%</td>
+                                    <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
+                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                    </template>
+                                    <template v-else>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </template>
+<!--                                     <td>
+                                        <a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>
+                                    <td> -->
+                                    <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
+                                    <td>{{trlist.contactsPerson}}</td>
+                                    <td>{{trlist.contactsPhone}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{nums.consumptionCount}}</td>
+                                    <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                    <td>{{nums.payAmount/100 | currency ''}}</td>
+                                    <td>{{nums.commission33211/100 | currency ''}}</td>
+                                    <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
+                                    <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="datatable-footer">
-                        <page :all="pageall"
-                              :cur.sync="defaultData.pageIndex"
-                              :page_size.sync="defaultData.pageSize">
-                        </page>
+
+                    <div class="datatable-bottom">
+                       <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                       </div>
                     </div>
                 </div>
+
                 <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
                     未找到数据
                 </div>
 
-                <div data-backdrop="static"  id="modal_checking" class="modal" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">额度采购消化账户</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div v-if="checkLists.length>0">
-                                    <span>商户ID：{{id}}</span>
-                                    <span>商户名：{{merchantName}}</span>
-                                    <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>
-                                </div>
-                                <div style="padding: 10px 0;">历史记录：</div>
-                                <div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">
-                                    无历史记录
-                                </div>
-                                <table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>ID</th>
-                                        <th>账户名</th>
-                                        <th>开始时间</th>
-                                        <th>结束时间</th>
-                                        <th>更新人</th>
-                                        <th>变更凭证</th>
-                                        <th>更新备注</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr role="row" v-for="n in checkLists">
-                                        <td>{{n.merchantID}}</td>
-                                        <td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>
-                                        <td>{{n.startDate | datetime}}</td>
-                                        <td>{{n.closeTime | datetime}}</td>
-                                        <td>{{n.updateBy}}</td>
-                                        <td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>
-                                        <td>{{n.remarks}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                <content-dialog
+                        :show.sync="modal_checking" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'额度采购消化账户'" 
+                >
+                    <div class="modal-body">
+                        <div v-if="checkLists.length>0">
+                            <span>商户ID：{{id}}</span>
+                            <span>商户名：{{merchantName}}</span>
+                            <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>
                         </div>
-                    </div>
-                </div>
-                <div data-backdrop="static"  id="modal_control" class="modal fade" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">划款账户</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <span>商户ID：{{controllist.merchantOperationID}}</span>
-                                    <span>商户名：{{controllist.merchantName}}</span>
-                                    <a class="updatebtn" @click="modal_updata" href="javascript:void(0);">更新</a>
-                                </div>
-                                <div  v-if="relist!=''" class="mt35">
-                                    <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
-                                    <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
-                                    <table v-if="index!=0&&relist.length>0" class="table dataTable">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>ID</th>
-                                            <th>账户信息</th>
-                                            <th>更新时间</th>
-                                            <th>更新人</th>
-                                            <th>变更凭证</th>
-                                            <th>更新说明</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr role="row" v-for="n in relist">
-                                                <td>{{$index+1}}</td>
-                                                <td>
-                                                    <p>{{n.accountName}}</p>
-                                                    <p>{{n.accountNumber}}</p>
-                                                </td>
-                                                <td>{{n.createAt | datetime}}</td>
-                                                <td>{{n.createBy}}</td>
-                                                <td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>
-                                                <td>{{n.updateInfo}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div style="padding: 10px 0;">历史记录：</div>
+                        <div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">
+                            无历史记录
                         </div>
+                        <table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">
+                            <thead>
+                            <tr role="row">
+                                <th>ID</th>
+                                <th>账户名</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>更新人</th>
+                                <th>变更凭证</th>
+                                <th>更新备注</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr role="row" v-for="n in checkLists">
+                                <td>{{n.merchantID}}</td>
+                                <td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>
+                                <td>{{n.startDate | datetime}}</td>
+                                <td>{{n.closeTime | datetime}}</td>
+                                <td>{{n.updateBy}}</td>
+                                <td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>
+                                <td>{{n.remarks}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </content-dialog>
 
-                <div data-backdrop="static"  id="modal_updata" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">更新账户</h5>
-                            </div>
-                            <validator name="vali">
-                                <form novalidate>
-                            <div class="modal-body member_rules_modal-body">
-                                    <div class="form-group">
-                                        <label class="w28"><i>*</i>账户名：</label>
-                                        <input v-validate:accountName="['required']" v-model="updateList.accountName" class="form-control" type="text" placeholder="账户名">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28" ><i>*</i>账 号：</label>
-                                        <input v-validate:accountNumber="['required']" v-model="updateList.accountNumber" class="form-control" type="text" placeholder="账 号">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28" ><i>*</i>开户行：</label>
-                                        <input v-validate:bankName="['required']" v-model="updateList.bankName" class="form-control" type="text" placeholder="开户行">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28" ><i>*</i>提入行号：</label>
-                                        <input v-validate:bankNumber="['required']" v-limitnumber="updateList.bankNumber" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
-                                        <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28" ><i>*</i>建行否：</label>
-                                        <input type="radio" id="one" value="1" v-model="updateList.isCcb" v-validate:isCcb="['required']">
-                                        <label class="w28" for="one">是</label>
-                                        <input type="radio" id="two" value="0" v-model="updateList.isCcb" v-validate:isCcb="['required']">
-                                        <label class="w28" for="two">否</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28" ><i>*</i>划付周期：</label>
-                                        <select class="form-control"  v-model="updateList.settlementCycle"  v-validate:settlementCycle="['required']">
-                                            <option value="0">请选择补贴划付周期</option>
-                                            <option value="1">日结</option>
-                                            <option value="2">周结</option>
-                                            <option value="3">月结</option>
-                                            <option value="4">手工结算</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28" ><i>*</i>补贴税率：</label>
-                                        <input debounce="300" @keyup="numberMax($event)" v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" class="form-control" type="number" placeholder="0~100">%
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="w28"><i>*</i>上传凭证：</label>
-                                        <input style="display:none" type="file" @change="uploads($event)">
-                                        <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                                        <span v-text="uploadText" v-show="uploadText!=''"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tarea" class="w28" style="position: relative;top: -40px;">更新说明：</label>
-                                        <textarea class="form-control" v-model="updateList.updateInfo"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tarea" class="w28">转账特殊备注：</label>
-                                        <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
-                                    </div>
-                                    <div class="form-group tc">
-                                        <button type="button" @click="updateTrue(updateList)" class="btn btn-primary" data-ksa="merchant_manage.update">保存</button>
-                                    </div>
-                                    <div class="form-group tc">
-                                        <span v-show="(!$vali.valid&&updataerror)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
-                                    </div>
-                                </div>
-                            </form>
-                            </validator>
+                <content-dialog
+                        :show.sync="modal_control" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'划款账户'" 
+                >
+                    <div class="modal-body" style="padding-top: 0;">
+                        <div>
+                            <span>商户ID：{{controllist.merchantOperationID}}</span>
+                            <span>商户名：{{controllist.merchantName}}</span>
+                            <a class="updatebtn" @click="modal_updata" href="javascript:void(0);">更新</a>
+                        </div>
+                        <div  v-if="relist!=''" class="mt35" style="margin-top: 5px;">
+                            <div v-if="relist!=''"><span>账户名：{{relist[0].accountName}}</span><span>账  号：{{relist[0].accountNumber}}</span></div>
+                            <div v-if="relist!=''"><span>开户行：{{relist[0].bankName}}</span><span>提入行号：{{relist[0].bankNumber}}</span></div>
+                            <table v-if="index!=0&&relist.length>0" class="table dataTable">
+                                <thead>
+                                <tr role="row">
+                                    <th>ID</th>
+                                    <th>账户信息</th>
+                                    <th>更新时间</th>
+                                    <th>更新人</th>
+                                    <th>变更凭证</th>
+                                    <th>更新说明</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" v-for="n in relist">
+                                        <td>{{$index+1}}</td>
+                                        <td>
+                                            <p>{{n.accountName}}</p>
+                                            <p>{{n.accountNumber}}</p>
+                                        </td>
+                                        <td>{{n.createAt | datetime}}</td>
+                                        <td>{{n.createBy}}</td>
+                                        <td><a href="{{origin}}/file/download/{{n.certificates}}">下载</a></td>
+                                        <td>{{n.updateInfo}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
+                </content-dialog>
+
+                <content-dialog
+                        :show.sync="modal_updatas" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'更新账户'" 
+                >
+                    <validator name="vali">
+                        <form novalidate>
+                        <div class="modal-body member_rules_modal-body">
+                            <div class="form-group">
+                                <label class="w28"><i>*</i>账户名：</label>
+                                <input v-validate:accountName="['required']" v-model="updateList.accountName" class="form-control" type="text" placeholder="账户名">
+                            </div>
+                            <div class="form-group">
+                                <label class="w28" ><i>*</i>账 号：</label>
+                                <input v-validate:accountNumber="['required']" v-model="updateList.accountNumber" class="form-control" type="text" placeholder="账 号">
+                            </div>
+                            <div class="form-group">
+                                <label class="w28" ><i>*</i>开户行：</label>
+                                <input v-validate:bankName="['required']" v-model="updateList.bankName" class="form-control" type="text" placeholder="开户行">
+                            </div>
+                            <div class="form-group">
+                                <label class="w28" ><i>*</i>提入行号：</label>
+                                <input v-validate:bankNumber="['required']" v-limitnumber="updateList.bankNumber" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
+                            </div>
+                            <div class="form-group">
+                                <label class="w28" ><i>*</i>建行否：</label>
+                                <input type="radio" id="one" value="1" v-model="updateList.isCcb" v-validate:isCcb="['required']">
+                                <label class="w28" for="one">是</label>
+                                <input type="radio" id="two" value="0" v-model="updateList.isCcb" v-validate:isCcb="['required']">
+                                <label class="w28" for="two">否</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="w28" ><i>*</i>划付周期：</label>
+                                <select class="form-control"  v-model="updateList.settlementCycle"  v-validate:settlementCycle="['required']">
+                                    <option value="0">请选择补贴划付周期</option>
+                                    <option value="1">日结</option>
+                                    <option value="2">周结</option>
+                                    <option value="3">月结</option>
+                                    <option value="4">手工结算</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="w28" ><i>*</i>补贴税率：</label>
+                                <input debounce="300" @keyup="numberMax($event)" v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" class="form-control" type="number" placeholder="0~100">%
+                            </div>
+                            <div class="form-group">
+                                <label class="w28"><i>*</i>上传凭证：</label>
+                                <input style="display:none" type="file" @change="uploads($event)">
+                                <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                <span v-text="uploadText" v-show="uploadText!=''"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="tarea" class="w28" style="position: relative;top: -40px;">更新说明：</label>
+                                <textarea class="form-control" v-model="updateList.updateInfo"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="tarea" class="w28">转账特殊备注：</label>
+                                <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
+                            </div>
+                            <div class="form-group tc">
+                                <button type="button" @click="updateTrue(updateList)" class="btn btn-primary" data-ksa="merchant_manage.update">保存</button>
+                            </div>
+                            <div class="form-group tc">
+                                <span v-show="(!$vali.valid&&updataerror)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                            </div>
+                        </div>
+                    </form>
+                    </validator>
+                </content-dialog>
 
             </div>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-      .form-group{
-        text-align: left;
-    }
-      .form-group.tc{
-        text-align: center;
-    }
-      .modal-body .form-control{
-        text-align: left;
-        width:67%;
-        display: inline-block;
-    }
-      .modal-body label{
-        width:20%;
-        display: inline-block;
-    }
-      .modal-body label i{
-        color:red;
-    }
-      .modal-body .waring{
-        color: red;
-        margin-left: 5px;
-    }
-      .modal-body button{
-        width:35%;
-    }
-      table tr td,  table tr th{
-         text-align: center;
-         text-overflow: ellipsis;
-         overflow: hidden;
-         white-space: nowrap;
-     }
-      td span{
-        cursor: pointer;
-        color: #3c8dbc;
-    }
-      td span:hover{
-        opacity: 80;
-    }
-      .modal-body .mt35{
-         border: 1px solid #ddd;
-         margin-top: 35px;
-         position: relative;
-         padding-top: 15px;
-    }
-      .modal-body .mt35 table{
-         border-top: 1px solid #ddd;
-     }
-      .modal-body .mt35 .togglebtn{
-         display: block;
-         position: absolute;
-         width: 80px;
-         line-height: 25px;
-         height: 25px;
-         top:-25px;
-         left: -1px;
-         background: #dadada;
-         text-align: center;
-         border: 1px solid #ccc;
-         border-radius: 15px 15px 0 0;
-         cursor: pointer;
-     }
-      .modal-body .mt35 .active{
-        color:#1E88E5;
-         top: -30px;
-         height: 30px;
-         line-height: 30px;
-    }
-      .modal-body .mt35 div{
-         margin-bottom: 10px;
-     }
-      .modal-body .mt35 div span{
-         margin: 0 30px 0 15px;
-     }
-      .modal-body .mt35 .updatebtn{
-         position: absolute;
-         right: 20px;
-         top: 45px;
-     }
-    .validation-error-label{
-        display: inline-block;
-    }
-</style>
+
 <script>
     import model from '../../ajax/BusinessManagement/buslists_model'
     export default{
         data(){
             this.model =model(this)
             return{
+                modal_checking: false ,
+                modal_control: false,
+                modal_updatas: false,
                 origin:window.origin,
                 id:'',
                 merchantName:'',
@@ -485,6 +396,8 @@
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 if(data.endValue<data.startValue){
+                    let a=data.endValue,b=data.startValue;
+                    this.defaultData.startValue=a;
                     this.defaultData.endValue=b;
                     data.startValue=a;
                     data.endValue=b;
@@ -519,9 +432,11 @@
                 this.initList();
             },
             initList(){
-                $(".modal").modal("hide");
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
+                this.modal_control = false;
+                this.modal_checking = false;
+                this.modal_updatas = false;
             },
             control(_list){
                 this.$set('controllist',_list);
@@ -538,7 +453,7 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('relist', response.data.data)
-                                $('#modal_control').modal('show');
+                                this.modal_control = true;
                             }
                         });
             },
@@ -568,7 +483,8 @@
             },
             modal_updata(){
                 this.errortext='';
-                $('#modal_updata').modal('show');
+                this.updateBtn(this.relist[0]);
+                this.modal_updatas = true;
             },
             uploadClick(){
                 $('input[type="file"]').val('');
@@ -672,7 +588,7 @@
                         .then((res)=>{
                             if(res.data.code==0){
                                 this.$set('checkLists',res.data.data);
-                                $('#modal_checking').modal('show');
+                                this.modal_checking = true;
                             }
                     })
             }
@@ -684,19 +600,19 @@
             vm.getCity();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
-            $('#modal_updata').on('show.bs.modal', function () {
-                vm.updateBtn(vm.relist[0]);
-            })
-            $('#modal_control').on('hidden.bs.modal', function () {
-                $('body').css('padding-right',0);
-                vm.uploadText='';
-                vm.updateList.certificates='';
-            })
-            $('#modal_updata').on('hidden.bs.modal',function(){
-                if(!$('#modal_control').is(':hidden')){
-                    $('#app').addClass('modal-open');
-                }
-            })
+            // $('#modal_updata').on('show.bs.modal', function () {
+            //     vm.updateBtn(vm.relist[0]);
+            // })
+            // $('#modal_control').on('hidden.bs.modal', function () {
+            //     $('body').css('padding-right',0);
+            //     vm.uploadText='';
+            //     vm.updateList.certificates='';
+            // })
+            // $('#modal_updata').on('hidden.bs.modal',function(){
+            //     if(!$('#modal_control').is(':hidden')){
+            //         $('#app').addClass('modal-open');
+            //     }
+            // })
         },
         watch:{
             'defaultData.pageSize+defaultData.pageIndex'(){
