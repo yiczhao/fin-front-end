@@ -296,13 +296,12 @@
             },
             payApply(){
                 this.batchData={
-                    timeRange:'3',
-                    startDate:'',
-                    endDate:'',
+                    timeRange:this.checkForm.timeRange,
+                    startDate:this.checkForm.startDate,
+                    endDate:this.checkForm.endDate,
                     activityOperationIDs:this.checkForm.activityOperationIDs,
                     merchantOperationIDs:this.checkForm.merchantOperationIDs
                 }
-                this.getbatchDataTime();
                 this.modal_batch=true;
             },
             payApplyTrue(){
@@ -311,8 +310,14 @@
                     dialogs('info','商户ID和活动ID不能都为空！');
                     return false
                 }
-                sessionStorage.setItem('manuallybatchData',JSON.stringify(this.batchData));
-                this.$router.go({'name':'manually-settlement-batchpay'});
+                this.model.manuallySettlement_list(this.batchData)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                sessionStorage.setItem('manuallybatchData',JSON.stringify(this.batchData));
+                                this.$router.go({'name':'manually-settlement-batchpay'});
+                            }
+                        });
             },
             getTime(){
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
