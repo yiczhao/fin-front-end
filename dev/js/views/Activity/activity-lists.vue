@@ -585,7 +585,7 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 if(typeof response.data.data=='undefined'||response.data.data==''){
-                                    dialogs('info','该计算公式尚不可编辑！');
+                                    dialogs('info','该活动下没有交易，暂无法编辑计算公式！');
                                     return
                                 }
                                 else if(response.data.data.length==1){

@@ -20,6 +20,7 @@ module.exports = [
         name: '交易管理',
         icon: 'icon-transmission',
         type:'trade',
+        ksa:'trade_detail_manage',
         sub_menu: [
             {name: '交易管理', link: 'trade-info',ksa:'trade_detail_manage'},
         ]
@@ -28,6 +29,7 @@ module.exports = [
         name: '备付金支出',
         icon: 'icon-coin-yen',
         type:'payment',
+        ksa:'reserve_cash_detail_manage',
         sub_menu: [
             {name: '备付金支出', link: 'payment-details',ksa:'reserve_cash_detail_manage'},
         ]
@@ -35,6 +37,7 @@ module.exports = [
     {
         name: '商户管理',
         icon: 'icon-table2',
+        ksa:'merchant_manage',
         type:'business',
         sub_menu: [
             {name: '商户管理', link: 'business-lists',ksa:'merchant_manage'},
@@ -62,6 +65,7 @@ module.exports = [
         name: '系统配置',
         icon: ' icon-wrench',
         type:'user',
+        ksa:'user_manage',
         sub_menu: [
             {name: '员工管理', link: 'user-managerment',ksa:'user_manage'},
         ]
