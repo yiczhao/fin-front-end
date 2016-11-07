@@ -120,6 +120,7 @@
                 this.getLists();
             },
             payApply(){
+                if(!this.recheckLists.length)return;
                 this.batchsData={
                     mergePay:false,
                     payType:''
@@ -127,7 +128,7 @@
                 this.show=true;
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1||!this.recheckLists.length)return;
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.batchsData.payType==''){
                     dialogs('info','请选择付款方式！');
                     return false
