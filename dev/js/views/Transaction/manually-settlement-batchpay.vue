@@ -9,7 +9,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a v-show="recheckLists.length>0" class="btn btn-add add-top" @click="payApply" data-ksa="manually_settlement.apply_pay" style="margin-top:20px;">申请划付</a>
+                        <a v-show="recheckLists.length>0" class="btn btn-add add-top" @click="payApply" data-ksa="manually_settlement.apply_pay" style="margin-top:20px;">生成划付</a>
                         <span class="btn btn-add add-top" v-link="{name:'manually-settlement'}" style="margin-top:20px;">返回上一步</span>
                     </div>
                 </div>
