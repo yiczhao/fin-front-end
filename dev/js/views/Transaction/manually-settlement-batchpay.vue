@@ -101,6 +101,12 @@
         methods:{
             getLists(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                this.total={
+                    tradeSize:0,
+                    suspensionTax:0,
+                    thirdPartyReceivable:0,
+                    merchantSubsidyActual:0,
+                }
                 this.model.manuallySettlement_list(JSON.parse(sessionStorage.getItem('manuallybatchData')))
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
