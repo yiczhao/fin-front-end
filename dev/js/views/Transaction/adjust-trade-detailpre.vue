@@ -6,12 +6,12 @@
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li><a v-link="{name:'trade-info'}" data-ksa="trade_detail_manage">交易明细</a></li>
-                    <li class="active"><a v-link="{name:'adjust-trade-detailpre'}" data-ksa="adjust_trade_detail_pre_manage">调账管理</a></li>
-                    <li><a v-link="{name:'manual-trade-detail'}" data-ksa="manual_trade_detail">手工单管理</a></li>
-                    <li><a v-link="{name:'manually-settlement'}" data-ksa="manually_settlement">手工结算</a></li>
-                    <li><a v-link="{name:'Abnormal-transaction'}" data-ksa="exception_trade_manage">异常交易</a></li>
-                    <li><a v-link="{name:'white-lists'}" data-ksa="exception_trade_white_list_manage">异常白名单</a></li>
+                    <li data-ksa="trade_detail_manage"><a v-link="{name:'trade-info'}">交易明细</a></li>
+                    <li class="active" data-ksa="adjust_trade_detail_pre_manage"><a v-link="{name:'adjust-trade-detailpre'}">调账管理</a></li>
+                    <li data-ksa="manual_trade_detail"><a v-link="{name:'manual-trade-detail'}">手工单管理</a></li>
+                    <li data-ksa="manually_settlement"><a v-link="{name:'manually-settlement'}">手工结算</a></li>
+                    <li data-ksa="exception_trade_manage"><a v-link="{name:'Abnormal-transaction'}">异常交易</a></li>
+                    <li data-ksa="exception_trade_white_list_manage"><a v-link="{name:'white-lists'}">异常白名单</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">

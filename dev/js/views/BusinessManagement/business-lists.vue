@@ -6,9 +6,9 @@
         <div class="content business-lists" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li class="active"><a v-link="{name:'business-lists'}" data-ksa="merchant_manage">商户管理</a></li>
+                    <li data-ksa="merchant_manage" class="active"><a v-link="{name:'business-lists'}">商户管理</a></li>
                     <!--<li><a v-link="{name:'business-limit'}" data-ksa="activity_manage">额度采购</a></li>-->
-                    <li><a v-link="{name:'prepayment-lists'}" data-ksa="advance_payment_account_manage">预付款</a></li>
+                    <li data-ksa="advance_payment_account_manage"><a v-link="{name:'prepayment-lists'}">预付款</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">

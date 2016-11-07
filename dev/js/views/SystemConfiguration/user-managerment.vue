@@ -3,8 +3,8 @@
         <div class="content user-managerment" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li class="active"><a>员工管理</a></li>
-                    <li><a v-link="{name:'log-management'}" data-ksa='system_log_manage'>系统日志</a></li>
+                    <li data-ksa='user_manage' class="active"><a>员工管理</a></li>
+                    <li data-ksa='system_log_manage'><a v-link="{name:'log-management'}">系统日志</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
