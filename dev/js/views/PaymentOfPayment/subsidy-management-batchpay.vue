@@ -195,9 +195,9 @@
                 this.model.subsidyManagement_batchs(data)
                         .then( (response)=> {
                             if(response.data.code==0){
-                                this.query();
                                 dialogs('success',response.data.message);
                             }
+                            this.query();
                         })
             }
         },
