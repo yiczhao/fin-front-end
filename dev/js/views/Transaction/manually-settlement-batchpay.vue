@@ -139,8 +139,8 @@
                         .then((response)=>{
                             if(response.data.code==0){
                                 dialogs('success',response.data.message);
-                                this.query();
                             }
+                            this.query();
                         });
             },
         },

@@ -19,6 +19,7 @@
                                 <th>ID</th>
                                 <th>划付时间</th>
                                 <th>付款账户</th>
+                                <th>付款方式</th>
                                 <th>收款账户信息</th>
                                 <th>用途</th>
                                 <th>划付金额</th>
@@ -30,6 +31,12 @@
                                 <td>{{trlist.id}}</td>
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>{{trlist.payAccount}}</td>
+                                <td>
+                                    <template v-if="trlist.payType==1">备付金账户</template>
+                                    <template v-if="trlist.payType==2">商户预付款账户</template>
+                                    <template v-if="trlist.payType==3">银行结算</template>
+                                    <template v-if="trlist.payType==4">其他</template>
+                                </td>
                                 <td>
                                     {{trlist.collectionAccountName}}
                                     {{trlist.collectionAccountNumber}}
