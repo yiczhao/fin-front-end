@@ -1,6 +1,6 @@
 <template>
     <index :title="'活动执行表'"
-           :ptitle="'活动执行表列表'"
+           :ptitle="'活动列表'"
            :hname="'activity-effect-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">

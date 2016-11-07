@@ -1,6 +1,6 @@
 <template>
     <index :title="'税率管理'"
-           :ptitle="'活动管理'"
+           :ptitle="'活动列表'"
            :hname="'taxRate'"
            :isshow="'isshow'">
 

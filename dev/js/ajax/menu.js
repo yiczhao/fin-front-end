@@ -67,7 +67,7 @@ module.exports = [
         type:'user',
         ksa:'user_manage',
         sub_menu: [
-            {name: '员工管理', link: 'user-managerment',ksa:'user_manage'},
+            {name: '系统配置', link: 'user-managerment',ksa:'user_manage'},
         ]
     },
 ]
