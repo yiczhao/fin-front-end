@@ -127,7 +127,7 @@
                 this.show=true;
             },
             submit(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(sessionStorage.getItem('isHttpin')==1||!this.recheckLists.length)return;
                 if(this.batchsData.payType==''){
                     dialogs('info','请选择付款方式！');
                     return false
