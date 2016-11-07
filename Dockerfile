@@ -27,12 +27,14 @@
 # USER 为运行镜像时或者任何接下来的RUN指令指定运行用户名或UID
 # USER <username>
 
-FROM nginx:1.10.1-alpine
+FROM kssz/nginx
 MAINTAINER chenyongbing
+ARG KS_PROJECT_NAME
+ENV KS_PROJECT_NAME $KS_PPROJECT_NAME
+ENV KS_PROJECT_PORT 80
+EXPOSE $KS_PROJECT_PORT
 
-ENV KS_PROJECT_NAME fin-front-end
-ENV LANG  en_US.UTF-8
 COPY index.html /usr/share/nginx/html/
 COPY dist /usr/share/nginx/html/dist
-EXPOSE 80
+
 
