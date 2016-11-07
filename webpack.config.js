@@ -3,6 +3,7 @@
  */
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 // var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
@@ -55,6 +56,11 @@ module.exports = {
         plugins: ['transform-runtime']
     },
 	plugins:[
+		new CleanWebpackPlugin(['dist'], {
+			root: __dirname,
+			verbose: true,
+			dry: false
+		}),
 		// new ProgressBarPlugin(),
 		new ExtractTextPlugin('app.css'),
 		// new webpack.optimize.UglifyJsPlugin({
