@@ -9,7 +9,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a v-show="recheckLists.length>0" class="btn btn-add add-top" @click="payApply" data-ksa="manually_settlement.apply_pay" style="margin-top:20px;">生成划付</a>
+                        <a class="btn btn-add add-top" @click="payApply" data-ksa="manually_settlement.apply_pay" style="margin-top:20px;">生成划付</a>
                         <span class="btn btn-add add-top" v-link="{name:'manually-settlement'}" style="margin-top:20px;">返回上一步</span>
                     </div>
                 </div>
@@ -126,7 +126,10 @@
                 this.getLists();
             },
             payApply(){
-                if(!this.recheckLists.length)return;
+                if(!this.recheckLists.length){
+                    dialogs('info','没有可划付数据！');
+                    return;
+                }
                 this.batchsData={
                     mergePay:false,
                     payType:''
