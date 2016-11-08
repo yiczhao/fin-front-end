@@ -9,8 +9,8 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="batchsBtn" data-ksa="" style="margin-top:20px;">确定提现</a>
-                        <span class="btn btn-add add-top" v-link="{name:'subsidy-management'}" data-ksa="" style="margin-top:20px;">返回上一步</span>
+                        <a class="btn btn-add add-top" @click="batchsBtn" data-ksa="subsidy_account_manage.with_draw" style="margin-top:20px;">确定提现</a>
+                        <span class="btn btn-add add-top" v-link="{name:'subsidy-management'}" style="margin-top:20px;">返回上一步</span>
                     </div>
                     <div class="heading-middle" style="padding-right: 20px;">
                         共{{recheckLists.length}}条记录，已选{{checkedIds.lengths}}个记录，合计可提现{{withdrawCashAmounts/100 | currency ''}}元
