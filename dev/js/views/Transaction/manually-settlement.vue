@@ -314,6 +314,9 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
+                                this.checkForm.merchantOperationIDs=this.batchData.merchantOperationIDs;
+                                this.checkForm.activityOperationIDs=this.batchData.activityOperationIDs;
+                                back_json.saveArray(this.$route.path,this.checkForm);
                                 sessionStorage.setItem('manuallybatchData',JSON.stringify(this.batchData));
                                 this.$router.go({'name':'manually-settlement-batchpay'});
                             }

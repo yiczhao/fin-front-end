@@ -33,7 +33,7 @@
                                 </tr>
                             </thead>
                             <tr v-for="(index,n) in recheckLists" v-bind:class="{'odd':(index%2==0)}">
-                                <td><input type="checkbox" @click="checked(n)" v-model="n.ischeck"/></td>
+                                <td><input type="checkbox" v-if="n.withdrawCashAmount!=0" @click="checked(n)" v-model="n.ischeck"/></td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.merchantOperationID}}</td>
@@ -144,6 +144,7 @@
                 this.withdrawCashAmounts=0;
                 let cloneData=_.cloneDeep(this.recheckLists);
                 cloneData.map((value)=>{
+                    if(value.withdrawCashAmount==0)return;
                     if(this.checkAll){
                         value.ischeck=false;
                         this.withdrawCashAmounts=0;

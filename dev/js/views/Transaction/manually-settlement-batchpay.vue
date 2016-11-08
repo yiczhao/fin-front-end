@@ -55,7 +55,7 @@
             </div>
             <content-dialog
                     :show.sync="show" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="'申请划付'" @kok="submit" @kcancel="show = false"
+                    :title.sync="'生成划付'" @kok="submit" @kcancel="show = false"
             >
                 <div class="modal-body">
                     <div class="form-group">

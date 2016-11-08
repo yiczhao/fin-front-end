@@ -194,14 +194,14 @@
                 this.getLogList(this.checkForm);
             },
             getTime(){
-                this.startDate=init_date(this.checkForm.timeRange)[0];
-                this.endDate=init_date(this.checkForm.timeRange)[1];
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             }
         },
         ready() {
             this.getTime();
             this.getSubcompany({});
-            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
        watch:{

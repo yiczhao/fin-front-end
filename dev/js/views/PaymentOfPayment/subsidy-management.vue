@@ -556,6 +556,9 @@
                         .then((res)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(res.data.code==0){
+                                this.defaultData.activityOperationID=this.batchData.activityOperationID;
+                                this.defaultData.merchantOperationID=this.batchData.merchantOperationID;
+                                back_json.saveArray(this.$route.path,this.defaultData);
                                 sessionStorage.setItem('batchData',JSON.stringify(this.batchData));
                                 this.$router.go({'name':'subsidy-management-batchpay'});
                             }
