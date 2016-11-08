@@ -58,8 +58,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>{{nums.payAmount/100 | currency ''}}</td>
                                 <td></td>
+                                <td>{{nums.payAmount/100 | currency ''}}</td>
                                 <td></td>
                             </tr>
                             </tbody>
