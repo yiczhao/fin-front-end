@@ -177,19 +177,20 @@ var accMul=(arg1,arg2)=> {
     return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
 }
 var removeCookie=()=> {
-    Cookie.set('KSAuthSysId', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthSysId', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('KSAuthUserToken', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthUserToken', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('KSAuthJSURL', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthJSURL', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('KSAuthApiURL', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthApiURL', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('JSESSTOKEN', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('JSESSTOKEN', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('JSESSID', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('JSESSID', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('XSRF-TOKEN', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('XSRF-TOKEN', '', {domain:'.kashuo.net',maxage: -1});
+    localStorage.clear();
 };
 window.getNow=()=>{
     var time = new Date();

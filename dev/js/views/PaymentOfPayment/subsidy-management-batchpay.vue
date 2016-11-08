@@ -198,6 +198,9 @@
                             if(response.data.code==0){
                                 dialogs('success',response.data.message);
                             }
+                            if(back_json.num==0){
+                                back_json.num++;
+                            }
                             this.query();
                         })
             }
