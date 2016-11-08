@@ -11,13 +11,13 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li class="active" data-ksa=""><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li class="active" data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left" style="width: 225px;">
-                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="batchApply">批量提现</a>
-                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="recharges">发票充值</a>
+                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="subsidy_account_manage.with_draw">批量提现</a>
+                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="subsidy_account_manage.recharge">发票充值</a>
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
@@ -36,7 +36,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="">查询</a>
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="subsidy_account_manage.search">查询</a>
                     </div>
                 </div>
                 <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
@@ -78,8 +78,8 @@
                                 <td>{{trlist.merchantSubsidyActual/100 | currency ''}}</td>
                                 <td>{{trlist.suspensionTax/100 | currency ''}}</td>
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
-                                <td><a data-ksa="" v-link="{name:'paid-amount',params:{paidId:trlist.id,paidHd:trlist.activityName,paidSh:trlist.merchantName}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
-                                <td><a data-ksa="" v-link="{name:'unpaid-amount',params:{unpaidId:trlist.id,unpaidHd:trlist.activityName,unpaidSh:trlist.merchantName,unpaidTs:trlist.suspensionTaxAmount,unpaidYe:trlist.unpaidAmount}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
+                                <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'paid-amount',params:{paidId:trlist.id,paidHd:trlist.activityName,paidSh:trlist.merchantName}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
+                                <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'unpaid-amount',params:{unpaidId:trlist.id,unpaidHd:trlist.activityName,unpaidSh:trlist.merchantName,unpaidTs:trlist.suspensionTaxAmount,unpaidYe:trlist.unpaidAmount}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
                                 <td><a data-ksa="suspension_tax_account_detail_manage.search" v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,suspensionBTid:trlist.merchantID,suspensionSHid:trlist.merchantID}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
                                 <td><a data-ksa="invoice_account_detail.search" v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
