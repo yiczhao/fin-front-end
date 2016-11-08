@@ -54,7 +54,14 @@
 									<td>
 									</td>
 								</tr>
-                            </table>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="计算补贴账户交易统计信息" data-toggle="modal" @click="caculateSubsidyAccountTradeData($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+							</table>
 						</form>
 					</div>
 				 </div>
@@ -171,7 +178,13 @@
 						.then((response)=>{
 							dialogs('success',response.data.message);
 						})
-			}
+			},
+			caculateSubsidyAccountTradeData(e){
+                this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
+                        .then((response)=>{
+                            dialogs('success','处理成功！');
+                        })
+            }
         },
         ready() {
         },
