@@ -16,8 +16,8 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left" style="width: 225px;">
-                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="subsidy_account_manage.with_draw">批量提现</a>
-                        <a class="btn btn-add add-top" data-ksa="" style="margin-right:0px;" @click="subsidy_account_manage.recharge">发票充值</a>
+                        <a class="btn btn-add add-top" data-ksa="subsidy_account_manage.with_draw" style="margin-right:0px;" @click="batchApply">批量提现</a>
+                        <a class="btn btn-add add-top" data-ksa="subsidy_account_manage.recharge" style="margin-right:0px;" @click="recharges">发票充值</a>
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
