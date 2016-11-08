@@ -115,7 +115,7 @@
         methods:{
             getLists(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.total=this.suspensionTaxAmount=0;
+                this.total=this.suspensionTaxAmount=this.withdrawCashAmounts=0;
                 this.model.subsidyManagement_batch(JSON.parse(sessionStorage.getItem('batchData')))
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
