@@ -71,6 +71,7 @@
         this.showyear=true
       },
       nextyear(){
+        this.yText=parseInt(this.yText)+12;
         let data=[];
         for(let i=0;i<12;i++){
           data[i]=parseInt(this.yText)+i
