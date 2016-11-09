@@ -9,61 +9,61 @@
                 <div class="panel-row">
                     <div class="col">
                         <div>实际广告费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualAdvertisementFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualAdvertisementFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同广告费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractAdvertisementFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractAdvertisementFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际物料费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualMaterialFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualMaterialFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同物料费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractMaterialFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractMaterialFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际微信营销费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualWeChatMarketFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualWeChatMarketFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同微信营销费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractWeChatMarketFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractWeChatMarketFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际服务费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualServiceFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualServiceFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同服务费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractServiceFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractServiceFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div><i>*</i>实际税费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualTaxFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualTaxFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同税费=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractTaxFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractTaxFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div><i>*</i>实际结算金额=</div>
-                        <v-select multiple taggable :value.sync="defaultData.actualSettlementFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualSettlementFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同结算金额=</div>
-                        <v-select multiple taggable :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-footer">
