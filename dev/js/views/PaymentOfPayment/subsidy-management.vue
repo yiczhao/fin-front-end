@@ -575,6 +575,7 @@
                 this.modal_recharges=true;
                 this.fire=false;
                 this.errortext='';
+                this.uploadText='';
             },
             rechargesTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
