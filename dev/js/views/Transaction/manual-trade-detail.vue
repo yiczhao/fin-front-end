@@ -537,7 +537,7 @@
                         .then((response)=> {
                             if (response.data.code == 0) {
                                 this.getManualTradeDetailData();
-                                dialogs(response.data.message);
+                                dialogs("success",response.data.message);
                                 this.modal_add=false;
                             }
                         })
