@@ -1,4 +1,4 @@
-# This dockerfile uses the centos image
+﻿# This dockerfile uses the centos image
 # VERSION 2 - EDITION 1
 # Author: chenyongbing
 # Cretae Time : 2016-10-17 下午4:30
