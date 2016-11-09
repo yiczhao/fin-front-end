@@ -279,7 +279,7 @@
              */
             multiple: {
                 type: Boolean,
-                default: true
+                default: false
             },
 
             /**
@@ -353,7 +353,7 @@
              */
             taggable: {
                 type: Boolean,
-                default: true
+                default: false
             },
 
             /**
