@@ -46,7 +46,7 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <a data-ksa="" v-if="trlist.status==1" @click="rewrite(trlist)">编辑</a>
+                                    <a data-ksa="" @click="rewrite(trlist)">编辑</a>
                                     <a data-ksa="" v-if="trlist.status==0" @click="start(trlist.id)">启用</a>
                                 </td>
                             </tr>
@@ -252,6 +252,10 @@
             getAccountList(a){
                 this.accountId=a;
                 this.addAccountTr=false;
+                this.addAccountData={
+                    accountName:'',
+                    accountNumber:''
+                };
                 this.model.getAccountList(this.accountId).then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code==0){
