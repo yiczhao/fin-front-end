@@ -337,14 +337,14 @@ export default function(router){
         // 转到登录页
         '*':{
             component:function () {
-                router.go({name:'login'})
+                router.go({name:'default'})
             }
         }
     })
     router.beforeEach(transition =>{
-        if(!sessionStorage.getItem('userData')){
-            router.go({name:'login'})
-        }
+        // if(!sessionStorage.getItem('userData')){
+        //     router.go({name:'login'})
+        // }
         document.querySelector('body').scrollTop=0;
         transition.next();
     });

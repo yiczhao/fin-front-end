@@ -10,6 +10,7 @@
     </index>
 </template>
 <script>
+    import Cookie from '../utils/Cookie'
     export default{
         data(){
             return{
@@ -19,10 +20,16 @@
         components:{
         },
         ready(){
-//            if(!sessionStorage.getItem('userData')){
-//                this.$router.go({name:'login'});
-//            }
-            this.loginList=JSON.parse(sessionStorage.getItem('userData'));
+            this.$http.post(this.$API.login,{username:Cookie.get('KSAuthUserName')})
+                    .then((response)=>{
+                        if(response.data.code===0){
+                            sessionStorage.setItem('userData',JSON.stringify(response.data.data));
+                            this.loginList=JSON.parse(sessionStorage.getItem('userData'));
+                            $('body').removeClass('login');
+                            $('.message-notify.show,.message-notify').css('top','6px');
+                            this.$router.go({name:'default'});
+                        }
+                    });
         }
     }
 </script>
