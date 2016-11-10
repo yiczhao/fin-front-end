@@ -412,6 +412,50 @@ export default function install(Vue) {
      */
     _o.abnormalhandle = './exception/trade/handle';
 
+    //- todo  本金收入-通道管理 running-channel
+    /**
+     * @description 查询通道列表
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getchannellist = './runningChannel/list?';
+    /**
+     * @description 查询配置信息
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getAccountList = './runningChannel/account/list/';
+    /**
+     * @description 保存配置信息
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.saveAccountList = './runningChannel/account/add';
+    /**
+     * @description 保存配置信息
+     * @author 于凯乐
+     * @method delete
+     */
+    _o.deleteAccountList = './runningChannel/account/delete/';
+    /**
+     * @description 启用账户
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.startChannel = './runningChannel/enable/';
+    /**
+     * @description 新增通道信息
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.addChannel = './runningChannel/add';
+    /**
+     * @description 编辑通道信息
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.editChannel = './runningChannel/edit';
+
     //- todo  备付金支出-付款明细 payment-details
     /**
      * @description 备付金支出明细列表接口地址
