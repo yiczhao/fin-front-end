@@ -26,6 +26,15 @@ module.exports = [
         ]
     },
     {
+        name: '本金收入',
+        icon: 'icon-heart5',
+        type:'Principal',
+        ksa:'',
+        sub_menu: [
+            {name: '通道管理', link: 'running-channel',ksa:''},
+        ]
+    },
+    {
         name: '备付金支出',
         icon: 'icon-coin-yen',
         type:'payment',
