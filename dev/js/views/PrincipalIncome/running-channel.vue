@@ -118,7 +118,7 @@
                     </div>
                     <div class="form-group">
                         <label><i>*</i>代码</label>
-                        <input type="text" class="form-control" v-if="relist.status==1" readonly v-validate:val4="['required']" maxlength="20" v-model="relist.code">
+                        <input type="text" class="form-control" v-if="relist.status==1" maxlength="20" v-model="relist.code" readonly>
                         <input type="text" class="form-control" v-else v-validate:val4="['required']" maxlength="20" v-model="relist.code">
                     </div>
                     <div class="form-group">
