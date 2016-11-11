@@ -152,7 +152,7 @@
                 pageall:1,
                 dateS:'3',
                 checkForm:{
-                    id:'',
+                    bankAccountID:'',
                     certificate:'',
                     status:'',
                     purpose:'',
@@ -201,7 +201,7 @@
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
             getShortName(){
-                this.model.principleBalanceList(this.checkForm.id).then((res)=>{
+                this.model.principleBalanceList(this.checkForm.bankAccountID).then((res)=>{
                     if(res.data.code == 0){
                         this.$set('balance', res.data.data)
                     }
@@ -211,7 +211,7 @@
         ready: function () {
             var vm=this;
             vm.getTime();
-            (vm.$route.params.principleId==':principleId')?vm.checkForm.id='' : vm.checkForm.id=vm.$route.params.principleId;
+            (vm.$route.params.principleId==':principleId')?vm.checkForm.bankAccountID='' : vm.checkForm.bankAccountID=vm.$route.params.principleId;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.checkForm=back_json.fetchArray(vm.$route.path):null;
             vm.getShortName();
             vm.initList();
