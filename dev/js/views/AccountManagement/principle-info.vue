@@ -37,7 +37,7 @@
                                 <option value="6">测试款</option>
                                 <option value="7">其它</option>
                             </select>
-                            <input type="text" class="form-control" v-model="checkForm.certificate" placeholder="凭证号">
+                            <input type="text" class="form-control" v-model="checkForm.certificateNumber" placeholder="凭证号">
                         </form>
                     </div>
 
@@ -153,7 +153,7 @@
                 dateS:'3',
                 checkForm:{
                     bankAccountID:'',
-                    certificate:'',
+                    certificateNumber:'',
                     status:'',
                     purpose:'',
                     startDate:'',
