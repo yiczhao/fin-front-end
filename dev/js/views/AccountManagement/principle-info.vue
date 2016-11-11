@@ -100,15 +100,10 @@
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 <tr>
-                                    <td>合计：</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>合计：</td><td></td><td></td>
                                     <td>{{total.payoutAmount/100 | currency ''}}</td>
                                     <td>{{total.incomeAmount/100 | currency ''}}</td>
-                                    <td>{{total.balanceAmount/100 | currency ''}}</td>
-                                    <td></td><td></td><td></td>
-                                    <td>{{total.diffAmount/100 | currency ''}}</td>
-                                    <td></td><td></td><td></td>
+                                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 </tr>
                             </tbody>
                         </table>
