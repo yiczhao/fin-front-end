@@ -63,7 +63,7 @@
 
             <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
-                    <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                    <table class="table">
                         <thead>
                             <tr  role="row">
                                 <th>编号</th>
@@ -82,7 +82,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{index+1}}</td>
                                 <td>{{trlist.collectionName}}</td>
                                 <td>{{trlist.certificate}}</td>
