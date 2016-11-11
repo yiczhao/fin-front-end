@@ -177,6 +177,26 @@ export default function install(Vue) {
      */
     _o.incomeAndPayoutAmount = './reserveCashDetail/total?';
 
+    //- todo 财务处理-账户管理-备付金明细 principle-info
+    /**
+     * @description 本金列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleList = './principleCashDetail/list?';
+    /**
+     * @description 合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.principleCashDetailModel = './principleCashDetail/total?';
+    /**
+     * @description 总收入支出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.principleBalanceList = './principleCashDetail/info/';
+
     //- todo 交易管理-交易明细 trade-info
     /**
      * @description 交易明细列表接口地址
