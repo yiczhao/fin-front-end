@@ -245,12 +245,10 @@
             },
         },
         ready: function () {
-            var vm=this;
-            vm.getTime();
-            vm.getClist();
-            (vm.$route.params.principleId==':principleId')?vm.checkForm.bankAccountID='' : vm.checkForm.bankAccountID=vm.$route.params.principleId;
-            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.checkForm=back_json.fetchArray(vm.$route.path):null;
-            vm.initList();
+            this.getTime();
+            this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
+            this.initList();
         },
         watch:{
             'checkForm.pageSize + checkForm.pageIndex'(){
