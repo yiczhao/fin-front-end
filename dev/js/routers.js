@@ -26,12 +26,20 @@ export default function(router){
                 require(['./views/AccountManagement/account-management.vue'],resolve);
             }
         },
-        //账户明细
+        //账户列表-备付金明细
         '/provisions-info/:accountId/:certificate/:aname/:balance/:subCompanyID':{
             name:'provisions-info',
             router_type:"account",
             component: function(resolve){
                 require(['./views/AccountManagement/provisions-info.vue'],resolve);
+            }
+        },
+        //账户列表-本金明细
+        '/principle-info/:principleId':{
+            name:'principle-info',
+            router_type:"account",
+            component: function(resolve){
+                require(['./views/AccountManagement/principle-info.vue'],resolve);
             }
         },
         //交易处理-交易明细

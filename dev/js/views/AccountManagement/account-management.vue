@@ -62,7 +62,8 @@
                                 </td>
                                 <td>{{trlist.startDate | datetimes}}</td>
                                 <td>
-                                    <a data-ksa="reserve_cash_detail_manage.search" v-link="{name:'provisions-info',params:{accountId:trlist.id,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                    <a v-if="trlist.accountType==1" data-ksa="reserve_cash_detail_manage.search" v-link="{name:'provisions-info',params:{accountId:trlist.id,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                    <a v-if="trlist.accountType==2" data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
                                 </td>
                                 <td v-if="trlist.status==0">
                                     <a data-ksa="account_manage.add" @click="rewrite(trlist)">编辑</a>
