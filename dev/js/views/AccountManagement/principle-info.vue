@@ -92,8 +92,10 @@
                                         <span v-if="trlist.status==2">对账成功</span>
                                         <span v-if="trlist.status==3">差额入账</span>
                                     </td>
-                                    <td>{{trlist.diffAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.diffTime | datetime}} </td>
+                                    <td>
+                                        <span v-if="trlist.diffAmount!=null">{{trlist.diffAmount/100 | currency ''}}</span>
+                                    </td>
+                                    <td>{{trlist.diffTime}} </td>
                                     <td>
                                         <a data-ksa="" @click="duizhang(trlist)" v-if="trlist.status!=2">对账</a>
                                     </td>

@@ -71,11 +71,11 @@
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.orderID }}</td>
                                 <td>{{trlist.createTime | datetime}}</td>
-                                <td>{{trlist.runningChannel}}</td>
+                                <td>{{trlist.runningChannelName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.accountName}}</td>
                                 <td>{{trlist.accountNumber}}</td>
-                                <td>{{trlist.tradeDate | datetime }}</td>
+                                <td>{{trlist.tradeDate | datetimes }}</td>
                                 <td>
                                     {{trlist.collectionAmount/100 | currency ''}}
                                 </td>
@@ -99,15 +99,17 @@
                                     <span v-if="trlist.status==2">对账成功</span>
                                     <span v-if="trlist.status==3">差额入账</span>
                                 </td>
-                                <td>{{trlist.diffAmount/100 | currency ''}}</td>
-                                <td>{{trlist.diffTime | datetime}}</td>
+                                <td>
+                                    <span v-if="trlist.diffAmount!=null">{{trlist.diffAmount/100 | currency ''}}</span>
+                                </td>
+                                <td>{{trlist.diffTime}}</td>
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>{{trlist.successTime | datetime}}</td>
                                 <td>
-                                    <a data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">查看</a>
+                                    <a v-if="trlist.status!=1" data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">查看</a>
                                 </td>
-                                <td><a>明细</a></td>
                                 <td><a>对账</a></td>
+                                <td></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
@@ -240,7 +242,7 @@
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
             principleexport(){
-                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.principleexport+ $.param(this.checkForm));
             },
         },
