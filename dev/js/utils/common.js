@@ -218,6 +218,20 @@ _i.isback=false;
 _i.num=0;
 window.back_json=_i;
 
+$(document).on('click','.addbottom .col-md-4 ul li',function(){
+    $(this).toggleClass('check-li');
+    ($(this).hasClass('check-li'))?$(this).css('background','#ccc'):$(this).css('background','none');
+})
+$(document).on('click','.sidebar-main-toggle', function (e) {
+    e.preventDefault();
+    $('body').toggleClass('sidebar-xs');
+});
+$(document).on('click','a', function () {
+    if(back_json.num==0){
+        back_json.num++;
+    }
+});
+
 module.exports = {
     check_upload:check_upload,
     datetime:datetime,

@@ -31,7 +31,7 @@ module.exports = [
         type:'Principal',
         ksa:'',
         sub_menu: [
-            {name: '通道管理', link: 'running-channel',ksa:''},
+            {name: '本金收入', link: 'principle-order',ksa:''},
         ]
     },
     {

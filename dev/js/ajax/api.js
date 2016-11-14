@@ -106,6 +106,13 @@ export default function install(Vue) {
      * @method GET
      */
     _o.subsidyAccountExcel = '/data/export/excel/subsidyAccount?';
+    /**
+     * @description 入账明细页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.principleexport = '/data/export/excel/principleCashOrder?';
+
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -475,6 +482,26 @@ export default function install(Vue) {
      * @method POST
      */
     _o.editChannel = './runningChannel/edit';
+
+    //- todo 本金收入-入账明细 principle-order
+    /**
+     * @description 入账明细列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleorderList = './principleCashOrder/list?';
+    /**
+     * @description 入账明细合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.principleorderTotal = './principleCashOrder/total?';
+    /**
+     * @description 获取通道接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.selectrunningList = './runningChannel/selectList?';
 
     //- todo  备付金支出-付款明细 payment-details
     /**

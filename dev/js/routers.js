@@ -114,6 +114,14 @@ export default function(router){
                 require(['./views/PrincipalIncome/running-channel.vue'],resolve);
             }
         },
+        //本金收入-通道管理
+        '/principle-order':{
+            name:'principle-order',
+            router_type:"Principal",
+            component: function(resolve){
+                require(['./views/PrincipalIncome/principle-order.vue'],resolve);
+            }
+        },
         //备付金支出-付款明细
         '/payment-details/:reserveCashOrderNumber/:payType/:merchantOperationIDs':{
             name:'payment-details',
