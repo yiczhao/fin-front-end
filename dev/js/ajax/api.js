@@ -184,7 +184,7 @@ export default function install(Vue) {
      */
     _o.incomeAndPayoutAmount = './reserveCashDetail/total?';
 
-    //- todo 财务处理-账户管理-备付金明细 principle-info
+    //- todo 财务处理-账户管理-本金明细 principle-info
     /**
      * @description 本金列表接口地址
      * @author 于凯乐
@@ -202,7 +202,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.principleBalanceList = './principleCashDetail/info/';
+    _o.principleBalanceList = './bankAccount/info/';
 
     //- todo 交易管理-交易明细 trade-info
     /**
