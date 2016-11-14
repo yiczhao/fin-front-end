@@ -30,7 +30,7 @@
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">全部对账状态</option>
                                 <option value="2">成功</option>
-                                <option value="1">待对账</option>
+                                <option value="1">等待对账</option>
                                 <option value="3">差额入账</option>
                             </select>
                         </form>
