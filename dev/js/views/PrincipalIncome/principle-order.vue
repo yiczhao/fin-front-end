@@ -143,7 +143,7 @@
                     </div>
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="export" data-ksa="">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="principleexport" data-ksa="">Excel导出</a>
                         </div>
 
                         <div class="right">
@@ -239,9 +239,9 @@
                 this.checkForm.startDate=init_date(this.dateS)[0];
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
-            export(){
+            principleexport(){
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
+                window.open(window.origin+this.$API.principleexport+ $.param(this.checkForm));
             },
         },
         ready: function () {
