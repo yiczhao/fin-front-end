@@ -40,25 +40,25 @@
                                 <th>备注</th>
                             </tr>
                         </thead>
-                        <tr v-show="!!detailLists.length" role="row" v-for="(index,trlist) in detailLists" v-bind:class="{'odd':(index%2==0)}">
+                        <tr v-show="detailLists!=''" role="row" class="odd">
                             <!--<td><input type="checkbox" @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck"/></td>-->
-                            <td>{{trlist.diffTime | datetime}}</td>
-                            <td>{{trlist.certificateNumber}}</td>
-                            <td>{{trlist.accountName}}</td>
-                            <td>{{trlist.accountNumber}}</td>
-                            <td>{{trlist.accounincomeAmount/100 | currency ''}}</td>
-                            <td>{{trlist.remarks}}</td>
+                            <td>{{detailLists.diffTime | datetime}}</td>
+                            <td>{{detailLists.certificateNumber}}</td>
+                            <td>{{detailLists.accountName}}</td>
+                            <td>{{detailLists.accountNumber}}</td>
+                            <td>{{detailLists.accounincomeAmount/100 | currency ''}}</td>
+                            <td>{{detailLists.remarks}}</td>
                         </tr>
-                        <tr v-show="!!detailLists.length" role="row">
+                        <tr v-show="detailLists!=''" role="row">
                             <!--<td></td>-->
                             <td>合计：</td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{detailTotal/100 | currency ''}}</td>
+                            <td>{{detailLists.accounincomeAmount/100 | currency ''}}</td>
                             <td></td>
                         </tr>
-                        <tr v-show="!detailLists.length" role="row">
+                        <tr v-show="detailLists==''" role="row">
                             <td colspan="7" style="text-align:center;">无银行流水</td>
                         </tr>
                     </table>
@@ -205,19 +205,19 @@
                 dzradio:'G',
                 detailData:{
                     startDate:'',
-                    bankAccountID:'',
+                    id:'',
                     endDate:''
                 },
                 orderData:{
                     startDate:'',
-                    bankAccountID:'',
+                    principleCashDetailID:'',
                     endDate:''
                 },
-                detailLists:[],
+                orderTotal:0,
+                detailLists:{},
                 orderLists:[],
                 infoList:[],
                 balance:{
-
                 }
             }
         },
@@ -237,9 +237,6 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('detailLists', response.data.data);
-                                response.data.data.map((value)=>{
-                                    this.detailTotal+=value.accounincomeAmount;
-                                })
                             }
                         });
             },
@@ -264,7 +261,7 @@
                         });
             },
             searchInfo(){
-                this.model.principleCashDetailinfo(this.orderData.bankAccountID)
+                this.model.principleCashDetailinfo(this.$route.params.principleAccountId)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
@@ -355,7 +352,7 @@
 //            },
         },
         ready: function () {
-            (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.bankAccountID=this.orderData.bankAccountID='' : this.detailData.bankAccountID=this.orderData.bankAccountID=this.$route.params.principleAccountId;
+            (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.id=this.orderData.principleCashDetailID='' : this.detailData.id=this.orderData.principleCashDetailID=this.$route.params.principleAccountId;
             this.searchDetail();
             this.searchOrder();
             this.getShortName();
