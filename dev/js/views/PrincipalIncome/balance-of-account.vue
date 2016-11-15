@@ -356,8 +356,8 @@
         },
         ready: function () {
             (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.bankAccountID=this.orderData.bankAccountID='' : this.detailData.bankAccountID=this.orderData.bankAccountID=this.$route.params.principleAccountId;
-//            this.searchDetail();
-//            this.searchOrder();
+            this.searchDetail();
+            this.searchOrder();
             this.getShortName();
         },
     }
