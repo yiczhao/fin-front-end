@@ -35,7 +35,6 @@
                             </select>
                         </form>
                     </div>
-
                     <div class="heading-middle">
                         <a class="btn btn-info add-top" @click="checkNew" data-ksa="">查询</a>
                     </div>
@@ -108,7 +107,7 @@
                                 <td>
                                     <a v-if="trlist.status!=1" data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">查看</a>
                                 </td>
-                                <td><a>对账</a></td>
+                                <td><a v-if="trlist.status==1" v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id}}">对账</a></td>
                                 <td></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>

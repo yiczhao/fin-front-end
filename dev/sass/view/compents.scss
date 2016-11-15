@@ -73,6 +73,8 @@
     display: table;
     padding-bottom: 20px;
     width: 100%;
+    font-size: 0;
+    -webkit-text-size-adjust:none;
     .heading-left,.heading-right,.heading-middle{
       display: table-cell;
       .form-control{
@@ -89,7 +91,8 @@
     .heading-left{
       width: 110px;
       padding-left: 20px;
-      //background: pink;
+      padding-top: 20px;
+      vertical-align: top;
     }
     .heading-right{
       text-align: right;
@@ -98,6 +101,8 @@
     .heading-middle{
       width: 110px;
       text-align: right;
+      padding-top: 20px;
+      vertical-align: top;
       //background: yellow;
     }
   }
@@ -123,10 +128,6 @@
       color: #fff;
     }
   }
-  .add-top { 
-    margin-top: -15px; 
-  }
-
   .btn{
     min-width: 90px;
   }
@@ -157,9 +158,16 @@
       border-color:#E9E9E9;
       font-size: 13px;
     }
-    tr{
-      &:hover{
-        background: #E3F5FF;
+    tbody{
+      tr{
+        &:hover{
+          background: #E3F5FF;
+        }
+      }
+      tr:last-child{
+        td{
+          border-bottom:1px solid #E9E9E9;
+        }
       }
     }
     .odd{

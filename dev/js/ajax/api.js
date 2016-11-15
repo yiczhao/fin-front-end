@@ -503,6 +503,32 @@ export default function install(Vue) {
      */
     _o.selectrunningList = './runningChannel/selectList?';
 
+    //- todo 本金收入-本金对账 balance-of-account
+    /**
+     * @description 本金明细列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleCheckingdetailList = './principleCashChecking/detailList?';
+    /**
+     * @description 入账列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleCheckingorderList = './principleCashChecking/orderList?';
+    /**
+     * @description 获取本金明细列表接口地址
+     * @author 冷艳君
+     * @method get
+     */
+    _o.principleCashDetailinfo = './principleCashDetail/info/';
+    /**
+     * @description 本金对账接口地址
+     * @author 冷艳君
+     * @method post
+     */
+    _o.principleCheckingordermanualCheck = './principleCashChecking/manualCheck';
+
     //- todo  备付金支出-付款明细 payment-details
     /**
      * @description 备付金支出明细列表接口地址

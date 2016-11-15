@@ -97,7 +97,7 @@
                                     </td>
                                     <td>{{trlist.diffTime}} </td>
                                     <td>
-                                        <a data-ksa="" @click="duizhang(trlist)" v-if="trlist.status!=2">对账</a>
+                                        <a data-ksa=""  v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id,shortId:$route.params.principleId}}" v-if="trlist.status!=2">对账</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
