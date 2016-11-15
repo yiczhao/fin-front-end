@@ -12,10 +12,10 @@
                             <label class="w28">对账方式：</label>
                             <input type="radio" id="one" value="G" v-model="dzradio">
                             <label class="w28" for="one">关联对账</label>
-                            <input type="radio" id="two" value="S" v-model="dzradio" @click="searchInfo">
-                            <label class="w28" for="two">手工对账</label>
+                            <input v-show="$route.params.shortId!=':shortId'" type="radio" id="two" value="S" v-model="dzradio" @click="searchInfo">
+                            <label v-show="$route.params.shortId!=':shortId'" class="w28" for="two">手工对账</label>
                         </div>
-                        <div class="inline ml20">
+                        <div class="inline ml20" v-show="$route.params.shortId!=':shortId'">
                             <span>账户简称：</span><span style="margin-right: 10px;font-size:14px">{{balance.shortName}}</span>
                             <span>余额：</span><span style="margin-right: 10px;font-size:14px">{{balance.balanceAmount/100 | currency ''}}</span>
                         </div>
@@ -357,7 +357,9 @@
             (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.id=this.orderData.principleCashDetailID='' : this.detailData.id=this.orderData.principleCashDetailID=this.$route.params.principleAccountId;
             this.searchDetail();
             this.searchOrder();
-            this.getShortName();
+            if(this.$route.params.shortId!=':shortId'){
+                this.getShortName();
+            }
         },
     }
 </script>
