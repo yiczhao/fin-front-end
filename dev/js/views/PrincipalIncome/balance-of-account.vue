@@ -40,7 +40,7 @@
                                 <th>备注</th>
                             </tr>
                         </thead>
-                        <tr v-show="detailLists!=''" role="row" class="odd">
+                        <tr v-show="detailLists.accountName!=undefined" role="row" class="odd">
                             <!--<td><input type="checkbox" @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck"/></td>-->
                             <td>{{detailLists.diffTime | datetime}}</td>
                             <td>{{detailLists.certificateNumber}}</td>
@@ -49,7 +49,7 @@
                             <td>{{detailLists.accounincomeAmount/100 | currency ''}}</td>
                             <td>{{detailLists.remarks}}</td>
                         </tr>
-                        <tr v-show="detailLists!=''" role="row">
+                        <tr v-show="detailLists.accountName!=undefined" role="row">
                             <!--<td></td>-->
                             <td>合计：</td>
                             <td></td>
@@ -58,7 +58,7 @@
                             <td>{{detailLists.accounincomeAmount/100 | currency ''}}</td>
                             <td></td>
                         </tr>
-                        <tr v-show="detailLists==''" role="row">
+                        <tr v-show="detailLists.accountName==undefined" role="row">
                             <td colspan="7" style="text-align:center;">无银行流水</td>
                         </tr>
                     </table>
@@ -235,7 +235,7 @@
                 this.model.principleCheckingdetailList(this.detailData)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
+                            if(response.data.code==0&&response.data.data!=undefined){
                                 this.$set('detailLists', response.data.data);
                             }
                         });
