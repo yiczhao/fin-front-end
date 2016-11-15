@@ -266,6 +266,8 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 this.$set('infoList', response.data.data);
+                                this.infoList.remarks='';
+                                this.infoList.purpose='';
                             }
                         });
             },
