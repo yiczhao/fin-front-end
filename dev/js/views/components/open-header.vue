@@ -15,7 +15,7 @@
                      @click="listshow = !listshow"
                 >
                     <div class="k-header-rcontainer">
-                        <div class="f14 open-head-owner">商户管理系统</div>
+                        <div class="f14 open-head-owner">财务管理系统</div>
                         <i class="bg-listshow"></i>
                     </div>
                     <ul class="k-header-list-active"
@@ -104,14 +104,13 @@
 
             },
             showsystemlist () {
-                alert('111');
                 let self = this
                 self.$http({
                     options:{xhr : { withCredentials: true }},
                     url: authUrl + '/auth/usersystem/list',
                     method: 'post'
                 }).then(res => {
-                    let arr = res.data.data.system
+                    let arr = res.data.data.system;
                     for (var i = 0; i < arr.length; i++) {
                         if (arr[i].sys_id === self.systemId) {
                             arr.splice(i, 1)
