@@ -42,11 +42,11 @@
                         </thead>
                         <tr v-show="detailLists.accountName!=undefined" role="row" class="odd">
                             <!--<td><input type="checkbox" @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck"/></td>-->
-                            <td>{{detailLists.diffTime | datetime}}</td>
+                            <td>{{detailLists.tradeTime | datetime}}</td>
                             <td>{{detailLists.certificateNumber}}</td>
                             <td>{{detailLists.accountName}}</td>
                             <td>{{detailLists.accountNumber}}</td>
-                            <td>{{detailLists.accounincomeAmount/100 | currency ''}}</td>
+                            <td>{{detailLists.incomeAmount/100 | currency ''}}</td>
                             <td>{{detailLists.remarks}}</td>
                         </tr>
                         <tr v-show="detailLists.accountName!=undefined" role="row">
@@ -355,8 +355,23 @@
         },
         ready: function () {
             (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.id=this.orderData.principleCashDetailID='' : this.detailData.id=this.orderData.principleCashDetailID=this.$route.params.principleAccountId;
+            if(this.$route.params.routeName=='info'){
+                this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime)
+                this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime,'pre')
+            }
+            else if(this.$route.params.routeName=='payoutAmount'){
+                this.dzradio='S';
+                this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime)
+                this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime,'pre')
+                this.searchInfo();
+            }
+            else{
+                this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime,'next')
+                this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime)
+            }
             this.searchDetail();
             this.searchOrder();
+            console.log(getDate(this.$route.params.tradeTime))
             if(this.$route.params.shortId!=':shortId'){
                 this.getShortName();
             }

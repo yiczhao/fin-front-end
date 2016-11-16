@@ -123,7 +123,7 @@ export default function(router){
             }
         },
         //本金收入-对账
-        '/balance-of-account/:principleAccountId/:shortId':{
+        '/balance-of-account/:principleAccountId/:shortId/:tradeTime/:routeName':{
             name:'balance-of-account',
             router_type:"Principal",
             component: function(resolve){
