@@ -42,6 +42,9 @@ function model(_this) {
          * @param data
          * @returns {*}
          */
+        principleBalanceLists(a) {
+            return _this.$http.get(_this.$API.principleBalanceLists+a)
+        },
         principleBalanceList (id) {
             return _this.$http.get(_this.$API.principleBalanceList+id)
         }

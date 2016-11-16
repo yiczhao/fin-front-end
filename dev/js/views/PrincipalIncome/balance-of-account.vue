@@ -15,7 +15,7 @@
                             <input v-show="$route.params.shortId!=':shortId'" type="radio" id="two" value="S" v-model="dzradio" @click="searchInfo">
                             <label v-show="$route.params.shortId!=':shortId'" class="w28" for="two">手工对账</label>
                         </div>
-                        <div class="inline ml20" v-show="$route.params.shortId!=':shortId'">
+                        <div class="inline ml20">
                             <span>账户简称：</span><span style="margin-right: 10px;font-size:14px">{{balance.shortName}}</span>
                             <span>余额：</span><span style="margin-right: 10px;font-size:14px">{{balance.balanceAmount/100 | currency ''}}</span>
                         </div>
@@ -292,6 +292,13 @@
                         this.$set('balance', res.data.data)
                     }
                 });
+            },
+            getShortNames(){
+                this.model.principleBalanceLists(this.$route.params.shortId).then((res)=>{
+                    if(res.data.code == 0){
+                        this.$set('balance', res.data.data)
+                    }
+                });
             }
 //            chooseAllDetail(){
 //                this.checkedIds=[];
@@ -355,26 +362,22 @@
         },
         ready: function () {
             (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.id=this.orderData.principleCashDetailID='' : this.detailData.id=this.orderData.principleCashDetailID=this.$route.params.principleAccountId;
-            if(this.$route.params.routeName=='info'){
+            if(this.$route.params.routeName=='info'||this.$route.params.routeName=='payoutAmount'){
                 this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime)
                 this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime,'pre')
-            }
-            else if(this.$route.params.routeName=='payoutAmount'){
-                this.dzradio='S';
-                this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime)
-                this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime,'pre')
-                this.searchInfo();
+                this.getShortName();
             }
             else{
                 this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime,'next')
                 this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime)
+                this.getShortNames();
+            }
+            if(this.$route.params.routeName=='payoutAmount'){
+                this.dzradio='S';
+                this.searchInfo();
             }
             this.searchDetail();
             this.searchOrder();
-            console.log(getDate(this.$route.params.tradeTime))
-            if(this.$route.params.shortId!=':shortId'){
-                this.getShortName();
-            }
         },
     }
 </script>

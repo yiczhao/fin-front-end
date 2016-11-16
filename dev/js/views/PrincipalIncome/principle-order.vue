@@ -107,7 +107,7 @@
                                 <td>
                                     <a v-if="trlist.status!=1" data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">查看</a>
                                 </td>
-                                <td><a v-if="trlist.status==1" v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id,tradeTime:trlist.tradeDate}}">对账</a></td>
+                                <td><a v-if="trlist.status==1" v-link="{name:'balance-of-account',params:{shortId:trlist.id,principleAccountId:trlist.id,tradeTime:trlist.tradeDate}}">对账</a></td>
                                 <td></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>

@@ -523,6 +523,12 @@ export default function install(Vue) {
      */
     _o.principleCashDetailinfo = './principleCashDetail/info/';
     /**
+     * @description 获取本金明细列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleBalanceLists = './principleCashChecking/orderToCheck/';
+    /**
      * @description 本金对账接口地址
      * @author 冷艳君
      * @method post
