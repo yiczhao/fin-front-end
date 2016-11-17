@@ -210,7 +210,7 @@
                 },
                 orderData:{
                     startDate:'',
-                    principleCashDetailID:'',
+                    id:'',
                     endDate:''
                 },
                 orderTotal:0,
@@ -361,7 +361,7 @@
 //            },
         },
         ready: function () {
-            (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.id=this.orderData.principleCashDetailID='' : this.detailData.id=this.orderData.principleCashDetailID=this.$route.params.principleAccountId;
+            (this.$route.params.principleAccountId==':principleAccountId')?this.detailData.id=this.orderData.id='' : this.detailData.id=this.orderData.id=this.$route.params.principleAccountId;
             if(this.$route.params.routeName=='info'||this.$route.params.routeName=='payoutAmount'){
                 this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime)
                 this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime,'pre')
