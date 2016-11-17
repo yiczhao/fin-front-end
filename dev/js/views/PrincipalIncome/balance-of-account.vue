@@ -79,19 +79,19 @@
                                 <th>入账金额</th>
                             </tr>
                         </thead>
-                        <tr v-show="!!orderLists.length" role="row" v-for="(index,trlist) in orderLists" v-bind:class="{'odd':(index%2==0)}">
+                        <tr v-show="orderLists.tradeDate!=undefined" role="row" class="odd">
                             <!--<td><input type="checkbox" @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck"/></td>-->
-                            <td>{{trlist.tradeDate | datetimes}}</td>
-                            <td>{{trlist.runningChannelShortName}}</td>
-                            <td>{{trlist.entryAmount/100 | currency ''}}</td>
+                            <td>{{orderLists.tradeDate | datetimes}}</td>
+                            <td>{{orderLists.runningChannelShortName}}</td>
+                            <td>{{orderLists.entryAmount/100 | currency ''}}</td>
                         </tr>
-                        <tr v-show="!!orderLists.length" role="row">
+                        <tr v-show="orderLists.tradeDate!=undefined" role="row">
                             <!--<td></td>-->
                             <td>合计：</td>
                             <td></td>
                             <td>{{orderTotal/100 | currency ''}}</td>
                         </tr>
-                        <tr v-show="!orderLists.length" role="row">
+                        <tr v-show="orderLists.tradeDate==undefined" role="row">
                             <td colspan="4" style="text-align:center;">无本金入账订单</td>
                         </tr>
                     </table>
