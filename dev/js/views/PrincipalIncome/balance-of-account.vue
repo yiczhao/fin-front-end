@@ -217,7 +217,7 @@
                 },
                 orderTotal:0,
                 detailLists:{},
-                orderLists:[],
+                orderLists:{},
                 infoList:[],
                 balance:{
                 }
