@@ -82,7 +82,7 @@
                         <tr v-show="orderLists.tradeDate!=undefined" role="row" class="odd">
                             <!--<td><input type="checkbox" @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck"/></td>-->
                             <td>{{orderLists.tradeDate | datetimes}}</td>
-                            <td>{{orderLists.runningChannelShortName}}</td>
+                            <td>{{orderLists.runningChannelName}}</td>
                             <td>{{orderLists.entryAmount/100 | currency ''}}</td>
                         </tr>
                         <tr v-show="orderLists.tradeDate!=undefined" role="row">
