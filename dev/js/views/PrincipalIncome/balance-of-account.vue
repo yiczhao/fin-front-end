@@ -89,7 +89,7 @@
                             <!--<td></td>-->
                             <td>合计：</td>
                             <td></td>
-                            <td>{{orderTotal/100 | currency ''}}</td>
+                            <td>{{orderLists.entryAmount/100 | currency ''}}</td>
                         </tr>
                         <tr v-show="orderLists.tradeDate==undefined" role="row">
                             <td colspan="4" style="text-align:center;">无本金入账订单</td>
@@ -254,11 +254,8 @@
                 this.model.principleCheckingorderList(this.orderData)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
+                            if(response.data.code==0&&response.data.data!=undefined){
                                 this.$set('orderLists', response.data.data);
-                                response.data.data.map((value)=>{
-                                    this.orderTotal+=value.entryAmount;
-                                })
                             }
                         });
             },
