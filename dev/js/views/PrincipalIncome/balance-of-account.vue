@@ -206,11 +206,13 @@
                 detailData:{
                     startDate:'',
                     id:'',
+                    type:'',
                     endDate:''
                 },
                 orderData:{
                     startDate:'',
                     id:'',
+                    type:'',
                     endDate:''
                 },
                 orderTotal:0,
@@ -365,11 +367,13 @@
             if(this.$route.params.routeName=='info'||this.$route.params.routeName=='payoutAmount'){
                 this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime)
                 this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime,'pre')
+                this.detailData.type=this.orderData.type=1;
                 this.getShortName();
             }
             else{
                 this.detailData.endDate=this.detailData.startDate=getDate(this.$route.params.tradeTime,'next')
                 this.orderData.endDate=this.orderData.startDate=getDate(this.$route.params.tradeTime)
+                this.detailData.type=this.orderData.type=2;
                 this.getShortNames();
             }
             if(this.$route.params.routeName=='payoutAmount'){
