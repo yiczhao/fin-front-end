@@ -10,10 +10,10 @@
                         <span class="btn btn-info" v-show="dzradio=='S'" @click="manualCheck" data-ksa="">入账</span>
                         <div class="inline ml20">
                             <label class="w28">对账方式：</label>
-                            <input type="radio" id="one" value="G" v-model="dzradio">
-                            <label class="w28" for="one">关联对账</label>
-                            <input v-show="$route.params.shortId!=':shortId'" type="radio" id="two" value="S" v-model="dzradio" @click="searchInfo">
-                            <label v-show="$route.params.shortId!=':shortId'" class="w28" for="two">手工对账</label>
+                            <input v-if="$route.params.routeName!='payoutAmount'" type="radio" id="one" value="G" v-model="dzradio">
+                            <label v-if="$route.params.routeName!='payoutAmount'" class="w28" for="one">关联对账</label>
+                            <input v-if="$route.params.routeName=='info'||$route.params.routeName=='payoutAmount'" type="radio" id="two" value="S" v-model="dzradio" @click="searchInfo">
+                            <label v-if="$route.params.routeName=='info'||$route.params.routeName=='payoutAmount'" class="w28" for="two">手工对账</label>
                         </div>
                         <div class="inline ml20">
                             <span>账户简称：</span><span style="margin-right: 10px;font-size:14px">{{balance.shortName}}</span>
@@ -376,9 +376,10 @@
             if(this.$route.params.routeName=='payoutAmount'){
                 this.dzradio='S';
                 this.searchInfo();
+            }else{
+                this.searchDetail();
+                this.searchOrder();
             }
-            this.searchDetail();
-            this.searchOrder();
         },
     }
 </script>

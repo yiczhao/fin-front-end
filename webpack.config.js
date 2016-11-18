@@ -61,17 +61,11 @@ module.exports = {
 			verbose: true,
 			dry: false
 		}),
-		// new ProgressBarPlugin(),
 		new ExtractTextPlugin('app.css'),
-		// new webpack.optimize.UglifyJsPlugin({
-		// 	minimize: true,
-		// 	compress: {
-		// 		warnings: false,
-		// 	},
-		// }),
+		new webpack.BannerPlugin('This file is created by yicZhao'),
 		new webpack.ProgressPlugin(function (percentage, msg) {
-	      console.log( Math.round(percentage * 100) + '% ---> ' + msg)
-	    }),
+			console.log( Math.round(percentage * 100) + '% ---> ' + msg)
+		}),
 		new webpack.ProvidePlugin({
 			_: 'lodash',
 			swal: 'sweetalert',

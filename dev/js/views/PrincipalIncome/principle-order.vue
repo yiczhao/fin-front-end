@@ -45,12 +45,11 @@
                             <thead>
                             <tr role="row">
                                 <th>订单号</th>
-                                <th>生成时间</th>
+                                <th>交易日期</th>
                                 <th>交易通道</th>
                                 <th>分公司</th>
                                 <th>账户名称</th>
                                 <th>账号</th>
-                                <th>交易日期</th>
                                 <th>扣收金额</th>
                                 <th>佣金</th>
                                 <th>入账金额</th>
@@ -69,12 +68,11 @@
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.orderID }}</td>
-                                <td>{{trlist.createTime | datetime}}</td>
+                                <td>{{trlist.tradeDate | datetimes }}</td>
                                 <td>{{trlist.runningChannelName}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.accountName}}</td>
                                 <td>{{trlist.accountNumber}}</td>
-                                <td>{{trlist.tradeDate | datetimes }}</td>
                                 <td>
                                     {{trlist.collectionAmount/100 | currency ''}}
                                 </td>
@@ -113,7 +111,6 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
