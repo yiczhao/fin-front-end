@@ -1,7 +1,7 @@
 <template>
     <index :title="'调账明细'"
-           :ptitle="'调账管理'"
-           :p2title="'交易管理'"
+           :ptitle="'交易管理'"
+           :p2title="'调账管理'"
            :hname="'adjust-trade-detailpre'"
            :h2name="'adjust-trade-detailpre'"
            :isshow="'isshow'">
