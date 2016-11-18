@@ -239,6 +239,8 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0&&response.data.data!=undefined){
                                 this.$set('detailLists', response.data.data);
+                            }else if(response.data.code==0&&response.data.data==undefined){
+                                this.detailLists='';
                             }
                         });
             },
@@ -256,6 +258,8 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0&&response.data.data!=undefined){
                                 this.$set('orderLists', response.data.data);
+                            }else if(response.data.code==0&&response.data.data==undefined){
+                                this.orderLists='';
                             }
                         });
             },
