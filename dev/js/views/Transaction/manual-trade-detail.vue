@@ -487,6 +487,8 @@
                                 this.$set('tradeInfo', response.data.data);
                                 this.errorHideL();
                                 this.modal_add=true;
+                                this.uploadText = '';
+                                this.tradeInfo.certificateID = '';
                                 this.addtitle='编辑手工单';
                             }
                         });

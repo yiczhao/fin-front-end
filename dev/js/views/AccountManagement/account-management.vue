@@ -1,6 +1,6 @@
 <template>
     <index :title="'账户列表'"
-           :ptitle="'财务处理'"
+           :ptitle="'账户管理'"
            :hname="'account-management'"
            :isshow="'isshow'">
         <div class="content account-management" slot="content">

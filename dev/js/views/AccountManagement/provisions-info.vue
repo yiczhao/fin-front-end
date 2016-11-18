@@ -1,6 +1,6 @@
 <template>
     <index :title="'备付金明细'"
-           :ptitle="'财务处理'"
+           :ptitle="'账户管理'"
            :p2title="'账户列表'"
            :hname="'account-management'"
            :h2name="'account-management'"
