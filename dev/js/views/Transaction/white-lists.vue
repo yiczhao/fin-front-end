@@ -5,24 +5,28 @@
            :isshow="'isshow'">
         <div class="content white-lists" slot="content">
             <div class="panel panel-flat">
-
+                <ul class="tab-bor">
+                    <li data-ksa="trade_detail_manage"><a v-link="{name:'trade-info'}">交易明细</a></li>
+                    <li data-ksa="adjust_trade_detail_pre_manage"><a v-link="{name:'adjust-trade-detailpre'}">调账管理</a></li>
+                    <li data-ksa="manual_trade_detail"><a v-link="{name:'manual-trade-detail'}">手工单管理</a></li>
+                    <li data-ksa="manually_settlement"><a v-link="{name:'manually-settlement'}">手工结算</a></li>
+                    <li data-ksa="exception_trade_manage"><a v-link="{name:'Abnormal-transaction'}">异常交易</a></li>
+                    <li class="active" data-ksa="exception_trade_white_list_manage"><a v-link="{name:'white-lists'}">异常白名单</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add" @click="addWhite" data-ksa="exception_trade_white_list_manage.add">添加</a>
                     </div>
-
                     <div class="heading-right">
                         <select class="form-control" v-model="defaultData.subCompanyID">
                             <option value="">全部分公司</option>
                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                         </select> 
-
                         <select class="form-control" v-model="defaultData.type">
                             <option value="">请选择类型</option>
                             <option value="2">活动</option>
                             <option value="1">商户</option>
                         </select>
-
                         <select class="form-control" v-model="defaultData.status">
                             <option value="">请选择状态</option>
                             <option value="true">正常</option>
@@ -303,6 +307,9 @@
                 let vm=this;
                 var reader = new FileReader();
                 if(!check_upload(files.name)){
+                    return;
+                }
+                if(check_upload_size(files.size)){
                     return;
                 }
                 reader.readAsDataURL(files);

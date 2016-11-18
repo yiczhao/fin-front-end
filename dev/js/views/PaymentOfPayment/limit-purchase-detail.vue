@@ -2,6 +2,15 @@
     <index title="额度采购" ptitle="备付金支出"  isshow="isshow">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="reserve_cash_detail_manage"><a v-link="{name:'payment-details'}">付款明细</a></li>
+                    <li data-ksa="pay_recheck"><a v-link="{name:'pay-recheck'}">划付复核</a></li>
+                    <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
+                    <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
+                    <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
 
@@ -19,7 +28,7 @@
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
 
-                            <select class="form-control" v-model="checkForm.timeRange">
+                            <select class="form-control" v-model="checkForm.timeRange" @change="getTime()">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -222,8 +231,7 @@
             query() {
                 // let data=this.data;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
-                    this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-                    this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
+                    this.getTime()
                 }
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getlimitPurchaseDetailList(this.checkForm);
@@ -247,6 +255,10 @@
                                     this.$router.go({'name':'limitaccount-info',params:{'limitPurchaseMerchantInfoID':response.data.data,'accountName':b}});
                                 }
                         })
+            },
+            getTime(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             }
         },
         ready() {
@@ -257,10 +269,6 @@
             this.query();
         },
          watch:{
-            'checkForm.timeRange'(){
-                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

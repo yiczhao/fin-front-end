@@ -14,6 +14,18 @@ var check_upload=((names)=>{
         return false;
     }
 })
+window.check_upload_size=((size)=>{
+    if(size > 3*1024*1024 ){  //用size属性判断文件大小不能超过5M
+        swal({
+            title: "文件必须小于3M！",
+            type:"error",
+            confirmButtonColor: "#EF5350"
+        });
+        return true;
+    }else{
+        return false;
+    }
+})
 var datetime=((value)=>{
     if(value==null || value=='')return '';
     var time = new Date(value);
@@ -165,19 +177,20 @@ var accMul=(arg1,arg2)=> {
     return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
 }
 var removeCookie=()=> {
-    Cookie.set('KSAuthSysId', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthSysId', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('KSAuthUserToken', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthUserToken', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('KSAuthJSURL', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthJSURL', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('KSAuthApiURL', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('KSAuthApiURL', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('JSESSTOKEN', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('JSESSTOKEN', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('JSESSID', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('JSESSID', '', {domain:'.kashuo.net',maxage: -1});
     // noinspection JSUnresolvedVariable
-    Cookie.set('XSRF-TOKEN', '', {domain:'.kashuo.net',maxage: -1})
+    Cookie.set('XSRF-TOKEN', '', {domain:'.kashuo.net',maxage: -1});
+    localStorage.clear();
 };
 window.getNow=()=>{
     var time = new Date();

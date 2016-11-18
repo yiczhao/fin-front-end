@@ -1,11 +1,16 @@
 <template>
     <index :title="'税率管理'"
-           :ptitle="'活动管理'"
+           :ptitle="'活动列表'"
            :hname="'taxRate'"
            :isshow="'isshow'">
 
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="tax_rate" class="active"><a v-link="{name:'taxRate'}">税率管理</a></li>
+                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
+                </ul>
                 <div v-if="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">

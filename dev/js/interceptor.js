@@ -12,7 +12,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.xhr = { withCredentials: true };
 	Vue.http.interceptors.push({
 		request (request) {
-			Message.show('loading','loading...');
+			request.url.indexOf('/total')<=0?Message.show('loading','loading...'):null;
 			(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0) ? sessionStorage.setItem('isHttpin',1):null;
 			conut=0;
 			let _appkey = 'p0obc8spr3ou8h35y1goejfod4ndngom83xzl90v'
@@ -29,7 +29,7 @@ export default function install(Vue,router_proto) {
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			Message.hide();
+			response.request.url.indexOf('/total')<=0? Message.hide():null;
 			// *** 拦截session过期
 			if(response.data.code === 50000){
 			  setTimeout(()=>{

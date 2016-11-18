@@ -2,6 +2,10 @@
     <index title="日志管理" ptitle="系统配置"  isshow="isshow">
         <div class="content log-management" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa='user_manage'><a v-link="{name:'user-managerment'}">员工管理</a></li>
+                    <li data-ksa='system_log_manage' class="active"><a>系统日志</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
 
@@ -16,7 +20,7 @@
                                     <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                                 </select>
 
-                                <select class="form-control" v-model="checkForm.timeRange">
+                                <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                                     <option value="5">今天</option>
                                     <option value="0">昨天</option>
                                     <option value="1">最近一周</option>
@@ -189,19 +193,18 @@
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getLogList(this.checkForm);
             },
+            getTime(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
+            }
         },
         ready() {
-            this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-            this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
+            this.getTime();
             this.getSubcompany({});
-            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
        watch:{
-            'checkForm.timeRange'(){
-                this.startDate=init_date(this.checkForm.timeRange)[0];
-                this.endDate=init_date(this.checkForm.timeRange)[1];
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

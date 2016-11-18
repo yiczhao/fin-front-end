@@ -47,7 +47,21 @@
 										<input type="button" class="btn btn-primary" value="执行" @click="excuteJob()"/>
 									</td>
 								</tr>
-                            </table>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成商户已划付数据" @click="generateMerchantSubsidyPaidDetail()"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="计算补贴账户交易统计信息" data-toggle="modal" @click="caculateSubsidyAccountTradeData($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+							</table>
 						</form>
 					</div>
 				 </div>
@@ -150,16 +164,27 @@
 				}
 				this.$http.post('./dev/tool/tradeDetail/revoke',data)
 						.then((response)=>{
-							dialogs('success',response.data.message);
+							dialogs('success','撤销成功！');
 						})
 			},
 			excuteJob(){
 				this.$http.get('./job/'+this.jobID)
 						.then((response)=>{
-					dialogs('success',response.data.message);
-			})
-			}
-
+							dialogs('success',response.data.message);
+						})
+			},
+			generateMerchantSubsidyPaidDetail(){
+				this.$http.post('./dev/tool/subsidyAccount/generateMerchantSubsidyPaidDetail')
+						.then((response)=>{
+							dialogs('success',response.data.message);
+						})
+			},
+			caculateSubsidyAccountTradeData(e){
+                this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
+                        .then((response)=>{
+                            dialogs('success','处理成功！');
+                        })
+            }
         },
         ready() {
         },

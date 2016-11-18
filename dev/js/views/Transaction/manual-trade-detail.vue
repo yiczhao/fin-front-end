@@ -4,6 +4,14 @@
            :isshow="'isshow'">
         <div class="content manual-trade-detail" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="trade_detail_manage"><a v-link="{name:'trade-info'}">交易明细</a></li>
+                    <li data-ksa="adjust_trade_detail_pre_manage"><a v-link="{name:'adjust-trade-detailpre'}">调账管理</a></li>
+                    <li class="active" data-ksa="manual_trade_detail"><a v-link="{name:'manual-trade-detail'}">手工单管理</a></li>
+                    <li data-ksa="manually_settlement"><a v-link="{name:'manually-settlement'}">手工结算</a></li>
+                    <li data-ksa="exception_trade_manage"><a v-link="{name:'Abnormal-transaction'}">异常交易</a></li>
+                    <li data-ksa="exception_trade_white_list_manage"><a v-link="{name:'white-lists'}">异常白名单</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a  class="btn btn-add add-top" data-toggle="modal" data-target="#modal_add" @click="addTradeInfo"
@@ -20,7 +28,7 @@
                             <option value="">全部城市</option>
                             <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                         </select>
-                        <select class="form-control" v-model="defaultData.timeRange">
+                        <select class="form-control" v-model="defaultData.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -479,6 +487,8 @@
                                 this.$set('tradeInfo', response.data.data);
                                 this.errorHideL();
                                 this.modal_add=true;
+                                this.uploadText = '';
+                                this.tradeInfo.certificateID = '';
                                 this.addtitle='编辑手工单';
                             }
                         });
@@ -529,7 +539,7 @@
                         .then((response)=> {
                             if (response.data.code == 0) {
                                 this.getManualTradeDetailData();
-                                dialogs(response.data.message);
+                                dialogs("success",response.data.message);
                                 this.modal_add=false;
                             }
                         })
@@ -564,6 +574,9 @@
                 if (!check_upload(files.name)) {
                     return;
                 }
+                if(check_upload_size(files.size)){
+                    return;
+                }
                 reader.readAsDataURL(files);
                 reader.onload = function (e) {
                     let datas = {
@@ -585,21 +598,20 @@
                 //初始化
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.manualTradeDetailExcel+ $.param(this.defaultData));
+            },
+            getTime(){
+                this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
+                this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
             }
         },
         ready: function () {
-            this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
-            this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
+            this.getTime();
             (back_json.isback && back_json.fetchArray(this.$route.path) != '') ? this.checkForm = back_json.fetchArray(this.$route.path) : null;
             this.getSubCompanyData();
             this.getCityData();
             this.getManualTradeDetailData();
         },
         watch: {
-            'defaultData.timeRange'(){
-                this.defaultData.startDate = init_date(this.defaultData.timeRange)[0];
-                this.defaultData.endDate = init_date(this.defaultData.timeRange)[1];
-            },
             'defaultData.pageIndex+defaultData.pageSize'(){
                 this.getManualTradeDetailData();
             }

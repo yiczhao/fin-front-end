@@ -1,9 +1,9 @@
 <template>
     <index :title="'暂扣税金账户明细'"
-           :ptitle="'商户管理'"
-           :p2title="'商户列表'"
-           :hname="'business-lists'"
-           :h2name="'business-lists'"
+           :ptitle="'备付金支出'"
+           :p2title="'退税管理'"
+           :hname="'payment-details'"
+           :h2name="'subsidy-management'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
@@ -60,9 +60,11 @@
                 </div>
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>退税款：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100| currency '' }}元</span>
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
+                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
+                    <span>退税款：</span><span style="margin-right: 10px;">{{balance.suspensionTaxAmount/100| currency '' }}元</span>
                 </div>
 
                 <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
@@ -165,7 +167,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 13%"><i style="color:red;">*</i>金额：</label>
-                                    <input style="width: 80%;display: inline-block" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount"></div>
+                                    <input style="width: 80%;display: inline-block" placeholder="单位：元" type="text" class="form-control" v-model="applyData.payoutAmount" v-limitprice="applyData.payoutAmount">
+                                </div>
                                 <div class="form-group">
                                     <label style="position: relative;top: -95px;width: 13%" class="control-label"><i style="color:red;">*</i>备注：</label>
                                     <textarea style="display: inline-block;width: 80%;"  rows="5" cols="5" class="form-control" v-model="applyData.remarks"></textarea>
@@ -215,9 +218,11 @@
                     'payoutAmount': '',
                 },
                 balance:{
-                    accountName:'',
+                    activityName:'',
+                    activityId:'',
                     merchantName:'',
-                    balanceAmount:''
+                    merchantId:'',
+                    suspensionTaxAmount:''
                 },
                 redata:{
                     suspensionTaxAmount:'',
@@ -225,7 +230,7 @@
                 },
                 applyData:{
                     remarks:'',
-                    id:'',
+                    ids:[],
                     payoutAmount:'',
                     mergePay:false,
                     payType:''
@@ -259,6 +264,24 @@
                             }
                         });
             },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.suspensionHDid
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.balance={
+                                    activityName:response.data.data.activity.name,
+                                    activityId:response.data.data.activity.operationId,
+                                    merchantId:response.data.data.merchant.operationId,
+                                    merchantName:response.data.data.merchant.name,
+                                    suspensionTaxAmount:response.data.data.subsidyAccount.suspensionTaxAmount
+                                }
+                            }
+                        });
+            },
             initList(){
                 $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
@@ -273,6 +296,7 @@
                 this.applyData.remarks='';
                 this.applyData.payoutAmount='';
                 this.applyData.payType='';
+                this.applyData.ids=[id];
                 this.applyData.mergePay=false;
                 let data={
                     id:id,
@@ -308,7 +332,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
-                                this.balance.balanceAmount=response.data.data;
+                                this.balance.suspensionTaxAmount=response.data.data;
                                 this.initList();
                             }
                         });
@@ -325,20 +349,12 @@
         },
         ready(){
             let vm=this;
-            (vm.$route.params.suspensionZHname==':suspensionZHname')?vm.balance.accountName= '' : vm.balance.accountName=vm.$route.params.suspensionZHname;
-            (vm.$route.params.suspensionSHname==':suspensionSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.suspensionSHname;
-            (vm.$route.params.suspensionZHbalance==':suspensionZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.suspensionZHbalance;
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
-            (vm.$route.params.orderId==':orderId')? vm.defaultData.orderID='' : vm.defaultData.orderID=vm.$route.params.orderId;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
-            $('#modal_recharge').on('hidden.bs.modal', function () {
-                $('body').css('padding-right',0);
-                vm.uploadText='';
-                vm.recharge.certificatesID='';
-            })
+            vm.getBlance();
         }
     }
 </script>

@@ -1,9 +1,9 @@
 <template>
     <index :title="'发票账户明细'"
-           :ptitle="'商户管理'"
-           :p2title="'商户列表'"
-           :hname="'business-lists'"
-           :h2name="'business-lists'"
+           :ptitle="'备付金支出'"
+           :p2title="'退税管理'"
+           :hname="'payment-details'"
+           :h2name="'subsidy-management'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
@@ -14,7 +14,7 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="dateS">
+                            <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
                                 <option value="2">最近一个月</option>
@@ -58,9 +58,11 @@
                 </div>
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
                     <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
-                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.accountName}}</span>
-                    <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}元</span>
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
+                    <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
+                    <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.invoiceAmount/100 | currency ''}}元</span>
                 </div>
 
                 <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -158,7 +160,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label><i style="color:red;">*</i>金额：</label>
-                                            <input style="width: 70%;display: inline-block" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount"></div>
+                                            <input style="width: 70%;display: inline-block" placeholder="单位：元" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
+                                        </div>
                                         <div class="form-group" v-else>
                                             <label>上传凭证：</label>
                                             <input  style="display:none" @change="uploads($event)" type="file">
@@ -167,7 +170,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label style="position: relative;top: -95px;" class="control-label">备注：</label>
-                                            <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
+                                            <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
                                         </div>
                                         <div class="form-group tc">
                                             <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
@@ -214,9 +217,11 @@
                     'payoutAmount': '',
                 },
                 balance:{
-                    accountName:'',
+                    activityName:'',
+                    activityId:'',
                     merchantName:'',
-                    balanceAmount:''
+                    merchantId:'',
+                    invoiceAmount:''
                 },
                 rechargeData:{
                     subsidyAccountID:'',
@@ -260,6 +265,24 @@
                             }
                         });
             },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.invoiceHDid
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.balance={
+                                    activityId:response.data.data.activity.operationId,
+                                    activityName:response.data.data.activity.name,
+                                    merchantId:response.data.data.merchant.operationId,
+                                    merchantName:response.data.data.merchant.name,
+                                    invoiceAmount:response.data.data.subsidyAccount.invoiceAmount
+                                }
+                            }
+                        });
+            },
             initList(){
                 $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
@@ -274,9 +297,9 @@
                 this.rechargeData.payoutAmount='';
                 this.rechargeData.remarks='';
                 this.rechargeData.certificateId='';
-                this.rechargeInfo.val1=this.balance.accountName;
+                this.rechargeInfo.val1=this.balance.activityName;
                 this.rechargeInfo.val2=this.balance.merchantName;
-                this.rechargeInfo.val3=this.balance.balanceAmount;
+                this.rechargeInfo.val3=this.balance.invoiceAmount;
             },
             rechargeTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -289,7 +312,7 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
-                                this.balance.balanceAmount=response.data.data;
+                                this.balance.invoiceAmount=response.data.data;
                                 this.initList();
                             }
                         });
@@ -306,6 +329,9 @@
                 let vm=this;
                 var reader = new FileReader();
                 if(!check_upload(files.name)){
+                    return;
+                }
+                if(check_upload_size(files.size)){
                     return;
                 }
                 reader.readAsDataURL(files);
@@ -333,21 +359,16 @@
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList()
-            },
-            dateS(){
-                this.getTime();
             }
         },
         ready(){
             let vm=this;
-            (vm.$route.params.invoiceZHname==':invoiceZHname')?vm.balance.accountName= '' : vm.balance.accountName=vm.$route.params.invoiceZHname;
-            (vm.$route.params.invoiceSHname==':invoiceSHname')? vm.balance.merchantName='' : vm.balance.merchantName=vm.$route.params.invoiceSHname;
-            (vm.$route.params.invoiceZHbalance==':invoiceZHbalance')? vm.balance.balanceAmount='' : vm.balance.balanceAmount=vm.$route.params.invoiceZHbalance;
             (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
             (vm.$route.params.invoiceHDid==':invoiceHDid')? vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID='' : vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID=vm.$route.params.invoiceHDid;
             vm.getTime();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();
+            vm.getBlance();
             $('#modal_recharge').on('hidden.bs.modal', function () {
                 $('body').css('padding-right',0);
                 vm.uploadText='';

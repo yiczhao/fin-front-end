@@ -5,10 +5,17 @@
            :isshow="'isshow'">
         <div class="content trade-info" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li class="active" data-ksa="trade_detail_manage"><a v-link="{name:'trade-info'}">交易明细</a></li>
+                    <li data-ksa="adjust_trade_detail_pre_manage"><a v-link="{name:'adjust-trade-detailpre'}">调账管理</a></li>
+                    <li data-ksa="manual_trade_detail"><a v-link="{name:'manual-trade-detail'}">手工单管理</a></li>
+                    <li data-ksa="manually_settlement"><a v-link="{name:'manually-settlement'}">手工结算</a></li>
+                    <li data-ksa="exception_trade_manage"><a v-link="{name:'Abnormal-transaction'}">异常交易</a></li>
+                    <li data-ksa="exception_trade_white_list_manage"><a v-link="{name:'white-lists'}">异常白名单</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                     </div>
-
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                             <option value="">全部分公司</option>
@@ -28,7 +35,7 @@
                             <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                         </select>
 
-                        <select class="form-control" v-model="checkForm.timeRange">
+                        <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -320,6 +327,10 @@
                                 this.$router.go({'name':'third-info',params:{'id':response.data.data,'serialNumber':_serialNumber}});
                             }
                         })
+            },
+            getTime(){
+                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
+                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             }
         },
         ready() {
@@ -331,14 +342,11 @@
             (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
             this.getSubcompany();
             this.getCity();
+            this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
        watch:{
-            'checkForm.timeRange'(){
-                this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
-                this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

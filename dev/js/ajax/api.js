@@ -100,7 +100,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.manualTradeDetailExcel = '/data/export/excel/manualTradeDetail?';
-
+    /**
+     * @description 退税管理页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyAccountExcel = '/data/export/excel/subsidyAccount?';
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -348,7 +353,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.select_manuallypay = './manuallySettlement/info?';
-
+    /**
+     * @description 手工结算之申请划付列表数据
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.manuallySettlement_list = './manuallySettlement/generate/list?';
 
     //- todo 交易管理-交易白名单 white-lists
     /**
@@ -637,6 +647,80 @@ export default function install(Vue) {
      * @method POST
      */
     _o.rebate_total = './subsidyTaxRebateDetail/total?';
+
+    //- todo  备付金支出-退税管理 subsidy-management
+    /**
+     * @description 退税管理数据接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyManagement_list = './subsidyAccount/list?';
+    /**
+     * @description 退税管理合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyManagement_total = './subsidyAccount/total?';
+    /**
+     * @description 退税管理发票充值接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidyManagement_recharge = './subsidyAccount/recharge';
+    /**
+     * @description 退税管理申请提现接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.subsidyManagement_applyPay = './subsidyAccount/applyPay';
+    /**
+     * @description 退税管理申请提现页面税金池和可提现金额 接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.subsidyManagement_info = './subsidyAccount/info?';
+    /**
+     * @description 退税管理批量提现接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.subsidyManagement_batch = './subsidyAccount/batchApplyPay/list?';
+    /**
+     * @description 退税管理批量提现接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.subsidyManagement_batchs = './subsidyAccount/batchApplyPay/applyPay';
+    /**
+     * @description 退税管理发票充值接口地址
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.rechargeByMerchantAndActivity = './subsidyAccount/rechargeByMerchantAndActivity';
+    /**
+     * @description 待划付金额明细列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.unpaidAmount_list = './subsidyAccount/unpaidAmount/detail?';
+    /**
+     * @description 待划付金额明细列表合计接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.unpaidAmount_total = './subsidyAccount/unpaidAmount/detail/total?';
+    /**
+     * @description 已划付金额明细列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.paidAmount_list = './subsidyAccount/paidAmount/detail?';
+    /**
+     * @description 已划付金额明细列表合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.paidAmount_total = './subsidyAccount/paidAmount/total?';
 
     //- todo  活动管理-活动列表 activity-lists
     /**

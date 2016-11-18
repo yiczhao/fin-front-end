@@ -5,11 +5,14 @@
            :isshow="'isshow'">
         <div class="content business-lists" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="merchant_manage" class="active"><a v-link="{name:'business-lists'}">商户管理</a></li>
+                    <!--<li><a v-link="{name:'business-limit'}" data-ksa="activity_manage">额度采购</a></li>-->
+                    <li data-ksa="advance_payment_account_manage"><a v-link="{name:'prepayment-lists'}">预付款</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
-
                     </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
@@ -43,6 +46,7 @@
                                     <th>商户名称</th>
                                     <th>分公司</th>
                                     <th>城市</th>
+                                    <th>划款账户</th>
                                     <th>消费总笔数</th>
                                     <th>消费总金额</th>
                                     <th>实付总金额</th>
@@ -53,14 +57,7 @@
                                     <th>佣金值</th>
                                     <th>结算周期</th>
                                     <th>补贴税率</th>
-                                    <th>已划付</th>
-                                    <th>待划付</th>
-                                    <th>退税款</th>
-                                    <th>欠发票金额</th>
                                     <!--<th>额度采购消化账户</th>-->
-                                    <th>划款账户</th>
-                                    <th>联系人</th>
-                                    <th>电话 </th>
                                 </tr>
                             </thead>
 
@@ -70,6 +67,7 @@
                                     <td>{{trlist.merchantName}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
                                     <td>{{trlist.cityName}}</td>
+                                    <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
                                     <td>{{trlist.consumptionCount}}</td>
                                     <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
                                     <td>{{trlist.payAmount/100 | currency '' }} </td>
@@ -85,28 +83,26 @@
                                         <template v-if="trlist.settlementCycle==4">手工结算</template>
                                     </td>
                                     <td>{{trlist.subsidyRate}}%</td>
-                                    <template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">
-                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>
-                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>
-                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
-                                        <td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
-                                    </template>
-                                    <template v-else>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                    </template>
+                                    <!--<template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">-->
+                                        <!--<td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>-->
+                                        <!--<td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>-->
+                                        <!--<td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>-->
+                                        <!--<td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>-->
+                                    <!--</template>-->
+                                    <!--<template v-else>-->
+                                        <!--<td>0.00</td>-->
+                                        <!--<td>0.00</td>-->
+                                        <!--<td>0.00</td>-->
+                                        <!--<td>0.00</td>-->
+                                    <!--</template>-->
 <!--                                     <td>
                                         <a @click="check_digest(trlist,trlist.merchantName)" href="javascript:void(0)"  data-ksa="merchant_manage.search_digest">查看消化账户</a>
                                     <td> -->
-                                    <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
-                                    <td>{{trlist.contactsPerson}}</td>
-                                    <td>{{trlist.contactsPhone}}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>合计：</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>{{nums.consumptionCount}}</td>
@@ -115,13 +111,6 @@
                                     <td>{{nums.commission33211/100 | currency ''}}</td>
                                     <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                     <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -145,46 +134,46 @@
                     未找到数据
                 </div>
 
-                <content-dialog
-                        :show.sync="modal_checking" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'额度采购消化账户'" 
-                >
-                    <div class="modal-body">
-                        <div v-if="checkLists.length>0">
-                            <span>商户ID：{{id}}</span>
-                            <span>商户名：{{merchantName}}</span>
-                            <span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>
-                        </div>
-                        <div style="padding: 10px 0;">历史记录：</div>
-                        <div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">
-                            无历史记录
-                        </div>
-                        <table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">
-                            <thead>
-                            <tr role="row">
-                                <th>ID</th>
-                                <th>账户名</th>
-                                <th>开始时间</th>
-                                <th>结束时间</th>
-                                <th>更新人</th>
-                                <th>变更凭证</th>
-                                <th>更新备注</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr role="row" v-for="n in checkLists">
-                                <td>{{n.merchantID}}</td>
-                                <td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>
-                                <td>{{n.startDate | datetime}}</td>
-                                <td>{{n.closeTime | datetime}}</td>
-                                <td>{{n.updateBy}}</td>
-                                <td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>
-                                <td>{{n.remarks}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </content-dialog>
+                <!--<content-dialog-->
+                        <!--:show.sync="modal_checking" :is-button="false" :type.sync="'infos'"-->
+                        <!--:title.sync="'额度采购消化账户'" -->
+                <!--&gt;-->
+                    <!--<div class="modal-body">-->
+                        <!--<div v-if="checkLists.length>0">-->
+                            <!--<span>商户ID：{{id}}</span>-->
+                            <!--<span>商户名：{{merchantName}}</span>-->
+                            <!--<span class="pull-right">额度采购消化账户：<a v-link="{'name':'business-limit','params':{'id':id}}">{{checkLists[0].merchantName}}</a></span>-->
+                        <!--</div>-->
+                        <!--<div style="padding: 10px 0;">历史记录：</div>-->
+                        <!--<div style="padding: 10px;font-size: 16px;text-align: center" v-if="!checkLists.length>0">-->
+                            <!--无历史记录-->
+                        <!--</div>-->
+                        <!--<table v-if="checkLists.length>0" class="table" style="border: 1px solid #ccc;">-->
+                            <!--<thead>-->
+                            <!--<tr role="row">-->
+                                <!--<th>ID</th>-->
+                                <!--<th>账户名</th>-->
+                                <!--<th>开始时间</th>-->
+                                <!--<th>结束时间</th>-->
+                                <!--<th>更新人</th>-->
+                                <!--<th>变更凭证</th>-->
+                                <!--<th>更新备注</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr role="row" v-for="n in checkLists">-->
+                                <!--<td>{{n.merchantID}}</td>-->
+                                <!--<td><a data-toggle="modal" data-dismiss="modal" @click="control(n)">{{n.merchantName}}</a></td>-->
+                                <!--<td>{{n.startDate | datetime}}</td>-->
+                                <!--<td>{{n.closeTime | datetime}}</td>-->
+                                <!--<td>{{n.updateBy}}</td>-->
+                                <!--<td><a href="{{origin}}/file/download/{{n.certificateID}}">下载</a></td>-->
+                                <!--<td>{{n.remarks}}</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</content-dialog>-->
 
                 <content-dialog
                         :show.sync="modal_control" :is-button="false" :type.sync="'infos'"
@@ -547,6 +536,9 @@
                 let vm=this;
                 var reader = new FileReader();
                 if(!check_upload(files.name)){
+                    return;
+                }
+                if(check_upload_size(files.size)){
                     return;
                 }
                 reader.readAsDataURL(files);

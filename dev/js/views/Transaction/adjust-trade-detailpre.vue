@@ -5,7 +5,14 @@
            :isshow="'isshow'">
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
-
+                <ul class="tab-bor">
+                    <li data-ksa="trade_detail_manage"><a v-link="{name:'trade-info'}">交易明细</a></li>
+                    <li class="active" data-ksa="adjust_trade_detail_pre_manage"><a v-link="{name:'adjust-trade-detailpre'}">调账管理</a></li>
+                    <li data-ksa="manual_trade_detail"><a v-link="{name:'manual-trade-detail'}">手工单管理</a></li>
+                    <li data-ksa="manually_settlement"><a v-link="{name:'manually-settlement'}">手工结算</a></li>
+                    <li data-ksa="exception_trade_manage"><a v-link="{name:'Abnormal-transaction'}">异常交易</a></li>
+                    <li data-ksa="exception_trade_white_list_manage"><a v-link="{name:'white-lists'}">异常白名单</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" @click="addTrade" data-ksa="adjust_trade_detail_pre_manage.add">添加调账交易</a>
@@ -22,7 +29,7 @@
                             <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                         </select>
 
-                        <select class="form-control" v-model="checkForm.timeRange">
+                        <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -469,6 +476,9 @@
                 if (!check_upload(files.name)) {
                     return;
                 }
+                if(check_upload_size(files.size)){
+                    return;
+                }
                 reader.readAsDataURL(files);
                 reader.onload = function (e) {
                     let datas = {
@@ -590,14 +600,11 @@
         ready() {
             this.getSubcompany();
             this.getCity();
+            this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
-            this.getTime()
             this.query();
         },
        watch:{
-            'checkForm.timeRange'(){
-                this.getTime()
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

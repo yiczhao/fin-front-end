@@ -5,23 +5,28 @@
            :isshow="'isshow'">
         <div class="content manually-settlement" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="trade_detail_manage"><a v-link="{name:'trade-info'}">交易明细</a></li>
+                    <li data-ksa="adjust_trade_detail_pre_manage"><a v-link="{name:'adjust-trade-detailpre'}">调账管理</a></li>
+                    <li data-ksa="manual_trade_detail"><a v-link="{name:'manual-trade-detail'}">手工单管理</a></li>
+                    <li class="active" data-ksa="manually_settlement"><a v-link="{name:'manually-settlement'}">手工结算</a></li>
+                    <li data-ksa="exception_trade_manage"><a v-link="{name:'Abnormal-transaction'}">异常交易</a></li>
+                    <li data-ksa="exception_trade_white_list_manage"><a v-link="{name:'white-lists'}">异常白名单</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">生成划付</a>
+                        <a class="btn btn-add add-top" v-on:click="payApply" data-ksa="manually_settlement.apply_pay">申请划付</a>
                     </div>
-
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
                             <option value="">全部分公司</option>
                             <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
-
                         <select class="form-control" v-model="checkForm.cityID">
                             <option value="">全部城市</option>
                             <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                         </select>
-
-                        <select class="form-control" v-model="checkForm.timeRange">
+                        <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
                             <option value="2">最近一个月</option>
@@ -33,18 +38,12 @@
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
-
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationIDs" placeholder="商户ID（多个ID以逗号隔开）" v-limitids="checkForm.merchantOperationIDs">
                         <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
-
                         <input type="text" class="form-control" v-model="checkForm.tradeDetailID" placeholder="交易ID" v-limitnumber="checkForm.tradeDetailID">
-
                         <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
-
                         <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
-
-                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
+                        <input type="text" class="form-control" placeholder="活动ID（多个ID以逗号隔开）" v-limitids="checkForm.activityOperationIDs" v-model="checkForm.activityOperationIDs">
                     </div>
 
                     <div class="heading-middle">
@@ -52,9 +51,9 @@
                     </div>
                 </div>
 
-                <div v-cloak v-show="tradeList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>交易ID</th>
@@ -165,45 +164,43 @@
                 </div>
 
                 <content-dialog
-                        :show.sync="show" :is-cancel="true" :type.sync="'primary'"
-                        :title.sync="'申请划付'" @kok="submit" @kcancel="show = false"
+                        :show.sync="modal_batch" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'申请划付'"
                 >
-                    <div class="modal-body">
-                        <div class="form-group">
-                            您目前选择了
-                            <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeSize}}</span>笔交易记录，
-                            三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartyReceivable/100 | currency ''}}</span>  元，
-                            补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.merchantSubsidyActual/100 | currency ''}}</span>  元，
-                            暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTax/100 | currency ''}}</span>  元
-                        </div>
-                        <div class="form-group">
-                            <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                            <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">
-                                <option value="">请选择付款方式</option>
-                                <option value="1">备付金账户</option>
-                                <option value="2">商户预付款账户</option>
-                                <option value="3">银行结算</option>
-                            </select>
-                        </div>
-                        <div class="form-group" v-show="payTypes==1">
-                            <label><input type="checkbox" v-model="mergePay"/>
-                                相同账户合并付款</label>
+                    <div class="form-group">
+                        <label style="width:18%;text-align:right;" class="control-label">时间：</label>
+                        <select class="form-control" style="display: inline-block;width: 80%;" v-model="batchData.timeRange" @change="getbatchDataTime">
+                            <option value="0">昨天</option>
+                            <option value="1">最近一周</option>
+                            <option value="2">最近一个月</option>
+                            <option value="3">最近三个月</option>
+                            <option value="4">自定义时间</option>
+                        </select>
+                        <div style="width: 80%;margin: 15px 0 0 19%;" v-show="batchData.timeRange==4">
+                            <datepicker  :readonly="true" :value.sync="batchData.startDate" format="YYYY-MM-DD"></datepicker>至
+                            <datepicker  :readonly="true" :value.sync="batchData.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">活动ID：</label>
+                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationIDs" v-model="batchData.activityOperationIDs"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">商户ID：</label>
+                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationIDs" v-model="batchData.merchantOperationIDs"></textarea>
+                    </div>
+                    <div class="form-group tc">
+                        <a @click="payApplyTrue" class="btn btn-primary">下一步</a>
+                    </div>
                 </content-dialog>
-
             </div>
         </div>
     </index>
 </template>
 
 <script>
-    import ContentDialog from '../components/ContentDialog.vue'
     import model from '../../ajax/Transaction/manually_model'
     export default{
-        components: { ContentDialog },
-        computed:{
-        },
         data(){
             this.model=model(this);
             return{
@@ -214,12 +211,12 @@
                     cityID:"",
                     startDate:"",
                     endDate:"",
-                    merchantOperationID:"",
+                    merchantOperationIDs:"",
                     merchantName:"",
                     tradeDetailID:"",
                     serialNumber:"",
                     phone:"",
-                    activityOperationID:'',
+                    activityOperationIDs:'',
                     pageIndex:1,
                     timeRange:'3',
                     pageSize:10
@@ -234,8 +231,16 @@
 
                 },
                 show:false,
+                modal_batch:false,
                 submitId:[],
                 payTypes:'',
+                batchData:{
+                    timeRange:'3',
+                    startDate:'',
+                    endDate:'',
+                    activityOperationIDs:'',
+                    merchantOperationIDs:''
+                },
                 mergePay:''
             }
         },
@@ -290,33 +295,30 @@
                 window.open(window.origin+this.$API.manuallyexcel+ $.param(this.checkForm));
             },
             payApply(){
+                this.batchData={
+                    timeRange:this.checkForm.timeRange,
+                    startDate:this.checkForm.startDate,
+                    endDate:this.checkForm.endDate,
+                    activityOperationIDs:this.checkForm.activityOperationIDs,
+                    merchantOperationIDs:this.checkForm.merchantOperationIDs
+                }
+                this.modal_batch=true;
+            },
+            payApplyTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.checkForm.merchantOperationID==''||this.checkForm.activityOperationID==''){
-                    dialogs('info','必须填写商户ID及活动ID！');
+                if(this.batchData.merchantOperationIDs==''&&this.batchData.activityOperationIDs==''){
+                    dialogs('info','商户ID和活动ID不能都为空！');
                     return false
                 }
-                this.payTypes='';
-                this.mergePay=false;
-                this.model.select_manuallypay(this.checkForm)
+                this.model.manuallySettlement_list(this.batchData)
                         .then((response)=>{
-                            // *** 判断请求是否成功如若
-                            // *** 判断请求是否成功如若
+                            // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
-                                this.$set('applyPayInfo', response.data.data)
-                                this.show=true;
-                            }
-                        });
-            },
-            submit(){
-                if(sessionStorage.getItem('isHttpin')==1||this.payTypes=='')return;
-                let data=_.cloneDeep(this.checkForm);
-                data.payType=this.payTypes;
-                data.mergePay=this.mergePay;
-                this.model.manuallypay(data)
-                        .then((response)=>{
-                            if(response.data.code==0){
-                                dialogs('success',response.data.message);
-                                this.query();
+                                this.checkForm.merchantOperationIDs=this.batchData.merchantOperationIDs;
+                                this.checkForm.activityOperationIDs=this.batchData.activityOperationIDs;
+                                back_json.saveArray(this.$route.path,this.checkForm);
+                                sessionStorage.setItem('manuallybatchData',JSON.stringify(this.batchData));
+                                this.$router.go({'name':'manually-settlement-batchpay'});
                             }
                         });
             },
@@ -324,18 +326,19 @@
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
                 this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             },
+            getbatchDataTime(){
+                this.batchData.startDate=init_date(this.batchData.timeRange)[0];
+                this.batchData.endDate=init_date(this.batchData.timeRange)[1];
+            }
         },
         ready() {
             this.getSubcompany();
             this.getCity();
+            this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
-            this.getTime()
             this.query();
         },
        watch:{
-            'checkForm.timeRange'(){
-                this.getTime()
-            },
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }

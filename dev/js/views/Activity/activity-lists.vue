@@ -5,6 +5,11 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
+                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
 
@@ -580,7 +585,7 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){
                                 if(typeof response.data.data=='undefined'||response.data.data==''){
-                                    dialogs('info','该计算公式尚不可编辑！');
+                                    dialogs('info','该活动下没有交易，暂无法编辑计算公式！');
                                     return
                                 }
                                 else if(response.data.data.length==1){

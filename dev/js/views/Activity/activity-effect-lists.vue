@@ -1,15 +1,18 @@
 <template>
     <index :title="'活动执行表'"
-           :ptitle="'活动执行表列表'"
+           :ptitle="'活动列表'"
            :hname="'activity-effect-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
+                    <li data-ksa="activity_effect_manage" class="active"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        
                     </div>
-
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <select class="form-control" v-model="defaultData.subCompanyID">
