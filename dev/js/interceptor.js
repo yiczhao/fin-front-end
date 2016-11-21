@@ -19,8 +19,8 @@ export default function install(Vue,router_proto) {
 			let _appkey = 'cxcx2bles6w15xfehrbsb8vaeqwge75d7mybz8f0'
 			let _secretkey = 'hsmpaf6wdryq8v5c7xsbtli7rjh45a75w9k6ejw9'
 			let _now=Date.now();
-			let token=md5(_appkey+_now+_secretkey);
-			let authtoken=(!!Cookie.get('KSAuthUserToken')) ? Cookie.get('KSAuthUserToken') : null;
+			let authtoken=md5(_appkey+_now+_secretkey);
+			let token=(!!Cookie.get('KSAuthUserToken')) ? Cookie.get('KSAuthUserToken') : null;
 			request.headers['X-AUTH-TIME']=_now;
 			request.headers['X-AUTH-APPKEY']=_appkey;
 			request.headers['X-AUTH-TOKEN']=authtoken;
