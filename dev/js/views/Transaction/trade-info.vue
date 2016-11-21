@@ -309,6 +309,7 @@
                     });
             },
             query() {
+                debugger
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 back_json.saveArray(this.$route.path,this.checkForm);
