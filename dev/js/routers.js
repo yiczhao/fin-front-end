@@ -329,7 +329,7 @@ export default function(router){
         // 转到登录页
         '*':{
             component:function () {
-                window.location.href = authUrl
+                window.location.href = authUrl1
             }
         }
     })

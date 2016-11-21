@@ -46,7 +46,7 @@
             if (document.cookie.indexOf("JSESSID=")) {
                 let check = document.cookie.indexOf("JSESSID=");
                 if (check == -1) {
-                    window.location.href = authUrl;
+                    window.location.href = authUrl1;
                 }
             }
         },

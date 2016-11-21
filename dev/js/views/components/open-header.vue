@@ -100,14 +100,14 @@
                 document.cookie = 'JSESSID=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 document.cookie = 'JSESSTOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 // window.location.href = loginUrl
-                window.location.href = authUrl
+                window.location.href = authUrl1
 
             },
             showsystemlist () {
                 let self = this
                 self.$http({
                     options:{xhr : { withCredentials: true }},
-                    url: authUrl + '/auth/usersystem/list',
+                    url: authUrl2 + '/auth/usersystem/list',
                     method: 'post'
                 }).then(res => {
                     let arr = res.data.data.system;
@@ -139,7 +139,7 @@
                 }
                 this.$http({
                     options:{xhr : { withCredentials: true }},
-                    url: authUrl + '/auth/usersystem/insert/' + index.sys_id,
+                    url: authUrl2 + '/auth/usersystem/insert/' + index.sys_id,
                     method: 'GET',
                     data: {
                         systemid: parseInt(index.sys_id)
@@ -148,6 +148,13 @@
                 })
             },
             addshowlist (index) {
+                if (document.cookie.indexOf("JSESSID=")) {
+                    let check = document.cookie.indexOf("JSESSID=");
+                    if (check == -1) {
+                        window.location.href = authUrl1;
+                        return;
+                    }
+                }
                 let _this = this
                 for (var i = 0; i < this.systemlist.length; i++) {
                     if (index.sys_id === this.systemlist[i].sys_id) {
@@ -159,7 +166,7 @@
                 }
                 this.$http({
                     options:{xhr : { withCredentials: true }},
-                    url: authUrl + '/auth/usersystem/delete/' + index.sys_id,
+                    url: authUrl2 + '/auth/usersystem/delete/' + index.sys_id,
                     method: 'GET',
                     data: {
                         systemid: parseInt(index.sys_id)

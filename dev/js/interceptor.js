@@ -35,7 +35,7 @@ export default function install(Vue,router_proto) {
 			// *** 拦截session过期
 			if(response.data.code === 50000){
 			  setTimeout(()=>{
-				  window.location.href = authUrl;
+				  window.location.href = authUrl1;
 			  })
 			}
 			else if(response.status===403){
