@@ -6,6 +6,10 @@
         <div class="content activity-formulae" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-title"><span class="btn btn-primary" data-ksa="activity_manage.config" @click="usedefalut">加载默认公式</span></div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{defaultData.activityOperationID}}</span>
+                    <span>活动名称：</span><span style="margin-right: 10px;">{{defaultData.activityName}}</span>
+                </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际广告费=</div>
@@ -99,6 +103,8 @@
                     '合同结算金额',
                 ],
                 defaultData:{
+                    activityName:'',
+                    activityOperationID:'',
                     actualAdvertisementFee:[],
                     actualMaterialFee:[],
                     actualWeChatMarketFee:[],
@@ -144,7 +150,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
+                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae'&&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
                         })
                         this.$set('defaultData',data);
                     }
@@ -159,7 +165,7 @@
                         }
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
+                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae' &&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
                         })
                         this.$set('defaultData',data);
                         dialogs('success','加载成功！')
