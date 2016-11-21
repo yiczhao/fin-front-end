@@ -3,7 +3,7 @@
  * @author zdzDesigner
  */
 import config from './config'
-// import Cookie from './utils/Cookie'
+import Cookie from './utils/Cookie'
 import md5 from 'blueimp-md5'
 export default function install(Vue,router_proto) {
 	var conut;
