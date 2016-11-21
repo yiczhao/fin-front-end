@@ -21,10 +21,12 @@ export default function install(Vue,router_proto) {
 			let _now=Date.now();
 			let authtoken=md5(_appkey+_now+_secretkey);
 			let token=(!!Cookie.get('KSAuthUserToken')) ? Cookie.get('KSAuthUserToken') : null;
+			let fintoken=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : null;
 			request.headers['X-AUTH-TIME']=_now;
 			request.headers['X-AUTH-APPKEY']=_appkey;
 			request.headers['X-AUTH-TOKEN']=authtoken;
 			request.headers['X-USER-TOKEN'] =token;
+			request.headers['X-Fin-Token'] =fintoken;
 			// config.mock_get(Vue,request)
 			return request;
 		},
