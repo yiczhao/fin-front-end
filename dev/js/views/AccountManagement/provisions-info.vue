@@ -128,7 +128,7 @@
                 </div>                    
             </div>
 
-            <div style="padding: 30px;font-size: 16px;text-align: center" v-else v-cloak>
+            <div class="no-list" v-else v-cloak>
                 未找到数据
             </div>
 

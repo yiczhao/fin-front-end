@@ -15,6 +15,7 @@ export default function install(Vue,router_proto) {
 			if(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0){
 				Message.show('loading','loading...');
 				sessionStorage.setItem('isHttpin',1);
+				document.querySelector('.no-list').style.display='none';
 			}
 			conut=0;
 			let _appkey = 'p0obc8spr3ou8h35y1goejfod4ndngom83xzl90v'
@@ -29,7 +30,12 @@ export default function install(Vue,router_proto) {
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			(response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0)? Message.hide():null;
+			if(response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0){
+				Message.hide();
+				if(response.data.data==''||response.data.data==null||typeof response.data.data=='undefined'){
+					document.querySelector('.no-list').style.display='block';
+				}
+			}
 			// *** 拦截session过期
 			if(response.data.code === 50000){
 			  setTimeout(()=>{

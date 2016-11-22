@@ -178,7 +178,7 @@
                     </div>
                 </div>
 
-                <div  v-else style="padding: 30px;font-size: 16px;text-align: center" >
+                <div  v-else class="no-list">
                     未查询到补贴退税信息！
                 </div>
 

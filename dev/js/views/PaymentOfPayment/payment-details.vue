@@ -208,7 +208,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
+                <div class="no-list" v-if="!zdlists.length>0">
                     未找到数据
                 </div>
             </div>
@@ -266,7 +266,7 @@
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
-                            <tr style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                            <tr class="no-list" v-if="!listinfos.length" v-cloak>
                                 <td>未找到数据</td>
                             </tr>
                         </table>

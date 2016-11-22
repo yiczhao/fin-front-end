@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到员工数据信息！
                 </div>
 
