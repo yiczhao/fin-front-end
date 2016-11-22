@@ -39,13 +39,12 @@
                             </select>
                         </form>
                     </div>
-
                     <div class="heading-middle">
                         <a class="btn btn-info add-top" @click="initList" data-ksa="activity_manage.search">查询</a>
                     </div>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
