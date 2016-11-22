@@ -12,15 +12,15 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.xhr = { withCredentials: true };
 	Vue.http.interceptors.push({
 		request (request) {
-			request.url.indexOf('/total')<=0?Message.show('loading','loading...'):null;
-			(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0) ? sessionStorage.setItem('isHttpin',1):null;
+			if(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0){
+				Message.show('loading','loading...');
+				sessionStorage.setItem('isHttpin',1);
+			}
 			conut=0;
 			let _appkey = 'p0obc8spr3ou8h35y1goejfod4ndngom83xzl90v'
 			let _secretkey = 'vc9iwg6550dzznfxrwv8rupl0z8prqmxir6wogr4'
 			let _now=Date.now();
-			// console.log(now);
 			let token=(!!sessionStorage.getItem('userData')) ? JSON.parse(sessionStorage.getItem('userData')).authToken : md5(_appkey+_now+_secretkey);
-			// var authtoken=(!!Cookie.get('KSAuthUserToken')) ? Cookie.get('KSAuthUserToken') : null;
 			request.headers['X-AUTH-TIME']=_now;
 			request.headers['X-AUTH-APPKEY']=_appkey;
 			request.headers['X-AUTH-TOKEN']=token;
@@ -29,7 +29,7 @@ export default function install(Vue,router_proto) {
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			response.request.url.indexOf('/total')<=0? Message.hide():null;
+			(response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0)? Message.hide():null;
 			// *** 拦截session过期
 			if(response.data.code === 50000){
 			  setTimeout(()=>{
