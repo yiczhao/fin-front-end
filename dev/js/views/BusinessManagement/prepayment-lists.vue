@@ -95,19 +95,18 @@
                                 <td>{{prepayment.connectionPhone}}</td>
                                 <td>{{prepayment.servicePerson}}</td>
                             </tr>
-                            </tbody>
                             <tr role="row">
-                                <th></th>
-                                <th></th>
-                                <th>合计：</th>
-                                <th></th>
-                                <th><B>{{total/100 | currency ''}}</B></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <td></td>
+                                <td></td>
+                                <td>合计：</td>
+                                <td></td>
+                                <td>{{total/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </table>
                     </div>
