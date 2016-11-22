@@ -31,7 +31,7 @@
                     <span>预付款账户名：{{merchantName}}</span>
                 </div>
 
-                <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -341,9 +341,9 @@
                     'companyId':'',
                     'cityId':'',
                     'merchantOperationID':'',
-                    'merchantName':'',
-                    'isAdvancePayment':'0',
-                    'isStore':'0'
+                    'merchantName':''
+                    // 'isAdvancePayment':'0',
+                    // 'isStore':'0'
                 };
                 this.clearUl();
                 this.getCity();
