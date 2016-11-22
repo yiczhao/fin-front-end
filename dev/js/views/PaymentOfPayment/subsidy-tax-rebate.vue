@@ -87,7 +87,8 @@
                                     <th>付款账户</th>
                                     <th>商户ID</th>
                                     <th>商户名称</th>
-                                    <th>收款账户信息</th>
+                                    <th>收款账户名</th>
+                                    <th>收款账号</th>
                                     <th>生成方式</th>
                                     <th>退税款</th>
                                     <th>交易</th>
@@ -112,7 +113,8 @@
                                     <td>{{strd.payAccount}}</td>
                                     <td>{{strd.merchantOperationID}}</td>
                                     <td>{{strd.merchantName}}</td>
-                                    <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>
+                                    <td>{{strd.collectionAccountName}}</td>
+                                    <td>{{strd.collectionAccountNumber}}</td>
                                     <td>
                                         <template v-if="strd.createType==1">系统生成</template>
                                         <template v-if="strd.createType==2">手工单</template>
@@ -161,6 +163,7 @@
                                 <tr>
                                     <td></td>
                                     <td>合计：</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

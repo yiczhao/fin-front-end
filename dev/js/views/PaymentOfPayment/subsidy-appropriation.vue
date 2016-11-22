@@ -92,7 +92,8 @@
                                         <th>商户名称</th>
                                         <th>活动ID</th>
                                         <th>活动名称</th>
-                                        <th>收款账户信息</th>
+                                        <th>收款账户名</th>
+                                        <th>收款账号</th>
                                         <th>生成方式</th>
                                         <th>三方应收</th>
                                         <th>划付金额</th>
@@ -121,7 +122,8 @@
                                         <td>{{sa.merchantName}}</td>
                                         <td>{{sa.activityOperationID}}</td>
                                         <td>{{sa.activityName}}</td>
-                                        <td>{{sa.receiptAccountName}}<br/>{{sa.receiptAccountNumber}}</td>
+                                        <td>{{sa.receiptAccountName}}</td>
+                                        <td>{{sa.receiptAccountNumber}}</td>
                                         <td>
                                             <template v-if="sa.createType==1">系统生成</template>
                                             <template v-if="sa.createType==2">手工单</template>
@@ -172,7 +174,7 @@
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                        <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                         <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{total.payAmount/100 | currency ''}}</td>
                                         <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td>

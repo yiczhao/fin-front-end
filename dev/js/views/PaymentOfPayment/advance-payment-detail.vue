@@ -77,7 +77,8 @@
                                     <th>付款账户</th>
                                     <th>商户ID</th>
                                     <th>商户名称</th>
-                                    <th>收款账户信息</th>
+                                    <th>收款账户名</th>
+                                    <th>收款账号</th>
                                     <th>预付金额</th>
                                     <th>账户详情</th>
                                     <th>状态</th>
@@ -94,7 +95,8 @@
                                     <td>{{apd.payAccount}}</td>
                                     <td>{{apd.merchantOperationID}}</td>
                                     <td>{{apd.merchantName}}</td>
-                                    <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
+                                    <td>{{apd.collectionAccountName}}</td>
+                                    <td>{{apd.collectionAccountNumber}}</td>
                                     <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
                                     <td>
                                         <a v-if="apd.reserveCashOrderID==0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'payRecheckID':apd.payRecheckID}}" data-ksa="advance_payment_account_manage.search">查看</a>
