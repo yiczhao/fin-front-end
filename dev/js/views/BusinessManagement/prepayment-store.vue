@@ -340,7 +340,7 @@
                     'companyId':'',
                     'cityId':'',
                     'merchantOperationID':'',
-                    'merchantName':''
+                    'merchantName':'',
                     'isStore':'0'
                 };
                 this.clearUl();
