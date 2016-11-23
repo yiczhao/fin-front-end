@@ -280,7 +280,6 @@
                     cityId: "",
                     merchantOperationID: "",
                     merchantName: "",
-                    isAdvancePayment: "0",
                     isStore: "0",
                 },
                 applyAdvancePay: {

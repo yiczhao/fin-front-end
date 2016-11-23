@@ -285,7 +285,6 @@
                     'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
-                    'isAdvancePayment':'0',
                     'isStore':'0'
                 },
                 zdlists:[],
@@ -342,8 +341,7 @@
                     'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':''
-                    // 'isAdvancePayment':'0',
-                    // 'isStore':'0'
+                    'isStore':'0'
                 };
                 this.clearUl();
                 this.getCity();
