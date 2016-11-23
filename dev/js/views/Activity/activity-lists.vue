@@ -224,6 +224,7 @@
                                 <option value="">请选择活动归属</option>
                                 <option value="1">分-分</option>
                                 <option value="2">总-总</option>
+                                <option value="3">总-总 分-分</option>
                             </select>
                         </span>
                     </div>
