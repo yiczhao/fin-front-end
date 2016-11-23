@@ -27,7 +27,7 @@ module.exports = [
     },
     {
         name: '本金收入',
-        icon: 'icon-heart5',
+        icon: 'icon-BJBZ',
         type:'Principal',
         ksa:'',
         sub_menu: [

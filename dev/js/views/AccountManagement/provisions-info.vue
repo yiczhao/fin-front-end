@@ -54,14 +54,14 @@
                     </div>
                 </div>
 
-            <div style="margin: 0 20px 20px 0;font-size: 18px;">
+            <div style="margin: 0 20px 20px 20px;font-size: 18px;">
                 <span>账户简称：</span><span style="margin-right: 10px;">{{aname}}</span>
                 <span>余额：</span><span style="margin-right: 10px;">{{balance/100 | currency ''}}</span>
                 <span  v-if="zdlists.length>0">总收入：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{shouru/100 | currency ''}}元</span>
                 <span  v-if="zdlists.length>0">总支出：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{zhichu/100 | currency ''}}元</span>
             </div>
 
-            <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
+            <div v-show="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
                     <table class="table">
                         <thead>
@@ -445,6 +445,7 @@
                 this.modal_fzr=true;//
             },
             checkNew(){
+                this.checkForm.pageIndex=1;
                 this.initList();
             },
             initList(){

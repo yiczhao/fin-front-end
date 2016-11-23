@@ -241,6 +241,7 @@
                 });
             },
             checkNew(){
+                this.defaultData.pageIndex=1;
                 this.initList();
             },
             addUser(){

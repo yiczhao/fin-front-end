@@ -27,11 +27,11 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="activity_effect_manage.search" style="margin-left: -60px;">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="activity_effect_manage.search" style="margin-left: -60px;">查询</a>
                     </div>
                 </div>
 
-                <div  v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                <div  v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -334,6 +334,10 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 $('.modal').modal('hide');

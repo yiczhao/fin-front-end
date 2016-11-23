@@ -15,9 +15,9 @@ export default function install(Vue,router_proto) {
 			if(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0){
 				Message.show('loading','loading...');
 				sessionStorage.setItem('isHttpin',1);
-			}
-			if(request.url.indexOf('pageIndex=')>0&&request.url.indexOf('pageSize=')>0){
-				document.querySelector('.no-list').style.display='none';
+				if(request.url.indexOf('pageIndex=')>0&&request.url.indexOf('pageSize=')>0){
+					document.querySelector('.no-list').style.display='none';
+				}
 			}
 			conut=0;
 			let _appkey = 'p0obc8spr3ou8h35y1goejfod4ndngom83xzl90v'

@@ -40,7 +40,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="activity_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="activity_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -476,6 +476,10 @@
                                     this.$set('shcity', response.data.data)
                                 }
                             });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 this.modal_add=false;

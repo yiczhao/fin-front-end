@@ -49,7 +49,7 @@
                     <span>账户简称：</span><span style="margin-right: 10px;">{{balance.shortName}}</span>
                     <span>余额：</span><span style="margin-right: 10px;">{{balance.balanceAmount/100 | currency ''}}</span>
                 </div>
-                <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
+                <div v-show="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -188,6 +188,7 @@
                 });
             },
             checkNew(){
+                this.checkForm.pageIndex=1;
                 this.initList();
             },
             initList(){

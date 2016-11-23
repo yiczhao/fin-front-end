@@ -11,7 +11,7 @@
                     <li data-ksa="tax_rate" class="active"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
                 </ul>
-                <div v-if="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->
+                <div v-show="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
