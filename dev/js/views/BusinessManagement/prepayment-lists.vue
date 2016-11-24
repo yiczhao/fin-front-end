@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="query" data-ksa="advance_payment_merchant_manage.search" style="margin-left: -21px;">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="advance_payment_merchant_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -490,8 +490,11 @@
                 this.modal_prepayment_info = false;
 
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
+            },
             query() {
-                //$('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getPrepaymentList(this.checkForm);
             },

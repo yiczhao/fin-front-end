@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="suspension_tax_account_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="suspension_tax_account_detail_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
                     <span>退税款：</span><span style="margin-right: 10px;">{{balance.suspensionTaxAmount/100| currency '' }}元</span>
                 </div>
 
-                <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -281,6 +281,10 @@
                                 }
                             }
                         });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 $('.modal').modal('hide');

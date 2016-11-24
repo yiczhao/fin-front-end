@@ -78,11 +78,11 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="reserve_cash_order_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="reserve_cash_order_manage.search">查询</a>
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
+                <div v-show="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table main-table">
                         <thead>
@@ -435,6 +435,10 @@
                             this.$set('subcompanyList', response.data.data)
                         }
                     });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.initList();
             },
             initList(){
                 this.modal_waring = false;

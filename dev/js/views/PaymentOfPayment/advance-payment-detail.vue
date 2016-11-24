@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="advance_payment_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="advance_payment_detail_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -204,8 +204,11 @@
 
                     });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
+            },
             query() {
-                // let data=this.data;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                    this.getTime();
                 }

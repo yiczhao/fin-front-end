@@ -14,16 +14,13 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <div class="form-group">
                                 <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-
                                 <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                            </div>
                         </form>
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" style="margin-top: 25px;" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -151,22 +148,6 @@
                         >
                 </content-dialog>
 
-<!--                 <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">你确定删除该商户？</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group tc">
-                                    <button type="button" @click="del_true" class="btn btn-primary">确认</button>
-                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </index>
@@ -325,8 +306,11 @@
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
                         });
             },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
+            },
             initList(){
-                $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },

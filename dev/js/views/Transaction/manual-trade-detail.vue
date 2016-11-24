@@ -59,11 +59,11 @@
                         <input type="text" class="form-control" v-model="defaultData.serialNumber" placeholder="交易流水号">
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="getManualTradeDetailData()" data-ksa="manual_trade_detail.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="manual_trade_detail.search">查询</a>
                     </div>
                 </div>
 
-                <div v-if="!!manualTradeDetailList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                <div v-show="!!manualTradeDetailList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -377,6 +377,10 @@
                         this.$set('pageall', response.data.total);
                     }
                 })
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.getManualTradeDetailData();
             },
             getSubCompanyData(){
                 // *** 请求分公司数据

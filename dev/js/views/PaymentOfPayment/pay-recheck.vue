@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="pay_recheck.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="pay_recheck.search">查询</a>
                     </div>
                 </div>
 
@@ -326,6 +326,10 @@
                                 this.$set('subcompanyList', response.data.data)
                             }
                         });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query(){
                 this.show=false;

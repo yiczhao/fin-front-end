@@ -35,13 +35,13 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
                     </div>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>账户ID</th>
@@ -434,6 +434,10 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('shcity', response.data.data) : null;
                         });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 this.modal_add=false;

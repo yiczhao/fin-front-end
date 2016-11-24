@@ -39,7 +39,7 @@
                         <a class="btn btn-info add-top" @click="checkNew" data-ksa="">查询</a>
                     </div>
                 </div>
-                <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
+                <div v-show="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -227,6 +227,7 @@
                 });
             },
             checkNew(){
+                this.checkForm.pageIndex=1;
                 this.initList();
             },
             initList(){

@@ -60,13 +60,13 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="exception_trade_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="exception_trade_manage.search">查询</a>
                     </div>
                 </div>
 
-                <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-cloak v-show="!!tradeList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>交易ID</th>
@@ -286,6 +286,10 @@
                                 this.$set('cityList', response.data.data)
                             }
                         });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;

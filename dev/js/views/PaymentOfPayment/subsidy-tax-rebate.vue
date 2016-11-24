@@ -46,7 +46,7 @@
 
                                 <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
 
-                                <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
+                                <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号">
 
                                 <select class="form-control" v-model="checkForm.createType">
                                     <option value="">请选择生成方式</option>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -389,6 +389,10 @@
                             }
                             this.query();
                         });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query() {
                 $('.modal').modal('hide');
