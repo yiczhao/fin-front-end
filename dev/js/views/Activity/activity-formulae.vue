@@ -7,8 +7,8 @@
             <div class="panel panel-flat">
                 <div class="panel-title"><span class="btn btn-primary" data-ksa="activity_manage.config" @click="usedefalut">加载默认公式</span></div>
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
-                    <span>活动ID：</span><span style="margin-right: 10px;">{{defaultData.activityOperationID}}</span>
-                    <span>活动名称：</span><span style="margin-right: 10px;">{{defaultData.activityName}}</span>
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{activityOperationID}}</span>
+                    <span>活动名称：</span><span style="margin-right: 10px;">{{activityName}}</span>
                 </div>
                 <div class="panel-row">
                     <div class="col">
@@ -115,9 +115,9 @@
                     '商户应补金额',
                     '实际其他费用',
                 ],
+                activityName:'',
+                activityOperationID:'',
                 defaultData:{
-                    activityName:'',
-                    activityOperationID:'',
                     otherExpenseRemarks:'',
                     actualAdvertisementFee:[],
                     actualMaterialFee:[],
@@ -215,6 +215,8 @@
             }
         },
         ready() {
+            (this.$route.params.formulaeName!=':formulaeName')?this.activityName=this.$route.params.formulaeName:null;
+            (this.$route.params.formulaeID!=':formulaeID')?this.activityOperationID=this.$route.params.formulaeID:null;
             this.getList();
         },
         watch:{

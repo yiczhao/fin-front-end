@@ -578,7 +578,7 @@
                             }
                         })
             },
-            checkformulae({id}){
+            checkformulae({id, name, operationID}){
                 // *** 请求公司数据
                 let data={
                     'type':'Activity',
@@ -593,7 +593,7 @@
                                     return
                                 }
                                 else if(response.data.data.length==1){
-                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data[0].subCompanyID}});
+                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data[0].subCompanyID, 'formulaeID':operationID, 'formulaeName':name}});
                                 }
                                 else{
                                     this.$set('usercompanylists', response.data.data);

@@ -311,7 +311,7 @@ export default function(router){
             }
         },
         /* 活动管理-活动列表-计算公式 */
-        '/activity-formulae/:activityID/:subCompanyID':{
+        '/activity-formulae/:activityID/:subCompanyID/:formulaeID/:formulaeName':{
             name:'activity-formulae',
             router_type:"activity",
             component: function(resolve){
