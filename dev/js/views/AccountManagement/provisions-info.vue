@@ -433,8 +433,7 @@
                 this.manualCheck={
                     "id":'',
                     "collectionName":'',
-                    "purpose":'',
-                    "remarks":''
+                    "purpose":''
                 }
                 this.glradio='one';
             },
