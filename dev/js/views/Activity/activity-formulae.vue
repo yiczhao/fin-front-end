@@ -70,6 +70,16 @@
                         <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
                     </div>
                 </div>
+                <div class="panel-row">
+                    <div class="col">
+                        <div>实际其他费用=</div>
+                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualOtherExpense" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>其他费用备注</div>
+                        <div style="width: 100%;"><input type="text" class="form-control" v-model="defaultData.otherExpenseRemarks" placeholder="其他费用备注"></div>
+                    </div>
+                </div>
                 <div class="panel-footer">
                     <span class="btn btn-primary" data-ksa="activity_manage.config" @click="setdefaultFormulae">设为默认公式</span>
                     <span class="btn btn-primary" data-ksa="activity_manage.config" @click="submit">保存</span>
@@ -101,10 +111,14 @@
                     '合同服务费',
                     '合同税费',
                     '合同结算金额',
+                    '交易笔数',
+                    '商户应补金额',
+                    '实际其他费用',
                 ],
                 defaultData:{
                     activityName:'',
                     activityOperationID:'',
+                    otherExpenseRemarks:'',
                     actualAdvertisementFee:[],
                     actualMaterialFee:[],
                     actualWeChatMarketFee:[],
@@ -116,6 +130,7 @@
                     contractWeChatMarketFee:[],
                     contractServiceFee:[],
                     contractTaxFee:[],
+                    actualOtherExpense:[],
                     contractSettlementFee:[]
                 }
             }
@@ -150,7 +165,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae'&&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
+                            (value!=null&&key!='activityID'&&key!='otherExpenseRemarks'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae'&&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
                         })
                         this.$set('defaultData',data);
                     }
@@ -165,7 +180,7 @@
                         }
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae' &&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
+                            (value!=null&&key!='activityID'&&key!='otherExpenseRemarks'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae' &&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
                         })
                         this.$set('defaultData',data);
                         dialogs('success','加载成功！')
