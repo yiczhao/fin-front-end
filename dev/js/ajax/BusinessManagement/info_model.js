@@ -45,6 +45,14 @@ function model(_this){
         getBlance(_id){
             return _this.$http.get(_this.$API.getBlance+_id)
         },
+        /**
+         * @description 校正余额
+         * @params {data}
+         * @returns {*}
+         * */
+        advancePaymentMerchantAdjust(data){
+            return _this.$http.post(_this.$API.advancePaymentMerchantAdjust+$.param(data))
+        }
     }
 }
 module.exports=model;

@@ -8,9 +8,10 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
-                    <div class="heading-left">
+                    <div class="heading-left" style="width:220px">
                         <a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"
                         @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
+                        <a class="btn btn-add add-top" data-ksa="advance_payment_merchant_manage.recharge" style="margin-right:0px;" @click="adjustBalance">余额校正</a>
                     </div>
 
                     <div class="heading-right">
@@ -146,6 +147,31 @@
             </div>
 
             <content-dialog
+                    :show.sync="adjustBalance_modal" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'余额校正'" @kok="adjustBalanceTrue" @kcancel="adjustBalance_modal = false"
+            >
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>商户名：</label>{{blanceList.merchantName}}
+                    </div>
+                    <div class="form-group">
+                        <label>余额：</label><span>{{blanceList.balanceAmount/100 | currency ''}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i style="color:red">*</i>金额：</label>
+                        <input type="text" class="form-control" v-model="adjustBalanceData.amount"  v-limitprice="adjustBalanceData.amount"  @blur="getadjustBalanceAmout"/>
+                    </div>
+                    <div class="form-group">
+                        <label>矫正后金额：</label><span>{{adjustBalanceData.adjustBalanceAmout | currency ''}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
+                        <textarea class="form-control" v-model="adjustBalanceData.remarks"></textarea>
+                    </div>
+                </div>
+            </content-dialog>
+
+            <content-dialog
                     :show.sync="modal_prepayment_recharge" :is-cancel="true" :type.sync="'infos'"
                     :title.sync="'预付充值'" @kok="subApplyAdvancePay" @kcancel="modal_prepayment_recharge = false"
                     >
@@ -205,7 +231,7 @@
     }
 
     .modal-body label {
-        width: 13%;
+        width: 19%;
         display: inline-block;
     }
 
@@ -310,6 +336,7 @@
             this.model = model(this)
             return {
                 modal_prepayment_recharge: false,
+                adjustBalance_modal: false,
                 pageall: 1,
                 blanceList:{},
                 total: {},
@@ -344,6 +371,12 @@
                     merchantAccountID: ""//商户账户ID   Integer
                 },
                 entity: {},
+                adjustBalanceData:{
+                    advancePaymentMerchantID:'',
+                    amount:'',
+                    adjustBalanceAmout:'',
+                    remarks:''
+                },
                 saveerror:false
             }
         },
@@ -434,10 +467,38 @@
             getTime(){
                 this.defaultData.startDate = init_date(this.defaultData.dateS)[0];
                 this.defaultData.endDate = init_date(this.defaultData.dateS)[1];
+            },
+            adjustBalance(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.adjustBalanceData.amount='';
+                this.adjustBalanceData.adjustBalanceAmout='';
+                this.adjustBalanceData.remarks='';
+                this.adjustBalance_modal=true;
+            },
+            getadjustBalanceAmout(){
+                this.adjustBalanceData.adjustBalanceAmout=this.blanceList.balanceAmount/100+ parseFloat(this.adjustBalanceData.amount);
+            },
+            adjustBalanceTrue(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(this.adjustBalanceData.amount==''||this.adjustBalanceData.remarks==''){
+                    dialogs('info','请填写必填信息！');
+                    return;
+                }
+                let data=_.cloneDeep(this.adjustBalanceData);
+                data.amount=accMul(data.amount,100);
+                this.model.advancePaymentMerchantAdjust(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若
+                            if (response.data.code == 0) {
+                                dialogs('success',response.data.message);
+                                this.initList();
+                                this.adjustBalance_modal = false;
+                            }
+                        });
             }
         },
         ready() {
-            (this.$route.params.id != ':id') ? this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
+            (this.$route.params.id != ':id') ?  this.adjustBalanceData.advancePaymentMerchantID=this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
             (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;

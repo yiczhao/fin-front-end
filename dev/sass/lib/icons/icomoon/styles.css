@@ -64,6 +64,9 @@
 .icon-users4:before {
 	content: "\eb44";
 }
+.icon-spinner2-:before {
+	content: "\eb50";
+}
 .icon-lock2:before {
 	content: "\eb66";
 }
@@ -84,4 +87,7 @@
 }
 .icon-file-excel:before {
 	content: "\ef39";
+}
+.icon-spinner2-:before {
+	content: "\eb50";
 }

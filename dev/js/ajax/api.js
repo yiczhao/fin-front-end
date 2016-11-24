@@ -1194,6 +1194,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getBlance = './advancePaymentMerchant/info/';
+    /**
+     * @description 预付款明细校正余额接口地址
+     * @author 于凯乐
+     * @method Post
+     */
+    _o.advancePaymentMerchantAdjust = './advancePaymentMerchant/adjust?';
 
     //- todo  商户管理-预付款-账户明细 prepayment-info
     /**
