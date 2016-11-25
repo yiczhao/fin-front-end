@@ -146,7 +146,11 @@
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
-                    (value!=null)?data[key]=this.toStrings(value):data[key]="";
+                    if(value!=null){
+                        (key!='otherExpenseRemarks')?data[key]=this.toStrings(value):data[key]=value;
+                    }else{
+                        data[key]="";
+                    }
                 })
                 return data;
             },
