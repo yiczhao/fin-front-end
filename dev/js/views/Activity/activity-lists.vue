@@ -215,10 +215,6 @@
                 >
                     <div class="dialog-row">
                         <span>
-                             <label>合同编号：</label>
-                             <input type="text" class="form-control" v-model="redata.contractNumber" placeholder="请输入合同编号">
-                        </span>
-                        <span>
                              <label>活动归属：</label>
                             <select class="form-control" v-model="redata.activityAttribution">
                                 <option value="">请选择活动归属</option>
@@ -342,7 +338,7 @@
                 width: 72px;
                 text-align: right;
             }
-            textarea{
+            textarea,select{
                 width: 495px;
             }
             .tlabel{
@@ -406,7 +402,6 @@
                 redata:{
                     "id": '',
                     "activityId": '',
-                    "contractNumber": '',
                     "activityAttribution": '',
                     "operator": '',
                     "collectPeriod": '',
@@ -535,7 +530,6 @@
                 this.redata={
                     "subCompanyID":subCompanyID,
                     "activityID": _id,
-                    "contractNumber": '',
                     "activityAttribution": '',
                     "operator": '',
                     "collectPeriod": '',

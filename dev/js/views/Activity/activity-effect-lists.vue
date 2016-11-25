@@ -21,8 +21,6 @@
                             </select>
 
                             <getmonth :value.sync="defaultData.startDate"></getmonth>
-                            <span class="getmonth-span" style="margin-right: 20px;">至</span>
-                            <getmonth :value.sync="defaultData.endDate"></getmonth>
                         </form>
                     </div>
 
@@ -243,10 +241,8 @@
                 defaultData:{
                     'subCompanyID':'',
                     'year':'',
-                    'startMonth':'',
-                    'endMonth':'',
+                    'month':'',
                     'startDate':firstMonth(),
-                    'endDate':'',
                     'pageIndex': 1,
                     'pageSize': 10,
                     'mid': ''
@@ -264,27 +260,11 @@
         methods:{
             export(){
                 var startDate =  this.defaultData.startDate.split('-');
-                var startYear = parseInt(startDate[0]);
-                var startMonth = parseInt(startDate[1]);
+                var year = parseInt(startDate[0]);
+                var month = parseInt(startDate[1]);
 
-                var endDate =  this.defaultData.endDate.split('-');
-                var endYear = parseInt(endDate[0]);
-                var endMonth = parseInt(endDate[1]);
-                if(startYear > endYear || (startYear == endYear && startMonth > endMonth)){
-                    dialogs('error','开始年月不能大于结束年月！');
-                    return;
-                }
-                if(startYear != endYear){
-                    dialogs('error','不能跨年查询！');
-                    return;
-                }
-                if(startMonth != 1 && startMonth != endMonth){
-                    dialogs('error','只能查询某个月份的数据或者从一月份开始的多个月份累计的数据！');
-                    return;
-                }
-                this.defaultData.year = startYear;
-                this.defaultData.startMonth = startMonth;
-                this.defaultData.endMonth = endMonth;
+                this.defaultData.year = year;
+                this.defaultData.startMonth = month;
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
             },
@@ -292,27 +272,11 @@
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 var startDate = data.startDate.split('-');
-                var startYear = parseInt(startDate[0]);
-                var startMonth = parseInt(startDate[1]);
+                var year = parseInt(startDate[0]);
+                var month = parseInt(startDate[1]);
 
-                var endDate = data.endDate.split('-');
-                var endYear = parseInt(endDate[0]);
-                var endMonth = parseInt(endDate[1]);
-                if(startYear > endYear || (startYear == endYear && startMonth > endMonth)){
-                    dialogs('error','开始年月不能大于结束年月！');
-                    return;
-                }
-                if(startYear != endYear){
-                    dialogs('error','不能跨年查询！');
-                    return;
-                }
-                if(startMonth != 1 && startMonth != endMonth){
-                    dialogs('error','只能查询某个月份的数据或者从一月份开始的多个月份累计的数据！');
-                    return;
-                }
-                data.year = startYear;
-                data.startMonth = startMonth;
-                data.endMonth = endMonth;
+                data.year = year;
+                data.month = month;
                 this.model.activity_effect_list(data)
                 .then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
