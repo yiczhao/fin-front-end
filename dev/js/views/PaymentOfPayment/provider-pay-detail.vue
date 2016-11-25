@@ -1,45 +1,76 @@
 <template>
-    <index :title="'账户列表'"
-           :ptitle="'账户管理'"
-           :hname="'account-management'"
+    <index :title="'供应商划付'"
+           :ptitle="'备付金支出'"
+           :hname="'provider-pay-detail'"
            :isshow="'isshow'">
-        <div class="content account-management" slot="content">
+        <div class="content provider-pay-detail" slot="content">
         <div class="panel panel-flat">
-
+            <ul class="tab-bor">
+                <li data-ksa="reserve_cash_detail_manage"><a v-link="{name:'payment-details'}">付款明细</a></li>
+                <li data-ksa="pay_recheck"><a v-link="{name:'pay-recheck'}">划付复核</a></li>
+                <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
+                <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
+                <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
+                <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                <li class="active" data-ksa=""><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
+            </ul>
             <div class="heading">
                 <div class="heading-left">
-                    <a class="btn btn-add" @click="addUser" data-ksa="account_manage.add">添加账户</a>
+                    <a class="btn btn-add" @click="addUser" data-ksa="account_manage.add">新增划付</a>
                 </div>
                 <div class="heading-right">
                     <select class="form-control" v-model="defaultData.companyId">
-                        <option value="">全部分公司</option>
-                        <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                        <option value="">请选择付款账号</option>
+                        <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
                     </select>
-                    <select class="form-control" v-model="defaultData.accountType">
-                        <option value="">请选择类型</option>
-                        <option value="1">备付金</option>
-                        <option value="2">本金</option>
-                        <option value="3">佣金</option>
+                    <select class="form-control" v-model="checkForm.dataS" @change="getTime">
+                        <option value="5">今天</option>
+                        <option value="0">昨天</option>
+                        <option value="1">最近一周</option>
+                        <option value="2">最近一个月</option>
+                        <option value="3">最近三个月</option>
+                        <option value="4">自定义时间</option>
                     </select>
-                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="账号" v-limitnumber="defaultData.accountNumber">
+                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="请输入活动ID" v-limitnumber="defaultData.accountNumber">
+                    <select class="form-control" v-model="checkForm.status">
+                        <option value="">全部状态</option>
+                        <option value="1">未提交</option>
+                        <option value="1">等待审核</option>
+                        <option value="1">审核通过</option>
+                        <option value="1">审核不通过</option>
+                        <option value="2">等待划付</option>
+                        <option value="3">转账中</option>
+                        <option value="4">等待对账</option>
+                        <option value="5">对账成功</option>
+                        <option value="6">付款失败</option>
+                        <option value="6">已关闭</option>
+                    </select>
                     <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                 </div>
             </div>
 
-            <div  v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
+            <div  v-show="!!zdlists.length"  class="dataTables_wrapper no-footer">
                 <div class="datatable-scroll">
                     <table class="table">
                         <thead>
                             <tr role="row">
-                                <th>分公司</th>
-                                <th>简称</th>
+                                <th>ID</th>
+                                <th>申请时间</th>
+                                <th>付款账户</th>
+                                <th>活动ID</th>
                                 <th>账户名</th>
-                                <th>账号</th>
+                                <th>收款账号</th>
                                 <th>开户行</th>
-                                <th>类型</th>
-                                <th>起始日期</th>
-                                <th>余额 </th>
+                                <th>提入行号</th>
+                                <th>是否建行</th>
+                                <th>金额</th>
+                                <th>用途</th>
+                                <th>状态</th>
                                 <th>操作</th>
+                                <th>数据流转</th>
+                                <th>备注</th>
+                                <th>不通过原因</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +104,12 @@
                                 <td v-else>
                                     <a chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)" data-ksa="charge_person_manage.add">负责人</a>
                                 </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>

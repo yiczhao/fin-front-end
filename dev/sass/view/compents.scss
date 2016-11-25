@@ -59,7 +59,15 @@
   .tab-bor li {
     margin-bottom: -2px;
     display: inline-block;
-    padding: 12px 35px; }
+    padding: 12px 40px;}
+  @media (max-width: 1280px) {
+    .tab-bor li {
+      margin-bottom: -2px;
+      display: inline-block;
+      padding: 12px 0;
+      min-width: 120px;
+      text-align: center;}
+  }
   .tab-bor li a {
     font-size: 1.38em;
     color: #444;}

@@ -210,6 +210,14 @@ export default function(router){
                 require(['./views/PaymentOfPayment/subsidy-tax-rebate.vue'],resolve);
             }
         },
+        //备付金支出-供应商划付
+        '/provider-pay-detail':{
+            name:'provider-pay-detail',
+            router_type:"payment",
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/provider-pay-detail.vue'],resolve);
+            }
+        },
         /* 三方管理-账户列表 */
         '/third-party/':{
             name:'third-party',
