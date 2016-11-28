@@ -52,6 +52,9 @@
 .icon-home:before {
 	content: "\e902";
 }
+.icon-error:before {
+	content: "\e995";
+}
 .icon-paragraph-justify3:before {
 	content: "\e9fc";
 }
@@ -64,7 +67,7 @@
 .icon-users4:before {
 	content: "\eb44";
 }
-.icon-spinner2-:before {
+.icon-spinner2:before {
 	content: "\eb50";
 }
 .icon-lock2:before {
@@ -85,9 +88,6 @@
 .icon-transmission:before {
 	content: "\eda5";
 }
-.icon-file-excel:before {
+.icon-excel:before {
 	content: "\ef39";
-}
-.icon-spinner2:before {
-	content: "\eb50";
 }

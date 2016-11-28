@@ -7,11 +7,11 @@
         <div class="panel panel-flat">
             <ul class="tab-bor">
                 <li data-ksa="principle_cash_order.search"><a v-link="{name:'principle-order'}">入账明细</a></li>
-                <li data-ksa="" class="active"><a v-link="{name:'running-channel'}">通道管理</a></li>
+                <li data-ksa="running_channel_manage.search" class="active"><a v-link="{name:'running-channel'}">通道管理</a></li>
             </ul>
             <div class="panel-heading">
                 <div class="heading-left">
-                    <a class="btn btn-add" @click="addUser" data-ksa="">添加通道</a>
+                    <a class="btn btn-add" @click="addUser" data-ksa="running_channel_manage.add">添加通道</a>
                 </div>
             </div>
             <div  v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
@@ -39,7 +39,7 @@
                                 <td>{{trlist.connectionPhone}}</td>
                                 <td>{{trlist.connectionEmail}}</td>
                                 <td>
-                                    <a @click.self="getAccountList(trlist.id)" data-ksa="">配置</a>
+                                    <a @click.self="getAccountList(trlist.id)" data-ksa="running_channel_manage.config">配置</a>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">
@@ -50,8 +50,8 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <a data-ksa="" @click="rewrite(trlist)">编辑</a>
-                                    <a data-ksa="" v-if="trlist.status==0" @click="start(trlist.id)">启用</a>
+                                    <a data-ksa="running_channel_manage.edit" @click="rewrite(trlist)">编辑</a>
+                                    <a data-ksa="running_channel_manage.enable" v-if="trlist.status==0" @click="start(trlist.id)">启用</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -82,7 +82,7 @@
                             <td>{{trlist.id}}</td>
                             <td>{{trlist.accountName}}</td>
                             <td>{{trlist.accountNumber}}</td>
-                            <td><a @click="delAccountBtn(trlist.id)">删除</a></td>
+                            <td><a @click="delAccountBtn(trlist.id)" data-ksa="running_channel_manage.delete">删除</a></td>
                         </tr>
                         <tr v-show="addAccountTr||!addAccountList.length">
                             <td></td>

@@ -17,14 +17,14 @@
             </ul>
             <div class="heading">
                 <div class="heading-left">
-                    <a class="btn btn-add" @click="addUser" data-ksa="account_manage.add">新增划付</a>
+                    <a class="btn btn-add" @click="addUser" data-ksa="">新增划付</a>
                 </div>
                 <div class="heading-right">
-                    <select class="form-control" v-model="defaultData.companyId">
+                    <select class="form-control" v-model="defaultData.subCompanyID">
                         <option value="">请选择付款账号</option>
                         <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
                     </select>
-                    <select class="form-control" v-model="checkForm.dataS" @change="getTime">
+                    <select class="form-control" v-model="dateS" @change="getTime">
                         <option value="5">今天</option>
                         <option value="0">昨天</option>
                         <option value="1">最近一周</option>
@@ -32,19 +32,22 @@
                         <option value="3">最近三个月</option>
                         <option value="4">自定义时间</option>
                     </select>
-                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="请输入活动ID" v-limitnumber="defaultData.accountNumber">
-                    <select class="form-control" v-model="checkForm.status">
+                    <div v-show="dateS==4" class="inline">
+                        <datepicker  :readonly="true" :value.sync="defaultData.startDate" format="YYYY-MM-DD"></datepicker>至
+                        <datepicker  :readonly="true" :value.sync="defaultData.endDate" format="YYYY-MM-DD"></datepicker>
+                    </div>
+                    <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="请输入活动ID" v-limitnumber="defaultData.activityID">
+                    <select class="form-control" v-model="defaultData.status">
                         <option value="">全部状态</option>
-                        <option value="1">未提交</option>
+                        <option value="18">未提交</option>
                         <option value="1">等待审核</option>
-                        <option value="1">审核通过</option>
-                        <option value="1">审核不通过</option>
+                        <option value="8">审核不通过</option>
                         <option value="2">等待划付</option>
                         <option value="3">转账中</option>
                         <option value="4">等待对账</option>
                         <option value="5">对账成功</option>
                         <option value="6">付款失败</option>
-                        <option value="6">已关闭</option>
+                        <option value="0">已关闭</option>
                     </select>
                     <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                 </div>
@@ -75,41 +78,55 @@
                         </thead>
                         <tbody>
                             <tr v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.companyName}}</td>
-                                <td>{{trlist.shortName}}</td>
-                                <td>{{trlist.accountName}}</td>
-                                <td>{{trlist.accountNumber}}</td>
-                                <td>{{trlist.bankName}}</td>
+                                <td>{{trlist.id}}</td>
+                                <td>{{trlist.applyTime | datatimes}}</td>
+                                <td>{{trlist.payAccount}}</td>
+                                <td>{{trlist.activityID}}</td>
+                                <td>{{trlist.collectionAccountName}}</td>
+                                <td>{{trlist.collectionAccountNumber}}</td>
+                                <td>{{trlist.collectionBankName}}</td>
+                                <td>{{trlist.collectionBankNumber}}</td>
                                 <td>
-                                    <template v-if="trlist.accountType==1">
-                                        备付金
-                                    </template>
-                                    <template v-if="trlist.accountType==2">
-                                        本金
-                                    </template>
-                                    <template v-if="trlist.accountType==3">
-                                        佣金
-                                    </template>
+                                    <template v-if="trlist.ccb==0">否</template>
+                                    <template v-if="trlist.ccb==1">是</template>
                                 </td>
-                                <td>{{trlist.startDate | datetimes}}</td>
+                                <td>{{trlist.payAmount/100 | currency ''}}</td>
                                 <td>
-                                    <a v-if="trlist.accountType==1" data-ksa="reserve_cash_detail_manage.search" v-link="{name:'provisions-info',params:{accountId:trlist.id,certificate:0,aname:trlist.shortName,balance:trlist.balanceAmount}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
-                                    <a v-if="trlist.accountType==2" data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">{{ trlist.balanceAmount/100 | currency '' }} </a>
+                                    <template v-if="trlist.purpose==0">其它</template>
+                                    <template v-if="trlist.purpose==1">广告费</template>
+                                    <template v-if="trlist.purpose==2">物料费</template>
                                 </td>
-                                <td v-if="trlist.status==0">
-                                    <a data-ksa="account_manage.add" @click="rewrite(trlist)">编辑</a>
-                                    <a data-ksa="account_manage.enable" @click="start(trlist.id)">启用</a>
-                                    <a data-ksa="account_manage.enable" @click="delBtn(trlist.id)">删除</a>
+                                <td>
+                                    <template v-if="trlist.status==18">未提交</template>
+                                    <template v-if="trlist.status==1">等待审核</template>
+                                    <template v-if="trlist.status==8">审核不通过</template>
+                                    <template v-if="trlist.status==2">等待划付</template>
+                                    <template v-if="trlist.status==3">转账中</template>
+                                    <template v-if="trlist.status==4">等待对账</template>
+                                    <template v-if="trlist.status==5">对账成功</template>
+                                    <template v-if="trlist.status==6">付款失败</template>
+                                    <template v-if="trlist.status==0">已关闭</template>
                                 </td>
-                                <td v-else>
-                                    <a chargePerson="{{trlist.chargePerson}}" @click.self="personDialog(trlist.chargePerson,trlist.id)" data-ksa="charge_person_manage.add">负责人</a>
+                                <td>
+                                    <template v-if="trlist.status==1||trlist.status==4">
+                                        <a @click="update(trlist.id)">编辑</a>
+                                        <a @click="applyTrue(trlist.id)">提交</a>
+                                        <a @click="close(trlist.id)">删除</a>
+                                    </template>
+                                    <template v-if="trlist.status==2">
+                                        <a @click="update(trlist.id)">通过</a>
+                                        <a @click="applyTrue(trlist.id)">退回</a>
+                                    </template>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    <a v-if="trlist.status==3" @click="gopayment(n.reserveCashOrderID)" data-ksa="reserve_cash_order_manage.search">付款订单</a>
+                                </td>
+                                <td>{{trlist.remarks}}</td>
+                                <td>{{trlist.refuseReason}}</td>
+                            </tr>
+                            <tr>
+                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -123,34 +140,10 @@
                    </div>
                 </div>
             </div>
-
             <div class="no-list" v-show="!zdlists.length">
                 未找到数据
             </div>
         </div>
-
-            <content-dialog
-                    :show.sync="personshow" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="'负责人'" @kok="personTrue(person.id)" @kcancel="personshow = false"
-                    >
-                <validator name="vali2">
-                    <div class="form-group">
-                        <label><i>*</i>负责人</label>
-                        <input type="text" class="form-control" v-validate:uname="['required']" v-model="person.name" value.sync="person.name">
-                        <span v-if="$vali2.uname.required && fire" class="validation-error-label">请输入负责人姓名</span>
-                    </div>
-                    <div class="form-group">
-                        <label><i>*</i>手机号</label>
-                        <input type="text" class="form-control" v-validate:phone="['required']" v-model="person.phone" value.sync="person.phone">
-                        <span v-if="$vali2.phone.required && fire" class="validation-error-label">请输入负责人电话</span>
-                    </div>
-                    <div class="form-group">
-                        <label><i>*</i>邮箱</label>
-                        <input type="text" class="form-control" v-validate:email="['required']" v-model="person.email" value.sync="person.email">
-                        <span v-if="$vali2.email.required && fire" class="validation-error-label">请输入负责人邮箱</span>
-                    </div>
-                </validator>
-            </content-dialog>
 
             <content-dialog
                     :show.sync="waringshow" :is-cancel="true" :type.sync="'infos'"
@@ -161,54 +154,60 @@
 
             <content-dialog
                     :show.sync="addshow" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="addtitle" @kok="addBtn" @kcancel="addshow = false"
+                    :title.sync="'供应商划付'" @kok="addBtn" @kcancel="addshow = false"
             >
                 <validator name="vali">
                     <div class="form-group">
-                        <label><i>*</i>分公司</label>
-                        <select class="form-control" v-model="relist.companyId" v-validate:val1="['required']">
-                            <option value="">请选择分公司</option>
-                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                        <label><i>*</i>付款账号</label>
+                        <select class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
+                            <option value="">请选择付款账号</option>
+                            <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
                         </select>
-                        <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span>
                     </div>
                     <div class="form-group">
-                        <label><i>*</i>简称</label>
-                        <input type="text" class="form-control" v-validate:val2="['required']" v-model="relist.shortName" maxlength="15" placeholder="15字以内">
-                        <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入简称</span>
+                        <label><i>*</i>活动ID</label>
+                        <input type="text" class="form-control" v-validate:val2="['required']" v-limitnumber="relist.activityID" v-model="relist.activityID" placeholder="活动ID">
                     </div>
                     <div class="form-group">
                         <label><i>*</i>账户名</label>
-                        <input type="text" class="form-control" v-validate:val3="['required']" v-model="relist.accountName">
-                        <span v-if="$vali.val3.required && fire1" class="validation-error-label">请输入账户名</span>
+                        <input type="text" class="form-control" v-validate:val3="['required']" v-model="relist.collectionAccountName" placeholder="20字以内" maxlength="20">
                     </div>
                     <div class="form-group">
-                        <label><i>*</i>账号</label>
-                        <input type="text" class="form-control" v-validate:val4="['required']" v-limitnumber="relist.accountNumber" v-model="relist.accountNumber">
-                        <span v-if="$vali.val4.required && fire1" class="validation-error-label">请输入账号</span>
+                        <label><i>*</i>收款账号</label>
+                        <input type="text" class="form-control" v-validate:val4="['required']" v-model="relist.collectionAccountNumber">
                     </div>
                     <div class="form-group">
                         <label><i>*</i>开户行</label>
-                        <input type="text" class="form-control" v-validate:val5="['required']" v-model="relist.bankName">
-                        <span v-if="$vali.val5.required && fire1" class="validation-error-label">请输入开户行</span>
+                        <input type="text" class="form-control" v-validate:val5="['required']" v-model="relist.collectionBankName">
                     </div>
                     <div class="form-group">
-                        <label><i>*</i>起始日期</label>
-                        <datepicker :width="'79%'" :readonly="true" :value.sync="relist.startDate | datetimes" format="YYYY-MM-DD"></datepicker>
-                        <span v-show="timeerror">请选择起始日期</span>
+                        <label><i>*</i>提入行号</label>
+                        <input type="text" class="form-control w65" v-validate:val6="['required']" v-model="relist.collectionBankNumber">
+                        <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank" class="btn btn-primary" style="vertical-align: top;">查询行号</a>
                     </div>
                     <div class="form-group">
-                        <label><i>*</i>类型</label>
-                        <select class="form-control" v-validate:val7="['required']" v-model="relist.accountType">
-                            <option value="">请选择类型</option>
-                            <option value="1">备付金</option>
-                            <option value="2">本金</option>
-                            <option value="3">佣金</option>
+                        <label class="w28" ><i>*</i>建行否：</label>
+                        <input type="radio" id="one" value="1" v-model="relist.ccb" v-validate:val7="['required']">
+                        <label class="w28" for="one">是</label>
+                        <input type="radio" id="two" value="0" v-model="relist.ccb" v-validate:val7="['required']">
+                        <label class="w28" for="two">否</label>
+                    </div>
+                    <div class="form-group">
+                        <label><i>*</i>金额</label>
+                        <input type="text" class="form-control" v-validate:val8="['required']" v-model="relist.payAmount">
+                    </div>
+                    <div class="form-group">
+                        <label><i>*</i>用途</label>
+                        <select class="form-control" v-validate:val9="['required']" v-model="relist.purpose">
+                            <option value="">请选择用途</option>
+                            <option value="1">广告费</option>
+                            <option value="2">物料费</option>
+                            <option value="0">其他</option>
                         </select>
-                        <span v-if="$vali.val7.required && fire1" class="validation-error-label">请选择类型</span>
                     </div>
                     <div class="form-group">
-                        <span v-show="saveerror!=''" class="validation-error-label" v-text="saveerror"></span>
+                        <label class="w28"><i>*</i>备注：</label>
+                        <input v-model="relist.remarks" class="form-control" type="text" v-validate:val0="['required']">
                     </div>
                 </validator>
             </content-dialog>
@@ -217,50 +216,37 @@
     </index>
 </template>
 <script>
-    import model from '../../ajax/AccountManagement/account_model'
+    import model from '../../ajax/PaymentOfPayment/provider_model'
     export default{
         data(){
             this.model =model(this)
             return{
                 pageall:1,
-                loginList:{},
-                defaultData:{"companyId": "","accountType": "","accountNumber": "","pageIndex": 1, "pageSize": 10},
-                zdlists:[],
-                relist:{
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
+                defaultData:{
+                    "subCompanyID": "",
+                    "startDate": "",
+                    "endDate": "",
+                    "activityID": "",
+                    "status": "",
+                    "pageIndex": 1,
+                    "pageSize": 10
                 },
+                dateS:'3',
+                zdlists:[],
+                relist:{},
                 companylists:[],
-                typelists:[],
-                params:{},
-                tSelect:'',
-                cSelect:'',
-                uText:'',
-                addtitle:'',
                 waring:'',
                 fire:false,
                 fire1:false,
-                person:{
-                    name:'',
-                    phone:'',
-                    email:''
-                },
                 accountId:'',
                 saveerror:'',
                 waringshow:false,
-                addshow:false,
-                personshow:false,
-                timeerror:false,
+                addshow:false
             }
         },
         methods:{
-            // *** 请求账户列表数据
-            errorHide(){
-                this.timeerror=false;
-                this.saveerror='';
-                this.fire1=false;
-            },
             getZlists(data){
-                this.model.getbanklist(data).then((response)=>{
+                this.model.providerPay_list(data).then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
                     if(response.data.code==0){
                         this.$set('zdlists', response.data.data)
@@ -282,28 +268,35 @@
                 this.initList();
             },
             addUser(){
-                this.errorHide();
                 this.fire1=false;
                 this.relist={
-                    startDate:'',companyId:'',accountType:'',shortName:'',accountName:'',accountNumber:'',bankName:'',
+                    activityID :'',
+                    applyTime :'',
+                    ccb :'0',
+                    collectionAccountName:'',
+                    collectionAccountNumber:'',
+                    collectionBankName:'',
+                    collectionBankNumber:'',
+                    payAccount:'',
+                    payAmount:'',
+                    purpose:'',
+                    remarks:'',
+                    subCompanyID:'',
+                    status:'',
                 },
                 this.accountId='';
-                this.addtitle = '添加账户';
                 this.addshow=true;
             },
             initList(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.waringshow=false;
                 this.addshow=false;
-                this.personshow=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             rewrite(_list){
-                this.errorHide();
                 this.accountId=_list.id;
                 this.relist=_.cloneDeep(_list);
-                this.addtitle = '编辑账户';
                 this.addshow=true;
             },
             start(a){
@@ -318,45 +311,6 @@
             },
             waringBtn(){
                 (this.waring == '你确认启用该账户？')?this.startTrue():this.delTrue();
-            },
-            personDialog(a,b){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.errorHide();
-                this.fire=false;
-                this.accountId=b;
-                this.model.queryperson(a).then((response)=>{
-                    if(response.data.code == 0){
-                        // *** 判断请求是否成功如若成功则启用该数据
-                        var newperson={
-                            name:'',
-                            phone:'',
-                            email:''
-                        };
-                        if(response.data.data){
-                            this.$set('person', response.data.data)
-                        }else{
-                            this.$set('person',newperson)
-                        }
-                        this.personshow=true;
-                    }
-                })
-            },
-            personTrue(a){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                if(!this.$vali2.valid){this.fire=true;return;}
-                let data={
-                    "id": a,
-                    "accountId":this.accountId,
-                    "name": this.person.name,
-                    "phone": this.person.phone,
-                    "email": this.person.email,
-                }
-                this.model.saveperson(data).then((response)=>{
-                    if(response.data.code==0){
-                        this.initList();
-                        dialogs();
-                    }
-                })
             },
             startTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -382,21 +336,10 @@
             },
             addBtn(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.errorHide();
-                if(!this.$vali.valid){this.fire1=true;return;}
-                if(this.relist.startDate==''){this.timeerror=true;return;}
-                // *** 新增修改保存
-                let data={
-                    "id": this.accountId,
-                    "companyId": this.relist.companyId,
-                    "shortName": this.relist.shortName,
-                    "accountName": this.relist.accountName,
-                    "accountNumber": this.relist.accountNumber,
-                    "bankName": this.relist.bankName,
-                    "accountType": this.relist.accountType,
-                    "startDate": this.relist.startDate
-                };
-                this.model.changeaccount(data).then((response)=>{
+                if(!this.$vali.valid){
+                    dialogs('info','请填写所有必填项！');
+                    return;}
+                this.model.providerPay_add(this.relist).then((response)=>{
                     if(response.data.code==-1){
                         this.$set('saveerror', response.data.message)
                     }else{
@@ -404,10 +347,14 @@
                         dialogs();
                     }
                 })
+            },
+            getTime(){
+                this.defaultData.startDate=init_date(this.dateS)[0];
+                this.defaultData.endDate=init_date(this.dateS)[1];
             }
         },
-        ready: function () {
-            (!!sessionStorage.getItem('userData')) ? this.$set('loginList',JSON.parse(sessionStorage.getItem('userData'))) : null;
+        ready() {
+            this.getTime();
             this.getClist();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();

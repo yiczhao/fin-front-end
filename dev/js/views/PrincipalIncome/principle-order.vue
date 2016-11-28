@@ -7,7 +7,7 @@
             <div class="panel panel-flat">
                 <ul class="tab-bor">
                     <li data-ksa="principle_cash_order.search" class="active"><a v-link="{name:'principle-order'}">入账明细</a></li>
-                    <li data-ksa=""><a v-link="{name:'running-channel'}">通道管理</a></li>
+                    <li data-ksa="running_channel_manage.search"><a v-link="{name:'running-channel'}">通道管理</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-right">

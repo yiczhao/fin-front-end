@@ -845,6 +845,56 @@ export default function install(Vue) {
      */
     _o.paidAmount_total = './subsidyAccount/paidAmount/total?';
 
+    //- todo  备付金支出-供应商划付 provider-pay-detail
+    /**
+     * @description 供应商划付列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.providerPay_list = './providerPayDetail/list?';
+    /**
+     * @description 供应商划付新增接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_add = './providerPayDetail/add';
+    /**
+     * @description 供应商划付退回接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_back = './providerPayDetail/back';
+    /**
+     * @description 供应商划付删除接口地址
+     * @author 于凯乐
+     * @method delete
+     */
+    _o.providerPay_delete = './providerPayDetail/delete/';
+    /**
+     * @description 供应商划付编辑接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_edit = './providerPayDetail/edit';
+    /**
+     * @description 供应商划付通过接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_pass = './providerPayDetail/pass';
+    /**
+     * @description 供应商划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_submit = './providerPayDetail/submit';
+    /**
+     * @description 供应商划付合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.providerPay_sum = './providerPayDetail/sum?';
+
     //- todo  活动管理-活动列表 activity-lists
     /**
      * @description 查询活动列表接口地址
