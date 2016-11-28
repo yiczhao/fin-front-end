@@ -109,13 +109,13 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1||trlist.status==4">
-                                        <a @click="update(trlist.id)">编辑</a>
-                                        <a @click="applyTrue(trlist.id)">提交</a>
-                                        <a @click="close(trlist.id)">删除</a>
+                                        <a @click="rewrite(trlist)">编辑</a>
+                                        <a @click="submit(trlist.id)">提交</a>
+                                        <a @click="delete(trlist.id)">删除</a>
                                     </template>
                                     <template v-if="trlist.status==2">
-                                        <a @click="update(trlist.id)">通过</a>
-                                        <a @click="applyTrue(trlist.id)">退回</a>
+                                        <a @click="pass(trlist.id)">通过</a>
+                                        <a @click="back(trlist.id)">退回</a>
                                     </template>
                                 </td>
                                 <td>
@@ -132,6 +132,9 @@
                     </table>
                 </div>
                 <div class="datatable-bottom">
+                    <div class="left">
+                        <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="reserve_cash_order_manage.export">Excel导出</a>
+                    </div>
                    <div class="right">
                         <page :all="pageall"
                               :cur.sync="defaultData.pageIndex"
@@ -187,9 +190,9 @@
                     </div>
                     <div class="form-group">
                         <label class="w28" ><i>*</i>建行否：</label>
-                        <input type="radio" id="one" value="1" v-model="relist.ccb" v-validate:val7="['required']">
+                        <input type="radio" id="one" value="true" v-model="relist.ccb" v-validate:val7="['required']">
                         <label class="w28" for="one">是</label>
-                        <input type="radio" id="two" value="0" v-model="relist.ccb" v-validate:val7="['required']">
+                        <input type="radio" id="two" value="false" v-model="relist.ccb" v-validate:val7="['required']">
                         <label class="w28" for="two">否</label>
                     </div>
                     <div class="form-group">
@@ -210,6 +213,20 @@
                         <input v-model="relist.remarks" class="form-control" type="text" v-validate:val0="['required']">
                     </div>
                 </validator>
+            </content-dialog>
+
+            <content-dialog
+                    :show.sync="modal_back" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'退回'" @kok="backTrue" @kcancel="modal_back = false"
+            >
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label"><i>*</i>退回原因</label>
+                        <div class="col-lg-9">
+                            <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
+                        </div>
+                    </div>
+                </div>
             </content-dialog>
 
         </div>
@@ -236,10 +253,9 @@
                 relist:{},
                 companylists:[],
                 waring:'',
-                fire:false,
-                fire1:false,
+                remarks:'',
+                modal_back:false,
                 accountId:'',
-                saveerror:'',
                 waringshow:false,
                 addshow:false
             }
@@ -251,6 +267,12 @@
                     if(response.data.code==0){
                         this.$set('zdlists', response.data.data)
                         this.$set('pageall', response.data.total)
+                    }
+                });
+                this.model.providerPay_sum(data).then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if(response.data.code==0){
+                        this.$set('total', response.data.data)
                     }
                 });
             },
@@ -272,7 +294,7 @@
                 this.relist={
                     activityID :'',
                     applyTime :'',
-                    ccb :'0',
+                    ccb :'false',
                     collectionAccountName:'',
                     collectionAccountNumber:'',
                     collectionBankName:'',
@@ -299,58 +321,106 @@
                 this.relist=_.cloneDeep(_list);
                 this.addshow=true;
             },
-            start(a){
-                this.waring = '你确认启用该账户？';
+            submit(a){
+                this.waring = '你确认提交该账户？';
                 this.accountId=a;
                 this.waringshow=true;
             },
-            delBtn(a){
+            delete(a){
                 this.waring = '你确认删除该账户？';
                 this.accountId=a;
                 this.waringshow=true;
             },
-            waringBtn(){
-                (this.waring == '你确认启用该账户？')?this.startTrue():this.delTrue();
+            delete(a){
+                this.waring = '你确认通过该账户？';
+                this.accountId=a;
+                this.waringshow=true;
             },
-            startTrue(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                // *** 启用提交
-                this.model.startaccount(this.accountId).then((response)=>{
+            back(a){
+                this.modal_back=true;
+                this.accountId=a;
+            },
+            backTrue(){
+                if(this.remarks == ''){
+                    dialogs('info','请填写退回原因！');
+                    return;
+                }
+                let data={
+                    id:this.accountId,
+                    refuseReason:this.remarks
+                }
+                this.model.providerPay_back(data).then((response)=>{
                     // *** 判断请求是否成功如若成功则启用该数据
                     if(response.data.code==0){
                         this.initList();
-                        dialogs('success','已启用！');
+                        dialogs('success',response.data.message);
                     }
                 })
             },
-            delTrue(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                // *** 删除提交
-                this.model.deleteaccount(this.accountId).then((response)=>{
-                    // *** 判断请求是否成功如若成功则删除该条数据
-                    if(response.data.code==0){
-                        this.initList();
-                        dialogs('success','已删除！');
-                    }
-                })
+            waringBtn(){
+                if(this.waring == '你确认提交该账户？'){
+                    this.model.providerPay_submit(this.accountId).then((response)=>{
+                        // *** 判断请求是否成功如若成功则启用该数据
+                        if(response.data.code==0){
+                            this.initList();
+                            dialogs('success',response.data.message);
+                        }
+                    })
+                }
+                if(this.waring == '你确认删除该账户？'){
+                    this.model.providerPay_delete(this.accountId).then((response)=>{
+                        // *** 判断请求是否成功如若成功则启用该数据
+                        if(response.data.code==0){
+                            this.initList();
+                            dialogs('success',response.data.message);
+                        }
+                    })
+                }
+                if(this.waring == '你确认通过该账户？'){
+                    this.model.providerPay_pass(this.accountId).then((response)=>{
+                        // *** 判断请求是否成功如若成功则启用该数据
+                        if(response.data.code==0){
+                            this.initList();
+                            dialogs('success',response.data.message);
+                        }
+                    })
+                }
             },
             addBtn(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.$vali.valid){
                     dialogs('info','请填写所有必填项！');
                     return;}
-                this.model.providerPay_add(this.relist).then((response)=>{
-                    if(response.data.code==-1){
-                        this.$set('saveerror', response.data.message)
-                    }else{
-                        this.initList();
-                        dialogs();
-                    }
-                })
+                let data=_.cloneDeep(this.relist);
+                data.payAmount=accMul(data.payAmount,100);
+                if(data.id==''){
+                    this.model.providerPay_add(data).then((response)=>{
+                        if(response.data.code==-1){
+                            dialogs('error',response.data.message);
+                        }else{
+                            this.initList();
+                            dialogs('success',response.data.message);
+                        }
+                    })
+                }else{
+                    this.model.providerPay_edit(data).then((response)=>{
+                        if(response.data.code==-1){
+                            dialogs('error',response.data.message);
+                        }else{
+                            this.initList();
+                            dialogs('success',response.data.message);
+                        }
+                    })
+                }
             },
             getTime(){
                 this.defaultData.startDate=init_date(this.dateS)[0];
                 this.defaultData.endDate=init_date(this.dateS)[1];
+            },
+            excel(){
+                if(!this.zdlists.length>0)return;
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.providerPayDetailexcel+ $.param(this.defaultData));
             }
         },
         ready() {

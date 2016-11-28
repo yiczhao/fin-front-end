@@ -112,6 +112,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.principleexport = '/data/export/excel/principleCashOrder?';
+    /**
+     * @description 供应商划付页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.providerPayDetailexcel = '/data/export/excel/providerPayDetail?';
 
 
     //- todo 财务处理-账户列表 account-management

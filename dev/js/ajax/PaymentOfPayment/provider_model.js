@@ -50,16 +50,16 @@ function model(_this) {
          * @param {data}
          * @returns {*}
          */
-        providerPay_pass(data) {
-            return _this.$http.post(_this.$API.providerPay_pass,data)
+        providerPay_pass(id) {
+            return _this.$http.post(_this.$API.providerPay_pass+id)
         },
         /**
          * @description 供应商划付提交
          * @param {data}
          * @returns {*}
          */
-        providerPay_submit(data) {
-            return _this.$http.post(_this.$API.providerPay_submit,data)
+        providerPay_submit(id) {
+            return _this.$http.post(_this.$API.providerPay_submit+id)
         },
         /**
          * @description 供应商划付合计
