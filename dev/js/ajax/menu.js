@@ -29,9 +29,9 @@ module.exports = [
         name: '本金收入',
         icon: 'icon-BJBZ',
         type:'Principal',
-        ksa:'',
+        ksa:'principle_cash_order',
         sub_menu: [
-            {name: '本金收入', link: 'principle-order',ksa:''},
+            {name: '本金收入', link: 'principle-order',ksa:'principle_cash_order'},
         ]
     },
     {
