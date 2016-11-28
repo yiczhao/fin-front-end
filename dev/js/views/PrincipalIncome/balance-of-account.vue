@@ -7,7 +7,7 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <div class="heading-left">
-                        <span class="btn btn-info" v-show="dzradio=='S'" @click="manualCheck" data-ksa="">入账</span>
+                        <span class="btn btn-info" v-show="dzradio=='S'" @click="manualCheck" data-ksa="principle_cash_checking.check">入账</span>
                         <div class="inline ml20">
                             <label class="w28">对账方式：</label>
                             <input v-if="$route.params.routeName!='payoutAmount'" type="radio" id="one" value="G" v-model="dzradio">
@@ -26,7 +26,7 @@
                         <span>请选择银行流水</span>
                         <datepicker  :readonly="true" :value.sync="detailData.startDate" format="YYYY-MM-DD"></datepicker>至
                         <datepicker  :readonly="true" :value.sync="detailData.endDate" format="YYYY-MM-DD"></datepicker>
-                        <a class="btn btn-info add-top" @click="searchDetail" data-ksa="">查询</a>
+                        <a class="btn btn-info add-top" @click="searchDetail" data-ksa="principle_cash_checking.search">查询</a>
                     </div>
                     <table class="table">
                         <thead>

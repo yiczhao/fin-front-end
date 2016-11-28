@@ -6,7 +6,7 @@
         <div class="content account-management" slot="content">
         <div class="panel panel-flat">
             <ul class="tab-bor">
-                <li data-ksa=""><a v-link="{name:'principle-order'}">入账明细</a></li>
+                <li data-ksa="principle_cash_order.search"><a v-link="{name:'principle-order'}">入账明细</a></li>
                 <li data-ksa="" class="active"><a v-link="{name:'running-channel'}">通道管理</a></li>
             </ul>
             <div class="panel-heading">

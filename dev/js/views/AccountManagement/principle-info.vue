@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="principle_cash_detail.search">查询</a>
                     </div>
                 </div>
                 <div style="margin: 0 20px;font-size: 18px;">
@@ -97,8 +97,8 @@
                                     </td>
                                     <td>{{trlist.diffTime}} </td>
                                     <td>
-                                        <a v-if="trlist.payoutAmount>0" data-ksa=""  v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id,shortId:$route.params.principleId,tradeTime:trlist.tradeTime,routeName:'payoutAmount'}}" v-if="trlist.status!=2">对账</a>
-                                        <a v-else data-ksa=""  v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id,shortId:$route.params.principleId,tradeTime:trlist.tradeTime,routeName:'info'}}" v-if="trlist.status!=2">对账</a>
+                                        <a v-if="trlist.payoutAmount>0" data-ksa="principle_cash_checking.check"  v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id,shortId:$route.params.principleId,tradeTime:trlist.tradeTime,routeName:'payoutAmount'}}" v-if="trlist.status!=2">对账</a>
+                                        <a v-else data-ksa="principle_cash_checking.check"  v-link="{name:'balance-of-account',params:{principleAccountId:trlist.id,shortId:$route.params.principleId,tradeTime:trlist.tradeTime,routeName:'info'}}" v-if="trlist.status!=2">对账</a>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>

@@ -6,7 +6,7 @@
         <div class="content " slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="" class="active"><a v-link="{name:'principle-order'}">入账明细</a></li>
+                    <li data-ksa="principle_cash_order.search" class="active"><a v-link="{name:'principle-order'}">入账明细</a></li>
                     <li data-ksa=""><a v-link="{name:'running-channel'}">通道管理</a></li>
                 </ul>
                 <div class="heading">
@@ -36,7 +36,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="principle_cash_order.search">查询</a>
                     </div>
                 </div>
                 <div v-show="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
@@ -103,9 +103,9 @@
                                 <td>{{trlist.payTime | datetime}}</td>
                                 <td>{{trlist.successTime | datetime}}</td>
                                 <td>
-                                    <a v-if="trlist.status!=1" data-ksa="" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">查看</a>
+                                    <a v-if="trlist.status!=1" data-ksa="principle_cash_detail.search" v-link="{name:'principle-info',params:{principleId:trlist.id,certificate:0}}">查看</a>
                                 </td>
-                                <td><a v-if="trlist.status==1" v-link="{name:'balance-of-account',params:{shortId:trlist.id,principleAccountId:trlist.id,tradeTime:trlist.tradeDate}}">对账</a></td>
+                                <td><a v-if="trlist.status==1" data-ksa="principle_cash_checking.check" v-link="{name:'balance-of-account',params:{shortId:trlist.id,principleAccountId:trlist.id,tradeTime:trlist.tradeDate}}">对账</a></td>
                                 <td></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
