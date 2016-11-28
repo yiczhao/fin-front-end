@@ -61,6 +61,13 @@
 									<td>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="补贴账户金额修正" data-toggle="modal" @click="correctSubsidyAccountData($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -181,6 +188,12 @@
 			},
 			caculateSubsidyAccountTradeData(e){
                 this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
+                        .then((response)=>{
+                            dialogs('success','处理成功！');
+                        })
+            },
+            correctSubsidyAccountData(e){
+                this.$http.post('./dev/tool/subsidyAccount/correct')
                         .then((response)=>{
                             dialogs('success','处理成功！');
                         })
