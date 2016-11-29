@@ -200,8 +200,9 @@
                         });
             },
             associateShow(a,b){
-                this.contractCompanyName=a;
+                this.contractNumbers=a;
                 this.id=b;
+                this.activityIDs=[];
                 this.modal_associate=true;
             },
             addBtn(){
