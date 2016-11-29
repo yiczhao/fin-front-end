@@ -27,7 +27,7 @@ function model(_this) {
          * @returns {*}
          */
         providerPay_back (data) {
-            return _this.$http.get(_this.$API.providerPay_back+$.param(data))
+            return _this.$http.post(_this.$API.providerPay_back+$.param(data))
         },
         /**
          * @description 供应商划付删除
