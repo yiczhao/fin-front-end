@@ -869,7 +869,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method post
      */
-    _o.providerPay_back = './providerPayDetail/back';
+    _o.providerPay_back = './providerPayDetail/back?';
     /**
      * @description 供应商划付删除接口地址
      * @author 于凯乐

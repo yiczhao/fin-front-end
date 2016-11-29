@@ -128,7 +128,7 @@
                                 <td>{{trlist.refuseReason}}</td>
                             </tr>
                             <tr>
-                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>
