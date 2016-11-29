@@ -325,6 +325,7 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.waringshow=false;
                 this.addshow=false;
+                this.modal_back=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
