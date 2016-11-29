@@ -440,6 +440,7 @@
             duizhang(a){
                 this.cleardz();
                 this.$set('dzList', a);
+                this.manualCheck.remarks=a.remarks;
                 this.errortext='';
                 this.modal_fzr=true;//
             },
