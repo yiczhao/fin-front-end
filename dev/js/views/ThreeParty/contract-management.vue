@@ -138,6 +138,7 @@
                 zdlists:[],
                 contractNumbers:[],
                 reData:{
+                    thirdPartyAccountID:'',
                     contractNumber:'',
                     contractAdvertisementFee:'',
                     contractMaterialFee:'',
@@ -171,6 +172,7 @@
             addContract(){
                 this.addTitle='添加合同';
                 this.reData={
+                    thirdPartyAccountID:this.defaultData.thirdPartyAccountID,
                     contractNumber:'',
                     contractAdvertisementFee:'',
                     contractMaterialFee:'',
