@@ -254,6 +254,7 @@
                 companylists:[],
                 waring:'',
                 remarks:'',
+                total:0,
                 modal_back:false,
                 accountId:'',
                 waringshow:false,
