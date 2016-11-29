@@ -25,7 +25,7 @@
                             </thead>
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                    <td>{{trlist.contractNumbers}}</td>
+                                    <td>{{trlist.contractNumber}}</td>
                                     <td>{{trlist.activityID}} </td>
                                     <td>
                                         <a @click="editShow(trlist.id)">编辑</a>
