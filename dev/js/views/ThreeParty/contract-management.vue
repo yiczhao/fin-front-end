@@ -28,7 +28,8 @@
                                     <td>{{trlist.contractNumbers}}</td>
                                     <td>{{trlist.activityID}} </td>
                                     <td>
-
+                                        <a @click="editShow(trlist.id)">编辑</a>
+                                        <a @click="associateShow(trlist.contractNumbers)">关联</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -75,6 +76,20 @@
                         </div>
                     </div>
             </content-dialog>
+
+            <content-dialog
+                    :show.sync="modal_associate" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'关联活动'" @kok="associateTrue" @kcancel="modal_associate = false"
+            >
+                <div class="form-group">
+                    <label class="control-label">合同编号：</label>
+                    <span>{{contractNumbers}}</span>
+                </div>
+                <div class="form-group">
+                    <label style="position: relative;top: -95px;" class="control-label"><i>*</i>活动ID：</label>
+                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-limitids="activityIDs" v-model="activityIDs" placeholder="多个ID以逗号隔开"></textarea>
+                </div>
+            </content-dialog>
         </div>
     </index>
 </template>
@@ -111,6 +126,7 @@
             this.model =model(this)
             return{
                 modal_add: false,
+                modal_associate: false,
                 addTitle:'',
                 pageall:1,
                 companylists:[],
@@ -120,7 +136,7 @@
                     'pageSize': 10
                 },
                 zdlists:[],
-                addId:[],
+                contractNumbers:[],
                 reData:{
                     contractNumber:'',
                     contractAdvertisementFee:'',
@@ -130,6 +146,7 @@
                     contractTaxFee:'',
                     contractSettlementFee:''
                 },
+                activityIDs:[],
                 contractName:'',
                 contractCity:'',
                 contractCompanyName:''
@@ -164,19 +181,48 @@
                 },
                 this.modal_add = true;
             },
+            editShow(a){
+                let data={
+                    id:a
+                }
+                this.model.contract_editinfo(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            if(response.data.code==0){
+                                this.addTitle='编辑合同';
+                                this.$set('reData', response.data.data);
+                                this.modal_add = true;
+                            }
+                        });
+            },
+            associateShow(a){
+                this.contractCompanyName=a;
+                this.modal_associate=true;
+            },
             addBtn(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.reData.contractNumber==''){
-                    dialogs('info','合同标号为必填项！');
+                    dialogs('info','合同编号为必填项！');
                     return;
                 }
-                this.model.contract_add(this.reData)
-                        .then((response)=>{
-                            if(response.data.code == 0){
-                                this.initList();
-                                dialogs('success',response.data.message);
-                            }
-                        })
+                if(this.addTitle=='编辑合同'){
+                    this.model.contract_edit(this.reData)
+                            .then((response)=>{
+                                if(response.data.code == 0){
+                                    this.initList();
+                                    dialogs('success',response.data.message);
+                                }
+                            })
+                }
+                else{
+                    this.model.contract_add(this.reData)
+                            .then((response)=>{
+                                if(response.data.code == 0){
+                                    this.initList();
+                                    dialogs('success',response.data.message);
+                                }
+                            })
+                }
             },
         },
         ready() {
