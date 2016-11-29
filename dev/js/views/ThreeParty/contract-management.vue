@@ -29,7 +29,7 @@
                                     <td>{{trlist.activityID}} </td>
                                     <td>
                                         <a @click="editShow(trlist.id)">编辑</a>
-                                        <a @click="associateShow(trlist.contractNumbers)">关联</a>
+                                        <a @click="associateShow(trlist.contractNumbers,trlist.id)">关联</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -148,6 +148,7 @@
                     contractSettlementFee:''
                 },
                 activityIDs:[],
+                id:'',
                 contractName:'',
                 contractCity:'',
                 contractCompanyName:''
@@ -197,8 +198,9 @@
                             }
                         });
             },
-            associateShow(a){
+            associateShow(a,b){
                 this.contractCompanyName=a;
+                this.id=b;
                 this.modal_associate=true;
             },
             addBtn(){
@@ -226,6 +228,23 @@
                             })
                 }
             },
+            associateTrue(){
+                if(this.activityIDs==''){
+                    dialogs('info','活动ID为必填项！');
+                    return;
+                }
+                let data={
+                    id:this.id,
+                    activityIDs:this.activityIDs
+                }
+                this.model.contract_associate(data)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                this.initList();
+                                dialogs('success',response.data.message);
+                            }
+                        })
+            }
         },
         ready() {
             var vm=this;
