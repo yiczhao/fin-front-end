@@ -90,7 +90,7 @@
                                 <td>{{trlist.purchaseDiscountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.commissionAmount/100 | currency ''}}</td>
-                                <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
+                                <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID,'tradeCompanyId':trlist.subCompanyID}}">交易明细</a></td>
                                 <td>
                                     <a data-ksa="activity_manage.config" class="mr20" @click="checkformulae(trlist)">计算公式</a>
                                     <a data-ksa="activity_manage.config" @click="otherInfo(trlist.subCompanyID,trlist.id)">其他信息</a>
