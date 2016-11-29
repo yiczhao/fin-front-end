@@ -294,6 +294,7 @@
                 this.relist={
                     activityID :'',
                     applyTime :'',
+                    id:'',
                     ccb :'false',
                     collectionAccountName:'',
                     collectionAccountNumber:'',
@@ -317,7 +318,6 @@
                 this.getZlists(this.defaultData);
             },
             rewrite(_list){
-                this.accountId=_list.id;
                 this.relist=_.cloneDeep(_list);
                 this.addshow=true;
             },
