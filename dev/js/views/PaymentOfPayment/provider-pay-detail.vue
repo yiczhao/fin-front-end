@@ -37,17 +37,17 @@
                         <datepicker  :readonly="true" :value.sync="defaultData.endDate" format="YYYY-MM-DD"></datepicker>
                     </div>
                     <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="请输入活动ID" v-limitnumber="defaultData.activityID">
-                    <select class="form-control" v-model="defaultData.status">
+                    <select class="form-control" v-model="status" @change="getStatus(status)">
                         <option value="">全部状态</option>
-                        <option value="18">未提交</option>
-                        <option value="1">等待审核</option>
-                        <option value="8">审核不通过</option>
-                        <option value="2">等待划付</option>
-                        <option value="3">转账中</option>
-                        <option value="4">等待对账</option>
-                        <option value="5">对账成功</option>
-                        <option value="6">付款失败</option>
-                        <option value="0">已关闭</option>
+                        <option value="1,s">未提交</option>
+                        <option value="2,s">等待审核</option>
+                        <option value="4,s">审核不通过</option>
+                        <option value="2,o">等待划付</option>
+                        <option value="3,o">转账中</option>
+                        <option value="4,o">等待对账</option>
+                        <option value="5,o">对账成功</option>
+                        <option value="6,o">付款失败</option>
+                        <option value="0,o">已关闭</option>
                     </select>
                     <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                 </div>
@@ -79,7 +79,7 @@
                         <tbody>
                             <tr v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.id}}</td>
-                                <td>{{trlist.applyTime | datatimes}}</td>
+                                <td>{{trlist.applyTime | datetime}}</td>
                                 <td>{{trlist.payAccount}}</td>
                                 <td>{{trlist.activityID}}</td>
                                 <td>{{trlist.collectionAccountName}}</td>
@@ -97,21 +97,24 @@
                                     <template v-if="trlist.purpose==2">物料费</template>
                                 </td>
                                 <td>
-                                    <template v-if="trlist.status==18">未提交</template>
-                                    <template v-if="trlist.status==1">等待审核</template>
-                                    <template v-if="trlist.status==8">审核不通过</template>
-                                    <template v-if="trlist.status==2">等待划付</template>
-                                    <template v-if="trlist.status==3">转账中</template>
-                                    <template v-if="trlist.status==4">等待对账</template>
-                                    <template v-if="trlist.status==5">对账成功</template>
-                                    <template v-if="trlist.status==6">付款失败</template>
-                                    <template v-if="trlist.status==0">已关闭</template>
+                                    <template v-if="trlist.status==3">
+                                        <template v-if="trlist.orderStatus==0">已关闭</template>
+                                        <template v-if="trlist.orderStatus==1">等待审核</template>
+                                        <template v-if="trlist.orderStatus==2">等待划付</template>
+                                        <template v-if="trlist.orderStatus==3">转账中</template>
+                                        <template v-if="trlist.orderStatus==4">等待对账</template>
+                                        <template v-if="trlist.orderStatus==5">对账成功</template>
+                                        <template v-if="trlist.orderStatus==6">划付失败</template>
+                                    </template>
+                                    <template v-if="trlist.status==1">未提交</template>
+                                    <template v-if="trlist.status==2">等待审核</template>
+                                    <template v-if="trlist.status==4">审核不通过</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1||trlist.status==4">
                                         <a @click="rewrite(trlist)">编辑</a>
                                         <a @click="submit(trlist.id)">提交</a>
-                                        <a @click="delete(trlist.id)">删除</a>
+                                        <a @click="deleteList(trlist.id)">删除</a>
                                     </template>
                                     <template v-if="trlist.status==2">
                                         <a @click="pass(trlist.id)">通过</a>
@@ -119,7 +122,7 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <a v-if="trlist.status==3" @click="gopayment(n.reserveCashOrderID)" data-ksa="reserve_cash_order_manage.search">付款订单</a>
+                                    <a v-if="trlist.orderNumber!=''&&trlist.orderNumber!=null" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber}}" data-ksa="reserve_cash_order_manage.search">付款订单</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                                 <td>{{trlist.refuseReason}}</td>
@@ -222,7 +225,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="col-lg-3 control-label"><i>*</i>退回原因</label>
-                        <div class="col-lg-9">
+                        <div>
                             <textarea rows="5" cols="5" class="form-control" v-model="remarks" placeholder=""></textarea>
                         </div>
                     </div>
@@ -245,10 +248,12 @@
                     "endDate": "",
                     "activityID": "",
                     "status": "",
+                    "orderStatus": "",
                     "pageIndex": 1,
                     "pageSize": 10
                 },
                 dateS:'3',
+                status:'',
                 zdlists:[],
                 relist:{},
                 companylists:[],
@@ -286,6 +291,11 @@
                     }
                 });
             },
+            getStatus(a){
+                let values=a.split(',');
+                this.defaultData.status=this.defaultData.orderStatus='';
+                (values[1]=='s')?this.defaultData.status=values[0]:this.defaultData.orderStatus=values[0];
+            },
             checkNew(){
                 this.defaultData.pageIndex=1;
                 this.initList();
@@ -320,6 +330,11 @@
             },
             rewrite(_list){
                 this.relist=_.cloneDeep(_list);
+                _.map(this.companylists,(value)=>{
+                   if(value.name.indexOf(this.relist.payAccount.split('备付金')[0])>=0){
+                       this.relist.subCompanyID=value.subCompanyID
+                   }
+                });
                 this.addshow=true;
             },
             submit(a){
@@ -327,12 +342,12 @@
                 this.accountId=a;
                 this.waringshow=true;
             },
-            delete(a){
+            deleteList(a){
                 this.waring = '你确认删除该账户？';
                 this.accountId=a;
                 this.waringshow=true;
             },
-            delete(a){
+            pass(a){
                 this.waring = '你确认通过该账户？';
                 this.accountId=a;
                 this.waringshow=true;
