@@ -167,6 +167,7 @@
             },
             initList(){
                 this.modal_add=false;
+                this.modal_associate=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
