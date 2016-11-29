@@ -234,6 +234,14 @@ export default function(router){
                 require(['./views/ThreeParty/third-info.vue'],resolve);
             }
         },
+        /* 三方管理-合同管理 */
+        '/contract-management/:contractId/:contractName/:contractCity/:contractCompanyName':{
+            name:'contract-management',
+            router_type:"third",
+            component: function(resolve){
+                require(['./views/ThreeParty/contract-management.vue'],resolve);
+            }
+        },
         /* 商户管理-商户列表 */
         '/business-lists/':{
             name:'business-lists',

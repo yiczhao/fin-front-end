@@ -51,6 +51,7 @@
                                 <th>余额</th>
                                 <th>状态</th>
                                 <th>操作</th>
+                                <th>合同</th>
                                 <th>开通时间</th>
                                 <th>联系人</th>
                                 <th>电话</th>
@@ -73,6 +74,9 @@
                                         <a v-link="{name:'third-info',params:{'id':trlist.id}}" data-ksa="third_party_account_manage.detail">明细</a>
                                         <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">停用</a>
                                         <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">启用</a>
+                                    </td>
+                                    <td>
+                                        <a v-link="{name:'contract-management',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName}}" data-ksa="">管理</a>
                                     </td>
                                     <td>{{trlist.openTime | datetime}}</td>
                                     <td>{{trlist.contactName}}</td>

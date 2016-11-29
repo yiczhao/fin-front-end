@@ -1372,6 +1372,39 @@ export default function install(Vue) {
      */
     _o.activity_effect_list = './activityEffect/list?';
 
+    //- todo  三方管理-合同管理 contract-management
+    /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contract_list = './contract/list?';
+    /**
+     * @description 新增合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_add = './contract/add';
+    /**
+     * @description 编辑合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_edit = './contract/edit';
+    /**
+     * @description 获取编辑合同接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contract_editInfo = './contract/editInfo?';
+
+    /**
+     * @description 关联合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_associate = './contract/associate';
+
 
 
     Object.defineProperties(Vue.prototype, {
