@@ -20,15 +20,11 @@
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID" v-limitnumber="defaultData.operationID">
 
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="活动名称">
+                            <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
 
-                            <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
+                            <select class="form-control" v-model="defaultData.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-
-                            <select class="form-control" v-model="defaultData.cityID">
-                                <option value="">全部城市</option>
-                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
 
                             <select class="form-control" v-model="defaultData.status">
@@ -51,9 +47,9 @@
                             <tr role="row">
                                 <th>活动ID</th>
                                 <th>活动名称</th>
-                                <th>补贴第三方</th>
+                                <th>三方名称</th>
+                                <th>合同编号</th>
                                 <th>分公司 </th>
-                                <th>城市</th>
                                 <th>起止时间</th>
                                 <th>状态</th>
                                 <th>消费总笔数</th>
@@ -77,8 +73,8 @@
                                     <template v-if="trlist.thirdPartyAccountID==0"><a @click="addUser(trlist.id)" data-ksa="activity_manage.config">配置</a></template>
                                     <template v-else>{{trlist.thirdPartyAccountName}}</template>
                                 </td>
+                                <td>{{trlist.contractNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
                                 <td>
                                     <template v-if="trlist.status==1">待上线</template>
@@ -364,6 +360,7 @@
                 defaultData:{
                     'operationID': '',
                     'name': '',
+                    'contractNumber': '',
                     'cityID':'',
                     'subCompanyID':'',
                     'status':'',
@@ -444,20 +441,6 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
-            },
-            //获取城市数据
-            getCity(_id){
-                this.defaultData.cityID='';
-                let data={
-                    'subCompanyID':_id
-                }
-                this.$common_model.getcity(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
-                                this.$set('city', response.data.data)
-                            }
-                        });
             },
             //获取城市数据
             getshCity(_id){
@@ -609,7 +592,6 @@
             (vm.$route.params.operationID!=':operationID')?vm.defaultData.operationID=vm.$route.params.operationID:null;
             (vm.$route.params.name!=':name')?vm.defaultData.name=vm.$route.params.name:null;
             vm.getClist();
-            vm.getCity();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
         },

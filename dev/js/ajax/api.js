@@ -907,13 +907,13 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method GET
      */
-    _o.activity_list = './activity/list?';
+    _o.activity_list = './activitySubCompany/list?';
     /**
      * @description 查询活动列表合计金额接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.activity_total = './activity/total?';
+    _o.activity_total = './activitySubCompany/total?';
     /**
      * @description 查询可配置三方接口地址
      * @author 冷艳君
