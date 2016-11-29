@@ -189,7 +189,7 @@
                 let data={
                     id:a
                 }
-                this.model.contract_editinfo(data)
+                this.model.contract_editInfo(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             if(response.data.code==0){

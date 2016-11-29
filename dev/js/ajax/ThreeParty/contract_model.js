@@ -34,8 +34,8 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        contract_editinfo(data){
-            return _this.$http.get(_this.$API.contract_editinfo+ $.param(data))
+        contract_editInfo(data){
+            return _this.$http.get(_this.$API.contract_editInfo+ $.param(data))
         },
         /**
          * @description 关联合同
