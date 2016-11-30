@@ -138,16 +138,18 @@
         methods:{
             toStrings(value){
                 let a=[];
-                value.map((val,index)=>{
-                    a[index]='【'+val+'】'
-                })
-                return a.join("")
+                if(typeof value==="object"){
+                    value.map((val,index)=>{
+                        a[index]='【'+val+'】'
+                    })
+                    return a.join("")
+                }
             },
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
                     if(value!=null){
-                        (key!='otherExpenseRemarks')?data[key]=this.toStrings(value):data[key]=value;
+                        (key!='otherExpenseRemarks'&&key!='id')?data[key]=this.toStrings(value):data[key]=value;
                     }else{
                         data[key]="";
                     }
