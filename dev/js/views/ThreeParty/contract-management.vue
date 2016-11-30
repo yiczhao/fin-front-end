@@ -237,7 +237,8 @@
                     return;
                 }
                 let data={
-                    thirdPartyAccountID:this.id,
+                    id:this.id,
+                    thirdPartyAccountID:this.defaultData.thirdPartyAccountID,
                     activityOperationIDs:this.activityOperationIDs
                 }
                 this.model.contract_associate(data)
