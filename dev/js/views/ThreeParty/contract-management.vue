@@ -29,7 +29,7 @@
                                     <td>{{trlist.activityOperationID}} </td>
                                     <td>
                                         <a @click="editShow(trlist.id)">编辑</a>
-                                        <a @click="associateShow(trlist.contractNumber,trlist.id)">关联</a>
+                                        <a @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -208,10 +208,10 @@
                             }
                         });
             },
-            associateShow(a,b){
+            associateShow(a,b,c){
                 this.contractNumbers=a;
                 this.id=b;
-                this.activityOperationIDs='';
+                this.activityOperationIDs=c;
                 this.modal_associate=true;
             },
             addBtn(){
