@@ -92,7 +92,7 @@
                                 <td>{{trlist.commissionAmount/100 | currency ''}}</td>
                                 <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID,'tradeCompanyId':trlist.subCompanyID}}">交易明细</a></td>
                                 <td>
-                                    <a data-ksa="activity_manage.config" class="mr20" @click="checkformulae(trlist)">计算公式</a>
+                                    <a data-ksa="activity_manage.config" class="mr20" @link="{'name':'activity-formulae','params':{'activityID':trlist.id, 'subCompanyID':trlist.subCompanyID, 'formulaeID':trlist.operationID, 'formulaeName':trlist.name}}">计算公式</a>
                                     <a data-ksa="activity_manage.config" @click="otherInfo(trlist.subCompanyID,trlist.id)">其他信息</a>
                                 </td>
                             </tr>
@@ -136,21 +136,7 @@
                     未找到数据
                 </div>
 
-                <content-dialog
-                        :show.sync="companymodal" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'选择分公司'"  @kok="goformulae" @kcancel="companymodal=false"
-                >
-                    <div class="dialog-row">
-                        <span>
-                            <label>分公司：</label>
-                            <select class="form-control" v-model="goformulaeData.subCompanyID">
-                                <option value="">请选择分公司</option>
-                                <option v-for="(index,n) in usercompanylists" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-                        </span>
-                    </div>
-                </content-dialog>
-                
+
                 <!--添加商户dialog-->
                 <content-dialog
                         :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
@@ -356,7 +342,6 @@
                 pageall:1,
                 city:[],
                 companylists:[],
-                usercompanylists:[],
                 defaultData:{
                     'operationID': '',
                     'name': '',
@@ -554,31 +539,6 @@
                                 this.initList();
                             }
                         })
-            },
-            checkformulae({id, name, operationID}){
-                // *** 请求公司数据
-                let data={
-                    'type':'Activity',
-                    'activityID':id
-                }
-                this.$common_model.getcompany(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
-                                if(typeof response.data.data=='undefined'||response.data.data==''){
-                                    dialogs('info','该活动下没有交易，暂无法编辑计算公式！');
-                                    return
-                                }
-                                else if(response.data.data.length==1){
-                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data[0].subCompanyID, 'formulaeID':operationID, 'formulaeName':name}});
-                                }
-                                else{
-                                    this.$set('usercompanylists', response.data.data);
-                                    this.goformulaeData.id=id;
-                                    this.companymodal=true;
-                                }
-                            }
-                        });
             },
             goformulae(){
                 if(this.goformulaeData.subCompanyID==''){
