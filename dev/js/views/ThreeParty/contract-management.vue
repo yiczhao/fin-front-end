@@ -35,6 +35,14 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="datatable-bottom">
+                        <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                        </div>
+                    </div>
                 </div>
                 <div class="no-list" v-else>
                     未找到数据
