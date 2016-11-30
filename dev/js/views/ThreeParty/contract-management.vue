@@ -252,9 +252,9 @@
                 this.model.contract_associate(data)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                this.initList();
                                 dialogs('success',response.data.message);
                             }
+                            this.initList();
                         })
             }
         },
