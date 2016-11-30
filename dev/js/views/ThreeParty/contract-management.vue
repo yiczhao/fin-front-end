@@ -26,7 +26,7 @@
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{trlist.contractNumber}}</td>
-                                    <td>{{trlist.activityID}} </td>
+                                    <td>{{trlist.activityOperationID}} </td>
                                     <td>
                                         <a @click="editShow(trlist.id)">编辑</a>
                                         <a @click="associateShow(trlist.contractNumber,trlist.id)">关联</a>
@@ -151,7 +151,8 @@
                 id:'',
                 contractName:'',
                 contractCity:'',
-                contractCompanyName:''
+                contractCompanyName:'',
+                activityOperationID:''
             }
         },
         methods:{
