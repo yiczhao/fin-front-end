@@ -90,7 +90,7 @@
                                     <template v-if="trlist.ccb==0">否</template>
                                     <template v-if="trlist.ccb==1">是</template>
                                 </td>
-                                <td>{{trlist.payAmount/100 | currency ''}}</td>
+                                <td>{{trlist.payAmount | currency ''}}</td>
                                 <td>
                                     <template v-if="trlist.purpose==0">其它</template>
                                     <template v-if="trlist.purpose==1">广告费</template>
@@ -129,7 +129,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                                <td>{{total/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -336,6 +336,7 @@
                        this.relist.subCompanyID=value.subCompanyID
                    }
                 });
+                (this.relist.ccb=='0')? this.relist.ccb='false':this.relist.ccb='true';
                 this.addshow=true;
             },
             submit(a){
