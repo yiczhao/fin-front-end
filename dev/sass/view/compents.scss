@@ -156,6 +156,19 @@
     }
   }
   .datatable-scroll table{
+  [class*=hint--]:after {
+    background: #383838;
+    color: #fff;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 250px;
+    white-space: normal;
+    text-shadow: 0 -1px 0 #000;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    line-height: 20px;
+    text-align: center;
+  }
     thead{
       th{
         border-color:#999;

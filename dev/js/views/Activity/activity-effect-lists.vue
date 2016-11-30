@@ -113,7 +113,9 @@
                                 <td>{{trlist.operator}}</td>
                                 <td>{{trlist.activityName}}</td>
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
-                                <td aria-label="{{trlist.description}}" class="hint--top">{{trlist.description | substring 15}}</td>
+                                <td aria-label="{{trlist.description}}" v-bind:class="{'hint--top':trlist.description.length>15}">
+                                    {{trlist.description | substring 15}}
+                                </td>
                                 <td>
                                     <span v-if="trlist.contractSettlementFee==null">--</span>
                                     <span v-else>{{trlist.contractSettlementFee/100 | currency ''}}</span>

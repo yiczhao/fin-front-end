@@ -87,7 +87,7 @@
                 </div>
                 <div class="form-group">
                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>活动ID：</label>
-                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-limitids="activityIDs" v-model="activityIDs" placeholder="多个ID以逗号隔开"></textarea>
+                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-limitids="activityOperationIDs" v-model="activityOperationIDs" placeholder="多个ID以逗号隔开"></textarea>
                 </div>
             </content-dialog>
         </div>
@@ -147,7 +147,7 @@
                     contractTaxFee:'',
                     contractSettlementFee:''
                 },
-                activityIDs:[],
+                activityOperationIDs:'',
                 id:'',
                 contractName:'',
                 contractCity:'',
@@ -202,7 +202,7 @@
             associateShow(a,b){
                 this.contractNumbers=a;
                 this.id=b;
-                this.activityIDs=[];
+                this.activityOperationIDs='';
                 this.modal_associate=true;
             },
             addBtn(){
@@ -231,13 +231,13 @@
                 }
             },
             associateTrue(){
-                if(this.activityIDs==''){
+                if(this.activityOperationIDs==''){
                     dialogs('info','活动ID为必填项！');
                     return;
                 }
                 let data={
                     id:this.id,
-                    activityIDs:this.activityIDs
+                    activityOperationIDs:this.activityOperationIDs
                 }
                 this.model.contract_associate(data)
                         .then((response)=>{
