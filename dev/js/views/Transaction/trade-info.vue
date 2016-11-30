@@ -168,7 +168,9 @@
                                         <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
                                     </template>
                                 </td>
-                                <td>{{trlist.remarks}}</td>
+                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':trlist.remarks.length>15}">
+                                    {{trlist.remarks | substring 15}}
+                                </td>
                             </tr>
                             <tr>
                                 <td></td>

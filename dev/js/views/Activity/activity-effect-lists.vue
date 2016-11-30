@@ -176,7 +176,9 @@
                                     <template v-if="trlist.activityGrossProfitRate">{{trlist.activityGrossProfitRate}}%</template>
                                 </td>
                                 <td>{{trlist.collectPeriod}}</td>
-                                <td>{{trlist.remarks}}</td>
+                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':trlist.remarks.length>15}">
+                                    {{trlist.remarks | substring 15}}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
