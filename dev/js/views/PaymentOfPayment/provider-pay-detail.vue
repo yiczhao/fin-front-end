@@ -336,6 +336,7 @@
                        this.relist.subCompanyID=value.subCompanyID
                    }
                 });
+                this.relist.purpose= this.relist.purpose+'';
                 (this.relist.ccb=='0')? this.relist.ccb='false':this.relist.ccb='true';
                 this.addshow=true;
             },
