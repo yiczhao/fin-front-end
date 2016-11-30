@@ -103,7 +103,7 @@
                                     <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
-                                <td>
+                                <td v-if="trlist.orderNumber!=null">
                                     <template v-if="trlist.status==7||trlist.status==8">
                                         <a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
                                     </template>
@@ -114,6 +114,7 @@
                                            v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
                                     </template>
                                 </td>
+                                <td v-else></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
@@ -482,6 +483,10 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 if(this.adjustBalanceData.amount==''||this.adjustBalanceData.remarks==''){
                     dialogs('info','请填写必填信息！');
+                    return;
+                }
+                if(this.adjustBalanceData.amount==0){
+                    dialogs('info','填写金额不可为0！');
                     return;
                 }
                 let data=_.cloneDeep(this.adjustBalanceData);
