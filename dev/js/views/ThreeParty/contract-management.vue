@@ -25,9 +25,9 @@
                             </thead>
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                    <td style="width:auto">{{trlist.contractNumber}}</td>
-                                    <td style="width:auto">{{trlist.activityOperationID}} </td>
-                                    <td style="width:auto">
+                                    <td>{{trlist.contractNumber}}</td>
+                                    <td>{{trlist.activityOperationID}} </td>
+                                    <td>
                                         <a @click="editShow(trlist.id)">编辑</a>
                                         <a @click="associateShow(trlist.contractNumber,trlist.id)">关联</a>
                                     </td>
