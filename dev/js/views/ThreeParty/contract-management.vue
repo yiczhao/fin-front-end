@@ -29,7 +29,7 @@
                                     <td>{{trlist.activityID}} </td>
                                     <td>
                                         <a @click="editShow(trlist.id)">编辑</a>
-                                        <a @click="associateShow(trlist.contractNumbers,trlist.id)">关联</a>
+                                        <a @click="associateShow(trlist.contractNumber,trlist.id)">关联</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -136,7 +136,7 @@
                     'pageSize': 10
                 },
                 zdlists:[],
-                contractNumbers:[],
+                contractNumbers:'',
                 reData:{
                     thirdPartyAccountID:'',
                     contractNumber:'',
