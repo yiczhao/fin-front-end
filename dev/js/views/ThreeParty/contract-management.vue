@@ -100,7 +100,7 @@
                     <span>{{contractNumbers}}</span>
                 </div>
                 <div class="form-group">
-                    <label style="position: relative;top: -95px;" class="control-label"><i>*</i>活动ID：</label>
+                    <label style="position: relative;top: -95px;" class="control-label">活动ID：</label>
                     <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-limitids="activityOperationIDs" v-model="activityOperationIDs" placeholder="多个ID以逗号隔开"></textarea>
                 </div>
             </content-dialog>
@@ -252,10 +252,6 @@
                 }
             },
             associateTrue(){
-                if(this.activityOperationIDs==''){
-                    dialogs('info','活动ID为必填项！');
-                    return;
-                }
                 let data={
                     id:this.id,
                     thirdPartyAccountID:this.defaultData.thirdPartyAccountID,

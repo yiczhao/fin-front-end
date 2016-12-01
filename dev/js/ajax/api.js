@@ -869,7 +869,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method post
      */
-    _o.providerPay_back = './providerPayDetail/back?';
+    _o.providerPay_back = './providerPayDetail/refuse?';
     /**
      * @description 供应商划付删除接口地址
      * @author 于凯乐
@@ -887,13 +887,13 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method post
      */
-    _o.providerPay_pass = './providerPayDetail/pass/';
+    _o.providerPay_pass = './providerPayDetail/approve/';
     /**
      * @description 供应商划付提交接口地址
      * @author 于凯乐
      * @method post
      */
-    _o.providerPay_submit = './providerPayDetail/submit/';
+    _o.providerPay_submit = './providerPayDetail/apply/';
     /**
      * @description 供应商划付合计接口地址
      * @author 于凯乐
