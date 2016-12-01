@@ -254,6 +254,7 @@
             associateTrue(){
                 let data={
                     id:this.id,
+                    subCompanyID:this.$route.params.contractCompanyId,
                     thirdPartyAccountID:this.defaultData.thirdPartyAccountID,
                     activityOperationID:this.activityOperationIDs
                 }
