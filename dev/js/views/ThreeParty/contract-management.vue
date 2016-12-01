@@ -28,7 +28,7 @@
                                     <td>{{trlist.contractNumber}}</td>
                                     <td>{{trlist.activityOperationID}} </td>
                                     <td>
-                                        <a @click="editShow(trlist.id)">编辑</a>
+                                        <a @click="editShow(trlist.id,trlist.activityOperationID)">编辑</a>
                                         <a @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>
                                     </td>
                                 </tr>
@@ -203,10 +203,12 @@
                 },
                 this.modal_add = true;
             },
-            editShow(a){
+            editShow(a,b){
+                this.activityOperationID=b;
                 let data={
                     id:a,
                     subCompanyID:this.$route.params.contractCompanyId,
+                    activityOperationID: this.activityOperationID
                 }
                 this.model.contract_editInfo(data)
                         .then((response)=>{
@@ -232,6 +234,7 @@
                     return;
                 }
                 this.reData.subCompanyID=this.$route.params.contractCompanyId;
+                this.reData.activityOperationID=this.activityOperationID;
                 if(this.addTitle=='编辑合同'){
                     this.model.contract_edit(this.reData)
                             .then((response)=>{
