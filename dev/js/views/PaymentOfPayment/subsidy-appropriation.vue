@@ -84,7 +84,7 @@
                             <table   id="table1" class="table">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox"  v-model="checkAll" @click="chooseAll""/>ID</th>
+                                        <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
