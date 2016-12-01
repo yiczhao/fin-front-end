@@ -122,7 +122,7 @@
                                 <td>
                                     <a href="{{origin}}/file/download/{{trlist.certificateID}}">下载</a>
                                 </td>
-                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':trlist.remarks.length>15}">
+                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
                                     {{trlist.remarks | substring 15}}
                                 </td>
                                 <td>
