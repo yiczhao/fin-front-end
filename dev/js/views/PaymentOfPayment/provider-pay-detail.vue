@@ -46,8 +46,6 @@
                         <option value="3,o">转账中</option>
                         <option value="4,o">等待对账</option>
                         <option value="5,o">对账成功</option>
-                        <option value="6,o">付款失败</option>
-                        <option value="0,o">已关闭</option>
                     </select>
                     <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
                 </div>
@@ -98,13 +96,11 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==3">
-                                        <template v-if="trlist.orderStatus==0">已关闭</template>
                                         <template v-if="trlist.orderStatus==1">等待审核</template>
                                         <template v-if="trlist.orderStatus==2">等待划付</template>
                                         <template v-if="trlist.orderStatus==3">转账中</template>
                                         <template v-if="trlist.orderStatus==4">等待对账</template>
                                         <template v-if="trlist.orderStatus==5">对账成功</template>
-                                        <template v-if="trlist.orderStatus==6">划付失败</template>
                                     </template>
                                     <template v-if="trlist.status==1">未提交</template>
                                     <template v-if="trlist.status==2">等待审核</template>
