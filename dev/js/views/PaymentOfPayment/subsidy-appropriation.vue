@@ -438,8 +438,6 @@
                 this.query();
             },
             query() {
-                $(".check-boxs").prop({'checked':false})
-                //$('.modal').modal('hide');
                 this.modal_applyPay = false;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];

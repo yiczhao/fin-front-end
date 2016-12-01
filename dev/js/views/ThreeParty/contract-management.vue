@@ -255,7 +255,7 @@
                 let data={
                     id:this.id,
                     thirdPartyAccountID:this.defaultData.thirdPartyAccountID,
-                    activityOperationIDs:this.activityOperationIDs
+                    activityOperationID:this.activityOperationIDs
                 }
                 this.model.contract_associate(data)
                         .then((response)=>{

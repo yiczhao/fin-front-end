@@ -481,7 +481,6 @@
                 this.modal_submit= false;
                 this.list_info= false;
                 this.modal_checking=false;
-                $(".check-boxs").prop({'checked':false})
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date('1')[0];
                     this.checkForm.endDate=init_date('1')[1];

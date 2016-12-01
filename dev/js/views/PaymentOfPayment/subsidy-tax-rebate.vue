@@ -14,7 +14,7 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" data-toggle="modal"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
+                        <a class="btn btn-add add-top"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
                     </div>
 
                     <div class="heading-right">
@@ -415,8 +415,6 @@
                 this.query();
             },
             query() {
-                $('.modal').modal('hide');
-                $(".check-boxs").prop({'checked':false})
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.getTime();
                 }
