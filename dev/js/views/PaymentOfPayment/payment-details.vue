@@ -89,7 +89,7 @@
                         <table class="table main-table">
                         <thead>
                             <tr role="row">
-                                <th><input type="checkbox" class="check-all" @change="addAll($event)"></th>
+                                <th><input type="checkbox"  v-model="checkAll" @click="chooseAll"></th>
                                 <th>订单号</th>
                                 <th>商户ID</th>
                                 <th>商户名称</th>
@@ -114,7 +114,7 @@
                         <template v-for="(index,n) in zdlists">
                             <tr role="row" v-bind:class="{'odd':(index%2==0)}">
                                 <td>
-                                    <template v-if="n.status==2"><input type="checkbox" class="check-boxs" @change="addorderIDs($event,n.id)" :value="n.id"></template>
+                                    <template v-if="n.status==2"><input type="checkbox"  @click="checked(n.ischeck,n.id)" v-model="n.ischeck"></template>
                                 </td>
                                 <td>
                                     <span>{{n.orderNumber}}</span>
@@ -405,7 +405,40 @@
                 orderIDs:[]
             }
         },
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.zdlists.map((value)=>{
+                    (!value.ischeck&&value.status==2)?clength++:null;
+                })
+                return !clength
+            }
+        },
         methods:{
+            chooseAll(){
+                this.orderIDs=[];
+                let cloneData=_.cloneDeep(this.zdlists);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        if(value.status==2){
+                            this.orderIDs.push(value.id);
+                            value.ischeck=true;
+                        }
+                    }
+                })
+                this.zdlists=cloneData;
+            },
+            checked(bool,_id){
+                if(!bool){
+                    this.orderIDs.push(_id);
+                }else{
+                    _.remove(this.orderIDs, function(n) {
+                        return n==_id;
+                    })
+                }
+            },
             // *** 请求账户数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -651,23 +684,6 @@
             getTime(){
                 this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
                 this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
-            },
-            addorderIDs(e){
-                if(e.target.checked){
-                    $(e.target).addClass('checked-boxs');
-                }else{
-                    $(e.target).removeClass('checked-boxs');
-                }
-                this.orderIDs= Array.from($(".checked-boxs"), i => parseInt(i.value));
-            },
-            addAll(e){
-                if(e.target.checked){
-                    $(".check-boxs").prop({'checked':true}).addClass('checked-boxs');
-                    this.orderIDs= Array.from($(".check-boxs"), i => parseInt(i.value));
-                }else{
-                    $(".check-boxs").prop({'checked':false}).removeClass('checked-boxs');
-                    this.orderIDs=[];
-                }
             },
             batchPay(){
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
