@@ -84,7 +84,7 @@
                             <table   id="table1" class="table">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" :value.sysc="ischeckData" class="check-boxs" @click="checkAll($event)"/>ID</th>
+                                        <th><input type="checkbox"  v-model="checkAll" @click="chooseAll""/>ID</th>
                                         <th>生成日期</th>
                                         <th>分公司</th>
                                         <th>城市</th>
@@ -108,12 +108,8 @@
                                 <tbody>
                                     <tr id="All" v-for="(index,sa) in subsidyAppropriationList" v-bind:class="{'odd':(index%2==0)}">
                                         <td>
-                                            <template v-if="sa.status!=1">
-                                                <input type="checkbox" disabled="true" name="ckbox-disabled" :id="sa.id"/>{{sa.id}}
-                                            </template>
-                                            <template v-else>
-                                                <input :value.sysc="ischeck" type="checkbox" name="ckbox" :id="sa.id" :class="sa.receiptAccountName+sa.receiptAccountNumber"/>{{sa.id}}
-                                            </template>
+                                            <input v-if="sa.status==1" type="checkbox" @click="checked(sa.ischeck,sa.id)" v-model="sa.ischeck"/>
+                                            {{sa.id}}
                                         </td>
                                         <td>{{sa.createAT | datetime}}</td>
                                         <td>{{sa.subCompanyName}}</td>
@@ -269,6 +265,7 @@
                 subcompanyList:[],
                 pageall:1,
                 cityList:[],
+                AccountS:[],
                 showPayAccount:'',
                 subsidyAppropriationList:[],
                 payTypes:'',
@@ -285,7 +282,40 @@
                 }
             }
         },
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.subsidyAppropriationList.map((value)=>{
+                    (!value.ischeck&&value.status==1)?clength++:null;
+                })
+                return !clength
+            }
+        },
         methods:{
+            chooseAll(){
+                this.AccountS=[];
+                let cloneData=_.cloneDeep(this.subsidyAppropriationList);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        if(value.status==1){
+                            this.AccountS.push(value.id);
+                            value.ischeck=true;
+                        }
+                    }
+                })
+                this.subsidyAppropriationList=cloneData;
+            },
+            checked(bool,_id){
+                if(!bool){
+                    this.AccountS.push(_id);
+                }else{
+                    _.remove(this.AccountS, function(n) {
+                        return n==_id;
+                    })
+                }
+            },
             //获取补贴划付数据
              getSubsidyAppropriationList(data){
                  if(sessionStorage.getItem('isHttpin')==1)return;
@@ -329,13 +359,6 @@
                         }
                     });
             },
-            checkAll(ck){
-                if(ck.target.checked){
-                    $("input[name='ckbox']").prop({'checked':true});
-                }else{
-                    $("input[name='ckbox']").prop({'checked':false});
-                }
-            },
             clear(){
                 this.payTypes='';
                 this.mergePay=false;
@@ -353,15 +376,11 @@
                         });
             },
             batchs(){
-                let AccountS = [];
-                $("input[name='ckbox']:checked").each(function(){
-                    AccountS.push(parseInt($(this).prop("id")));
-                });
-                if(AccountS.length<=0){
+                if(this.AccountS.length<=0){
                     dialogs('info','请勾选审核信息！');
                     return false
                 }
-                this.getApplyPayInfoByIDs(AccountS);
+                this.getApplyPayInfoByIDs(this.AccountS);
                 this.dialogTitle='一键审核';
             },
             showModalApplyPayById(id){

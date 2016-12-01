@@ -235,7 +235,7 @@ export default function(router){
             }
         },
         /* 三方管理-合同管理 */
-        '/contract-management/:contractId/:contractName/:contractCity/:contractCompanyName':{
+        '/contract-management/:contractId/:contractName/:contractCity/:contractCompanyName/:contractCompanyId':{
             name:'contract-management',
             router_type:"third",
             component: function(resolve){
