@@ -7,7 +7,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="addContract" data-ksa="">添加合同</a>
+                        <a class="btn btn-add add-top" @click="addContract" data-ksa="contract.add">添加合同</a>
                     </div>
                     <span>三方名称：{{contractName}}</span>
                     <span>分公司：{{contractCompanyName}}</span>
@@ -28,8 +28,8 @@
                                     <td>{{trlist.contractNumber}}</td>
                                     <td>{{trlist.activityOperationID}} </td>
                                     <td>
-                                        <a @click="editShow(trlist.id,trlist.activityOperationID)">编辑</a>
-                                        <a @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>
+                                        <a data-ksa="contract.edit" @click="editShow(trlist.id,trlist.activityOperationID)">编辑</a>
+                                        <a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>
                                     </td>
                                 </tr>
                             </tbody>

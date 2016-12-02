@@ -13,11 +13,11 @@
                 <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
                 <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
                 <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
-                <li class="active" data-ksa=""><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
+                <li class="active" data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
             </ul>
             <div class="heading">
                 <div class="heading-left">
-                    <a class="btn btn-add" @click="addUser" data-ksa="">新增划付</a>
+                    <a class="btn btn-add" @click="addUser" data-ksa="provider_pay_detail.add">新增划付</a>
                 </div>
                 <div class="heading-right">
                     <select class="form-control" v-model="defaultData.subCompanyID">
@@ -47,7 +47,7 @@
                         <option value="4,o">等待对账</option>
                         <option value="5,o">对账成功</option>
                     </select>
-                    <a class="btn btn-info" @click="checkNew" data-ksa="account_manage.search">查询</a>
+                    <a class="btn btn-info" @click="checkNew" data-ksa="provider_pay_detail.search">查询</a>
                 </div>
             </div>
 
@@ -108,13 +108,13 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1||trlist.status==4">
-                                        <a @click="rewrite(trlist)">编辑</a>
-                                        <a @click="submit(trlist.id)">提交</a>
-                                        <a @click="deleteList(trlist.id)">删除</a>
+                                        <a data-ksa="provider_pay_detail.edit" @click="rewrite(trlist)">编辑</a>
+                                        <a data-ksa="provider_pay_detail.apply" @click="submit(trlist.id)">提交</a>
+                                        <a data-ksa="provider_pay_detail.delete" @click="deleteList(trlist.id)">删除</a>
                                     </template>
                                     <template v-if="trlist.status==2">
-                                        <a @click="pass(trlist.id)">通过</a>
-                                        <a @click="back(trlist.id)">退回</a>
+                                        <a data-ksa="provider_pay_detail.approve" @click="pass(trlist.id)">通过</a>
+                                        <a data-ksa="provider_pay_detail.refuse" @click="back(trlist.id)">退回</a>
                                     </template>
                                 </td>
                                 <td>

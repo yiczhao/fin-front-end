@@ -76,7 +76,7 @@
                                         <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">启用</a>
                                     </td>
                                     <td>
-                                        <a v-link="{name:'contract-management',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="">管理</a>
+                                        <a v-link="{name:'contract-management',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="contract.search">管理</a>
                                     </td>
                                     <td>{{trlist.openTime | datetime}}</td>
                                     <td>{{trlist.contactName}}</td>
