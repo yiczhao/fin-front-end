@@ -61,32 +61,32 @@
                         <div class="form-group">
                             <label>合同广告费 =</label>
                             <input v-if="isAdd||!reData.contractAdvertisementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractAdvertisementFee" v-limitprice="reData.contractAdvertisementFee">
-                            <input v-else type="text" class="form-control" v-model="reData.contractAdvertisementFee" disabled="true">
+                            <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同物料费 =</label>
                             <input v-if="isAdd||!reData.contractMaterialFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractMaterialFee" v-limitprice="reData.contractMaterialFee">
-                            <input v-else type="text" class="form-control" v-model="reData.contractMaterialFee" disabled="true">
+                            <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同微信营销费 =</label>
                             <input v-if="isAdd||!reData.contractWeChatMarketFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractWeChatMarketFee" v-limitprice="reData.contractWeChatMarketFee">
-                            <input v-else type="text" class="form-control" v-model="reData.contractWeChatMarketFee" disabled="true">
+                            <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同服务费 =</label>
                             <input v-if="isAdd||!reData.contractServiceFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractServiceFee" v-limitprice="reData.contractServiceFee">
-                            <input v-else type="text" class="form-control" v-model="reData.contractServiceFee" disabled="true">
+                            <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同税费 =</label>
                             <input v-if="isAdd||!reData.contractTaxFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractTaxFee" v-limitprice="reData.contractTaxFee">
-                            <input v-else type="text" class="form-control" v-model="reData.contractTaxFee" disabled="true">
+                            <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同结算金额 =</label>
                             <input v-if="isAdd||!reData.contractSettlementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractSettlementFee" v-limitprice="reData.contractSettlementFee">
-                            <input v-else type="text" class="form-control" v-model="reData.contractSettlementFee" disabled="true">
+                            <input v-else type="text" class="form-control" disabled="true">
                         </div>
                     </div>
             </content-dialog>
@@ -206,8 +206,9 @@
             },
             editShow(a,b){
                 this.activityOperationID=b;
+                this.id=a;
                 let data={
-                    id:a,
+                    id:this.id,
                     subCompanyID:this.$route.params.contractCompanyId,
                     activityOperationID: this.activityOperationID
                 }
@@ -234,6 +235,7 @@
                     dialogs('info','合同编号为必填项！');
                     return;
                 }
+                this.reData.id=this.id;
                 this.reData.subCompanyID=this.$route.params.contractCompanyId;
                 this.reData.activityOperationID=this.activityOperationID;
                 if(this.addTitle=='编辑合同'){
