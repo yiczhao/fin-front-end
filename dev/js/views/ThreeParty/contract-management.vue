@@ -60,32 +60,32 @@
                         </div>
                         <div class="form-group">
                             <label>合同广告费 =</label>
-                            <input v-if="isAdd||redata.contractAdvertisementFee==null||redata.contractAdvertisementFee==''" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractAdvertisementFee" v-limitprice="reData.contractAdvertisementFee">
+                            <input v-if="isAdd||reData.contractAdvertisementStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractAdvertisementFee" v-limitprice="reData.contractAdvertisementFee">
                             <input v-else type="text" class="form-control" v-model="reData.contractAdvertisementFee" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同物料费 =</label>
-                            <input v-if="isAdd||redata.contractMaterialFee==null||redata.contractMaterialFee==''" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractMaterialFee" v-limitprice="reData.contractMaterialFee">
+                            <input v-if="isAdd||reData.contractMaterialStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractMaterialFee" v-limitprice="reData.contractMaterialFee">
                             <input v-else type="text" class="form-control" v-model="reData.contractMaterialFee" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同微信营销费 =</label>
-                            <input v-if="isAdd||redata.contractWeChatMarketFee==null||redata.contractWeChatMarketFee==''" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractWeChatMarketFee" v-limitprice="reData.contractWeChatMarketFee">
+                            <input v-if="isAdd||reData.contractWeChatMarketStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractWeChatMarketFee" v-limitprice="reData.contractWeChatMarketFee">
                             <input v-else type="text" class="form-control" v-model="reData.contractWeChatMarketFee" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同服务费 =</label>
-                            <input v-if="isAdd||redata.contractServiceFee==null||redata.contractServiceFee==''" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractServiceFee" v-limitprice="reData.contractServiceFee">
+                            <input v-if="isAdd||reData.contractServiceStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractServiceFee" v-limitprice="reData.contractServiceFee">
                             <input v-else type="text" class="form-control" v-model="reData.contractServiceFee" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同税费 =</label>
-                            <input v-if="isAdd||redata.contractTaxFee==null||redata.contractTaxFee==''" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractTaxFee" v-limitprice="reData.contractTaxFee">
+                            <input v-if="isAdd||reData.contractTaxStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractTaxFee" v-limitprice="reData.contractTaxFee">
                             <input v-else type="text" class="form-control" v-model="reData.contractTaxFee" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同结算金额 =</label>
-                            <input v-if="isAdd||redata.contractSettlementFee==null||redata.contractSettlementFee==''" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractSettlementFee" v-limitprice="reData.contractSettlementFee">
+                            <input v-if="isAdd||reData.contractSettlementEditStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractSettlementFee" v-limitprice="reData.contractSettlementFee">
                             <input v-else type="text" class="form-control" v-model="reData.contractSettlementFee" disabled="true">
                         </div>
                     </div>
@@ -152,7 +152,6 @@
                 },
                 zdlists:[],
                 contractNumbers:'',
-                redata:{},
                 reData:{
                     subCompanyID:'',
                     thirdPartyAccountID:'',
@@ -219,7 +218,6 @@
                                 this.addTitle='编辑合同';
                                 this.isAdd = false;
                                 this.$set('reData', response.data.data);
-                                this.redata=_.cloneDeep(this.reData);
                                 this.modal_add = true;
                             }
                         });
