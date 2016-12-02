@@ -171,7 +171,7 @@
 </style>
 
 <template>
-    <div class="dropdown v-select" :class="dropdownClasses">
+    <div class="dropdown v-select" :class="dropdownClasses" :style="{ background: !editable ? '#fafafa' : '#fff' }">
         <div v-el:toggle @mousedown.prevent="toggleDropdown" class="dropdown-toggle clearfix" type="button">
 
         <span class="selected-tag" v-for="option in valueAsArray" track-by="$index">
@@ -191,12 +191,12 @@
                     @keydown.down.prevent="typeAheadDown"
                     @keyup.enter.prevent="typeAheadSelect"
                     @blur="blurinput"
-                    @focus="open = true"
+                    @focus="edit"
                     type="search"
                     class="form-control"
                     :placeholder="searchPlaceholder"
                     :readonly="!searchable"
-                    :style="{ width: isValueEmpty ? '100%' : 'auto' }"
+                    :style="{ width: isValueEmpty ? '100%' : 'auto'}"
             >
 
             <i v-el:open-indicator role="presentation" class="open-indicator"></i>
@@ -271,6 +271,15 @@
             searchable: {
                 type: Boolean,
                 default: true
+            },
+
+            /**
+             * Enable/disable filtering the options.
+             * @type {Boolean}
+             */
+            editable: {
+                type: Boolean,
+                default: false
             },
 
             /**
@@ -416,7 +425,12 @@
         },
 
         methods: {
+            edit(){
+                if(!this.editable)return;
+                this.open = true
+            },
             removeSelect(option,_i){
+                if(!this.editable)return;
                 let data=_.cloneDeep(this.value);
                 _.remove(data, function(val,index) {
                     return (index === _i&&option===val);
@@ -492,6 +506,7 @@
              * @return {void}
              */
             toggleDropdown(e) {
+                if(!this.editable)return;
                 if (e.target === this.$els.openIndicator || e.target === this.$els.search || e.target === this.$els.toggle || e.target === this.$el) {
                     if (this.open) {
                         this.$els.search.blur() // dropdown will close on blur
