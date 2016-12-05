@@ -129,69 +129,70 @@
                 <!-- 添加商户 -->
                 <content-dialog
                         :show.sync="modal_prepayment_info" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'添加商户'"  
+                        :title.sync="'添加商户'"
                 >
-                        <div class="modal-body" style="width: 900px;">
-                            <form class="form-inline manage-form">
-                                    <input type="text" class="form-control"
-                                           v-model="merchantInfo.merchantOperationID" placeholder="商户ID" v-limitnumber="merchantInfo.merchantOperationID">
-                                    <input type="text" class="form-control" v-model="merchantInfo.merchantName"
-                                           placeholder="商户名">
-                                    <select class="form-control" v-model="merchantInfo.companyId"
-                                            @change="getshCity(merchantInfo.companyId)">
-                                        <option value="">全部分公司</option>
-                                        <option v-for="n in subcompanyList" v-text="n.name"
-                                                :value="n.subCompanyID"></option>
-                                    </select>
-                                    <select class="form-control" v-model="merchantInfo.cityId">
-                                        <option value="">全部城市
-                                        </option>
-                                        <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
-                                    </select>
-                                    <input type="button" class="btn btn-info" @click="getMerchantList"
-                                           value="查询">
-                            </form>
+                    <div class="addDialogs">
+                        <form class="form-inline">
+                            <input type="text" class="form-control"
+                                   v-model="merchantInfo.merchantOperationID" placeholder="商户ID" v-limitnumber="merchantInfo.merchantOperationID">
+                            <input type="text" class="form-control" v-model="merchantInfo.merchantName"
+                                   placeholder="商户名">
+                            <select class="form-control" v-model="merchantInfo.companyId"
+                                    @change="getshCity(merchantInfo.companyId)">
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name"
+                                        :value="n.subCompanyID"></option>
+                            </select>
+                            <select class="form-control" v-model="merchantInfo.cityId">
+                                <option value="">全部城市
+                                </option>
+                                <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
+                            </select>
+                            <input type="button" class="btn btn-info" @click="getMerchantList"
+                                   value="查询">
+                        </form>
 
-                            <div class="dataTables_wrapper no-footer addbottom">
-                                <div style="text-indent: 68%">已选择：</div>
-                                <div class="col-md-7" style="height:300px;overflow: auto;border: 1px solid #ccc;">
-                                    <table v-if="merchantList.length>0"
-                                           class="table datatable-selection-single dataTable no-footer">
-                                        <thead>
-                                        <tr role="row">
-                                            <th><input id="ckAll" type="checkbox" @click="checkAll($event)"/>全选</th>
-                                            <th>分公司</th>
-                                            <th>城市</th>
-                                            <th>商户名</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="(index,merchant) in merchantList">
-                                            <td>
-                                                <input type="checkbox" :value="merchant.merchantID"
-                                                       :id="merchant.merchantID" name="ckbox"/>
-                                                {{index+1}}
-                                            </td>
-                                            <td>{{merchant.subCompanyName}}</td>
-                                            <td>{{merchant.cityName}}</td>
-                                            <td>{{merchant.merchantName}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <span v-if="!merchantList.length>0 && firstAdd">
+                        <div class="addbottom clearfix">
+                            <div style="text-indent: 68%">已选择：</div>
+                            <div class="left">
+                                <table v-if="merchantList.length>0"
+                                       class="table">
+                                    <thead>
+                                    <tr role="row">
+                                        <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>全选</th>
+                                        <th>分公司</th>
+                                        <th>城市</th>
+                                        <th>商户名</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(index,merchant) in merchantList" v-show="merchant.isAdd">
+                                        <td>
+                                            <input type="checkbox" @click="checked(merchant)" v-model="merchant.ischeck"/>
+                                            {{index+1}}
+                                        </td>
+                                        <td>{{merchant.subCompanyName}}</td>
+                                        <td>{{merchant.cityName}}</td>
+                                        <td>{{merchant.merchantName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <span v-if="!merchantList.length>0 && firstAdd">
                                         未查询到商户数据！
                                     </span>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
-                                    <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
-                                    <input type="button" class="btn btn-info" @click="submit()" value="确认">
-                                </div>
-                                <div class="col-md-4">
-                                    <ul id="IDS"></ul>
-                                </div>
+                            </div>
+                            <div class="center">
+                                <input type="button" class="btn btn-info" @click="addTrue" value="添加">
+                                <input type="button" class="btn btn-info" @click="delTrue" value="删除">
+                                <input type="button" class="btn btn-info" @click="submit" value="确认">
+                            </div>
+                            <div class="right">
+                                <ul>
+                                    <li v-for="n in checkedLis" @click="checkLi($event,n)">{{n.merchantName}}</li>
+                                </ul>
                             </div>
                         </div>
+                    </div>
                 </content-dialog>
 
                 <!-- 预付 -->
@@ -274,7 +275,6 @@
                 shCity: [],
                 prepaymentList: [],
                 merchantList: [],
-                addId: [],
                 merchantInfo: {
                     companyId: "",
                     cityId: "",
@@ -304,10 +304,145 @@
                 total: [],
                 dtitle:'',
                 saveerror: false,
+                checkedIds: [],
+                checkedLis: [],
+                removeIds: [],
                 firstAdd: false
             }
         },
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.merchantList.map((value)=>{
+                    (!value.ischeck)?clength++:null;
+                })
+                return !clength
+            }
+        },
         methods: {
+            checkLi(e,n){
+                if(!e.target.classList.length){
+                    this.removeIds.push(n.merchantID);
+                    e.target.classList.add('check-li');
+                }
+                else{
+                    _.remove(this.removeIds, function(e) {
+                        return e==n.merchantID;
+                    })
+                    e.target.classList.remove('check-li');
+                }
+            },
+            addTrue() {
+                if(this.checkedIds==''){
+                    dialogs('info','请勾选要添加的商户！');
+                    return;
+                }
+                this.$set('checkedLis',this.checkedIds);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.checkedLis.map((value)=>{
+                        if(val.merchantID==value.merchantID){
+                            val.isAdd=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.checkedIds=[];
+            },
+            delTrue() {
+                if(this.removeIds==''){
+                    dialogs('info','请选择要删除的商户！');
+                    return;
+                }
+                let dataLi=_.cloneDeep(this.checkedLis);
+                _.map(this.removeIds,(val)=>{
+                    _.remove(dataLi, function(e) {
+                        return e.merchantID==val;
+                    })
+                })
+                this.$set('checkedLis',dataLi);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.removeIds.map((value)=>{
+                        if(val.merchantID==value){
+                            val.isAdd=true;
+                            val.ischeck=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.removeIds=[];
+            },
+            submit() {
+                if(this.checkedLis==''){
+                    return;
+                }
+                let data = {
+                    'merchantIDs':[]
+                }
+                _.map(this.checkedLis,(val)=>{
+                    data.merchantIDs.push(val.merchantID);
+                })
+                this.model.insertBatch(data).then((response)=>{
+                    // *** 判断请求是否成功如若
+                    if (response.data.code == 0) {
+                        this.query();
+                        dialogs();
+                    }
+                });
+                this.modal_prepayment_info = false;
+            },
+            chooseAll(){
+                this.checkedIds=[];
+                let cloneData=_.cloneDeep(this.merchantList);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        this.checkedIds.push(value);
+                        value.ischeck=true;
+                    }
+                })
+                this.merchantList=cloneData;
+            },
+            checked(n){
+                if(!n.ischeck){
+                    this.checkedIds.push(n);
+                }else{
+                    _.remove(this.checkedIds, function(e) {
+                        return e.merchantID==n.merchantID;
+                    })
+                }
+            },
+            //获取商户数据
+            getMerchantList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.firstAdd=true;
+                this.merchantList=[];
+                this.checkedIds=[];
+                this.checkedLis=[];
+                this.$common_model.getmerchant_list(this.merchantInfo)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若成功则填充数据到模型
+                            (response.data.code == 0) ? this.$set('merchantList', response.data.data) : null;
+                            _.map(this.merchantList, function(value) {
+                                value.isAdd=true;
+                            })
+                        });
+            },
+            //显示选择商户窗口
+            showMerchants() {
+                this.merchantInfo.companyId =this.merchantInfo.cityId=this.merchantInfo.merchantOperationID = this.merchantInfo.merchantName = "";
+                this.firstAdd=false;
+                this.merchantList=[];
+                this.checkedIds=[];
+                this.checkedLis=[];
+                this.queryForMerchantList();
+            },
+            queryForMerchantList() {
+                this.getshCity();
+                this.modal_prepayment_info = true;
+            },
             initList(){
                 this.modal_prepayment_info=false;
                 this.modal_prepayment_recharge=false;
@@ -358,16 +493,6 @@
                             }
                         });
             },
-            //获取商户数据
-            getMerchantList(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.firstAdd=true;
-                this.$common_model.getmerchant_list(this.merchantInfo)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code == 0) ? this.$set('merchantList', response.data.data) : null;
-                        });
-            },
             //获取分公司数据
             getSubcompany(){
                 this.$common_model.getcompany()
@@ -399,25 +524,6 @@
                             (response.data.code == 0) ? this.$set('shCity', response.data.data) : null;
                         });
             },
-            checkAll(ck) {
-                if (ck.target.checked) {
-                    $("input[name='ckbox']").prop({'checked': true});
-                } else {
-                    $("input[name='ckbox']").prop({'checked': false});
-                }
-            },
-            //显示选择商户窗口
-            showMerchants() {
-                this.merchantInfo.companyId = "", this.merchantInfo.cityId = "", this.merchantInfo.merchantOperationID = "", this.merchantInfo.merchantName = "", this.queryForMerchantList();
-                this.firstAdd=false;
-                this.merchantList=[];
-            },
-            queryForMerchantList() {
-                //设置全选属性
-                this.clear();
-                this.getshCity();
-                this.modal_prepayment_info = true;
-            },
             subApplyAdvancePay() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror = true;
@@ -437,58 +543,6 @@
                         });
                 //关闭弹出层
                 this.modal_prepayment_recharge = false;
-            },
-            //清除
-            clear() {
-                this.addId = [];
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked', false);
-                $('.addbottom .col-md-4').children('ul').html('');
-            },
-            appendLi(a) {
-
-                let _tr = $("input[value='" + a + "']").closest('tr');
-                let _ul = $('.addbottom .col-md-4').children('ul');
-                _ul.append('<li value="' + a + '">' + _tr.children('td:last').html() + '</li>');
-                _tr.hide();
-            },
-            addTrue(e) {
-                this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value
-                )
-                ;
-                for (let i = 0; i < this.addId.length; i++) {
-                    this.appendLi(this.addId[i]);
-                }
-                $('.col-md-7 td input[type="checkbox"]').prop('checked', false);
-                this.addId = [];
-            },
-            delTrue(e) {
-                let _ul = $(e.target).parent('.col-md-2').next('.col-md-4').children('ul'),
-                        _table = $(e.target).parent('.col-md-2').prev('.col-md-7').children('table').find('tr:hidden'),
-                        _li = _ul.find('.check-li');
-                for (let i = 0; i < _li.length; i++) {
-                    _table.eq(_li.eq(i).index()).show();
-                }
-                _li.remove();
-            },
-            submit(e) {
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                let _li = $("#IDS").children('li');
-                if (!_li.length > 0)return;
-                let data = {'merchantIDs': Array.from(_li, i => i.getAttribute('value')
-                )
-            }
-                this.model.insertBatch(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若
-                            if (response.data.code == 0) {
-                                this.query();
-                                dialogs();
-                            }
-                        });
-                //关闭弹出层
-                //$(".modal").modal("hide");
-                this.modal_prepayment_info = false;
-
             },
             checkNew(){
                 this.checkForm.pageIndex=1;
