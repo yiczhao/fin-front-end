@@ -172,7 +172,7 @@
                     </div>
                     <div class="form-group">
                         <label><i>*</i>账户名</label>
-                        <input type="text" class="form-control" v-validate:val3="['required']" v-model="relist.collectionAccountName" placeholder="20字以内" maxlength="20">
+                        <input type="text" class="form-control" v-validate:val3="['required']" v-model="relist.collectionAccountName" placeholder="50字以内" maxlength="50">
                     </div>
                     <div class="form-group">
                         <label><i>*</i>收款账号</label>
