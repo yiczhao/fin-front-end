@@ -144,12 +144,13 @@
                     })
                     return a.join("")
                 }
+                return value;
             },
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
                     if(value!=null){
-                        (key!='otherExpenseRemarks'&&key!='id')?data[key]=this.toStrings(value):data[key]=value;
+                        data[key]=this.toStrings(value);
                     }else{
                         data[key]="";
                     }
@@ -157,7 +158,9 @@
                 return data;
             },
             enString(value){
-                if(typeof value !='string'||value.indexOf('】')<0)return;
+                if(typeof value !='string'||value.indexOf('】')<0){
+                    return value;
+                }
                 let a=value.split('】');
                 _.remove(a,(n)=>{return n==''});
                 let b=a.map(function (val){ return val.replace('【','')})
@@ -172,7 +175,7 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='otherExpenseRemarks'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae'&&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
+                            data[key]=this.enString(value);
                         })
                         this.$set('defaultData',data);
                     }
@@ -187,7 +190,7 @@
                         }
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='otherExpenseRemarks'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae' &&key!= 'activityName'&&key!= 'activityOperationID')?data[key]=this.enString(value):data[key]=value;
+                            data[key]=this.enString(value);
                         })
                         this.$set('defaultData',data);
                         dialogs('success','加载成功！')
