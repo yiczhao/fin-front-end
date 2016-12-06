@@ -337,17 +337,17 @@
                 this.addshow=true;
             },
             submit(a){
-                this.waring = '你确认提交该账户？';
+                this.waring = '你确认提交信息？';
                 this.accountId=a;
                 this.waringshow=true;
             },
             deleteList(a){
-                this.waring = '你确认删除该账户？';
+                this.waring = '你确认删除信息？';
                 this.accountId=a;
                 this.waringshow=true;
             },
             pass(a){
-                this.waring = '你确认通过该账户？';
+                this.waring = '你确认通过信息？';
                 this.accountId=a;
                 this.waringshow=true;
             },
@@ -373,7 +373,7 @@
                 })
             },
             waringBtn(){
-                if(this.waring == '你确认提交该账户？'){
+                if(this.waring == '你确认提交信息？'){
                     this.model.providerPay_submit(this.accountId).then((response)=>{
                         // *** 判断请求是否成功如若成功则启用该数据
                         if(response.data.code==0){
@@ -382,7 +382,7 @@
                         }
                     })
                 }
-                if(this.waring == '你确认删除该账户？'){
+                if(this.waring == '你确认删除信息？'){
                     this.model.providerPay_delete(this.accountId).then((response)=>{
                         // *** 判断请求是否成功如若成功则启用该数据
                         if(response.data.code==0){
@@ -391,7 +391,7 @@
                         }
                     })
                 }
-                if(this.waring == '你确认通过该账户？'){
+                if(this.waring == '你确认通过信息？'){
                     this.model.providerPay_pass(this.accountId).then((response)=>{
                         // *** 判断请求是否成功如若成功则启用该数据
                         if(response.data.code==0){
