@@ -177,7 +177,7 @@
                         :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
                         :title.sync="'添加账户'" 
                         >
-                        <div class="modal-body" style="width: 900px;">
+                        <div class="addDialogs">
                             <div class="addtop">
                                 <div class="col-md-3">
                                     <select class="form-control" v-model="shdata.subCompanyID" @change="getshCity(shdata.subCompanyID)">
@@ -205,48 +205,44 @@
                                     <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
                                 </div>
                             </div>
-                            <div class="addbottom">
-                                <div style="text-indent: 68%">已选择：</div>
-                                <div class="col-md-7">
-                                    <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
+                            <div class="addbottom clearfix">
+                                <div style="text-indent: 76%">已选择：</div>
+                                <div class="left">
+                                    <table v-if="merchantList.length>0"
+                                           class="table">
                                         <thead>
                                         <tr role="row">
-                                            <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
+                                            <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>全选</th>
                                             <th>分公司</th>
                                             <th>城市</th>
                                             <th>商户名</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr role="row" v-for="n in xhlist">
+                                        <tr v-for="(index,merchant) in merchantList" v-show="merchant.isAdd">
                                             <td>
-                                                <label>
-                                                    <input :value="n.id"
-                                                           type="checkbox"
-                                                           :name="n.name"
-                                                           :subCompanyID="n.subCompanyOperationID"
-                                                           :cityID="n.cityID"
-                                                           :_type="n.type"
-                                                    >{{$index+1}}
-                                                </label>
+                                                <input type="checkbox" @click="checked(merchant)" v-model="merchant.ischeck"/>
+                                                {{index+1}}
                                             </td>
-                                            <td>{{n.subCompanyName}}</td>
-                                            <td>{{n.cityName}}</td>
-                                            <td>{{n.name}}</td>
+                                            <td>{{merchant.subCompanyName}}</td>
+                                            <td>{{merchant.cityName}}</td>
+                                            <td>{{merchant.name}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <span v-if="!xhlist.length>0&&firstAdd">
-                                        无可添加数据
+                                    <span v-if="!merchantList.length>0 && firstAdd">
+                                        未查询到商户数据！
                                     </span>
                                 </div>
-                                <div class="col-md-1">
-                                    <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
-                                    <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
-                                    <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
+                                <div class="center">
+                                    <input type="button" class="btn btn-info" @click="addTrue" value="添加">
+                                    <input type="button" class="btn btn-info" @click="delTrue" value="删除">
+                                    <input type="button" class="btn btn-info" @click="submit" value="确认">
                                 </div>
-                                <div class="col-md-4">
-                                    <ul></ul>
+                                <div class="right">
+                                    <ul>
+                                        <li v-for="n in checkedLis" @click="checkLi($event,n)">{{n.name}}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -257,71 +253,25 @@
     </index>
 </template>
 <style lang="sass" scoped>
-    .addtop,  .addbottom{
-        overflow: hidden;
-    .form-control{
-        padding: 7px;
-    }
-    }
-    .addbottom{
-        margin-top: 15px;
-    .col-md-2{
-        text-align: center;
-    input{
-        margin-bottom: 10px;
-    }
-    }
-    .col-md-7{
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-    .col-md-1{
-        padding-top: 40px;
-        text-align: center;
-        width: 113px;
-    input{
-        margin:15px 0;
-    }
-    }
-    .col-md-4{
-        border: 1px solid #ccc;
-        padding:10px;
-        width: 243px;
-    }
-    ul{
-        list-style: none;
-        height: 278px;
-        overflow: auto;
-    li{
-        margin:5px 0;
-        cursor: pointer;
-        padding-left:3px;
-    }
-    }
-    }
     table tr{
-    td,th{
-        text-align: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    span{
-        cursor: pointer;
-        color: #3c8dbc;
-    &:hover{
-         opacity: 80;
-     }
-    }
+        td,th{
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        span{
+            cursor: pointer;
+            color: #3c8dbc;
+        &:hover{
+             opacity: 80;
+         }
+        }
     }
     input[type="checkbox"]{
         position: relative;
         top: 2px;
         left: -2px;
     }
-    }
-    .addbottom table tr td,  .addbottom table tr th{
-        padding: 2px;
     }
     #modal_submit{
         label i{
@@ -373,7 +323,7 @@
                     'name':''
                 },
                 zdlists:[],
-                xhlist:[],
+                merchantList:[],
                 addId:[],
                 id:'',
                 isEnable: 0,
@@ -386,10 +336,120 @@
                 },
                 saveerror:false,
                 firstAdd:false,
+                checkedIds: [],
+                checkedLis: [],
+                removeIds: [],
                 total:0
             }
         },
-        methods:{
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.merchantList.map((value)=>{
+                    (!value.ischeck)?clength++:null;
+                })
+                return !clength
+            }
+        },
+        methods: {
+            checkLi(e,n){
+                if(!e.target.classList.length){
+                    this.removeIds.push(n.operationID);
+                    e.target.classList.add('check-li');
+                }
+                else{
+                    _.remove(this.removeIds, function(e) {
+                        return e==n.operationID;
+                    })
+                    e.target.classList.remove('check-li');
+                }
+            },
+            addTrue() {
+                if(this.checkedIds==''){
+                    dialogs('info','请勾选要添加的商户！');
+                    return;
+                }
+                this.$set('checkedLis',this.checkedIds);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.checkedLis.map((value)=>{
+                        if(val.operationID==value.operationID){
+                            val.isAdd=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.checkedIds=[];
+            },
+            delTrue() {
+                if(this.removeIds==''){
+                    dialogs('info','请选择要删除的商户！');
+                    return;
+                }
+                let dataLi=_.cloneDeep(this.checkedLis);
+                _.map(this.removeIds,(val)=>{
+                    _.remove(dataLi, function(e) {
+                        return e.operationID==val;
+                    })
+                })
+                this.$set('checkedLis',dataLi);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.removeIds.map((value)=>{
+                        if(val.operationID==value){
+                            val.isAdd=true;
+                            val.ischeck=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.removeIds=[];
+            },
+            submit() {
+                if(this.checkedLis==''){
+                    return;
+                }
+                let data=[];
+                _.map(this.checkedLis,(val)=>{
+                    data.push(
+                        {
+                            operationID:val.id+"",
+                            name:val.name,
+                            subCompanyID:val.subCompanyOperationID,
+                            cityID:val.cityID,
+                            type:val.type
+                        })
+                })
+                this.model.thirdParty_save(JSON.stringify(data))
+                        .then((response)=>{
+                                if(response.data.code == 0){
+                                this.initList();
+                                dialogs('success','已添加！');
+                            }
+                        })
+            },
+            chooseAll(){
+                this.checkedIds=[];
+                let cloneData=_.cloneDeep(this.merchantList);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        this.checkedIds.push(value);
+                        value.ischeck=true;
+                    }
+                })
+                this.merchantList=cloneData;
+            },
+            checked(n){
+                if(!n.ischeck){
+                    this.checkedIds.push(n);
+                }else{
+                    _.remove(this.checkedIds, function(e) {
+                        return e.operationID==n.operationID;
+                    })
+                }
+            },
             // *** 请求账户列表数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -450,9 +510,11 @@
                 this.getZlists(this.defaultData);
             },
             clearUl(){
-                this.xhlist=[];
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
-                $('.addbottom .col-md-4').children('ul').html('');
+                this.merchantList=[];
+                this.firstAdd=false;
+                this.merchantList=[];
+                this.checkedIds=[];
+                this.checkedLis=[];
             },
             addUser(){
                 this.shdata={
@@ -463,7 +525,6 @@
                 };
                 this.getshCity();
                 this.clearUl();
-                this.firstAdd=false;
                 this.modal_add = true;
             },
             searchDigest(){
@@ -472,70 +533,10 @@
                 this.firstAdd=true;
                 this.model.thirdParty_accountlist(this.shdata)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-                        })
-            },
-            allCkb(e){
-                if(e.target.checked){
-                    $('.col-md-7 td input[type="checkbox"]').prop('checked',true);
-                }else{
-                    $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
-                    this.addId=[];
-                }
-            },
-            appendLi(a){
-                let _this=$("input[value='" + a + "']");
-                let _tr=_this.closest('tr');
-                let _ul=$('.addbottom .col-md-4').children('ul');
-                let subCompanyID=_this.attr('subCompanyID');
-                let cityID=_this.attr('cityID');
-                let type=_this.attr('_type');
-                _ul.append('<li value="'+a+'"subCompanyId="'+subCompanyID+'" cityID="'+cityID+'" type="'+type+'">'+_tr.children('td:last').html()+'</li>');
-                _tr.hide();
-            },
-            addTrue(e){
-                this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value);
-                for(let i=0;i<this.addId.length;i++){
-                    this.appendLi(this.addId[i]);
-                }
-                $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
-                this.addId=[];
-            },
-            delTrue(e){
-                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
-                        _table=$(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
-                        _li= _ul.find('.check-li');
-                for(let i=0;i<_li.length;i++){
-                    _table.eq(_li.eq(i).index()).show();
-                }
-                _li.remove();
-            },
-            submitTrue(e){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
-                if(!_li.length>0)return;
-                var data=[];
-                _li.each(function(index){
-                    let _this=$(this);
-                    let operationID=_this.attr('value');
-                    let subCompanyID=_this.attr('subCompanyID');
-                    let cityID=_this.attr('cityID');
-                    let type=_this.attr('type');
-                    data.push(
-                    {
-                        operationID:operationID,
-                        name:_this.html(),
-                        subCompanyID:subCompanyID,
-                        cityID:cityID,
-                        type:type
-                    })
-                })
-                this.model.thirdParty_save(JSON.stringify(data))
-                        .then((response)=>{
-                            if(response.data.code == 0){
-                                this.initList();
-                                dialogs('success','已添加！');
-                            }
+                            (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
+                            _.map(this.merchantList, function(value) {
+                                value.isAdd=true;
+                            })
                         })
             },
             delstore(_id){
