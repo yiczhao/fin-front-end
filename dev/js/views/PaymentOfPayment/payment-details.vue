@@ -237,13 +237,14 @@
                                 </tr>
                             </thead>
                             <tr v-show="listinfos!=''&&listinfos!=null" class="div-table" v-for="trlist in listinfos">
-                                <td>{{trlist.createDate | datetimes}}</td>
+                                <td v-if = "!!trlist.createDate">{{trlist.createDate | datetimes}}</td>
+                                <td v-else>{{trlist.createTime | datetimes}}</td>
                                 <td>
                                     <span v-if="listinfos[0].purpose=='3'">{{trlist.suspensionTaxAmount/100 | currency '' }}</span>
                                     <span v-else>{{trlist.payAmount/100 | currency '' }}</span>
                                 </td>
                                 <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
-                                <td>
+                                <td v-if="!trlist.providerPayDetail">
                                     <template v-if="trlist.purpose==1"> 补贴划付</template>
                                     <template v-if="trlist.purpose==2"> 额度采购</template>
                                     <template v-if="trlist.purpose==3"> 退税划付</template>
@@ -251,12 +252,18 @@
                                     <template v-if="trlist.purpose==5"> 供货商划付</template>
                                     <template v-if="trlist.purpose==10">税金提现</template>
                                 </td>
+                                <td v-else>
+                                    <template v-if="trlist.purpose==0"> 其他</template>
+                                    <template v-if="trlist.purpose==1"> 广告费</template>
+                                    <template v-if="trlist.purpose==2"> 物料费</template>
+                                </td>
                                 <td>
-                                    <template v-if="trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='3'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='4'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='10'"><a @click="skipToSubsidyAccount(trlist.streamID)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='3'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='4'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='10'"><a @click="skipToSubsidyAccount(trlist.streamID)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                                    <template v-if="trlist.providerPayDetail"><a @click="skipToProviderPayDetail(trlist.id)" data-ksa="provider_pay_detail.search">详情</a></template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>
@@ -314,7 +321,7 @@
 
             <content-dialog
                     :show.sync="modal_checking" :is-button="false" :type.sync="'infos'"
-                    :title.sync="'对账'" 
+                    :title.sync="'对账'"
                     >
                     <div  v-if="!!checkLists.length&&checkLists != ''" class="modal-body">
                         <div class="tc f20">
@@ -539,6 +546,18 @@
                                     }
                                 });
                         break;
+                    case 11:
+                    this.model.getpart11(a.id)
+                            .then( (response)=> {
+                                if(response.data.code==0) {
+                                    this.$set('listinfos',response.data.data);
+                                    _.map(this.listinfos, (value) => {
+                                        value.providerPayDetail = true;
+                                    })
+                                    this.list_info = true;
+                                }
+                            });
+                    break;
                 }
             },
             back(a){
@@ -704,6 +723,13 @@
                                 this.$router.go({name:'suspension-tax',params:{orderId:trlist.reserveCashOrder.orderId,suspensionHDid:trlist.subsidyAccount.id,suspensionBTid:trlist.reserveCashOrder.merchantId,suspensionZHname:trlist.activity.name,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.subsidyAccount.suspensionTaxAmount,suspensionSHname:trlist.merchant.name}});
                             }
                         })
+            },
+            skipToProviderPayDetail(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.skipToProviderPayDetail(_id)
+                    .then((response) => {
+                        this.$router.go({name:'provider-pay-detail', params:{providerID:_id}});
+                    })
             }
         },
         watch:{

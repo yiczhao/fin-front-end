@@ -573,6 +573,12 @@ export default function install(Vue) {
      */
     _o.getpart10 = './reserveCashOrder/suspensionTaxAccountDetail/list/';
     /**
+     * @description 备付金支出明细税金提现详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart11 = './reserveCashOrder/providerPayDetail/list/';
+    /**
      * @description 查询对账数据接口地址
      * @author 冷艳君
      * @method GET
@@ -632,6 +638,19 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToSubsidyAccount='./reserveCashOrder/skipToSubsidyAccount/';
+
+    /**
+     * @description 跳转至供应商划付
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToProviderPayDetail='./reserveCashOrder/skipToProviderPayDetail/';
+    /**
+     * @description 跳转至跳转到供应商划付
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToProviderPayDetail='./reserveCashOrder/skipToProviderPayDetail/';
     /**
      * @description 合计
      * @author 于凯乐

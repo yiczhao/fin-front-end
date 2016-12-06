@@ -211,7 +211,7 @@ export default function(router){
             }
         },
         //备付金支出-供应商划付
-        '/provider-pay-detail':{
+        '/provider-pay-detail/:providerID':{
             name:'provider-pay-detail',
             router_type:"payment",
             component: function(resolve){

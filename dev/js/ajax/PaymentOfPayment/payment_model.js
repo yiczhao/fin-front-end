@@ -46,6 +46,14 @@ function model(_this) {
             return _this.$http.get(_this.$API.getpart10+_id)
         },
         /**
+         * @description 查询z供应商划付详情数据
+         * @param {id}
+         * @returns {*}
+         */
+        getpart11(_id){
+            return _this.$http.get(_this.$API.getpart11+_id)
+        },
+        /**
          * @description 查询对账数据
          * @param {id}
          * @returns {*}
@@ -132,6 +140,14 @@ function model(_this) {
          */
         skipToSubsidyAccount(_id){
             return _this.$http.get(_this.$API.skipToSubsidyAccount+_id)
+        },
+        /**
+         * @description 订单跳转到供应商划付
+         * @param {data}
+         * @returns {*}
+         */
+        skipToProviderPayDetail(_id){
+            return _this.$http.get(_this.$API.skipToProviderPayDetail+_id)
         },
         reserveCashOrdertotal(data){
             return _this.$http.get(_this.$API.reserveCashOrdertotal+$.param(data))

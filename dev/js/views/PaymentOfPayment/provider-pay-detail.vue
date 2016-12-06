@@ -442,6 +442,7 @@
             this.getTime();
             this.getClist();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
+            (this.$route.params.providerID==':providerID')?this.defaultData.id='' :this.defaultData.id=this.$route.params.providerID;
             this.initList();
         },
         watch:{
