@@ -354,6 +354,7 @@
             back(a){
                 this.modal_back=true;
                 this.accountId=a;
+                this.remarks='';
             },
             backTrue(){
                 if(this.remarks == ''){
