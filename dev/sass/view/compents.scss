@@ -140,6 +140,9 @@
   .btn{
     min-width: 90px;
   }
+  .check-li{
+    background: #ccc;
+  }
   .form-control{
     padding: 7px 10px;
   }
@@ -200,6 +203,39 @@
   }
   .table-footer{
     border-top: 1px solid #bbb;
+  }
+  .addDialogs{
+    .addbottom{
+      margin-bottom: 20px;
+      .left,.center,.right{
+        float: left;
+      }
+      .left{
+        height: 300px;
+        overflow: auto;
+        border: 1px solid #ccc;
+        width: 550px;
+      }
+      .center{
+        width: 90px;
+        margin:0 20px;
+        padding-top: 30px;
+        .btn{
+          margin-top:30px;
+        }
+      }
+      .right{
+        width: 220px;
+        margin: 0;
+        ul{
+          list-style: none;
+          border: 1px solid #ccc;
+          padding: 10px;
+          height: 300px;
+          overflow: auto;
+        }
+      }
+    }
   }
   .no-list{
     padding: 30px;

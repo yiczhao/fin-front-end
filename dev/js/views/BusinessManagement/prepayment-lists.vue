@@ -144,8 +144,7 @@
                                         :value="n.subCompanyID"></option>
                             </select>
                             <select class="form-control" v-model="merchantInfo.cityId">
-                                <option value="">全部城市
-                                </option>
+                                <option value="">全部城市</option>
                                 <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
                             </select>
                             <input type="button" class="btn btn-info" @click="getMerchantList"
@@ -153,7 +152,7 @@
                         </form>
 
                         <div class="addbottom clearfix">
-                            <div style="text-indent: 68%">已选择：</div>
+                            <div style="text-indent: 76%">已选择：</div>
                             <div class="left">
                                 <table v-if="merchantList.length>0"
                                        class="table">
@@ -381,7 +380,7 @@
                     'merchantIDs':[]
                 }
                 _.map(this.checkedLis,(val)=>{
-                    data.merchantIDs.push(val.merchantID);
+                    data.merchantIDs.push(val.merchantID+"");
                 })
                 this.model.insertBatch(data).then((response)=>{
                     // *** 判断请求是否成功如若
