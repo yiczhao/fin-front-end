@@ -385,6 +385,7 @@ export default function(router){
         if(!sessionStorage.getItem('userData')){
             router.go({name:'login'})
         }
+        sessionStorage.setItem('isHttpin',0);
         document.querySelector('body').scrollTop=0;
         transition.next();
     });

@@ -324,7 +324,6 @@
                 },
                 zdlists:[],
                 merchantList:[],
-                addId:[],
                 id:'',
                 isEnable: 0,
                 redata:{
