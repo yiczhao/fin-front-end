@@ -68,6 +68,13 @@
 									<td>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="老交易数据生成活动列表" data-toggle="modal" @click="generateOldActivitySubCompany($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -196,6 +203,12 @@
                 this.$http.post('./dev/tool/subsidyAccount/correct')
                         .then((response)=>{
                             dialogs('success','处理成功！');
+                        })
+            },
+            generateOldActivitySubCompany(e){
+                this.$http.post('./dev/tool/oldActivitySubCompany/generate')
+                        .then((response)=>{
+                            dialogs('success','生成功！');
                         })
             }
         },
