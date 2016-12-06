@@ -2,14 +2,6 @@
 
 export default function(router){
     router.map({
-        /* 登录 */
-        '/login':{
-            name:'login',
-            cnname:'登录',
-            component: function(resolve){
-                require(['./views/login.vue'],resolve);
-            }
-        },
         /* 首页 */
         '/default':{
             name:'default',
@@ -377,14 +369,11 @@ export default function(router){
         // 转到登录页
         '*':{
             component:function () {
-                router.go({name:'login'})
+                window.location.href = authUrl1
             }
         }
     })
     router.beforeEach(transition =>{
-        if(!sessionStorage.getItem('userData')){
-            router.go({name:'login'})
-        }
         sessionStorage.setItem('isHttpin',0);
         document.querySelector('body').scrollTop=0;
         transition.next();
