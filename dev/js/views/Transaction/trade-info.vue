@@ -309,7 +309,6 @@
                     });
             },
             query() {
-                debugger
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
                 back_json.saveArray(this.$route.path,this.checkForm);
@@ -344,7 +343,6 @@
             this.getSubcompany();
             this.getCity();
             this.getTime();
-            debugger;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },

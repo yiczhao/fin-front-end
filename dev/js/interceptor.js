@@ -13,7 +13,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.interceptors.push({
 		request (request) {
 			request.url.indexOf('/total')<=0?Message.show('loading','loading...'):null;
-			(request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0) ? sessionStorage.setItem('isHttpin',1):null;
+			(request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0) ? sessionStorage.setItem('isHttpin',1):null;
 			conut=0;
 			let _appkey = 'cxcx2bles6w15xfehrbsb8vaeqwge75d7mybz8f0'
 			let _secretkey = 'hsmpaf6wdryq8v5c7xsbtli7rjh45a75w9k6ejw9'
