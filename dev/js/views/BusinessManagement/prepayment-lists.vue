@@ -388,8 +388,8 @@
                         this.query();
                         dialogs();
                     }
+                    this.modal_prepayment_info = false;
                 });
-                this.modal_prepayment_info = false;
             },
             chooseAll(){
                 this.checkedIds=[];
