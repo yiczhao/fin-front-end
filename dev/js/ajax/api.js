@@ -1415,7 +1415,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method get
      */
-    _o.contract_editInfo = './contract/editInfo?';
+    _o.contract_editInfo = './contract/info?';
 
     /**
      * @description 关联合同接口地址
