@@ -88,18 +88,18 @@
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
-                                <th>退税款</th>
+                                <th>暂扣税金</th>
                                 <th>商户实补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
-                                <th>33211佣金</th>
+                                <th>佣金</th>
                                 <th>入账金额</th>
                                 <th>交易时间</th>
                                 <th>手机号</th>
                                 <th>卡号</th>
                                 <th>参与活动</th>
                                 <th>交易类型</th>
-                                <th>操作</th>
+                                <th>凭证</th>
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -165,7 +165,7 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.type==2||trlist.type==3">
-                                        <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
+                                        <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载</a>
                                     </template>
                                 </td>
                                 <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
@@ -173,8 +173,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>

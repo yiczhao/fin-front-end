@@ -256,7 +256,7 @@
     margin: 20px 0;
     .left {
       width: 120px;
-      position: absolute;
+      margin-right: 20px;
       padding: 0 20px;
       height: 33px;
       border-right: 1px solid #ccc; 
@@ -268,8 +268,8 @@
       }
     }
     .right{
-      //background: pink;
-      margin:0 20px 0 140px;
+      margin:0 20px 0;
+      overflow: hidden;
     }
   }
   .nums{

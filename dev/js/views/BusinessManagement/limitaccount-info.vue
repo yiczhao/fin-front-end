@@ -112,8 +112,8 @@
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
                                     <td>合计：</td>
+                                    <td></td>
                                     <td></td>
                                     <td>{{nums.purchaseLimitAmount/100 | currency ''}}</td>
                                     <td>{{nums.purchaseCostAmount/100 | currency ''}}</td>

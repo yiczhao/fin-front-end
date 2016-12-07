@@ -118,8 +118,8 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td>{{total.incomeAmount/100| currency '' }}</td>
                                 <td>{{total.payoutAmount/100| currency '' }}</td>
                                 <td></td>

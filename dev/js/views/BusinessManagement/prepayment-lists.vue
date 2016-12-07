@@ -96,9 +96,9 @@
                                 <td>{{prepayment.servicePerson}}</td>
                             </tr>
                             <tr role="row">
-                                <td></td>
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td>{{total/100 | currency ''}}</td>
                                 <td></td>

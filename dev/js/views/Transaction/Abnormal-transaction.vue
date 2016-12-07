@@ -84,7 +84,7 @@
                                 <th>商户应补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
-                                <th>33211佣金</th>
+                                <th>佣金</th>
                                 <th>交易时间</th>
                                 <th>手机号</th>
                                 <th>卡号</th>
@@ -138,8 +138,8 @@
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>

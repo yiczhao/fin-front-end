@@ -73,7 +73,7 @@
                                 <th>三方应收</th>
                                 <th>商户应补</th>
                                 <th>扣收金额</th>
-                                <th>33211佣金</th>
+                                <th>佣金</th>
                                 <th>状态</th>
                                 <th>操作</th>
                                 <th>参与活动</th>
@@ -130,8 +130,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.limitDeduct/100 | currency ''}}</td>
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
@@ -261,7 +261,7 @@
                                     placeholder="三方应收">
                         </span>
                         <span>
-                             <label><i>*</i>卡说佣金：</label>
+                             <label><i>*</i>佣金：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.commission33211"
@@ -269,7 +269,7 @@
                                     v-validate:val9="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val9.required}"
                                     v-limitprice="redata.commission33211"
-                                    placeholder="卡说佣金">
+                                    placeholder="佣金">
                         </span>
                     </div>
                     <div class="dialog-row">

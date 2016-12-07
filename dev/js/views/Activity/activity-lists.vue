@@ -1,12 +1,12 @@
 <template>
-    <index :title="'活动管理'"
+    <index :title="'活动列表'"
            :ptitle="'活动列表'"
            :hname="'activity-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'activity-lists'}">活动列表</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
                 </ul>
@@ -52,14 +52,14 @@
                                 <th>分公司 </th>
                                 <th>起止时间</th>
                                 <th>状态</th>
-                                <th>消费总笔数</th>
-                                <th>消费总金额 </th>
-                                <th>三方结算金额</th>
-                                <th>商户结算金额</th>
-                                <th>商户已付金额</th>
-                                <th>退税款</th>
+                                <th>消费笔数</th>
+                                <th>消费金额 </th>
+                                <th>三方应收</th>
+                                <th>商户应补</th>
+                                <th>商户实补</th>
+                                <th>暂扣税金</th>
                                 <th>额采折扣差 </th>
-                                <th>三方折扣差</th>
+                                <th>折扣差</th>
                                 <th>佣金</th>
                                 <th>操作</th>
                                 <th>执行表参数</th>
@@ -97,8 +97,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

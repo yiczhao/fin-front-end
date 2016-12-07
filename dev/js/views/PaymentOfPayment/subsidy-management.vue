@@ -1,5 +1,5 @@
 <template>
-    <index :title="'退税管理'"
+    <index :title="'税金管理'"
            :ptitle="'备付金支出'"
            :hname="'payment-details'"
            :isshow="'isshow'">
@@ -11,7 +11,7 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li class="active" data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li class="active" data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
                     <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
@@ -59,8 +59,8 @@
                                 <th>佣金</th>
                                 <th>已划付</th>
                                 <th>待划付</th>
-                                <th>退税款</th>
-                                <th>欠发票金额</th>
+                                <th>税金账户</th>
+                                <th>欠发票账户</th>
                                 <th>交易</th>
                                 <th>操作</th>
                             </tr>
@@ -92,8 +92,8 @@
                                 </td>
                             </tr>
                             <tr role="row" v-show="total!=''">
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

@@ -11,7 +11,7 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
                     <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
@@ -94,7 +94,7 @@
                                 <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>划付金额</th>
-                                <th>退税款</th>
+                                <th>暂扣税金</th>
                                 <th>付款账户</th>
                                 <th>用途</th>
                                 <th>状态</th>
@@ -186,8 +186,8 @@
                             </tr>
                         </template>
                         <tr>
-                            <td></td>
                             <td>合计：</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td>{{total.payoutAmount/100 | currency ''}}</td>
@@ -229,7 +229,7 @@
                                         <span v-if="listinfos!=''&&listinfos[0].purpose=='3'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
-                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'">退税款</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>

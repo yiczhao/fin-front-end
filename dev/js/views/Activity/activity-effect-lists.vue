@@ -6,7 +6,7 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动列表</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li data-ksa="activity_effect_manage" class="active"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
                 </ul>
@@ -89,7 +89,7 @@
                                 <th>开票金额 </th>
                                 <th>三方应收 </th>
                                 <th>商户应补 </th>
-                                <th>三方折扣差 </th>
+                                <th>折扣差 </th>
                                 <th>佣金 </th>
                                 <th>市场毛利 </th>
                                 <th>商合毛利 </th>

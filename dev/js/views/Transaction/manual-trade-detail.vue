@@ -153,8 +153,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
@@ -249,13 +249,13 @@
                         <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                     </div>
                     <div class="dialog-row">
-                        <label><i>*</i>退税款：</label>
+                        <label><i>*</i>暂扣税金：</label>
                         <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
                                v-validate:val7="['required']"
                                v-limitaddprice="tradeInfo.suspensionTax"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val7.required}">
-                        <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
+                        <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
                     </div>
                     <div class="dialog-row">
                         <label><i>*</i>商户实补：</label>

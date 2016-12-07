@@ -8,7 +8,7 @@
                     <li class="active" data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
                     <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
@@ -98,7 +98,7 @@
                                         <th>生成方式</th>
                                         <th>三方应收</th>
                                         <th>划付金额</th>
-                                        <th>退税款</th>
+                                        <th>暂扣税金</th>
                                         <th>交易</th>
                                         <th>状态</th>
                                         <th>操作</th>
@@ -170,8 +170,8 @@
                                         <td>{{sa.remarks}}</td>
                                     </tr>
                                     <tr>
-                                        <td></td>
-                                        <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                        <td>合计：</td>
+                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                         <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{total.payAmount/100 | currency ''}}</td>
                                         <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td>

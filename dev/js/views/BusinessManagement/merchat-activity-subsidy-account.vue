@@ -76,8 +76,8 @@
                                 </td>
                             </tr>
                             <tr role="row">
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>{{total.paidAmount/100 | currency ''}}</td>
