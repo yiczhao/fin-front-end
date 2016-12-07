@@ -55,6 +55,18 @@
 .icon-error:before {
 	content: "\e995";
 }
+.icon-icon-backward2:before {
+	content: "\e9c0";
+}
+.icon-icon-backward4:before {
+	content: "\e9c1";
+}
+.icon-icon-backward1:before {
+	content: "\e9c2";
+}
+.icon-icon-backward3:before {
+	content: "\e9c3";
+}
 .icon-paragraph-justify3:before {
 	content: "\e9fc";
 }

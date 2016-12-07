@@ -35,19 +35,18 @@
         },
         ready () {
             // 插入权限控制 JS
-//            if(!Cookie.get('KSAuthJSURL')){
-//                this.$router.go({name:'login'})
-//                return
-//            }
-//             let sciprt = document.createElement('SCRIPT')
-//             let _src=Cookie.get('KSAuthJSURL').replace(window.authurl1,window.authurl2);
-//             sciprt.setAttribute('src',_src);
-//             this.$els.scriptPlayground.appendChild(sciprt)
-            if (document.cookie.indexOf("JSESSID=")) {
-                let check = document.cookie.indexOf("JSESSID=");
-                if (check == -1) {
-                    window.location.href = authUrl1;
-                }
+            if(!Cookie.get('KSAuthJSURL')){
+                window.location.href = authUrl1
+                return
+            }
+            window.systemId = 4;
+            if (Cookie.get('KSAuthUserToken')) {
+                KSAuthKit.config({
+                    systemId:systemId,
+                    userToken: Cookie.get('KSAuthUserToken'),
+                    apiURL: authUrl1+'/auth/third/search_user_info'
+                })
+                KSAuthKit.on()
             }
         },
         watch: {

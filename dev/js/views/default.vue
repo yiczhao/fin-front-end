@@ -20,7 +20,6 @@
         components:{
         },
         ready(){
-        debugger;
             this.$http.post(this.$API.login,{username:Cookie.get('KSAuthUserName')})
                     .then((response)=>{
                         if(response.data.code===0){
