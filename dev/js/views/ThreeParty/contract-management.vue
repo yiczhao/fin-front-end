@@ -35,14 +35,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-bottom">
-                        <div class="right">
-                            <page :all="pageall"
-                                  :cur.sync="defaultData.pageIndex"
-                                  :page_size.sync="defaultData.pageSize">
-                            </page>
-                        </div>
-                    </div>
                 </div>
                 <div class="no-list" v-else>
                     未找到数据
@@ -60,32 +52,32 @@
                         </div>
                         <div class="form-group">
                             <label>合同广告费 =</label>
-                            <input v-if="isAdd||!reData.contractAdvertisementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractAdvertisementFee" v-limitprice="reData.contractAdvertisementFee">
+                            <input v-if="isAdd||!reData.contractAdvertisementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractAdvertisementFee" v-limitaddprice="reData.contractAdvertisementFee">
                             <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同物料费 =</label>
-                            <input v-if="isAdd||!reData.contractMaterialFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractMaterialFee" v-limitprice="reData.contractMaterialFee">
+                            <input v-if="isAdd||!reData.contractMaterialFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractMaterialFee" v-limitaddprice="reData.contractMaterialFee">
                             <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同微信营销费 =</label>
-                            <input v-if="isAdd||!reData.contractWeChatMarketFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractWeChatMarketFee" v-limitprice="reData.contractWeChatMarketFee">
+                            <input v-if="isAdd||!reData.contractWeChatMarketFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractWeChatMarketFee" v-limitaddprice="reData.contractWeChatMarketFee">
                             <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同服务费 =</label>
-                            <input v-if="isAdd||!reData.contractServiceFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractServiceFee" v-limitprice="reData.contractServiceFee">
+                            <input v-if="isAdd||!reData.contractServiceFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractServiceFee" v-limitaddprice="reData.contractServiceFee">
                             <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同税费 =</label>
-                            <input v-if="isAdd||!reData.contractTaxFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractTaxFee" v-limitprice="reData.contractTaxFee">
+                            <input v-if="isAdd||!reData.contractTaxFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractTaxFee" v-limitaddprice="reData.contractTaxFee">
                             <input v-else type="text" class="form-control" disabled="true">
                         </div>
                         <div class="form-group">
                             <label>合同结算金额 =</label>
-                            <input v-if="isAdd||!reData.contractSettlementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractSettlementFee" v-limitprice="reData.contractSettlementFee">
+                            <input v-if="isAdd||!reData.contractSettlementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractSettlementFee" v-limitaddprice="reData.contractSettlementFee">
                             <input v-else type="text" class="form-control" disabled="true">
                         </div>
                     </div>
@@ -143,12 +135,9 @@
                 modal_associate: false,
                 isAdd: true,
                 addTitle:'',
-                pageall:1,
                 companylists:[],
                 defaultData:{
                     'thirdPartyAccountID': '',
-                    'pageIndex': 1,
-                    'pageSize': 10
                 },
                 zdlists:[],
                 contractNumbers:'',
@@ -180,7 +169,6 @@
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         });
             },
             initList(){
@@ -281,11 +269,6 @@
             (this.$route.params.contractCompanyName==':contractCompanyName')?this.contractCompanyName='' :this.contractCompanyName=this.$route.params.contractCompanyName;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
-        },
-        watch:{
-            'defaultData.pageSize+defaultData.pageIndex'(){
-                this.initList();
-            }
         }
     }
 </script>
