@@ -42,6 +42,7 @@
                                 <option value="7">转账退款</option>
                                 <option value="8">账户费用</option>
                                 <option value="10">税金提现</option>
+                                <option value="11">供应商划付</option>
                                 <option value="9">其它</option>
                             </select>
 
@@ -103,6 +104,7 @@
                                     <template v-if="trlist.purpose==8">账户费用</template>
                                     <template v-if="trlist.purpose==9">其它</template>
                                     <template v-if="trlist.purpose==10">税金提现</template>
+                                    <template v-if="trlist.purpose==11">供应商划付</template>
                                 </td>
                                 <td>
                                     <span v-if="trlist.status==1">成功</span>
