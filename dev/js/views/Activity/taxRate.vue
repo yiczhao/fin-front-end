@@ -26,7 +26,7 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trList) in taxRateList" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{index+1}}</td>
+                                <td>{{trList.subCompanyID}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>
                                     <template v-if="trList.payTaxType==1">{{'小规模纳税人（/1.03）'}}</template>
