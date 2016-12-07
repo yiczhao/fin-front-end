@@ -229,7 +229,7 @@
                                         <span v-if="listinfos!=''&&listinfos[0].purpose=='3'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
-                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'">暂扣税金</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'&&!listinfos[0].providerPayDetail">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
@@ -243,7 +243,7 @@
                                     <span v-if="listinfos[0].purpose=='3'">{{trlist.suspensionTaxAmount/100 | currency '' }}</span>
                                     <span v-else>{{trlist.payAmount/100 | currency '' }}</span>
                                 </td>
-                                <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                                <td  v-if="trlist.purpose=='1'&&!listinfos[0].providerPayDetail">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                                 <td v-if="!trlist.providerPayDetail">
                                     <template v-if="trlist.purpose==1"> 补贴划付</template>
                                     <template v-if="trlist.purpose==2"> 额度采购</template>
