@@ -70,6 +70,13 @@
 								</tr>
 								<tr>
 									<td>
+										<input type="button" class="btn btn-primary" value="生成活动列表数据" data-toggle="modal" @click="generatActivitySubCompany($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
 										<input type="button" class="btn btn-primary" value="老交易数据生成活动列表" data-toggle="modal" @click="generateOldActivitySubCompany($event)"/>
 									</td>
 									<td>
@@ -205,10 +212,16 @@
                             dialogs('success','处理成功！');
                         })
             },
+            generatActivitySubCompany(e){
+                this.$http.post('./dev/tool/activitySubCompany/generate')
+                        .then((response)=>{
+                            dialogs('success',response.data.message);
+                        })
+            },
             generateOldActivitySubCompany(e){
                 this.$http.post('./dev/tool/oldActivitySubCompany/generate')
                         .then((response)=>{
-                            dialogs('success','生成功！');
+                            dialogs('success',response.data.message);
                         })
             }
         },
