@@ -104,6 +104,8 @@
                                 <th>收款账户名</th>
                                 <th>收款账号</th>
                                 <th>收款开户行</th>
+                                <th>提入行号</th>
+                                <th>是否建行</th>
                                 <th>申请时间</th>
                                 <th>划付时间</th>
                                 <th>对账时间</th>
@@ -179,6 +181,13 @@
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeBankName}}</span>
                                 </td>
+                                <td>
+                                    {{n.incomeBankNumber }}
+                                </td>
+                                <td>
+                                    <span v-if="n.ccb">是</span>
+                                    <span v-else>否</span>
+                                </td>
                                 <td>{{n.applyTime | datetime}}</td>
                                 <td>{{n.paymentTime  | datetime}}</td>
                                 <td>{{n.successTime | datetime}}</td>
@@ -191,7 +200,7 @@
                             <td></td>
                             <td></td>
                             <td>{{total.payoutAmount/100 | currency ''}}</td>
-                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                         </tr>
                         </tbody>
                         </table>

@@ -96,6 +96,8 @@
                                     <th>活动名称</th>
                                     <th>收款账户名</th>
                                     <th>收款账号</th>
+                                    <th>提入行号</th>
+                                    <th>是否建行</th>
                                     <th>付款方式</th>
                                     <th>用途</th>
                                     <th>三方应收</th>
@@ -121,7 +123,13 @@
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.collectionBankName }}</td>
                                 <td>{{n.collectionBankNumber}}</td>
-
+                                <td>
+                                    {{n.bankNumber}}
+                                </td>
+                                <td>
+                                    <template v-if="n.isCcb==1">是</template>
+                                    <template v-else>否</template>
+                                </td>
                                 <td>
                                     <template v-if="n.payType==1">备付金账户</template>
                                     <template v-if="n.payType==2">预付款账户</template>
@@ -158,7 +166,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
