@@ -182,7 +182,11 @@
                 })
             },
             usedefalut(){
-                this.model.useDefault(this.$route.params.subCompanyID).then((res)=>{
+                let data={
+                    subCompanyID:this.$route.params.subCompanyID,
+                    activityID:this.$route.params.activityID
+                }
+                this.model.useDefault(data).then((res)=>{
                     if(res.data.code==0){
                         if(typeof res.data.data=='undefined'){
                             dialogs('info','无默认公式！')

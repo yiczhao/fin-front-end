@@ -101,6 +101,14 @@ function model(_this){
         paidAmount_total(data){
             return _this.$http.get(_this.$API.paidAmount_total+ $.param(data))
         },
+        /**
+         * @description 已划付金额明细合计
+         * @params {data}
+         * @returns {*}
+         * */
+        unpaidAmount_Amount(data){
+            return _this.$http.get(_this.$API.unpaidAmount_Amount+ $.param(data))
+        },
     }
 }
 module.exports=model;

@@ -852,6 +852,12 @@ export default function install(Vue) {
      */
     _o.unpaidAmount_list = './subsidyAccount/unpaidAmount/detail?';
     /**
+     * @description 待划付金额明细列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.unpaidAmount_Amount = './subsidyAccount/isWithDrawAmount?';
+    /**
      * @description 待划付金额明细列表合计接口地址
      * @author 冷艳君
      * @method GET
@@ -1010,7 +1016,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.useDefault = './activity/formulae/useDefault/';
+    _o.useDefault = './activity/formulae/useDefault?';
 
     //- todo  系统配置-系统日志 log-management
     /**
