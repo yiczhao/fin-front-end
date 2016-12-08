@@ -1,7 +1,7 @@
 <template>
     <index :title="'备付金付款明细'"
            :ptitle="'备付金支出'"
-           :hname="'account-management'"
+           :hname="'payment-details'"
            :isshow="'isshow'">
         <div class="content payment-details" slot="content">
             <div class="panel panel-flat">
