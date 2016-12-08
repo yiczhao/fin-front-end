@@ -238,7 +238,8 @@
                             </thead>
                             <tr v-show="listinfos!=''&&listinfos!=null" class="div-table" v-for="trlist in listinfos">
                                 <td v-if = "!!trlist.applyTime">{{trlist.applyTime | datetimes}}</td>
-                                <td v-else>{{trlist.createTime | datetimes}}</td>
+                                <td v-if = "!!trlist.createTime">{{trlist.createTime | datetimes}}</td>
+                                <td v-if = "!!trlist.createDate">{{trlist.createDate | datetimes}}</td>
                                 <td>
                                     <span v-if="listinfos[0].purpose=='3'">{{trlist.suspensionTaxAmount/100 | currency '' }}</span>
                                     <span v-else>{{trlist.payAmount/100 | currency '' }}</span>
