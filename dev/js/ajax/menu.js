@@ -62,12 +62,12 @@ module.exports = [
         ]
     },
     {
-        name: '活动列表',
+        name: '活动管理',
         icon: 'icon-flag3',
         type:'activity',
         ksa:'activity_manage',
         sub_menu: [
-            {name: '活动列表', link: 'activity-lists',ksa:'activity_manage'},
+            {name: '活动管理', link: 'activity-lists',ksa:'activity_manage'},
         ]
     },
     {

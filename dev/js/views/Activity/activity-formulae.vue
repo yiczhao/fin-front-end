@@ -190,7 +190,7 @@
                     if(res.data.code==0){
                         if(!res.data.data){
                             dialogs('info','无默认公式！')
-                            return; 
+                            return;
                         }
                         _.forEach(res.data.data,(value,key)=>{
                             if(!!value){
