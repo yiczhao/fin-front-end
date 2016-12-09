@@ -15,7 +15,7 @@
                     <span class="mr20" >已进税金账户金额：{{unpaidTs/100 | currency ''}}元</span>
                     <span class="mr20" >提现中金额：{{Amount/100 | currency ''}}元</span>
                 </div>
-                <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
+                <div v-show="!!tradeList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -89,7 +89,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="no-list" v-else>
+                <div class="no-list" v-show="!tradeList.length">
                     未查询到数据！
                 </div>
                 <div class="datatable-bottom">
@@ -141,7 +141,10 @@ export default{
                              this.defaultData.pageTotal=response.data.total
                         }
                     });
-                 this.model.unpaidAmount_Amount(this.defaultData)
+                 let data={
+                     id:this.defaultData.id
+                 }
+                 this.model.unpaidAmount_Amount(data)
                          .then((response)=>{
                              if(response.data.code==0){
                                  this.Amount= response.data.data;
