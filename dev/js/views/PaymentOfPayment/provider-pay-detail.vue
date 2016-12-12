@@ -21,7 +21,7 @@
                 </div>
                 <div class="heading-right">
                     <select class="form-control" v-model="defaultData.subCompanyID">
-                        <option value="">请选择付款账号</option>
+                        <option value="">请选择付款账户</option>
                         <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
                     </select>
                     <select class="form-control" v-model="dateS" @change="getTime">
@@ -196,7 +196,7 @@
                     </div>
                     <div class="form-group">
                         <label><i>*</i>金额</label>
-                        <input type="text" class="form-control" v-validate:val8="['required']" v-model="relist.payAmount">
+                        <input type="text" class="form-control" v-validate:val8="['required']" v-limitaddprice="relist.payAmount" v-model="relist.payAmount">
                     </div>
                     <div class="form-group">
                         <label><i>*</i>用途</label>
