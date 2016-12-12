@@ -124,7 +124,8 @@
                                 <td>{{n.collectionBankName }}</td>
                                 <td>{{n.collectionBankNumber}}</td>
                                 <td>
-                                    {{n.bankNumber}}
+                                    <template v-if="n.isCcb==1"></template>
+                                    <template v-else> {{n.bankNumber}}</template>
                                 </td>
                                 <td>
                                     <template v-if="n.isCcb==1">是</template>

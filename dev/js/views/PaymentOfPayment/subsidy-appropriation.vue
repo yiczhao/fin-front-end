@@ -123,7 +123,10 @@
                                         <td>{{sa.activityName}}</td>
                                         <td>{{sa.receiptAccountName}}</td>
                                         <td>{{sa.receiptAccountNumber}}</td>
-                                        <td>{{sa.receiptBankNumber}}</td>
+                                        <td>
+                                            <template v-if="sa.ccb"></template>
+                                            <template v-else>{{sa.receiptBankNumber}}</template>
+                                        </td>
                                         <td>
                                             <template v-if="sa.ccb">是</template>
                                             <template v-else>否</template>

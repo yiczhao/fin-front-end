@@ -182,7 +182,8 @@
                                     <span v-if="n.payType==1">{{n.incomeBankName}}</span>
                                 </td>
                                 <td>
-                                    {{n.incomeBankNumber }}
+                                    <span v-if="n.ccb"></span>
+                                    <span v-else> {{n.incomeBankNumber }}</span>
                                 </td>
                                 <td>
                                     <span v-if="n.ccb">是</span>
