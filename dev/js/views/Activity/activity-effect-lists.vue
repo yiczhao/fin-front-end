@@ -246,7 +246,7 @@
                     'subCompanyID':'',
                     'year':'',
                     'month':'',
-                    'startDate':firstMonth(),
+                    'startDate':getNow(),
                     'pageIndex': 1,
                     'pageSize': 10,
                     'mid': ''
