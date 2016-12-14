@@ -415,6 +415,7 @@
                 this.query();
             },
             query() {
+                this.AccountS=[];
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.getTime();
                 }

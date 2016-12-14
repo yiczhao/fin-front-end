@@ -449,6 +449,7 @@
             },
             query() {
                 this.modal_applyPay = false;
+                this.AccountS=[];
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
                     this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
