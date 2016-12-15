@@ -109,6 +109,7 @@
                                 <td>
                                     <span v-if="trlist.activityAttribution==1">分-分</span>
                                     <span v-if="trlist.activityAttribution==2">总-总</span>
+                                    <span v-if="trlist.activityAttribution==3">总-总 分-分</span>
                                 </td>
                                 <td>{{trlist.operator}}</td>
                                 <td>{{trlist.activityName}}</td>
