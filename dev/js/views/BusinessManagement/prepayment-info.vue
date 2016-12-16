@@ -103,7 +103,8 @@
                                     <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
-                                <td v-if="trlist.orderNumber!=null">
+                                <td v-if="trlist.orderNumber==null&&trlist.status==5"></td>
+                                <td v-else>
                                     <template v-if="trlist.status==7||trlist.status==8">
                                         <a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
                                     </template>
@@ -114,7 +115,6 @@
                                            v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
                                     </template>
                                 </td>
-                                <td v-else></td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
