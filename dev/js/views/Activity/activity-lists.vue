@@ -552,6 +552,7 @@
             (vm.$route.params.operationID!=':operationID')?vm.defaultData.operationID=vm.$route.params.operationID:null;
             (vm.$route.params.name!=':name')?vm.defaultData.name=vm.$route.params.name:null;
             vm.getClist();
+            (vm.$route.params.osubcompanyID!=':osubcompanyID')?vm.defaultData.subCompanyID=vm.$route.params.osubcompanyID:null;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
         },

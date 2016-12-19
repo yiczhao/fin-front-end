@@ -121,7 +121,7 @@
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>{{trlist.consumptionPhone}}</td>
                                 <td>{{trlist.consumptionAccountNumber}}</td>
-                                <td> <a data-ksa="activity_manage.search" v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
+                                <td> <a data-ksa="activity_manage.search" v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
                                 <td>
                                     <span v-if="trlist.isHandled==0" style="color:red;">
                                         待处理

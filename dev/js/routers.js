@@ -311,7 +311,7 @@ export default function(router){
             }
         },
         /* 活动管理-活动列表 */
-        '/activity-lists/:operationID/:name':{
+        '/activity-lists/:operationID/:name/:osubcompanyID':{
             name:'activity-lists',
             router_type:"activity",
             component: function(resolve){
