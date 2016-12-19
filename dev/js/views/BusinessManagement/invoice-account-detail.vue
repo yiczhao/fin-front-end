@@ -1,7 +1,7 @@
 <template>
     <index :title="'发票账户明细'"
            :ptitle="'备付金支出'"
-           :p2title="'退税管理'"
+           :p2title="'税金管理'"
            :hname="'payment-details'"
            :h2name="'subsidy-management'"
            :isshow="'isshow'">
