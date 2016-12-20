@@ -158,7 +158,7 @@
                 return data;
             },
             enString(value){
-                if(typeof value !='string'||value.indexOf('】')<0){
+                if(!value ||typeof value !='string'||value.indexOf('】')<0){
                     return value;
                 }
                 let a=value.split('】');
