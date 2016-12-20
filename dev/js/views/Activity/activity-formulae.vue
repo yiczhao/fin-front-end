@@ -192,11 +192,11 @@
                             dialogs('info','无默认公式！')
                             return;
                         }
+                        let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            if(!!value){
-                                this.defaultData[key]=this.enString(value);
-                            }
+                            data[key]=this.enString(value);
                         })
+                        this.$set('defaultData',data);
                         dialogs('success','加载成功！')
                     }
                 })
