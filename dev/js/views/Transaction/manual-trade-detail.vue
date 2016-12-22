@@ -140,7 +140,7 @@
                                        data-ksa="manual_trade_detail.delete">删除</a>
                                 </td>
                                 <td>
-                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:manualTradeDetail.activityOperationID,name:manualTradeDetail.activityName,osubcompanyID:trlist.subCompanyID}}">{{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}</a>
+                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:manualTradeDetail.activityOperationID,name:manualTradeDetail.activityName,osubcompanyID:manualTradeDetail.subCompanyID}}">{{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}</a>
                                 </td>
                                 <td>
                                     <a href="{{origin}}/file/download/{{manualTradeDetail.certificateID}}">下载</a>
