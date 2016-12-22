@@ -36,7 +36,7 @@ export default function install(Vue,router_proto) {
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			if(response.url.indexOf('auth/usersystem/list')<=0&&response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0&&response.request.url.indexOf('/sum')<=0){
+			if(response.request.url.indexOf('auth/usersystem/list')<=0&&response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0&&response.request.url.indexOf('/sum')<=0){
 				Message.hide();
 				if((response.data.data==''||response.data.data==null||typeof response.data.data=='undefined')&&response.request.url.indexOf('pageIndex=')>0&&response.request.url.indexOf('pageSize=')>0){
 					document.querySelector('.no-list').style.display='block';
