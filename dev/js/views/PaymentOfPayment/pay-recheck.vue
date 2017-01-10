@@ -8,8 +8,9 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                    <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
@@ -74,7 +75,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="pay_recheck.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="pay_recheck.search">查询</a>
                     </div>
                 </div>
 
@@ -93,7 +94,10 @@
                                     <th>商户名称</th>
                                     <th>活动ID</th>
                                     <th>活动名称</th>
-                                    <th>收款账户信息</th>
+                                    <th>收款账户名</th>
+                                    <th>收款账号</th>
+                                    <th>提入行号</th>
+                                    <th>是否建行</th>
                                     <th>付款方式</th>
                                     <th>用途</th>
                                     <th>三方应收</th>
@@ -117,8 +121,15 @@
                                 <td>{{n.merchantName }}</td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
-                                <td>{{n.collectionBankName }}<br>
-                                    {{n.collectionBankNumber}}
+                                <td>{{n.collectionBankName }}</td>
+                                <td>{{n.collectionBankNumber}}</td>
+                                <td>
+                                    <template v-if="n.isCcb==1"></template>
+                                    <template v-else> {{n.bankNumber}}</template>
+                                </td>
+                                <td>
+                                    <template v-if="n.isCcb==1">是</template>
+                                    <template v-else>否</template>
                                 </td>
                                 <td>
                                     <template v-if="n.payType==1">备付金账户</template>
@@ -155,8 +166,8 @@
                                 <td>{{n.refuseReason}}</td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
@@ -325,6 +336,10 @@
                                 this.$set('subcompanyList', response.data.data)
                             }
                         });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query(){
                 this.show=false;

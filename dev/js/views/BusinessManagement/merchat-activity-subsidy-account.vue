@@ -39,7 +39,7 @@
                     <span>商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -76,8 +76,8 @@
                                 </td>
                             </tr>
                             <tr role="row">
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>{{total.paidAmount/100 | currency ''}}</td>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 

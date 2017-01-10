@@ -1,6 +1,8 @@
 /**
  * filter_number input中过滤为数字
  */
+import filter_string from './filter_string'
+exports.substring = filter_string.filter_string
 
 import filter_dates from './filter_dates'
 exports.datetime = filter_dates.filter_dates

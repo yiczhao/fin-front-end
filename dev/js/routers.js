@@ -2,14 +2,6 @@
 
 export default function(router){
     router.map({
-        /* 登录 */
-        '/login':{
-            name:'login',
-            cnname:'登录',
-            component: function(resolve){
-                require(['./views/login.vue'],resolve);
-            }
-        },
         /* 首页 */
         '/default':{
             name:'default',
@@ -26,7 +18,7 @@ export default function(router){
                 require(['./views/AccountManagement/account-management.vue'],resolve);
             }
         },
-        //账户明细
+        //账户列表-备付金明细
         '/provisions-info/:accountId/:certificate/:aname/:balance/:subCompanyID':{
             name:'provisions-info',
             router_type:"account",
@@ -34,8 +26,16 @@ export default function(router){
                 require(['./views/AccountManagement/provisions-info.vue'],resolve);
             }
         },
+        //账户列表-本金明细
+        '/principle-info/:principleId':{
+            name:'principle-info',
+            router_type:"account",
+            component: function(resolve){
+                require(['./views/AccountManagement/principle-info.vue'],resolve);
+            }
+        },
         //交易处理-交易明细
-        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber':{
+        '/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber/:tradeCompanyId':{
             name:'trade-info',
             router_type:"trade",
             component: function(resolve){
@@ -96,6 +96,30 @@ export default function(router){
             router_type:"trade",
             component: function(resolve){
                 require(['./views/Transaction/manual-trade-detail.vue'],resolve);
+            }
+        },
+        //本金收入-通道管理
+        '/running-channel':{
+            name:'running-channel',
+            router_type:"Principal",
+            component: function(resolve){
+                require(['./views/PrincipalIncome/running-channel.vue'],resolve);
+            }
+        },
+        //本金收入-通道管理
+        '/principle-order':{
+            name:'principle-order',
+            router_type:"Principal",
+            component: function(resolve){
+                require(['./views/PrincipalIncome/principle-order.vue'],resolve);
+            }
+        },
+        //本金收入-对账
+        '/balance-of-account/:principleAccountId/:shortId/:tradeTime/:routeName':{
+            name:'balance-of-account',
+            router_type:"Principal",
+            component: function(resolve){
+                require(['./views/PrincipalIncome/balance-of-account.vue'],resolve);
             }
         },
         //备付金支出-付款明细
@@ -178,6 +202,14 @@ export default function(router){
                 require(['./views/PaymentOfPayment/subsidy-tax-rebate.vue'],resolve);
             }
         },
+        //备付金支出-供应商划付
+        '/provider-pay-detail/:providerID':{
+            name:'provider-pay-detail',
+            router_type:"payment",
+            component: function(resolve){
+                require(['./views/PaymentOfPayment/provider-pay-detail.vue'],resolve);
+            }
+        },
         /* 三方管理-账户列表 */
         '/third-party/':{
             name:'third-party',
@@ -192,6 +224,14 @@ export default function(router){
             router_type:"third",
             component: function(resolve){
                 require(['./views/ThreeParty/third-info.vue'],resolve);
+            }
+        },
+        /* 三方管理-合同管理 */
+        '/contract-management/:contractId/:contractName/:contractCity/:contractCompanyName/:contractCompanyId':{
+            name:'contract-management',
+            router_type:"third",
+            component: function(resolve){
+                require(['./views/ThreeParty/contract-management.vue'],resolve);
             }
         },
         /* 商户管理-商户列表 */
@@ -271,7 +311,7 @@ export default function(router){
             }
         },
         /* 活动管理-活动列表 */
-        '/activity-lists/:operationID/:name':{
+        '/activity-lists/:operationID/:name/:osubcompanyID':{
             name:'activity-lists',
             router_type:"activity",
             component: function(resolve){
@@ -279,7 +319,7 @@ export default function(router){
             }
         },
         /* 活动管理-活动列表-计算公式 */
-        '/activity-formulae/:activityID/:subCompanyID':{
+        '/activity-formulae/:activityID/:subCompanyID/:formulaeID/:formulaeName':{
             name:'activity-formulae',
             router_type:"activity",
             component: function(resolve){
@@ -329,14 +369,12 @@ export default function(router){
         // 转到登录页
         '*':{
             component:function () {
-                router.go({name:'login'})
+                window.location.href = authUrl1
             }
         }
     })
     router.beforeEach(transition =>{
-        if(!sessionStorage.getItem('userData')){
-            router.go({name:'login'})
-        }
+        sessionStorage.setItem('isHttpin',0);
         document.querySelector('body').scrollTop=0;
         transition.next();
     });

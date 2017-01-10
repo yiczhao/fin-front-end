@@ -1,7 +1,7 @@
 <template>
     <index :title="'暂扣税金账户明细'"
            :ptitle="'备付金支出'"
-           :p2title="'退税管理'"
+           :p2title="'税金管理'"
            :hname="'payment-details'"
            :h2name="'subsidy-management'"
            :isshow="'isshow'">
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="suspension_tax_account_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="suspension_tax_account_detail_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
                     <span>退税款：</span><span style="margin-right: 10px;">{{balance.suspensionTaxAmount/100| currency '' }}元</span>
                 </div>
 
-                <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
@@ -282,6 +282,10 @@
                             }
                         });
             },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
+            },
             initList(){
                 $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
@@ -332,8 +336,8 @@
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
-                                this.balance.suspensionTaxAmount=response.data.data;
                                 this.initList();
+                                this.getBlance();
                             }
                         });
             },

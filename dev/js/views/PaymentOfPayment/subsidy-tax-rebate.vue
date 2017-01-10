@@ -8,12 +8,13 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li class="active" data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                    <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" data-toggle="modal"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
+                        <a class="btn btn-add add-top"  @click="batchs()" data-ksa="subsidy_tax_rebate_detail_manage.apply_pay">一键审核</a>
                     </div>
 
                     <div class="heading-right">
@@ -46,7 +47,7 @@
 
                                 <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
 
-                                <input type="text" class="form-control" v-model="checkForm.keywords" style="width:192px;" placeholder="商户名、收款账户名、帐号">
+                                <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号">
 
                                 <select class="form-control" v-model="checkForm.createType">
                                     <option value="">请选择生成方式</option>
@@ -71,7 +72,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="subsidy_tax_rebate_detail_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -80,16 +81,17 @@
                         <table id="table1" class="table">
                             <thead>
                                 <tr>
-                                <th><input type="checkbox" id="All"  class="check-boxs" @click="checkAll($event)"/>ID</th>
+                                <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>ID</th>
                                     <th>生成日期</th>
                                     <th>分公司</th>
                                     <th>城市</th>
                                     <th>付款账户</th>
                                     <th>商户ID</th>
                                     <th>商户名称</th>
-                                    <th>收款账户信息</th>
+                                    <th>收款账户名</th>
+                                    <th>收款账号</th>
                                     <th>生成方式</th>
-                                    <th>退税款</th>
+                                    <th>暂扣税金</th>
                                     <th>交易</th>
                                     <th>状态</th>
                                     <th>付款流水</th>
@@ -99,12 +101,8 @@
                             <tbody>
                                 <tr v-for="(index,strd) in subsidyTaxRebateDetailList" v-bind:class="{'odd':(index%2==0)}">
                                     <td>
-                                        <template v-if="strd.status!=1">
-                                            <input type="checkbox" disabled="true" name="ckbox-disabled" :id="strd.id"/>{{strd.id}}
-                                        </template>
-                                        <template v-else>
-                                            <input type="checkbox" name="ckbox" :id="strd.id" :class="strd.collectionAccountName+strd.collectionAccountNumber"/>{{strd.id}}
-                                        </template>
+                                        <input v-if="strd.status==1" type="checkbox" @click="checked(strd.ischeck,strd.id)" v-model="strd.ischeck"/>
+                                        {{strd.id}}
                                     </td>
                                     <td>{{strd.createTime | datetime}}</td>
                                     <td>{{strd.subCompanyName}}</td>
@@ -112,7 +110,8 @@
                                     <td>{{strd.payAccount}}</td>
                                     <td>{{strd.merchantOperationID}}</td>
                                     <td>{{strd.merchantName}}</td>
-                                    <td>{{strd.collectionAccountName}}<br/>{{strd.collectionAccountNumber}}</td>
+                                    <td>{{strd.collectionAccountName}}</td>
+                                    <td>{{strd.collectionAccountNumber}}</td>
                                     <td>
                                         <template v-if="strd.createType==1">系统生成</template>
                                         <template v-if="strd.createType==2">手工单</template>
@@ -159,8 +158,9 @@
                                     <td>{{strd.remarks}}</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
                                     <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -175,7 +175,7 @@
                     </div>
                 </div>
 
-                <div  v-else style="padding: 30px;font-size: 16px;text-align: center" >
+                <div  v-else class="no-list">
                     未查询到补贴退税信息！
                 </div>
 
@@ -249,6 +249,7 @@
                 subcompanyList:[],
                 pageall:1,
                 cityList:[],
+                AccountS:[],
                 subsidyTaxRebateDetailList:[],
                 payTypes:'',
                 mergePay:false,
@@ -263,7 +264,40 @@
                 }
             }
         },
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.subsidyTaxRebateDetailList.map((value)=>{
+                    (!value.ischeck&&value.status==1)?clength++:null;
+                })
+                return !clength
+            }
+        },
         methods:{
+            chooseAll(){
+                this.AccountS=[];
+                let cloneData=_.cloneDeep(this.subsidyTaxRebateDetailList);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        if(value.status==1){
+                            this.AccountS.push(value.id);
+                            value.ischeck=true;
+                        }
+                    }
+                })
+                this.subsidyTaxRebateDetailList=cloneData;
+            },
+            checked(bool,_id){
+                if(!bool){
+                    this.AccountS.push(_id);
+                }else{
+                    _.remove(this.AccountS, function(n) {
+                        return n==_id;
+                    })
+                }
+            },
             //获取补贴划付数据
              getsubsidyTaxRebateDetailList(data){
                  if(sessionStorage.getItem('isHttpin')==1)return;
@@ -304,13 +338,6 @@
                          }
                     });
             },
-             checkAll(ck){
-                if(ck.target.checked){
-                    $("input[name='ckbox']").prop({'checked':true});
-                }else{
-                    $("input[name='ckbox']").prop({'checked':false});
-                }
-            },
             clear(){
                 this.payTypes='';
                 this.mergePay=false;
@@ -325,15 +352,11 @@
                         });
             },
             batchs(){
-                let AccountS = [];
-                $("input[name='ckbox']:checked").each(function(){
-                    AccountS.push($(this).prop("id"));
-                });
-                if(AccountS.length<=0){
+                if(this.AccountS.length<=0){
                     dialogs('info','请勾选审核信息！');
                     return false
                 }
-                this.getApplyPayInfoByIDs(AccountS);
+                this.getApplyPayInfoByIDs(this.AccountS);
                 this.dialogTitle='一键审核';
             },
             showModalApplyPayById(id){
@@ -387,9 +410,12 @@
                             this.query();
                         });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
+            },
             query() {
-                $('.modal').modal('hide');
-                $(".check-boxs").prop({'checked':false})
+                this.AccountS=[];
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.getTime();
                 }

@@ -1,5 +1,5 @@
 <template>
-    <index :title="'退税管理'"
+    <index :title="'税金管理'"
            :ptitle="'备付金支出'"
            :hname="'payment-details'"
            :isshow="'isshow'">
@@ -11,12 +11,13 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li class="active" data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li class="active" data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                    <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left" style="width: 225px;">
-                        <a class="btn btn-add add-top" data-ksa="subsidy_account_manage.with_draw" style="margin-right:0px;" @click="batchApply">批量提现</a>
+                        <a class="btn btn-add add-top" data-ksa="subsidy_account_manage.with_draw" style="margin-right:20px;" @click="batchApply">批量提现</a>
                         <a class="btn btn-add add-top" data-ksa="subsidy_account_manage.recharge" style="margin-right:0px;" @click="recharges">发票充值</a>
                     </div>
                     <div class="heading-right">
@@ -36,7 +37,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="subsidy_account_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="subsidy_account_manage.search">查询</a>
                     </div>
                 </div>
                 <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
@@ -58,8 +59,8 @@
                                 <th>佣金</th>
                                 <th>已划付</th>
                                 <th>待划付</th>
-                                <th>退税款</th>
-                                <th>欠发票金额</th>
+                                <th>税金账户</th>
+                                <th>欠发票账户</th>
                                 <th>交易</th>
                                 <th>操作</th>
                             </tr>
@@ -86,13 +87,13 @@
                                     <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':trlist.merchantOperationID}}">明细</a>
                                 </td>
                                 <td>
-                                    <a @click="recharge(trlist)" data-ksa="subsidy_account_manage.recharge">发票充值</a>
+                                    <a @click="recharge(trlist)" class="mr20" data-ksa="subsidy_account_manage.recharge">发票充值</a>
                                     <a @click="applyPay(trlist)" data-ksa="subsidy_account_manage.with_draw">税金提现</a>
                                 </td>
                             </tr>
                             <tr role="row" v-show="total!=''">
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -267,7 +268,7 @@
                         </div>
                         <div class="form-group tc">
                             <a @click="rechargesTrue" class="btn btn-primary">保存并继续</a>
-                            <a @click="initList" class="btn btn-default">取消</a>
+                            <a @click="checkNew" class="btn btn-default">取消</a>
                         </div>
                         <div class="form-group tc">
                             <span v-show="$valis.invalid && fire" class="validation-error-label" v-text="errortext"></span>
@@ -408,6 +409,10 @@
                                 this.$set('cityList', response.data.data)
                             }
                         });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 this.modal_applyPay = false;

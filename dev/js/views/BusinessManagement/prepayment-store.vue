@@ -14,16 +14,13 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <div class="form-group">
                                 <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-
                                 <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                            </div>
                         </form>
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" style="margin-top: 25px;" @click="initList" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -31,7 +28,7 @@
                     <span>预付款账户名：{{merchantName}}</span>
                 </div>
 
-                <div v-if="zdlists.length>0" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -70,7 +67,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
@@ -79,7 +76,7 @@
                         :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
                         :title.sync="'添加商户'" 
                         >
-                        <div class="modal-body" style=" width: 900px;">
+                        <div class="addDialogs">
                             <div class="addtop">
                                 <div class="col-md-3">
                                     <select class="form-control" v-model="shdata.companyId" @change="getCity(shdata.companyId)">
@@ -103,42 +100,44 @@
                                     <input type="button" class="btn btn-info" @click="searchDigest" value="查询">
                                 </div>
                             </div>
-                            <div class="addbottom">
-                                <div style="text-indent: 68%">已选择：</div>
-                                <div class="col-md-7">
-                                    <table v-if="xhlist.length>0" class="table datatable-selection-single dataTable no-footer">
+                            <div class="addbottom clearfix">
+                                <div style="text-indent: 76%">已选择：</div>
+                                <div class="left">
+                                    <table v-if="merchantList.length>0"
+                                           class="table">
                                         <thead>
                                         <tr role="row">
-                                            <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
+                                            <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>全选</th>
                                             <th>分公司</th>
                                             <th>城市</th>
                                             <th>商户名</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr role="row" v-for="n in xhlist">
+                                        <tr v-for="(index,merchant) in merchantList" v-show="merchant.isAdd">
                                             <td>
-                                                <label>
-                                                    <input :value="n.merchantID" type="checkbox">{{$index+1}}
-                                                </label>
+                                                <input type="checkbox" @click="checked(merchant)" v-model="merchant.ischeck"/>
+                                                {{index+1}}
                                             </td>
-                                            <td>{{n.subCompanyName}}</td>
-                                            <td>{{n.cityName}}</td>
-                                            <td>{{n.merchantName}}</td>
+                                            <td>{{merchant.subCompanyName}}</td>
+                                            <td>{{merchant.cityName}}</td>
+                                            <td>{{merchant.merchantName}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <span v-if="firstAdd && !xhlist.length>0">
-                                        无可添加数据
+                                    <span v-if="!merchantList.length>0 && firstAdd">
+                                        未查询到商户数据！
                                     </span>
                                 </div>
-                                <div class="col-md-2">
-                                    <input type="button" class="btn btn-info" @click="addTrue($event)" value="添加">
-                                    <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
-                                    <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
+                                <div class="center">
+                                    <input type="button" class="btn btn-info" @click="addTrue" value="添加">
+                                    <input type="button" class="btn btn-info" @click="delTrue" value="删除">
+                                    <input type="button" class="btn btn-info" @click="submit" value="确认">
                                 </div>
-                                <div class="col-md-4">
-                                    <ul></ul>
+                                <div class="right">
+                                    <ul>
+                                        <li v-for="n in checkedLis" @click="checkLi($event,n)">{{n.merchantName}}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -151,116 +150,10 @@
                         >
                 </content-dialog>
 
-<!--                 <div id="modal_waring" data-backdrop="static" class="modal fade" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                <h5 class="modal-title">你确定删除该商户？</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group tc">
-                                    <button type="button" @click="del_true" class="btn btn-primary">确认</button>
-                                    <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </index>
 </template>
-<style lang="sass" scoped>
-    .addtop,  .addbottom{
-        overflow: hidden;
-        .form-control{
-              padding: 7px;
-        }
-    }
-    .addbottom {
-        margin-top: 15px;
-
-    .col-md-2 {
-        text-align: center;
-        width: 113px;
-        padding: 0;
-    input {
-        margin-bottom: 10px;
-    }
-    }
-    .col-md-7 {
-        height: 300px;
-        overflow: auto;
-        border: 1px solid #ccc;
-    }
-    .col-md-4 {
-        width: 243px;
-        height: 300px;
-        padding: 0;
-    input {
-        margin: 15px 0;
-    }
-    }
-    ul {
-        list-style: none;
-        border: 1px solid #ccc;
-        padding: 10px;
-        height: 300px;
-        overflow: auto;
-    li {
-        margin: 5px 0;
-        cursor: pointer;
-        padding-left: 3px;
-    }
-    li.check-li {
-        background: #ccc;
-    }
-    }
-    }
-    table tr{
-        td,th{
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            span{
-                cursor: pointer;
-                color: #3c8dbc;
-                &:hover{
-                     opacity: 80;
-                 }
-            }
-        }
-        input[type="checkbox"]{
-            position: relative;
-            top: 2px;
-            left: -2px;
-        }
-    }
-     .addbottom table tr td,  .addbottom table tr th{
-        padding: 2px;
-    }
-    #modal_update{
-        table tr td{
-            padding: 10px 2px;
-        }
-        .form-group{
-            overflow: hidden;
-            line-height: 36px;
-        }
-    }
-    .pull-left label i{
-        color:red;
-    }
-    .pull-left{
-        .validation-error-label{
-            line-height: 20px;
-            padding-left: 18px;
-            margin-top: 10px;
-        }
-    }
-</style>
 <script>
     import model from '../../ajax/BusinessManagement/store_model'
     export default{
@@ -285,17 +178,121 @@
                     'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
-                    'isAdvancePayment':'0',
                     'isStore':'0'
                 },
                 zdlists:[],
-                xhlist:[],
-                addId:[],
+                merchantList:[],
+                checkedIds: [],
+                checkedLis: [],
+                removeIds: [],
                 id:'',
                 firstAdd:false
             }
         },
-        methods:{
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.merchantList.map((value)=>{
+                    (!value.ischeck)?clength++:null;
+                })
+                return !clength
+            }
+        },
+        methods: {
+            checkLi(e,n){
+                if(!e.target.classList.length){
+                    this.removeIds.push(n.merchantID);
+                    e.target.classList.add('check-li');
+                }
+                else{
+                    _.remove(this.removeIds, function(e) {
+                        return e==n.merchantID;
+                    })
+                    e.target.classList.remove('check-li');
+                }
+            },
+            addTrue() {
+                if(this.checkedIds==''){
+                    dialogs('info','请勾选要添加的商户！');
+                    return;
+                }
+                this.$set('checkedLis',this.checkedIds);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.checkedLis.map((value)=>{
+                        if(val.merchantID==value.merchantID){
+                            val.isAdd=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.checkedIds=[];
+            },
+            delTrue() {
+                if(this.removeIds==''){
+                    dialogs('info','请选择要删除的商户！');
+                    return;
+                }
+                let dataLi=_.cloneDeep(this.checkedLis);
+                _.map(this.removeIds,(val)=>{
+                    _.remove(dataLi, function(e) {
+                        return e.merchantID==val;
+                    })
+                })
+                this.$set('checkedLis',dataLi);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.removeIds.map((value)=>{
+                        if(val.merchantID==value){
+                            val.isAdd=true;
+                            val.ischeck=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.removeIds=[];
+            },
+            submit() {
+                if(this.checkedLis==''){
+                    return;
+                }
+                let data = {
+                    'id':this.defaultData.id,
+                    'merchantIDs':[]
+                }
+                _.map(this.checkedLis,(val)=>{
+                    data.merchantIDs.push(val.merchantID+"");
+                })
+                this.model.store_add(data).then((response)=>{
+                    if(response.data.code == 0){
+                        this.initList();
+                        dialogs('success','已添加！');
+                        this.modal_add = false;
+                    }
+                });
+            },
+            chooseAll(){
+                this.checkedIds=[];
+                let cloneData=_.cloneDeep(this.merchantList);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        this.checkedIds.push(value);
+                        value.ischeck=true;
+                    }
+                })
+                this.merchantList=cloneData;
+            },
+            checked(n){
+                if(!n.ischeck){
+                    this.checkedIds.push(n);
+                }else{
+                    _.remove(this.checkedIds, function(e) {
+                        return e.merchantID==n.merchantID;
+                    })
+                }
+            },
             // *** 请求账户列表数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -326,15 +323,20 @@
                             (response.data.code==0) ? this.$set('city', response.data.data) : null;
                         });
             },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
+            },
             initList(){
-                $('.modal').modal('hide');
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
             clearUl(){
-                this.xhlist=[];
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
-                $('.addbottom .col-md-4').children('ul').html('');
+                this.merchantList=[];
+                this.firstAdd=true;
+                this.merchantList=[];
+                this.checkedIds=[];
+                this.checkedLis=[];
             },
             addUser(){
                 this.shdata={
@@ -342,7 +344,6 @@
                     'cityId':'',
                     'merchantOperationID':'',
                     'merchantName':'',
-                    'isAdvancePayment':'0',
                     'isStore':'0'
                 };
                 this.clearUl();
@@ -353,55 +354,12 @@
             searchDigest(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.clearUl();
-                this.firstAdd=true;
                 this.$common_model.getmerchant_list(this.shdata)
                         .then((response)=>{
-                            (response.data.code==0) ? this.$set('xhlist', response.data.data) : null;
-                        })
-            },
-            allCkb(e){
-                if(e.target.checked){
-                    $('.col-md-7 td input[type="checkbox"]').prop('checked',true);
-                }else{
-                    $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
-                    this.addId=[];
-                }
-            },
-            appendLi(a){
-                let _tr=$("input[value='" + a + "']").closest('tr');
-                let _ul=$('.addbottom .col-md-4').children('ul');
-                _ul.append('<li value="'+a+'">'+_tr.children('td:last').html()+'</li>');
-                _tr.hide();
-            },
-            addTrue(e){
-                this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value);
-                for(let i=0;i<this.addId.length;i++){
-                    this.appendLi(this.addId[i]);
-                }
-                $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
-                this.addId=[];
-            },
-            delTrue(e){
-                let _ul=$(e.target).parent('.col-md-2').next('.col-md-4').children('ul'),
-                    _table=$(e.target).parent('.col-md-2').prev('.col-md-7').children('table').find('tr:hidden'),
-                    _li= _ul.find('.check-li');
-                for(let i=0;i<_li.length;i++){
-                    _table.eq(_li.eq(i).index()).show();
-                }
-                _li.remove();
-            },
-            submitTrue(e){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                let _li=$(e.target).parent('.col-md-2').next('.col-md-4').children('ul').children('li');
-                if(!_li.length>0)return;
-                let data={'id':this.defaultData.id,'merchantIDs':Array.from(_li, i => i.getAttribute('value'))}
-                this.model.store_add(data)
-                        .then((response)=>{
-                            if(response.data.code == 0){
-                                this.initList();
-                                dialogs('success','已添加！');
-                                this.modal_add = false;
-                            }
+                            (response.data.code==0) ? this.$set('merchantList', response.data.data) : null;
+                            _.map(this.merchantList, function(value) {
+                                value.isAdd=true;
+                            })
                         })
             },
             delstore(_id){

@@ -6,64 +6,78 @@
         <div class="content activity-formulae" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-title"><span class="btn btn-primary" data-ksa="activity_manage.config" @click="usedefalut">加载默认公式</span></div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{activityOperationID}}</span>
+                    <span>活动名称：</span><span style="margin-right: 10px;">{{activityName}}</span>
+                </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际广告费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualAdvertisementFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualAdvertisementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualAdvertisementFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同广告费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractAdvertisementFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractAdvertisementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.contractAdvertisementFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际物料费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualMaterialFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualMaterialFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualMaterialFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同物料费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractMaterialFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractMaterialFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.contractMaterialFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际微信营销费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualWeChatMarketFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualWeChatMarketFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualWeChatMarketFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同微信营销费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractWeChatMarketFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractWeChatMarketFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.contractWeChatMarketFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>实际服务费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualServiceFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualServiceFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualServiceFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同服务费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractServiceFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractServiceFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.contractServiceFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div><i>*</i>实际税费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualTaxFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualTaxFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualTaxFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同税费=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractTaxFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractTaxFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.contractTaxFee" :options="chooseData"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div><i>*</i>实际结算金额=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.actualSettlementFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualSettlementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualSettlementFee" :options="chooseData"></v-select>
                     </div>
                     <div class="col">
                         <div>合同结算金额=</div>
-                        <v-select :multiple="true" :taggable="true" :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractSettlementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
+                    </div>
+                </div>
+                <div class="panel-row">
+                    <div class="col">
+                        <div>实际其他费用=</div>
+                        <v-select :editable="!defaultData.actualOtherExpenseStatus" :multiple="true" :taggable="true" :value.sync="defaultData.actualOtherExpense" :options="chooseData"></v-select>
+                    </div>
+                    <div class="col">
+                        <div>其他费用备注</div>
+                        <div style="width: 100%;"><input type="text" class="form-control" v-model="defaultData.otherExpenseRemarks" placeholder="其他费用备注"></div>
                     </div>
                 </div>
                 <div class="panel-footer">
@@ -97,8 +111,14 @@
                     '合同服务费',
                     '合同税费',
                     '合同结算金额',
+                    '交易笔数',
+                    '商户应补金额',
+                    '实际其他费用',
                 ],
+                activityName:'',
+                activityOperationID:'',
                 defaultData:{
+                    otherExpenseRemarks:'',
                     actualAdvertisementFee:[],
                     actualMaterialFee:[],
                     actualWeChatMarketFee:[],
@@ -110,6 +130,7 @@
                     contractWeChatMarketFee:[],
                     contractServiceFee:[],
                     contractTaxFee:[],
+                    actualOtherExpense:[],
                     contractSettlementFee:[]
                 }
             }
@@ -117,19 +138,29 @@
         methods:{
             toStrings(value){
                 let a=[];
-                value.map((val,index)=>{
-                    a[index]='【'+val+'】'
-                })
-                return a.join("")
+                if(typeof value==="object"){
+                    value.map((val,index)=>{
+                        a[index]='【'+val+'】'
+                    })
+                    return a.join("")
+                }
+                return value;
             },
             getsubitData(){
                 let data={};
                 _.forEach(this.defaultData,(value,key)=>{
-                    (value!=null)?data[key]=this.toStrings(value):data[key]="";
+                    if(value!=null){
+                        data[key]=this.toStrings(value);
+                    }else{
+                        data[key]="";
+                    }
                 })
                 return data;
             },
             enString(value){
+                if(!value ||typeof value !='string'||value.indexOf('】')<0){
+                    return value;
+                }
                 let a=value.split('】');
                 _.remove(a,(n)=>{return n==''});
                 let b=a.map(function (val){ return val.replace('【','')})
@@ -144,22 +175,26 @@
                     if(res.data.code==0){
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
+                            data[key]=this.enString(value);
                         })
                         this.$set('defaultData',data);
                     }
                 })
             },
             usedefalut(){
-                this.model.useDefault(this.$route.params.subCompanyID).then((res)=>{
+                let data={
+                    subCompanyID:this.$route.params.subCompanyID,
+                    activityID:this.$route.params.activityID
+                }
+                this.model.useDefault(data).then((res)=>{
                     if(res.data.code==0){
-                        if(typeof res.data.data=='undefined'){
+                        if(!res.data.data){
                             dialogs('info','无默认公式！')
                             return;
                         }
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
-                            (value!=null&&key!='activityID'&&key!='id'&&key!='subCompanyID'&&key!='defaultFormulae')?data[key]=this.enString(value):data[key]=[];
+                            data[key]=this.enString(value);
                         })
                         this.$set('defaultData',data);
                         dialogs('success','加载成功！')
@@ -194,6 +229,8 @@
             }
         },
         ready() {
+            (this.$route.params.formulaeName!=':formulaeName')?this.activityName=this.$route.params.formulaeName:null;
+            (this.$route.params.formulaeID!=':formulaeID')?this.activityOperationID=this.$route.params.formulaeID:null;
             this.getList();
         },
         watch:{

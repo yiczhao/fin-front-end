@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="adjust_trade_detail_pre_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="adjust_trade_detail_pre_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -73,7 +73,7 @@
                                 <th>三方应收</th>
                                 <th>商户应补</th>
                                 <th>扣收金额</th>
-                                <th>33211佣金</th>
+                                <th>佣金</th>
                                 <th>状态</th>
                                 <th>操作</th>
                                 <th>参与活动</th>
@@ -114,7 +114,7 @@
                                     <template v-if="!trlist.activityName">
                                         无
                                     </template>
-                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
+                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
                                 </td>
                                 <td>
                                     <a data-ksa="adjust_trade_detail_pre_manage.search" v-link="{'name':'adjust-trade-detailpre-list','params':{'adjustTradeDetailPreId':trlist.id}}">明细</a>
@@ -122,16 +122,16 @@
                                 <td>
                                     <a href="{{origin}}/file/download/{{trlist.certificateID}}">下载</a>
                                 </td>
-                                <td>
-                                    {{trlist.remarks}}
+                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
+                                    {{trlist.remarks | substring 15}}
                                 </td>
                                 <td>
                                     {{trlist.refuseReason}}
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.limitDeduct/100 | currency ''}}</td>
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
@@ -261,7 +261,7 @@
                                     placeholder="三方应收">
                         </span>
                         <span>
-                             <label><i>*</i>卡说佣金：</label>
+                             <label><i>*</i>佣金：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.commission33211"
@@ -269,7 +269,7 @@
                                     v-validate:val9="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val9.required}"
                                     v-limitprice="redata.commission33211"
-                                    placeholder="卡说佣金">
+                                    placeholder="佣金">
                         </span>
                     </div>
                     <div class="dialog-row">
@@ -409,6 +409,10 @@
                             this.$set('cityList', response.data.data)
                         }
                     });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;

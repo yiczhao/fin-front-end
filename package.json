@@ -5,7 +5,7 @@
   "main": "null",
   "scripts": {
     "pro": "webpack -p",
-    "watch": "webpack --watch --display-error-details"
+    "watch": "webpack --progress --colors --watch"
   },
   "repository": {
     "type": "git",

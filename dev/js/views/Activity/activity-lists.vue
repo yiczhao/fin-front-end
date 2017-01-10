@@ -1,12 +1,12 @@
 <template>
-    <index :title="'活动管理'"
+    <index :title="'活动列表'"
            :ptitle="'活动列表'"
            :hname="'activity-lists'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'activity-lists'}">活动列表</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
                 </ul>
@@ -20,15 +20,11 @@
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID" v-limitnumber="defaultData.operationID">
 
                             <input type="text" class="form-control" v-model="defaultData.name" placeholder="活动名称">
+                            <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
 
-                            <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
+                            <select class="form-control" v-model="defaultData.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-
-                            <select class="form-control" v-model="defaultData.cityID">
-                                <option value="">全部城市</option>
-                                <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                             </select>
 
                             <select class="form-control" v-model="defaultData.status">
@@ -39,32 +35,31 @@
                             </select>
                         </form>
                     </div>
-
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="activity_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="activity_manage.search">查询</a>
                     </div>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
                                 <th>活动ID</th>
                                 <th>活动名称</th>
-                                <th>补贴第三方</th>
+                                <th>三方名称</th>
+                                <th>合同编号</th>
                                 <th>分公司 </th>
-                                <th>城市</th>
                                 <th>起止时间</th>
                                 <th>状态</th>
-                                <th>消费总笔数</th>
-                                <th>消费总金额 </th>
-                                <th>三方结算金额</th>
-                                <th>商户结算金额</th>
-                                <th>商户已付金额</th>
-                                <th>退税款</th>
+                                <th>消费笔数</th>
+                                <th>消费金额 </th>
+                                <th>三方应收</th>
+                                <th>商户应补</th>
+                                <th>商户实补</th>
+                                <th>暂扣税金</th>
                                 <th>额采折扣差 </th>
-                                <th>三方折扣差</th>
+                                <th>折扣差</th>
                                 <th>佣金</th>
                                 <th>操作</th>
                                 <th>执行表参数</th>
@@ -78,8 +73,8 @@
                                     <template v-if="trlist.thirdPartyAccountID==0"><a @click="addUser(trlist.id)" data-ksa="activity_manage.config">配置</a></template>
                                     <template v-else>{{trlist.thirdPartyAccountName}}</template>
                                 </td>
+                                <td>{{trlist.contractNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
                                 <td>
                                     <template v-if="trlist.status==1">待上线</template>
@@ -95,15 +90,15 @@
                                 <td>{{trlist.purchaseDiscountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                 <td>{{trlist.commissionAmount/100 | currency ''}}</td>
-                                <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID}}">交易明细</a></td>
+                                <td><a data-ksa="trade_detail_manage.search" v-link="{'name':'trade-info','params':{'activityOperationID':trlist.operationID,'tradeCompanyId':trlist.subCompanyID}}">交易明细</a></td>
                                 <td>
-                                    <a data-ksa="activity_manage.config" @click="checkformulae(trlist)">计算公式</a>
+                                    <a data-ksa="activity_manage.config" class="mr20" v-link="{'name':'activity-formulae','params':{'activityID':trlist.id, 'subCompanyID':trlist.subCompanyID, 'formulaeID':trlist.operationID, 'formulaeName':trlist.name}}">计算公式</a>
                                     <a data-ksa="activity_manage.config" @click="otherInfo(trlist.subCompanyID,trlist.id)">其他信息</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -137,25 +132,11 @@
 
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
-                <content-dialog
-                        :show.sync="companymodal" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'选择分公司'"  @kok="goformulae" @kcancel="companymodal=false"
-                >
-                    <div class="dialog-row">
-                        <span>
-                            <label>分公司：</label>
-                            <select class="form-control" v-model="goformulaeData.subCompanyID">
-                                <option value="">请选择分公司</option>
-                                <option v-for="(index,n) in usercompanylists" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-                        </span>
-                    </div>
-                </content-dialog>
-                
+
                 <!--添加商户dialog-->
                 <content-dialog
                         :show.sync="modal_add" :is-Button="false" :type.sync="'infos'"
@@ -216,15 +197,12 @@
                 >
                     <div class="dialog-row">
                         <span>
-                             <label>合同编号：</label>
-                             <input type="text" class="form-control" v-model="redata.contractNumber" placeholder="请输入合同编号">
-                        </span>
-                        <span>
                              <label>活动归属：</label>
                             <select class="form-control" v-model="redata.activityAttribution">
                                 <option value="">请选择活动归属</option>
                                 <option value="1">分-分</option>
                                 <option value="2">总-总</option>
+                                <option value="3">总-总 分-分</option>
                             </select>
                         </span>
                     </div>
@@ -342,7 +320,7 @@
                 width: 72px;
                 text-align: right;
             }
-            textarea{
+            textarea,select{
                 width: 495px;
             }
             .tlabel{
@@ -364,10 +342,10 @@
                 pageall:1,
                 city:[],
                 companylists:[],
-                usercompanylists:[],
                 defaultData:{
                     'operationID': '',
                     'name': '',
+                    'contractNumber': '',
                     'cityID':'',
                     'subCompanyID':'',
                     'status':'',
@@ -406,7 +384,6 @@
                 redata:{
                     "id": '',
                     "activityId": '',
-                    "contractNumber": '',
                     "activityAttribution": '',
                     "operator": '',
                     "collectPeriod": '',
@@ -451,20 +428,6 @@
                     });
             },
             //获取城市数据
-            getCity(_id){
-                this.defaultData.cityID='';
-                let data={
-                    'subCompanyID':_id
-                }
-                this.$common_model.getcity(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
-                                this.$set('city', response.data.data)
-                            }
-                        });
-            },
-            //获取城市数据
             getshCity(_id){
                 this.shdata.cityID='';
                         let data={
@@ -477,6 +440,10 @@
                                     this.$set('shcity', response.data.data)
                                 }
                             });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 this.modal_add=false;
@@ -531,7 +498,6 @@
                 this.redata={
                     "subCompanyID":subCompanyID,
                     "activityID": _id,
-                    "contractNumber": '',
                     "activityAttribution": '',
                     "operator": '',
                     "collectPeriod": '',
@@ -574,31 +540,6 @@
                             }
                         })
             },
-            checkformulae({id}){
-                // *** 请求公司数据
-                let data={
-                    'type':'Activity',
-                    'activityID':id
-                }
-                this.$common_model.getcompany(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
-                                if(typeof response.data.data=='undefined'||response.data.data==''){
-                                    dialogs('info','该活动下没有交易，暂无法编辑计算公式！');
-                                    return
-                                }
-                                else if(response.data.data.length==1){
-                                    this.$router.go({'name':'activity-formulae','params':{'activityID':id, 'subCompanyID':response.data.data[0].subCompanyID}});
-                                }
-                                else{
-                                    this.$set('usercompanylists', response.data.data);
-                                    this.goformulaeData.id=id;
-                                    this.companymodal=true;
-                                }
-                            }
-                        });
-            },
             goformulae(){
                 if(this.goformulaeData.subCompanyID==''){
                     return;
@@ -611,7 +552,7 @@
             (vm.$route.params.operationID!=':operationID')?vm.defaultData.operationID=vm.$route.params.operationID:null;
             (vm.$route.params.name!=':name')?vm.defaultData.name=vm.$route.params.name:null;
             vm.getClist();
-            vm.getCity();
+            (vm.$route.params.osubcompanyID!=':osubcompanyID')?vm.defaultData.subCompanyID=vm.$route.params.osubcompanyID:null;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
         },

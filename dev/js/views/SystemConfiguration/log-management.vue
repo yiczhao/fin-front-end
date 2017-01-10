@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="system_log_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="system_log_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到日志数据！
                 </div>
 
@@ -188,6 +188,10 @@
                             (response.data.code==0) ? this.$set('log', response.data.data) : null;
                             this.modal_logInfo=true;
                         })
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query() {
                 back_json.saveArray(this.$route.path,this.checkForm);

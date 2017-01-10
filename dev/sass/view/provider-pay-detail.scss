@@ -1,0 +1,40 @@
+.provider-pay-detail{
+  .kdialog__content{
+    .datetime-picker{
+      .form-control{
+        width:100%;
+      }
+    }
+    .form-control{
+      text-align: left;
+      width:79%;
+      display: inline-block;
+    }
+    label{
+      width:20%;
+      display: inline-block;
+      i{
+        color:red;
+      }
+    }
+    .waring{
+      color: red;
+      margin-left: 5px;
+    }
+    button{
+      width:35%;
+    }
+    .w65{
+      width: 61%;
+    }
+  }
+  .validation-error-label{
+    margin-left: 20%;
+  }
+  .timeerror,.suberror,.suberror1{
+    display: none;
+  }
+  .suberror,.suberror1{
+    padding-top: 3px;
+  }
+}

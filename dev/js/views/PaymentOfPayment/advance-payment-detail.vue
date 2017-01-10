@@ -8,8 +8,9 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage" class="active"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                    <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-right">
@@ -61,7 +62,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="advance_payment_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="advance_payment_detail_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -77,7 +78,8 @@
                                     <th>付款账户</th>
                                     <th>商户ID</th>
                                     <th>商户名称</th>
-                                    <th>收款账户信息</th>
+                                    <th>收款账户名</th>
+                                    <th>收款账号</th>
                                     <th>预付金额</th>
                                     <th>账户详情</th>
                                     <th>状态</th>
@@ -94,7 +96,8 @@
                                     <td>{{apd.payAccount}}</td>
                                     <td>{{apd.merchantOperationID}}</td>
                                     <td>{{apd.merchantName}}</td>
-                                    <td>{{apd.collectionAccountName}}<br/>{{apd.collectionAccountNumber}}</td>
+                                    <td>{{apd.collectionAccountName}}</td>
+                                    <td>{{apd.collectionAccountNumber}}</td>
                                     <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
                                     <td>
                                         <a v-if="apd.reserveCashOrderID==0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'payRecheckID':apd.payRecheckID}}" data-ksa="advance_payment_account_manage.search">查看</a>
@@ -130,7 +133,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到预付款划付数据！
                 </div>
             </div>
@@ -202,8 +205,11 @@
 
                     });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
+            },
             query() {
-                // let data=this.data;
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                    this.getTime();
                 }

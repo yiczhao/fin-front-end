@@ -1,7 +1,7 @@
 <template>
     <index :title="'待划付金额'"
            :ptitle="'备付金支出'"
-           :p2title="'退税管理'"
+           :p2title="'税金管理'"
            :hname="'payment-details'"
            :h2name="'subsidy-management'"
            :isshow="'isshow'">
@@ -10,9 +10,12 @@
                 <div class="panel-heading">
                     <span class="mr20" v-show="unpaidHd!=''">活动名称：{{unpaidHd}}</span>
                     <span class="mr20" v-show="unpaidSh!=''">商户名称：{{unpaidSh}}</span>
-                    <span v-show="unpaidYe!=''">待划付：{{unpaidYe/100 | currency ''}}(含退税款：{{unpaidTs/100 | currency ''}})元</span>
+                    <span class="mr20" v-show="unpaidYe!=''">待划付：{{unpaidYe/100 | currency ''}}元</span>
+                    <span class="mr20" >未进税金账户金额：{{nums.suspensionTax/100+nums.merchantSubsidyActual/100 | currency ''}}元</span>
+                    <span class="mr20" >已进税金账户金额：{{unpaidTs/100 | currency ''}}元</span>
+                    <span class="mr20" >提现中金额：{{Amount/100 | currency ''}}元</span>
                 </div>
-                <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
+                <div v-show="!!tradeList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -86,7 +89,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="no-list" v-else>
+                <div class="no-list" v-show="!tradeList.length">
                     未查询到数据！
                 </div>
                 <div class="datatable-bottom">
@@ -117,6 +120,7 @@ export default{
                 unpaidSh:'',
                 unpaidTs:'',
                 unpaidYe:'',
+                Amount:'',
                 tradeList:[],
                 nums:{}
             }
@@ -137,6 +141,15 @@ export default{
                              this.defaultData.pageTotal=response.data.total
                         }
                     });
+                 let data={
+                     id:this.defaultData.id
+                 }
+                 this.model.unpaidAmount_Amount(data)
+                         .then((response)=>{
+                             if(response.data.code==0){
+                                 this.Amount= response.data.data;
+                             }
+                         });
             },
         },
         ready() {

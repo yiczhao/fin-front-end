@@ -59,11 +59,11 @@
                         <input type="text" class="form-control" v-model="defaultData.serialNumber" placeholder="交易流水号">
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="getManualTradeDetailData()" data-ksa="manual_trade_detail.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="manual_trade_detail.search">查询</a>
                     </div>
                 </div>
 
-                <div v-if="!!manualTradeDetailList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                <div v-show="!!manualTradeDetailList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -140,21 +140,21 @@
                                        data-ksa="manual_trade_detail.delete">删除</a>
                                 </td>
                                 <td>
-                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:manualTradeDetail.activityOperationID,name:manualTradeDetail.activityName}}">{{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}</a>
+                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:manualTradeDetail.activityOperationID,name:manualTradeDetail.activityName,osubcompanyID:manualTradeDetail.subCompanyID}}">{{manualTradeDetail.activityOperationID}}:{{manualTradeDetail.activityName}}</a>
                                 </td>
                                 <td>
                                     <a href="{{origin}}/file/download/{{manualTradeDetail.certificateID}}">下载</a>
                                 </td>
-                                <td>
-                                    {{manualTradeDetail.remarks}}
+                                <td aria-label="{{manualTradeDetail.remarks}}" v-bind:class="{'hint--top':(manualTradeDetail.remarks!=null&&manualTradeDetail.remarks.length>15)}">
+                                    {{manualTradeDetail.remarks | substring 15}}
                                 </td>
                                 <td>
                                     {{manualTradeDetail.refuseReason}}
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
@@ -249,13 +249,13 @@
                         <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
                     </div>
                     <div class="dialog-row">
-                        <label><i>*</i>退税款：</label>
+                        <label><i>*</i>暂扣税金：</label>
                         <input type="text" class="form-control" v-model="tradeInfo.suspensionTax"
                                v-validate:val7="['required']"
                                v-limitaddprice="tradeInfo.suspensionTax"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val7.required}">
-                        <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入退税款</span>
+                        <span v-if="$vali.val7.required && fire" class="validation-error-label">请输入暂扣税金</span>
                     </div>
                     <div class="dialog-row">
                         <label><i>*</i>商户实补：</label>
@@ -377,6 +377,10 @@
                         this.$set('pageall', response.data.total);
                     }
                 })
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.getManualTradeDetailData();
             },
             getSubCompanyData(){
                 // *** 请求分公司数据

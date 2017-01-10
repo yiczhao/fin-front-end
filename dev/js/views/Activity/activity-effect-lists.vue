@@ -6,7 +6,7 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动列表</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li data-ksa="activity_effect_manage" class="active"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
                 </ul>
@@ -21,17 +21,15 @@
                             </select>
 
                             <getmonth :value.sync="defaultData.startDate"></getmonth>
-                            <span class="getmonth-span" style="margin-right: 20px;">至</span>
-                            <getmonth :value.sync="defaultData.endDate"></getmonth>
                         </form>
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="activity_effect_manage.search" style="margin-left: -60px;">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="activity_effect_manage.search" style="margin-left: -60px;">查询</a>
                     </div>
                 </div>
 
-                <div  v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
+                <div  v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -91,7 +89,7 @@
                                 <th>开票金额 </th>
                                 <th>三方应收 </th>
                                 <th>商户应补 </th>
-                                <th>三方折扣差 </th>
+                                <th>折扣差 </th>
                                 <th>佣金 </th>
                                 <th>市场毛利 </th>
                                 <th>商合毛利 </th>
@@ -111,11 +109,14 @@
                                 <td>
                                     <span v-if="trlist.activityAttribution==1">分-分</span>
                                     <span v-if="trlist.activityAttribution==2">总-总</span>
+                                    <span v-if="trlist.activityAttribution==3">总-总 分-分</span>
                                 </td>
                                 <td>{{trlist.operator}}</td>
                                 <td>{{trlist.activityName}}</td>
                                 <td>{{trlist.startDate | datetimes}}至{{trlist.endDate | datetimes}}</td>
-                                <td>{{trlist.description}}</td>
+                                <td aria-label="{{trlist.description}}" v-bind:class="{'hint--top':(trlist.description!=null&&trlist.description.length>15)}">
+                                    {{trlist.description | substring 15}}
+                                </td>
                                 <td>
                                     <span v-if="trlist.contractSettlementFee==null">--</span>
                                     <span v-else>{{trlist.contractSettlementFee/100 | currency ''}}</span>
@@ -176,7 +177,9 @@
                                     <template v-if="trlist.activityGrossProfitRate">{{trlist.activityGrossProfitRate}}%</template>
                                 </td>
                                 <td>{{trlist.collectPeriod}}</td>
-                                <td>{{trlist.remarks}}</td>
+                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
+                                    {{trlist.remarks | substring 15}}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -243,10 +246,8 @@
                 defaultData:{
                     'subCompanyID':'',
                     'year':'',
-                    'startMonth':'',
-                    'endMonth':'',
-                    'startDate':firstMonth(),
-                    'endDate':'',
+                    'month':'',
+                    'startDate':getNow(),
                     'pageIndex': 1,
                     'pageSize': 10,
                     'mid': ''
@@ -264,27 +265,11 @@
         methods:{
             export(){
                 var startDate =  this.defaultData.startDate.split('-');
-                var startYear = parseInt(startDate[0]);
-                var startMonth = parseInt(startDate[1]);
+                var year = parseInt(startDate[0]);
+                var month = parseInt(startDate[1]);
 
-                var endDate =  this.defaultData.endDate.split('-');
-                var endYear = parseInt(endDate[0]);
-                var endMonth = parseInt(endDate[1]);
-                if(startYear > endYear || (startYear == endYear && startMonth > endMonth)){
-                    dialogs('error','开始年月不能大于结束年月！');
-                    return;
-                }
-                if(startYear != endYear){
-                    dialogs('error','不能跨年查询！');
-                    return;
-                }
-                if(startMonth != 1 && startMonth != endMonth){
-                    dialogs('error','只能查询某个月份的数据或者从一月份开始的多个月份累计的数据！');
-                    return;
-                }
-                this.defaultData.year = startYear;
-                this.defaultData.startMonth = startMonth;
-                this.defaultData.endMonth = endMonth;
+                this.defaultData.year = year;
+                this.defaultData.startMonth = month;
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
             },
@@ -292,27 +277,11 @@
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 var startDate = data.startDate.split('-');
-                var startYear = parseInt(startDate[0]);
-                var startMonth = parseInt(startDate[1]);
+                var year = parseInt(startDate[0]);
+                var month = parseInt(startDate[1]);
 
-                var endDate = data.endDate.split('-');
-                var endYear = parseInt(endDate[0]);
-                var endMonth = parseInt(endDate[1]);
-                if(startYear > endYear || (startYear == endYear && startMonth > endMonth)){
-                    dialogs('error','开始年月不能大于结束年月！');
-                    return;
-                }
-                if(startYear != endYear){
-                    dialogs('error','不能跨年查询！');
-                    return;
-                }
-                if(startMonth != 1 && startMonth != endMonth){
-                    dialogs('error','只能查询某个月份的数据或者从一月份开始的多个月份累计的数据！');
-                    return;
-                }
-                data.year = startYear;
-                data.startMonth = startMonth;
-                data.endMonth = endMonth;
+                data.year = year;
+                data.month = month;
                 this.model.activity_effect_list(data)
                 .then((response)=>{
                     // *** 判断请求是否成功如若成功则填充数据到模型
@@ -334,6 +303,10 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 $('.modal').modal('hide');

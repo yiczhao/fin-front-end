@@ -19,6 +19,7 @@ import datepicker from './views/components/datepicker.vue'
 import getmonth from './views/components/vue-picker/picker.vue'
 import ContentDialog from './views/components/ContentDialog.vue'
 import common from  './utils/common'
+import Auth from  './utils/KsAuth'
 import store from './utils/store.js'
 import API from './ajax/api.js'
 import common_model from './ajax/components/model.js'
@@ -62,19 +63,7 @@ window.dialogs=common.dialogs;
 window.init_date=common.init_date;
 window.accMul=common.accMul;
 window.removeCookie=common.removeCookie;
-
+window.onbeforeunload=()=>{
+	localStorage.clear();
+}
 Vue.config.debug = true;
-$(document).on('click','.addbottom .col-md-4 ul li',function(){
-	$(this).toggleClass('check-li');
-	($(this).hasClass('check-li'))?$(this).css('background','#ccc'):$(this).css('background','none');
-})
-$(document).on('click','.sidebar-main-toggle', function (e) {
-	e.preventDefault();
-	// Toggle min sidebar class
-	$('body').toggleClass('sidebar-xs');
-});
-$(document).on('click','a', function () {
-	if(back_json.num==0){
-		back_json.num++;
-	}
-});

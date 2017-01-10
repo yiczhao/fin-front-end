@@ -18,7 +18,7 @@
                             <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
                             <input type="text" class="form-control" v-model="defaultData.startValue" v-limitnumber="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
-                            <span>至</span>
+                            <span style="margin:0 10px;font-size:13px;">至</span>
                             <input type="text" class="form-control" v-model="defaultData.endValue" v-limitnumber="defaultData.endValue" placeholder="佣金值">
                             <select class="form-control" v-model="defaultData.companyId" @change="getCity(defaultData.companyId)">
                                 <option value="">全部分公司</option>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
                             <thead>
@@ -47,11 +47,11 @@
                                     <th>分公司</th>
                                     <th>城市</th>
                                     <th>划款账户</th>
-                                    <th>消费总笔数</th>
-                                    <th>消费总金额</th>
-                                    <th>实付总金额</th>
-                                    <th>33211总佣金 </th>
-                                    <th>三方折扣差</th>
+                                    <th>消费笔数</th>
+                                    <th>消费金额</th>
+                                    <th>实付金额</th>
+                                    <th>佣金 </th>
+                                    <th>折扣差</th>
                                     <th>额采折扣差</th>
                                     <th>交易</th>
                                     <th>佣金值</th>
@@ -100,8 +100,8 @@
                                     <td> -->
                                 </tr>
                                 <tr>
-                                    <td></td>
                                     <td>合计：</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
@@ -260,7 +260,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="w28" ><i>*</i>补贴税率：</label>
-                                <input debounce="300" @keyup="numberMax($event)" v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" class="form-control" type="number" placeholder="0~100">%
+                                <input @keyup="numberMax($event)" v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" class="form-control" type="number" placeholder="0~100">%
                             </div>
                             <div class="form-group">
                                 <label class="w28"><i>*</i>上传凭证：</label>
@@ -269,11 +269,11 @@
                                 <span v-text="uploadText" v-show="uploadText!=''"></span>
                             </div>
                             <div class="form-group">
-                                <label for="tarea" class="w28" style="position: relative;top: -40px;">更新说明：</label>
+                                <label class="w28" style="position: relative;top: -40px;">更新说明：</label>
                                 <textarea class="form-control" v-model="updateList.updateInfo"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="tarea" class="w28">转账特殊备注：</label>
+                                <label class="w28">转账特殊备注：</label>
                                 <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
                             </div>
                             <div class="form-group tc">
@@ -418,6 +418,7 @@
                 });
             },
             checkNew(){
+                this.defaultData.pageIndex=1;
                 this.initList();
             },
             initList(){

@@ -34,8 +34,8 @@ function model(_this){
          * @params {_id}
          * @returns {*}
          * */
-        useDefault(_id){
-            return _this.$http.get(_this.$API.useDefault+_id)
+        useDefault(data){
+            return _this.$http.get(_this.$API.useDefault+$.param(data))
         }
     }
 }

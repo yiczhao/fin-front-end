@@ -25,6 +25,9 @@
       color: #333333;
     }
   }
+  .navbar-nav{
+    margin:5px 10px 0 0;
+  }
   h1{
     font-size: 30px;
   }
@@ -59,7 +62,15 @@
   .tab-bor li {
     margin-bottom: -2px;
     display: inline-block;
-    padding: 12px 44px; }
+    padding: 12px 40px;}
+  @media (max-width: 1280px) {
+    .tab-bor li {
+      margin-bottom: -2px;
+      display: inline-block;
+      padding: 12px 0;
+      min-width: 120px;
+      text-align: center;}
+  }
   .tab-bor li a {
     font-size: 1.38em;
     color: #444;}
@@ -73,6 +84,8 @@
     display: table;
     padding-bottom: 20px;
     width: 100%;
+    font-size: 0;
+    -webkit-text-size-adjust:none;
     .heading-left,.heading-right,.heading-middle{
       display: table-cell;
       .form-control{
@@ -89,7 +102,8 @@
     .heading-left{
       width: 110px;
       padding-left: 20px;
-      //background: pink;
+      padding-top: 20px;
+      vertical-align: top;
     }
     .heading-right{
       text-align: right;
@@ -98,12 +112,15 @@
     .heading-middle{
       width: 110px;
       text-align: right;
+      padding-top: 20px;
+      vertical-align: top;
       //background: yellow;
     }
   }
   .inline{
     display:inline-block;
     margin-right: 20px;
+    font-size: 13px;
   }
   .btn-info{
     background: #2196f3;
@@ -123,12 +140,11 @@
       color: #fff;
     }
   }
-  .add-top { 
-    margin-top: -15px; 
-  }
-
   .btn{
     min-width: 90px;
+  }
+  .check-li{
+    background: #ccc;
   }
   .form-control{
     padding: 7px 10px;
@@ -141,12 +157,24 @@
       text-align: left;
       white-space: nowrap;
       text-overflow: ellipsis;
-      overflow: hidden;
       color: #444;
       font-size: 13px;
     }
   }
   .datatable-scroll table{
+  [class*=hint--]:after {
+    background: #383838;
+    color: #fff;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 250px;
+    white-space: normal;
+    text-shadow: 0 -1px 0 #000;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    line-height: 20px;
+    text-align: center;
+  }
     thead{
       th{
         border-color:#999;
@@ -157,9 +185,19 @@
       border-color:#E9E9E9;
       font-size: 13px;
     }
-    tr{
-      &:hover{
-        background: #E3F5FF;
+    .hint--top{
+      width: 100%;
+    }
+    tbody{
+      tr{
+        &:hover{
+          background: #E3F5FF;
+        }
+      }
+      tr:last-child{
+        td{
+          border-bottom:1px solid #E9E9E9;
+        }
       }
     }
     .odd{
@@ -168,6 +206,40 @@
   }
   .table-footer{
     border-top: 1px solid #bbb;
+  }
+  .addDialogs{
+    .addbottom{
+      width: 900px;
+      margin-bottom: 20px;
+      .left,.center,.right{
+        float: left;
+      }
+      .left{
+        height: 300px;
+        overflow: auto;
+        border: 1px solid #ccc;
+        width: 550px;
+      }
+      .center{
+        width: 90px;
+        margin:0 20px;
+        padding-top: 30px;
+        .btn{
+          margin-top:30px;
+        }
+      }
+      .right{
+        width: 220px;
+        margin: 0;
+        ul{
+          list-style: none;
+          border: 1px solid #ccc;
+          padding: 10px;
+          height: 300px;
+          overflow: auto;
+        }
+      }
+    }
   }
   .no-list{
     padding: 30px;
@@ -185,7 +257,7 @@
     margin: 20px 0;
     .left {
       width: 120px;
-      position: absolute;
+      margin-right: 20px;
       padding: 0 20px;
       height: 33px;
       border-right: 1px solid #ccc; 
@@ -193,11 +265,12 @@
       float: left;
       .icon-file-excel{
         top: 3px;
+        font-size: 13px;
       }
     }
     .right{
-      //background: pink;
-      margin:0 20px 0 140px;
+      margin:0 20px 0;
+      overflow: hidden;
     }
   }
   .nums{

@@ -106,6 +106,19 @@ export default function install(Vue) {
      * @method GET
      */
     _o.subsidyAccountExcel = '/data/export/excel/subsidyAccount?';
+    /**
+     * @description 入账明细页面数据导出接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.principleexport = '/data/export/excel/principleCashOrder?';
+    /**
+     * @description 供应商划付页面数据导出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.providerPayDetailexcel = '/data/export/excel/providerPayDetail?';
+
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -176,6 +189,26 @@ export default function install(Vue) {
      * @method GET
      */
     _o.incomeAndPayoutAmount = './reserveCashDetail/total?';
+
+    //- todo 财务处理-账户管理-本金明细 principle-info
+    /**
+     * @description 本金列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleList = './principleCashDetail/list?';
+    /**
+     * @description 合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.principleCashDetailModel = './principleCashDetail/total?';
+    /**
+     * @description 总收入支出接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.principleBalanceList = './bankAccount/info/';
 
     //- todo 交易管理-交易明细 trade-info
     /**
@@ -412,6 +445,102 @@ export default function install(Vue) {
      */
     _o.abnormalhandle = './exception/trade/handle';
 
+    //- todo  本金收入-通道管理 running-channel
+    /**
+     * @description 查询通道列表
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getchannellist = './runningChannel/list?';
+    /**
+     * @description 查询配置信息
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getAccountList = './runningChannel/account/list/';
+    /**
+     * @description 保存配置信息
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.saveAccountList = './runningChannel/account/add';
+    /**
+     * @description 保存配置信息
+     * @author 于凯乐
+     * @method delete
+     */
+    _o.deleteAccountList = './runningChannel/account/delete/';
+    /**
+     * @description 启用账户
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.startChannel = './runningChannel/enable/';
+    /**
+     * @description 新增通道信息
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.addChannel = './runningChannel/add';
+    /**
+     * @description 编辑通道信息
+     * @author 于凯乐
+     * @method POST
+     */
+    _o.editChannel = './runningChannel/edit';
+
+    //- todo 本金收入-入账明细 principle-order
+    /**
+     * @description 入账明细列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleorderList = './principleCashOrder/list?';
+    /**
+     * @description 入账明细合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.principleorderTotal = './principleCashOrder/total?';
+    /**
+     * @description 获取通道接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.selectrunningList = './runningChannel/selectList?';
+
+    //- todo 本金收入-本金对账 balance-of-account
+    /**
+     * @description 本金明细列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleCheckingdetailList = './principleCashChecking/detailList?';
+    /**
+     * @description 入账列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleCheckingorderList = './principleCashChecking/orderList?';
+    /**
+     * @description 获取本金明细列表接口地址
+     * @author 冷艳君
+     * @method get
+     */
+    _o.principleCashDetailinfo = './principleCashDetail/info/';
+    /**
+     * @description 获取本金明细列表接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.principleBalanceLists = './principleCashChecking/orderToCheck/';
+    /**
+     * @description 本金对账接口地址
+     * @author 冷艳君
+     * @method post
+     */
+    _o.principleCheckingordermanualCheck = './principleCashChecking/manualCheck';
+
     //- todo  备付金支出-付款明细 payment-details
     /**
      * @description 备付金支出明细列表接口地址
@@ -443,6 +572,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getpart10 = './reserveCashOrder/suspensionTaxAccountDetail/list/';
+    /**
+     * @description 备付金支出明细税金提现详情接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.getpart11 = './reserveCashOrder/providerPayDetail/list/';
     /**
      * @description 查询对账数据接口地址
      * @author 冷艳君
@@ -503,6 +638,19 @@ export default function install(Vue) {
      * @method GET
      */
     _o.skipToSubsidyAccount='./reserveCashOrder/skipToSubsidyAccount/';
+
+    /**
+     * @description 跳转至供应商划付
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToProviderPayDetail='./reserveCashOrder/skipToProviderPayDetail/';
+    /**
+     * @description 跳转至跳转到供应商划付
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.skipToProviderPayDetail='./reserveCashOrder/skipToProviderPayDetail/';
     /**
      * @description 合计
      * @author 于凯乐
@@ -704,6 +852,12 @@ export default function install(Vue) {
      */
     _o.unpaidAmount_list = './subsidyAccount/unpaidAmount/detail?';
     /**
+     * @description 待划付金额明细列表接口地址
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.unpaidAmount_Amount = './subsidyAccount/isWithDrawAmount?';
+    /**
      * @description 待划付金额明细列表合计接口地址
      * @author 冷艳君
      * @method GET
@@ -722,19 +876,69 @@ export default function install(Vue) {
      */
     _o.paidAmount_total = './subsidyAccount/paidAmount/total?';
 
+    //- todo  备付金支出-供应商划付 provider-pay-detail
+    /**
+     * @description 供应商划付列表接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.providerPay_list = './providerPayDetail/list?';
+    /**
+     * @description 供应商划付新增接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_add = './providerPayDetail/add';
+    /**
+     * @description 供应商划付退回接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_back = './providerPayDetail/refuse?';
+    /**
+     * @description 供应商划付删除接口地址
+     * @author 于凯乐
+     * @method delete
+     */
+    _o.providerPay_delete = './providerPayDetail/delete/';
+    /**
+     * @description 供应商划付编辑接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_edit = './providerPayDetail/edit';
+    /**
+     * @description 供应商划付通过接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_pass = './providerPayDetail/approve/';
+    /**
+     * @description 供应商划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.providerPay_submit = './providerPayDetail/apply/';
+    /**
+     * @description 供应商划付合计接口地址
+     * @author 于凯乐
+     * @method GET
+     */
+    _o.providerPay_sum = './providerPayDetail/sum?';
+
     //- todo  活动管理-活动列表 activity-lists
     /**
      * @description 查询活动列表接口地址
      * @author 冷艳君
      * @method GET
      */
-    _o.activity_list = './activity/list?';
+    _o.activity_list = './activitySubCompany/list?';
     /**
      * @description 查询活动列表合计金额接口地址
      * @author 冷艳君
      * @method POST
      */
-    _o.activity_total = './activity/total?';
+    _o.activity_total = './activitySubCompany/total?';
     /**
      * @description 查询可配置三方接口地址
      * @author 冷艳君
@@ -812,7 +1016,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method GET
      */
-    _o.useDefault = './activity/formulae/useDefault/';
+    _o.useDefault = './activity/formulae/useDefault?';
 
     //- todo  系统配置-系统日志 log-management
     /**
@@ -1071,6 +1275,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getBlance = './advancePaymentMerchant/info/';
+    /**
+     * @description 预付款明细校正余额接口地址
+     * @author 于凯乐
+     * @method Post
+     */
+    _o.advancePaymentMerchantAdjust = './advancePaymentMerchant/adjust?';
 
     //- todo  商户管理-预付款-账户明细 prepayment-info
     /**
@@ -1186,6 +1396,39 @@ export default function install(Vue) {
      * @method get
      */
     _o.activity_effect_list = './activityEffect/list?';
+
+    //- todo  三方管理-合同管理 contract-management
+    /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contract_list = './contract/list?';
+    /**
+     * @description 新增合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_add = './contract/add';
+    /**
+     * @description 编辑合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_edit = './contract/edit';
+    /**
+     * @description 获取编辑合同接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contract_editInfo = './contract/info?';
+
+    /**
+     * @description 关联合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_associate = './contract/associate';
 
 
 

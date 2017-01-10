@@ -42,6 +42,7 @@
                                 <option value="7">转账退款</option>
                                 <option value="8">账户费用</option>
                                 <option value="10">税金提现</option>
+                                <option value="11">供应商划付</option>
                                 <option value="9">其它</option>
                             </select>
 
@@ -54,16 +55,16 @@
                     </div>
                 </div>
 
-            <div style="margin: 0 20px 20px 0;font-size: 18px;">
+            <div style="margin: 0 20px 20px 20px;font-size: 18px;">
                 <span>账户简称：</span><span style="margin-right: 10px;">{{aname}}</span>
                 <span>余额：</span><span style="margin-right: 10px;">{{balance/100 | currency ''}}</span>
                 <span  v-if="zdlists.length>0">总收入：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{shouru/100 | currency ''}}元</span>
                 <span  v-if="zdlists.length>0">总支出：</span><span style="margin-right: 10px;" v-if="zdlists.length>0">{{zhichu/100 | currency ''}}元</span>
             </div>
 
-            <div v-if="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
+            <div v-show="zdlists.length>0"  class="dataTables_wrapper no-footer" v-cloak>
                 <div class="datatable-scroll">
-                    <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                    <table class="table">
                         <thead>
                             <tr  role="row">
                                 <th>编号</th>
@@ -82,7 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists">
+                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{index+1}}</td>
                                 <td>{{trlist.collectionName}}</td>
                                 <td>{{trlist.certificate}}</td>
@@ -103,6 +104,7 @@
                                     <template v-if="trlist.purpose==8">账户费用</template>
                                     <template v-if="trlist.purpose==9">其它</template>
                                     <template v-if="trlist.purpose==10">税金提现</template>
+                                    <template v-if="trlist.purpose==11">供应商划付</template>
                                 </td>
                                 <td>
                                     <span v-if="trlist.status==1">成功</span>
@@ -128,7 +130,7 @@
                 </div>                    
             </div>
 
-            <div style="padding: 30px;font-size: 16px;text-align: center" v-else v-cloak>
+            <div class="no-list" v-else v-cloak>
                 未找到数据
             </div>
 
@@ -433,18 +435,19 @@
                 this.manualCheck={
                     "id":'',
                     "collectionName":'',
-                    "purpose":'',
-                    "remarks":''
+                    "purpose":''
                 }
                 this.glradio='one';
             },
             duizhang(a){
                 this.cleardz();
                 this.$set('dzList', a);
+                this.manualCheck.remarks=a.remarks;
                 this.errortext='';
                 this.modal_fzr=true;//
             },
             checkNew(){
+                this.checkForm.pageIndex=1;
                 this.initList();
             },
             initList(){

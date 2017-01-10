@@ -1,7 +1,7 @@
 <template>
     <index title="批量提现"
            :ptitle="'备付金支出'"
-           :p2title="'退税管理'"
+           :p2title="'税金管理'"
            :hname="'payment-details'"
            :h2name="'subsidy-management'"
            isshow="isshow">
@@ -44,8 +44,8 @@
                                 <td>{{n.withdrawCashAmount/100 | currency ''}}</td>
                             </tr>
                             <tr>
-                                <td></td>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{total/100 | currency ''}}</td>

@@ -66,13 +66,13 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="trade_detail_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="trade_detail_manage.search">查询</a>
                     </div>
                 </div>
 
-                <div v-cloak v-show="!!tradeList.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-cloak v-show="!!tradeList.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>交易ID</th>
@@ -88,18 +88,18 @@
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
-                                <th>退税款</th>
+                                <th>暂扣税金</th>
                                 <th>商户实补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
-                                <th>33211佣金</th>
+                                <th>佣金</th>
                                 <th>入账金额</th>
                                 <th>交易时间</th>
                                 <th>手机号</th>
                                 <th>卡号</th>
                                 <th>参与活动</th>
                                 <th>交易类型</th>
-                                <th>操作</th>
+                                <th>凭证</th>
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -150,7 +150,7 @@
                                     <template v-if="!trlist.activityName">
                                         无
                                     </template>
-                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
+                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
                                 </td>
                                 <td>
                                     <template v-if="trlist.type==1">
@@ -165,14 +165,16 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.type==2||trlist.type==3">
-                                        <a href="{{origin}}/file/download/{{trlist.certificateId}}">详情</a>
+                                        <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载</a>
                                     </template>
                                 </td>
-                                <td>{{trlist.remarks}}</td>
+                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
+                                    {{trlist.remarks | substring 15}}
+                                </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>合计：</td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
@@ -212,7 +214,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到交易明细数据！
                 </div>
             </div>
@@ -308,6 +310,10 @@
                         }
                     });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
+            },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
@@ -341,8 +347,9 @@
             (this.$route.params.activityOperationID==':activityOperationID')? this.checkForm.activityOperationID='' : this.checkForm.activityOperationID=this.$route.params.activityOperationID;
             (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
             this.getSubcompany();
-            this.getCity();
             this.getTime();
+            (this.$route.params.tradeCompanyId==':tradeCompanyId')? this.checkForm.subCompanyID='' : this.checkForm.subCompanyID=this.$route.params.tradeCompanyId;
+            this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },

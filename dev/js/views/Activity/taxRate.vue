@@ -7,11 +7,11 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动管理</a></li>
+                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">活动列表</a></li>
                     <li data-ksa="tax_rate" class="active"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动执行表</a></li>
                 </ul>
-                <div v-if="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->
+                <div v-show="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -25,14 +25,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr role="row" v-for="(index,trList) in taxRateList" v-bind:class="{'odd':(index52==0)}">
+                            <tr role="row" v-for="(index,trList) in taxRateList" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trList.subCompanyID}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>
                                     <template v-if="trList.payTaxType==1">{{'小规模纳税人（/1.03）'}}</template>
                                     <template v-if="trList.payTaxType==2">{{'一般纳税人（/1.06）'}}</template>
                                 </td>
-                                <td>{{trList.taxRate}}</td>
+                                <td>{{trList.taxRate}} <template v-if="!!trList.taxRate">%</template></td>
                                 <td><a @click="editDetail(trList.subCompanyID, trList.subCompanyName, trList.effectiveYear, trList.effectiveMonth)" data-ksa="tax_rate.update">编辑</a></td>
                                 <td>{{trList.remarks}}</td>
                             </tr>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     <table id="table2" class="table datatable-selection-single dataTable no-footer">
                         <thead>
                         <tr role="row">

@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="manually_settlement.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="manually_settlement.search">查询</a>
                     </div>
                 </div>
 
@@ -69,11 +69,11 @@
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
-                                <th>退税款</th>
+                                <th>暂扣税金</th>
                                 <th>商户实补</th>
                                 <th>折扣差</th>
                                 <th>扣收金额</th>
-                                <th>33211佣金</th>
+                                <th>佣金</th>
                                 <th>入账金额</th>
                                 <th>交易时间</th>
                                 <th>手机号</th>
@@ -110,7 +110,7 @@
                                     <template v-if="!trlist.activityName">
                                         无
                                     </template>
-                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
+                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
@@ -140,7 +140,6 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
                             </tr>
                         </table>
                     </div>
@@ -159,7 +158,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到手工结算数据！
                 </div>
 
@@ -280,6 +279,10 @@
                             this.$set('cityList', response.data.data)
                         }
                     });
+            },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
             },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;

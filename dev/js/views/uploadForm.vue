@@ -61,6 +61,27 @@
 									<td>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="补贴账户金额修正" data-toggle="modal" @click="correctSubsidyAccountData($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成活动列表数据" data-toggle="modal" @click="generatActivitySubCompany($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="老交易数据生成活动列表" data-toggle="modal" @click="generateOldActivitySubCompany($event)"/>
+									</td>
+									<td>
+									</td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -183,6 +204,24 @@
                 this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
                         .then((response)=>{
                             dialogs('success','处理成功！');
+                        })
+            },
+            correctSubsidyAccountData(e){
+                this.$http.post('./dev/tool/subsidyAccount/correct')
+                        .then((response)=>{
+                            dialogs('success','处理成功！');
+                        })
+            },
+            generatActivitySubCompany(e){
+                this.$http.post('./dev/tool/activitySubCompany/generate')
+                        .then((response)=>{
+                            dialogs('success',response.data.message);
+                        })
+            },
+            generateOldActivitySubCompany(e){
+                this.$http.post('./dev/tool/oldActivitySubCompany/generate')
+                        .then((response)=>{
+                            dialogs('success',response.data.message);
                         })
             }
         },

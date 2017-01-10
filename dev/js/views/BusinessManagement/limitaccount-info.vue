@@ -65,11 +65,11 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="limit_purchase_account_manage.detail">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="limit_purchase_account_manage.detail">查询</a>
                     </div>
                 </div>
 
-                <div  v-if="!!zdlists.length" v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
+                <div  v-show="!!zdlists.length" v-show="!!zdlists.length"  class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -112,8 +112,8 @@
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
                                     <td>合计：</td>
+                                    <td></td>
                                     <td></td>
                                     <td>{{nums.purchaseLimitAmount/100 | currency ''}}</td>
                                     <td>{{nums.purchaseCostAmount/100 | currency ''}}</td>
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
             </div>
@@ -238,8 +238,11 @@
                             }
                          });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.initList();
+            },
             initList(){
-                $(".modal").modal("hide");
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);
             },

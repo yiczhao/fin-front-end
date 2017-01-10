@@ -25,6 +25,15 @@ module.exports = [
             {name: '交易管理', link: 'trade-info',ksa:'trade_detail_manage'},
         ]
     },
+    // {
+    //     name: '本金收入',
+    //     icon: 'icon-BJBZ',
+    //     type:'Principal',
+    //     ksa:'principle_cash_order',
+    //     sub_menu: [
+    //         {name: '本金收入', link: 'principle-order',ksa:'principle_cash_order'},
+    //     ]
+    // },
     {
         name: '备付金支出',
         icon: 'icon-coin-yen',

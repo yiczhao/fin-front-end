@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.detail">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="third_party_account_manage.detail">查询</a>
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@
                     <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                 </div>
 
-                <div v-if="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="zdlists.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -88,9 +88,9 @@
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
                                 <tr role="row">
-                                    <td></td>
-                                    <td></td>
                                     <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
                                     <td>{{total/100 | currency ''}}</td>
                                     <td></td>
                                     <td></td>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未找到数据
                 </div>
 
@@ -357,6 +357,10 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('shcity', response.data.data) : null;
                         });
+            },
+            checkNew(){
+                this.defaultData.pageIndex=1;
+                this.initList();
             },
             initList(){
                 $('.modal').modal('hide');

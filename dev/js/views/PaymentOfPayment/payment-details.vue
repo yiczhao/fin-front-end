@@ -1,7 +1,7 @@
 <template>
     <index :title="'备付金付款明细'"
            :ptitle="'备付金支出'"
-           :hname="'account-management'"
+           :hname="'payment-details'"
            :isshow="'isshow'">
         <div class="content payment-details" slot="content">
             <div class="panel panel-flat">
@@ -11,8 +11,9 @@
                     <li data-ksa="subsidy_pay_detail_manage"><a v-link="{name:'subsidy-appropriation'}">补贴划付</a></li>
                     <!--<li class="active"><a v-link="{name:'limit-purchase-detail'}" data-ksa="advance_payment_account_manage">额度采购</a></li>-->
                     <li data-ksa="subsidy_tax_rebate_detail_manage"><a v-link="{name:'subsidy-tax-rebate'}">补贴退税</a></li>
-                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">退税管理</a></li>
+                    <li data-ksa="subsidy_account_manage"><a v-link="{name:'subsidy-management'}">税金管理</a></li>
                     <li data-ksa="advance_payment_detail_manage"><a v-link="{name:'advance-payment-detail'}">预付款划付</a></li>
+                    <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
@@ -71,6 +72,7 @@
                                 <option value="4">预付款</option>
                                 <option value="5">供货商划付</option>
                                 <option value="10">税金提现</option>
+                                <option value="11">供应商划付</option>
                             </select>
 
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
@@ -78,21 +80,21 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="reserve_cash_order_manage.search">查询</a>
+                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="reserve_cash_order_manage.search">查询</a>
                     </div>
                 </div>
 
-                <div v-if="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
+                <div v-show="!!zdlists.length" class="dataTables_wrapper no-footer" v-cloak>
                     <div class="datatable-scroll">
                         <table class="table main-table">
                         <thead>
                             <tr role="row">
-                                <th><input type="checkbox" class="check-all" @change="addAll($event)"></th>
+                                <th><input type="checkbox"  v-model="checkAll" @click="chooseAll"></th>
                                 <th>订单号</th>
                                 <th>商户ID</th>
                                 <th>商户名称</th>
                                 <th>划付金额</th>
-                                <th>退税款</th>
+                                <th>暂扣税金</th>
                                 <th>付款账户</th>
                                 <th>用途</th>
                                 <th>状态</th>
@@ -102,6 +104,8 @@
                                 <th>收款账户名</th>
                                 <th>收款账号</th>
                                 <th>收款开户行</th>
+                                <th>提入行号</th>
+                                <th>是否建行</th>
                                 <th>申请时间</th>
                                 <th>划付时间</th>
                                 <th>对账时间</th>
@@ -112,7 +116,7 @@
                         <template v-for="(index,n) in zdlists">
                             <tr role="row" v-bind:class="{'odd':(index%2==0)}">
                                 <td>
-                                    <template v-if="n.status==2"><input type="checkbox" class="check-boxs" @change="addorderIDs($event,n.id)" :value="n.id"></template>
+                                    <template v-if="n.status==2"><input type="checkbox"  @click="checked(n.ischeck,n.id)" v-model="n.ischeck"></template>
                                 </td>
                                 <td>
                                     <span>{{n.orderNumber}}</span>
@@ -136,6 +140,7 @@
                                     <template v-if="n.purpose==4"> 预付款</template>
                                     <template v-if="n.purpose==5"> 供货商划付</template>
                                     <template v-if="n.purpose==10">税金提现</template>
+                                    <template v-if="n.purpose==11">供应商划付</template>
                                 </td>
                                 <td >
                                     <template v-if="n.status==1"> 等待审核</template>
@@ -176,6 +181,14 @@
                                 <td>
                                     <span v-if="n.payType==1">{{n.incomeBankName}}</span>
                                 </td>
+                                <td>
+                                    <span v-if="n.ccb"></span>
+                                    <span v-else> {{n.incomeBankNumber }}</span>
+                                </td>
+                                <td>
+                                    <span v-if="n.ccb">是</span>
+                                    <span v-else>否</span>
+                                </td>
                                 <td>{{n.applyTime | datetime}}</td>
                                 <td>{{n.paymentTime  | datetime}}</td>
                                 <td>{{n.successTime | datetime}}</td>
@@ -183,12 +196,12 @@
                             </tr>
                         </template>
                         <tr>
-                            <td></td>
                             <td>合计：</td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td>{{total.payoutAmount/100 | currency ''}}</td>
-                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                         </tr>
                         </tbody>
                         </table>
@@ -208,7 +221,7 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-if="!zdlists.length>0" v-cloak>
+                <div class="no-list" v-if="!zdlists.length>0">
                     未找到数据
                 </div>
             </div>
@@ -226,7 +239,7 @@
                                         <span v-if="listinfos!=''&&listinfos[0].purpose=='3'">退税金额</span>
                                         <span v-else>划付金额</span>
                                     </th>
-                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'">退税款</th>
+                                    <th  v-if="listinfos!=''&&listinfos[0].purpose=='1'&&!listinfos[0].providerPayDetail">暂扣税金</th>
                                     <th>用途</th>
                                     <th>操作</th>
                                     <th>状态</th>
@@ -234,13 +247,15 @@
                                 </tr>
                             </thead>
                             <tr v-show="listinfos!=''&&listinfos!=null" class="div-table" v-for="trlist in listinfos">
-                                <td>{{trlist.createDate | datetimes}}</td>
+                                <td v-if = "!!trlist.applyTime">{{trlist.applyTime | datetimes}}</td>
+                                <td v-if = "!!trlist.createTime">{{trlist.createTime | datetimes}}</td>
+                                <td v-if = "!!trlist.createDate">{{trlist.createDate | datetimes}}</td>
                                 <td>
                                     <span v-if="listinfos[0].purpose=='3'">{{trlist.suspensionTaxAmount/100 | currency '' }}</span>
                                     <span v-else>{{trlist.payAmount/100 | currency '' }}</span>
                                 </td>
-                                <td  v-if="trlist.purpose=='1'">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
-                                <td>
+                                <td  v-if="trlist.purpose=='1'&&!listinfos[0].providerPayDetail">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
+                                <td v-if="!trlist.providerPayDetail">
                                     <template v-if="trlist.purpose==1"> 补贴划付</template>
                                     <template v-if="trlist.purpose==2"> 额度采购</template>
                                     <template v-if="trlist.purpose==3"> 退税划付</template>
@@ -248,12 +263,18 @@
                                     <template v-if="trlist.purpose==5"> 供货商划付</template>
                                     <template v-if="trlist.purpose==10">税金提现</template>
                                 </td>
+                                <td v-else>
+                                    <template v-if="trlist.purpose==0"> 其他</template>
+                                    <template v-if="trlist.purpose==1"> 广告费</template>
+                                    <template v-if="trlist.purpose==2"> 物料费</template>
+                                </td>
                                 <td>
-                                    <template v-if="trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='3'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='4'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.streamID}}">详情</a></template>
-                                    <template v-if="trlist.purpose=='10'"><a @click="skipToSubsidyAccount(trlist.streamID)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='1'"><a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='2'"><a data-ksa="limit_purchase_account_manage.search" v-link="{name:'limit-purchase-detail',params:{id:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='3'"><a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='4'"><a data-ksa="advance_payment_detail_manage.search" v-link="{name:'advance-payment-detail',params:{advanceId:trlist.streamID}}">详情</a></template>
+                                    <template v-if="!trlist.providerPayDetail&&trlist.purpose=='10'"><a @click="skipToSubsidyAccount(trlist.streamID)" data-ksa="suspension_tax_account_detail_manage.search">详情</a></template>
+                                    <template v-if="trlist.providerPayDetail"><a @click="skipToProviderPayDetail(trlist.id)" data-ksa="provider_pay_detail.search">详情</a></template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==1"> 等待审核</template>
@@ -266,7 +287,7 @@
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                             </tr>
-                            <tr style="padding: 30px;font-size: 16px;text-align: center"  v-if="!listinfos.length" v-cloak>
+                            <tr class="no-list" v-if="!listinfos.length" v-cloak>
                                 <td>未找到数据</td>
                             </tr>
                         </table>
@@ -311,7 +332,7 @@
 
             <content-dialog
                     :show.sync="modal_checking" :is-button="false" :type.sync="'infos'"
-                    :title.sync="'对账'" 
+                    :title.sync="'对账'"
                     >
                     <div  v-if="!!checkLists.length&&checkLists != ''" class="modal-body">
                         <div class="tc f20">
@@ -402,7 +423,40 @@
                 orderIDs:[]
             }
         },
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.zdlists.map((value)=>{
+                    (!value.ischeck&&value.status==2)?clength++:null;
+                })
+                return !clength
+            }
+        },
         methods:{
+            chooseAll(){
+                this.orderIDs=[];
+                let cloneData=_.cloneDeep(this.zdlists);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        if(value.status==2){
+                            this.orderIDs.push(value.id);
+                            value.ischeck=true;
+                        }
+                    }
+                })
+                this.zdlists=cloneData;
+            },
+            checked(bool,_id){
+                if(!bool){
+                    this.orderIDs.push(_id);
+                }else{
+                    _.remove(this.orderIDs, function(n) {
+                        return n==_id;
+                    })
+                }
+            },
             // *** 请求账户数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -436,12 +490,16 @@
                         }
                     });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.initList();
+            },
             initList(){
                 this.modal_waring = false;
                 this.modal_submit= false;
                 this.list_info= false;
                 this.modal_checking=false;
-                $(".check-boxs").prop({'checked':false})
+                this.orderIDs=[];
                 if (this.checkForm.startDate=="" && this.checkForm.endDate=="") {
                     this.checkForm.startDate=init_date('1')[0];
                     this.checkForm.endDate=init_date('1')[1];
@@ -500,6 +558,18 @@
                                     }
                                 });
                         break;
+                    case 11:
+                    this.model.getpart11(a.id)
+                            .then( (response)=> {
+                                if(response.data.code==0) {
+                                    this.$set('listinfos',response.data.data);
+                                    _.map(this.listinfos, (value) => {
+                                        value.providerPayDetail = true;
+                                    })
+                                    this.list_info = true;
+                                }
+                            });
+                    break;
                 }
             },
             back(a){
@@ -645,23 +715,6 @@
                 this.checkForm.startDate=init_date(this.checkForm.dateS)[0];
                 this.checkForm.endDate=init_date(this.checkForm.dateS)[1];
             },
-            addorderIDs(e){
-                if(e.target.checked){
-                    $(e.target).addClass('checked-boxs');
-                }else{
-                    $(e.target).removeClass('checked-boxs');
-                }
-                this.orderIDs= Array.from($(".checked-boxs"), i => parseInt(i.value));
-            },
-            addAll(e){
-                if(e.target.checked){
-                    $(".check-boxs").prop({'checked':true}).addClass('checked-boxs');
-                    this.orderIDs= Array.from($(".check-boxs"), i => parseInt(i.value));
-                }else{
-                    $(".check-boxs").prop({'checked':false}).removeClass('checked-boxs');
-                    this.orderIDs=[];
-                }
-            },
             batchPay(){
                 this.model.reservecash_batchPay(JSON.stringify(this.orderIDs))
                         .then( (response)=> {
@@ -682,6 +735,13 @@
                                 this.$router.go({name:'suspension-tax',params:{orderId:trlist.reserveCashOrder.orderId,suspensionHDid:trlist.subsidyAccount.id,suspensionBTid:trlist.reserveCashOrder.merchantId,suspensionZHname:trlist.activity.name,suspensionSHid:trlist.merchant.merchantID,suspensionZHbalance:trlist.subsidyAccount.suspensionTaxAmount,suspensionSHname:trlist.merchant.name}});
                             }
                         })
+            },
+            skipToProviderPayDetail(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.model.skipToProviderPayDetail(_id)
+                    .then((response) => {
+                        this.$router.go({name:'provider-pay-detail', params:{providerID:_id}});
+                    })
             }
         },
         watch:{

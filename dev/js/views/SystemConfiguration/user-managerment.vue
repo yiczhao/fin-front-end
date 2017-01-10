@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" v-on:click="query" data-ksa="user_manage.search">查询</a>
+                        <a class="btn btn-info add-top" v-on:click="checkNew" data-ksa="user_manage.search">查询</a>
                     </div>
                 </div>
 
@@ -68,16 +68,16 @@
                     </div>
                 </div>
 
-                <div style="padding: 30px;font-size: 16px;text-align: center" v-else>
+                <div class="no-list" v-else>
                     未查询到员工数据信息！
                 </div>
 
                 <content-dialog
                         :show.sync="modal_ControlSpan" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'管辖范围'" @kok="submit" @kcancel="modal_ControlSpan = false"
+                        :title.sync="'管辖范围'" @kok="submits" @kcancel="modal_ControlSpan = false"
                         >
                          <div class="modal-body">
-                             <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                             <input type="button" id="All" value="全选" v-on:click="checkAlls()"/>
                              <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
                              <hr/>
                              <div class="controlSpan" v-for="controlSpan in controlSpanList">
@@ -116,7 +116,7 @@
                         :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
                         :title.sync="'导入员工'"  
                 >
-                            <div class="modal-body" style="width: 900px;">
+                            <div class="addDialogs">
                                 <div class="addtop">
                                     <div class="col-md-3">
                                         <select class="form-control" v-model="userdata.subCompanyID">
@@ -131,13 +131,13 @@
                                         <input type="button" class="btn btn-info" @click="queryUser" value="查询">
                                     </div>
                                 </div>
-                                <div class="addbottom">
-                                    <div style="text-indent: 68%">已选择：</div>
-                                    <div class="col-md-7">
-                                        <table v-if="userlists.length>0" class="table">
+                                <div class="addbottom clearfix">
+                                    <div style="text-indent: 76%">已选择：</div>
+                                    <div class="left">
+                                        <table v-if="merchantList.length>0" class="table">
                                             <thead>
                                             <tr role="row">
-                                                <th><label><input @click="allCkb($event)" type="checkbox">全选</label></th>
+                                                <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>全选</th>
                                                 <th>分公司</th>
                                                 <th>用户名</th>
                                                 <th>手机号</th>
@@ -145,17 +145,10 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr role="row" v-for="(index,n) in userlists" v-bind:class="{'odd':(index%2==0)}">
+                                            <tr role="row" v-for="(index,n) in merchantList" v-show="n.isAdd">
                                                 <td>
-                                                    <label>
-                                                        <input :value="n.operationID"
-                                                               type="checkbox"
-                                                               :subCompanyId="n.subCompanyId"
-                                                               :userName="n.userName"
-                                                               :phone="n.phone"
-                                                               :empName="n.empName"
-                                                        >{{$index+1}}
-                                                    </label>
+                                                    <input type="checkbox" @click="checked(n)" v-model="n.ischeck"/>
+                                                    {{index+1}}
                                                 </td>
                                                 <td>{{n.subCompanyName}}</td>
                                                 <td>{{n.userName}}</td>
@@ -164,17 +157,19 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <span v-if="firstAdd && !userlists.length>0">
+                                        <span v-if="firstAdd && !merchantList.length>0">
                                             无可添加数据
                                         </span>
                                     </div>
-                                    <div class="col-md-1">
-                                        <input type="button" class="btn btn-info"  @click="addTrue($event)" value="添加">
-                                        <input type="button" class="btn btn-info" @click="delTrue($event)" value="删除">
-                                        <input type="button" class="btn btn-info" @click="submitTrue($event)" value="确认">
+                                    <div class="center">
+                                        <input type="button" class="btn btn-info" @click="addTrue" value="添加">
+                                        <input type="button" class="btn btn-info" @click="delTrue" value="删除">
+                                        <input type="button" class="btn btn-info" @click="submit" value="确认">
                                     </div>
-                                    <div class="col-md-4">
-                                        <ul></ul>
+                                    <div class="right">
+                                        <ul>
+                                            <li v-for="n in checkedLis" @click="checkLi($event,n)">{{n.empName}}</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -207,17 +202,149 @@
                 pageall:1,
                 userList:[],
                 controlSpanArray:[],
-                userlists:[],
+                merchantList:[],
                 userdata:{
                     subCompanyID:'',
                     keyWord:''
                 },
-                addId:[],
+                checkedIds: [],
+                checkedLis: [],
+                removeIds: [],
                 firstAdd:false
             }
         },
-
-        methods:{
+        computed:{
+            checkAll(){
+                let clength=0;
+                this.merchantList.map((value)=>{
+                    (!value.ischeck)?clength++:null;
+                })
+                return !clength
+            }
+        },
+        methods: {
+            checkLi(e,n){
+                if(!e.target.classList.length){
+                    this.removeIds.push(n.operationID);
+                    e.target.classList.add('check-li');
+                }
+                else{
+                    _.remove(this.removeIds, function(e) {
+                        return e==n.operationID;
+                    })
+                    e.target.classList.remove('check-li');
+                }
+            },
+            addTrue() {
+                if(this.checkedIds==''){
+                    dialogs('info','请勾选要添加的商户！');
+                    return;
+                }
+                this.$set('checkedLis',this.checkedIds);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.checkedLis.map((value)=>{
+                        if(val.operationID==value.operationID){
+                            val.isAdd=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.checkedIds=[];
+            },
+            delTrue() {
+                if(this.removeIds==''){
+                    dialogs('info','请选择要删除的商户！');
+                    return;
+                }
+                let dataLi=_.cloneDeep(this.checkedLis);
+                _.map(this.removeIds,(val)=>{
+                    _.remove(dataLi, function(e) {
+                        return e.operationID==val;
+                    })
+                })
+                this.$set('checkedLis',dataLi);
+                let data=_.cloneDeep(this.merchantList);
+                _.map(data,(val)=>{
+                    this.removeIds.map((value)=>{
+                        if(val.operationID==value){
+                            val.isAdd=true;
+                            val.ischeck=false;
+                        }
+                    })
+                })
+                this.$set('merchantList',data);
+                this.removeIds=[];
+            },
+            submits(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                var arrays = [];
+                $("input[name='ckbox']:checked").each(function(){
+                    arrays.push($(this).prop("id"));
+                });
+                let data={
+                    userID:this.userID,
+                    subCompanyIDs:arrays
+                }
+                this.model.saveUserControlSpans(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若
+                            if (response.data.code==0)
+                            {
+                                dialogs("保存成功！");
+                                this.modal_ControlSpan = false;
+                            }
+                        });
+                //关闭弹出层
+                //$(".modal").modal("hide");
+            },
+            submit() {
+                if(this.checkedLis==''){
+                    return;
+                }
+                var data={data:[]};
+                _.map(this.checkedLis,(val)=>{
+                    data.data.push(
+                        {
+                            operationID:val.operationID+"",
+                            subCompanyId:val.subCompanyId+"",
+                            userName:val.userName,
+                            phone:val.phone,
+                            empName:val.empName
+                        }
+                    );
+                })
+                this.model.importUser(data)
+                        .then((response)=>{
+                                if(response.data.code == 0){
+                                this.query();
+                                this.modal_add = false;
+                                dialogs('success','已添加！');
+                            }
+                        })
+            },
+            chooseAll(){
+                this.checkedIds=[];
+                let cloneData=_.cloneDeep(this.merchantList);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else{
+                        this.checkedIds.push(value);
+                        value.ischeck=true;
+                    }
+                })
+                this.merchantList=cloneData;
+            },
+            checked(n){
+                if(!n.ischeck){
+                    this.checkedIds.push(n);
+                }else{
+                    _.remove(this.checkedIds, function(e) {
+                        return e.operationID==n.operationID;
+                    })
+                }
+            },
             //获取员工数据
              getUserList(data){
                  if(sessionStorage.getItem('isHttpin')==1)return;
@@ -238,6 +365,10 @@
                         (response.data.code==0) ? this.$set('subcompanyList', response.data.data) : null;
                     });
             },
+            checkNew(){
+                this.checkForm.pageIndex=1;
+                this.query();
+            },
             query() {
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getUserList(this.checkForm);
@@ -253,123 +384,39 @@
                         });
                 this.modal_ControlSpan = true;
             },
-            checkAll(){
-                $("input[name='ckbox']").prop({'checked':true});
-            },
-            othercheck(){
-                $("input[name='ckbox']").each(function(){
-                  $(this).prop({'checked': !$(this).prop("checked")});  
-                })
-            },
-            submit(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                var arrays = [];
-                $("input[name='ckbox']:checked").each(function(){
-                  arrays.push($(this).prop("id"));  
-                });
-                let data={
-                    userID:this.userID,
-                    subCompanyIDs:arrays
-                }
-                this.model.saveUserControlSpans(data)
-                    .then((response)=>{
-                        // *** 判断请求是否成功如若
-                        if (response.data.code==0)
-                        {
-                            dialogs("保存成功！");
-                            this.modal_ControlSpan = false;
-                        }
-                    });
-                    //关闭弹出层
-                    //$(".modal").modal("hide");
-            },
             addUser(){
                 this.modal_add = true;
                 this.firstAdd=false;
                 this.clearUl();
             },
             clearUl(){
-                $('.col-md-7 tr input[type="checkbox"]').prop('checked',false);
-                $('.addbottom .col-md-4').children('ul').html('');
+                this.merchantList=[];
+                this.checkedIds=[];
+                this.checkedLis=[];
+                this.firstAdd=false;
+            },
+            checkAlls(){
+                $("input[name='ckbox']").prop({'checked':true});
+            },
+            othercheck(){
+                $("input[name='ckbox']").each(function(){
+                    $(this).prop({'checked': !$(this).prop("checked")});
+                })
             },
             queryUser(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.firstAdd=true;
+                this.checkedLis=[];
                 this.model.readyImportUser(this.userdata)
                         .then((response)=>{
                             if(response.data.code == 0){
-                                this.$set('userlists',response.data.data)
-                                this.clearUl();
+                                this.$set('merchantList',response.data.data);
+                                _.map(this.merchantList, function(value) {
+                                    value.isAdd=true;
+                                })
                              }
                         })
-            },
-            allCkb(e){
-                if(e.target.checked){
-                    $('.col-md-7 td input[type="checkbox"]').prop('checked',true);
-                }else{
-                    $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
-                    this.addId=[];
-                }
-            },
-            appendLi(a){
-                let _this=$("input[value='" + a + "']");
-                let _tr=_this.closest('tr');
-                let _ul=$('.addbottom .col-md-4').children('ul');
-                let subCompanyId=_this.attr('subCompanyId');
-                let userName=_this.attr('userName');
-                let phone=_this.attr('phone');
-                let empName=_this.attr('empName');
-                _ul.append('<li subCompanyId="'+subCompanyId+'" userName="'+userName+'" phone="'+phone+'" empName="'+empName+'" operationID="'+a+'">'+userName+'</li>');
-                _tr.hide();
-            },
-            addTrue(e){
-                this.addId = Array.from($(".col-md-7 td input[type='checkbox']:checked"), i => i.value);
-                for(let i=0;i<this.addId.length;i++){
-                    this.appendLi(this.addId[i]);
-                }
-                $('.col-md-7 td input[type="checkbox"]').prop('checked',false);
-                this.addId=[];
-            },
-            delTrue(e){
-                let _ul=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul'),
-                        _table=$(e.target).parent('.col-md-1').prev('.col-md-7').children('table').find('tr:hidden'),
-                        _li= _ul.find('.check-li');
-                for(let i=0;i<_li.length;i++){
-                    _table.eq(_li.eq(i).index()).show();
-                }
-                _li.remove();
-            },
-            submitTrue(e){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                let _li=$(e.target).parent('.col-md-1').next('.col-md-4').children('ul').children('li');
-                if(!_li.length>0)return;
-                var data={data:[]};
-                _li.each(function(index){
-                    let _this=$(this);
-                    let operationIDs=_this.attr('operationID');
-                    let subCompanyIds=_this.attr('subCompanyId');
-                    let userNames=_this.attr('empName');
-                    let phones=_this.attr('phone');
-                    let names=_this.attr('empName');
-                    data.data[index]=
-                            {
-                                operationID:operationIDs,
-                                subCompanyId:subCompanyIds,
-                                userName:userNames,
-                                phone:phones,
-                                empName:names
-                            }
-
-                })
-                this.model.importUser(data)
-                        .then((response)=>{
-                            if(response.data.code == 0){
-                                this.query();
-                                this.modal_add = false;
-                                dialogs('success','已添加！');
-                            }
-                        })
-            },
+            }
         },
         ready() {
             this.getSubcompany({});

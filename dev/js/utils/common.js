@@ -204,6 +204,26 @@ window.firstMonth=()=>{
     var m = 1;
     return y+'-'+m;
 };
+window.getDate=(value,type)=>{
+    if(value==null || value=='')return '';
+    switch (type){
+        case 'pre':
+            var time = new Date(parseInt(value)-86400000);
+            break;
+        case 'next':
+            var time = new Date(parseInt(value)+86400000);
+            break;
+        default:
+            var time = new Date(parseInt(value));
+            break;
+    }
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var d = time.getDate();
+    function add0(m){return m<10?'0'+m:m }
+    return y+'-'+add0(m)+'-'+add0(d);
+};
+
 var _i={};
 _i.fetchArray=(key)=>{
     if(localStorage.getItem(key)){
@@ -217,6 +237,16 @@ _i.saveArray=(key, value)=>{
 _i.isback=false;
 _i.num=0;
 window.back_json=_i;
+
+$(document).on('click','.sidebar-main-toggle', function (e) {
+    e.preventDefault();
+    $('body').toggleClass('sidebar-xs');
+});
+$(document).on('click','a', function () {
+    if(back_json.num==0){
+        back_json.num++;
+    }
+});
 
 module.exports = {
     check_upload:check_upload,
