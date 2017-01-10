@@ -74,10 +74,10 @@
 
                 <content-dialog
                         :show.sync="modal_ControlSpan" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'管辖范围'" @kok="submit" @kcancel="modal_ControlSpan = false"
+                        :title.sync="'管辖范围'" @kok="submits" @kcancel="modal_ControlSpan = false"
                         >
                          <div class="modal-body">
-                             <input type="button" id="All" value="全选" v-on:click="checkAll()"/>
+                             <input type="button" id="All" value="全选" v-on:click="checkAlls()"/>
                              <input type="button" id="othercheck" value="反选" v-on:click="othercheck()"/>
                              <hr/>
                              <div class="controlSpan" v-for="controlSpan in controlSpanList">
@@ -276,6 +276,28 @@
                 this.$set('merchantList',data);
                 this.removeIds=[];
             },
+            submits(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                var arrays = [];
+                $("input[name='ckbox']:checked").each(function(){
+                    arrays.push($(this).prop("id"));
+                });
+                let data={
+                    userID:this.userID,
+                    subCompanyIDs:arrays
+                }
+                this.model.saveUserControlSpans(data)
+                        .then((response)=>{
+                            // *** 判断请求是否成功如若
+                            if (response.data.code==0)
+                            {
+                                dialogs("保存成功！");
+                                this.modal_ControlSpan = false;
+                            }
+                        });
+                //关闭弹出层
+                //$(".modal").modal("hide");
+            },
             submit() {
                 if(this.checkedLis==''){
                     return;
@@ -372,6 +394,14 @@
                 this.checkedIds=[];
                 this.checkedLis=[];
                 this.firstAdd=false;
+            },
+            checkAlls(){
+                $("input[name='ckbox']").prop({'checked':true});
+            },
+            othercheck(){
+                $("input[name='ckbox']").each(function(){
+                    $(this).prop({'checked': !$(this).prop("checked")});
+                })
             },
             queryUser(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
