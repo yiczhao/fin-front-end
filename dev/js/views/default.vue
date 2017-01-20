@@ -22,6 +22,7 @@
         ready(){
             this.$http.post(this.$API.login,{username:Cookie.get('KSAuthUserName')})
                     .then((response)=>{
+                        debugger
                         if(response.data.code===0){
                             sessionStorage.setItem('userData',JSON.stringify(response.data.data));
                             this.loginList=JSON.parse(sessionStorage.getItem('userData'));
