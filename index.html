@@ -9,12 +9,13 @@
 <body id="app" class="pace-done">
 	<router-view></router-view>
    	<script>
-          window.origin = 'https://fin.qa.kashuo.net/v1/finance';
+          window.origin = 'http://fin.local.kashuo.net:8080/v1/finance';
           window.authUrl1 = 'http://auth2.qa.kashuo.net';
           window.authUrl2 = 'https://fin.qa.kashuo.net';
    	</script>
 	<script type="text/javascript" src="./dist/jquery.js"></script>
 	<script type="text/javascript" src="./dist/bootstrap.js"></script>
+	<script type="text/javascript" src="http://newauth.boss.kashuo.net/dist/authKit.js"></script>
     <script src="./dist/app.js"></script>
 </body>
 </html>
