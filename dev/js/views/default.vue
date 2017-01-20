@@ -27,7 +27,6 @@
                             this.loginList=JSON.parse(sessionStorage.getItem('userData'));
                             $('body').removeClass('login');
                             $('.message-notify.show,.message-notify').css('top','6px');
-                            this.$router.go({name:'default'});
                         }
                     });
         }
