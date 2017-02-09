@@ -39,15 +39,6 @@
                 window.location.href = authUrl1
                 return
             }
-            window.systemId = 4;
-            if (Cookie.get('KSAuthUserToken')) {
-                KSAuthKit.config({
-                    systemId:systemId,
-                    userToken: Cookie.get('KSAuthUserToken'),
-                    apiURL: authUrl2+'/auth/open/user-info'
-                })
-                KSAuthKit.on()
-            }
         },
         watch: {
             userData() {
