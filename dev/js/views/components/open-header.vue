@@ -83,6 +83,10 @@
                 var self = this;
                 document.cookie = 'JSESSID=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 document.cookie = 'JSESSTOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'KSAuthApiURL=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'KSAuthUserName=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'KSAuthUserToken=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'X-XSRF-TOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 sessionStorage.clear();
                 window.location.href = authUrl1;
 
@@ -102,8 +106,6 @@
         ready () {
             if (Cookie.get('JSESSID')) {
                 let idandname = Cookie.get('JSESSID');
-                // let asd = CryptoJS.enc.Base64.stringify(idandname)
-                // console.log(asd)
                 let hash = CryptoJS.enc.Base64.parse(idandname)
                 var _id = hash.toString(CryptoJS.enc.Utf8);
                 let idd = _id.split(":")[1];
