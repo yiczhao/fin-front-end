@@ -44,7 +44,7 @@
                 KSAuthKit.config({
                     systemId:systemId,
                     userToken: Cookie.get('KSAuthUserToken'),
-                    apiURL: authUrl2+'/auth/third/search_user_info'
+                    apiURL: authUrl2+'/auth/open/user-info'
                 })
                 KSAuthKit.on()
             }
