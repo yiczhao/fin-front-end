@@ -35,7 +35,7 @@
         },
         ready () {
             // 插入权限控制 JS
-            if(!Cookie.get('KSAuthJSURL')){
+            if(!Cookie.get('KSAuthUserToken')){
                 window.location.href = authUrl1
                 return
             }
