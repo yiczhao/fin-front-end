@@ -105,21 +105,6 @@
             },
             showsystemlist () {
             console.log("open-header.vue showsystemlist method");
-                <!--let self = this-->
-                <!--self.$http({-->
-                    <!--options:{xhr : { withCredentials: true }},-->
-                    <!--url: authUrl2 + '/auth/open/user-info',-->
-                    <!--method: 'post'-->
-                <!--}).then(res => {-->
-                    <!--let arr = res.data.data.system;-->
-                    <!--for (var i = 0; i < arr.length; i++) {-->
-                        <!--if (arr[i].sys_id === self.systemId) {-->
-                            <!--arr.splice(i, 1)-->
-                            <!--break-->
-                        <!--}-->
-                    <!--}-->
-                    <!--self.systemlist = arr-->
-                <!--})-->
             },
             addusual (index) {
                 // Cookie.set('KSAuthSysId', index.sys_id)
