@@ -80,7 +80,6 @@
         },
         methods:{
             loginOut(){
-                var self = this;
                 document.cookie = 'JSESSID=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 document.cookie = 'JSESSTOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 document.cookie = 'KSAuthApiURL=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();

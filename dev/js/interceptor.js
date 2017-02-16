@@ -9,7 +9,6 @@ export default function install(Vue,router_proto) {
 	var conut;
 	window.origin && (Vue.http.options.root = window.origin );
 	Vue.http.options.emulateJSON = false;
-    debugger
 	Vue.http.interceptors.push({
 		request (request) {
 			if(request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
