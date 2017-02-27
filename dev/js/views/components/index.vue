@@ -35,18 +35,9 @@
         },
         ready () {
             // 插入权限控制 JS
-            if(!Cookie.get('KSAuthJSURL')){
+            if(!Cookie.get('KSAuthUserToken')){
                 window.location.href = authUrl1
                 return
-            }
-            window.systemId = 4;
-            if (Cookie.get('KSAuthUserToken')) {
-                KSAuthKit.config({
-                    systemId:systemId,
-                    userToken: Cookie.get('KSAuthUserToken'),
-                    apiURL: authUrl2+'/auth/third/search_user_info'
-                })
-                KSAuthKit.on()
             }
         },
         watch: {

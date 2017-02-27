@@ -21,23 +21,14 @@
                     <ul class="k-header-list-active"
                         v-if="listshow"
                     >
-                        <template  v-for="system in systemlist">
-                            <li @click="addusual(system)" v-if="system.system_type=='1'">
-                                <a>{{system.system_name}}</a>
-                                <div class="system-add" @click="removeshowlist(system)"></div>
+                        <template  v-for="system in systemList">
+                            <li @click=" switchSystem(system)">
+                                <a>{{system.name}}</a>
                             </li>
                         </template>
 
                     </ul>
                 </div>
-                <template v-for="system in systemlist">
-                    <div id="menu-list" class="k-header-item k-header-list  trans" v-if="system.system_type == '2'">
-                        <div class="k-header__rcontainer" @click="addusual(system)">
-                            <span class="f14">{{system.system_name}}</span>
-                            <div class="system-del" @click="addshowlist(system)"></div>
-                        </div>
-                    </div>
-                </template>
                 <div id="menu-button" class="k-header-item k-header-menu r trans"
                      v-el:menu-btn
                      :class="show && 'active'"
@@ -50,7 +41,6 @@
                     <ul class="k-header-menu-active m0 p0"
                         v-if="show"
                     >
-                        <!--<li v-link ="{name: 'updatePwd'}"><a><i class="icon-quill4"></i> 修改密码</a></li>-->
                         <li @click="loginOut"><i class="fa fa-key"></i> 登出</li>
                     </ul>
                 </div>
@@ -71,108 +61,37 @@
                 username:'',
                 show: false,
                 listshow: false,
-                xxx:false,
-                systemlist: [
-                    {
-                        id: '1',
-                        type: '1',
-                        name: '商户管理系统',
-                        url: 'http://backend.dev.kashuo.net'},
-                    {
-                        id: '2',
-                        type: '2',
-                        name: '权限系统管理',
-                        url: 'http://auth.boss.kashuo.net'},
-                    {
-                        id: '3',
-                        type: '1',
-                        name: 'POS进销存'
-                    }
-                ]
+                systemList: []
             }
         },
         created () {
-            this.showsystemlist()
+            window.systemId = 4;
+            if (Cookie.get('KSAuthUserToken')) {
+                KSAuthKit.config({
+                    systemId:systemId,
+                    userToken: Cookie.get('KSAuthUserToken'),
+                    apiURL: authUrl2+'/auth/open/user-info'
+                })
+                KSAuthKit.ready(() => {
+                    this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'))
+                })
+                KSAuthKit.on()
+            }
         },
         methods:{
             loginOut(){
-                var self = this;
                 document.cookie = 'JSESSID=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 document.cookie = 'JSESSTOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
-                // window.location.href = loginUrl
-                window.location.href = authUrl1
+                document.cookie = 'KSAuthApiURL=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'KSAuthUserName=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'KSAuthUserToken=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                document.cookie = 'X-XSRF-TOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
+                sessionStorage.clear();
+                window.location.href = authUrl1;
 
             },
-            showsystemlist () {
-                let self = this
-                self.$http({
-                    options:{xhr : { withCredentials: true }},
-                    url: authUrl2 + '/auth/usersystem/list',
-                    method: 'post'
-                }).then(res => {
-                    let arr = res.data.data.system;
-                    for (var i = 0; i < arr.length; i++) {
-                        if (arr[i].sys_id === self.systemId) {
-                            arr.splice(i, 1)
-                            break
-                        }
-                    }
-                    self.systemlist = arr
-                })
-            },
-            addusual (index) {
-                // Cookie.set('KSAuthSysId', index.sys_id)
-                // document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
-                // document.cookie = 'KSAuthSysId=' + index.sys_id + ';path=/; domain=.kashuo.net; expires=100'
-                window.location.href = index.system_url
-            },
-            removeshowlist (index) {
-                let _this = this
-                for (var i = 0; i < this.systemlist.length; i++) {
-                    if (index.sys_id === this.systemlist[i].sys_id) {
-                        index.system_type = 2
-                        let arr = index
-                        // _this.$set('systemlist[i]', arr)
-                        _this.systemlist[i] = arr
-                        // console.log(this.systemlist)
-                    }
-                }
-                this.$http({
-                    options:{xhr : { withCredentials: true }},
-                    url: authUrl2 + '/auth/usersystem/insert/' + index.sys_id,
-                    method: 'GET',
-                    data: {
-                        systemid: parseInt(index.sys_id)
-                    }
-                }).then(res => {
-                })
-            },
-            addshowlist (index) {
-                if (document.cookie.indexOf("JSESSID=")) {
-                    let check = document.cookie.indexOf("JSESSID=");
-                    if (check == -1) {
-                        window.location.href = authUrl1;
-                        return;
-                    }
-                }
-                let _this = this
-                for (var i = 0; i < this.systemlist.length; i++) {
-                    if (index.sys_id === this.systemlist[i].sys_id) {
-                        index.system_type = 1
-                        let arr = index
-                        // _this.$set('systemlist[i]', arr)
-                        _this.systemlist[i] = arr
-                    }
-                }
-                this.$http({
-                    options:{xhr : { withCredentials: true }},
-                    url: authUrl2 + '/auth/usersystem/delete/' + index.sys_id,
-                    method: 'GET',
-                    data: {
-                        systemid: parseInt(index.sys_id)
-                    }
-                }).then(res => {
-                })
+             switchSystem (system) {
+                window.location.href = system.url
             },
             /**
              * @description 展开后失去焦点关闭菜单
@@ -186,8 +105,6 @@
         ready () {
             if (Cookie.get('JSESSID')) {
                 let idandname = Cookie.get('JSESSID');
-                // let asd = CryptoJS.enc.Base64.stringify(idandname)
-                // console.log(asd)
                 let hash = CryptoJS.enc.Base64.parse(idandname)
                 var _id = hash.toString(CryptoJS.enc.Utf8);
                 let idd = _id.split(":")[1];

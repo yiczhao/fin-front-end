@@ -237,16 +237,16 @@
                                 <input v-validate:bankName="['required']" v-model="updateList.bankName" class="form-control" type="text" placeholder="开户行">
                             </div>
                             <div class="form-group">
-                                <label class="w28" ><i>*</i>提入行号：</label>
-                                <input v-validate:bankNumber="['required']" v-limitnumber="updateList.bankNumber" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
-                                <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
-                            </div>
-                            <div class="form-group">
                                 <label class="w28" ><i>*</i>建行否：</label>
                                 <input type="radio" id="one" value="1" v-model="updateList.isCcb" v-validate:isCcb="['required']">
                                 <label class="w28" for="one">是</label>
                                 <input type="radio" id="two" value="0" v-model="updateList.isCcb" v-validate:isCcb="['required']">
                                 <label class="w28" for="two">否</label>
+                            </div>
+                            <div class="form-group" v-if="updateList.isCcb!=1">
+                                <label class="w28" ><i>*</i>提入行号：</label>
+                                <input v-validate:bankNumber="['required']" v-limitnumber="updateList.bankNumber" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
                             </div>
                             <div class="form-group">
                                 <label class="w28" ><i>*</i>划付周期：</label>
@@ -358,7 +358,7 @@
                     certificates: '',
                     expired: '',
                     updateInfo: '',
-                    isCcb:'',
+                    isCcb:0,
                     accountType:'',
                     settlementCycle:0,
                     subsidyRate:'',

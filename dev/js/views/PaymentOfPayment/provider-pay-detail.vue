@@ -183,16 +183,16 @@
                         <input type="text" class="form-control" v-validate:val5="['required']" v-model="relist.collectionBankName">
                     </div>
                     <div class="form-group">
-                        <label><i>*</i>提入行号</label>
-                        <input type="text" class="form-control w65" v-validate:val6="['required']" v-model="relist.collectionBankNumber">
-                        <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank" class="btn btn-primary" style="vertical-align: top;">查询行号</a>
-                    </div>
-                    <div class="form-group">
                         <label class="w28" ><i>*</i>建行否：</label>
                         <input type="radio" id="one" value="true" v-model="relist.ccb" v-validate:val7="['required']">
                         <label class="w28" for="one">是</label>
                         <input type="radio" id="two" value="false" v-model="relist.ccb" v-validate:val7="['required']">
                         <label class="w28" for="two">否</label>
+                    </div>
+                    <div class="form-group" v-if="relist.ccb != 'true'">
+                        <label><i>*</i>提入行号</label>
+                        <input type="text" class="form-control w65" v-validate:val6="['required']" v-model="relist.collectionBankNumber">
+                        <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank" class="btn btn-primary" style="vertical-align: top;">查询行号</a>
                     </div>
                     <div class="form-group">
                         <label><i>*</i>金额</label>
@@ -209,7 +209,7 @@
                     </div>
                     <div class="form-group">
                         <label class="w28"><i>*</i>备注：</label>
-                        <input v-model="relist.remarks" class="form-control" type="text" v-validate:val0="['required']">
+                        <input v-model="relist.remarks" class="form-control" type="text" placeholder="最多15字符" maxlength="15" v-validate:val0="['required']">
                     </div>
                 </validator>
             </content-dialog>
@@ -327,11 +327,6 @@
             },
             rewrite(_list){
                 this.relist=_.cloneDeep(_list);
-                _.map(this.companylists,(value)=>{
-                   if(value.name.indexOf(this.relist.payAccount.split('备付金')[0])>=0){
-                       this.relist.subCompanyID=value.subCompanyID
-                   }
-                });
                 this.relist.purpose= this.relist.purpose+'';
                 (this.relist.ccb=='0')? this.relist.ccb='false':this.relist.ccb='true';
                 this.addshow=true;
