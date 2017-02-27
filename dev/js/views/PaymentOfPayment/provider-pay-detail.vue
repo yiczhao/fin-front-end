@@ -209,7 +209,7 @@
                     </div>
                     <div class="form-group">
                         <label class="w28"><i>*</i>备注：</label>
-                        <input v-model="relist.remarks" class="form-control" type="text" v-validate:val0="['required']">
+                        <input v-model="relist.remarks" class="form-control" type="text" placeholder="最多15字符" maxlength="15" v-validate:val0="['required']">
                     </div>
                 </validator>
             </content-dialog>
@@ -327,11 +327,6 @@
             },
             rewrite(_list){
                 this.relist=_.cloneDeep(_list);
-                _.map(this.companylists,(value)=>{
-                   if(value.name.indexOf(this.relist.payAccount.split('备付金')[0])>=0){
-                       this.relist.subCompanyID=value.subCompanyID
-                   }
-                });
                 this.relist.purpose= this.relist.purpose+'';
                 (this.relist.ccb=='0')? this.relist.ccb='false':this.relist.ccb='true';
                 this.addshow=true;
