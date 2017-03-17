@@ -229,6 +229,7 @@
                                 <option value="1">备付金账户</option>
                                 <option value="2">商户预付款账户</option>
                                 <option value="3">银行结算</option>
+                                <option value="5">网银转账</option>
                             </select>
                         </div>
                         <div class="form-group"  v-show="payTypes==1">

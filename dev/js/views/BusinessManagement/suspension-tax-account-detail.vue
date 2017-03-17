@@ -36,6 +36,8 @@
                                     <option value="">请选择付款方式</option>
                                     <option value="1">备付金</option>
                                     <option value="2">预付款</option>
+                                    <option value="5">网银转账</option>
+
                                 </select>
 
                                 <select class="form-control" v-model="defaultData.status">
@@ -90,6 +92,7 @@
                                 <td>
                                     <template v-if="trlist.payType==1">备付金</template>
                                     <template v-if="trlist.payType==2">预付款</template>
+                                    <template v-if="trlist.payType==5">网银转账</template>
                                 </td>
                                 <td>
                                     <template v-if="trlist.status==0">已关闭</template>
@@ -159,6 +162,7 @@
                                         <option value="">请选择付款方式</option>
                                         <option value="1">备付金账户</option>
                                         <option value="2">商户预付款账户</option>
+                                        <option value="5">网银转账</option>
                                     </select>
                                 </div>
                                 <div class="form-group" v-show="applyData.payType==1">

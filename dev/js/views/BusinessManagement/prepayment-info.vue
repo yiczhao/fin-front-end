@@ -195,6 +195,14 @@
                                               v-model="applyAdvancePay.remarks"></textarea>
                             </div>
                             <div class="form-group">
+                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                <select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 30%;display: inline-block;">
+                                    <option value="">请选择付款方式</option>
+                                    <option value="1">备付金账户</option>
+                                    <option value="5">网银转账</option>
+                                </select>
+                            </div>
+                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
                             </div>
                             <div class="form-group">
@@ -364,6 +372,7 @@
                     collectionBankNumber: "",//    提入行号    String
                     subCompanyID: "",//    分公司ID   Integer
                     merchantID: "",//  商户ID    Integer
+                    payTypes: "",//付款方式
                     payAccount: "",//  付款账户    String
                     collectionAccountName: "",//   收款账户    String
                     collectionAccountNumber: "",// 收款账号    String
@@ -432,6 +441,7 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
+                                this.applyAdvancePay.payTypes = "";
                                 //判断是否有银行卡账号
                                 if (this.applyAdvancePay.collectionAccountNumber == null) {
                                     dialogs('error', '该商户未设置划款账户，无法充值！');
@@ -446,9 +456,14 @@
             },
             subApplyAdvancePay() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                 if(this.applyAdvancePay.payTypes==''){
+                    dialogs('info','请选择付款方式！');
+                    return;
+                 }
                 this.saveerror=true;
                 if(this.$vali.invalid&&this.saveerror)return;
                 let entity = {
+                    payType:this.applyAdvancePay.payTypes,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,

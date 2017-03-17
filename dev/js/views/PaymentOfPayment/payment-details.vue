@@ -27,6 +27,7 @@
                                 <option value="2">商户预付款账户</option>
                                 <option value="3">银行结算</option>
                                 <option value="4">其他</option>
+                                <option value="5">网银转账</option>
                             </select>
 
                             <select class="form-control" v-model="checkForm.subCompanyID">

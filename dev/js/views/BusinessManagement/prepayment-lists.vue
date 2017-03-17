@@ -213,12 +213,20 @@
                                        name="advancePaymentAmount"
                                        v-model="applyAdvancePay.advancePaymentAmount" v-limitprice="applyAdvancePay.advancePaymentAmount"/>
                             </div>
-                            <div class="form-group">
+                             <div class="form-group">
                                 <label style="position: relative;top: 0px;"><i style="color:red">*</i>备注：</label>
                             <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
                                       v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                             </div>
                             <div class="form-group">
+                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                <select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 30%;display: inline-block;">
+                                    <option value="">请选择付款方式</option>
+                                    <option value="1">备付金账户</option>
+                                    <option value="5">网银转账</option>
+                                </select>
+                            </div>
+                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
                             </div>
                             <div class="form-group">
@@ -289,6 +297,7 @@
                     collectionBankNumber: "",//    提入行号    String
                     subCompanyID: "",//    分公司ID   Integer
                     merchantID: "",//  商户ID    Integer
+                    payTypes: "", // 付款方式
                     payAccount: "",//  付款账户    String
                     collectionAccountName: "",//   收款账户    String
                     collectionAccountNumber: "",// 收款账号    String
@@ -473,6 +482,7 @@
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
                                 this.applyAdvancePay.merchantName = this.entity.merchantName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
+                                this.applyAdvancePay.payTypes = "";
                                 this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
                                 this.applyAdvancePay.collectionAccountName = this.entity.collectionAccountName;//   收款账户    String   --6-1
                                 this.applyAdvancePay.collectionAccountNumber = this.entity.collectionAccountNumber;// 收款账号    String   --6-2
@@ -525,6 +535,10 @@
             },
             subApplyAdvancePay() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                 if(this.applyAdvancePay.payTypes==''){
+                    dialogs('info','请选择付款方式！');
+                                      return;
+                                   }
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
                 let entity = {
