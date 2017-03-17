@@ -35,6 +35,7 @@
                             <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                         </select>
 
+                        <div  class="inline"><label>交易时间：</label></div>
                         <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
@@ -46,6 +47,20 @@
                         <div  v-show="checkForm.timeRange==4" class="inline">
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                        </div>
+
+                        <div  class="inline"><label>结算时间：</label></div>
+                        <select class="form-control" v-model="checkForm.settlementTimeRange" @change="getSettlementTime">
+                            <option value="0">昨天</option>
+                            <option value="1">最近一周</option>
+                            <option value="2">最近一个月</option>
+                            <option value="3">最近三个月</option>
+                            <option value="4">自定义时间</option>
+                        </select>
+
+                        <div  v-show="checkForm.settlementTimeRange==4" class="inline">
+                            <datepicker  :readonly="true" :value.sync="checkForm.startSettlementDate" format="YYYY-MM-DD"></datepicker>至
+                            <datepicker  :readonly="true" :value.sync="checkForm.endSettlementDate" format="YYYY-MM-DD"></datepicker>
                         </div>
 
                         <input type="text" class="form-control" v-model="checkForm.subsidyPayId" v-limitnumber="checkForm.subsidyPayId" placeholder="补贴划付ID">
@@ -95,6 +110,7 @@
                                 <th>佣金</th>
                                 <th>入账金额</th>
                                 <th>交易时间</th>
+                                <th>结算时间</th>
                                 <th>手机号</th>
                                 <th>卡号</th>
                                 <th>参与活动</th>
@@ -144,6 +160,7 @@
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td>{{trlist.entryAmount/100 | currency ''}}</td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
+                                <td>{{trlist.settleDate | datetimes}}</td>
                                 <td>{{trlist.consumptionPhone}}</td>
                                 <td>{{trlist.consumptionAccountNumber}}</td>
                                 <td>
@@ -221,7 +238,11 @@
         </div>
     </index>
 </template>
-
+<style scope>
+html #app .heading .heading-left .form-control, #app .heading .heading-right .form-control,html  #app .heading .heading-middle .form-control{
+        vertical-align: baseline;
+}
+</style>
 <script>
     import model from '../../ajax/Transaction/trade_model'
     export default{
@@ -240,6 +261,8 @@
                     type:"",
                     startDate:"",
                     endDate:"",
+                    startSettlementDate:"",
+                    endSettlementDate:"",
                     merchantOperationID:"",
                     merchantName:"",
                     tradeDetailID:"",
@@ -248,6 +271,7 @@
                     activityOperationID:'',
                     pageIndex:1,
                     timeRange:'3',
+                    settlementTimeRange:'3',
                     pageSize:10
                 },
                 subcompanyList:[],
@@ -337,6 +361,10 @@
             getTime(){
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
                 this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
+            },
+            getSettlementTime(){
+                this.checkForm.startSettlementDate=init_date(this.checkForm.settlementTimeRange)[0];
+                this.checkForm.endSettlementDate=init_date(this.checkForm.settlementTimeRange)[1];
             }
         },
         ready() {
@@ -348,6 +376,7 @@
             (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
             this.getSubcompany();
             this.getTime();
+            this.getSettlementTime();
             (this.$route.params.tradeCompanyId==':tradeCompanyId')? this.checkForm.subCompanyID='' : this.checkForm.subCompanyID=this.$route.params.tradeCompanyId;
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
