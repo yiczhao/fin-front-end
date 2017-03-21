@@ -229,7 +229,7 @@
                             <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <label>收款信息：</label>
                                 <br/>
                                 <div class="collectionAccount-bgcolor">
@@ -482,7 +482,7 @@
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
                                 this.applyAdvancePay.merchantName = this.entity.merchantName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
-                                this.applyAdvancePay.payTypes = "";
+                                this.applyAdvancePay.payTypes = this.entity.payType;
                                 this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
                                 this.applyAdvancePay.collectionAccountName = this.entity.collectionAccountName;//   收款账户    String   --6-1
                                 this.applyAdvancePay.collectionAccountNumber = this.entity.collectionAccountNumber;// 收款账号    String   --6-2
@@ -490,15 +490,10 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
-                                //判断是否有银行卡账号
-                                if (this.applyAdvancePay.collectionAccountNumber == null) {
-                                    dialogs('error', '该商户未设置划款账户，无法充值！');
-                                    return false;
-                                } else {
-                                    //显示窗口
-                                    this.saveerror = false;
-                                    this.modal_prepayment_recharge = true;
-                                }
+
+                                //显示窗口
+                                this.saveerror = false;
+                                this.modal_prepayment_recharge = true;
                             }
                         });
             },
