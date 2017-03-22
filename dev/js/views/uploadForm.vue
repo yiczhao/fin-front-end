@@ -93,6 +93,13 @@
                                         <input type="button" class="btn btn-primary" value="提交" @click="generateActivityEffect($event)"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="生成活动执行表" data-toggle="modal" @click="generateActivityEffectAgain($event)"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
 							</table>
 						</form>
 					</div>
@@ -247,6 +254,12 @@
                                     .then((response)=>{
                                         dialogs('success',response.data.message);
                                     })
+            },
+            generateActivityEffectAgain(e){
+                this.$http.post('./dev/tool/activityEffect/generate/again')
+                        .then((response)=>{
+                            dialogs('success',response.data.message);
+                        })
             }
         },
         ready() {
