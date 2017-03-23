@@ -35,12 +35,11 @@
                             <option value="3">最近三个月</option>
                             <option value="4">自定义时间</option>
                         </select>
-                        <datepicker v-show="defaultData.timeRange==4" :readonly="true"
-                                    :value.sync="defaultData.startDate"
-                                    format="YYYY-MM-DD"></datepicker>
-                        <span v-show="defaultData.timeRange==4">至</span>
-                        <datepicker v-show="defaultData.timeRange==4" :readonly="true" :value.sync="defaultData.endDate"
-                                    format="YYYY-MM-DD"></datepicker>
+                        <div v-show="defaultData.timeRange==4"  class="inline">
+                            <datepicker :readonly="true" :value.sync="defaultData.startDate" format="YYYY-MM-DD"></datepicker>至
+                            <datepicker :readonly="true" :value.sync="defaultData.endDate" format="YYYY-MM-DD"></datepicker>
+                        </div>
+
                         <select class="form-control" v-model="defaultData.status">
                             <option value="">全部手工单状态</option>
                             <option value="1">未提交</option>

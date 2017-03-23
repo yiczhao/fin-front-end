@@ -244,7 +244,7 @@
                     keywords:"",
                     pageIndex:1,
                     pageSize:10,
-                    timeRange:'3'
+                    timeRange:'4'
                 },
                 subcompanyList:[],
                 pageall:1,

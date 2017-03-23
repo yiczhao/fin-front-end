@@ -406,7 +406,7 @@
                     endDate:'',
                     mid:'',
                     pageIndex:1,
-                    dateS:'3',
+                    dateS:'4',
                     pageSize:10
                 },
                 total:{

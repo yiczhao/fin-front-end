@@ -161,7 +161,10 @@ var init_date=((type)=>{
             startT=nyear + "-" + getTwo(nmonth) + "-" + getTwo(day);
             break;
         case '4':
-            startT=year + "-" + getTwo(month) + "-" + getTwo(day);
+            var nmonth,nyear;
+            nmonth=month;
+            nyear=year - 1;
+            startT=nyear + "-" + getTwo(nmonth) + "-" + getTwo(day);
             break;
         case '5':
             startT=year + "-" + getTwo(month) + "-" + getTwo(day);
