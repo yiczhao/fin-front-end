@@ -93,6 +93,13 @@
                                         <input type="button" class="btn btn-primary" value="提交" @click="generateActivityEffect($event)"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="修正订单下补贴账户数据" data-toggle="modal" @click="updateSubsidyAccount($event)"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
 							</table>
 						</form>
 					</div>
@@ -247,6 +254,12 @@
                                     .then((response)=>{
                                         dialogs('success',response.data.message);
                                     })
+            },
+            updateSubsidyAccount(e){
+                this.$http.post('./dev/tool/subsidyAccount/update')
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
             }
         },
         ready() {
