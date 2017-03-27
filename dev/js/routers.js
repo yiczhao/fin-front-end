@@ -234,6 +234,23 @@ export default function(router){
                 require(['./views/ThreeParty/contract-management.vue'],resolve);
             }
         },
+        /*商户账户管理列表 */
+	    '/merchant-account/':{
+		    name:'merchant-account',
+		    router_type:"merchant-account",
+		    component: function(resolve){
+			    require(['./views/MerchantAccount/merchant-account.vue'],resolve);
+		    }
+	    },
+        /*商户账户管理列表 -- 明细列表 */
+	    '/merchant_account_detail/:id/':{
+		    name:'merchant_account_detail',
+		    router_type:"merchant-account",
+		    component: function(resolve){
+			    require(['./views/MerchantAccount/merchant-account-detail.vue'],resolve);
+		    }
+	    },
+
         /* 商户管理-商户列表 */
         '/business-lists/':{
             name:'business-lists',

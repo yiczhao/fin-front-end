@@ -1430,7 +1430,48 @@ export default function install(Vue) {
      */
     _o.contract_associate = './contract/associate';
 
+	/**
+	 * @description 商户账户 列表
+	 * @author 于凯乐
+	 * @method get
+	 */
+	_o.merchantAccountList = './merchantAccount/list?';
 
+	/**
+	 * @description 商户账户 明细
+	 * @author 于凯乐
+	 * @method get
+	 */
+	_o.merchantAccountDetail = './merchantAccount/detail';
+
+	/**
+	 * @description 商户账户 确认
+	 * @author 于凯乐
+	 * @method post
+	 */
+	_o.merchantAccountConfirm = './merchantAccount/confirm';
+
+	/**
+	 * @description 商户账户 配置
+	 * @author 于凯乐
+	 * @method get
+	 */
+	_o.merchantAccountConfigure = './merchantAccount/configure';
+
+
+	/**
+	 * @description 商户账户 配置确认
+	 * @author 于凯乐
+	 * @method post
+	 */
+	_o.merchantAccountConfigureConfirm = './merchantAccount/configureConfirm';
+
+	/**
+	 * @description 商户账户 导出Excel
+	 * @author 于凯乐
+	 * @method get
+	 */
+	_o.merchantAccountExportToExcel = './data/export/excel/merchantAccount';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
