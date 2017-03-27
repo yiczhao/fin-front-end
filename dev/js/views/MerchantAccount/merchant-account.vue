@@ -128,11 +128,12 @@
                                     <!--data-ksa="third_party_account_manage.detail"-->
                                 </td>
                                 <td>
-                                    <template v-if="trList.expired == 1">已确认</template>
-                                    <template v-if="trList.expired == 2">未确认</template>
+                                    <template v-if="trList.expired==1">已确认</template>
+                                    <template v-if="trList.expired==2">未确认</template>
                                 </td>
                                 <td>
-                                    <a v-link="">确认</a>
+                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal"
+                                       data-target="#modal_submit">确认</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
@@ -161,6 +162,18 @@
                     未找到数据
                 </div>
 
+                <!--确定-->
+                <content-dialog
+                        :show.sync="modal_confirm" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'确认账号'" @kok="confirm"
+                >
+                    <div class="modal-body">
+                        <div class="form-group tc">
+                            <button type="button" @click="confirm" class="btn btn-primary">确认</button>
+                            <button type="button" class="btn btn-gray" @click="modal_confirm=false">取消</button>
+                        </div>
+                    </div>
+                </content-dialog>
             </div>
         </div>
     </index>
@@ -173,6 +186,7 @@
 			this.model = model(this);
 			return {
 				pageAll: 1,
+				modal_confirm: false,
 				cityList: [],
 				merchantAccountList: [],
 				companyList: [],
@@ -244,8 +258,28 @@
 				window.open(window.origin + this.$API.merchantAccountExportToExcel + $.param(this.conditionData));
 			},
 			initList(){
+				this.modal_confirm = false;
+				$('.modal').modal('hide');
+
 				back_json.saveArray(this.$route.path, this.conditionData);
 				this.getMerchantAccountList(this.conditionData);
+			},
+			confirmAlert(_id){
+				this.modal_confirm = true;
+				this.conditionData.id = _id;
+			},
+			confirm(){
+				if (sessionStorage.getItem('isHttpin') == 1)return;
+				let data = {
+					merchantID: this.conditionData.id,
+				};
+				this.model.merchantAccountConfirm(data)
+					.then((res) => {
+						if (res.data.code == 0) {
+							this.initList();
+							dialogs('success', '确认成功！')
+						}
+					})
 			}
 		},
 		ready() {

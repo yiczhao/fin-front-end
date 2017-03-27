@@ -14,12 +14,22 @@ function model(_this) {
 			return _this.$http.get(_this.$API.merchantAccountList + $.param(data))
 		},
 
+		/**
+		 * @description 查询商户账户列表 明细
+		 * @param _id
+		 * @returns {*}
+		 */
 		merchantAccountDetail(_id){
 			return _this.$http.get(_this.$API.merchantAccountDetail+_id);
 		},
 
+		/**
+		 * @description 确认账户信息
+		 * @param data
+		 * @returns {*}
+		 */
 		merchantAccountConfirm(data){
-			return _this.$http.get(_this.$API.merchantAccountConfirm + $.param(data))
+			return _this.$http.post(_this.$API.merchantAccountConfirm, data)
 		},
 
 		merchantAccountConfigure(data){
