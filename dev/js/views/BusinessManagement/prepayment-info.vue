@@ -195,7 +195,12 @@
                                               v-model="applyAdvancePay.remarks"></textarea>
                             </div>
                             <div class="form-group">
-                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                                <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                <select class="form-control" v-model="applyAdvancePay.subCompanyID" style="width: 30%;display: inline-block;">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
+
                             </div>
                             <div class="form-group">
                                 <label>收款信息：</label>
@@ -355,6 +360,7 @@
                     pageSize:10,
                     "endDate": ''
                 },
+                subcompanyList:[],
                 zdlists: [],
                 applyAdvancePay: {
                     merchantName: "",//商户名
@@ -415,6 +421,16 @@
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
+             //获取分公司数据
+            getSubcompany(){
+                 this.$common_model.getcompany()
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                         if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
+                    });
+            },
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
                 if(sessionStorage.getItem('isHttpin')==1)return;
@@ -432,6 +448,7 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
+                                this.applyAdvancePay.subCompanyID = "";
                                 //判断是否有银行卡账号
                                 if (this.applyAdvancePay.collectionAccountNumber == null) {
                                     dialogs('error', '该商户未设置划款账户，无法充值！');
@@ -448,7 +465,12 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror=true;
                 if(this.$vali.invalid&&this.saveerror)return;
+                if(this.applyAdvancePay.subCompanyID==''){
+                    dialogs('info','请选择分公司！');
+                    return;
+                }
                 let entity = {
+                    subCompanyID: this.applyAdvancePay.subCompanyID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,
@@ -506,6 +528,7 @@
             (this.$route.params.id != ':id') ?  this.adjustBalanceData.advancePaymentMerchantID=this.defaultData.advancePaymentMerchantID = this.$route.params.id : null;
             (this.$route.params.orderNumber != ':orderNumber') ? this.defaultData.orderNumber = this.$route.params.orderNumber : null;
             this.getTime();
+            this.getSubcompany();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
 

@@ -162,6 +162,14 @@
                                     </select>
                                 </div>
                                 <div class="form-group" v-show="applyData.payType==1">
+                                    <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                    <select class="form-control" v-model="applyData.subCompanyID" style="width: 30%;display: inline-block;">
+                                        <option value="">全部分公司</option>
+                                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group" v-show="applyData.payType==1">
                                     <label style="padding-left: 13%"><input type="checkbox" v-model="applyData.mergePay"/>
                                         相同账户合并付款</label>
                                 </div>
@@ -212,6 +220,7 @@
                     mid:'',
                     dateS:'3'
                 },
+                subcompanyList:[],
                 zdlists:[],
                 total:{
                     'incomeAmount': '',
@@ -233,7 +242,8 @@
                     ids:[],
                     payoutAmount:'',
                     mergePay:false,
-                    payType:''
+                    payType:'',
+                    subCompanyID:''
                 },
                 applyText:''
             }
@@ -265,6 +275,15 @@
                         });
             },
             //获取分公司数据
+            getSubcompany(){
+                 this.$common_model.getcompany()
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                         if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
+                    });
+            },
             getBlance(){
                 let data={
                     id:this.$route.params.suspensionHDid
@@ -302,6 +321,7 @@
                 this.applyData.payType='';
                 this.applyData.ids=[id];
                 this.applyData.mergePay=false;
+                this.applyData.subCompanyID='';
                 let data={
                     id:id,
                 }
@@ -327,6 +347,10 @@
                 }
                 if(this.applyData.payType==''){
                     this.applyText='请选择付款方式！';
+                    return;
+                }
+                if(this.applyData.payType=='1' && this.applyData.subCompanyID==''){
+                    this.applyText='请选择分公司！';
                     return;
                 }
                 let data={};
@@ -356,6 +380,7 @@
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
             vm.getTime();
+            vm.getSubcompany();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
             vm.getBlance();

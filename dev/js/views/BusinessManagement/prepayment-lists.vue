@@ -219,7 +219,12 @@
                                       v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                             </div>
                             <div class="form-group">
-                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                                <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                <select class="form-control" v-model="applyAdvancePay.subCompanyID" style="width: 30%;display: inline-block;">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
+
                             </div>
                             <div class="form-group">
                                 <label>收款信息：</label>
@@ -480,6 +485,7 @@
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
+                                this.applyAdvancePay.subCompanyID = "";
                                 //判断是否有银行卡账号
                                 if (this.applyAdvancePay.collectionAccountNumber == null) {
                                     dialogs('error', '该商户未设置划款账户，无法充值！');
@@ -527,7 +533,12 @@
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
+                if(this.applyAdvancePay.subCompanyID==''){
+                    dialogs('info','请选择分公司！');
+                    return;
+                }
                 let entity = {
+                    subCompanyID: this.applyAdvancePay.subCompanyID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,

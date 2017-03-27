@@ -74,6 +74,14 @@
                     </select>
                 </div>
                 <div class="form-group" v-show="batchsData.payType==1">
+                    <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                    <select class="form-control" v-model="batchsData.subCompanyID" style="width: 30%;display: inline-block;">
+                        <option value="">全部分公司</option>
+                        <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                    </select>
+
+                </div>
+                <div class="form-group" v-show="batchsData.payType==1">
                     <label style="padding-left: 13%"><input type="checkbox" v-model="batchsData.mergePay"/>
                         相同账户合并付款</label>
                 </div>
@@ -98,7 +106,8 @@
                 batchsData:{
                     mergePay:false,
                     remarks:'',
-                    payType:''
+                    payType:'',
+                    subCompanyID:''
                 },
                 recheckLists:[],
                 checkedIds:{
@@ -106,6 +115,7 @@
                     lengths:0
                 },
                 id:'',
+                subcompanyList:[],
                 dtitle:'',
                 remarks:'',
                 withdrawCashAmounts:0,
@@ -125,6 +135,15 @@
                                     this.total+=value.withdrawCashAmount;
                                     this.suspensionTaxAmount+=value.suspensionTaxAmount;
                                 })
+                            }
+                        });
+            },
+            //获取分公司数据
+            getSubcompany(){
+                this.$common_model.getcompany()
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('subcompanyList', response.data.data)
                             }
                         });
             },
@@ -187,6 +206,14 @@
                     dialogs('info','请填写必填信息！');
                     return;
                 }
+                if(this.batchsData.payType==''){
+                    this.applyText='请选择付款方式！';
+                    return;
+                }
+                if(this.batchsData.payType=='1' && this.batchsData.subCompanyID==''){
+                    dialogs('info','请选择分公司！');
+                    return;
+                }
                 let data={
                     'payType':this.batchsData.payType,
                     'remarks':this.batchsData.remarks,
@@ -197,6 +224,9 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 dialogs('success',response.data.message);
+                            }else{
+                                dialogs('error',response.data.message);
+                                return;
                             }
                             if(back_json.num==0){
                                 back_json.num++;
@@ -215,6 +245,7 @@
             }
         },
         ready(){
+            this.getSubcompany();
             this.query();
         },
         watch:{
