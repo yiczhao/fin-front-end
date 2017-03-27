@@ -284,7 +284,7 @@
                     subCompanyID:'',
                     purpose:'',
                     status:'',
-                    timeRange:'3',
+                    timeRange:'4',
                     startDate:'',
                     endDate:'',
                     id:'',
