@@ -36,6 +36,7 @@
                                     <template v-if="trlist.payType==2">商户预付款账户</template>
                                     <template v-if="trlist.payType==3">银行结算</template>
                                     <template v-if="trlist.payType==4">其他</template>
+                                    <template v-if="trlist.payType==5">网银转账</template>
                                 </td>
                                 <td>
                                     {{trlist.collectionAccountName}}

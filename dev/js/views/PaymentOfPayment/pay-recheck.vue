@@ -25,6 +25,7 @@
                                 <option value="2">商户预付款账户</option>
                                 <option value="3">银行结算</option>
                                 <option value="4">其他</option>
+                                <option value="5">网银转账</option>
                             </select>
 
                             <select class="form-control" v-model="checkForm.subCompanyID">
@@ -135,6 +136,7 @@
                                     <template v-if="n.payType==1">备付金账户</template>
                                     <template v-if="n.payType==2">预付款账户</template>
                                     <template v-if="n.payType==3">银行结算</template>
+                                    <template v-if="n.payType==5">网银转账</template>
                                 </td>
                                 <td>
                                     <template v-if="n.purpose==1">补贴划付</template>
