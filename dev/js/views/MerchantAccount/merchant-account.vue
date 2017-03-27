@@ -253,8 +253,8 @@
 			},
         /*导出Excel*/
 			exportToExcel(){
-				if (!this.merchantList.length > 0)return;
-//				this.checkForm.mid = JSON.parse(sessionStorage.getItem('userData')).authToken;
+				if (!this.conditionData.length > 0)return;
+//				this.conditionData.mid = JSON.parse(sessionStorage.getItem('userData')).authToken;
 				window.open(window.origin + this.$API.merchantAccountExportToExcel + $.param(this.conditionData));
 			},
 			initList(){

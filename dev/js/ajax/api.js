@@ -1471,7 +1471,7 @@ export default function install(Vue) {
 	 * @author 于凯乐
 	 * @method get
 	 */
-	_o.merchantAccountExportToExcel = './data/export/excel/merchantAccount';
+	_o.merchantAccountExportToExcel = './data/export/excel/merchantAccount?';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
