@@ -14,8 +14,8 @@ function model(_this) {
 			return _this.$http.get(_this.$API.merchantAccountList + $.param(data))
 		},
 
-		merchantAccountDetail(data){
-			return _this.$http.get(_this.$API.merchantAccountDetail + $.param(data))
+		merchantAccountDetail(_id){
+			return _this.$http.get(_this.$API.merchantAccountDetail+_id);
 		},
 
 		merchantAccountConfirm(data){

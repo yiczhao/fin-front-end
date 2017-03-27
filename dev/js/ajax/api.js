@@ -1442,7 +1442,7 @@ export default function install(Vue) {
 	 * @author 于凯乐
 	 * @method get
 	 */
-	_o.merchantAccountDetail = './merchantAccount/detail';
+	_o.merchantAccountDetail = './merchantAccount/detail/';
 
 	/**
 	 * @description 商户账户 确认

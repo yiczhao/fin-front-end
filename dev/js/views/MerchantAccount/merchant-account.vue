@@ -1,5 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-    <index :title="'商户账户管理列表'"
+    <index :title="'商户账户管理'"
            :ptitle="'商户账户'"
            :hname="'merchant-account'"
            :isshow="'isshow'">
@@ -124,7 +124,8 @@
                                 <!--补贴税率-->
                                 <td>{{trList.subsidyRate}}</td>
                                 <td>
-                                    <a v-link="{name:'merchant_account_detail',params:{'id':trlist.id}}">明细</a> <!--data-ksa="third_party_account_manage.detail"-->
+                                    <a v-link="{name:'merchant-account-detail',params:{'merchantID':trList.id}}">明细</a>
+                                    <!--data-ksa="third_party_account_manage.detail"-->
                                 </td>
                                 <td>
                                     <template v-if="trList.expired == 1">已确认</template>
@@ -176,6 +177,7 @@
 				merchantAccountList: [],
 				companyList: [],
 				conditionData: {
+					'id': '',
 					'merchantOperationID': '',
 					'subCompanyID': '',
 					'cityID': '',
