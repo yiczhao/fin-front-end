@@ -82,6 +82,24 @@
 									<td>
 									</td>
 								</tr>
+								<tr>
+                                    <td>
+                                        <input type="text" class="form-control" v-model="activityID" placeholder="activityID"/>
+                                        <input type="text" class="form-control" v-model="subCompanyID" placeholder="subCompanyID"/>
+                                        <input type="text" class="form-control" v-model="year" placeholder="年份"/>
+                                        <input type="text" class="form-control" v-model="month" placeholder="月份"/>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="提交" @click="generateActivityEffect($event)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="修正订单下补贴账户数据" data-toggle="modal" @click="updateSubsidyAccount($event)"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
 							</table>
 						</form>
 					</div>
@@ -223,6 +241,25 @@
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
+            },
+            generateActivityEffect(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                    let data={
+                       subCompanyID :  this.subCompanyID,
+                       activityID : this.activityID,
+                       year : this.year,
+                       month : this.month
+                    }
+                this.$http.post('./dev/tool/activityEffect/generate',data)
+                                    .then((response)=>{
+                                        dialogs('success',response.data.message);
+                                    })
+            },
+            updateSubsidyAccount(e){
+                this.$http.post('./dev/tool/subsidyAccount/update')
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
             }
         },
         ready() {
