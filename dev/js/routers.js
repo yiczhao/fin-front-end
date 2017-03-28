@@ -251,6 +251,15 @@ export default function (router) {
 			}
 		},
 
+		/*商户账户管理列表 -- 转账配置 */
+		'/merchant-account-transConf/:transConfMerchantID/:transConfMerchantOperationID/': {
+			name: 'merchant-account-transConf',
+			router_type: "merchant-account",
+			component: function (resolve) {
+				require(['./views/MerchantAccount/trans-configure.vue'], resolve);
+			}
+		},
+
 		/* 商户管理-商户列表 */
 		'/business-lists/': {
 			name: 'business-lists',

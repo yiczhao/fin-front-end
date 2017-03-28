@@ -79,6 +79,7 @@
                                 <th>商户简称</th>
                                 <th>商户类型</th>
                                 <th>门店号</th>
+                                <th>门店名称</th>
                                 <th>分公司</th>
                                 <th>城市</th>
                                 <th>账户名</th>
@@ -97,7 +98,7 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trList) in merchantAccountList">
-                                <td>{{trList.operationID}}</td>
+                                <td>{{trList.merchantOperationID}}</td>
                                 <td>{{trList.backendMerchantCode}}</td>
                                 <td>{{trList.backendMerchantName}}</td>
                                 <td>
@@ -105,6 +106,7 @@
                                     <template v-if="trList.merchantType ==2">连锁商户</template>
                                 </td>
                                 <td>{{trList.backendStoreCode}}</td>
+                                <td>{{trList.storeName}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>{{trList.cityName}}</td>
                                 <td>{{trList.accountName}}</td>
@@ -129,7 +131,7 @@
                                 </td>
                                 <td>
                                     <template v-if="trList.expired==1">已确认</template>
-                                    <template v-if="trList.expired==2">未确认</template>
+                                    <template v-if="trList.expired==2">待确认</template>
                                 </td>
                                 <td>
                                     <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal"
@@ -138,7 +140,7 @@
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
                                 <td>
-                                    <a v-link="">配置</a>
+                                    <a v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}">配置</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -253,8 +255,8 @@
 			},
         /*导出Excel*/
 			exportToExcel(){
-				if (!this.conditionData.length > 0)return;
-//				this.conditionData.mid = JSON.parse(sessionStorage.getItem('userData')).authToken;
+				if (!this.merchantAccountList.length > 0)return;
+				this.conditionData.mid = JSON.parse(sessionStorage.getItem('userData')).authToken;
 				window.open(window.origin + this.$API.merchantAccountExportToExcel + $.param(this.conditionData));
 			},
 			initList(){

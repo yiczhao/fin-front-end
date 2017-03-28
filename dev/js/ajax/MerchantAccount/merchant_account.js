@@ -20,7 +20,7 @@ function model(_this) {
 		 * @returns {*}
 		 */
 		merchantAccountDetail(_id){
-			return _this.$http.get(_this.$API.merchantAccountDetail+_id);
+			return _this.$http.get(_this.$API.merchantAccountDetail + _id);
 		},
 
 		/**
@@ -32,14 +32,29 @@ function model(_this) {
 			return _this.$http.post(_this.$API.merchantAccountConfirm, data)
 		},
 
+		/**
+		 * @description 转账配置 信息
+		 * @param data
+		 * @returns {*}
+		 */
+		merchantAccountConfigureInfo(_id){
+			return _this.$http.get(_this.$API.merchantAccountConfigureInfo + _id)
+		},
+
+		/**
+		 * @description 转账配置 保存
+		 * @param data
+		 * @returns {*}
+		 */
 		merchantAccountConfigure(data){
-			return _this.$http.get(_this.$API.merchantAccountConfigure + $.param(data))
+			return _this.$http.post(_this.$API.merchantAccountConfigure, data)
 		},
 
-		merchantAccountConfigureConfirm(data){
-			return _this.$http.get(_this.$API.merchantAccountConfigureConfirm + $.param(data))
-		},
-
+		/**
+		 * @description 导出excel
+		 * @param data
+		 * @returns {*}
+		 */
 		merchantAccountExportToExcel(data){
 			return _this.$http.get(_this.$API.merchantAccountExportToExcel + $.param(data))
 		}

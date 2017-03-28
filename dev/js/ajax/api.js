@@ -1452,11 +1452,11 @@ export default function install(Vue) {
 	_o.merchantAccountConfirm = './merchantAccount/confirm?';
 
 	/**
-	 * @description 商户账户 配置
+	 * @description 商户账户 配置信息
 	 * @author 于凯乐
 	 * @method get
 	 */
-	_o.merchantAccountConfigure = './merchantAccount/configure';
+	_o.merchantAccountConfigureInfo = './merchantAccount/configureInfo/';
 
 
 	/**
@@ -1464,14 +1464,14 @@ export default function install(Vue) {
 	 * @author 于凯乐
 	 * @method post
 	 */
-	_o.merchantAccountConfigureConfirm = './merchantAccount/configureConfirm';
+	_o.merchantAccountConfigure = './merchantAccount/configure';
 
 	/**
 	 * @description 商户账户 导出Excel
 	 * @author 于凯乐
 	 * @method get
 	 */
-	_o.merchantAccountExportToExcel = './data/export/excel/merchantAccount?';
+	_o.merchantAccountExportToExcel = '/data/export/excel/merchantAccount?';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
