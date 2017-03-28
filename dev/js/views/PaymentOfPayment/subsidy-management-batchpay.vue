@@ -215,6 +215,7 @@
                     return;
                 }
                 let data={
+                    'subCompanyID':this.batchsData.subCompanyID,
                     'payType':this.batchsData.payType,
                     'remarks':this.batchsData.remarks,
                     'mergePay':this.batchsData.mergePay,
