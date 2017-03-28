@@ -379,6 +379,7 @@
                     });
             },
             clear(){
+                this.subCompanyID='';
                 this.payTypes='';
                 this.mergePay=false;
             },

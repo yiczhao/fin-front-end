@@ -199,6 +199,12 @@
                     return;
                 }
                 this.dtitle='批量提现';
+                this.batchsData={
+                      mergePay:false,
+                      remarks:'',
+                      payType:'',
+                      subCompanyID:''
+                 };
                 this.show=true;
             },
             batchs(){
