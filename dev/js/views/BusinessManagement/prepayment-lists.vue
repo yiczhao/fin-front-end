@@ -227,7 +227,11 @@
                                 </select>
                             </div>
                             <div class="form-group" v-show="applyAdvancePay.payTypes==1">
-                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                                <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                <select class="form-control" v-model="applyAdvancePay.subCompanyID" style="width: 30%;display: inline-block;">
+                                    <option value="">全部分公司</option>
+                                    <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                                </select>
                             </div>
                             <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <label>收款信息：</label>
@@ -495,6 +499,16 @@
                                 //显示窗口
                                 this.saveerror = false;
                                 this.modal_prepayment_recharge = true;
+                                this.applyAdvancePay.subCompanyID = "";
+                                //判断是否有银行卡账号
+                                if (this.applyAdvancePay.collectionAccountNumber == null) {
+                                    dialogs('error', '该商户未设置划款账户，无法充值！');
+                                    return false;
+                                } else {
+                                    //显示窗口
+                                    this.saveerror = false;
+                                    this.modal_prepayment_recharge = true;
+                                }
                             }
                         });
             },
@@ -537,8 +551,13 @@
                                    }
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
+                if(this.applyAdvancePay.subCompanyID==''){
+                    dialogs('info','请选择分公司！');
+                    return;
+                }
                 let entity = {
                     payType:this.applyAdvancePay.payTypes,
+                    subCompanyID: this.applyAdvancePay.subCompanyID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks,

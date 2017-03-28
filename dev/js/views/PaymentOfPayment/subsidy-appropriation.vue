@@ -232,6 +232,14 @@
                                 <option value="5">网银转账</option>
                             </select>
                         </div>
+                        <div class="form-group" v-show="payTypes==1">
+                            <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                            <select class="form-control" v-model="subCompanyID" style="width: 30%;display: inline-block;">
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+
+                        </div>
                         <div class="form-group"  v-show="payTypes==1">
                             <label><input type="checkbox" v-model="mergePay"/>
                                 相同账户合并付款</label>
@@ -273,6 +281,7 @@
                     pageSize:10,
                     timeRange:'4'
                 },
+                subCompanyID:'',
                 subcompanyList:[],
                 pageall:1,
                 cityList:[],
@@ -371,6 +380,7 @@
                     });
             },
             clear(){
+                this.subCompanyID='';
                 this.payTypes='';
                 this.mergePay=false;
             },
@@ -427,9 +437,14 @@
                     dialogs('info','请选择付款方式！');
                     return;
                 }
+                if(this.payTypes=='1' && this.subCompanyID==''){
+                    dialogs('info','请选择分公司！');
+                    return;
+                }
                 let data={
                     ids:this.submitId,
                     payType:this.payTypes,
+                    subCompanyID:this.subCompanyID,
                     mergePay:this.mergePay
                 }
                 var mes;
@@ -440,8 +455,11 @@
                                 if(response.data.code==0){
                                     dialogs('success',mes);
                                     this.modal_applyPay = false;
+                                    this.query();
+                                }else{
+                                    dialogs('error',response.data.message);
+                                    return;
                                 }
-                                this.query();
                             });
             },
             checkNew(){

@@ -160,6 +160,14 @@
                             </select>
                         </div>
                         <div class="form-group" v-show="applyData.payType==1">
+                            <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                            <select class="form-control" v-model="applyData.subCompanyID" style="width: 30%;display: inline-block;">
+                                <option value="">全部分公司</option>
+                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+
+                        </div>
+                        <div class="form-group" v-show="applyData.payType==1">
                             <label style="padding-left: 13%"><input type="checkbox" v-model="applyData.mergePay"/>
                                 相同账户合并付款</label>
                         </div>
@@ -352,7 +360,8 @@
                     ids:[],
                     payoutAmount:'',
                     mergePay:false,
-                    payType:''
+                    payType:'',
+                    subCompanyID:''
                 },
                 rechargeInfo:{
                     val1:'',
@@ -435,7 +444,8 @@
                     ids:[],
                     payoutAmount:'',
                     mergePay:false,
-                    payType:''
+                    payType:'',
+                    subCompanyID:''
                 };
                 this.rechargeInfo.val1=merchantName;
                 this.rechargeInfo.val2=activityName;
@@ -468,6 +478,10 @@
                 }
                 if(this.applyData.payType==''){
                     this.applyText='请选择付款方式！';
+                    return;
+                }
+                if(this.applyData.payType=='1' && this.applyData.subCompanyID==''){
+                    this.applyText='请选择分公司！';
                     return;
                 }
                 let data=_.cloneDeep(this.applyData);
