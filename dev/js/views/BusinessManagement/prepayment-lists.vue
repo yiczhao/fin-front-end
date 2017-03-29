@@ -551,7 +551,7 @@
                                    }
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
-                if(this.applyAdvancePay.subCompanyID==''){
+                if(this.applyAdvancePay.payTypes=='1'&& this.applyAdvancePay.subCompanyID==''){
                     dialogs('info','请选择分公司！');
                     return;
                 }
