@@ -191,8 +191,8 @@
                             </div>
                             <div class="form-group">
                                 <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
-                                    <textarea v-validate:val2="['required']" class="form-control" name="remarks"
-                                              v-model="applyAdvancePay.remarks"></textarea>
+                                    <textarea v-validate:val2="['required']" class="form-control"  maxlength="15" name="remarks"
+                                              v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
@@ -491,7 +491,7 @@
                     subCompanyID: this.applyAdvancePay.subCompanyID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
-                    remarks: this.applyAdvancePay.remarks,
+                    remarks: this.applyAdvancePay.remarks
                 }
                 this.model.applyAdvancePay(entity)
                         .then((response)=>{

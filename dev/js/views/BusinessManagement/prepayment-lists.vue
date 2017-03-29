@@ -560,7 +560,7 @@
                     subCompanyID: this.applyAdvancePay.subCompanyID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
-                    remarks: this.applyAdvancePay.remarks,
+                    remarks: this.applyAdvancePay.remarks
                 }
                 this.model.applyAdvancePay(entity)
                         .then((response)=>{
