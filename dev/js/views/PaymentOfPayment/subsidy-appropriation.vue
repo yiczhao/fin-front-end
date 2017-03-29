@@ -234,9 +234,9 @@
                         </div>
                         <div class="form-group" v-show="payTypes==1">
                             <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
-                            <select class="form-control" v-model="subCompanyID" style="width: 30%;display: inline-block;">
-                                <option value="">全部分公司</option>
-                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            <select class="form-control" v-model="bankAccountID" style="width: 30%;display: inline-block;">
+                                <option value="">--请选择--</option>
+                                <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
                             </select>
 
                         </div>
@@ -266,7 +266,7 @@
                 modal_applyPay: false,
                 checkForm:{
                     id:"",
-                    subCompanyID:"",
+                    bankAccountID:"",
                     cityID:"",
                     createType:"",
                     status:"",
@@ -283,6 +283,7 @@
                 },
                 subCompanyID:'',
                 subcompanyList:[],
+                bankAccountList:[],
                 pageall:1,
                 cityList:[],
                 AccountS:[],
@@ -379,8 +380,18 @@
                         }
                     });
             },
+            //获取付款账户数据
+            getBankAccountList(_type){
+                this.$common_model.getbankAccount(_type)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('bankAccountList', response.data.data)
+                        }
+                    });
+            },
             clear(){
-                this.subCompanyID='';
+                this.bankAccountID='';
                 this.payTypes='';
                 this.mergePay=false;
             },
@@ -437,14 +448,14 @@
                     dialogs('info','请选择付款方式！');
                     return;
                 }
-                if(this.payTypes=='1' && this.subCompanyID==''){
-                    dialogs('info','请选择分公司！');
+                if(this.payTypes=='1' && this.bankAccountID==''){
+                    dialogs('info','请选择付款账户！');
                     return;
                 }
                 let data={
                     ids:this.submitId,
                     payType:this.payTypes,
-                    subCompanyID:this.subCompanyID,
+                    bankAccountID:this.bankAccountID,
                     mergePay:this.mergePay
                 }
                 var mes;
@@ -519,6 +530,7 @@
             (this.$route.params.subsidyHDid==':subsidyHDid')?this.checkForm.activityOperationID='':this.checkForm.activityOperationID=this.$route.params.subsidyHDid;
             this.getSubcompany();
             this.getCity();
+            this.getBankAccountList('1');
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
