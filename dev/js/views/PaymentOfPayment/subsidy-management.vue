@@ -161,9 +161,9 @@
                         </div>
                         <div class="form-group" v-show="applyData.payType==1">
                             <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
-                            <select class="form-control" v-model="applyData.subCompanyID" style="width: 30%;display: inline-block;">
-                                <option value="">全部分公司</option>
-                                <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                            <select class="form-control" v-model="applyData.bankAccountID" style="width: 30%;display: inline-block;">
+                                <option value="">请选择付款账号</option>
+                                <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
                             </select>
 
                         </div>
@@ -332,6 +332,7 @@
                 },
                 zdlists:[],
                 subcompanyList:[],
+                bankAccountList: [],
                 cityList:[],
                 total:{},
                 redata:{
@@ -361,7 +362,7 @@
                     payoutAmount:'',
                     mergePay:false,
                     payType:'',
-                    subCompanyID:''
+                    bankAccountID:''
                 },
                 rechargeInfo:{
                     val1:'',
@@ -407,6 +408,16 @@
                             }
                         });
             },
+            //获取付款账户数据
+            getBankAccountList(_type){
+                this.$common_model.getbankAccount(_type)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('bankAccountList', response.data.data)
+                        }
+                    });
+            },
             //获取城市数据
             getCity(_id){
                 this.cityID='';
@@ -445,7 +456,7 @@
                     payoutAmount:'',
                     mergePay:false,
                     payType:'',
-                    subCompanyID:''
+                    bankAccountID:''
                 };
                 this.rechargeInfo.val1=merchantName;
                 this.rechargeInfo.val2=activityName;
@@ -480,8 +491,8 @@
                     this.applyText='请选择付款方式！';
                     return;
                 }
-                if(this.applyData.payType=='1' && this.applyData.subCompanyID==''){
-                    this.applyText='请选择分公司！';
+                if(this.applyData.payType=='1' && this.applyData.bankAccountID==''){
+                    this.applyText='请选择付款账户！';
                     return;
                 }
                 let data=_.cloneDeep(this.applyData);
@@ -622,6 +633,7 @@
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getSubcompany();
             vm.getCity();
+            vm.getBankAccountList('1');
             vm.getZlists();
         }
     }

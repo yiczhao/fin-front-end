@@ -11,7 +11,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 		request (request) {
-			if(request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
+			if(request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('bankAccount/account/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
 				Message.show('loading','loading...');
 				sessionStorage.setItem('isHttpin',1);
 				if(request.url.indexOf('pageIndex=')>0&&request.url.indexOf('pageSize=')>0){
