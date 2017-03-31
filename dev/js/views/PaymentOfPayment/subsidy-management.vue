@@ -162,7 +162,7 @@
                         <div class="form-group" v-show="applyData.payType==1">
                             <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
                             <select class="form-control" v-model="applyData.bankAccountID" style="width: 30%;display: inline-block;">
-                                <option value="">--请选择--</option>
+                                <option value="">请选择付款账号</option>
                                 <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
                             </select>
 
