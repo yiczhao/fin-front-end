@@ -67,15 +67,20 @@
         created () {
             window.systemId = 4;
             if (Cookie.get('KSAuthUserToken')) {
-                KSAuthKit.config({
-                    systemId:systemId,
-                    userToken: Cookie.get('KSAuthUserToken'),
-                    apiURL: authUrl2+'/auth/open/user-info'
-                })
-                KSAuthKit.ready(() => {
-                    this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'))
-                })
-                KSAuthKit.on()
+                if(!window.firstAuth){
+                    KSAuthKit.config({
+                        systemId:systemId,
+                        userToken: Cookie.get('KSAuthUserToken'),
+                        apiURL: authUrl2+'/auth/open/user-info'
+                    })
+                    KSAuthKit.ready(() => {
+                        this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'));
+                        !window.firstAuth?window.firstAuth=true:null;
+                    })
+                    KSAuthKit.on();
+                }else{
+                    this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'));
+                }
             }
         },
         methods:{
