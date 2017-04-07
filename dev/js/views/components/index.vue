@@ -39,6 +39,9 @@
                 window.location.href = authUrl1
                 return
             }
+            if(KSAuthKit){
+                KSAuthKit.on();
+            }
         },
         watch: {
             userData() {
