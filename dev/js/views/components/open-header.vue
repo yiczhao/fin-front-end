@@ -80,6 +80,7 @@
                     KSAuthKit.on();
                 }else{
                     this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'));
+                    KSAuthKit.on();
                 }
             }
         },
