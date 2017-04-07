@@ -37,6 +37,11 @@
             document.querySelector(`*[data-type=${routerType}]`).classList.add('v-link-active');
             var availableHeight = $(window).height() - $('.page-container').offset().top -46;
             $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
+            if(KSAuthKit){
+                console.log(11111);
+                KSAuthKit.off();
+                KSAuthKit.on();
+            }
             window.onresize=(()=>{
                 var availableHeight = $(window).height() - $('.page-container').offset().top -46;
                 $('.page-container').attr('style', 'min-height:' + availableHeight + 'px');
