@@ -71,7 +71,16 @@
                         <option value="">请选择付款方式</option>
                         <option value="1">备付金账户</option>
                         <option value="2">商户预付款账户</option>
+                        <option value="5">网银转账</option>
                     </select>
+                </div>
+                <div class="form-group" v-show="batchsData.payType==1">
+                    <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                    <select class="form-control" v-model="batchsData.bankAccountID" style="width: 30%;display: inline-block;">
+                        <option value="">请选择付款账号</option>
+                        <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
+                    </select>
+
                 </div>
                 <div class="form-group" v-show="batchsData.payType==1">
                     <label style="padding-left: 13%"><input type="checkbox" v-model="batchsData.mergePay"/>
@@ -98,7 +107,8 @@
                 batchsData:{
                     mergePay:false,
                     remarks:'',
-                    payType:''
+                    payType:'',
+                    bankAccountID:''
                 },
                 recheckLists:[],
                 checkedIds:{
@@ -106,6 +116,8 @@
                     lengths:0
                 },
                 id:'',
+                subcompanyList:[],
+                bankAccountList: [],
                 dtitle:'',
                 remarks:'',
                 withdrawCashAmounts:0,
@@ -125,6 +137,25 @@
                                     this.total+=value.withdrawCashAmount;
                                     this.suspensionTaxAmount+=value.suspensionTaxAmount;
                                 })
+                            }
+                        });
+            },
+            //获取付款账户数据
+            getBankAccountList(_type){
+                this.$common_model.getbankAccount(_type)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('bankAccountList', response.data.data)
+                        }
+                    });
+            },
+            //获取分公司数据
+            getSubcompany(){
+                this.$common_model.getcompany()
+                        .then((response)=>{
+                            if(response.data.code==0){
+                                this.$set('subcompanyList', response.data.data)
                             }
                         });
             },
@@ -180,6 +211,12 @@
                     return;
                 }
                 this.dtitle='批量提现';
+                this.batchsData={
+                      mergePay:false,
+                      remarks:'',
+                      payType:'',
+                      bankAccountID:''
+                 };
                 this.show=true;
             },
             batchs(){
@@ -187,7 +224,16 @@
                     dialogs('info','请填写必填信息！');
                     return;
                 }
+                if(this.batchsData.payType==''){
+                    this.applyText='请选择付款方式！';
+                    return;
+                }
+                if(this.batchsData.payType=='1' && this.batchsData.bankAccountID==''){
+                    dialogs('info','请选择付款账户！');
+                    return;
+                }
                 let data={
+                    'bankAccountID':this.batchsData.bankAccountID,
                     'payType':this.batchsData.payType,
                     'remarks':this.batchsData.remarks,
                     'mergePay':this.batchsData.mergePay,
@@ -197,6 +243,9 @@
                         .then( (response)=> {
                             if(response.data.code==0){
                                 dialogs('success',response.data.message);
+                            }else{
+                                dialogs('error',response.data.message);
+                                return;
                             }
                             if(back_json.num==0){
                                 back_json.num++;
@@ -215,6 +264,8 @@
             }
         },
         ready(){
+            this.getSubcompany();
+            this.getBankAccountList('1');
             this.query();
         },
         watch:{

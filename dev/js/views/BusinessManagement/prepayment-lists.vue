@@ -197,7 +197,7 @@
                 <!-- 预付 -->
                 <content-dialog
                         :show.sync="modal_prepayment_recharge" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'预付充值'" @kok="subApplyAdvancePay" @kcancel="modal_prepayment_recharge = false"  
+                        :title.sync="'预付充值'" @kok="subApplyAdvancePay($event)" @kcancel="modal_prepayment_recharge = false"
                 >
                     <validator name="vali">
                         <div class="modal-body">
@@ -213,15 +213,27 @@
                                        name="advancePaymentAmount"
                                        v-model="applyAdvancePay.advancePaymentAmount" v-limitprice="applyAdvancePay.advancePaymentAmount"/>
                             </div>
-                            <div class="form-group">
+                             <div class="form-group">
                                 <label style="position: relative;top: 0px;"><i style="color:red">*</i>备注：</label>
                             <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
                                       v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                             </div>
                             <div class="form-group">
-                                <div><label>付款账户：</label>{{applyAdvancePay.payAccount}}</div>
+                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
+                                <select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 30%;display: inline-block;" @change="changePayType">
+                                    <option value="">请选择付款方式</option>
+                                    <option value="1">备付金账户</option>
+                                    <option value="5">网银转账</option>
+                                </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
+                                <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                <select class="form-control" v-model="applyAdvancePay.bankAccountID" style="width: 30%;display: inline-block;">
+                                    <option value="">请选择付款账号</option>
+                                    <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
+                                </select>
+                            </div>
+                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <label>收款信息：</label>
                                 <br/>
                                 <div class="collectionAccount-bgcolor">
@@ -270,6 +282,7 @@
                     pageSize: 10,
                 },
                 subcompanyList: [],
+                bankAccountList: [],
                 cityList: [],
                 shCity: [],
                 prepaymentList: [],
@@ -287,8 +300,9 @@
                     advancePaymentMerchantId: "",//    预付款商户ID Integer
                     collectionBankName: "",//  开户行 String
                     collectionBankNumber: "",//    提入行号    String
-                    subCompanyID: "",//    分公司ID   Integer
+                    bankAccountID: "",//    付款账户ID   Integer
                     merchantID: "",//  商户ID    Integer
+                    payTypes: "", // 付款方式
                     payAccount: "",//  付款账户    String
                     collectionAccountName: "",//   收款账户    String
                     collectionAccountNumber: "",// 收款账号    String
@@ -473,13 +487,20 @@
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
                                 this.applyAdvancePay.merchantName = this.entity.merchantName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
+                                this.applyAdvancePay.payTypes = this.entity.payType;
                                 this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
                                 this.applyAdvancePay.collectionAccountName = this.entity.collectionAccountName;//   收款账户    String   --6-1
                                 this.applyAdvancePay.collectionAccountNumber = this.entity.collectionAccountNumber;// 收款账号    String   --6-2
                                 this.applyAdvancePay.collectionBankName = this.entity.collectionBankName;//  开户行 String            --6-3
                                 this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
+                                this.applyAdvancePay.isCcb = this.entity.isCcb;
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
+
+                                //显示窗口
+                                this.saveerror = false;
+                                this.modal_prepayment_recharge = true;
+                                this.applyAdvancePay.bankAccountID = "";
                                 //判断是否有银行卡账号
                                 if (this.applyAdvancePay.collectionAccountNumber == null) {
                                     dialogs('error', '该商户未设置划款账户，无法充值！');
@@ -499,6 +520,16 @@
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code == 0) ? this.$set('subcompanyList', response.data.data) : null;
                         });
+            },
+            //获取付款账户数据
+            getBankAccountList(_type){
+                this.$common_model.getbankAccount(_type)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('bankAccountList', response.data.data)
+                        }
+                    });
             },
             //获取城市数据
             getCity(_id) {
@@ -525,12 +556,22 @@
             },
             subApplyAdvancePay() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                 if(this.applyAdvancePay.payTypes==''){
+                    dialogs('info','请选择付款方式！');
+                                      return;
+                                   }
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
+                if(this.applyAdvancePay.payTypes=='1'&& this.applyAdvancePay.bankAccountID==''){
+                    dialogs('info','请选择付款账户！');
+                    return;
+                }
                 let entity = {
+                    payType:this.applyAdvancePay.payTypes,
+                    bankAccountID: this.applyAdvancePay.bankAccountID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
-                    remarks: this.applyAdvancePay.remarks,
+                    remarks: this.applyAdvancePay.remarks
                 }
                 this.model.applyAdvancePay(entity)
                         .then((response)=>{
@@ -542,6 +583,20 @@
                         });
                 //关闭弹出层
                 this.modal_prepayment_recharge = false;
+            },
+            changePayType(e){
+                if(this.applyAdvancePay.payTypes=='1'){
+                    if(this.applyAdvancePay.collectionAccountName == null
+                                                      || this.applyAdvancePay.collectionAccountNumber == null
+                                                      || this.applyAdvancePay.collectionBankName == null
+                                                      || this.applyAdvancePay.isCcb == null
+                                                      || (this.applyAdvancePay.isCcb != '1' && this.applyAdvancePay.collectionBankNumber == null)){
+                         dialogs('error', '该商户划款账户未设置或信息不全，无法充值！');
+                         e.target.value = '5';
+                         this.applyAdvancePay.payTypes = '5';
+                         return;
+                     }
+                }
             },
             checkNew(){
                 this.checkForm.pageIndex=1;
@@ -582,6 +637,7 @@
         ready() {
             this.getSubcompany();
             this.getCity();
+            this.getBankAccountList('1');
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },

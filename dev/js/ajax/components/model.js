@@ -17,6 +17,16 @@ export default function install(Vue) {
                 return Vue.http.get('./subCompany/list?' + $.param(data));
             }
         },
+
+        /**
+         * @description 查询付款账户数据
+         * @param {}
+         * @returns {*}
+         */
+        getbankAccount(type) {
+            return Vue.http.get('./bankAccount/account/list/' + type);
+        },
+
         /**
          * @description 查询城市列表数据
          * @param {data}
