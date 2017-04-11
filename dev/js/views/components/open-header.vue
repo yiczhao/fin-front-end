@@ -77,7 +77,6 @@
                         this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'));
                         !window.firstAuth?window.firstAuth=true:null;
                     })
-                    KSAuthKit.on();
                 }else{
                     this.systemList = JSON.parse(sessionStorage.getItem('KSAuthSysList'));
                 }
