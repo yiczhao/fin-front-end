@@ -1,0 +1,29 @@
+.content {
+  background-color: #fff;
+  margin: 20px;
+  padding: 20px;
+  .flex{
+    display: flex;
+    .dialog-row{
+      flex: 1;
+    }
+  }
+  .input-dialog{
+    margin-top: 15px;
+    padding-left: 25%;
+    button:last-child{
+      margin-left: 10px;
+    }
+  }
+  .float{
+    height: 38px;
+    label{
+      line-height: 38px;
+      float: left;
+      margin-bottom: 0;
+    }
+    input{
+      width: 50%;
+    }
+  }
+}
