@@ -46,12 +46,10 @@
 
                             <select class="form-control" v-model="conditionData.settlementCycle">
                                 <option value="">结算周期</option>
-                                <option value="1">D+1</option>
-                                <option value="2">T+0</option>
-                                <option value="3">T+1</option>
-                                <option value="4">T+7</option>
-                                <option value="5">T+30</option>
-                                <option value="6">T+365</option>
+                                <option value="1">日结</option>
+                                <option value="2">周结</option>
+                                <option value="3">月结</option>
+                                <option value="4">手工结算</option>
                             </select>
 
                             <select class="form-control" v-model="conditionData.expired">
