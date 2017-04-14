@@ -46,7 +46,7 @@
                                     <th>商户名称</th>
                                     <th>分公司</th>
                                     <th>城市</th>
-                                    <th>划款账户</th>
+                                    <!--<th>划款账户</th>-->
                                     <th>消费笔数</th>
                                     <th>消费金额</th>
                                     <th>实付金额</th>
@@ -67,7 +67,7 @@
                                     <td>{{trlist.merchantName}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
                                     <td>{{trlist.cityName}}</td>
-                                    <td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>
+                                    <!--<td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>-->
                                     <td>{{trlist.consumptionCount}}</td>
                                     <td>{{trlist.consumptionAmount/100 | currency '' }} </td>
                                     <td>{{trlist.payAmount/100 | currency '' }} </td>

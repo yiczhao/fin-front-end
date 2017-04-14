@@ -134,6 +134,7 @@
                                 <td>
                                     <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal"
                                        data-target="#modal_submit">确认</a>
+                                    <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);">更新</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
@@ -174,6 +175,76 @@
                         </div>
                     </div>
                 </content-dialog>
+
+                <content-dialog
+                        :show.sync="modal_updatas" :is-button="false" :type.sync="'infos'"
+                        :title.sync="'更新账户'"
+                >
+                    <validator name="vali">
+                        <form novalidate>
+                            <div class="modal-body member_rules_modal-body">
+                                <div class="form-group">
+                                    <label class="w28"><i>*</i>账户名：</label>
+                                    <input v-validate:accountName="['required']" v-model="updateList.accountName" class="form-control" type="text" placeholder="账户名">
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28" ><i>*</i>账 号：</label>
+                                    <input v-validate:accountNumber="['required']" v-model="updateList.accountNumber" class="form-control" type="text" placeholder="账 号">
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28" ><i>*</i>开户行：</label>
+                                    <input v-validate:bankName="['required']" v-model="updateList.bankName" class="form-control" type="text" placeholder="开户行">
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28" ><i>*</i>建行否：</label>
+                                    <input type="radio" id="one" value="1" v-model="updateList.isCcb" v-validate:isCcb="['required']">
+                                    <label class="w28" for="one">是</label>
+                                    <input type="radio" id="two" value="0" v-model="updateList.isCcb" v-validate:isCcb="['required']">
+                                    <label class="w28" for="two">否</label>
+                                </div>
+                                <div class="form-group" v-if="updateList.isCcb!=1">
+                                    <label class="w28" ><i>*</i>提入行号：</label>
+                                    <input v-validate:bankNumber="['required']" v-limitnumber="updateList.bankNumber" v-model="updateList.bankNumber" class="form-control" type="text" placeholder="提入行号">
+                                    <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank">查询行号</a>
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28" ><i>*</i>划付周期：</label>
+                                    <select class="form-control"  v-model="updateList.settlementCycle"  v-validate:settlementCycle="['required']">
+                                        <option value="0">请选择补贴划付周期</option>
+                                        <option value="1">日结</option>
+                                        <option value="2">周结</option>
+                                        <option value="3">月结</option>
+                                        <option value="4">手工结算</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28" ><i>*</i>补贴税率：</label>
+                                    <input @keyup="numberMax($event)" v-validate:subsidyRate="['required']" v-model="updateList.subsidyRate" class="form-control" type="number" placeholder="0~100">%
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28"><i>*</i>上传凭证：</label>
+                                    <input style="display:none" type="file" @change="uploads($event)">
+                                    <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                                    <span v-text="uploadText" v-show="uploadText!=''"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28" style="position: relative;top: -40px;">更新说明：</label>
+                                    <textarea class="form-control" v-model="updateList.updateInfo"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="w28">转账特殊备注：</label>
+                                    <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
+                                </div>
+                                <div class="form-group tc">
+                                    <button type="button" @click="updateTrue(updateList)" class="btn btn-primary" data-ksa="merchant_manage.update">保存</button>
+                                </div>
+                                <div class="form-group tc">
+                                    <span v-show="(!$vali.valid&&updataerror)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </validator>
+                </content-dialog>
             </div>
         </div>
     </index>
@@ -187,6 +258,7 @@
 			return {
 				pageAll: 1,
 				modal_confirm: false,
+                modal_updatas: false,
 				cityList: [],
 				merchantAccountList: [],
 				companyList: [],
@@ -204,7 +276,29 @@
 					'settlementCycle': '',
 					'pageIndex': 1,
 					'pageSize': 10
-				}
+				},
+                updateList:
+                    {
+                        id: '',
+                        accountName:'',
+                        accountNumber:'',
+                        bankName: '',
+                        bankNumber: '',
+                        createBy:'',
+                        createAt: '',
+                        certificates: '',
+                        expired: '',
+                        updateInfo: '',
+                        isCcb:0,
+                        accountType:'',
+                        settlementCycle:0,
+                        subsidyRate:'',
+                        merchantID:'',
+                        specialRemarks:''
+                    },
+                updataerror:false,
+                uploadText:'',
+                errortext:''
 			}
 		},
 		methods: {
@@ -259,6 +353,7 @@
 			},
 			initList(){
 				this.modal_confirm = false;
+                this.modal_updatas = false;
 				$('.modal').modal('hide');
 
 				back_json.saveArray(this.$route.path, this.conditionData);
@@ -280,7 +375,117 @@
 							dialogs('success', '确认成功！')
 						}
 					})
-			}
+			},
+            numberMax(e){
+                if(e.target.value>100){
+                    return e.target.value=100;
+                }
+                else if(e.target.value<0){
+                    return e.target.value=0;
+                }
+                else if(e.target.value>=0&&e.target.value<=100){
+                    return e.target.value;
+                }
+                else{
+                    return  e.target.value='';
+                }
+            },
+            /*商户账户更新弹出框*/
+            modal_update(_id){
+                this.errortext='';
+                if (sessionStorage.getItem('isHttpin') == 1)return;
+                this.model.merchantAccountInfo(_id).then((res) => {
+                    if (res.data.code == 0) {
+                        this.updateBtn(res.data.data,_id);
+                        this.modal_updatas = true;
+                    }
+                })
+            },
+            updateBtn(_list,_id){
+                var a=_list;
+                if(typeof _list=='undefined'){
+                    this.updateList={
+                        id: '',
+                        accountName:'',
+                        accountNumber:'',
+                        bankName: '',
+                        bankNumber: '',
+                        createBy:'',
+                        createAt: '',
+                        certificates: '',
+                        expired: '',
+                        updateInfo: '',
+                        isCcb:'',
+                        accountType:'',
+                        settlementCycle:0,
+                        subsidyRate:'',
+                        specialRemarks:'',
+                        merchantID:this._id
+                    }
+                }else{
+                    $.extend(true, this.updateList, a);
+                    this.updateList.id = a.id;
+                    this.updateList.merchantID = a.merchantId;
+                    this.updateList.updateInfo='';
+                }
+                this.uploadText='';
+                this.updateList.certificates='';
+                this.updateList.accountType=this.accountType;
+            },
+            updateTrue(data){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(!this.$vali.valid){
+                    this.updataerror=true;
+                    this.errortext='您的信息未填写完整！';
+                    return;}
+                if(this.updateList.certificates==''){
+                    this.updataerror=true;
+                    this.errortext='请上传凭证！';
+                    return;}
+                this.updataerror=false;
+                this.model.merchant_update(this.updateList)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code == 0){
+                            dialogs();
+                            this.initList();
+                        }
+                    });
+            },
+            uploadClick(){
+                $('input[type="file"]').val('');
+                $('input[type="file"]').click();
+            },
+            uploads(e){
+                if(e.target.value==''&&this.uploadText!=''){
+                    return;
+                }
+                let files=e.target.files[0];
+                let vm=this;
+                var reader = new FileReader();
+                if(!check_upload(files.name)){
+                    return;
+                }
+                if(check_upload_size(files.size)){
+                    return;
+                }
+                reader.readAsDataURL(files);
+                reader.onload = function(e){
+                    let datas={
+                        name:files.name,
+                        data:this.result.split(',')[1]
+                    }
+                    vm.$common_model.upload(datas)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                vm.updateList.certificates=response.data.data;
+                                vm.uploadText=files.name;
+                                this.updataerror=false;
+                                dialogs('success','上传成功！');
+                            }
+                        })
+                }
+            }
 		},
 		ready() {
 			const vm = this;

@@ -57,7 +57,25 @@ function model(_this) {
 		 */
 		merchantAccountExportToExcel(data){
 			return _this.$http.get(_this.$API.merchantAccountExportToExcel + $.param(data))
-		}
+		},
+
+        /**
+         * @description 商户账户最新信息
+         * @param data
+         * @returns {*}
+         */
+		merchantAccountInfo(_id){
+            return _this.$http.get(_this.$API.merchantAccountInfo + _id)
+		},
+
+        /**
+         * @description 编辑划款账户数据
+         * @params {data}
+         * @returns {*}
+         * */
+        merchant_update(data){
+            return _this.$http.post(_this.$API.merchant_update,data)
+        },
 
 	}
 }

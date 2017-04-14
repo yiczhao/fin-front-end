@@ -1473,6 +1473,13 @@ export default function install(Vue) {
 	 */
 	_o.merchantAccountExportToExcel = '/data/export/excel/merchantAccount?';
 
+    /**
+     * @description 商户账户最新信息 查询
+     * @author 冷艳君
+     * @method get
+     */
+    _o.merchantAccountInfo = './merchantAccount/info/';
+
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
     })
