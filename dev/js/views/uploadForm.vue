@@ -48,41 +48,6 @@
 									</td>
 								</tr>
 								<tr>
-									<td>
-										<input type="button" class="btn btn-primary" value="生成商户已划付数据" @click="generateMerchantSubsidyPaidDetail()"/>
-									</td>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="button" class="btn btn-primary" value="计算补贴账户交易统计信息" data-toggle="modal" @click="caculateSubsidyAccountTradeData($event)"/>
-									</td>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="button" class="btn btn-primary" value="补贴账户金额修正" data-toggle="modal" @click="correctSubsidyAccountData($event)"/>
-									</td>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="button" class="btn btn-primary" value="生成活动列表数据" data-toggle="modal" @click="generatActivitySubCompany($event)"/>
-									</td>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="button" class="btn btn-primary" value="老交易数据生成活动列表" data-toggle="modal" @click="generateOldActivitySubCompany($event)"/>
-									</td>
-									<td>
-									</td>
-								</tr>
-								<tr>
                                     <td>
                                         <input type="text" class="form-control" v-model="activityID" placeholder="activityID"/>
                                         <input type="text" class="form-control" v-model="subCompanyID" placeholder="subCompanyID"/>
@@ -91,11 +56,6 @@
                                     </td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="提交" @click="generateActivityEffect($event)"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="button" class="btn btn-primary" value="修正订单下补贴账户数据" data-toggle="modal" @click="updateSubsidyAccount($event)"/>
                                     </td>
                                 </tr>
                                 <tr>
