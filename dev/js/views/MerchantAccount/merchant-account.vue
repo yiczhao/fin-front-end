@@ -30,7 +30,7 @@
                                    v-limitnumber="conditionData.backendStoreCode">
 
                             <input type="text" class="form-control" v-model="conditionData.storeName"
-                                   placeholder="门店简称">
+                                   placeholder="门店名称">
 
                             <select class="form-control" v-model="conditionData.subCompanyID"
                                     @change="getCityList(conditionData.subCompanyID)">
