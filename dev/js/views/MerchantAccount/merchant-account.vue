@@ -62,7 +62,7 @@
 
                     <div class="heading-middle">
                         <a class="btn btn-info add-top" @click="searchByCondition"
-                           data-ksa="third_party_account_manage.search"
+                           data-ksa="merchant_account_manage.search"
                            style="margin-left: -21px;">查询</a>
                     </div>
                 </div>
@@ -124,31 +124,30 @@
                                 <!--补贴税率-->
                                 <td>{{trList.subsidyRate}}</td>
                                 <td>
-                                    <a v-link="{name:'merchant-account-detail',params:{'merchantID':trList.id}}">明细</a>
-                                    <!--data-ksa="third_party_account_manage.detail"-->
+                                    <a v-link="{name:'merchant-account-detail',params:{'merchantID':trList.id}}" data-ksa="merchant_account_manage.search">明细</a>
+
                                 </td>
                                 <td>
                                     <template v-if="trList.expired==1">已确认</template>
                                     <template v-if="trList.expired==2">待确认</template>
                                 </td>
                                 <td>
-                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal"
+                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal" data-ksa="merchant_account_manage.confirm"
                                        data-target="#modal_submit">确认</a>
-                                    <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);">更新</a>
+                                    <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);" data-ksa="merchant_account_manage.update">更新</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
                                 <td>
-                                    <a v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}">配置</a>
-                                </td>
-                            </tr>
+                                    <a v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>
+                                </td>                            </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="exportToExcel" data-ksa="merchant-account.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="exportToExcel" data-ksa="merchant_account_manage.export">Excel导出</a>
                         </div>
                         <div class="right">
                             <page :all="pageAll"
@@ -170,7 +169,7 @@
                 >
                     <div class="modal-body">
                         <div class="form-group tc">
-                            <button type="button" @click="confirm" class="btn btn-primary">确认</button>
+                            <button type="button" @click="confirm" class="btn btn-primary" data-ksa="merchant_account_manage.confirm">确认</button>
                             <button type="button" class="btn btn-gray" @click="modal_confirm=false">取消</button>
                         </div>
                     </div>
@@ -236,7 +235,7 @@
                                     <input v-model="updateList.specialRemarks" class="form-control" type="text" placeholder="目前只有中石化商户需要在此填写商户编号">
                                 </div>
                                 <div class="form-group tc">
-                                    <button type="button" @click="updateTrue(updateList)" class="btn btn-primary" data-ksa="merchant_manage.update">保存</button>
+                                    <button type="button" @click="updateTrue(updateList)" class="btn btn-primary" data-ksa="merchant_account_manage.update">保存</button>
                                 </div>
                                 <div class="form-group tc">
                                     <span v-show="(!$vali.valid&&updataerror)|| errortext!=''" class="validation-error-label" v-text="errortext"></span>
