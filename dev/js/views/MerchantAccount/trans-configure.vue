@@ -54,7 +54,7 @@
 
             <div class="dialog-row input-dialog">
                 <button type="button" @click="confirm" class="btn btn-primary">确认</button>
-                <button type="button" class="btn btn-gray" @click="modal_confirm=false">取消
+                <button type="button" class="btn btn-gray" v-link="{name:'merchant-account'}">取消
                 </button>
             </div>
         </div>
@@ -103,7 +103,8 @@
 					.then((res) => {
 						if (res.data.code == 0) {
 							this.getTransConfModel(this.merchantID);
-							dialogs('success', '保存成功！')
+							dialogs('success', '保存成功！');
+							this.$router.go({ name: 'merchant-account'});
 						}
 					})
 			}
