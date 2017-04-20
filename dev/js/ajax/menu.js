@@ -53,15 +53,6 @@ module.exports = [
 		]
 	},
 	{
-		name: '商户账户',
-		icon: ' icon-table2',
-		type: 'merchant-account',
-		ksa:'merchant_account_manage',
-		sub_menu: [
-			{name: '商户账户', link: 'merchant-account',ksa:'merchant_account_manage'},
-		]
-	},
-	{
 		name: '三方管理',
 		icon: ' icon-users4',
 		type: 'third',

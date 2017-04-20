@@ -103,8 +103,10 @@
 					.then((res) => {
 						if (res.data.code == 0) {
 							this.getTransConfModel(this.merchantID);
-							dialogs('success', '保存成功！');
-							this.$router.go({ name: 'merchant-account'});
+							dialogs('successTime', '保存成功！');
+							setTimeout(()=>{
+                                this.$router.go({ name: 'merchant-account'});
+                            },1500)
 						}
 					})
 			}

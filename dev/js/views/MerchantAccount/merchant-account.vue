@@ -6,6 +6,11 @@
 
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="merchant_manage"><a v-link="{name:'business-lists'}">商户管理</a></li>
+                    <li data-ksa="merchant_account_manage" class="active"><a v-link="{name:'merchant-account'}">商户账户</a></li>
+                    <li data-ksa="advance_payment_account_manage"><a v-link="{name:'prepayment-lists'}">预付款</a></li>
+                </ul>
                 <div class="heading">
 
                     <div class="heading-right">
@@ -353,8 +358,6 @@
 			initList(){
 				this.modal_confirm = false;
                 this.modal_updatas = false;
-				$('.modal').modal('hide');
-
 				back_json.saveArray(this.$route.path, this.conditionData);
 				this.getMerchantAccountList(this.conditionData);
 			},
@@ -488,6 +491,7 @@
 		},
 		ready() {
 			const vm = this;
+            (back_json.isback && back_json.fetchArray(vm.$route.path) != '') ? vm.conditionData = back_json.fetchArray(vm.$route.path) : null;
 			vm.getCompanyList();
 			vm.getCityList();
 			vm.initList();
