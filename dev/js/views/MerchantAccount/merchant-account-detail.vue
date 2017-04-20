@@ -35,7 +35,7 @@
                                     <template v-if="trList.settlementCycle == 4">手工结算</template>
                                 </td>
                                 <td>{{trList.subsidyRate}}</td>
-                                <td>{{trList.createAt | datetime}}</td>
+                                <td>{{trList.updatedAt | datetime}}</td>
                             </tr>
                             </tbody>
                         </table>
