@@ -46,9 +46,7 @@
                     未找到数据
                 </div>
                 <div class="datatable-bottom">
-                    <div class="left">
-                        <span class="btn btn-add add-top" v-link="{name:'merchant-account'}" style="margin-top:20px;">返回上一步</span>
-                    </div>
+                    <span class="btn btn-add add-top" v-link="{name:'merchant-account'}" style="margin-left:20px;">返回上一步</span>
                 </div>
             </div>
         </div>

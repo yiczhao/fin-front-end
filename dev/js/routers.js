@@ -237,7 +237,7 @@ export default function (router) {
 		/*商户账户管理列表 */
 		'/merchant-account/': {
 			name: 'merchant-account',
-			router_type: "merchant-account",
+			router_type: "business",
 			component: function (resolve) {
 				require(['./views/MerchantAccount/merchant-account.vue'], resolve);
 			}
@@ -245,7 +245,7 @@ export default function (router) {
 		/*商户账户管理列表 -- 明细列表 */
 		'/merchant-account-detail/:merchantID/': {
 			name: 'merchant-account-detail',
-			router_type: "merchant-account",
+			router_type: "business",
 			component: function (resolve) {
 				require(['./views/MerchantAccount/merchant-account-detail.vue'], resolve);
 			}
@@ -254,7 +254,7 @@ export default function (router) {
 		/*商户账户管理列表 -- 转账配置 */
 		'/merchant-account-transConf/:transConfMerchantID/:transConfMerchantOperationID/': {
 			name: 'merchant-account-transConf',
-			router_type: "merchant-account",
+			router_type: "business",
 			component: function (resolve) {
 				require(['./views/MerchantAccount/trans-configure.vue'], resolve);
 			}
