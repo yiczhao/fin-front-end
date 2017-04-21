@@ -351,7 +351,7 @@
 				origin: window.origin,
 				id: '',
 				merchantName: '',
-                pageAll:'',
+                pageAll:1,
 				loginList: {},
 				defaultData: {
 					"merchantOperationID": "",

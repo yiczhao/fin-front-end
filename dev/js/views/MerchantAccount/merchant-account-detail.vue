@@ -19,6 +19,7 @@
                                 <th>是否建行</th>
                                 <th>结算周期</th>
                                 <th>补贴税率</th>
+                                <th>转账备注</th>
                                 <th>状态</th>
                                 <th>账号更新时间</th>
                             </tr>
@@ -43,6 +44,7 @@
                                 <td>{{trList.subsidyRate}}
                                     <template v-if="!!trList.subsidyRate">%</template>
                                 </td>
+                                <td>{{trList.specialRemarks}}</td>
                                 <td>
                                     <template v-if="trList.expired == 0">历史账号</template>
                                     <template v-if="trList.expired == 1">正在使用</template>
