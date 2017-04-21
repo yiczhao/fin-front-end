@@ -139,8 +139,9 @@
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
                                 <td>
-                                    <a v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>
-                                </td>                            </tr>
+                                    <a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
