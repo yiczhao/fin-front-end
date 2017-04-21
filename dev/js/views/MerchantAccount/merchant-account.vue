@@ -25,12 +25,6 @@
                             <input type="text" class="form-control" v-model="conditionData.backendMerchantName"
                                    placeholder="商户简称">
 
-                            <select class="form-control" v-model="conditionData.merchantType">
-                                <option value="">商户类型</option>
-                                <option value="1">单店</option>
-                                <option value="2">连锁总店</option>
-                            </select>
-
                             <input type="number" class="form-control" v-model="" placeholder="门店号"
                                    v-limitnumber="conditionData.backendStoreCode">
 
@@ -127,7 +121,9 @@
                                     <template v-if="trList.settlementCycle == 4">手工结算</template>
                                 </td>
                                 <!--补贴税率-->
-                                <td>{{trList.subsidyRate}}</td>
+                                <td>{{trList.subsidyRate}}
+                                    <template v-if="!!trList.subsidyRate">%</template>
+                                </td>
                                 <td>
                                     <a v-link="{name:'merchant-account-detail',params:{'merchantID':trList.id}}" data-ksa="merchant_account_manage.search">明细</a>
 
@@ -137,8 +133,7 @@
                                     <template v-if="trList.expired==2">待确认</template>
                                 </td>
                                 <td>
-                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal" data-ksa="merchant_account_manage.confirm"
-                                       data-target="#modal_submit">确认</a>
+                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-ksa="merchant_account_manage.confirm">确认</a>
                                     <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);" data-ksa="merchant_account_manage.update">更新</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
@@ -274,7 +269,6 @@
 					'backendMerchantCode': '',
 					'storeName': '',
 					'backendMerchantName': '',
-					'merchantType': '',
 					'backendStoreCode': '',
 					'expired': '',
 					'settlementCycle': '',
@@ -314,9 +308,8 @@
 						// *** 判断请求是否成功如若成功则填充数据到模型
 						if (response.data.code == 0) {
 							this.$set('merchantAccountList', response.data.data);
-							this.$set('pageAll', response.data.total)
+							this.$set('pageAll', response.data.total);
 						}
-
 					});
 			},
 			getCompanyList(){

@@ -16,8 +16,10 @@
                                 <th>账号</th>
                                 <th>开户行</th>
                                 <th>联行号</th>
+                                <th>是否建行</th>
                                 <th>结算周期</th>
                                 <th>补贴税率</th>
+                                <th>状态</th>
                                 <th>账号更新时间</th>
                             </tr>
                             </thead>
@@ -29,12 +31,23 @@
                                 <td>{{trList.bankName}}</td>
                                 <td>{{trList.bankNumber}}</td>
                                 <td>
+                                    <template v-if="trList.isCcb == 1">是</template>
+                                    <template v-else>否</template>
+                                </td>
+                                <td>
                                     <template v-if="trList.settlementCycle == 1">日结</template>
                                     <template v-if="trList.settlementCycle == 2">周结</template>
                                     <template v-if="trList.settlementCycle == 3">月结</template>
                                     <template v-if="trList.settlementCycle == 4">手工结算</template>
                                 </td>
-                                <td>{{trList.subsidyRate}}</td>
+                                <td>{{trList.subsidyRate}}
+                                    <template v-if="!!trList.subsidyRate">%</template>
+                                </td>
+                                <td>
+                                    <template v-if="trList.expired == 0">历史账号</template>
+                                    <template v-if="trList.expired == 1">正在使用</template>
+                                    <template v-if="trList.expired == 2">待确认</template>
+                                </td>
                                 <td>{{trList.updatedAt | datetime}}</td>
                             </tr>
                             </tbody>

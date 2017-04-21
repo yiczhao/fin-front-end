@@ -21,8 +21,6 @@
                                    placeholder="商户号">
                             <input type="text" class="form-control" v-model="defaultData.backendMerchantName"
                                    placeholder="商户名称">
-                            <input type="text" class="form-control" v-model="defaultData.merchantType"
-                                   placeholder="商户类型">
                             <input type="text" class="form-control" v-model="defaultData.backendStoreCode"
                                    placeholder="门店号">
                             <input type="text" class="form-control" v-model="defaultData.storeName"
@@ -52,7 +50,7 @@
                     </div>
                 </div>
 
-                <div v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <div v-show="!!zdlists.length" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table">
                             <thead>
@@ -103,14 +101,14 @@
                                 <td><a data-ksa="trade_detail_manage.search"
                                        v-link="{name:'trade-info',params:{merchantOperationID:trlist.merchantOperationID,merchantName:trlist.merchantName}}">明细</a>
                                 </td>
-                                <td>{{trlist.commission/100 | currency '' }}</td>
-                                <td>
-                                    <template v-if="trlist.settlementCycle==1">日结</template>
-                                    <template v-if="trlist.settlementCycle==2">周结</template>
-                                    <template v-if="trlist.settlementCycle==3">月结</template>
-                                    <template v-if="trlist.settlementCycle==4">手工结算</template>
-                                </td>
-                                <td>{{trlist.subsidyRate}}%</td>
+                                <!--<td>{{trlist.commission/100 | currency '' }}</td>-->
+                                <!--<td>-->
+                                    <!--<template v-if="trlist.settlementCycle==1">日结</template>-->
+                                    <!--<template v-if="trlist.settlementCycle==2">周结</template>-->
+                                    <!--<template v-if="trlist.settlementCycle==3">月结</template>-->
+                                    <!--<template v-if="trlist.settlementCycle==4">手工结算</template>-->
+                                <!--</td>-->
+                                <!--<td>{{trlist.subsidyRate}}%</td>-->
                                 <!--<template  v-if="trlist.paidAmount!=0||trlist.unpaidAmount!=0||trlist.suspensionTaxAmount!=0||trlist.invoiceAmount!=0">-->
                                 <!--<td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.paidAmount/100| currency ''}}</a></td>-->
                                 <!--<td><a data-ksa="subsidy_account_manage.search" v-link="{name:'merchat-activity',params:{merchantID1:trlist.merchantID,merchantOperationID1:trlist.merchantOperationID,merchantName1:trlist.merchantName}}">{{trlist.unpaidAmount/100| currency ''}}</a></td>-->
@@ -133,15 +131,15 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>{{nums.consumptionCount}}</td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
                                 <td>{{nums.commission33211/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyDiscountDiff/100 | currency ''}}</td>
                                 <td>{{nums.limitPurchaseDiscountDiff/100 | currency ''}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -150,10 +148,15 @@
 
                     <div class="datatable-bottom">
                         <div class="right">
-                            <page :all="pageall"
+                            <page
+                                :all="pageAll"
+                                :cur.sync="defaultData.pageIndex"
+                                :page_size.sync="defaultData.pageSize"
+                            ></page>
+                            <span v-show="false"><page :all="pageAll"
                                   :cur.sync="defaultData.pageIndex"
                                   :page_size.sync="defaultData.pageSize">
-                            </page>
+                            </page></span>
                         </div>
                     </div>
                 </div>
@@ -348,13 +351,12 @@
 				origin: window.origin,
 				id: '',
 				merchantName: '',
-				pageall: 1,
+                pageAll:'',
 				loginList: {},
 				defaultData: {
 					"merchantOperationID": "",
 					"backendMerchantCode": "",
 					"backendMerchantName": "",
-					"merchantType": "",
 					"backendStoreCode": "",
 					"storeName": "",
 					"companyId": "",
@@ -439,8 +441,10 @@
 					data.endValue = b;
 				}
 				this.model.merchant_lists(data).then((response) => {
-					(response.data.code == 0) ? this.$set('zdlists', response.data.data) : null;
-					(response.data.code == 0) ? this.$set('pageall', response.data.total) : null;
+					if(response.data.code == 0){
+                        this.$set('zdlists', response.data.data);
+                        this.pageAll=+response.data.total;
+                    }
 				});
 				this.model.merchant_total(this.defaultData).then((res) => {
 					(res.data.code == 0) ? this.$set('nums', res.data.data) : null;
@@ -635,7 +639,7 @@
 					})
 			}
 		},
-		ready() {
+		created() {
 			let vm = this;
 			(!!sessionStorage.getItem('userData')) ? vm.$set('loginList', JSON.parse(sessionStorage.getItem('userData'))) : null;
 			vm.getClist();
