@@ -82,6 +82,14 @@ export default function install(Vue) {
          */
         suspensionTaxAccountDetail_info(data){
             return Vue.http.get('./subsidyAccount/suspensionTaxAccountDetail/info?' + $.param(data))
+        },
+        /**
+         * @description 获取三方
+         * @param {data}
+         * @returns {*}
+         */
+        thirdPartyAccount(){
+            return Vue.http.get('./thirdParty/list?')
         }
     };
     Object.defineProperties(Vue.prototype, {
