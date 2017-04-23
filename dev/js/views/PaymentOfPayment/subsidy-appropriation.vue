@@ -437,8 +437,11 @@
                             // *** 判断请求是否成功如若
                             // *** 判断请求是否成功如若
                             if(response.data.code==0){
-                                this.$set('applyPayInfo', response.data.data)
+                                this.$set('applyPayInfo', response.data.data);
                                 this.modal_applyPay = true;
+                                if(response.data.data.bankAccountID){
+                                    this.bankAccountID = response.data.data.bankAccountID;
+                                }
                             }
                         });
             },

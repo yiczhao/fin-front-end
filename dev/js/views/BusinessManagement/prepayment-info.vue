@@ -460,8 +460,9 @@
                                 this.applyAdvancePay.isCcb = this.entity.isCcb;
                                 //显示窗口
                                 this.saveerror=false;
-                                this.modal_prepayment_recharge = true;
-                                this.applyAdvancePay.bankAccountID = "";
+                                if(response.data.data.bankAccountID){
+                                    this.applyAdvancePay.bankAccountID = response.data.data.bankAccountID;
+                                }
                                 //判断是否有银行卡账号
                                 if (this.applyAdvancePay.collectionAccountNumber == null) {
                                     dialogs('error', '该商户未设置划款账户，无法充值！');
