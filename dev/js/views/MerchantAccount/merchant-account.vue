@@ -4,7 +4,7 @@
            :hname="'merchant-account'"
            :isshow="'isshow'">
 
-        <div class="content" slot="content">
+        <div class="content merchant-account" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
                     <li data-ksa="merchant_manage"><a v-link="{name:'business-lists'}">商户管理</a></li>
