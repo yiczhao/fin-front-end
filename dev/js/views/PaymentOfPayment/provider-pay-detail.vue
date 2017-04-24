@@ -183,7 +183,7 @@
                         <label class="w28" ><i>*</i>划付类型：</label>
                         <input type="radio" id="one1" :value="1" v-model="relist.ifBankActivityPay">
                         <label class="w28" for="one1">银行活动划付</label>
-                        <input type="radio" id="two1" :value="0" v-model="relist.ifBankActivityPay">
+                        <input type="radio" id="two1" :value="0" @change="relist.thirdPartyAccountID=''" v-model="relist.ifBankActivityPay">
                         <label class="w28" for="two1">非银行活动划付</label>
                     </div>
                     <div class="form-group">
@@ -195,15 +195,17 @@
                     </div>
                     <div class="form-group">
                         <label><i>*</i>付款账号</label>
-                        <select v-if="relist.payType===1" class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
-                            <option value="">请选择付款账号</option>
-                            <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
-                        </select>
+                        <template v-if="relist.payType===1">
+                            <select class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
+                                <option value="">请选择付款账号</option>
+                                <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
+                            </select>
+                        </template>
                         <span v-if="relist.payType===5">网银转账</span>
                     </div>
                     <div class="form-group" v-if="relist.ifBankActivityPay===0">
                         <label><i>*</i>结算三方</label>
-                        <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val1="['required']">
+                        <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val10="['required']">
                             <option value="">请选择结算三方</option>
                             <option v-for="(index,n) in thirdPartyAccountlists" :value="n.id">{{n.accountName}}</option>
                         </select>
@@ -368,6 +370,7 @@
                     subCompanyID:'',
                     status:'',
                     ifBankActivityPay:1,
+	                thirdPartyAccountID:'',
                     payType:5
                 },
                 this.accountId='';
