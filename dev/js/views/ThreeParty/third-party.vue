@@ -48,10 +48,14 @@
                                 <th>名称</th>
                                 <th>分公司</th>
                                 <th>城市 </th>
-                                <th>余额</th>
+                                <th>合同结算金额</th>
+                                <th>待结算金额</th>
+                                <th>开票金额</th>
+                                <th>已回款</th>
+                                <th>应收账款</th>
+                                <th>数据穿透</th>
                                 <th>状态</th>
                                 <th>操作</th>
-                                <th>合同</th>
                                 <th>开通时间</th>
                                 <th>联系人</th>
                                 <th>电话</th>
@@ -64,20 +68,25 @@
                                     <td>{{trlist.accountName}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
                                     <td>{{trlist.cityName}}</td>
-                                    <td>{{trlist.balanceAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.contractSettlementAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.unsettlementAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.billingAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
+                                    <td>
+                                        <a v-link="{name:'third-info',params:{'id':trlist.id}}" data-ksa="third_party_account_manage">合同</a>
+                                    </td>
                                     <td>
                                         <template v-if="trlist.status==0">停用</template>
                                         <template v-if="trlist.status==1">正常</template>
                                     </td>
                                     <td>
-                                        <a v-if="trlist.status==1" @click="recharge(trlist.id,trlist.accountName,trlist.balanceAmount)" data-toggle="modal" data-target="#modal_submit" data-ksa="third_party_account_manage.recharge">回款</a>
-                                        <a v-link="{name:'third-info',params:{'id':trlist.id}}" data-ksa="third_party_account_manage.detail">明细</a>
                                         <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">停用</a>
                                         <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">启用</a>
                                     </td>
-                                    <td>
-                                        <a v-link="{name:'contract-management',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="contract.search">管理</a>
-                                    </td>
+                                    <!--<td>-->
+                                        <!--<a v-link="{name:'contract-management',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="contract.search">管理</a>-->
+                                    <!--</td>-->
                                     <td>{{trlist.openTime | datetime}}</td>
                                     <td>{{trlist.contactName}}</td>
                                     <td>{{trlist.contactNumber}} </td>
@@ -88,7 +97,12 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{total/100 | currency ''}}</td>
+                                    <td>{{total.contractSettlementAmountTotal/100 | currency ''}}</td>
+                                    <td>{{total.unsettlementAmountTotal/100 | currency ''}}</td>
+                                    <td>{{total.collectionAmountTotal/100 | currency ''}}</td>
+                                    <td>{{total.billingAmountTotal/100 | currency ''}}</td>
+                                    <td>{{total.accountsReceivableTotal/100 | currency ''}}</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -331,14 +345,20 @@
                     money:'',
                     remarks:'',
                     name:'',
-                    balanceAmount:''
+                    balanceAmount:0
                 },
                 saveerror:false,
                 firstAdd:false,
                 checkedIds: [],
                 checkedLis: [],
                 removeIds: [],
-                total:0
+                total:{
+                    contractSettlementAmountTotal:0,
+                    unsettlementAmountTotal:0,
+                    collectionAmountTotal:0,
+                    billingAmountTotal:0,
+                    accountsReceivableTotal:0
+                },
             }
         },
         computed:{
