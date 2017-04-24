@@ -20,6 +20,16 @@
                     <a class="btn btn-add" @click="addUser" data-ksa="provider_pay_detail.add">新增划付</a>
                 </div>
                 <div class="heading-right">
+                    <select class="form-control" v-model="defaultData.ifBankActivityPay">
+                        <option value="">请选择划付类型</option>
+                        <option :value="1">银行活动划付</option>
+                        <option :value="0">非银行活动划付</option>
+                    </select>
+                    <select class="form-control" v-model="defaultData.payType">
+                        <option value="">请选择付款方式</option>
+                        <option :value="5">网银转账</option>
+                        <option :value="1">备付金</option>
+                    </select>
                     <select class="form-control" v-model="defaultData.subCompanyID">
                         <option value="">请选择付款账户</option>
                         <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
@@ -57,6 +67,8 @@
                         <thead>
                             <tr role="row">
                                 <th>ID</th>
+                                <th>划付类型</th>
+                                <th>付款方式</th>
                                 <th>申请时间</th>
                                 <th>付款账户</th>
                                 <th>活动ID</th>
@@ -77,6 +89,14 @@
                         <tbody>
                             <tr v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.id}}</td>
+                                <td>
+                                    <template v-if="trlist.ifBankActivityPay==1">银行活动划付</template>
+                                    <template v-if="trlist.ifBankActivityPay==0">非银行活动划付</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.payType==5">网银转账</template>
+                                    <template v-if="trlist.payType==1">备付金</template>
+                                </td>
                                 <td>{{trlist.applyTime | datetime}}</td>
                                 <td>{{trlist.payAccount}}</td>
                                 <td>{{trlist.activityID}}</td>
@@ -124,7 +144,7 @@
                                 <td>{{trlist.refuseReason}}</td>
                             </tr>
                             <tr>
-                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>
@@ -168,10 +188,10 @@
                     </div>
                     <div class="form-group">
                         <label class="w28" ><i>*</i>付款方式：</label>
-                        <input type="radio" id="one2" :value="5" v-model="relist.payType" @change="relist.subCompanyID=''">
-                        <label class="w28" for="one2">网银转账</label>
-                        <input type="radio" id="two2" :value="1" v-model="relist.payType">
-                        <label class="w28" for="two2">备付金</label>
+                        <select class="form-control" v-model="relist.payType" @change="relist.subCompanyID=''">
+                            <option :value="5">网银转账</option>
+                            <option :value="1">备付金</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label><i>*</i>付款账号</label>
@@ -268,6 +288,8 @@
                     "status": "",
                     "orderStatus": "",
                     "pageIndex": 1,
+                    ifBankActivityPay:'',
+                    payType:'',
                     "pageSize": 10
                 },
                 dateS:'3',
