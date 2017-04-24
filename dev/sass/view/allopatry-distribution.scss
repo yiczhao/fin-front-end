@@ -1,0 +1,15 @@
+.allopatry-distribution{
+	.kdialog{
+		.form-control{
+			display: inline-block;width: 74%;
+		}
+		.form-group{
+			label{
+				width:20%;
+			}
+			span:not(:first-child){
+				padding: 0 7px;
+			}
+		}
+	}
+}
