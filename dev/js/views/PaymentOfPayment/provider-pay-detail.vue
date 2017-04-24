@@ -160,36 +160,58 @@
             >
                 <validator name="vali">
                     <div class="form-group">
+                        <label class="w28" ><i>*</i>划付类型：</label>
+                        <input type="radio" id="one1" :value="1" v-model="relist.ifBankActivityPay">
+                        <label class="w28" for="one1">银行活动划付</label>
+                        <input type="radio" id="two1" :value="0" v-model="relist.ifBankActivityPay">
+                        <label class="w28" for="two1">非银行活动划付</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="w28" ><i>*</i>付款方式：</label>
+                        <input type="radio" id="one2" :value="5" v-model="relist.payType" @change="relist.subCompanyID=''">
+                        <label class="w28" for="one2">网银转账</label>
+                        <input type="radio" id="two2" :value="1" v-model="relist.payType">
+                        <label class="w28" for="two2">备付金</label>
+                    </div>
+                    <div class="form-group">
                         <label><i>*</i>付款账号</label>
-                        <select class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
+                        <select v-if="relist.payType===1" class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
                             <option value="">请选择付款账号</option>
                             <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
                         </select>
+                        <span v-if="relist.payType===5">网银转账</span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="relist.ifBankActivityPay===0">
+                        <label><i>*</i>结算三方</label>
+                        <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val1="['required']">
+                            <option value="">请选择结算三方</option>
+                            <option v-for="(index,n) in thirdPartyAccountlists" :value="n.id">{{n.accountName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" v-if="relist.ifBankActivityPay===1">
                         <label><i>*</i>活动ID</label>
                         <input type="text" class="form-control" v-validate:val2="['required']" v-limitnumber="relist.activityID" v-model="relist.activityID" placeholder="活动ID">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="relist.payType!==5">
                         <label><i>*</i>账户名</label>
                         <input type="text" class="form-control" v-validate:val3="['required']" v-model="relist.collectionAccountName" placeholder="50字以内" maxlength="50">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="relist.payType!==5">
                         <label><i>*</i>收款账号</label>
                         <input type="text" class="form-control" v-validate:val4="['required']" v-model="relist.collectionAccountNumber">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="relist.payType!==5">
                         <label><i>*</i>开户行</label>
                         <input type="text" class="form-control" v-validate:val5="['required']" v-model="relist.collectionBankName">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="relist.payType!==5">
                         <label class="w28" ><i>*</i>建行否：</label>
                         <input type="radio" id="one" value="true" v-model="relist.ccb" v-validate:val7="['required']">
                         <label class="w28" for="one">是</label>
                         <input type="radio" id="two" value="false" v-model="relist.ccb" v-validate:val7="['required']">
                         <label class="w28" for="two">否</label>
                     </div>
-                    <div class="form-group" v-if="relist.ccb != 'true'">
+                    <div class="form-group" v-if="relist.ccb != 'true'&&relist.payType!==5">
                         <label><i>*</i>提入行号</label>
                         <input type="text" class="form-control w65" v-validate:val6="['required']" v-model="relist.collectionBankNumber">
                         <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank" class="btn btn-primary" style="vertical-align: top;">查询行号</a>
@@ -251,6 +273,7 @@
                 dateS:'3',
                 status:'',
                 zdlists:[],
+                thirdPartyAccountlists:[],
                 relist:{},
                 companylists:[],
                 waring:'',
@@ -287,6 +310,15 @@
                     }
                 });
             },
+            getThird(){
+                // *** 请求三方数据
+                this.$common_model.thirdPartyAccount().then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if(response.data.code==0){
+                        this.$set('thirdPartyAccountlists', response.data.data)
+                    }
+                });
+            },
             getStatus(a){
                 let values=a.split(',');
                 this.defaultData.status=this.defaultData.orderStatus='';
@@ -313,6 +345,8 @@
                     remarks:'',
                     subCompanyID:'',
                     status:'',
+                    ifBankActivityPay:1,
+                    payType:5
                 },
                 this.accountId='';
                 this.addshow=true;
@@ -440,6 +474,7 @@
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             (this.$route.params.providerID==':providerID')?this.defaultData.id='' :this.defaultData.id=this.$route.params.providerID;
             this.initList();
+            this.getThird();
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
