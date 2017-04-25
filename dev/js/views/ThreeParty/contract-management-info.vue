@@ -67,16 +67,20 @@
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
                                     <td>{{trlist.thirdPartyAccountName}}</td>
-                                    <td>{{trlist.contractNumber}}</td>
+                                    <td>
+                                        <span v-if="!trlist.contractFileID" style="color:red">{{trlist.contractNumber}}</span>
+                                        <span v-else>{{trlist.contractNumber}}</span>
+                                    </td>
                                     <td>{{trlist.contractSettlementAmount/100 | currency ''}}</td>
                                     <td>
-                                        <a data-ksa="contract.edit" @click="editShow(trlist.id,trlist.activityOperationID)">编辑</a>
-                                        <a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>
+                                        <a data-ksa="contract.edit" v-link="{name:'contract-add',params:{'contractAddId':trlist.contractID}}">编辑</a>
+                                        <a v-if="!!trlist.contractFileID">附件</a>
+                                        <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
                                     </td>
                                     <td>{{trlist.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</td>
                                     <td>
-                                        <a data-ksa="contract.edit" @click="editShow(trlist.id,trlist.activityOperationID)">开票</a>
-                                        <a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">回款</a>
+                                        <a @click="associateShow(trlist,'开票')">开票</a>
+                                        <a @click="associateShow(trlist,'回款')">回款</a>
                                     </td>
                                     <td>{{trlist.billingAmount/100 | currency ''}}</td>
                                     <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -104,58 +108,37 @@
             </div>
 
             <content-dialog
-                    :show.sync="modal_add" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="addTitle" @kok="addBtn" @kcancel="modal_add = false"
-            >
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="tlabel"><i>*</i>合同编号：</label>
-                            <textarea class="form-control" row="3" v-model="reData.contractNumber" placeholder="多个合同编号以逗号隔开"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>合同广告费 =</label>
-                            <input v-if="isAdd||!reData.contractAdvertisementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractAdvertisementFee" v-limitaddprice="reData.contractAdvertisementFee">
-                            <input v-else type="text" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group">
-                            <label>合同物料费 =</label>
-                            <input v-if="isAdd||!reData.contractMaterialFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractMaterialFee" v-limitaddprice="reData.contractMaterialFee">
-                            <input v-else type="text" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group">
-                            <label>合同微信营销费 =</label>
-                            <input v-if="isAdd||!reData.contractWeChatMarketFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractWeChatMarketFee" v-limitaddprice="reData.contractWeChatMarketFee">
-                            <input v-else type="text" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group">
-                            <label>合同服务费 =</label>
-                            <input v-if="isAdd||!reData.contractServiceFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractServiceFee" v-limitaddprice="reData.contractServiceFee">
-                            <input v-else type="text" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group">
-                            <label>合同税费 =</label>
-                            <input v-if="isAdd||!reData.contractTaxFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractTaxFee" v-limitaddprice="reData.contractTaxFee">
-                            <input v-else type="text" class="form-control" disabled="true">
-                        </div>
-                        <div class="form-group">
-                            <label>合同结算金额 =</label>
-                            <input v-if="isAdd||!reData.contractSettlementFeeStatus" placeholder="固定的金额请在此处填写" type="text" class="form-control" v-model="reData.contractSettlementFee" v-limitaddprice="reData.contractSettlementFee">
-                            <input v-else type="text" class="form-control" disabled="true">
-                        </div>
-                    </div>
-            </content-dialog>
-
-            <content-dialog
                     :show.sync="modal_associate" :is-cancel="true" :type.sync="'infos'"
-                    :title.sync="'关联活动'" @kok="associateTrue" @kcancel="modal_associate = false"
+                    :title.sync="dialogTitle" @kok="associateTrue" @kcancel="modal_associate = false"
             >
                 <div class="form-group">
-                    <label class="control-label">合同编号：</label>
-                    <span>{{contractNumbers}}</span>
+                    <label class="control-label">分公司：</label>
+                    <span>{{relist.subCompanyName}}</span>
                 </div>
                 <div class="form-group">
-                    <label style="position: relative;top: -95px;" class="control-label">活动ID：</label>
-                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-limitids="activityOperationIDs" v-model="activityOperationIDs" placeholder="多个ID以逗号隔开"></textarea>
+                    <label class="control-label">三方名称：</label>
+                    <span>{{relist.thirdPartyAccountName}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">合同编号：</label>
+                    <span>{{relist.contractNumber}}</span>
+                </div>
+                <div class="form-group" v-if="dialogTitle==='开票'">
+                    <label class="control-label">待开票金额：</label>
+                    <span>{{relist.billingAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group" v-if="dialogTitle==='回款'">
+                    <label class="control-label">应收账款：</label>
+                    <span>{{relist.collectionAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">金   额：</label>
+                    <input class="form-control" v-if="dialogTitle==='开票'" v-limitaddNumber="relist.invoiceAmount" v-model="relist.invoiceAmount">
+                    <input class="form-control" v-if="dialogTitle==='回款'" v-limitaddNumber="relist.invoiceAmount" v-model="relist.invoiceAmount">
+                </div>
+                <div class="form-group">
+                    <label style="position: relative;top: -95px;" class="control-label">备   注：</label>
+                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.remarks" placeholder="50字以内"></textarea>
                 </div>
             </content-dialog>
         </div>
@@ -193,10 +176,8 @@
         data(){
             this.model =model(this)
             return{
-                modal_add: false,
                 modal_associate: false,
-                isAdd: true,
-                addTitle:'',
+                dialogTitle:'',
                 companylists:[],
                 defaultData:{
                     thirdPartyAccountID: '',
@@ -209,18 +190,7 @@
                 },
                 zdlists:[],
                 contractNumbers:'',
-                reData:{
-                    subCompanyID:'',
-                    thirdPartyAccountID:'',
-                    contractNumber:'',
-                    contractAdvertisementFee:'',
-                    contractMaterialFee:'',
-                    contractWeChatMarketFee:'',
-                    contractServiceFee:'',
-                    contractCompanyId:'',
-                    contractTaxFee:'',
-                    contractSettlementFee:''
-                },
+                relist:{},
                 activityOperationIDs:'',
                 id:'',
                 contractName:'',
@@ -255,93 +225,35 @@
                 });
             },
             initList(){
-                this.modal_add=false;
                 this.modal_associate=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
-            addContract(){
-                this.addTitle='添加合同';
-                this.reData=this.redata={
-                    thirdPartyAccountID:this.defaultData.thirdPartyAccountID,
-                    contractNumber:'',
-                    contractAdvertisementFee:'',
-                    contractMaterialFee:'',
-                    contractWeChatMarketFee:'',
-                    contractServiceFee:'',
-                    contractTaxFee:'',
-                    contractSettlementFee:''
-                },
-                this.modal_add = true;
-                this.isAdd = true;
-            },
-            editShow(a,b){
-                this.activityOperationID=b;
-                this.id=a;
-                let data={
-                    id:this.id,
-                    subCompanyID:this.$route.params.contractCompanyId,
-                    activityOperationID: this.activityOperationID
-                }
-                this.model.contract_editInfo(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            if(response.data.code==0){
-                                this.addTitle='编辑合同';
-                                this.isAdd = false;
-                                this.$set('reData', response.data.data);
-                                this.modal_add = true;
-                            }
-                        });
-            },
-            associateShow(a,b,c){
-                this.contractNumbers=a;
-                this.id=b;
-                this.activityOperationIDs=c;
+            associateShow(list,title){
+                this.dialogTitle=title;
+                this.relist=_.cloneDeep(list);
+                this.relist.invoiceAmount='';
+                this.relist.collectionAmount='';
                 this.modal_associate=true;
             },
-            addBtn(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.reData.contractNumber==''){
-                    dialogs('info','合同编号为必填项！');
-                    return;
-                }
-                this.reData.id=this.id;
-                this.reData.subCompanyID=this.$route.params.contractCompanyId;
-                this.reData.activityOperationID=this.activityOperationID;
-                if(this.addTitle=='编辑合同'){
-                    this.model.contract_edit(this.reData)
-                            .then((response)=>{
-                                if(response.data.code == 0){
-                                    this.initList();
-                                    dialogs('success',response.data.message);
-                                }
-                            })
-                }
-                else{
-                    this.model.contract_add(this.reData)
-                            .then((response)=>{
-                                if(response.data.code == 0){
-                                    this.initList();
-                                    dialogs('success',response.data.message);
-                                }
-                            })
-                }
-            },
             associateTrue(){
-                let data={
-                    id:this.id,
-                    subCompanyID:this.$route.params.contractCompanyId,
-                    thirdPartyAccountID:this.defaultData.thirdPartyAccountID,
-                    activityOperationID:this.activityOperationIDs
-                }
-                this.model.contract_associate(data)
+                if(this.dialogTitle==='开票'){
+                    this.model.contract_invoice(this.relist)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
                             }
                             this.initList();
                         })
+                }else{
+                    this.model.contract_collection(this.relist)
+                        .then((response)=>{
+                            if(response.data.code == 0){
+                                dialogs('success',response.data.message);
+                            }
+                            this.initList();
+                        })
+                }
             }
         },
         ready() {

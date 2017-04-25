@@ -251,7 +251,7 @@ export default function (router) {
         //     }
         // },
 		/* 三方管理-新增合同 */
-        '/contract-add': {
+        '/contract-add/:contractAddId': {
             name: 'contract-add',
             router_type: "third",
             component: function (resolve) {

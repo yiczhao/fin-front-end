@@ -22,28 +22,20 @@ function model(_this){
             return _this.$http.post(_this.$API.contract_add,data)
         },
         /**
-         * @description 编辑合同
+         * @description 关联合同
          * @params {data}
          * @returns {*}
          * */
-        contract_edit(data){
-            return _this.$http.post(_this.$API.contract_edit,data)
-        },
-        /**
-         * @description 编辑合同
-         * @params {data}
-         * @returns {*}
-         * */
-        contract_editInfo(data){
-            return _this.$http.get(_this.$API.contract_editInfo+ $.param(data))
+        contract_invoice(data){
+            return _this.$http.post(_this.$API.contract_invoice,data)
         },
         /**
          * @description 关联合同
          * @params {data}
          * @returns {*}
          * */
-        contract_associate(data){
-            return _this.$http.post(_this.$API.contract_associate,data)
+        contract_collection(data){
+            return _this.$http.post(_this.$API.contract_collection,data)
         },
     }
 }

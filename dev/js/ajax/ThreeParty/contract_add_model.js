@@ -11,7 +11,7 @@ function model(_this){
          * @returns {*}
          * */
         saveFormulae(data){
-            return _this.$http.post(_this.$API.contract_add,data)
+            return _this.$http.post(_this.$API.contractAdd,data)
         },
         /**
          * @description 根据分公司ID获取三方列表
@@ -20,6 +20,14 @@ function model(_this){
          * */
         getThirdPartyAccountList(data){
             return _this.$http.get(_this.$API.getThirdPartyAccountList+$.param(data));
+        },
+        /**
+         * @description 编辑合同
+         * @params {data}
+         * @returns {*}
+         * */
+        contractaddList(data){
+            return _this.$http.get(_this.$API.contractaddList+$.param(data));
         }
     }
 }

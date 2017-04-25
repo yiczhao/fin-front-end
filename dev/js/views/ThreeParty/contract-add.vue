@@ -142,6 +142,20 @@
             }
         },
         methods:{
+            getList(){
+                let data={
+                    id:this.$route.params.contractAddId
+                };
+                this.model.contractaddList(data).then((res)=>{
+                    if(res.data.code==0){
+                        let data={};
+                        _.forEach(res.data.data,(value,key)=>{
+                            data[key]=this.enString(value);
+                        })
+                        this.$set('defaultData',data);
+                    }
+                })
+            },
             //获取分公司数据
             getSubcompany(){
                 this.$common_model.getcompany()
@@ -228,10 +242,10 @@
                 return b;
             },
             submit() {
-//                if(!this.defaultData.thirdPartyAccountID){
-//                    dialogs('info','请选择三方');
-//                    return;
-//                }
+                if(!this.defaultData.thirdPartyAccountID){
+                    dialogs('info','请选择三方');
+                    return;
+                }
                 if(!this.defaultData.contractNumber){
                     dialogs('info','请填写合同编号');
                     return;
@@ -246,6 +260,9 @@
         },
         ready() {
             this.getSubcompany();
+            if(this.$route.params.contractAddId!=':contractAddId'){
+                this.getList();
+            }
         },
         watch:{
         }

@@ -1422,6 +1422,18 @@ export default function install(Vue) {
      * @method get
      */
     _o.contract_editInfo = './contract/info?';
+    /**
+     * @description 开票确定接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_invoice = './contract/invoice';
+    /**
+     * @description 回款确认接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_collection = './contract/collection';
 
     /**
      * @description 关联合同接口地址
@@ -1488,11 +1500,11 @@ export default function install(Vue) {
 
     //- todo  三方管理-合同管理-新增合同 contract-add
     /**
-     * @description 列表数据接口地址
+     * @description 新增合同接口地址
      * @author 于凯乐
      * @method post
      */
-    _o.contract_add = './contract/add';
+    _o.contractAdd = './contract/add';
     /**
      * @description 根据分公司ID获取三方列表
      * @author 于凯乐
@@ -1505,7 +1517,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.getActivityFormulae = './activityIncomeCost/default/formulae/info?';
-
+    /**
+     * @description 编辑合同接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contractaddList = './contract/info?';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
