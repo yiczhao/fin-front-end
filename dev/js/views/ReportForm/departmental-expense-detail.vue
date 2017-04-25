@@ -27,7 +27,7 @@
                             <select class="form-control" v-model="checkForm.expenseType">
                                 <option value="">费用类型</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
+                            <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -35,14 +35,14 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                            <div v-show="checkForm.dateS==4"  class="inline">
+                            <div v-show="dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="" >查询</a>
+                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -75,7 +75,6 @@
                         </table>
                     </div>
                     <div class="datatable-bottom">
-                        <div class="left"> </div>
                         <div class="right">
                         <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
@@ -99,17 +98,23 @@
                     company:'',
                     departmental:'',
                     expenseType:'',
-                    dateS:'',
                     startDate:'',
                     endDate:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
+                dateS:'3',
                 pageall:1,
 			}
 		},
 		methods:{
-            getTime(){},
+            getTime(){
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
+            },
+            searchData(){
+                this.checkForm.pageIndex=1;
+            },
         },
 		ready(){
 

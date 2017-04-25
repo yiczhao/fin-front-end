@@ -299,21 +299,21 @@ export default function (router) {
 			}
 		},
 		/* 报表管理-合伙人订单 */
-		'/partner-order': {
-			name: 'partner-order',
-			router_type: "report",
-			component: function (resolve) {
-				require(['./views/ReportForm/partner-order.vue'], resolve);
-			}
-		},
+		// '/partner-order': {
+		// 	name: 'partner-order',
+		// 	router_type: "report",
+		// 	component: function (resolve) {
+		// 		require(['./views/ReportForm/partner-order.vue'], resolve);
+		// 	}
+		// },
 		/* 报表管理-合伙人订单 */
-		'/shipment-quantity': {
-			name: 'shipment-quantity',
-			router_type: "report",
-			component: function (resolve) {
-				require(['./views/ReportForm/shipment-quantity.vue'], resolve);
-			}
-		},
+		// '/shipment-quantity': {
+		// 	name: 'shipment-quantity',
+		// 	router_type: "report",
+		// 	component: function (resolve) {
+		// 		require(['./views/ReportForm/shipment-quantity.vue'], resolve);
+		// 	}
+		// },
 		/*商户账户管理列表 */
 		'/merchant-account/': {
 			name: 'merchant-account',

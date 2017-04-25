@@ -3,7 +3,7 @@
            :ptitle="'报表管理'"
            :hname="'financial-index-total'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content expense-management" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
                     <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
@@ -39,14 +39,14 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                            <div v-show="checkForm.dateS==4"  class="inline">
+                            <div v-show="dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="" >查询</a>
+                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -97,10 +97,10 @@
                     </div>
                 </div>
                 <content-dialog
-                        :show.sync="type_in" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'typeTitle'"
+                        :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
+                        :title.sync="typeTitle" @kok="" @kcancel="type_in=false"
                         >
-                    <validator name="vali" v-show="typeTitle=='infact'">
+                    <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
                             <select class="form-control" v-model="infaceList.companyId" v-validate:val1="['required']">
@@ -144,11 +144,8 @@
                             <input type="text" class="form-control" v-validate:val2="['required']" v-model="infaceList.amount" maxlength="15" placeholder="">
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
-                        <div class="form-group">
-                            <span v-show="saveerror!=''" class="validation-error-label" v-text="saveerror"></span>
-                        </div>
                     </validator>
-                    <validator name="vali" v-show="typeTitle=='budget'">
+                    <validator name="vali" v-if="typeTitle=='预算录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
                             <select class="form-control" v-model="budgetList.companyId" v-validate:val1="['required']">
@@ -188,12 +185,12 @@
                     company:'',
                     budget:'',
                     budgetType:'',
-                    dateS:'',
                     startDate:'',
                     endDate:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
+                dateS:'3',
                 infaceList:{
                     companyId:'',
                     expenseType:'',
@@ -211,10 +208,21 @@
 			}
 		},
 		methods:{
-            getTime(){},
+            getTime(){
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
+            },
             typeIn(title){
                 this.type_in=true;
-                (title!='infact')?this.typeTitle='预算录入':this.typeTitle='实际费用录入';
+                if(title=='infact'){
+                    this.typeTitle='实际费用录入';
+                }else{
+                    this.typeTitle='预算录入';
+                }
+                console.log(this.typeTitle);
+            },
+            searchData(){
+                this.checkForm.pageIndex=1;
             },
         },
 		ready(){

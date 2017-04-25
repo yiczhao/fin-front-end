@@ -24,7 +24,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="" >查询</a>
+                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -92,7 +92,9 @@
 			}
 		},
 		methods:{
-            getTime(){},
+            searchData(){
+                this.checkForm.pageIndex=1;
+            },
         },
 		ready(){
 

@@ -27,7 +27,7 @@
                             <select class="form-control" v-model="checkForm.projectDetail">
                                 <option value="">业务明细项目</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
+                            <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -35,14 +35,14 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                            <div v-show="checkForm.dateS==4"  class="inline">
+                            <div v-show="dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="" >查询</a>
+                            <a class="btn btn-info add-top" @click="searchData()" >查询</a>
                     </div>
                 </div>
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -66,23 +66,36 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <template>
                                 <!-- <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}"> -->
+                                <!-- <tr role="row">
+                                    <td></td>{{index+1}}
+                                    <td></td>{{companyName}}
+                                    <td></td>{{项目}}
+                                    <td></td>{{业务名称}}
+                                    <td></td>{{收入}}
+                                    <td></td>{{成本}}
+                                    <td></td>{{毛利润}}
+                                    <td></td>{{毛利率}}
+                                    <td></td>{{费用}}
+                                    <td></td>{{净利润}}
+                                    <td></td>{{净利率}}
+                                    <td></td>{{净利润指标完成率}}
+                                </tr> -->
                                 <tr role="row">
-                                    <td></td><!--{{index+1}}-->
-                                    <td></td><!-- {{companyName}} -->
-                                    <td></td><!-- {{项目}} -->
-                                    <td></td><!-- {{业务名称}} -->
-                                    <td></td><!-- {{收入}} -->
-                                    <td></td><!-- {{成本}} -->
-                                    <td></td><!-- {{毛利润}} -->
-                                    <td></td><!-- {{毛利率}} -->
-                                    <td></td><!-- {{费用}} -->
-                                    <td></td><!-- {{净利润}} -->
-                                    <td></td><!-- {{净利率}} -->
-                                    <td></td><!-- {{净利润指标完成率}} -->
+                                    <td>1</td><!--{{index+1}}-->
+                                    <td>companyName</td><!-- {{companyName}} -->
+                                    <td>项目</td><!-- {{项目}} -->
+                                    <td>业务名称</td><!-- {{业务名称}} -->
+                                    <td>业务明细项目</td>
+                                    <td>收入</td><!-- {{收入}} -->
+                                    <td>成本</td><!-- {{成本}} -->
+                                    <td>毛利润</td><!-- {{毛利润}} -->
+                                    <td>毛利率</td><!-- {{毛利率}} -->
+                                    <td>费用</td><!-- {{费用}} -->
+                                    <td>净利润</td><!-- {{净利润}} -->
+                                    <td>净利率</td><!-- {{净利率}} -->
+                                    <td>净利润指标完成率</td><!-- {{净利润指标完成率}} -->
                                 </tr>
-                            </template>
                             <tr>
                                 <td>合计：</td>
                                 <td></td>
@@ -128,16 +141,24 @@
                     project:'',
                     businessName:'',
                     projectDetail:'',
-                    dateS:'',
                     startDate:'',
                     endDate:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
+                dateS:'3',
                 pageall:1,
 			}
 		},
-		methods:{},
+		methods:{
+            getTime(){
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
+            },
+            searchData(){
+                this.checkForm.pageIndex=1;
+            },
+        },
 		ready(){
 
 		},

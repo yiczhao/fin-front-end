@@ -1,0 +1,28 @@
+.allopatry-distribution,.expense-management,.index-management{
+	.kdialog{
+		.form-control{
+			display: inline-block;width: 74%;
+		}
+		.form-group{
+			label{
+				width:20%;
+				i{
+					padding-right: 5px;color:red;
+				}
+			}
+			span:not(:first-child){
+				padding: 0 7px;
+			}
+			.datetime-picker{
+				.form-control{
+					width:94% !important;
+				}
+			}
+		}
+	}
+}
+.expense-management{
+	.heading-left{
+		width:255px !important;
+	}
+}

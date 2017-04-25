@@ -30,7 +30,7 @@
                                 <option value="0">汉付信通</option>
                                 <option value="1">上海新卡说</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
+                            <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -38,7 +38,7 @@
                                 <option value="3">最近三个月</option>
                                 <option value="4">自定义时间</option>
                             </select>
-                            <div v-show="checkForm.dateS==4"  class="inline">
+                            <div v-show="dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -149,12 +149,12 @@
                     confirmCompany:'',
                     serviceType:'',
                     Partner:'',
-                    dateS:'',
                     startDate:'',
                     endDate:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
+                dateS:'3',
                 partnerOrder:{
                     amount:'',
                     quantity:'',
@@ -167,7 +167,10 @@
 			}
 		},
 		methods:{
-            getTime(){},
+            getTime(){
+                this.checkForm.startDate=init_date(this.dateS)[0];
+                this.checkForm.endDate=init_date(this.dateS)[1];
+            },
             typeInShow(title){
                 this.type_in=true;
                 if(title!='partner'){this.typeTitle='发货数量'}else{this.typeTitle='合伙人订单'};
@@ -177,6 +180,7 @@
                 console.log('success+kok');
             },
             searchData(){
+                this.checkForm.pageIndex=1;
                 console.log('success'+this.checkForm+'searchData');
             },
         },
