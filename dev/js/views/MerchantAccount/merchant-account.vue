@@ -18,7 +18,6 @@
                             <input type="number" class="form-control" v-model="conditionData.merchantOperationID"
                                    placeholder="商户ID"
                                    v-limitnumber="">
-
                             <!--<input type="text" class="form-control" v-model="conditionData.backendMerchantCode"-->
                                    <!--placeholder="商户号">-->
 
