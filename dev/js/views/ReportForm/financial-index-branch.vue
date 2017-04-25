@@ -4,7 +4,7 @@
            :hname="'financial-index-total'"
            :isshow="'isshow'">
         <div class="content" slot="content">
-           	<div class="panel panel-flat">
+           	<div class="panel panel-flat"> 
            	 	<ul class="tab-bor">
                     <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
                     <li class="active"><a>财务指标分析表（分）</a></li>
@@ -18,6 +18,10 @@
                     <div class="heading-left"></div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
+                            <select class="form-control" v-model="checkForm.subCompanyID">
+                                <option value="">全部分公司</option>
+                                <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
+                            </select>
                             <select class="form-control" v-model="checkForm.project">
                                 <option value="">项目</option>
                             </select>
@@ -138,6 +142,7 @@
 			// this.model = model(this);
 			return{
                 checkForm:{
+                    subCompanyID:'',
                     project:'',
                     businessName:'',
                     projectDetail:'',
@@ -148,6 +153,7 @@
                 },
                 dateS:'3',
                 pageall:1,
+                companylists:[],
 			}
 		},
 		methods:{
@@ -158,9 +164,22 @@
             searchData(){
                 this.checkForm.pageIndex=1;
             },
+            getClist(){
+                // *** 请求公司数据
+                let data={
+                    'type':'ImportUser'
+                }
+                this.$common_model.getcompany(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('companylists', response.data.data)
+                        }
+                    });
+            },
         },
 		ready(){
-
+            this.getClist();
 		},
 	}
 </script>

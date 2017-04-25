@@ -19,8 +19,9 @@
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <span>收入成本确认分公司</span>
-                            <select class="form-control" v-model="checkForm.confirmCompany">
+                            <select class="form-control" v-model="checkForm.subCompanyID">
                                 <option value="">收入成本确认分公司</option>
+                                <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
                             <select class="form-control" v-model="checkForm.serviceType">
                                 <option value="">业务类型</option>
@@ -146,7 +147,7 @@
 			// this.model = model(this);
 			return{
                 checkForm:{
-                    confirmCompany:'',
+                    subCompanyID:'',
                     serviceType:'',
                     Partner:'',
                     startDate:'',
@@ -164,6 +165,7 @@
                 type_in:false,
                 typeTitle:'',
                 pageall:1,
+                companylists:[],
 			}
 		},
 		methods:{
@@ -183,9 +185,22 @@
                 this.checkForm.pageIndex=1;
                 console.log('success'+this.checkForm+'searchData');
             },
+            getClist(){
+                // *** 请求公司数据
+                let data={
+                    'type':'ImportUser'
+                }
+                this.$common_model.getcompany(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('companylists', response.data.data)
+                        }
+                    });
+            },
         },
 		ready(){
-
+            this.getClist();
 		},
 	}
 </script>

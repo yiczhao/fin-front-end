@@ -20,8 +20,9 @@
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.company">
-                                <option value="">分公司</option>
+                            <select class="form-control" v-model="checkForm.subCompanyID">
+                                <option value="">全部分公司</option>
+                                <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
                             <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="5">今天</option>
@@ -112,9 +113,9 @@
                     <validator name="vali">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="typeIn.companyId" v-validate:val1="['required']">
+                            <select class="form-control" v-model="typeIn.subCompanyID" v-validate:val1="['required']">
                                 <option value="">请选择分公司</option>
-                                <!-- <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option> -->
+                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                             <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span> -->
                         </div>
@@ -196,7 +197,7 @@
 			return{
                 type_in:false,
                 checkForm:{
-                    company:'',
+                    subCompanyID:'',
                     startDate:'',
                     endDate:'',
                     pagIndex: 1,
@@ -204,7 +205,7 @@
                 },
                 dateS:'3',
                 typeIn:{
-                    companyId:'',
+                    subCompanyID:'',
                     Jan:'',
                     Feb:'',
                     Mar:'',
@@ -219,6 +220,7 @@
                     Dec:'',
                 },
                 pageall:1,
+                companylists:[],
 			}
 		},
 		methods:{
@@ -236,9 +238,22 @@
             searchData(){
                 this.checkForm.pageIndex=1;
             },
+            getClist(){
+                // *** 请求公司数据
+                let data={
+                    'type':'ImportUser'
+                }
+                this.$common_model.getcompany(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('companylists', response.data.data)
+                        }
+                    });
+            },
         },
 		ready(){
-
+            this.getClist();
 		},
 	}
 </script>

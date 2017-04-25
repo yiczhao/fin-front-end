@@ -147,7 +147,7 @@
             searchData(){
                 this.checkForm.pageIndex=1;
                 console.log('success'+this.checkForm+'searchData');
-            },
+            }, 
         },
 		ready(){
 

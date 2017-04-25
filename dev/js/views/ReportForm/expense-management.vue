@@ -21,8 +21,9 @@
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.company">
-                                <option value="">分公司</option>
+                            <select class="form-control" v-model="checkForm.subCompanyID">
+                                <option value="">全部分公司</option>
+                                <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
                             <select class="form-control" v-model="checkForm.budget">
                                 <option value="">预算/实际</option>
@@ -103,11 +104,10 @@
                     <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="infaceList.companyId" v-validate:val1="['required']">
+                            <select class="form-control" v-model="infaceList.subCompanyID" v-validate:val1="['required']">
                                 <option value="">请选择分公司</option>
-                                <!-- <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option> -->
+                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span> -->
                         </div>
                         <div class="form-group">
                             <label><i>*</i>费用类型</label>
@@ -148,11 +148,10 @@
                     <validator name="vali" v-if="typeTitle=='预算录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="budgetList.companyId" v-validate:val1="['required']">
+                            <select class="form-control" v-model="budgetList.subCompanyID" v-validate:val1="['required']">
                                 <option value="">请选择分公司</option>
-                                <!-- <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option> -->
+                                <option value="" v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span> -->
                         </div>
                         <div class="form-group">
                             <label><i>*</i>费用类型</label>
@@ -182,7 +181,7 @@
                 type_in:false,
                 typeTitle:'',
                 checkForm:{
-                    company:'',
+                    subCompanyID:'',
                     budget:'',
                     budgetType:'',
                     startDate:'',
@@ -192,7 +191,7 @@
                 },
                 dateS:'3',
                 infaceList:{
-                    companyId:'',
+                    subCompanyID:'',
                     expenseType:'',
                     department:'',
                     startDate:'',
@@ -200,11 +199,12 @@
                     amount:'',
                 },
                 budgetList:{
-                    companyId:'',
+                    subCompanyID:'',
                     expenseType:'',
                     January:'',
                 },
                 pageall:1,
+                companylists:[],
 			}
 		},
 		methods:{
@@ -224,9 +224,22 @@
             searchData(){
                 this.checkForm.pageIndex=1;
             },
+            getClist(){
+                // *** 请求公司数据
+                let data={
+                    'type':'ImportUser'
+                }
+                this.$common_model.getcompany(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('companylists', response.data.data)
+                        }
+                    });
+            },
         },
 		ready(){
-
+            this.getClist();
 		},
 	}
 </script>
