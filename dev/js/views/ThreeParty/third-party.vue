@@ -1,10 +1,16 @@
 <template>
-    <index :title="'账户列表'"
-           :ptitle="'三方管理'"
+    <index :title="'三方管理'"
+           :ptitle="'三方结算管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="third_party_account_manage" class="active"><a v-link="{name:'third-party'}">三方管理</a></li>
+                    <li data-ksa="activity_manage"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
+                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动收入成本</a></li>
+                    <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top" @click="addUser" data-ksa="third_party_account_manage.add">添加</a>
@@ -74,8 +80,11 @@
                                     <td>{{trlist.billingAmount/100 | currency ''}}</td>
                                     <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
                                     <td>
-                                        <a v-link="{name:'third-info',params:{'id':trlist.id}}" data-ksa="third_party_account_manage">合同</a>
+                                        <a v-link="{name:'contract-management-info',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="contract.search">合同</a>
                                     </td>
+                                    <!--<td>-->
+                                        <!--<a v-link="{name:'third-info',params:{'id':trlist.id}}" data-ksa="third_party_account_manage">明细</a>-->
+                                    <!--</td>-->
                                     <td>
                                         <template v-if="trlist.status==0">停用</template>
                                         <template v-if="trlist.status==1">正常</template>
@@ -84,9 +93,6 @@
                                         <a v-if="trlist.status==1" @click="startParty(trlist.id,0)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">停用</a>
                                         <a v-if="trlist.status==0" @click="startParty(trlist.id,1)" data-toggle="modal" data-target="#modal_waring" data-ksa="third_party_account_manage.enable_disable">启用</a>
                                     </td>
-                                    <!--<td>-->
-                                        <!--<a v-link="{name:'contract-management',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="contract.search">管理</a>-->
-                                    <!--</td>-->
                                     <td>{{trlist.openTime | datetime}}</td>
                                     <td>{{trlist.contactName}}</td>
                                     <td>{{trlist.contactNumber}} </td>

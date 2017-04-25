@@ -1480,6 +1480,21 @@ export default function install(Vue) {
      */
     _o.merchantAccountInfo = './merchantAccount/info/';
 
+    //- todo  三方管理-合同管理-新增合同 contract-add
+    /**
+     * @description 列表数据接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_add = './contract/add';
+    /**
+     * @description 根据分公司ID获取三方列表
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getThirdPartyAccountList = './thirdParty/thirdPartyAccountList?';
+
+
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
     })

@@ -227,11 +227,27 @@ export default function (router) {
 			}
 		},
 		/* 三方管理-合同管理 */
-		'/contract-management/:contractId/:contractName/:contractCity/:contractCompanyName/:contractCompanyId': {
-			name: 'contract-management',
+        // '/contract-management': {
+        //     name: 'contract-management',
+        //     router_type: "third",
+        //     component: function (resolve) {
+        //         require(['./views/ThreeParty/contract-management.vue'], resolve);
+        //     }
+        // },
+		/* 三方管理-新增合同 */
+        '/contract-add': {
+            name: 'contract-add',
+            router_type: "third",
+            component: function (resolve) {
+                require(['./views/ThreeParty/contract-add.vue'], resolve);
+            }
+        },
+		/* 三方管理-合同管理 */
+		'/contract-management-info/:contractId/:contractName/:contractCity/:contractCompanyName/:contractCompanyId': {
+			name: 'contract-management-info',
 			router_type: "third",
 			component: function (resolve) {
-				require(['./views/ThreeParty/contract-management.vue'], resolve);
+				require(['./views/ThreeParty/contract-management-info.vue'], resolve);
 			}
 		},
 		/*商户账户管理列表 */

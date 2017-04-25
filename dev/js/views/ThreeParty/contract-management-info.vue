@@ -5,32 +5,94 @@
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
+                <ul class="tab-bor">
+                    <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
+                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
+                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动收入成本</a></li>
+                    <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
+                </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="addContract" data-ksa="contract.add">添加合同</a>
+                        <a class="btn btn-add add-top" v-link="{name:'contract-add'}" data-ksa="contract.add">添加合同</a>
                     </div>
-                    <span>三方名称：{{contractName}}</span>
-                    <span>分公司：{{contractCompanyName}}</span>
-                    <span>城市：{{contractCity}}</span>
+                    <div class="heading-right">
+                        <form class="form-inline manage-form">
+                            <select class="form-control" v-model="defaultData.subCompanyID">
+                                <option value="">全部分公司</option>
+                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
+                            </select>
+                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
+                            <getmonth :value.sync="defaultData.startDate"></getmonth>
+                        </form>
+                    </div>
+                    <div class="heading-middle">
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
+                    </div>
                 </div>
+                <!--<div style="padding: 0 20px;font-size: 18px;">-->
+                    <!--<span>三方名称：{{contractName}}</span>-->
+                    <!--<span>分公司：{{contractCompanyName}}</span>-->
+                    <!--<span>城市：{{contractCity}}</span>-->
+                <!--</div>-->
                 <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
                             <tr role="row">
+                                <th>序号</th>
+                                <th>分公司</th>
+                                <th>三方名称</th>
                                 <th>合同编号</th>
-                                <th>活动ID</th>
+                                <th>合同结算金额</th>
                                 <th>操作</th>
+                                <th>待结算金额</th>
+                                <th>开票/回款</th>
+                                <th>开票金额</th>
+                                <th>已回款</th>
+                                <th>应收账款</th>
+                                <th>成本</th>
+                                <th>已划付</th>
+                                <th>待划付</th>
+                                <th>税金账户</th>
+                                <th>欠发票账户</th>
+                                <th>毛利</th>
+                                <th>毛利率</th>
+                                <th>结算确认</th>
+                                <th>备注</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                    <td>{{index+1}}</td>
+                                    <td>{{trlist.subCompanyName}}</td>
+                                    <td>{{trlist.thirdPartyAccountName}}</td>
                                     <td>{{trlist.contractNumber}}</td>
-                                    <td>{{trlist.activityOperationID}} </td>
+                                    <td>{{trlist.contractSettlementAmount/100 | currency ''}}</td>
                                     <td>
                                         <a data-ksa="contract.edit" @click="editShow(trlist.id,trlist.activityOperationID)">编辑</a>
                                         <a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>
                                     </td>
+                                    <td>{{trlist.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</td>
+                                    <td>
+                                        <a data-ksa="contract.edit" @click="editShow(trlist.id,trlist.activityOperationID)">开票</a>
+                                        <a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">回款</a>
+                                    </td>
+                                    <td>{{trlist.billingAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
+                                    <td>{{trlist.cost/100 | currency ''}}</td>
+                                    <td>{{trlist.paidAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.unpaidAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.suspensionTaxAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.invoiceAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.grossProfit/100 | currency ''}}</td>
+                                    <td>{{trlist.grossMargin}} <span v-if="!!trlist.grossMargin">%</span></td>
+                                    <td>
+                                        <template v-if="!status"><a>确认</a></template>
+                                        <template v-else>已确认</template>
+                                    </td>
+                                    <td>{{trlist.remarks}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -137,7 +199,13 @@
                 addTitle:'',
                 companylists:[],
                 defaultData:{
-                    'thirdPartyAccountID': '',
+                    thirdPartyAccountID: '',
+                    year:'',
+                    month:'',
+                    startDate:getNowMonth(),
+                    thirdPartyAccountName:'',
+                    contractNumber:'',
+                    subCompanyID:'',
                 },
                 zdlists:[],
                 contractNumbers:'',
@@ -165,11 +233,26 @@
             // *** 请求账户列表数据
             getZlists(data){
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                var startDate = data.startDate.split('-');
+                var year = parseInt(startDate[0]);
+                var month = parseInt(startDate[1]);
+
+                data.year = year;
+                data.month = month;
                 this.model.contract_list(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
                         });
+            },
+            getClist(){
+                // *** 请求公司数据
+                this.$common_model.getcompany().then((response)=>{
+                    // *** 判断请求是否成功如若成功则填充数据到模型
+                    if(response.data.code==0){
+                        this.$set('companylists', response.data.data)
+                    }
+                });
             },
             initList(){
                 this.modal_add=false;
@@ -263,10 +346,8 @@
         },
         ready() {
             var vm=this;
-            (this.$route.params.contractId==':contractId')?this.defaultData.thirdPartyAccountID='' :this.defaultData.thirdPartyAccountID=this.$route.params.contractId;
-            (this.$route.params.contractName==':contractName')?this.contractName='' :this.contractName=this.$route.params.contractName;
-            (this.$route.params.contractCity==':contractCity')?this.contractCity='' :this.contractCity=this.$route.params.contractCity;
-            (this.$route.params.contractCompanyName==':contractCompanyName')?this.contractCompanyName='' :this.contractCompanyName=this.$route.params.contractCompanyName;
+            (this.$route.params.contractName==':contractName')?this.defaultData.thirdPartyAccountName='' :this.defaultData.thirdPartyAccountName=this.$route.params.contractName;
+            this.getClist();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
         }
