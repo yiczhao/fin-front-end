@@ -1479,6 +1479,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.merchantAccountInfo = './merchantAccount/info/';
+    /**
+     * @description 活动收入成本 列表查询
+     * @author 冷艳君
+     * @method get
+     */
+    _o.activityIncomeCostInfo = './activityIncomeCost/list?';
 
     //- todo  三方管理-合同管理-新增合同 contract-add
     /**

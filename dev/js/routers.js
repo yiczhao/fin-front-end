@@ -218,6 +218,22 @@ export default function (router) {
 				require(['./views/ThreeParty/third-party.vue'], resolve);
 			}
 		},
+		/* 三方管理-活动收入成本管理 */
+		'/activity-cost-management/': {
+			name: 'activity-cost-management',
+			router_type: "third",
+			component: function (resolve) {
+				require(['./views/ThreeParty/activity-cost-management.vue'], resolve);
+			}
+		},
+		/* 三方管理-活动收入成本管理-计算公式 */
+		'/calculation-formula/:acmActivityID/': {
+			name: 'calculation-formula',
+			router_type: "third",
+			component: function (resolve) {
+				require(['./views/ThreeParty/calculation-formula.vue'], resolve);
+			}
+		},
 		/* 三方管理-账户明细 */
 		'/third-info/:id/:serialNumber': {
 			name: 'third-info',
