@@ -3,7 +3,7 @@
            :ptitle="'三方管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content activity-cost-management" slot="content">
            	<div class="panel panel-flat">
            	 	<!-- <ul class="tab-bor">
                     <li><a v-link="{name:'third-party'}">账户列表</a></li>
@@ -39,7 +39,6 @@
                                 <th>合同编号</th>
                                 <th>活动ID</th>
                                 <th>执行表参数</th>
-                                <th>审核状态</th>
                                 <th>操作</th>
                                 <th>服务费</th>
                                 <th>三方应收</th>
@@ -80,12 +79,11 @@
                                     <td>{{trlist.subCompanyName}}</td><!-- 分公司 -->
                                     <td>{{trlist.thirdPartyAccountName}}</td><!-- 三方名称 -->
                                     <td>{{trlist.contractNumber}}</td><!-- 合同编号 -->
-                                    <td>{{trlist.activityID}}</td><!-- 活动ID -->
+                                    <td>{{trlist.activityOperationID }}</td><!-- 活动ID -->
                                     <td>
-                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':n.activityID}}">计算公式</a>
-                                        <a @click="">其他信息</a>
+                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID,'acmContractID':trlist.contractID}}">计算公式</a>
+                                        <a @click="modal_other=true">其他信息</a>
                                     </td><!-- 执行表参数 -->
-                                    <td>{{trlist.我的天}}</td><!-- 审核状态 -->
                                     <td>
                                         <a>去审核</a>
                                     </td><!-- 操作 -->
@@ -124,6 +122,12 @@
                                     <td>{{trlist.collectPeriod}}</td><!-- 回款账期 -->
                                     <td>{{trlist.remarks}}</td><!-- 备注 -->
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <a v-link="{name:'calculation-formula'}">计算公式</a>
+                                        <a @click="modal_other=true">其他信息</a>
+                                    </td><!-- 执行表参数 -->
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -142,6 +146,45 @@
                 <div class="no-list" v-else>
                     未找到数据
                 </div>
+                <content-dialog
+                        :show.sync="modal_other" :type.sync="'infos'" :is-cancel="true"
+                        :title.sync="'录入数据'" @kok="saveOther" @kcancel="modal_other=false"
+                >
+                    <div class="dialog-row">
+                        <span>
+                             <label>活动归属：</label>
+                            <select class="form-control" v-model="redata.activityAttribution">
+                                <option value="">请选择活动归属</option>
+                                <option value="1">分-分</option>
+                                <option value="2">总-总</option>
+                                <option value="3">总-总 分-分</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="dialog-row">
+                        <span>
+                            <label>经办人：</label>
+                             <input type="text" class="form-control" v-model="redata.operator" placeholder="请输入经办人">
+                        </span>
+                        <span>
+                            <label>回款帐期：</label>
+                           <input type="text" class="form-control" v-model="redata.collectPeriod" v-limitnumber="redata.collectPeriod" placeholder="请输入回款帐期">
+                            个月
+                        </span>
+                    </div>
+                    <div class="dialog-row">
+                         <span>
+                             <label class="tlabel"><i>*</i>活动说明：</label>
+                             <textarea rows="3" class="form-control" v-model="redata.description"></textarea>
+                         </span>
+                    </div>
+                    <div class="dialog-row">
+                        <span>
+                             <label class="tlabel">备注：</label>
+                             <textarea rows="3" class="form-control" v-model="redata.remarks"></textarea>
+                        </span>
+                    </div>
+                </content-dialog>
             </div>
         </div>
 	</index>
@@ -152,6 +195,7 @@
 		data(){
 			this.model = model(this);
 			return{
+                modal_other:false,
                 checkForm:{
                     subCompanyID:'',
                     thirdPartyAccountName:'',
@@ -165,6 +209,17 @@
                 pageall:1,
                 companylists:[],
                 infoList:[],
+                redata:{
+                    "id": '',
+                    "activityId": '',
+                    "activityAttribution": '',
+                    "operator": '',
+                    "collectPeriod": '',
+                    "collectAmount": '',
+                    "invoiceAmount": '',
+                    "description": '',
+                    "remarks": '',
+                },
 			}
 		},
 		methods:{
@@ -191,6 +246,15 @@
                 //         this.pageall=res.data.total;
                 //     }
                 // })
+            },
+            saveOther(){
+                if(this.redata.description==''){
+                    dialogs('info','请输入活动说明！');
+                    return;
+                }
+                let data=_.cloneDeep(this.redata);
+                data.collectAmount=accMul(data.collectAmount,100);
+                data.invoiceAmount=accMul(data.invoiceAmount,100);
             },
         },
 		ready(){

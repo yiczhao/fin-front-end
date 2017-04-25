@@ -1499,6 +1499,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.getThirdPartyAccountList = './thirdParty/thirdPartyAccountList?';
+    /**
+     * @description 三方管理-活动收入成本管理-获取默认计算公式
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getActivityFormulae = './activityIncomeCost/default/formulae/info?';
 
 
     Object.defineProperties(Vue.prototype, {

@@ -21,6 +21,14 @@ function model(_this){
         // thirdParty_status(data){
         //     return _this.$http.post(_this.$API.thirdParty_status,data)
         // },
+        /**
+         * @description 获取默认公式信息
+         * @params {data}
+         * @returns {*}
+         * */
+        getCostList(data){
+            return _this.$http.get(_this.$API.getActivityFormulae+ $.param(data))
+        },
     }
 }
 module.exports=model;
