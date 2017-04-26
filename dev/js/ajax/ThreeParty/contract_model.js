@@ -14,6 +14,14 @@ function model(_this){
             return _this.$http.get(_this.$API.contract_list+ $.param(data))
         },
         /**
+         * @description 查询合同合计数据
+         * @params {data}
+         * @returns {*}
+         * */
+        contract_sum(data){
+            return _this.$http.get(_this.$API.contract_sum+ $.param(data))
+        },
+        /**
          * @description 添加合同
          * @params {data}
          * @returns {*}
@@ -22,7 +30,7 @@ function model(_this){
             return _this.$http.post(_this.$API.contract_add,data)
         },
         /**
-         * @description 关联合同
+         * @description 开票合同
          * @params {data}
          * @returns {*}
          * */
@@ -30,12 +38,20 @@ function model(_this){
             return _this.$http.post(_this.$API.contract_invoice,data)
         },
         /**
-         * @description 关联合同
+         * @description 回款合同
          * @params {data}
          * @returns {*}
          * */
         contract_collection(data){
             return _this.$http.post(_this.$API.contract_collection,data)
+        },
+        /**
+         * @description 结算确认
+         * @params {data}
+         * @returns {*}
+         * */
+        contractSettlement(data){
+            return _this.$http.post(_this.$API.contractSettlement,data)
         },
     }
 }

@@ -93,19 +93,88 @@
                                     <td>{{trlist.grossProfit/100 | currency ''}}</td>
                                     <td>{{trlist.grossMargin}} <span v-if="!!trlist.grossMargin">%</span></td>
                                     <td>
-                                        <template v-if="!status"><a>确认</a></template>
+                                        <template v-if="!status"><a @click="settlementShow(trlist)">确认</a></template>
                                         <template v-else>已确认</template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
                                 </tr>
+                                <tr role="row">
+                                    <td></td><td>合计：</td><td></td><td></td>
+                                    <td>{{total.contractSettlementAmount/100 | currency ''}}</td><td></td>
+                                    <td>{{total.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</td><td></td>
+                                    <td>{{total.billingAmount/100 | currency ''}}</td>
+                                    <td>{{total.collectionAmount/100 | currency ''}}</td>
+                                    <td>{{total.accountsReceivable/100 | currency ''}}</td>
+                                    <td>{{total.cost/100 | currency ''}}</td>
+                                    <td>{{total.paidAmount/100 | currency ''}}</td>
+                                    <td>{{total.unpaidAmount/100 | currency ''}}</td>
+                                    <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
+                                    <td>{{total.invoiceAmount/100 | currency ''}}</td>
+                                    <td>{{total.grossProfit/100 | currency ''}}</td>
+                                    <td></td><td></td><td></td>
+                                </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="datatable-bottom">
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>
+                        </div>
+
+                        <div class="right">
+                            <page :all="pageall"
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
+                            </page>
+                        </div>
                     </div>
                 </div>
                 <div class="no-list" v-else>
                     未找到数据
                 </div>
             </div>
+
+            <content-dialog
+                    :show.sync="modal_settlement" :is-cancel="true" :type.sync="'infos'"
+                    :title.sync="'结算确认'" @kok="settlement" @kcancel="modal_settlement = false"
+            >
+                <div class="form-group">
+                    <label class="control-label">分公司：</label>
+                    <span>{{relist.subCompanyName}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">三方名称：</label>
+                    <span>{{relist.thirdPartyAccountName}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">合同编号：</label>
+                    <span>{{relist.contractNumber}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">合同结算金额：</label>
+                    <span>{{relist.contractSettlementAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">待结算金额：</label>
+                    <span>{{relist.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">已开票金额：</label>
+                    <span>{{relist.billingAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">已回款：</label>
+                    <span>{{relist.collectionAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">应收账款：</label>
+                    <span>{{relist.accountsReceivable/100 | currency ''}}</span>
+                </div>
+                <div class="form-group">
+                    <label style="position: relative;top: -95px;" class="control-label"><i>*</i>结算备注：</label>
+                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.confirmRemarks" placeholder="50字以内"></textarea>
+                </div>
+            </content-dialog>
 
             <content-dialog
                     :show.sync="modal_associate" :is-cancel="true" :type.sync="'infos'"
@@ -138,7 +207,7 @@
                 </div>
                 <div class="form-group">
                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备   注：</label>
-                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.remarks" placeholder="50字以内"></textarea>
+                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.contractMemo" placeholder="50字以内"></textarea>
                 </div>
             </content-dialog>
         </div>
@@ -176,8 +245,10 @@
         data(){
             this.model =model(this)
             return{
+                pageall:1,
                 origin:window.origin,
                 modal_associate: false,
+                modal_settlement: false,
                 dialogTitle:'',
                 companylists:[],
                 defaultData:{
@@ -188,8 +259,11 @@
                     thirdPartyAccountName:'',
                     contractNumber:'',
                     subCompanyID:'',
+                    pageIndex: 1,
+                    pageSize: 10
                 },
                 zdlists:[],
+                total:{},
                 contractNumbers:'',
                 relist:{},
                 activityOperationIDs:'',
@@ -207,14 +281,19 @@
                 var startDate = data.startDate.split('-');
                 var year = parseInt(startDate[0]);
                 var month = parseInt(startDate[1]);
-
                 data.year = year;
                 data.month = month;
                 this.model.contract_list(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                            (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
                         });
+                this.model.contract_sum(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('total', response.data.data) : null;
+                    });
             },
             getClist(){
                 // *** 请求公司数据
@@ -227,6 +306,7 @@
             },
             initList(){
                 this.modal_associate=false;
+                this.modal_settlement=false;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },
@@ -236,6 +316,24 @@
                 this.relist.invoiceAmount='';
                 this.relist.collectionAmount='';
                 this.modal_associate=true;
+            },
+            settlementShow(list){
+                this.relist=_.cloneDeep(list);
+                this.modal_settlement=true;
+            },
+            settlement(){
+                let data={
+                    id:this.relist.contractID,
+                    thirdPartyAccountID:this.relist.thirdPartyAccountID,
+                    confirmRemarks:this.relist.confirmRemarks
+                }
+                this.model.contractSettlement(data)
+                    .then((response)=>{
+                        if(response.data.code == 0){
+                            dialogs('success',response.data.message);
+                            this.initList();
+                        }
+                    })
             },
             associateTrue(){
                 if(this.dialogTitle==='开票'){
@@ -247,14 +345,14 @@
                         id:this.relist.contractID,
                         invoiceAmount2:this.relist.invoiceAmount2,
                         thirdPartyAccountID:this.relist.thirdPartyAccountID,
-                        contractMemo:this.relist.remarks
+                        contractMemo:this.relist.contractMemo
                     }
                     this.model.contract_invoice(data)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
+                                this.initList();
                             }
-                            this.initList();
                         })
                 }else{
                     if(!this.relist.collectionAmount2 || !this.relist.remarks){
@@ -265,14 +363,14 @@
                         id:this.relist.contractID,
                         collectionAmount2:this.relist.collectionAmount2,
                         thirdPartyAccountID:this.relist.thirdPartyAccountID,
-                        contractMemo:this.relist.remarks
+                        contractMemo:this.relist.contractMemo
                     }
                     this.model.contract_collection(data)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
+                                this.initList();
                             }
-                            this.initList();
                         })
                 }
             }
@@ -283,6 +381,11 @@
             this.getClist();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
+        },
+        watch:{
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList();
+            }
         }
     }
 </script>

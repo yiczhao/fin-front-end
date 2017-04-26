@@ -1405,6 +1405,12 @@ export default function install(Vue) {
      */
     _o.contract_list = './contract/list?';
     /**
+     * @description 列表数据合计接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contract_sum = './contract/sum?';
+    /**
      * @description 新增合同接口地址
      * @author 于凯乐
      * @method post
@@ -1434,13 +1440,18 @@ export default function install(Vue) {
      * @method post
      */
     _o.contract_collection = './contract/collection';
-
     /**
      * @description 关联合同接口地址
      * @author 于凯乐
      * @method post
      */
     _o.contract_associate = './contract/associate';
+    /**
+     * @description 结算确认接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contractSettlement = './contract/settlement';
 
 	/**
 	 * @description 商户账户 列表
@@ -1529,6 +1540,8 @@ export default function install(Vue) {
      * @method get
      */
     _o.contractaddList = './contract/info?';
+
+
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
