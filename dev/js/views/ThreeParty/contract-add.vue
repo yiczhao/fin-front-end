@@ -145,14 +145,14 @@
                     contractNumber:'',
                     subCompanyID :'',
                     thirdPartyAccountID :'',
-                    contractAdvertisementFee :[],
-                    contractMaterialFee :[],
-                    contractOther :[],
-                    contractRedPacket :[],
-                    contractServiceFee :[],
-                    contractSettlementFee :[],
-                    contractTaxFee :[],
-                    contractWeChatMarketFee :[]
+                    contractAdvertisementFee :'',
+                    contractMaterialFee :'',
+                    contractOther :'',
+                    contractRedPacket :'',
+                    contractServiceFee :'',
+                    contractSettlementFee :'',
+                    contractTaxFee :'',
+                    contractWeChatMarketFee :''
                 }
             }
         },

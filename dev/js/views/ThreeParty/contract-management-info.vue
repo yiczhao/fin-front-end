@@ -77,7 +77,7 @@
                                         <a v-if="!!trlist.contractFileID" href="{{origin}}/file/download/{{trlist.contractFileID}}">附件</a>
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
                                     </td>
-                                    <td>{{trlist.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.unSettlementAmount/100 | currency ''}}</td>
                                     <td>
                                         <a @click="associateShow(trlist,'开票')">开票</a>
                                         <a @click="associateShow(trlist,'回款')">回款</a>
@@ -101,7 +101,7 @@
                                 <tr role="row">
                                     <td></td><td>合计：</td><td></td><td></td>
                                     <td>{{total.contractSettlementAmount/100 | currency ''}}</td><td></td>
-                                    <td>{{total.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</td><td></td>
+                                    <td>{{total.unSettlementAmount/100 | currency ''}}</td><td></td>
                                     <td>{{total.billingAmount/100 | currency ''}}</td>
                                     <td>{{total.collectionAmount/100 | currency ''}}</td>
                                     <td>{{total.accountsReceivable/100 | currency ''}}</td>
@@ -156,7 +156,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">待结算金额：</label>
-                    <span>{{relist.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</span>
+                    <span>{{relist.unSettlementAmount/100 | currency ''}}</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">已开票金额：</label>
