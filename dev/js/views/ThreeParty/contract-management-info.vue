@@ -202,7 +202,7 @@
                 </div>
                 <div class="form-group" v-if="dialogTitle==='回款'">
                     <label class="control-label">应收账款：</label>
-                    <span>{{relist.collectionAmount/100 | currency ''}}</span>
+                    <span>{{relist.accountsReceivable/100 | currency ''}}</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label"><i>*</i>金   额：</label>
