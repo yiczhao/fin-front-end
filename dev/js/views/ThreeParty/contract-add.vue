@@ -234,7 +234,7 @@
                 }
                 this.model.saveFormulae(this.defaultData).then((res)=>{
                     if(res.data.code==0){
-                        dialogs('successTime','保存成功！');
+                        dialogs('successTime',res.data.message);
                         setTimeout(()=>{
                             this.$router.go({name:'contract-management-info'})
                         },1800)
@@ -254,7 +254,7 @@
                 data.id=this.$route.params.contractAddId;
                 this.model.editContract(data).then((res)=>{
                     if(res.data.code==0){
-                        dialogs('successTime','编辑成功！');
+                        dialogs('successTime',res.data.message);
                         setTimeout(()=>{
                             this.$router.go({name:'contract-management-info'})
                         },1800)
