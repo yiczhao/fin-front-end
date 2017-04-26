@@ -9,7 +9,6 @@
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
                     <li data-ksa="activity_manage"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
                     <li class="active"><a>活动收入成本管理</a></li>
-                    <!-- <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动收入成本</a></li> -->
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div class="heading">
