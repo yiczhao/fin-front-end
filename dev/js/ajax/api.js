@@ -1480,6 +1480,63 @@ export default function install(Vue) {
      */
     _o.merchantAccountInfo = './merchantAccount/info/';
 
+
+    /**
+     * @description 报表管理 获取财务指标分析（总）合计
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceSumTotal = './target/finance_sum_total?';
+
+    /**
+     * @description 报表管理 获取财务指标分析（总）列表
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceListTotal = './target/finance_list_total?';
+
+    /**
+     * @description 报表管理 获取财务指标分析（分）合计
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceSumBranch = './target/finance_sum_branch?';
+
+    /**
+     * @description 报表管理 获取财务指标分析（分）列表
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceListBranch = './target/finance_list_branch?';
+
+    /**
+     * @description 报表管理 财务指标排行
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceRanking = './target/finance_ranking?';
+
+    /**
+     * @description 报表管理 指标管理
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceManagement = './target/finance_management?';
+
+    /**
+     * @description 报表管理 指标录入
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceAdd = './target/finance_add?';
+
+    /**
+     * @description 报表管理 异地激活收入成本分配明细
+     * @author 周俭
+     * @method get
+     */
+    _o.getAllopatryActivationList = './target/activation_list?';
+
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
     })

@@ -18,16 +18,16 @@
                     <div class="heading-left"></div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.project">
+                            <select class="form-control" v-model="checkForm.itemId">
                                 <option value="">项目</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.businessName">
+                            <select class="form-control" v-model="checkForm.businessId">
                                 <option value="">业务名称</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.projectDetail">
+                            <select class="form-control" v-model="checkForm.businessDetailId">
                                 <option value="">业务明细项目</option>
                             </select>
-                            <select class="form-control" v-model="dateS" @change="getTime">
+                            <!-- <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -38,7 +38,8 @@
                             <div v-show="dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div>
+                            </div> -->
+                            <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -63,30 +64,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}"> -->
-                                <!-- <tr role="row">
-                                    <td></td>{{序号}}
-                                    <td></td>{{项目}}
-                                    <td></td>{{业务名称}}
-                                    <td></td>{{业务明细项目}}
-                                    <td></td>{{收入}}
-                                    <td></td>{{成本}}
-                                    <td></td>{{费用}}
-                                    <td></td>{{净利润}}
-                                    <td></td>{{净利率}}
-                                    <td></td>{{净利润指标完成率}}
-                                </tr> -->
+                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                 <tr role="row">
-                                    <td>1</td><!-- {{序号}} -->
-                                    <td>项目</td><!-- {{项目}} -->
-                                    <td>业务名称</td><!-- {{业务名称}} -->
-                                    <td>业务明细项目</td><!-- {{业务明细项目}} -->
-                                    <td>100</td><!-- {{收入}} -->
-                                    <td>1</td><!-- {{成本}} -->
-                                    <td>50</td><!-- {{费用}} -->
-                                    <td>100-1=99收入-成本-费用</td><!-- {{净利润}} -->
-                                    <td>99/100净利润/收入</td><!-- {{净利率}} -->
-                                    <td>净利润/年利润指标</td><!-- {{净利润指标完成率}} -->
+                                    <!-- <td>{{index+1}}</td>{{序号}} -->
+                                    <!-- <td>{{trlist.itemNname}}</td>{{项目}} -->
+                                    <!-- <td>{{trlist.businessName}}</td>{{业务名称}} -->
+                                    <!-- <td>{{trlist.businessDetailName}}</td>{{业务明细项目}} -->
+                                    <!-- <td>{{trlist.income}}</td>{{收入}} -->
+                                    <!-- <td>{{trlist.cost}}</td>{{成本}} -->
+                                    <!-- <td>{{trlist.spend}}</td>{{费用}} -->
+                                    <!-- <td>{{trlist.profit}}</td>{{净利润}} -->
+                                    <!-- <td>{{trlist.profitRate}}</td>{{净利率}} -->
+                                    <!-- <td>{{trlist.profitFinished}}</td>{{净利润指标完成率}} -->
                                 </tr>
                             <tr>
                                 <td>合计：</td>
@@ -95,17 +84,17 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>费用</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
-                                <td>净利润</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
-                                <td>净利率</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
-                                <td>净利润指标完成率</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
+                                <td>{{totalData.costTotal}}</td><!--{{费用}} -->
+                                <td>{{totalData.profitTotal}}</td><!--{{净利润}} -->
+                                <td>{{totalData.profitRateTotal}}</td><!--{{净利率}} -->
+                                <td>{{totalData.targetFinishTotal}}</td><!--{{净利润指标完成率}} -->
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="export()">Excel导出</a>
                         </div>
                         <div class="right">
                         <!-- v-if="zdlists.length>0"  -->
@@ -121,36 +110,68 @@
 	</index>
 </template>
 <script>
-	// import model from '../../ajax/'
+	import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
 		data(){
-			// this.model = model(this);
+			this.model = model(this);
 			return{
                 checkForm:{
-                    project:'',
-                    businessName:'',
-                    projectDetail:'',
-                    startDate:'',
-                    endDate:'',
+                    itemId:'',
+                    businessId:'',
+                    businessDetailId:'',
+                    date:'',
+                    year:'',
+                    month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
                 dateS:'3',
                 pageall:1,
+                listData:{},
+                totalData:{},
 			}
 		},
 		methods:{
-            getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+            export(){
+                console.log('success')
+            //     var date =  this.checkForm.date.split('-');
+            //     var year = parseInt(date[0]);
+            //     var month = parseInt(date[1]);
+
+            //     this.defaultData.year = year;
+            //     this.defaultData.startMonth = month;
+            //     this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+            //     window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
             },
+            // getTime(){
+            //     this.checkForm.startDate=init_date(this.dateS)[0];
+            //     this.checkForm.endDate=init_date(this.dateS)[1];
+            // },
             searchData(){
+                debugger
+                var date =  this.checkForm.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.checkForm.year = year;
+                this.checkForm.month = month;
                 this.checkForm.pageIndex=1;
                 console.log('success'+this.checkForm+'searchData');
-            }, 
+            },
+            getAllData(){
+                // this.model.getTotalFinanceList(this.checkForm).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('totalData',res.data.data);
+                //     }
+                // });
+                // this.model.getTotalFinanceSum(this.checkForm).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('listData',res.data.data);
+                //     }
+                // })
+            },
         },
 		ready(){
-
+            this.getAllData();
 		},
 	}
 </script>

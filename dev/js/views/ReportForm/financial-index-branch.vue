@@ -18,20 +18,20 @@
                     <div class="heading-left"></div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="checkForm.subCompanyId">
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.project">
+                            <select class="form-control" v-model="checkForm.itemId">
                                 <option value="">项目</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.businessName">
+                            <select class="form-control" v-model="checkForm.businessId">
                                 <option value="">业务名称</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.projectDetail">
+                            <select class="form-control" v-model="checkForm.businessDetailId">
                                 <option value="">业务明细项目</option>
                             </select>
-                            <select class="form-control" v-model="dateS" @change="getTime">
+                            <!-- <select class="form-control" v-model="dateS" @change="getTime">
                                 <option value="5">今天</option>
                                 <option value="0">昨天</option>
                                 <option value="1">最近一周</option>
@@ -42,7 +42,8 @@
                             <div v-show="dateS==4"  class="inline">
                                 <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div>
+                            </div> -->
+                            <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -120,7 +121,7 @@
                     </div>
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="export()">Excel导出</a>
                         </div>
                         <div class="right">
                         <!-- v-if="zdlists.length>0"  -->
@@ -142,26 +143,45 @@
 			// this.model = model(this);
 			return{
                 checkForm:{
-                    subCompanyID:'',
-                    project:'',
-                    businessName:'',
-                    projectDetail:'',
-                    startDate:'',
-                    endDate:'',
+                    subCompanyId:'',
+                    itemId:'',
+                    businessId:'',
+                    businessDetailId:'',
+                    date:'',
+                    year:'',
+                    month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
                 dateS:'3',
                 pageall:1,
                 companylists:[],
+                listData:{},
+                totalData:{},
 			}
 		},
 		methods:{
+            export(){
+                console.log('success')
+            //     var date =  this.checkForm.date.split('-');
+            //     var year = parseInt(date[0]);
+            //     var month = parseInt(date[1]);
+
+            //     this.defaultData.year = year;
+            //     this.defaultData.startMonth = month;
+            //     this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+            //     window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
+            },
             getTime(){
                 this.checkForm.startDate=init_date(this.dateS)[0];
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
             searchData(){
+                var date =  this.checkForm.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.checkForm.year = year;
+                this.checkForm.month = month;
                 this.checkForm.pageIndex=1;
             },
             getClist(){
@@ -176,6 +196,18 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+            },
+            getAllData(){
+                this.model.getBranchFinanceSum(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                    }
+                })
+                this.model.getBranchFinanceList(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('totalData',res.data.data);
+                    }
+                });
             },
         },
 		ready(){
