@@ -6,9 +6,9 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">三方管理</a></li>
-                    <li data-ksa="activity_manage"><a v-link="{name:'activity-lists'}">合同管理</a></li>
-                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动收入成本</a></li>
+                    <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
+                    <li data-ksa="activity_manage"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
+                    <li><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
                     <li data-ksa="tax_rate" class="active"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div v-show="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->

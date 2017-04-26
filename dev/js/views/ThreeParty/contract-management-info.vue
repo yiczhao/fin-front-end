@@ -8,7 +8,7 @@
                 <ul class="tab-bor">
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
                     <li data-ksa="activity_manage" class="active"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
-                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动收入成本</a></li>
+                    <li><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div class="heading">
@@ -93,7 +93,7 @@
                                     <td>{{trlist.grossProfit/100 | currency ''}}</td>
                                     <td>{{trlist.grossMargin}} <span v-if="!!trlist.grossMargin">%</span></td>
                                     <td>
-                                        <template v-if="!status"><a @click="settlementShow(trlist)">确认</a></template>
+                                        <template v-if="!trlist.status"><a @click="settlementShow(trlist)">确认</a></template>
                                         <template v-else>已确认</template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
