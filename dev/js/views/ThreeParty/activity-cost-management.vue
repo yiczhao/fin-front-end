@@ -218,8 +218,6 @@
                     "activityAttribution": '',
                     "operator": '',
                     "collectPeriod": '',
-                    "collectAmount": '',
-                    "invoiceAmount": '',
                     "description": '',
                     "remarks": '',
                 },
@@ -255,8 +253,8 @@
                 let data={
                     activityID:this.checkForm.activityID,
                     subCompanyID:this.checkForm.subCompanyID,
-                }
-                this.model.getOtherInfo(data).then((res)=>{
+                };
+                this.model.getOtherInfo(data).then((res)=>{//获取
                     if(res.data.code==0){
                         // this.$set('redata',res.data.data);
                         console.log('success');
@@ -271,9 +269,9 @@
                 // let data=_.cloneDeep(this.redata);
                 // data.collectAmount=accMul(data.collectAmount,100);
                 // data.invoiceAmount=accMul(data.invoiceAmount,100);
-                this.model.saveOtherInfo(this.checkForm).then((res)=>{
+                this.model.saveOtherInfo(this.redata).then((res)=>{//保存
                     if(res.data.code==0){
-                        dialogs('success','保存成功！');
+                        // dialogs('success','保存成功！');
                         console.log('success');
                     }
                 })
