@@ -1630,6 +1630,13 @@ export default function install(Vue) {
      */
     _o.getAllopatryActivationList = './target/activation_list?';
 
+    /**
+     * @description 报表管理 费用管理 费用预算录入
+     * @author 洪刚
+     * @method po
+     */
+    _o.CostBugetIn = './cost/budget?';
+
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}
     })

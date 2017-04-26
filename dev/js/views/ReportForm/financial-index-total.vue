@@ -27,18 +27,6 @@
                             <select class="form-control" v-model="checkForm.businessDetailId">
                                 <option value="">业务明细项目</option>
                             </select>
-                            <!-- <select class="form-control" v-model="dateS" @change="getTime">
-                                <option value="5">今天</option>
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                            <div v-show="dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div> -->
                             <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
@@ -57,33 +45,35 @@
                                 <th>业务明细项目</th>
                                 <th>收入 </th>
                                 <th>成本</th>
-                                <th>费用</th>
-                                <th>净利润</th>
-                                <th>净利率 </th>
-                                <th>净利润指标完成率</th>
+                                <!-- <th>费用</th> -->
+                                <!-- <th>净利润</th> -->
+                                <!-- <th>净利率 </th> -->
+                                <!-- <th>净利润指标完成率</th> -->
                             </tr>
                             </thead>
                             <tbody>
-                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
-                                <tr role="row">
-                                    <!-- <td>{{index+1}}</td>{{序号}} -->
-                                    <!-- <td>{{trlist.itemNname}}</td>{{项目}} -->
-                                    <!-- <td>{{trlist.businessName}}</td>{{业务名称}} -->
-                                    <!-- <td>{{trlist.businessDetailName}}</td>{{业务明细项目}} -->
-                                    <!-- <td>{{trlist.income}}</td>{{收入}} -->
-                                    <!-- <td>{{trlist.cost}}</td>{{成本}} -->
-                                    <!-- <td>{{trlist.spend}}</td>{{费用}} -->
-                                    <!-- <td>{{trlist.profit}}</td>{{净利润}} -->
-                                    <!-- <td>{{trlist.profitRate}}</td>{{净利率}} -->
-                                    <!-- <td>{{trlist.profitFinished}}</td>{{净利润指标完成率}} -->
-                                </tr>
+                            <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
+                            <tr role="row">
+                                <!-- <td>{{index+1}}</td>{{序号}} -->
+                                <!-- <td>{{trlist.itemNname}}</td>{{项目}} -->
+                                <!-- <td>{{trlist.businessName}}</td>{{业务名称}} -->
+                                <!-- <td>{{trlist.businessDetailName}}</td>{{业务明细项目}} -->
+                                <!-- <td>{{trlist.income}}</td>{{收入}} -->
+                                <!-- <td>{{trlist.cost}}</td>{{成本}} -->
+                            </tr>
+                            <tr>
+                                <!-- <td>{{trlist.spend}}</td>{{费用}} -->
+                                <!-- <td>{{trlist.profit}}</td>{{净利润}} -->
+                                <!-- <td>{{trlist.profitRate}}</td>{{净利率}} -->
+                                <!-- <td>{{trlist.profitFinished}}</td>{{净利润指标完成率}} -->
+                            </tr>
                             <tr>
                                 <td>合计：</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
+                                <!-- <td></td> -->
+                                <!-- <td></td> -->
+                                <!-- <td></td> -->
                                 <td>{{totalData.costTotal}}</td><!--{{费用}} -->
                                 <td>{{totalData.profitTotal}}</td><!--{{净利润}} -->
                                 <td>{{totalData.profitRateTotal}}</td><!--{{净利率}} -->
@@ -124,6 +114,7 @@
                     month:'',
                     pageIndex: 1,
                     pageSize: 10,
+                    mid:'',
                 },
                 dateS:'3',
                 pageall:1,
@@ -132,30 +123,23 @@
 			}
 		},
 		methods:{
-            export(){
-                console.log('success')
-            //     var date =  this.checkForm.date.split('-');
-            //     var year = parseInt(date[0]);
-            //     var month = parseInt(date[1]);
-
-            //     this.defaultData.year = year;
-            //     this.defaultData.startMonth = month;
-            //     this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-            //     window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
-            },
-            // getTime(){
-            //     this.checkForm.startDate=init_date(this.dateS)[0];
-            //     this.checkForm.endDate=init_date(this.dateS)[1];
-            // },
-            searchData(){
-                debugger
+            setTime(){
                 var date =  this.checkForm.date.split('-');
                 var year = parseInt(date[0]);
                 var month = parseInt(date[1]);
                 this.checkForm.year = year;
                 this.checkForm.month = month;
+            },
+            export(){
+                console.log('success');
+                this.setTime();
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
+            },
+            searchData(){
                 this.checkForm.pageIndex=1;
-                console.log('success'+this.checkForm+'searchData');
+                this.setTime();
+                this.getAllData();
             },
             getAllData(){
                 // this.model.getTotalFinanceList(this.checkForm).then((res)=>{
@@ -171,6 +155,7 @@
             },
         },
 		ready(){
+            this.getAllData();
             this.getAllData();
 		},
 	}

@@ -32,18 +32,7 @@
                                 <option value="">选择费用类型</option>
                                 <option value="0">工资</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.dateS" @change="getTime">
-                                <option value="5">今天</option>
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                            <div v-show="dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div>
+                            <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -99,7 +88,7 @@
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
-                        :title.sync="typeTitle" @kok="" @kcancel="type_in=false"
+                        :title.sync="typeTitle" @kok="runTest" @kcancel="type_in=false"
                         >
                     <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
@@ -130,14 +119,8 @@
                             <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择费用类型</span> -->
                         </div>
                         <div class="form-group">
-                            <label><i>*</i>起始日期</label>
-                            <datepicker :width="'79%'" :readonly="true" :value.sync="infaceList.startDate | datetimes" format="YYYY-MM-DD"></datepicker>
-                            <span v-show="timeerror">请选择起始日期</span>
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>结束日期</label>
-                            <datepicker :width="'79%'" :readonly="true" :value.sync="infaceList.endDate | datetimes" format="YYYY-MM-DD"></datepicker>
-                            <span v-show="timeerror">请选择结束日期</span>
+                            <label><i>*</i>时间</label>
+                            <getmonth :value.sync="infaceList.date"></getmonth>
                         </div>
                         <div class="form-group">
                             <label><i>*</i>金额</label>
@@ -159,12 +142,10 @@
                                 <option value="">请选择费用类型</option>
                                 <!-- <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option> -->
                             </select>
-                            <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择费用类型</span> -->
                         </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年1月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="budgetList.January" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
+                        <div class="form-group" v-for="(index,value) in timeList">
+                            <label><i>*</i>2017年{{$index+1}}月</label>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="budgetList.info[index]" maxlength="15" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>
@@ -173,10 +154,10 @@
 	</index>
 </template>
 <script>
-	// import model from '../../ajax/'
+    import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
 		data(){
-			// this.model = model(this);
+			this.model = model(this);
 			return{
                 type_in:false,
                 typeTitle:'',
@@ -184,33 +165,36 @@
                     subCompanyID:'',
                     budget:'',
                     budgetType:'',
-                    startDate:'',
-                    endDate:'',
+                    date:'',
+                    year:'',
+                    month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
-                dateS:'3',
                 infaceList:{
                     subCompanyID:'',
                     expenseType:'',
                     department:'',
-                    startDate:'',
-                    endDate:'',
+                    date:'',
                     amount:'',
                 },
                 budgetList:{
                     subCompanyID:'',
                     expenseType:'',
-                    January:'',
+                    info:[],
                 },
                 pageall:1,
                 companylists:[],
+                timeList:['1','2','3','4','5','6','7','8','9','10','11','12']
 			}
 		},
 		methods:{
-            getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+            setTime(){
+                var date =  this.checkForm.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.checkForm.year = year;
+                this.checkForm.month = month;
             },
             typeIn(title){
                 this.type_in=true;
@@ -222,7 +206,9 @@
                 console.log(this.typeTitle);
             },
             searchData(){
+                this.setTime();
                 this.checkForm.pageIndex=1;
+                //this.getAllData();//没有接口
             },
             getClist(){
                 // *** 请求公司数据
@@ -236,6 +222,16 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+            },
+            budgetTypeIn(){
+                this.model.costBugetTypeIn(this.budgetList).then((res)=>{
+                    if(res.data.code==0){
+
+                    }
+                })
+            },
+            runTest(){
+                console.log('success')
             },
         },
 		ready(){

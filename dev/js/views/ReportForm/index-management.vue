@@ -24,18 +24,7 @@
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="dateS" @change="getTime">
-                                <option value="5">今天</option>
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                            <div v-show="dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div>
+                            <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -67,29 +56,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <template>
-                                <!-- <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}"> -->
-                                <tr role="row">
-                                    <!-- <td>{{index+1}}</td> 序号-->
-                                    <th></th><!-- {{序号}} -->
-                                    <th></th><!-- {{分公司}} -->
-                                    <th></th><!-- {{年份}} -->
-                                    <th></th><!-- {{年收入目标}} -->
-                                    <th></th><!-- {{年净利润目标}} -->
-                                    <th></th><!-- {{1月（元）}} -->
-                                    <th></th><!-- {{2月（元）}} -->
-                                    <th></th><!-- {{3月（元）}} -->
-                                    <th></th><!-- {{4月（元）}} -->
-                                    <th></th><!-- {{5月（元）}} -->
-                                    <th></th><!-- {{6月（元）}} -->
-                                    <th></th><!-- {{7月（元）}} -->
-                                    <th></th><!-- {{8月（元）}} -->
-                                    <th></th><!-- {{9月（元）}} -->
-                                    <th></th><!-- {{10月（元）}} -->
-                                    <th></th><!-- {{11月（元）}} -->
-                                    <th></th><!-- {{12月（元）}} -->
+                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
+                                    <td>{{index+1}}</td>
+                                    <th>{{trlist.subCompanyName}}</th><!-- {{分公司}} -->
+                                    <th>{{trlist.year}}</th><!-- {{年份}} -->
+                                    <th>{{trlist.yearTarget}}百万</th><!-- {{年收入目标}} -->
+                                    <th>{{trlist.yearProfitTarget}}</th><!-- {{年净利润目标}} -->
+                                    <th>{{trlist.january}}</th><!-- {{1月（元）}} -->
+                                    <th>{{trlist.february}}</th><!-- {{2月（元）}} -->
+                                    <th>{{trlist.march}}</th><!-- {{3月（元）}} -->
+                                    <th>{{trlist.april}}</th><!-- {{4月（元）}} -->
+                                    <th>{{trlist.may}}</th><!-- {{5月（元）}} -->
+                                    <th>{{trlist.june}}</th><!-- {{6月（元）}} -->
+                                    <th>{{trlist.july}}</th><!-- {{7月（元）}} -->
+                                    <th>{{trlist.august}}</th><!-- {{8月（元）}} -->
+                                    <th>{{trlist.september}}</th><!-- {{9月（元）}} -->
+                                    <th>{{trlist.october}}</th><!-- {{10月（元）}} -->
+                                    <th>{{trlist.november}}</th><!-- {{11月（元）}} -->
+                                    <th>{{trlist.december}}</th><!-- {{12月（元）}} -->
                                 </tr>
-                            </template>
                             </tbody>
                         </table>
                     </div>
@@ -121,67 +106,11 @@
                         </div>
                         <div class="form-group">
                             <label><i>*</i>年份</label>
-                            <span>2017年</span>
+                            <span>{{yearShow}}年</span>
                         </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年1月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Jan" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年2月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Feb" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年3月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Mar" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年4月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Apr" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年5月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.May" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年6月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Jun" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年7月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Jul" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年8月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Aug" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年9月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Sept" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年10月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Oct" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年11月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Nov" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
-                        </div>
-                        <div class="form-group">
-                            <label><i>*</i>2017年12月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.Dec" maxlength="15" placeholder="">
-                            <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入时间</span> -->
+                        <div class="form-group" v-for="(index,value) in timeList">
+                            <label><i>*</i>{{yearShow}}年{{$index+1}}月</label>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.info[index]" maxlength="15" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>
@@ -190,53 +119,60 @@
 	</index>
 </template>
 <script>
-	// import model from '../../ajax/'
+    import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
 		data(){
-			// this.model = model(this);
+			this.model = model(this);
 			return{
                 type_in:false,
                 checkForm:{
                     subCompanyID:'',
-                    startDate:'',
-                    endDate:'',
+                    date:'',
+                    year:'',
+                    month:'',
                     pagIndex: 1,
                     pageSize: 10,
                 },
                 dateS:'3',
                 typeIn:{
                     subCompanyID:'',
-                    Jan:'',
-                    Feb:'',
-                    Mar:'',
-                    Apr:'',
-                    May:'',
-                    Jun:'',
-                    Jul:'',
-                    Aug:'',
-                    Sept:'',
-                    Oct:'',
-                    Nov:'',
-                    Dec:'',
+                    info:[],
                 },
                 pageall:1,
                 companylists:[],
+                listData:{},
+                timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
+                yearShow:'',
 			}
 		},
 		methods:{
-            getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+            setTime(){
+                var date =  this.checkForm.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.checkForm.year = year;
+                this.checkForm.month = month;
+            },
+            export(){
+                console.log('success');
+                this.setTime();
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
             indexIn(){
                 this.type_in=true;
             },
             saveChange(){
-                this.type_in=false;
-                console.log('success');
+                this.model.getIndexAdd(this.typeIn).then((res)=>{
+                    if(res.data.code==0){
+                        dialog('success','保存成功！');
+                    }
+                })
             },
             searchData(){
+                this.setTime();
                 this.checkForm.pageIndex=1;
+                this.getAllData();
             },
             getClist(){
                 // *** 请求公司数据
@@ -251,9 +187,18 @@
                         }
                     });
             },
+            getAllData(){
+                this.model.getIndexManagement(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                        this.yearShow=res.data.data.year;
+                    }
+                })
+            },
         },
 		ready(){
             this.getClist();
+            this.getAllData();
 		},
 	}
 </script>

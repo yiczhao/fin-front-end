@@ -141,10 +141,10 @@
 	</index>
 </template>
 <script>
-	// import model from '../../ajax/'
+    import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
 		data(){
-			// this.model = model(this);
+			this.model = model(this);
 			return{
                 checkForm:{
                     subCompanyID:'',

@@ -12,40 +12,29 @@
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <span>收入成本确认分公司</span>
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="checkForm.subCompanyId">
                                 <option value="">收入成本确认分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.seleType">
+                            <select class="form-control" v-model="checkForm.businessTypeId">
                                 <option value="">业务类型</option>
                                 <option value="1">知店销售</option>
                                 <option value="2">K1销售</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.Partner">
+                            <select class="form-control" v-model="checkForm.snType">
                                 <option value="">sn归属合伙人</option>
                                 <option value="0">汉付信通</option>
                                 <option value="1">上海新卡说</option>
                             </select>
                             <span>门店所在地分公司</span>
-                            <select class="form-control" v-model="checkForm.storeCompany">
+                            <select class="form-control" v-model="checkForm.localSubCompanyId">
                                 <option value="">门店所在地分公司</option>
                             </select>
                             <span>合伙人所在地分公司</span>
                             <select class="form-control" v-model="checkForm.partnerCompany">
                                 <option value="">合伙人所在地分公司</option>
                             </select>
-                            <select class="form-control" v-model="dateS" @change="getTime">
-                                <option value="5">今天</option>
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                            <div v-show="dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div>
+                            <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -69,28 +58,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}"> -->
-                                <!-- <tr role="row">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr> -->
-                                <tr role="row">
-                                    <td>序号</td>
-                                    <td>收入成本确认分公司</td>
-                                    <td>业务类型</td>
-                                    <td>SN归属合伙人</td>
-                                    <td>门店所在地分公司</td>
-                                    <td>合伙人所在地分公司</td>
-                                    <td>台数</td>
-                                    <td>收入</td>
-                                    <td>成本</td>
+                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
+                                    <td>{{index+1}}</td><!-- 序号 -->
+                                    <td>{{trlist.subCompanyName}}</td><!-- 收入成本确认分公司 -->
+                                    <td>{{trlist.businessName}}</td><!-- 业务类型 -->
+                                    <td>{{trlist.snTypeName}}</td><!-- SN归属合伙人 -->
+                                    <td>{{trlist.storeSubCompanyName}}</td><!-- 门店所在地分公司 -->
+                                    <td>{{trlist.localSubCompanyName}}</td><!-- 合伙人所在地分公司 -->
+                                    <td>{{trlist.number}}</td><!-- 台数 -->
+                                    <td>{{trlist.income}}</td><!-- 收入 -->
+                                    <td>{{trlist.cost}}</td><!-- 成本 -->
                                 </tr>
                             </tbody>
                         </table>
@@ -113,19 +90,20 @@
 	</index>
 </template>
 <script>
-	// import model from '../../ajax/'
+    import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
 		data(){
-			// this.model = model(this);
+			this.model = model(this);
 			return{
                 checkForm:{
-                    subCompanyID:'',
-                    seleType:'',
-                    Partner:'',
-                    storeCompany:'',
+                    subCompanyId:'',
+                    businessTypeId:'',
+                    snType:'',
+                    localSubCompanyId:'',
                     partnerCompany:'',
-                    startDate:'',
-                    endDate:'',
+                    date:'',
+                    year:'',
+                    month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
@@ -140,6 +118,7 @@
                 typeTitle:'',
                 pageall:1,
                 companylists:[],
+                listData:{},
 			}
 		},
 		methods:{
@@ -162,6 +141,7 @@
             searchData(){
                 this.checkForm.pageIndex=1;
                 console.log(this.checkForm);
+                this.getAllData();
             },
             getTime(){
                 this.checkForm.startDate=init_date(this.dateS)[0];
@@ -180,12 +160,20 @@
                         }
                     });
             },
+            getAllData(){
+                this.model.getAllopatryListDetali(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                    }
+                });
+            },
         },
 		ready:function(){
             var vm=this;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.checkForm=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
             vm.getClist();
+            vm.getAllData();
 		},
         watch:{
             'checkForm.pageSize + checkForm.pageIndex'(){
