@@ -48,7 +48,7 @@
                                 <th>操作</th>
                                 <th>待结算金额</th>
                                 <th>开票/回款</th>
-                                <th>开票金额</th>
+                                <th>已开票金额</th>
                                 <th>已回款</th>
                                 <th>应收账款</th>
                                 <th>成本</th>
@@ -111,7 +111,7 @@
                                     <td>{{total.suspensionTaxAmount/100 | currency ''}}</td>
                                     <td>{{total.invoiceAmount/100 | currency ''}}</td>
                                     <td>{{total.grossProfit/100 | currency ''}}</td>
-                                    <td></td><td></td><td></td>
+                                    <td>{{total.grossMargin}} <span v-if="!!total.grossMargin">%</span></td><td></td><td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -193,7 +193,11 @@
                     <span>{{relist.contractNumber}}</span>
                 </div>
                 <div class="form-group" v-if="dialogTitle==='开票'">
-                    <label class="control-label">待开票金额：</label>
+                    <label class="control-label">待结算金额：</label>
+                    <span>{{relist.unSettlementAmount/100 | currency ''}}</span>
+                </div>
+                <div class="form-group" v-if="dialogTitle==='开票'">
+                    <label class="control-label">已开票金额：</label>
                     <span>{{relist.billingAmount/100 | currency ''}}</span>
                 </div>
                 <div class="form-group" v-if="dialogTitle==='回款'">
