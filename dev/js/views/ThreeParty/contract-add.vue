@@ -44,43 +44,59 @@
                 <div class="panel-row">
                     <div class="col">
                         <div>合同结算金额=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractSettlementFee" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractSettlementFee" class="form-control" v-limitaddprice="defaultData.contractSettlementFee">
+                        </div>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>合同税费=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractTaxFee" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractTaxFee" class="form-control" v-limitaddprice="defaultData.contractTaxFee">
+                        </div>
                     </div>
                     <div class="col">
                         <div>合同广告费=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractAdvertisementFee" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractAdvertisementFee" class="form-control" v-limitaddprice="defaultData.contractAdvertisementFee">
+                        </div>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>合同物料费=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractMaterialFee" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractMaterialFee" class="form-control" v-limitaddprice="defaultData.contractMaterialFee">
+                        </div>
                     </div>
                     <div class="col">
                         <div>合同现金红包=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractRedPacket" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractRedPacket" class="form-control" v-limitaddprice="defaultData.contractRedPacket">
+                        </div>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>合同微信运营=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractWeChatMarketFee" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractWeChatMarketFee" class="form-control" v-limitaddprice="defaultData.contractWeChatMarketFee">
+                        </div>
                     </div>
                     <div class="col">
                         <div>合同服务费=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractServiceFee" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractServiceFee" class="form-control" v-limitaddprice="defaultData.contractServiceFee">
+                        </div>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>合同其他=</div>
-                        <v-select :editable="true" :multiple="true" :taggable="true" :value.sync="defaultData.contractOther" :options="chooseData"></v-select>
+                        <div style="width: 100%;">
+                            <input type="text" v-model="defaultData.contractOther" class="form-control" v-limitaddprice="defaultData.contractOther">
+                        </div>
                     </div>
                     <div class="col">
                         <div>合同备注</div>
@@ -96,12 +112,13 @@
                                  <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传</a>
                                  <span v-text="uploadText" v-show="uploadText!=''"></span>
                             </span>
-                            <span class="btn btn-primary" data-ksa="activity_manage.config" @click="submit">下载</span>
+                            <a class="btn btn-primary" v-if="!!defaultData.contractFileID" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <span class="btn btn-primary" data-ksa="activity_manage.config" @click="submit">保存</span>
+                    <span class="btn btn-primary" v-if="$route.params.contractAddId===':contractAddId'" @click="submit">保存</span>
+                    <span class="btn btn-primary" v-if="$route.params.contractAddId!==':contractAddId'" @click="edit">编辑</span>
                     <span class="btn btn-default" v-link="{name:'contract-management-info'}">取消</span>
                 </div>
             </div>
@@ -116,9 +133,7 @@
         data(){
             this.model =model(this)
             return{
-                chooseData:[
-                    '合同结算金额', '合同服务费', '合同税费', '合同广告费', '合同物料费', '合同现金红包', '合同微信运营', '合同结算金额', '合同其他'
-                ],
+                origin:window.origin,
                 companylists:[],
                 thirdPartyList:[],
                 uploadText:'',
@@ -148,11 +163,8 @@
                 };
                 this.model.contractaddList(data).then((res)=>{
                     if(res.data.code==0){
-                        let data={};
-                        _.forEach(res.data.data,(value,key)=>{
-                            data[key]=this.enString(value);
-                        })
-                        this.$set('defaultData',data);
+                        this.$set('defaultData',res.data.data);
+                        this.getThirdParty(this.defaultData.subCompanyID);
                     }
                 })
             },
@@ -174,7 +186,7 @@
                 this.model.getThirdPartyAccountList(data)
                     .then((response)=>{
                         if(response.data.code==0){
-                            this.$set('thirdPartyList', response.data.data)
+                            this.$set('thirdPartyList', response.data.data);
                         }
                     });
             },
@@ -211,36 +223,6 @@
                         })
                 }
             },
-            toStrings(value){
-                let a=[];
-                if(typeof value==="object"){
-                    value.map((val,index)=>{
-                        a[index]='【'+val+'】'
-                    })
-                    return a.join("")
-                }
-                return value;
-            },
-            getsubitData(){
-                let data={};
-                _.forEach(this.defaultData,(value,key)=>{
-                    if(value!=null){
-                        data[key]=this.toStrings(value);
-                    }else{
-                        data[key]="";
-                    }
-                })
-                return data;
-            },
-            enString(value){
-                if(!value ||typeof value !='string'||value.indexOf('】')<0){
-                    return value;
-                }
-                let a=value.split('】');
-                _.remove(a,(n)=>{return n==''});
-                let b=a.map(function (val){ return val.replace('【','')})
-                return b;
-            },
             submit() {
                 if(!this.defaultData.thirdPartyAccountID){
                     dialogs('info','请选择三方');
@@ -250,10 +232,32 @@
                     dialogs('info','请填写合同编号');
                     return;
                 }
-                let data=this.getsubitData();
-                this.model.saveFormulae(data).then((res)=>{
+                this.model.saveFormulae(this.defaultData).then((res)=>{
                     if(res.data.code==0){
-                        dialogs('success','保存成功！');
+                        dialogs('successTime','保存成功！');
+                        setTimeout(()=>{
+                            this.$router.go({name:'contract-management-info'})
+                        },1800)
+                    }
+                })
+            },
+            edit(){
+                if(!this.defaultData.thirdPartyAccountID){
+                    dialogs('info','请选择三方');
+                    return;
+                }
+                if(!this.defaultData.contractNumber){
+                    dialogs('info','请填写合同编号');
+                    return;
+                }
+                let data=_.cloneDeep(this.defaultData);
+                data.id=this.$route.params.contractAddId;
+                this.model.editContract(data).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('successTime','编辑成功！');
+                        setTimeout(()=>{
+                            this.$router.go({name:'contract-management-info'})
+                        },1800)
                     }
                 })
             }
@@ -263,8 +267,6 @@
             if(this.$route.params.contractAddId!=':contractAddId'){
                 this.getList();
             }
-        },
-        watch:{
         }
     }
 </script>

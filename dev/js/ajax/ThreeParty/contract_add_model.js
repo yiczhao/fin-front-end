@@ -14,6 +14,14 @@ function model(_this){
             return _this.$http.post(_this.$API.contractAdd,data)
         },
         /**
+         * @description 编辑合同
+         * @params {data}
+         * @returns {*}
+         * */
+        editContract(data){
+            return _this.$http.post(_this.$API.contractEdit,data)
+        },
+        /**
          * @description 根据分公司ID获取三方列表
          * @params {data}
          * @returns {*}

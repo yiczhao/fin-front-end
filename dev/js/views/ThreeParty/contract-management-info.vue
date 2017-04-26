@@ -74,7 +74,7 @@
                                     <td>{{trlist.contractSettlementAmount/100 | currency ''}}</td>
                                     <td>
                                         <a data-ksa="contract.edit" v-link="{name:'contract-add',params:{'contractAddId':trlist.contractID}}">编辑</a>
-                                        <a v-if="!!trlist.contractFileID">附件</a>
+                                        <a v-if="!!trlist.contractFileID" href="{{origin}}/file/download/{{trlist.contractFileID}}">附件</a>
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
                                     </td>
                                     <td>{{trlist.unSettlementAmountcontractSettlementAmount/100 | currency ''}}</td>
@@ -132,12 +132,12 @@
                     <span>{{relist.collectionAmount/100 | currency ''}}</span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">金   额：</label>
-                    <input class="form-control" v-if="dialogTitle==='开票'" v-limitaddNumber="relist.invoiceAmount" v-model="relist.invoiceAmount">
-                    <input class="form-control" v-if="dialogTitle==='回款'" v-limitaddNumber="relist.invoiceAmount" v-model="relist.invoiceAmount">
+                    <label class="control-label"><i>*</i>金   额：</label>
+                    <input class="form-control" v-if="dialogTitle==='开票'" v-limitaddprice="relist.invoiceAmount2" v-model="relist.invoiceAmount2">
+                    <input class="form-control" v-if="dialogTitle==='回款'" v-limitaddprice="relist.collectionAmount2" v-model="relist.collectionAmount2">
                 </div>
                 <div class="form-group">
-                    <label style="position: relative;top: -95px;" class="control-label">备   注：</label>
+                    <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备   注：</label>
                     <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.remarks" placeholder="50字以内"></textarea>
                 </div>
             </content-dialog>
@@ -176,6 +176,7 @@
         data(){
             this.model =model(this)
             return{
+                origin:window.origin,
                 modal_associate: false,
                 dialogTitle:'',
                 companylists:[],
@@ -238,7 +239,17 @@
             },
             associateTrue(){
                 if(this.dialogTitle==='开票'){
-                    this.model.contract_invoice(this.relist)
+                    if(!this.relist.invoiceAmount2 || !this.relist.remarks){
+                        dialogs('info','金额与备注为必填项');
+                        return;
+                    }
+                    let data={
+                        id:this.relist.contractID,
+                        invoiceAmount2:this.relist.invoiceAmount2,
+                        thirdPartyAccountID:this.relist.thirdPartyAccountID,
+                        contractMemo:this.relist.remarks
+                    }
+                    this.model.contract_invoice(data)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);
@@ -246,7 +257,17 @@
                             this.initList();
                         })
                 }else{
-                    this.model.contract_collection(this.relist)
+                    if(!this.relist.collectionAmount2 || !this.relist.remarks){
+                        dialogs('info','金额与备注为必填项');
+                        return;
+                    }
+                    let data={
+                        id:this.relist.contractID,
+                        collectionAmount2:this.relist.collectionAmount2,
+                        thirdPartyAccountID:this.relist.thirdPartyAccountID,
+                        contractMemo:this.relist.remarks
+                    }
+                    this.model.contract_collection(data)
                         .then((response)=>{
                             if(response.data.code == 0){
                                 dialogs('success',response.data.message);

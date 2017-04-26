@@ -1506,6 +1506,12 @@ export default function install(Vue) {
      */
     _o.contractAdd = './contract/add';
     /**
+     * @description 新增合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contractEdit = './contract/edit';
+    /**
      * @description 根据分公司ID获取三方列表
      * @author 于凯乐
      * @method get
