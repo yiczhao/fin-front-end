@@ -7,10 +7,10 @@
            :isshow="'isshow'">
         <div class="content calculation-formula" slot="content">
             <div class="panel panel-flat">
-                <div class="panel-title"><span class="btn btn-primary" data-ksa="activity_manage.config" @click="usedefalut">加载默认公式</span></div>
+                <div class="panel-title"><span class="btn btn-primary" data-ksa="activity_manage.config" @click="loadDault()">加载默认公式</span></div>
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动名称：</span><span style="margin-right: 10px;">{{activityName}}</span>
-                    <span>活动ID：</span><span style="margin-right: 10px;">{{activityID}}</span>
+                    <span>活动ID：</span><span style="margin-right: 10px;">{{operationID}}</span>
                     <span><i style="color:red">*</i>合同：</span><span style="margin-right: 10px;">压缩包文件名</span>
                     <span class="btn btn-primary" @click="">下载</span>
                 </div>
@@ -90,8 +90,8 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <span class="btn btn-primary" @click="setdefaultFormulae">设为默认公式</span>
-                    <span class="btn btn-primary" @click="submit">保存</span>
+                    <span class="btn btn-primary" @click="saveDefault()">设为默认公式</span>
+                    <span class="btn btn-primary" @click="submit()">保存</span>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
     export default{
         components: {vSelect},
         data(){
-            // this.model =model(this)
+            this.model =model(this)
             return{
                 chooseData:[
                     '三方应收',
@@ -125,12 +125,14 @@
                     '实际其他费用',
                 ],
                 activityName:'',
-                activityID:'',
+                operationID:'',
+                getDataDefault:{
+                	activityName:'',
+                	contractFileID:'',
+                },
                 defaultData:{
                 	activityID:'',
                 	subCompanyID:'',
-                	activityName:'',
-                	contractFileID:'',
                 	id:'',//活动收入成本计算公式主键ID
                     incomeServiceFee:'',
                     incomeTaxFee:[],
@@ -150,72 +152,53 @@
             }
         },
         methods:{
-            toStrings(value){
-                let a=[];
-                if(typeof value==="object"){
-                    value.map((val,index)=>{
-                        a[index]='【'+val+'】'
-                    })
-                    return a.join("")
-                }
-                return value;
+            loadDault(){
+            	this.model.getDefaultFormulae(this.getDataDefault.subCompanyID).then((res)=>{
+            		if(res.data.code==0){
+            			// this.$set('defaultData',res.data.data)
+            			console.log('success')
+            		}
+            	})
             },
-            getsubitData(){
-                let data={};
-                _.forEach(this.defaultData,(value,key)=>{
-                    if(value!=null){
-                        data[key]=this.toStrings(value);
-                    }else{
-                        data[key]="";
-                    }
-                })
-                return data;
+            getFormulae(){
+            	let data={
+            		activityID:this.getDataDefault.activityID,
+            		subCompanyID:this.getDataDefault.subCompanyID,
+            	}
+            	this.model.getFormulae(data).then((res)=>{
+            		if(res.data.code==0){
+            			// this.$set('defaultData',res.data.data)
+            			console.log('success')
+            		}
+            	})
             },
-            enString(value){
-                if(!value ||typeof value !='string'||value.indexOf('】')<0){
-                    return value;
-                }
-                let a=value.split('】');
-                _.remove(a,(n)=>{return n==''});
-                let b=a.map(function (val){ return val.replace('【','')})
-                return b;
+            submit(){
+            	this.model.saveFormulae(this.defaultData).then((res)=>{
+            		if(res.data.code==0){
+            			// this.defaultData.id=res.data.data.id;
+            			console.log('success')
+            		}
+            	})
             },
-            submit() {
-                if(this.defaultData.actualTaxFee==''||this.defaultData.actualSettlementFee==''){
-                    dialogs('info','请填写实际税费及实际结算金额');
-                    return;
-                }
-                let data=this.getsubitData();
-                data.id = '';
-                // data.activityID=this.$route.params.activityID;
-                // data.subCompanyID=this.$route.params.subCompanyID;
-            },
-            usedefalut(){
-                let data={
-                    subCompanyID:this.$route.params.subCompanyID,
-                    activityID:this.$route.params.activityID
-                }
-                this.model.getCostList(data).then((res)=>{
-                    if(res.data.code==0){
-                        if(!res.data.data){
-                            dialogs('info','无默认公式！')
-                            return;
-                        }
-                        let data={};
-                        _.forEach(res.data.data,(value,key)=>{
-                            data[key]=this.enString(value);
-                        })
-                        this.$set('defaultData',data);
-                        dialogs('success','加载成功！')
-                    }
-                })
+            saveDefault(){
+            	if(!this.defaultData.id){
+            		dialogs('info','请先保存公式再设为默认公式！');
+            		return
+            	};
+            	this.model.saveDefaultFormulae(this.defaultData.id).then((res)=>{
+            		if(res.data.code==0){
+            			console.log('success')
+            		}
+            	})
             },
         },
         ready() {
             // (this.$route.params.formulaeName!=':formulaeName')?this.activityName=this.$route.params.formulaeName:null;
-            (this.$route.params.formulaeID!=':acmActivityID')?this.defaultData.activityID=this.$route.params.acmActivityID:null;
-            (this.$route.params.acmCompanyID!=':acmCompanyID')?this.defaultData.subCompanyID=this.$route.params.acmCompanyID:null;
-            (this.$route.params.acmContractID!=':acmContractID')?this.defaultData.contractFileID=this.$route.params.acmContractID:null;
+            (this.$route.params.acmActivityID!=':acmActivityID')?this.defaultData.activityID=this.$route.params.acmActivityID:null;//活动主键id
+            (this.$route.params.OperationID!=':OperationID')?this.getDataDefault.z=this.$route.params.OperationID:null;//活动主键id
+            (this.$route.params.acmCompanyID!=':acmCompanyID')?this.getDataDefault.subCompanyID=this.$route.params.acmCompanyID:null;//分公司ID
+            (this.$route.params.acmContractID!=':acmContractID')?this.getDataDefault.contractFileID=this.$route.params.acmContractID:null;//合同编号id
+            this.getFormulae();
         },
         watch:{
         }

@@ -5,10 +5,13 @@
            :isshow="'isshow'">
         <div class="content activity-cost-management" slot="content">
            	<div class="panel panel-flat">
-           	 	<!-- <ul class="tab-bor">
-                    <li><a v-link="{name:'third-party'}">账户列表</a></li>
+           	 	<ul class="tab-bor">
+                    <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
+                    <li data-ksa="activity_manage"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
+                    <li data-ksa="activity_effect_manage"><a v-link="{name:'activity-effect-lists'}">活动收入成本</a></li>
+                    <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                     <li class="active"><a>活动收入成本管理</a></li>
-                </ul> -->
+                </ul>
                 <div class="heading">
                     <div class="heading-left"></div>
                     <div class="heading-right">
@@ -81,7 +84,7 @@
                                     <td>{{trlist.contractNumber}}</td><!-- 合同编号 -->
                                     <td>{{trlist.activityOperationID }}</td><!-- 活动ID -->
                                     <td>
-                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID,'acmContractID':trlist.contractID}}">计算公式</a>
+                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID,'acmContractID':trlist.contractID,'OperationID':trlist.activityOperationID }}">计算公式</a>
                                         <a @click="modal_other=true">其他信息</a>
                                     </td><!-- 执行表参数 -->
                                     <td>
@@ -125,7 +128,7 @@
                                 <tr>
                                     <td>
                                         <a v-link="{name:'calculation-formula'}">计算公式</a>
-                                        <a @click="modal_other=true">其他信息</a>
+                                        <a @click="showDialog()">其他信息</a>
                                     </td><!-- 执行表参数 -->
                                 </tr>
                             </tbody>
@@ -247,14 +250,34 @@
                 //     }
                 // })
             },
+            showDialog(){
+                this.modal_other=true;
+                let data={
+                    activityID:this.checkForm.activityID,
+                    subCompanyID:this.checkForm.subCompanyID,
+                }
+                this.model.getOtherInfo(data).then((res)=>{
+                    if(res.data.code==0){
+                        // this.$set('redata',res.data.data);
+                        console.log('success');
+                    }
+                })
+            },
             saveOther(){
                 if(this.redata.description==''){
                     dialogs('info','请输入活动说明！');
                     return;
                 }
-                let data=_.cloneDeep(this.redata);
-                data.collectAmount=accMul(data.collectAmount,100);
-                data.invoiceAmount=accMul(data.invoiceAmount,100);
+                // let data=_.cloneDeep(this.redata);
+                // data.collectAmount=accMul(data.collectAmount,100);
+                // data.invoiceAmount=accMul(data.invoiceAmount,100);
+                this.model.saveOtherInfo(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('success','保存成功！');
+                        console.log('success');
+                    }
+                })
+
             },
         },
 		ready(){

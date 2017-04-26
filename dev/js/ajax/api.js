@@ -1533,7 +1533,37 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method get
      */
-    _o.getActivityFormulae = './activityIncomeCost/default/formulae/info?';
+    _o.getActivityFormulaeDefault = './activityIncomeCost/default/formulae/info/';
+    /**
+     * @description 三方管理-活动收入成本管理-获取计算公式信息
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getActivityFormulae = './activityIncomeCost/formulae/info?';
+    /**
+     * @description 三方管理-活动收入成本管理-保存计算公式信息
+     * @author 冷艳君
+     * @method post
+     */
+    _o.saveActivityFormulae = './activityIncomeCost/default/formulae/save?';
+    /**
+     * @description 三方管理-活动收入成本管理-获取其他信息
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getActivityOtherInfo = './activityIncomeCost/otherInfo/info?';
+    /**
+     * @description 三方管理-活动收入成本管理-保存其他信息
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.saveActivityOtherInfo = './activityIncomeCost/otherInfo/save?';
+    /**
+     * @description 三方管理-活动收入成本管理-设为默认公式信息
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.saveActivityDefaultFormulae = './activityIncomeCost/default/formulae/setup/';
     /**
      * @description 编辑合同接口地址
      * @author 于凯乐
