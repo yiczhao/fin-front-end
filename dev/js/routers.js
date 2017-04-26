@@ -227,7 +227,7 @@ export default function (router) {
 			}
 		},
 		/* 三方管理-活动收入成本管理-计算公式 */
-		'/calculation-formula/:acmActivityID/:acmCompanyID/:acmContractID/': {
+		'/calculation-formula/:acmActivityID/:acmCompanyID/:acmContractID/:OperationID/': {
 			name: 'calculation-formula',
 			router_type: "third",
 			component: function (resolve) {
