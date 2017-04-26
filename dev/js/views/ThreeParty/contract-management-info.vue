@@ -337,7 +337,7 @@
             },
             associateTrue(){
                 if(this.dialogTitle==='开票'){
-                    if(!this.relist.invoiceAmount2 || !this.relist.remarks){
+                    if(!this.relist.invoiceAmount2 || !this.relist.contractMemo){
                         dialogs('info','金额与备注为必填项');
                         return;
                     }
@@ -355,7 +355,7 @@
                             }
                         })
                 }else{
-                    if(!this.relist.collectionAmount2 || !this.relist.remarks){
+                    if(!this.relist.collectionAmount2 || !this.relist.contractMemo){
                         dialogs('info','金额与备注为必填项');
                         return;
                     }
