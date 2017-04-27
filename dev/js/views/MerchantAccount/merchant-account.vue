@@ -4,10 +4,10 @@
            :hname="'merchant-account'"
            :isshow="'isshow'">
 
-        <div class="content" slot="content">
+        <div class="content merchant-account" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="merchant_manage"><a v-link="{name:'business-lists'}">商户管理</a></li>
+                    <li data-ksa="merchant_manage"><a v-link="{name:'business-lists'}">商户列表</a></li>
                     <li data-ksa="merchant_account_manage" class="active"><a v-link="{name:'merchant-account'}">商户账户</a></li>
                     <li data-ksa="advance_payment_account_manage"><a v-link="{name:'prepayment-lists'}">预付款</a></li>
                 </ul>
@@ -18,24 +18,17 @@
                             <input type="number" class="form-control" v-model="conditionData.merchantOperationID"
                                    placeholder="商户ID"
                                    v-limitnumber="">
+                            <!--<input type="text" class="form-control" v-model="conditionData.backendMerchantCode"-->
+                                   <!--placeholder="商户号">-->
 
-                            <input type="text" class="form-control" v-model="conditionData.backendMerchantCode"
-                                   placeholder="商户号">
+                            <!--<input type="text" class="form-control" v-model="conditionData.backendMerchantName"-->
+                                   <!--placeholder="商户简称">-->
 
-                            <input type="text" class="form-control" v-model="conditionData.backendMerchantName"
-                                   placeholder="商户简称">
+                            <!--<input type="number" class="form-control" v-model="" placeholder="门店号"-->
+                                   <!--v-limitnumber="conditionData.backendStoreCode">-->
 
-                            <select class="form-control" v-model="conditionData.merchantType">
-                                <option value="">商户类型</option>
-                                <option value="1">单店</option>
-                                <option value="2">连锁总店</option>
-                            </select>
-
-                            <input type="number" class="form-control" v-model="" placeholder="门店号"
-                                   v-limitnumber="conditionData.backendStoreCode">
-
-                            <input type="text" class="form-control" v-model="conditionData.storeName"
-                                   placeholder="门店名称">
+                            <!--<input type="text" class="form-control" v-model="conditionData.storeName"-->
+                                   <!--placeholder="门店名称">-->
 
                             <select class="form-control" v-model="conditionData.subCompanyID"
                                     @change="getCityList(conditionData.subCompanyID)">
@@ -78,10 +71,10 @@
                             <thead>
                             <tr role="row">
                                 <th>商户ID</th>
-                                <th>商户号</th>
-                                <th>商户简称</th>
-                                <th>商户类型</th>
-                                <th>门店号</th>
+                                <!--<th>商户号</th>-->
+                                <!--<th>商户简称</th>-->
+                                <!--<th>商户类型</th>-->
+                                <!--<th>门店号</th>-->
                                 <th>门店名称</th>
                                 <th>分公司</th>
                                 <th>城市</th>
@@ -96,19 +89,19 @@
                                 <th>状态</th>
                                 <th>操作</th>
                                 <th>最新更新时间</th>
-                                <th>转账配置</th>
+                                <!--<th>转账配置</th>-->
                             </tr>
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trList) in merchantAccountList">
                                 <td>{{trList.merchantOperationID}}</td>
-                                <td>{{trList.backendMerchantCode}}</td>
-                                <td>{{trList.backendMerchantName}}</td>
-                                <td>
-                                    <template v-if="trList.merchantType ==1 ">单店</template>
-                                    <template v-if="trList.merchantType ==2">连锁商户</template>
-                                </td>
-                                <td>{{trList.backendStoreCode}}</td>
+                                <!--<td>{{trList.backendMerchantCode}}</td>-->
+                                <!--<td>{{trList.backendMerchantName}}</td>-->
+                                <!--<td>-->
+                                    <!--<template v-if="trList.merchantType ==1 ">单店</template>-->
+                                    <!--<template v-if="trList.merchantType ==2">连锁商户</template>-->
+                                <!--</td>-->
+                                <!--<td>{{trList.backendStoreCode}}</td>-->
                                 <td>{{trList.storeName}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>{{trList.cityName}}</td>
@@ -127,7 +120,9 @@
                                     <template v-if="trList.settlementCycle == 4">手工结算</template>
                                 </td>
                                 <!--补贴税率-->
-                                <td>{{trList.subsidyRate}}</td>
+                                <td>{{trList.subsidyRate}}
+                                    <template v-if="!!trList.subsidyRate">%</template>
+                                </td>
                                 <td>
                                     <a v-link="{name:'merchant-account-detail',params:{'merchantID':trList.id}}" data-ksa="merchant_account_manage.search">明细</a>
 
@@ -137,15 +132,15 @@
                                     <template v-if="trList.expired==2">待确认</template>
                                 </td>
                                 <td>
-                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-toggle="modal" data-ksa="merchant_account_manage.confirm"
-                                       data-target="#modal_submit">确认</a>
+                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-ksa="merchant_account_manage.confirm">确认</a>
                                     <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);" data-ksa="merchant_account_manage.update">更新</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
-                                <td>
-                                    <a v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>
-                                </td>                            </tr>
+                                <!--<td>-->
+                                    <!--<a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>-->
+                                <!--</td>-->
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -274,7 +269,6 @@
 					'backendMerchantCode': '',
 					'storeName': '',
 					'backendMerchantName': '',
-					'merchantType': '',
 					'backendStoreCode': '',
 					'expired': '',
 					'settlementCycle': '',
@@ -314,9 +308,8 @@
 						// *** 判断请求是否成功如若成功则填充数据到模型
 						if (response.data.code == 0) {
 							this.$set('merchantAccountList', response.data.data);
-							this.$set('pageAll', response.data.total)
+							this.$set('pageAll', response.data.total);
 						}
-
 					});
 			},
 			getCompanyList(){

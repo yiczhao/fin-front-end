@@ -91,7 +91,7 @@
                 document.cookie = 'KSAuthUserToken=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 document.cookie = 'X-XSRF-TOKEN=; path=/; domain=.kashuo.net; expires=' + new Date(0).toUTCString();
                 sessionStorage.clear();
-                window.location.href = "http://login.kashuo.net";
+                window.location.href = authUrl1;
 
             },
              switchSystem (system) {
