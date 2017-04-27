@@ -84,8 +84,22 @@
                                         <a @click="associateShow(trlist,'开票')">开票</a>
                                         <a @click="associateShow(trlist,'回款')">回款</a>
                                     </td>
-                                    <td>{{trlist.billingAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                    <td>
+                                        <a v-link="{name:'invoice-collection',params:
+                                        {'invoiceCollectionId':trlist.contractID,
+                                        'invoiceCollectionName':trlist.thirdPartyAccountName,
+                                        'invoiceCollectionsubCompanyID':trlist.subCompanyID,
+                                        'invoiceCollectionContract':trlist.contractNumber
+                                         }}">{{trlist.billingAmount/100 | currency ''}}</a>
+                                    </td>
+                                    <td>
+                                        <a v-link="{name:'invoice-collection',params:
+                                        {'invoiceCollectionId':trlist.contractID,
+                                        'invoiceCollectionName':trlist.thirdPartyAccountName,
+                                        'invoiceCollectionsubCompanyID':trlist.subCompanyID,
+                                        'invoiceCollectionContract':trlist.contractNumber
+                                         }}">{{trlist.collectionAmount/100 | currency ''}}</a>
+                                    </td>
                                     <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
                                     <td>
                                         <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.cost/100 | currency ''}}</a>

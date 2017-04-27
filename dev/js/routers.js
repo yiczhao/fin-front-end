@@ -266,6 +266,14 @@ export default function (router) {
 				require(['./views/ThreeParty/contract-management-info.vue'], resolve);
 			}
 		},
+		/* 三方管理-合同管理-回款开票明细 */
+        '/invoice-collection/:invoiceCollectionId/:invoiceCollectionName/:invoiceCollectionContract/:invoiceCollectionsubCompanyID': {
+            name: 'invoice-collection',
+            router_type: "third",
+            component: function (resolve) {
+                require(['./views/ThreeParty/invoice-collection.vue'], resolve);
+            }
+        },
 		/* 报表管理-财务指标分析表(总) */
 		'/financial-index-total': {
 			name: 'financial-index-total',

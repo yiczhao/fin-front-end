@@ -1459,50 +1459,63 @@ export default function install(Vue) {
      */
     _o.contractInvoiceInfo = './contract/invoiceInfo?';
 
+    //- todo  三方管理-合同管理-回款开票明细 invoice-collection
+    /**
+     * @description 回款开票明细接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.invoiceCollection = './invoiceCollection/list?';
+    /**
+     * @description 回款开票明细接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.invoiceCollectionSum = './invoiceCollection/sum?';
+    /**
+     * @description 回款开票明细接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getContractNumber = './contract/contractByUser?';
 
+    //- todo  三方管理-合同管理-回款开票明细 merchant-account
 	/**
 	 * @description 商户账户 列表
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountList = './merchantAccount/list?';
-
 	/**
 	 * @description 商户账户 明细
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountDetail = './merchantAccount/detail/';
-
 	/**
 	 * @description 商户账户 确认
 	 * @author 于凯乐
 	 * @method post
 	 */
 	_o.merchantAccountConfirm = './merchantAccount/confirm?';
-
 	/**
 	 * @description 商户账户 配置信息
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountConfigureInfo = './merchantAccount/configureInfo/';
-
-
 	/**
 	 * @description 商户账户 配置确认
 	 * @author 于凯乐
 	 * @method post
 	 */
 	_o.merchantAccountConfigure = './merchantAccount/configure';
-
 	/**
 	 * @description 商户账户 导出Excel
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountExportToExcel = '/data/export/excel/merchantAccount?';
-
     /**
      * @description 商户账户最新信息 查询
      * @author 冷艳君
