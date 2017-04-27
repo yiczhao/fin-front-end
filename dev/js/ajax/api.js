@@ -1662,7 +1662,7 @@ export default function install(Vue) {
      * @author 洪钢
      * @method post
      */
-    _o.CostBugetIn = './cost/budget?';
+    _o.costBugetIn = './cost/budget?';
 
     /**
      * @description 报表管理 费用管理 预算-预算录入-查询费用类型GET /v1/finance/cost/detail 费用明细查询

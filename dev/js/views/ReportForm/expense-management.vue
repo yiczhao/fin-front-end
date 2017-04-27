@@ -206,16 +206,15 @@
                     this.typeTitle='实际费用录入';
                 }else{
                     this.typeTitle='预算录入';
+                    this.budgetList.subCompanyId='';
+                    this.budgetList.subject='';
+                    this.budgetList.amountList.splice(0,this.budgetList.amountList.length);
                     this.model.costCommonTypeIn().then((res)=>{
                         if(res.data.code==0){
                             this.$set('costType',res.data.data)
                         }
-                    })
-                    // this..model.costCommonDetail().then((res)=>{
-                    //     if(red.data.code==0){
-
-                    //     }
-                    // })
+                    });
+                    debugger
                 };
             },
             searchData(){
@@ -228,20 +227,12 @@
                 let data={
                     'type':'ImportUser'
                 }
-                this.$common_model.getcompany(data)
-                    .then((response)=>{
+                this.$common_model.getcompany(data).then((res)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
-                        if(response.data.code==0){
-                            this.$set('companylists', response.data.data)
+                        if(res.data.code==0){
+                            this.$set('companylists', res.data.data)
                         }
                     });
-            },
-            budgetTypeIn(){
-            //     let data={
-            //         subCompanyId:'',
-            //         subject:'',
-            //         year:'2017',
-            //     }
             },
             saveChange(){
                 this.model.costBugetTypeInP(this.budgetList).then((res)=>{

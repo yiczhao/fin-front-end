@@ -67,7 +67,7 @@ function model(_this){
          * @returns {*}
          * */
         costBugetTypeInP(data){
-            return _this.$http.post(_this.$API.CostBugetIn,data)
+            return _this.$http.post(_this.$API.costBugetIn,data)
         },
         /**
          * @description  费用管理-费用预算查询
