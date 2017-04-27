@@ -409,7 +409,10 @@
         },
         ready() {
             var vm=this;
-            (this.$route.params.contractName==':contractName')?this.defaultData.thirdPartyAccountName='' :this.defaultData.thirdPartyAccountName=this.$route.params.contractName;
+            if(this.$route.params.contractName!==':contractName'){
+                this.defaultData.thirdPartyAccountName=this.$route.params.contractName;
+                this.defaultData.subCompanyID=this.$route.params.contractCompanyId;
+            }
             this.getClist();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
