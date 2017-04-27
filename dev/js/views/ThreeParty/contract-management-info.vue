@@ -317,9 +317,19 @@
             associateShow(list,title){
                 this.dialogTitle=title;
                 this.relist=_.cloneDeep(list);
-                this.relist.invoiceAmount='';
-                this.relist.collectionAmount='';
-                this.modal_associate=true;
+                let data={
+                    id:list.contractID
+                }
+                this.model.contractInvoiceInfo(data).then((res)=>{
+                    if(res.data.code===0){
+                        this.relist.invoiceAmount=res.data.data.invoiceAmount;
+                        this.relist.accountsReceivable=res.data.data.accountsReceivable;
+                        this.relist.collectionAmount=res.data.data.collectionAmount;
+                        this.relist.invoiceAmount2='';
+                        this.relist.collectionAmount2='';
+                        this.modal_associate=true;
+                    }
+                })
             },
             settlementShow(list){
                 this.relist=_.cloneDeep(list);

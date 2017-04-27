@@ -53,6 +53,14 @@ function model(_this){
         contractSettlement(data){
             return _this.$http.post(_this.$API.contractSettlement,data)
         },
+        /**
+         * @description 回款开票信息
+         * @params {data}
+         * @returns {*}
+         * */
+        contractInvoiceInfo(data){
+            return _this.$http.get(_this.$API.contractInvoiceInfo+$.param(data))
+        }
     }
 }
 module.exports=model;

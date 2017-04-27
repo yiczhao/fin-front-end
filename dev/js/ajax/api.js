@@ -1452,6 +1452,13 @@ export default function install(Vue) {
      * @method post
      */
     _o.contractSettlement = './contract/settlement';
+    /**
+     * @description 回款开票信息接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contractInvoiceInfo = './contract/invoiceInfo?';
+
 
 	/**
 	 * @description 商户账户 列表
