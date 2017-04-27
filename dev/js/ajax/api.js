@@ -1644,18 +1644,45 @@ export default function install(Vue) {
     _o.getFinanceAdd = './target/finance_add?';
 
     /**
-     * @description 报表管理 异地激活收入成本分配明细
+     * @description 报表管理 异地激活收入成本分配明细GET /v1/finance/target/activation_count_list 异地激活收入成本分配统计
      * @author 周俭
      * @method get
      */
     _o.getAllopatryActivationList = './target/activation_list?';
 
     /**
+     * @description 报表管理 异地激活收入成本分配统计
+     * @author 周俭
+     * @method get
+     */
+    _o.getAllopatryActivationCountList = './target/activation_count_list?';
+
+    /**
      * @description 报表管理 费用管理 费用预算录入
-     * @author 洪刚
-     * @method po
+     * @author 洪钢
+     * @method post
      */
     _o.CostBugetIn = './cost/budget?';
+
+    /**
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型GET /v1/finance/cost/detail 费用明细查询
+     * @author 洪钢
+     * @method post
+     */
+    _o.commonCostType = './common/costType?';
+    /**
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型GET /v1/finance/cost/detail 费用明细查询
+     * @author 洪钢
+     * @method GET
+     */
+    // _o.commonCostType = './common/costType?';
+
+    /**
+     * @description 报表管理 费用管理 预算-预算录入-费用明细查询
+     * @author 洪钢
+     * @method GET
+     */
+    _o.commonCostDetail = './cost/detail?';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

@@ -41,6 +41,7 @@
                             <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
+                <!-- <div v-show="listData.length>0" class="dataTables_wrapper"> -->
                 <div class="dataTables_wrapper">
                     <div class="datatable-scroll">
                         <table class="table">

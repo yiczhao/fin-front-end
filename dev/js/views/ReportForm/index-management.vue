@@ -99,7 +99,7 @@
                     <validator name="vali">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="typeIn.subCompanyID" v-validate:val1="['required']">
+                            <select class="form-control" v-model="typeIn.subCompanyID">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="form-group" v-for="(index,value) in timeList">
                             <label><i>*</i>{{yearShow}}年{{$index+1}}月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="typeIn.info[index]" maxlength="15" placeholder="">
+                            <input type="text" class="form-control" v-model="typeIn.info[index]" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>

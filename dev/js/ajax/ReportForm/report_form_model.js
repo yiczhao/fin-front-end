@@ -66,8 +66,32 @@ function model(_this){
          * @params {data}
          * @returns {*}
          * */
-        costBugetTypeIn(data){
+        costBugetTypeInP(data){
             return _this.$http.post(_this.$API.CostBugetIn,data)
+        },
+        /**
+         * @description  费用管理-费用预算查询
+         * @params {data}
+         * @returns {*}
+         * */
+        costBugetTypeInG(data){
+            return _this.$http.get(_this.$API.CostBugetIn + $.param(data))
+        },
+        /**
+         * @description  费用管理-预算-预算录入-查询费用类型
+         * @params {data}
+         * @returns {*}
+         * */
+        costCommonTypeIn(){
+            return _this.$http.get(_this.$API.commonCostType)
+        },
+        /**
+         * @description  费用管理-预算-预算录入-查询费用类型
+         * @params {data}
+         * @returns {*}
+         * */
+        costCommonDetail(data){
+            return _this.$http.get(_this.$API.commonCostDetail+ $.param(data))
         },
         /**
          * @description  异地激活收入成本分配明细
@@ -76,6 +100,14 @@ function model(_this){
          * */
         getAllopatryListDetali(data){
             return _this.$http.get(_this.$API.getAllopatryActivationList+ $.param(data))
+        },
+        /**
+         * @description  异地激活收入成本分配统计
+         * @params {data}
+         * @returns {*}
+         * */
+        getAllopatryListCount(data){
+            return _this.$http.get(_this.$API.getAllopatryActivationCountList+ $.param(data))
         },
     }
 }

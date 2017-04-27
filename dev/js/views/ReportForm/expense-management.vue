@@ -89,27 +89,27 @@
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
-                        :title.sync="typeTitle" @kok="runTest" @kcancel="type_in=false"
+                        :title.sync="typeTitle" @kok="saveChange()" @kcancel="type_in=false"
                         >
                     <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="infaceList.subCompanyID" v-validate:val1="['required']">
+                            <select class="form-control" v-model="infaceList.subCompanyID" @change="showType()">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label><i>*</i>费用类型</label>
-                            <select class="form-control" v-model="infaceList.expenseType" v-validate:val1="['required']">
+                            <select class="form-control" v-model="infaceList.expenseType">
                                 <option value="">请选择费用类型</option>
-                                <!-- <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option> -->
+                                <option v-for="(index,n) in costType" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                             <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择费用类型</span> -->
                         </div>
                         <div class="form-group">
                             <label><i>*</i>部门</label>
-                            <select class="form-control" v-model="infaceList.department" v-validate:val1="['required']">
+                            <select class="form-control" v-model="infaceList.department">
                                 <option value="">请选择部门</option>
                                 <option value="1">总经办</option>
                                 <option value="2">商合部</option>
@@ -125,28 +125,28 @@
                         </div>
                         <div class="form-group">
                             <label><i>*</i>金额</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="infaceList.amount" maxlength="15" placeholder="">
+                            <input type="text" class="form-control" v-model="infaceList.amount" placeholder="">
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
                     </validator>
                     <validator name="vali" v-if="typeTitle=='预算录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="budgetList.subCompanyID" v-validate:val1="['required']">
+                            <select class="form-control" v-model="budgetList.subCompanyId" @change="showType()">
                                 <option value="">请选择分公司</option>
                                 <option value="" v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label><i>*</i>费用类型</label>
-                            <select class="form-control" v-model="budgetList.expenseType" v-validate:val1="['required']">
+                            <select class="form-control" v-model="budgetList.subject" @change="showType()">
                                 <option value="">请选择费用类型</option>
-                                <!-- <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option> -->
+                                <option v-for="(index,n) in costType" v-text="n.name" :value="n.id"></option>
                             </select>
                         </div>
                         <div class="form-group" v-for="(index,value) in timeList">
                             <label><i>*</i>2017年{{$index+1}}月</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="budgetList.info[index]" maxlength="15" placeholder="">
+                            <input type="text" class="form-control" v-model="budgetList.amountList[index]" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>
@@ -174,19 +174,22 @@
                 },
                 infaceList:{
                     subCompanyID:'',
-                    expenseType:'',
+                    subject:'',
                     department:'',
                     date:'',
                     amount:'',
                 },
                 budgetList:{
-                    subCompanyID:'',
-                    expenseType:'',
-                    info:[],
+                    subCompanyId:'',
+                    subject:'',
+                    year:'2017',
+                    amountList:[],
                 },
                 pageall:1,
                 companylists:[],
-                timeList:['1','2','3','4','5','6','7','8','9','10','11','12']
+                costType:{},
+                timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
+
 			}
 		},
 		methods:{
@@ -203,8 +206,17 @@
                     this.typeTitle='实际费用录入';
                 }else{
                     this.typeTitle='预算录入';
-                }
-                console.log(this.typeTitle);
+                    this.model.costCommonTypeIn().then((res)=>{
+                        if(res.data.code==0){
+                            this.$set('costType',res.data.data)
+                        }
+                    })
+                    // this..model.costCommonDetail().then((res)=>{
+                    //     if(red.data.code==0){
+
+                    //     }
+                    // })
+                };
             },
             searchData(){
                 this.setTime();
@@ -225,14 +237,28 @@
                     });
             },
             budgetTypeIn(){
-                this.model.costBugetTypeIn(this.budgetList).then((res)=>{
-                    if(res.data.code==0){
-
-                    }
-                })
+            //     let data={
+            //         subCompanyId:'',
+            //         subject:'',
+            //         year:'2017',
+            //     }
             },
-            runTest(){
-                console.log('success')
+            saveChange(){
+                this.model.costBugetTypeInP(this.budgetList).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('success','保存成功！');
+                        this.type_in=false;
+                    }
+                });
+            },
+            showType(){
+                if(!!this.budgetList.subCompanyId&&!!this.budgetList.subject){
+                    this.model.costBugetTypeInG(this.budgetList).then((res)=>{
+                        if(res.data.code==0){
+                            this.$set('budgetList.amountList',res.data.data.amountList)
+                        }
+                    });
+                }
             },
         },
 		ready(){

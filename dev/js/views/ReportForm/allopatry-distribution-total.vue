@@ -23,7 +23,7 @@
                                 <option value="">收入成本确认分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.serviceType">
+                            <select class="form-control" v-model="checkForm.businessTypeId">
                                 <option value="">业务类型</option>
                             </select>
                             <select class="form-control" v-model="checkForm.Partner">
@@ -73,24 +73,23 @@
                             <tbody>
                                 <!-- <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}"> -->
                                 <tr role="row">
-                                    <!-- <td>{{index+1}}</td> -->
-                                    <td>序号</td><!-- {{序号}} -->
-                                    <td>收入成本确认分公司</td><!-- {{收入成本确认分公司}} -->
-                                    <td>业务类型</td><!-- {{业务类型}} -->
-                                    <td>SN归属合伙人</td><!-- {{SN归属合伙人}} -->
+                                    <td>{{index+1}}</td><!-- {{序号}} -->
+                                    <td>{{listData.subCompanyName }}</td><!-- {{收入成本确认分公司}} -->
+                                    <td>{{listData.businessName }}</td><!-- {{业务类型}} -->
+                                    <td>{{listData.snTypeName }}</td><!-- {{SN归属合伙人}} -->
                                     <td>
                                         <!-- <a v-link="{name:'partner-order'}" @click="typeInShow('partner')">合伙人订单</a> -->
                                         <a @click="typeInShow('partner')">合伙人订单</a>
                                         <!-- <a v-link="{name:'shipment-quantity'}" @click="typeInShow('shipment')">发货数量</a> -->
                                         <a @click="typeInShow('shipment')">发货数量</a>
                                     </td>
-                                    <td>预收账款</td><!-- {{预收账款}} -->
-                                    <td>采购数量</td><!-- {{采购数量}} -->
-                                    <td>发货数量</td><!-- {{发货数量}} -->
+                                    <td>{{listData.preIncome }}</td><!-- {{预收账款}} -->
+                                    <td>{{listData.purchaseNumber }}</td><!-- {{采购数量}} -->
+                                    <td>{{listData.发货数量}}</td><!-- {{发货数量}} -->
                                     <td><a v-link="{name:'allopatry-distribution-detail'}">激活数量100</a></td><!-- 激活数量 -->
-                                    <td>收入</td><!-- {{收入}} -->
-                                    <td>成本</td><!-- {{成本}} -->
-                                    <td>备注</td><!-- {{备注}} -->
+                                    <td>{{listData.income }}</td><!-- {{收入}} -->
+                                    <td>{{listData.cost}}</td><!-- {{成本}} -->
+                                    <td>{{listData.remarks}}</td><!-- {{备注}} -->
                                 </tr>
                             </tbody>
                         </table>
@@ -119,11 +118,11 @@
                         </div>
                         <div class="form-group">
                             <label>预收账款</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.amount" maxlength="15" placeholder=""><span>元</span>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.amount" placeholder=""><span>元</span>
                         </div>
                         <div class="form-group">
                             <label>采购数量</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.quantity" maxlength="15" placeholder=""><span>台</span>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.quantity" placeholder=""><span>台</span>
                         </div>
                     </validator>
                     <validator name="vali2" v-if="typeTitle=='发货数量'">
@@ -133,7 +132,7 @@
                         </div>
                         <div class="form-group">
                             <label>采购数量</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="quantityNum" maxlength="15" placeholder=""><span>台</span>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="quantityNum" placeholder=""><span>台</span>
                         </div>
                     </validator>
                 </content-dialog>
@@ -167,6 +166,7 @@
                 typeTitle:'',
                 pageall:1,
                 companylists:[],
+                listData:{},
 			}
 		},
 		methods:{
@@ -199,9 +199,17 @@
                         }
                     });
             },
+            getAllData(){
+                this.model.getAllopatryListCount().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                    }
+                })
+            },
         },
 		ready(){
             this.getClist();
+            this.getAllData();
 		},
 	}
 </script>

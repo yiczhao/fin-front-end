@@ -31,18 +31,6 @@
                             <select class="form-control" v-model="checkForm.businessDetailId">
                                 <option value="">业务明细项目</option>
                             </select>
-                            <!-- <select class="form-control" v-model="dateS" @change="getTime">
-                                <option value="5">今天</option>
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                            <div v-show="dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div> -->
                             <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
