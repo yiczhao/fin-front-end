@@ -87,7 +87,9 @@
                                     <td>{{trlist.billingAmount/100 | currency ''}}</td>
                                     <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                     <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
-                                    <td>{{trlist.cost/100 | currency ''}}</td>
+                                    <td>
+                                        <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.cost/100 | currency ''}}</a>
+                                    </td>
                                     <td>{{trlist.paidAmount/100 | currency ''}}</td>
                                     <td>{{trlist.unpaidAmount/100 | currency ''}}</td>
                                     <td>{{trlist.suspensionTaxAmount/100 | currency ''}}</td>
