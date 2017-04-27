@@ -175,7 +175,7 @@
                 <!--添加商户dialog-->
                 <content-dialog
                         :show.sync="modal_add" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'添加账户'" 
+                        :title.sync="'添加账户'"
                         >
                         <div class="addDialogs">
                             <div class="addtop">
