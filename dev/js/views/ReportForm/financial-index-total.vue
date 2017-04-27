@@ -34,7 +34,8 @@
                             <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
-                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
+                <div class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>

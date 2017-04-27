@@ -49,6 +49,7 @@
                             <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
+                <!-- <div v-show="listData.length>0" class="dataTables_wrapper"> -->
                 <div class="dataTables_wrapper">
                     <div class="datatable-scroll">
                         <table class="table">
@@ -70,7 +71,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}"> -->
+                                <!-- <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}"> -->
                                 <tr role="row">
                                     <!-- <td>{{index+1}}</td> -->
                                     <td>序号</td><!-- {{序号}} -->
