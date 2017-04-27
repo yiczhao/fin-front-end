@@ -19,9 +19,9 @@
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <input type="number" class="form-control" v-model="checkForm.thirdPartyAccountName" placeholder="三方名称" v-limitnumber="checkForm.operationID">
-                            <input type="number" class="form-control" v-model="checkForm.contractNumber" placeholder="合同编号" v-limitnumber="checkForm.operationID">
-                            <input type="number" class="form-control" v-model="checkForm.activityID" placeholder="活动ID" v-limitnumber="checkForm.activityId">
+                            <input type="text" class="form-control" v-model="checkForm.thirdPartyAccountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="checkForm.contractNumber" placeholder="合同编号">
+                            <input type="text" class="form-control" v-model="checkForm.activityID" placeholder="活动ID" v-limitnumber="checkForm.activityId">
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -239,12 +239,12 @@
                     });
             },
             getInfoList(){
-                // this.model.getCostList(this.checkForm).then((res)=>{
-                //     if(res.data.code==0){
-                //         this.$set('infoList',res.data.data);
-                //         this.pageall=res.data.total;
-                //     }
-                // })
+                 this.model.getCostList(this.checkForm).then((res)=>{
+                     if(res.data.code==0){
+                         this.$set('infoList',res.data.data);
+                         this.pageall=res.data.total;
+                     }
+                 })
             },
             showDialog(){
                 this.modal_other=true;
@@ -279,6 +279,8 @@
 		ready(){
             var vm=this;
             vm.getClist();
+            (vm.$route.params.activityCostNumber!=':activityCostNumber')?vm.checkForm.contractNumber=vm.$route.params.activityCostNumber:null;
+            (vm.$route.params.activityCostName!=':activityCostName')?vm.checkForm.thirdPartyAccountName=vm.$route.params.activityCostName:null;
             vm.getInfoList();
         },
 	}

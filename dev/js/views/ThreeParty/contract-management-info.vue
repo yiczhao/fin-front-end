@@ -77,7 +77,9 @@
                                         <a v-if="!!trlist.contractFileID" href="{{origin}}/file/download/{{trlist.contractFileID}}">附件</a>
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
                                     </td>
-                                    <td>{{trlist.unSettlementAmount/100 | currency ''}}</td>
+                                    <td>
+                                        <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>
+                                    </td>
                                     <td>
                                         <a @click="associateShow(trlist,'开票')">开票</a>
                                         <a @click="associateShow(trlist,'回款')">回款</a>

@@ -219,7 +219,7 @@ export default function (router) {
 			}
 		},
 		/* 三方管理-活动收入成本管理 */
-		'/activity-cost-management/': {
+		'/activity-cost-management/:activityCostNumber/:activityCostName': {
 			name: 'activity-cost-management',
 			router_type: "third",
 			component: function (resolve) {
