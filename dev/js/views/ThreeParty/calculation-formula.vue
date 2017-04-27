@@ -21,72 +21,72 @@
                 <div class="panel-row">
                     <div class="col">
                         <div>服务费=</div>
-                        <v-select :editable="!defaultData.actualAdvertisementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeServiceFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualAdvertisementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeServiceFee" :options="chooseData_income"></v-select>
                     </div>
                     <div class="col">
                         <div>税费=</div>
-                        <v-select :editable="!defaultData.contractAdvertisementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeTaxFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractAdvertisementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeTaxFee" :options="chooseData_income"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>广告费=</div>
-                        <v-select :editable="!defaultData.actualMaterialFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeAdvertisementFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualMaterialFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeAdvertisementFee" :options="chooseData_income"></v-select>
                     </div>
                     <div class="col">
                         <div>物料费=</div>
-                        <v-select :editable="!defaultData.contractMaterialFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeMaterialFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractMaterialFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeMaterialFee" :options="chooseData_income"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>现金红包=</div>
-                        <v-select :editable="!defaultData.actualWeChatMarketFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeRedPacketFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualWeChatMarketFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeRedPacketFee" :options="chooseData_income"></v-select>
                     </div>
                     <div class="col">
                         <div>微信运营=</div>
-                        <v-select :editable="!defaultData.contractWeChatMarketFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeWeChatMarketFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractWeChatMarketFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeWeChatMarketFee" :options="chooseData_income"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>其他=</div>
-                        <v-select :editable="!defaultData.actualServiceFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeOtherExpense" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualServiceFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeOtherExpense" :options="chooseData_income"></v-select>
                     </div>
                     <div class="col">
                         <div>收入小计=</div>
-                        <v-select :editable="!defaultData.contractServiceFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeSum" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractServiceFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.incomeSum" :options="chooseData_income"></v-select>
                     </div>
                 </div>
                 <div class="part_1 part_2">成本<span>根绝合同中的规定，直接录入或者编辑计算公式来确认活动的成本</span></div>
                 <div class="panel-row">
                     <div class="col">
                         <div>服务费分润=</div>
-                        <v-select :editable="!defaultData.actualTaxFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costServiceFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualTaxFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costServiceFee" :options="chooseData_cost"></v-select>
                     </div>
                     <div class="col">
                         <div>税费=</div>
-                        <v-select :editable="!defaultData.contractTaxFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costTaxFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractTaxFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costTaxFee" :options="chooseData_cost"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>现金红包=</div>
-                        <v-select :editable="!defaultData.actualSettlementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costRedPacketFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualSettlementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costRedPacketFee" :options="chooseData_cost"></v-select>
                     </div>
                     <div class="col">
                         <div>微信运营=</div>
-                        <v-select :editable="!defaultData.contractSettlementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costWeChatMarketFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.contractSettlementFeeStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costWeChatMarketFee" :options="chooseData_cost"></v-select>
                     </div>
                 </div>
                 <div class="panel-row">
                     <div class="col">
                         <div>资金占用=</div>
-                        <v-select :editable="!defaultData.actualOtherExpenseStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costFundOccupyFee" :options="chooseData"></v-select>
+                        <v-select :editable="!defaultData.actualOtherExpenseStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costFundOccupyFee" :options="chooseData_cost"></v-select>
                     </div>
                     <div class="col">
                         <div>其他=</div>
-                        <div style="width: 100%;"><input type="text" class="form-control" v-model="defaultData.costOtherExpense" placeholder="其他费用备注"></div>
+                        <v-select :editable="!defaultData.actualOtherExpenseStatus" :multiple="true" :taggable="true" :value.sync="defaultData.costOtherExpense" :options="chooseData_cost"></v-select>
                     </div>
                 </div>
                 <div class="panel-footer">
@@ -105,24 +105,14 @@
         data(){
             this.model =model(this)
             return{
-                chooseData:[
+                chooseData_income:[
                     '三方应收',
-                    '税率',
-                    '实际广告费',
-                    '实际物料费',
-                    '实际微信营销费',
-                    '实际服务费',
-                    '实际税费',
-                    '实际结算金额',
-                    '合同广告费',
-                    '合同物料费',
-                    '合同微信营销费',
-                    '合同服务费',
-                    '合同税费',
-                    '合同结算金额',
                     '交易笔数',
-                    '商户应补金额',
-                    '实际其他费用',
+                    '收入小计',
+                ],
+                chooseData_cost:[
+                    '税率',
+                    '收入小计',
                 ],
                 activityName:'',
                 operationID:'',

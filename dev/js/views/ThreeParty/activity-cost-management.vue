@@ -20,9 +20,7 @@
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
                             <input type="number" class="form-control" v-model="checkForm.thirdPartyAccountName" placeholder="三方名称" v-limitnumber="checkForm.operationID">
-                            <select class="form-control" v-model="checkForm.contractNumber">
-                                <option value="">合同编号</option>
-                            </select>
+                            <input type="number" class="form-control" v-model="checkForm.contractNumber" placeholder="合同编号" v-limitnumber="checkForm.operationID">
                             <input type="number" class="form-control" v-model="checkForm.activityID" placeholder="活动ID" v-limitnumber="checkForm.activityId">
                         </form>
                     </div>
@@ -30,7 +28,8 @@
                             <a class="btn btn-info add-top" @click="searchData()">查询</a>
                     </div>
                 </div>
-                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <!-- <div v-show="infoList.length>0" class="dataTables_wrapper no-footer"> -->
+                <div class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
