@@ -19,30 +19,19 @@
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <span>收入成本确认分公司</span>
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="checkForm.subCompanyId">
                                 <option value="">收入成本确认分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
                             <select class="form-control" v-model="checkForm.businessTypeId">
                                 <option value="">业务类型</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.Partner">
+                            <select class="form-control" v-model="checkForm.snType">
                                 <option value="">sn归属合伙人</option>
                                 <option value="0">汉付信通</option>
                                 <option value="1">上海新卡说</option>
                             </select>
-                            <select class="form-control" v-model="dateS" @change="getTime">
-                                <option value="5">今天</option>
-                                <option value="0">昨天</option>
-                                <option value="1">最近一周</option>
-                                <option value="2">最近一个月</option>
-                                <option value="3">最近三个月</option>
-                                <option value="4">自定义时间</option>
-                            </select>
-                            <div v-show="dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                            </div>
+                            <getmonth :value.sync="checkForm.date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -71,8 +60,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}"> -->
-                                <tr role="row">
+                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
+                                <!-- <tr role="row"> -->
                                     <td>{{index+1}}</td><!-- {{序号}} -->
                                     <td>{{listData.subCompanyName }}</td><!-- {{收入成本确认分公司}} -->
                                     <td>{{listData.businessName }}</td><!-- {{业务类型}} -->
@@ -147,11 +136,12 @@
 			this.model = model(this);
 			return{
                 checkForm:{
-                    subCompanyID:'',
-                    serviceType:'',
-                    Partner:'',
-                    startDate:'',
-                    endDate:'',
+                    subCompanyId:'',
+                    businessTypeId:'',
+                    snType:'',
+                    date:'',
+                    year:'',
+                    month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
@@ -184,7 +174,8 @@
             },
             searchData(){
                 this.checkForm.pageIndex=1;
-                console.log('success'+this.checkForm+'searchData');
+                back_json.saveArray(this.$route.path,this.checkForm);
+                this.getAllData();
             },
             getClist(){
                 // *** 请求公司数据
@@ -200,16 +191,21 @@
                     });
             },
             getAllData(){
-                this.model.getAllopatryListCount().then((res)=>{
-                    if(res.data.code==0){
-                        this.$set('listData',res.data.data);
-                    }
-                })
+                // this.model.getAllopatryListCount(this.checkForm).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('listData',res.data.data);
+                //     }
+                // })
             },
         },
 		ready(){
             this.getClist();
             this.getAllData();
 		},
+        watch:{
+            'checkForm.pageIndex+checkForm.pageSize'(){
+                this.initList();
+            }
+        }
 	}
 </script>

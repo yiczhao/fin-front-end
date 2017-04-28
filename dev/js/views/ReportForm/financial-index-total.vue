@@ -140,6 +140,7 @@
             searchData(){
                 this.checkForm.pageIndex=1;
                 this.setTime();
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getAllData();
             },
             getAllData(){
@@ -159,5 +160,10 @@
             this.getAllData();
             this.getAllData();
 		},
+        watch:{
+            'checkForm.pageIndex+checkForm.pageSize'(){
+                this.initList();
+            }
+        }
 	}
 </script>

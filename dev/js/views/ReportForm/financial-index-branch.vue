@@ -94,7 +94,7 @@
                     </div>
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px" @click="export()">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px" @click="export">Excel导出</a>
                         </div>
                         <div class="right">
                         <!-- v-if="zdlists.length>0"  -->
@@ -144,13 +144,14 @@
             },
             export(){
                 console.log('success');
-                this.setTime();
-                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                // this.setTime();
+                // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
             searchData(){
                 this.setTime();
                 this.checkForm.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getAllData();
             },
             getClist(){
@@ -183,5 +184,10 @@
             this.getClist();
             this.getAllData();
 		},
+        watch:{
+            'checkForm.pageIndex+checkForm.pageSize'(){
+                this.initList();
+            }
+        }
 	}
 </script>

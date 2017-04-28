@@ -141,7 +141,7 @@
             },
             searchData(){
                 this.checkForm.pageIndex=1;
-                console.log(this.checkForm);
+                back_json.saveArray(this.$route.path,this.checkForm);
                 this.getAllData();
             },
             getTime(){

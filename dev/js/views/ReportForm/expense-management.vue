@@ -223,6 +223,7 @@
             searchData(){
                 this.setTime();
                 this.checkForm.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.checkForm);
                 //this.getAllData();//没有接口
             },
             getClist(){
@@ -258,5 +259,10 @@
 		ready(){
             this.getClist();
 		},
+        watch:{
+            'checkForm.pageIndex+checkForm.pageSize'(){
+                this.initList();
+            }
+        }
 	}
 </script>
