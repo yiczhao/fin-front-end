@@ -1,6 +1,6 @@
 <template>
     <index :title="'计算公式'"
-           :ptitle="'三方管理'"
+           :ptitle="'三方结算管理'"
            :p2title="'活动收入成本管理'"
            :hname="'third-party'"
            :h2name="'activity-cost-management'"

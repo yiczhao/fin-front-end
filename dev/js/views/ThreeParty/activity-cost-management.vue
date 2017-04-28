@@ -1,6 +1,6 @@
 <template>
     <index :title="'活动收入成本管理'"
-           :ptitle="'三方管理'"
+           :ptitle="'三方结算管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
         <div class="content activity-cost-management" slot="content">
