@@ -14,6 +14,14 @@ function model(_this){
             return _this.$http.get(_this.$API.contract_list+ $.param(data))
         },
         /**
+         * @description 查询合同合计数据
+         * @params {data}
+         * @returns {*}
+         * */
+        contract_sum(data){
+            return _this.$http.get(_this.$API.contract_sum+ $.param(data))
+        },
+        /**
          * @description 添加合同
          * @params {data}
          * @returns {*}
@@ -22,28 +30,60 @@ function model(_this){
             return _this.$http.post(_this.$API.contract_add,data)
         },
         /**
-         * @description 编辑合同
+         * @description 开票合同
          * @params {data}
          * @returns {*}
          * */
-        contract_edit(data){
-            return _this.$http.post(_this.$API.contract_edit,data)
+        contract_invoice(data){
+            return _this.$http.post(_this.$API.contract_invoice,data)
         },
         /**
-         * @description 编辑合同
+         * @description 回款合同
          * @params {data}
          * @returns {*}
          * */
-        contract_editInfo(data){
-            return _this.$http.get(_this.$API.contract_editInfo+ $.param(data))
+        contract_collection(data){
+            return _this.$http.post(_this.$API.contract_collection,data)
         },
         /**
-         * @description 关联合同
+         * @description 结算确认
          * @params {data}
          * @returns {*}
          * */
-        contract_associate(data){
-            return _this.$http.post(_this.$API.contract_associate,data)
+        contractSettlement(data){
+            return _this.$http.post(_this.$API.contractSettlement,data)
+        },
+        /**
+         * @description 回款开票信息
+         * @params {data}
+         * @returns {*}
+         * */
+        contractInvoiceInfo(data){
+            return _this.$http.get(_this.$API.contractInvoiceInfo+$.param(data))
+        },
+        /**
+         * @description 回款开票明细
+         * @params {data}
+         * @returns {*}
+         * */
+        invoiceCollection(data){
+            return _this.$http.get(_this.$API.invoiceCollection+$.param(data))
+        },
+        /**
+         * @description 回款开票明细合计
+         * @params {data}
+         * @returns {*}
+         * */
+        invoiceCollectionSum(data){
+            return _this.$http.get(_this.$API.invoiceCollectionSum+$.param(data))
+        },
+        /**
+         * @description 查询合同编号
+         * @params {data}
+         * @returns {*}
+         * */
+        getContractNumber(data){
+            return _this.$http.get(_this.$API.getContractNumber+$.param(data))
         },
     }
 }

@@ -218,6 +218,22 @@ export default function (router) {
 				require(['./views/ThreeParty/third-party.vue'], resolve);
 			}
 		},
+		/* 三方管理-活动收入成本管理 */
+		'/activity-cost-management/:activityCostNumber/:activityCostName': {
+			name: 'activity-cost-management',
+			router_type: "third",
+			component: function (resolve) {
+				require(['./views/ThreeParty/activity-cost-management.vue'], resolve);
+			}
+		},
+		/* 三方管理-活动收入成本管理-计算公式 */
+		'/calculation-formula/:acmActivityID/:acmCompanyID/:acmContractID/:OperationID/': {
+			name: 'calculation-formula',
+			router_type: "third",
+			component: function (resolve) {
+				require(['./views/ThreeParty/calculation-formula.vue'], resolve);
+			}
+		},
 		/* 三方管理-账户明细 */
 		'/third-info/:id/:serialNumber': {
 			name: 'third-info',
@@ -227,13 +243,117 @@ export default function (router) {
 			}
 		},
 		/* 三方管理-合同管理 */
-		'/contract-management/:contractId/:contractName/:contractCity/:contractCompanyName/:contractCompanyId': {
-			name: 'contract-management',
+        // '/contract-management': {
+        //     name: 'contract-management',
+        //     router_type: "third",
+        //     component: function (resolve) {
+        //         require(['./views/ThreeParty/contract-management.vue'], resolve);
+        //     }
+        // },
+		/* 三方管理-新增合同 */
+        '/contract-add/:contractAddId': {
+            name: 'contract-add',
+            router_type: "third",
+            component: function (resolve) {
+                require(['./views/ThreeParty/contract-add.vue'], resolve);
+            }
+        },
+		/* 三方管理-合同管理 */
+		'/contract-management-info/:contractId/:contractName/:contractCity/:contractCompanyName/:contractCompanyId': {
+			name: 'contract-management-info',
 			router_type: "third",
 			component: function (resolve) {
-				require(['./views/ThreeParty/contract-management.vue'], resolve);
+				require(['./views/ThreeParty/contract-management-info.vue'], resolve);
 			}
 		},
+		/* 三方管理-合同管理-回款开票明细 */
+        '/invoice-collection/:invoiceCollectionId/:invoiceCollectionName/:invoiceCollectionContract/:invoiceCollectionsubCompanyID': {
+            name: 'invoice-collection',
+            router_type: "third",
+            component: function (resolve) {
+                require(['./views/ThreeParty/invoice-collection.vue'], resolve);
+            }
+        },
+		/* 报表管理-财务指标分析表(总) */
+		'/financial-index-total': {
+			name: 'financial-index-total',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/financial-index-total.vue'], resolve);
+			}
+		},
+		/* 报表管理-财务指标分析表（分） */
+		'/financial-index-branch': {
+			name: 'financial-index-branch',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/financial-index-branch.vue'], resolve);
+			}
+		},
+		/* 报表管理-分公司财务指标分析表 */
+		'/branch-financial-indicators': {
+			name: 'branch-financial-indicators',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/branch-financial-indicators.vue'], resolve);
+			}
+		},
+		/* 报表管理-費用管理 */
+		'/expense-management': {
+			name: 'expense-management',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/expense-management.vue'], resolve);
+			}
+		},
+		/* 报表管理-指标管理 */
+		'/index-management': {
+			name: 'index-management',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/index-management.vue'], resolve);
+			}
+		},
+		/* 报表管理-部门费用明细 */
+		'/departmental-expense-detail': {
+			name: 'departmental-expense-detail',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/departmental-expense-detail.vue'], resolve);
+			}
+		},
+		/* 报表管理-异地激活收入成本分配总表 */
+		'/allopatry-distribution-total': {
+			name: 'allopatry-distribution-total',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/allopatry-distribution-total.vue'], resolve);
+			}
+		},
+		/* 报表管理-异地激活收入成本分配明细表 */
+		'/allopatry-distribution-detail': {
+			name: 'allopatry-distribution-detail',
+			router_type: "report",
+			component: function (resolve) {
+				require(['./views/ReportForm/allopatry-distribution-detail.vue'], resolve);
+			}
+		},
+		/* 报表管理-合伙人订单 */
+		// '/partner-order': {
+		// 	name: 'partner-order',
+		// 	router_type: "report",
+		// 	component: function (resolve) {
+		// 		require(['./views/ReportForm/partner-order.vue'], resolve);
+		// 	}
+		// },
+		/* 报表管理-合伙人订单 */
+		// '/shipment-quantity': {
+		// 	name: 'shipment-quantity',
+		// 	router_type: "report",
+		// 	component: function (resolve) {
+		// 		require(['./views/ReportForm/shipment-quantity.vue'], resolve);
+		// 	}
+		// },
 		/*商户账户管理列表 */
 		'/merchant-account/': {
 			name: 'merchant-account',

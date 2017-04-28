@@ -208,6 +208,12 @@ window.getNow=()=>{
     var m = time.getMonth();
     return y+'-'+m;
 };
+window.getNowMonth=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    return y+'-'+m;
+};
 window.firstMonth=()=>{
     var time = new Date();
     var y = time.getFullYear();

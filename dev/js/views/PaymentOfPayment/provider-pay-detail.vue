@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <label><i>*</i>付款账号</label>
                         <template v-if="relist.payType===1">
-                            <select class="form-control" v-model="relist.subCompanyID" v-validate:val1="['required']">
+                            <select class="form-control" v-model="relist.subCompanyID" v-validate:val10="['required']">
                                 <option value="">请选择付款账号</option>
                                 <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
                             </select>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="form-group" v-if="relist.ifBankActivityPay===0">
                         <label><i>*</i>结算三方</label>
-                        <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val10="['required']">
+                        <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val1="['required']">
                             <option value="">请选择结算三方</option>
                             <option v-for="(index,n) in thirdPartyAccountlists" :value="n.id">{{n.accountName}}</option>
                         </select>

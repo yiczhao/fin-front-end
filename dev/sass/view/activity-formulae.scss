@@ -1,4 +1,4 @@
-.activity-formulae{
+.activity-formulae,.calculation-formula{
     .panel{
         padding:20px;
         .panel-title{
@@ -63,5 +63,19 @@
             width: 50px;
             border: 1px solid #ddd;
         }
+    }
+}
+.calculation-formula{
+    .other-info{
+        margin: 0 20px;
+    }
+    .part_1{
+        padding: 20px 20px;font-size: 18px;
+        span{
+            padding: 0 5px;font-size: 13px;
+        }
+    }
+    .part_2{
+        border-top: 1px solid #ddd;
     }
 }
