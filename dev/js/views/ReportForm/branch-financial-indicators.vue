@@ -3,7 +3,7 @@
            :ptitle="'报表管理'"
            :hname="'financial-index-total'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content branch-financial-indicators" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
                     <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
@@ -33,36 +33,34 @@
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
-                            <tr role="row">
+                            <tr role="row sortSpan">
                                 <th>排名</th>
                                 <th>分公司</th>
-                                <th>收入</th>
-                                <th>成本</th>
-                                <th>费用 </th>
-                                <th>净利润</th>
-                                <th>净利率</th>
-                                <th>净利润指标完成率</th>
+                                <th @click="sortByKey('income',boll)"><span>&#9660</span>收入</th>
+                                <th @click="sortByKey('cost',boll)"><span>&#9660</span>成本</th>
+                                <th @click="sortByKey('')"><span>&#9660</span>费用 </th>
+                                <th @click="sortByKey('profit')"><span>&#9660</span>净利润</th>
+                                <th @click="sortByKey('profitRate')"><span>&#9660</span>净利率</th>
+                                <th @click="sortByKey('profitFinished',boll)"><span>&#9660</span>净利润指标完成率</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <template>
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td><!-- {{排名}} -->
-                                    <td>{{listData.subCompanyName }}</td><!-- {{分公司}} -->
-                                    <td>{{listData.income }}</td><!-- {{收入}} -->
-                                    <td>{{listData.cost }}</td><!-- {{成本}} -->
-                                    <td>{{listData.费用}}</td><!-- {{费用}} -->
-                                    <td>{{listData.profit }}</td><!-- {{净利润}} -->
-                                    <td>{{listData.profitRate }}</td><!-- {{净利率}} -->
-                                    <td>{{listData.profitFinished }}</td><!-- {{净利润指标完成率}} -->
+                                    <td>{{trlist.subCompanyName }}</td><!-- {{分公司}} -->
+                                    <td>{{trlist.income }}</td><!-- {{收入}} -->
+                                    <td>{{trlist.cost }}</td><!-- {{成本}} -->
+                                    <td>{{trlist.费用}}</td><!-- {{费用}} -->
+                                    <td>{{trlist.profit }}</td><!-- {{净利润}} -->
+                                    <td>{{trlist.profitRate }}</td><!-- {{净利率}} -->
+                                    <td>{{trlist.profitFinished }}</td><!-- {{净利润指标完成率}} -->
                                 </tr>
-                            </template>
                             </tbody>
                         </table>
                     </div>
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="export()">Excel导出</a>
+                            <a class="icon-file-excel line-height" @click="export">Excel导出</a>
                         </div>
                         <div class="right">
                         <!-- v-if="zdlists.length>0"  -->
@@ -77,6 +75,19 @@
         </div>
 	</index>
 </template>
+<style lang="sass" scoped>
+    .line-height{
+        line-height: 30px;
+    }
+    .sortSpan{
+        span{
+            color:#999;
+        }
+        .chooseSort{
+            color:#444;
+        }
+    }
+</style>
 <script>
     import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
@@ -94,7 +105,8 @@
                 },
                 pageall:1,
                 companylists:[],
-                listData:{},
+                listData:[],
+                boll:false,
 			}
 		},
 		methods:{
@@ -106,9 +118,8 @@
                 this.checkForm.month = month;
             },
             export(){
-                console.log('success');
-                this.setTime();
-                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                // this.setTime();
+                // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
             searchData(){
@@ -130,11 +141,23 @@
                     });
             },
             getAllData(){
-                this.model.getFinanceRanking(this.checkForm).then((res)=>{
-                    if(res.data.code==0){
-                        this.$set('listData',res.data.data);
-                    }
-                })
+                this.sortByKey('profitFinished',this.boll)
+                // this.model.getFinanceRanking(this.checkForm).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('listData',res.data.data);
+                //         this.sortByKey('profitFinished',this.boll)
+                //     }
+                // })
+            },
+            sortByKey(key,boll){
+                let data=_.cloneDeep(this.listData);
+                if(boll){
+                    data= data.sort((a,b)=>{return a[key]-b[key]});//正序
+                }else{
+                    data= data.sort((a,b)=>{return b[key]-a[key]});//倒序
+                }
+                this.boll=!this.boll;
+                this.$set('listData', data);
             },
         },
 		ready(){

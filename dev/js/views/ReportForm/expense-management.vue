@@ -89,7 +89,7 @@
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
-                        :title.sync="typeTitle" @kok="saveChange()" @kcancel="type_in=false"
+                        :title.sync="typeTitle" @kok="saveChange()" @kcancel="cancel()"
                         >
                     <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
@@ -101,9 +101,9 @@
                         </div>
                         <div class="form-group">
                             <label><i>*</i>费用类型</label>
-                            <select class="form-control" v-model="infaceList.expenseType">
+                            <select class="form-control" v-model="infaceList.subject">
                                 <option value="">请选择费用类型</option>
-                                <option v-for="(index,n) in costType" v-text="n.name" :value="n.subCompanyID"></option>
+                                <option v-for="(index,n) in costType" v-text="n.name" :value="n.id"></option>
                             </select>
                             <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择费用类型</span> -->
                         </div>
@@ -173,17 +173,17 @@
                     pageSize: 10,
                 },
                 infaceList:{
-                    subCompanyID:'',
-                    subject:'',
-                    department:'',
-                    date:'',
-                    amount:'',
+                    // subCompanyID:'',
+                    // subject:'',
+                    // department:'',
+                    // date:'',
+                    // amount:'',
                 },
                 budgetList:{
-                    subCompanyId:'',
-                    subject:'',
-                    year:'2017',
-                    amountList:[],
+                    // subCompanyId:'',
+                    // subject:'',
+                    // year:'2017',
+                    // amountList:[],
                 },
                 pageall:1,
                 companylists:[],
@@ -202,20 +202,23 @@
             },
             typeIn(title){
                 this.type_in=true;
+                this.model.costCommonTypeIn().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('costType',res.data.data)
+                    }
+                })
                 if(title=='infact'){
                     this.typeTitle='实际费用录入';
+                    this.infaceList={subCompanyID:'',subject:'',department:'',date:getNowMonth(),amount:''};
                 }else{
                     this.typeTitle='预算录入';
-                    this.budgetList.subCompanyId='';
-                    this.budgetList.subject='';
-                    this.budgetList.amountList.splice(0,this.budgetList.amountList.length);
-                    this.model.costCommonTypeIn().then((res)=>{
-                        if(res.data.code==0){
-                            this.$set('costType',res.data.data)
-                        }
-                    });
-                    debugger
-                };
+                    this.budgetList={subCompanyId:'',subject:'',year:'2017',amountList:[]};
+                }
+            },
+            cancel(){
+                this.infaceList={date:getNowMonth()};
+                this.budgetList={amountList:[]};
+                this.type_in=false;
             },
             searchData(){
                 this.setTime();
