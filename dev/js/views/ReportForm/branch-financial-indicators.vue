@@ -25,7 +25,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
@@ -58,18 +58,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-bottom">
+                    <!-- <div class="datatable-bottom">
                         <div class="left">
                             <a class="icon-file-excel line-height" @click="export">Excel导出</a>
                         </div>
                         <div class="right">
-                        <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
                                   :page_size.sync="checkForm.pageSize">
                             </page>
                        </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -122,11 +121,10 @@
                 // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
-            searchData(){
+            initList(){
                 this.setTime();
-                this.checkForm.pageIndex=1;
                 back_json.saveArray(this.$route.path,this.checkForm);
-                this.getAllData();
+                this.getZlists();
             },
             getClist(){
                 // *** 请求公司数据
@@ -141,7 +139,7 @@
                         }
                     });
             },
-            getAllData(){
+            getZlists(){
                 this.sortByKey('profitFinished',this.boll)
                 // this.model.getFinanceRanking(this.checkForm).then((res)=>{
                 //     if(res.data.code==0){
@@ -163,7 +161,7 @@
         },
 		ready(){
             this.getClist();
-            this.getAllData();
+            this.initList();
 		},
         watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){

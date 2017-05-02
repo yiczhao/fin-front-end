@@ -3,7 +3,7 @@
            :ptitle="'报表管理'"
            :hname="'financial-index-total'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content departmental-expense-detail" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
                     <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
@@ -32,7 +32,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
@@ -53,13 +53,12 @@
                             <template>
                                 <!-- <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}"> -->
                                 <tr role="row">
-                                    <!-- <td>{{index+1}}</td> -->
-                                    <td></td><!-- {{序号}} -->
-                                    <td></td><!-- {{分公司}} -->
-                                    <td></td><!-- {{部门}} -->
-                                    <td></td><!-- {{费用类型}} -->
-                                    <td></td><!-- {{时间}} -->
-                                    <td></td><!-- {{备注}} -->
+                                    <td>{{index+1}}</td>
+                                    <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
+                                    <td>{{trlist.department}}</td><!-- {{部门}} -->
+                                    <td>{{trlist.subject}}</td><!-- {{费用类型}} -->
+                                    <td>{{trlist.date}}</td><!-- {{时间}} -->
+                                    <td>{{trlist.remarks}}</td><!-- {{备注}} -->
                                 </tr>
                             </template>
                             </tbody>
@@ -98,6 +97,7 @@
                 dateS:'3',
                 pageall:1,
                 companylists:[],
+                listData:{},
 			}
 		},
 		methods:{
@@ -105,9 +105,9 @@
                 this.checkForm.startDate=init_date(this.dateS)[0];
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
-            searchData(){
-                this.checkForm.pageIndex=1;
+            initList(){
                 back_json.saveArray(this.$route.path,this.checkForm);
+                this.getZlists();
             },
             getClist(){
                 // *** 请求公司数据
@@ -122,9 +122,18 @@
                         }
                     });
             },
+            getZlists(){
+                this.sortByKey('profitFinished',this.boll)
+                // this.model.getCostCommonDetail(this.checkForm).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('listData',res.data.data);
+                //     }
+                // })
+            },
         },
 		ready(){
             this.getClist();
+            this.initList();
 		},
         watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){

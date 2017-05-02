@@ -3,7 +3,7 @@
            :ptitle="'报表管理'"
            :hname="'financial-index-total'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content financial-index-total" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
                     <li class="active"><a>财务指标分析表（总）</a></li>
@@ -31,7 +31,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
@@ -124,6 +124,18 @@
 			}
 		},
 		methods:{
+            getZlists(data){
+                // this.model.getTotalFinanceList(data).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('totalData',res.data.data);
+                //     }
+                // });
+                // this.model.getTotalFinanceSum(data).then((res)=>{
+                //     if(res.data.code==0){
+                //         this.$set('listData',res.data.data);
+                //     }
+                // })
+            },
             setTime(){
                 var date =  this.checkForm.date.split('-');
                 var year = parseInt(date[0]);
@@ -133,32 +145,18 @@
             },
             export(){
                 console.log('success');
-                this.setTime();
-                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                // this.setTime();
+                // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
-            searchData(){
-                this.checkForm.pageIndex=1;
+            initList(){
                 this.setTime();
                 back_json.saveArray(this.$route.path,this.checkForm);
-                this.getAllData();
-            },
-            getAllData(){
-                // this.model.getTotalFinanceList(this.checkForm).then((res)=>{
-                //     if(res.data.code==0){
-                //         this.$set('totalData',res.data.data);
-                //     }
-                // });
-                // this.model.getTotalFinanceSum(this.checkForm).then((res)=>{
-                //     if(res.data.code==0){
-                //         this.$set('listData',res.data.data);
-                //     }
-                // })
+                this.getZlists(this.checkForm)
             },
         },
 		ready(){
-            this.getAllData();
-            this.getAllData();
+            this.initList();
 		},
         watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){

@@ -62,6 +62,14 @@ function model(_this){
             return _this.$http.get(_this.$API.getFinanceAdd+ $.param(data))
         },
         /**
+         * @description  费用管理-费用管理
+         * @params {data}
+         * @returns {*}
+         * */
+        getExpenseManageLlst(data){
+            return _this.$http.get(_this.$API.getExpenseManagementLlst+ $.param(data))
+        },
+        /**
          * @description  费用管理-费用预算录入
          * @params {data}
          * @returns {*}
@@ -78,6 +86,14 @@ function model(_this){
             return _this.$http.get(_this.$API.CostBugetIn + $.param(data))
         },
         /**
+         * @description  费用管理-费用实际费用录入
+         * @params {data}
+         * @returns {*}
+         * */
+        costBugetActualTypeInP(data){
+            return _this.$http.post(_this.$API.commonCostDetail,data)
+        },
+        /**
          * @description  费用管理-预算-预算录入-查询费用类型
          * @params {data}
          * @returns {*}
@@ -86,11 +102,11 @@ function model(_this){
             return _this.$http.get(_this.$API.commonCostType)
         },
         /**
-         * @description  费用管理-预算-预算录入-查询费用类型
+         * @description  费用管理-部门费用明细查询
          * @params {data}
          * @returns {*}
          * */
-        costCommonDetail(data){
+        getCostCommonDetail(data){
             return _this.$http.get(_this.$API.commonCostDetail+ $.param(data))
         },
         /**

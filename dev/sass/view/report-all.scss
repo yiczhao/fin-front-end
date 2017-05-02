@@ -26,3 +26,13 @@
 		width:255px !important;
 	}
 }
+.financial-index-total,.financial-index-branch,
+.allopatry-distribution,.expense-management,
+.departmental-expense-detail,.index-management,
+.branch-financial-indicators{
+	@media screen and (max-width: 1280px){
+		.tab-bor li{
+			padding:12px 12px !important;
+		}
+	}
+}

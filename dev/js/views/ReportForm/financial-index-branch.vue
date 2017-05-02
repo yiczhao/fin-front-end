@@ -3,7 +3,7 @@
            :ptitle="'报表管理'"
            :hname="'financial-index-total'"
            :isshow="'isshow'">
-        <div class="content" slot="content">
+        <div class="content financial-index-branch" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
                     <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
@@ -35,7 +35,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()" >查询</a>
+                            <a class="btn btn-info add-top" @click="initList()" >查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
@@ -84,10 +84,10 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>费用</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
-                                    <td>净利润</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
-                                    <td>净利率</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
-                                    <td>净利润指标完成率</td><!--{{consumptionTotalAmount/100 | currency ''}} -->
+                                    <td>{{totalData.spendTotal}}</td>
+                                    <td>{{totalData.profitTotal}}</td>
+                                    <td>{{totalData.profitRateTotal}}</td>
+                                    <td>{{totalData.targetFinishTotal}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -148,11 +148,10 @@
                 // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
-            searchData(){
+            initList(){
                 this.setTime();
-                this.checkForm.pageIndex=1;
                 back_json.saveArray(this.$route.path,this.checkForm);
-                this.getAllData();
+                this.getZlists(this.checkForm);
             },
             getClist(){
                 // *** 请求公司数据
@@ -167,13 +166,13 @@
                         }
                     });
             },
-            getAllData(){
-                this.model.getBranchFinanceSum(this.checkForm).then((res)=>{
+            getZlists(data){
+                this.model.getBranchFinanceSum(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
                     }
                 })
-                this.model.getBranchFinanceList(this.checkForm).then((res)=>{
+                this.model.getBranchFinanceList(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('totalData',res.data.data);
                     }

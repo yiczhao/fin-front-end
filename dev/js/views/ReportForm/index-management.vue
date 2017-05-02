@@ -28,7 +28,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
@@ -119,6 +119,7 @@
         </div>
 	</index>
 </template>
+</style>
 <script>
     import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
@@ -156,8 +157,8 @@
             },
             export(){
                 console.log('success');
-                this.setTime();
-                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                // this.setTime();
+                // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
             indexIn(){
@@ -170,11 +171,10 @@
                     }
                 })
             },
-            searchData(){
+            initList(){
                 this.setTime();
-                this.checkForm.pageIndex=1;
                 back_json.saveArray(this.$route.path,this.checkForm);
-                this.getAllData();
+                this.getZlists(this.checkForm);
             },
             getClist(){
                 // *** 请求公司数据
@@ -189,8 +189,8 @@
                         }
                     });
             },
-            getAllData(){
-                this.model.getIndexManagement(this.checkForm).then((res)=>{
+            getZlists(data){
+                this.model.getIndexManagement(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
                         this.yearShow=res.data.data.year;
@@ -200,7 +200,7 @@
         },
 		ready(){
             this.getClist();
-            this.getAllData();
+            this.initList();
 		},
         watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){

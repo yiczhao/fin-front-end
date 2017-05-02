@@ -38,7 +38,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper"> -->
@@ -139,14 +139,9 @@
                 this.type_in=false;//test
                 console.log('success+kok');
             },
-            searchData(){
-                this.checkForm.pageIndex=1;
+            initList(){
                 back_json.saveArray(this.$route.path,this.checkForm);
-                this.getAllData();
-            },
-            getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+                this.getZlists(this.checkForm);
             },
             getClist(){
                 // *** 请求公司数据
@@ -161,8 +156,8 @@
                         }
                     });
             },
-            getAllData(){
-                this.model.getAllopatryListDetali(this.checkForm).then((res)=>{
+            getZlists(data){
+                this.model.getAllopatryListDetali(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
                     }
@@ -174,7 +169,6 @@
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.checkForm=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
             vm.getClist();
-            vm.getAllData();
 		},
         watch:{
             'checkForm.pageSize + checkForm.pageIndex'(){

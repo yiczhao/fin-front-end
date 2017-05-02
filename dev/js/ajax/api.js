@@ -1629,6 +1629,7 @@ export default function install(Vue) {
      */
     _o.getFinanceRanking = './target/finance_ranking?';
 
+
     /**
      * @description 报表管理 指标管理
      * @author 周俭
@@ -1658,6 +1659,13 @@ export default function install(Vue) {
     _o.getAllopatryActivationCountList = './target/activation_count_list?';
 
     /**
+     * @description 报表管理 费用管理
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getExpenseManagementLlst = './cost/list?';
+
+    /**
      * @description 报表管理 费用管理 费用预算录入
      * @author 洪钢
      * @method post
@@ -1665,20 +1673,20 @@ export default function install(Vue) {
     _o.costBugetIn = './cost/budget?';
 
     /**
-     * @description 报表管理 费用管理 预算-预算录入-查询费用类型GET /v1/finance/cost/detail 费用明细查询
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型
      * @author 洪钢
      * @method post
      */
     _o.commonCostType = './common/costType?';
     /**
-     * @description 报表管理 费用管理 预算-预算录入-查询费用类型GET /v1/finance/cost/detail 费用明细查询
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型
      * @author 洪钢
-     * @method GET
+     * @method post
      */
-    // _o.commonCostType = './common/costType?';
+    _o.commonCostDetail = './cost/detail?';
 
     /**
-     * @description 报表管理 费用管理 预算-预算录入-费用明细查询
+     * @description 报表管理 费用管理 部门费用明细查询
      * @author 洪钢
      * @method GET
      */

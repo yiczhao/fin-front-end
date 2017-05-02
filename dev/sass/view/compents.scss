@@ -289,4 +289,13 @@
   .error-input{
     border-color: #F44336;
   }
+  .border-none th{
+    border:none;
+  }
+  .thTitle{
+    text-align: center;
+  }
+  .thTitle-span:not(:first-child)>span,.thTitle-span:not(:last-child)>span{
+    padding:0 15px;
+  }
 }
