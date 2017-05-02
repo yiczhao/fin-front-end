@@ -33,14 +33,30 @@
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
-                            <tr role="row">
-                                <th>序号</th>
-                                <th>分公司</th>
-                                <th>三方名称</th>
-                                <th>合同编号</th>
-                                <th>活动ID</th>
-                                <th>执行表参数</th>
-                                <th>操作</th>
+                            <tr class="border-none">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th colspan="10">收入</th>
+                                <th></th>
+                                <th colspan="12">成本</th>
+                                <th colspan="3">毛利</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr role="row border-top">
+                                <th class="top-none">序号</th>
+                                <th class="top-none">分公司</th>
+                                <th class="top-none">三方名称</th>
+                                <th class="top-none">合同编号</th>
+                                <th class="top-none">活动ID</th>
+                                <th class="top-none">执行表参数</th>
                                 <th>服务费</th>
                                 <th>三方应收</th>
                                 <th>税费</th>
@@ -51,7 +67,7 @@
                                 <th>微信运营</th>
                                 <th>其他</th>
                                 <th>小计</th>
-                                <th>合同金额说明</th>
+                                <th class="top-none">合同金额说明</th>
                                 <th>商户应补</th>
                                 <th>服务费分润</th>
                                 <th>折扣差分润</th>
@@ -67,11 +83,11 @@
                                 <th>商合部毛利</th>
                                 <th>市场部毛利</th>
                                 <th>小计</th>
-                                <th>活动归属</th>
-                                <th>经办人</th>
-                                <th>活动说明</th>
-                                <th>回款账期</th>
-                                <th>备注</th>
+                                <th class="top-none">活动归属</th>
+                                <th class="top-none">经办人</th>
+                                <th class="top-none">活动说明</th>
+                                <th class="top-none">回款账期</th>
+                                <th class="top-none">备注</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -85,9 +101,6 @@
                                         <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID,'acmContractID':trlist.contractID,'OperationID':trlist.activityOperationID }}">计算公式</a>
                                         <a @click="modal_other=true">其他信息</a>
                                     </td><!-- 执行表参数 -->
-                                    <td>
-                                        <a>去审核</a>
-                                    </td><!-- 操作 -->
                                     <!-- 收入 -->
                                     <td>{{trlist.incomeServiceAmount}}</td><!-- 服务费 -->
                                     <td>{{trlist.thirdPartyReceivable}}</td><!-- 三方应收 -->
@@ -123,12 +136,12 @@
                                     <td>{{trlist.collectPeriod}}</td><!-- 回款账期 -->
                                     <td>{{trlist.remarks}}</td><!-- 备注 -->
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>
                                         <a v-link="{name:'calculation-formula'}">计算公式</a>
                                         <a @click="showDialog()">其他信息</a>
-                                    </td><!-- 执行表参数 -->
-                                </tr>
+                                    </td>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -190,6 +203,9 @@
         </div>
 	</index>
 </template>
+<style lang="sass">
+    
+</style>
 <script>
 	import model from '../../ajax/ThreeParty/costmanagement_model.js'
 	export default{
