@@ -415,7 +415,7 @@
                         settlementCycle:0,
                         subsidyRate:'',
                         specialRemarks:'',
-                        merchantID:this._id
+                        merchantID:_id
                     }
                 }else{
                     $.extend(true, this.updateList, a);
