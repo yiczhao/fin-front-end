@@ -1609,6 +1609,25 @@ export default function install(Vue) {
     _o.getFinanceListTotal = './target/finance_list_total?';
 
     /**
+     * @description 报表管理 获取财务指标分析（总）查询业务(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonBusiness = './common/business';
+    /**
+     * @description 报表管理 获取财务指标分析（总）查询项目(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonItem = './common/item';
+    /**
+     * @description 报表管理 获取财务指标分析（总）查询业务项目明细(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonBusinessDetail = './common/businessDetail';
+
+    /**
      * @description 报表管理 获取财务指标分析（分）合计
      * @author 周俭
      * @method get
