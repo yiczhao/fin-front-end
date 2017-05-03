@@ -1659,16 +1659,22 @@ export default function install(Vue) {
     /**
      * @description 报表管理 指标录入
      * @author 周俭
-     * @method get
+     * @method post
      */
-    _o.getFinanceAdd = './target/finance_add?';
+    _o.typeInFinanceAdd = './target/finance_add';
 
     /**
-     * @description 报表管理 异地激活收入成本分配明细GET /v1/finance/target/activation_count_list 异地激活收入成本分配统计
+     * @description 报表管理 异地激活收入成本分配明细
      * @author 周俭
      * @method get
      */
-    _o.getAllopatryActivationList = './target/activation_list?';
+    _o.getAllopatryActivationDetailList = './target/activation_detail_list?';
+    /**
+     * @description 报表管理 异地激活收入成本分配明细--获取合伙人
+     * @author 周俭
+     * @method get
+     */
+    _o.getAllopatrySnPartnerList = './target/sn_partner_list';
 
     /**
      * @description 报表管理 异地激活收入成本分配统计
@@ -1676,6 +1682,13 @@ export default function install(Vue) {
      * @method get
      */
     _o.getAllopatryActivationCountList = './target/activation_count_list?';
+
+    /**
+     * @description 报表管理 异地激活收入成本分配统计--合伙人订单录入
+     * @author 周俭
+     * @method get
+     */
+    _o.snInfoSave = './target/sn_info_save?';
 
     /**
      * @description 报表管理 费用管理

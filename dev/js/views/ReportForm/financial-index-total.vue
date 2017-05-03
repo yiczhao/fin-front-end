@@ -71,9 +71,9 @@
                         </table>
                     </div>
                     <div class="datatable-bottom">
-                        <div class="left">
+                        <!-- <div class="left">
                             <a class="icon-file-excel" @click="export()">Excel导出</a>
-                        </div>
+                        </div> -->
                         <div class="right">
                             <page :all="pageall"
                                   :cur.sync="defaultData.pageIndex"
@@ -155,12 +155,6 @@
                 var month = parseInt(date[1]);
                 this.defaultData.year = year;
                 this.defaultData.month = month;
-            },
-            export(){
-                console.log('success');
-                // this.setTime();
-                // this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.defaultData));
             },
             initList(){
                 this.setTime();

@@ -78,9 +78,9 @@
                         </table>
                     </div>
                     <div class="datatable-bottom">
-                        <div class="left">
+                        <!-- <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px" @click="export">Excel导出</a>
-                        </div>
+                        </div> -->
                         <div class="right">
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
@@ -129,12 +129,6 @@
                 var month = parseInt(date[1]);
                 this.checkForm.year = year;
                 this.checkForm.month = month;
-            },
-            export(){
-                console.log('success');
-                // this.setTime();
-                // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
             },
             initList(){
                 this.setTime();

@@ -19,27 +19,26 @@
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <span>收入成本确认分公司</span>
-                            <select class="form-control" v-model="checkForm.subCompanyId">
+                            <select class="form-control" v-model="defaultData.subCompanyId">
                                 <option value="">收入成本确认分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.businessTypeId">
+                            <select class="form-control" v-model="defaultData.businessTypeId">
                                 <option value="">业务类型</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.snType">
+                            <select class="form-control" v-model="defaultData.snType">
                                 <option value="">sn归属合伙人</option>
                                 <option value="0">汉付信通</option>
                                 <option value="1">上海新卡说</option>
                             </select>
-                            <getmonth :value.sync="checkForm.date"></getmonth>
+                            <getmonth :value.sync="date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
                             <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="listData.length>0" class="dataTables_wrapper"> -->
-                <div class="dataTables_wrapper">
+                <div v-show="listData.length>0" class="dataTables_wrapper">
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -51,50 +50,48 @@
                                 <th>录入 </th>
                                 <th>预收账款</th>
                                 <th>采购数量</th>
-                                <th>发货数量</th>
                                 <th>激活数量</th>
                                 <th>收入</th>
                                 <th>成本</th>
-                                <th>备注</th>
-
                             </tr>
                             </thead>
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                 <!-- <tr role="row"> -->
                                     <td>{{index+1}}</td><!-- {{序号}} -->
-                                    <td>{{listData.subCompanyName }}</td><!-- {{收入成本确认分公司}} -->
-                                    <td>{{listData.businessName }}</td><!-- {{业务类型}} -->
-                                    <td>{{listData.snTypeName }}</td><!-- {{SN归属合伙人}} -->
+                                    <td>{{trlist.subCompanyName}}</td><!-- {{收入成本确认分公司}} -->
+                                    <td>{{trlist.businessName }}</td><!-- {{业务类型}} -->
+                                    <td>{{trlist.snTypeName }}</td><!-- {{SN归属合伙人}} -->
                                     <td>
                                         <!-- <a v-link="{name:'partner-order'}" @click="typeInShow('partner')">合伙人订单</a> -->
-                                        <a @click="typeInShow('partner')">合伙人订单</a>
+                                        <a @click="typeInShow('partner',trlist.id)">合伙人订单</a>
                                         <!-- <a v-link="{name:'shipment-quantity'}" @click="typeInShow('shipment')">发货数量</a> -->
                                         <a @click="typeInShow('shipment')">发货数量</a>
                                     </td>
-                                    <td>{{listData.preIncome }}</td><!-- {{预收账款}} -->
-                                    <td>{{listData.purchaseNumber }}</td><!-- {{采购数量}} -->
-                                    <td>{{listData.发货数量}}</td><!-- {{发货数量}} -->
-                                    <td><a v-link="{name:'allopatry-distribution-detail'}">激活数量100</a></td><!-- 激活数量 -->
-                                    <td>{{listData.income }}</td><!-- {{收入}} -->
-                                    <td>{{listData.cost}}</td><!-- {{成本}} -->
-                                    <td>{{listData.remarks}}</td><!-- {{备注}} -->
+                                    <td>{{trlist.preIncome }}</td><!-- {{预收账款}} -->
+                                    <td>{{trlist.purchaseNumber }}</td><!-- {{采购数量}} -->
+                                    <td><a v-link="{name:'allopatry-distribution-detail'}">激活数量{{trlist.number}}</a></td><!-- 激活数量 -->
+                                    <td>{{trlist.income }}</td><!-- {{收入}} -->
+                                    <td>{{trlist.cost}}</td><!-- {{成本}} -->
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="datatable-bottom">
-                        <div class="left">
+                        <!-- <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
-                        </div>
+                        </div> -->
                         <div class="right">
                         <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
                             </page>
                        </div>
                     </div>
+                </div>
+                <div class="no-list" v-else>
+                    未找到数据
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancel="true" :type.sync="'infos'"
@@ -107,11 +104,11 @@
                         </div>
                         <div class="form-group">
                             <label>预收账款</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.amount" placeholder=""><span>元</span>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.preIncome" placeholder=""><span>元</span>
                         </div>
                         <div class="form-group">
                             <label>采购数量</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.quantity" placeholder=""><span>台</span>
+                            <input type="text" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.purchaseNumber" placeholder=""><span>台</span>
                         </div>
                     </validator>
                     <validator name="vali2" v-if="typeTitle=='发货数量'">
@@ -135,20 +132,20 @@
 		data(){
 			this.model = model(this);
 			return{
-                checkForm:{
+                defaultData:{
                     subCompanyId:'',
                     businessTypeId:'',
                     snType:'',
-                    date:'',
                     year:'',
                     month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
-                dateS:'3',
+                date:'',
                 partnerOrder:{
-                    amount:'',
-                    quantity:'',
+                    dataId:'',
+                    preIncome:'',
+                    purchaseNumber:'',
                 },
                 quantityNum:'',
                 saveTypeIn:{},
@@ -160,21 +157,39 @@
 			}
 		},
 		methods:{
-            getTime(){
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+            setTime(){
+                var date =  this.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.defaultData.year = year;
+                this.defaultData.month = month;
             },
-            typeInShow(title){
+            typeInShow(title,id){
                 this.type_in=true;
-                if(title!='partner'){this.typeTitle='发货数量'}else{this.typeTitle='合伙人订单'};
+                if(title!='partner'){
+                    this.typeTitle='发货数量';
+                    this.quantityNum='';
+                }else{
+                    this.typeTitle='合伙人订单';
+                    this.partnerOrder={dataId:'',preIncome:'',purchaseNumber:'',},
+                    this.partnerOrder.dataId=id;
+                };
             },
             saveChange(){
                 this.type_in=false;//test
-                console.log('success+kok');
+                this.model.snInfoTypeIn(this.partnerOrder).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('success','录入成功！')
+                        this.partnerOrder={};
+                        this.initList();
+                    }
+                })
             },
             initList(){
-                back_json.saveArray(this.$route.path,this.checkForm);
-                this.getZlists(this.checkForm);
+                this.setTime();
+                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists(this.defaultData);
             },
             getClist(){
                 // *** 请求公司数据
@@ -190,11 +205,11 @@
                     });
             },
             getZlists(data){
-                // this.model.getAllopatryListCount(data).then((res)=>{
-                //     if(res.data.code==0){
-                //         this.$set('listData',res.data.data);
-                //     }
-                // })
+                this.model.getAllopatryListCount(data).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                    }
+                })
             },
         },
 		ready(){
@@ -202,7 +217,7 @@
             this.initList();
 		},
         watch:{
-            'checkForm.pageIndex+checkForm.pageSize'(){
+            'defaultData.pageIndex+defaultData.pageSize'(){
                 this.initList();
             }
         }

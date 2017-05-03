@@ -31,8 +31,7 @@
                             <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
-                <div class="dataTables_wrapper no-footer">
+                <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -80,17 +79,19 @@
                         </table>
                     </div>
                     <div class="datatable-bottom">
-                        <div class="left">
+                       <!--  <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
-                        </div>
+                        </div> -->
                         <div class="right">
-                        <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
                                   :page_size.sync="checkForm.pageSize">
                             </page>
                        </div>
                     </div>
+                </div>
+                <div class="no-list" v-else>
+                    未找到数据
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
@@ -99,19 +100,22 @@
                     <validator name="vali">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="typeIn.subCompanyID">
+                            <select class="form-control" v-model="typeIn.subCompanyId" @change="saveCompanyName()">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择分公司</span> -->
                         </div>
                         <div class="form-group">
                             <label><i>*</i>年份</label>
                             <span>{{yearShow}}年</span>
                         </div>
+                        <div class="form-group">
+                            <label><i>*</i>年收入目标（百万）</label>
+                            <input type="text" class="form-control" v-model="typeIn.yearTarget">
+                        </div>
                         <div class="form-group" v-for="(index,value) in timeList">
                             <label><i>*</i>{{yearShow}}年{{$index+1}}月</label>
-                            <input type="text" class="form-control" v-model="typeIn.info[index]" placeholder="">
+                            <input type="text" class="form-control" v-model="typeIn[value]" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>
@@ -137,13 +141,28 @@
                 },
                 dateS:'3',
                 typeIn:{
-                    subCompanyID:'',
-                    info:[],
+                    yearTarget:'',
+                    subCompanyId:'',
+                    subCompanyName:'',
+                    january:'',
+                    february:'',
+                    march:'',
+                    april:'',
+                    may:'',
+                    june:'',
+                    july:'',
+                    august:'',
+                    september:'',
+                    october:'',
+                    november:'',
+                    december:'',
+                    year:'',
                 },
                 pageall:1,
                 companylists:[],
                 listData:{},
-                timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
+                // timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
+                timeList:['january','february','march','april','may','june','july','august','september','october','november','december'],
                 yearShow:'',
 			}
 		},
@@ -155,21 +174,85 @@
                 this.checkForm.year = year;
                 this.checkForm.month = month;
             },
-            export(){
-                console.log('success');
-                // this.setTime();
-                // this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
-                // window.open(window.origin+this.$API.activityEffectExcel+ $.param(this.checkForm));
-            },
             indexIn(){
                 this.type_in=true;
+                this.typeIn={
+                    yearTarget:'',
+                    subCompanyId:'',
+                    subCompanyName:'',
+                    year:'',
+                    january:'',
+                    february:'',
+                    march:'',
+                    april:'',
+                    may:'',
+                    june:'',
+                    july:'',
+                    august:'',
+                    september:'',
+                    october:'',
+                    november:'',
+                    december:''
+                };
+                this.typeIn.year=this.checkForm.year;
             },
-            saveChange(){
-                this.model.getIndexAdd(this.typeIn).then((res)=>{
-                    if(res.data.code==0){
-                        dialog('success','保存成功！');
+            verifyField(){
+                let errMapper={
+                    yearTarget:'年收入',
+                    subCompanyName:'',
+                    subCompanyId:'分公司名称',
+                    year:'年份',
+                    january:'1月净利润目标',
+                    february:'2月净利润目标',
+                    march:'3月净利润目标',
+                    april:'4月净利润目标',
+                    may:'5月净利润目标',
+                    june:'6月净利润目标',
+                    july:'7月净利润目标',
+                    august:'8月净利润目标',
+                    september:'9月净利润目标',
+                    october:'10月净利润目标',
+                    november:'11月净利润目标',
+                    december:'12月净利润目标',
+                };
+                // 检测是否存在未填写项
+                for (let k in this.typeIn) {
+                    let m = this.typeIn[k]
+                    let err = errMapper[k] && new Error(`${errMapper[k]}为必填项!`)
+
+                    /*global _*/
+                    if ((!m && err) || (_.isArray(m) && !m.length && err)) {
+                        throw err
+                    }
+                }
+            },
+            errHandle(err){
+                dialogs('info', err)
+            },
+            saveCompanyName(){
+                _.map(this.companylists,(val)=>{
+                    if(val.subCompanyID==this.typeIn.subCompanyId){
+                        this.typeIn.subCompanyName=val.name;
                     }
                 })
+            },
+            saveChange(){
+                if (true) {
+                    try {
+                        this.verifyField()
+                    } catch (e) {
+                        this.errHandle(e.message)
+                        return
+                    }
+                }
+                this.saveCompanyName();
+                debugger
+                this.model.getIndexAdd(this.typeIn).then((res)=>{
+                    if(res.data.code==0){
+                        dialogs('success','保存成功！');
+                    }
+                });
+                this.typeIn={};
             },
             initList(){
                 this.setTime();
@@ -193,7 +276,8 @@
                 this.model.getIndexManagement(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
-                        this.yearShow=res.data.data.year;
+                        // this.yearShow=res.data.data.year;
+                        this.yearShow=this.checkForm.year
                     }
                 })
             },

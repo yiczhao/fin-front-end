@@ -12,37 +12,37 @@
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <span>收入成本确认分公司</span>
-                            <select class="form-control" v-model="checkForm.subCompanyId">
+                            <select class="form-control" v-model="defaultData.subCompanyId">
                                 <option value="">收入成本确认分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.businessTypeId">
+                            <select class="form-control" v-model="defaultData.businessTypeId">
                                 <option value="">业务类型</option>
                                 <option value="1">知店销售</option>
                                 <option value="2">K1销售</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.snType">
+                            <select class="form-control" v-model="defaultData.snType">
                                 <option value="">sn归属合伙人</option>
-                                <option value="0">汉付信通</option>
-                                <option value="1">上海新卡说</option>
+                                <option v-for="(index,n) in SnPartnerList" v-text="n.name" :value="n.id"></option>
                             </select>
                             <span>门店所在地分公司</span>
-                            <select class="form-control" v-model="checkForm.localSubCompanyId">
+                            <select class="form-control" v-model="defaultData.localSubCompanyId">
                                 <option value="">门店所在地分公司</option>
+                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
                             <span>合伙人所在地分公司</span>
-                            <select class="form-control" v-model="checkForm.partnerCompany">
+                            <select class="form-control" v-model="defaultData.partnerCompany">
                                 <option value="">合伙人所在地分公司</option>
+                                <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <getmonth :value.sync="checkForm.date"></getmonth>
+                            <getmonth :value.sync="date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
                             <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="listData.length>0" class="dataTables_wrapper"> -->
-                <div class="dataTables_wrapper">
+                <div v-show="listData.length>0" class="dataTables_wrapper">
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -74,17 +74,19 @@
                         </table>
                     </div>
                     <div class="datatable-bottom">
-                        <div class="left">
+                       <!--  <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
-                        </div>
+                        </div> -->
                         <div class="right">
-                        <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
                             </page>
                        </div>
                     </div>
+                </div>
+                <div class="no-list" v-else>
+                    未找到数据
                 </div>
             </div>
         </div>
@@ -96,24 +98,24 @@
 		data(){
 			this.model = model(this);
 			return{
-                checkForm:{
+                defaultData:{
                     subCompanyId:'',
                     businessTypeId:'',
                     snType:'',
                     localSubCompanyId:'',
                     partnerCompany:'',
-                    date:'',
                     year:'',
                     month:'',
                     pageIndex: 1,
                     pageSize: 10,
                 },
-                dateS:'3',
+                date:'',
                 partnerOrder:{
                     amount:'',
                     quantity:'',
                 },
                 quantityNum:'',
+                SnPartnerList:{},
                 saveTypeIn:{},
                 type_in:false,
                 typeTitle:'',
@@ -123,13 +125,18 @@
 			}
 		},
 		methods:{
-            getTime(){
-                debugger
-                this.checkForm.startDate=init_date(this.dateS)[0];
-                this.checkForm.endDate=init_date(this.dateS)[1];
+            setTime(){
+                var date =  this.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.defaultData.year = year;
+                this.defaultData.month = month;
             },
             initList(){
-                back_json.saveArray(this.$route.path,this.checkForm);
+                this.setTime();
+                this.defaultData.pageIndex=1;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists(this.defaultData);
             },
             typeInShow(title){
                 this.type_in=true;
@@ -137,11 +144,6 @@
             },
             saveChange(){
                 this.type_in=false;//test
-                console.log('success+kok');
-            },
-            initList(){
-                back_json.saveArray(this.$route.path,this.checkForm);
-                this.getZlists(this.checkForm);
             },
             getClist(){
                 // *** 请求公司数据
@@ -155,6 +157,12 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+                //获取合伙人
+                this.model.getAllopatrySnPartner().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('SnPartnerList',res.data.data);
+                    }
+                });
             },
             getZlists(data){
                 this.model.getAllopatryListDetali(data).then((res)=>{
@@ -166,12 +174,12 @@
         },
 		ready:function(){
             var vm=this;
-            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.checkForm=back_json.fetchArray(vm.$route.path):null;
+            (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
             vm.getClist();
 		},
         watch:{
-            'checkForm.pageSize + checkForm.pageIndex'(){
+            'defaultData.pageSize + defaultData.pageIndex'(){
                 this.initList();
             }
         }

@@ -83,7 +83,7 @@ function model(_this){
          * @returns {*}
          * */
         getIndexAdd(data){
-            return _this.$http.get(_this.$API.getFinanceAdd+ $.param(data))
+            return _this.$http.post(_this.$API.typeInFinanceAdd,data)
         },
         /**
          * @description  费用管理-费用管理
@@ -142,7 +142,15 @@ function model(_this){
          * @returns {*}
          * */
         getAllopatryListDetali(data){
-            return _this.$http.get(_this.$API.getAllopatryActivationList+ $.param(data))
+            return _this.$http.get(_this.$API.getAllopatryActivationDetailList+ $.param(data))
+        },
+        /**
+         * @description  异地激活收入成本分配明细--获取合伙人
+         * @params {data}
+         * @returns {*}
+         * */
+        getAllopatrySnPartner(){
+            return _this.$http.get(_this.$API.getAllopatrySnPartnerList)
         },
         /**
          * @description  异地激活收入成本分配统计
@@ -151,6 +159,14 @@ function model(_this){
          * */
         getAllopatryListCount(data){
             return _this.$http.get(_this.$API.getAllopatryActivationCountList+ $.param(data))
+        },
+        /**
+         * @description  异地激活收入成本分配统计--合伙人订单录入
+         * @params {data}
+         * @returns {*}
+         * */
+        snInfoTypeIn(data){
+            return _this.$http.get(_this.$API.snInfoSave+ $.param(data))
         },
     }
 }
