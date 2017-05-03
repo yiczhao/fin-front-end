@@ -67,7 +67,8 @@ module.exports = [
 		// ksa: 'report_form_mange',
 		type: 'report',
 		sub_menu: [
-			{name: '报表管理', link: 'financial-index-total', ksa: 'report_form_mange'},
+			// {name: '报表管理', link: 'financial-index-total', ksa: 'report_form_mange'},
+			{name: '报表管理', link: 'financial-index-total'},
 		]
 	},
 	{
