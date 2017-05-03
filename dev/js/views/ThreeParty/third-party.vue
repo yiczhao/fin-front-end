@@ -51,7 +51,7 @@
                             <thead>
                             <tr role="row">
                                 <th>账户ID</th>
-                                <th>名称</th>
+                                <th>三方名称</th>
                                 <th>分公司</th>
                                 <th>城市 </th>
                                 <th>合同结算金额</th>
