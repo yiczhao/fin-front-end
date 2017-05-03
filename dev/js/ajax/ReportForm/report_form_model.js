@@ -22,30 +22,6 @@ function model(_this){
             return _this.$http.get(_this.$API.getFinanceListTotal+ $.param(data))
         },
         /**
-         * @description  获取财务指标分析（总）查询业务(选项)
-         * @params {data}
-         * @returns {*}
-         * */
-        getSearchBusiness(){
-            return _this.$http.get(_this.$API.getCommonBusiness)
-        },
-        /**
-         * @description  获取财务指标分析（总）查询项目(选项)
-         * @params {data}
-         * @returns {*}
-         * */
-        getSearchItem(){
-            return _this.$http.get(_this.$API.getCommonItem)
-        },
-        /**
-         * @description  获取财务指标分析（总）查询业务项目明细(选项)
-         * @params {data}
-         * @returns {*}
-         * */
-        getSearchBusinessDetail(){
-            return _this.$http.get(_this.$API.getCommonBusinessDetail)
-        },
-        /**
          * @description  获取财务指标分析（分）合计
          * @params {data}
          * @returns {*}
@@ -60,6 +36,30 @@ function model(_this){
          * */
         getBranchFinanceList(data){
             return _this.$http.get(_this.$API.getFinanceListBranch+ $.param(data))
+        },
+        /**
+         * @description  获取财务指标分析（总）（分） 查询业务(选项)
+         * @params {data}
+         * @returns {*}
+         * */
+        getSearchBusiness(){
+            return _this.$http.get(_this.$API.getCommonBusiness)
+        },
+        /**
+         * @description  获取财务指标分析（总）（分） 查询项目(选项)
+         * @params {data}
+         * @returns {*}
+         * */
+        getSearchItem(){
+            return _this.$http.get(_this.$API.getCommonItem)
+        },
+        /**
+         * @description  获取财务指标分析（总）（分） 查询业务项目明细(选项)
+         * @params {data}
+         * @returns {*}
+         * */
+        getSearchBusinessDetail(){
+            return _this.$http.get(_this.$API.getCommonBusinessDetail)
         },
         /**
          * @description  获取财务指标排行
