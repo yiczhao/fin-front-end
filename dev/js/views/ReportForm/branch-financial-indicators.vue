@@ -38,37 +38,29 @@
                                 <th>分公司</th>
                                 <th @click="sortByKey('income',boll)"><span>&#9660</span>收入</th>
                                 <th @click="sortByKey('cost',boll)"><span>&#9660</span>成本</th>
-                                <th @click="sortByKey('')"><span>&#9660</span>费用 </th>
-                                <th @click="sortByKey('profit')"><span>&#9660</span>净利润</th>
-                                <th @click="sortByKey('profitRate')"><span>&#9660</span>净利率</th>
+                                <th @click="sortByKey('spend',boll)"><span>&#9660</span>费用 </th>
+                                <th @click="sortByKey('profit',boll)"><span>&#9660</span>净利润</th>
+                                <th @click="sortByKey('profitRate',boll)"><span>&#9660</span>净利率</th>
                                 <th @click="sortByKey('profitFinished',boll)"><span>&#9660</span>净利润指标完成率</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td><!-- {{排名}} -->
-                                    <td>{{trlist.subCompanyName }}</td><!-- {{分公司}} -->
-                                    <td>{{trlist.income }}</td><!-- {{收入}} -->
-                                    <td>{{trlist.cost }}</td><!-- {{成本}} -->
-                                    <td>{{trlist.费用}}</td><!-- {{费用}} -->
-                                    <td>{{trlist.profit }}</td><!-- {{净利润}} -->
-                                    <td>{{trlist.profitRate }}</td><!-- {{净利率}} -->
-                                    <td>{{trlist.profitFinished }}</td><!-- {{净利润指标完成率}} -->
+                                    <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
+                                    <td>{{trlist.income}}</td><!-- {{收入}} -->
+                                    <td>{{trlist.cost}}</td><!-- {{成本}} -->
+                                    <td>{{trlist.spend}}</td><!-- {{费用}} -->
+                                    <td>{{trlist.profit}}</td><!-- {{净利润}} -->
+                                    <td>{{trlist.profitRate}}</td><!-- {{净利率}} -->
+                                    <td>{{trlist.profitFinished}}</td><!-- {{净利润指标完成率}} -->
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- <div class="datatable-bottom">
-                        <div class="left">
-                            <a class="icon-file-excel line-height" @click="export">Excel导出</a>
-                        </div>
-                        <div class="right">
-                            <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
-                            </page>
-                       </div>
-                    </div> -->
+                </div>
+                <div class="no-list" v-else>
+                    未找到数据
                 </div>
             </div>
         </div>
@@ -138,15 +130,16 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+
             },
             getZlists(){
                 this.sortByKey('profitFinished',this.boll)
-                // this.model.getFinanceRanking(this.checkForm).then((res)=>{
-                //     if(res.data.code==0){
-                //         this.$set('listData',res.data.data);
-                //         this.sortByKey('profitFinished',this.boll)
-                //     }
-                // })
+                this.model.getFinanceRanking(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                        this.sortByKey('profitFinished',this.boll)
+                    }
+                })
             },
             sortByKey(key,boll){
                 let data=_.cloneDeep(this.listData);
