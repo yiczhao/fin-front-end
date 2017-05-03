@@ -1683,6 +1683,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.getExpenseManagementLlst = './cost/list?';
+    /**
+     * @description 报表管理 费用管理
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getExpenseManageSubject = './cost/subject?';
 
     /**
      * @description 报表管理 费用管理 费用预算录入
@@ -1701,13 +1707,6 @@ export default function install(Vue) {
      * @description 报表管理 费用管理 预算-预算录入-查询费用类型
      * @author 洪钢
      * @method post
-     */
-    _o.commonCostDetail = './cost/detail?';
-
-    /**
-     * @description 报表管理 费用管理 部门费用明细查询
-     * @author 洪钢
-     * @method GET
      */
     _o.commonCostDetail = './cost/detail?';
 

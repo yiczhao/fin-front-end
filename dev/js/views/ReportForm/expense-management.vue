@@ -42,7 +42,7 @@
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
                 <div class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                        <table class="table">
                             <thead>
                             <tr role="row">
                                 <th>序号</th>
@@ -50,99 +50,16 @@
                                 <th>预算/实际</th>
                                 <th>当月金额</th>
                                 <th>累计金额</th>
-                                <th>工资</th>
-                                <th>社保及公积金</th>
-                                <th>宣传推广费</th>
-                                <th>运杂费</th>
-                                <th>研发费</th>
-                                <th>认证注册费</th>
-                                <th>差旅费</th>
-                                <th>市内交通费</th>
-                                <th>招待费</th>
-                                <th>通讯费</th>
-                                <th>办公费</th>
-                                <th>培训费</th>
-                                <th>会议费</th>
-                                <th>劳务费</th>
-                                <th>租赁费</th>
-                                <th>装修费</th>
-                                <th>水电费</th>
-                                <th>折旧费</th>
-                                <th>无形资产摊销</th>
-                                <th>汽车费</th>
-                                <th>税金</th>
-                                <th>开办费摊销</th>
-                                <th>审计费用</th>
-                                <th>保险费用</th>
-                                <th>咨询、注册费</th>
-                                <th>误餐费</th>
-                                <th>设计、印刷费</th>
-                                <th>招聘费</th>
-                                <th>坏账准备</th>
-                                <th>存货损失</th>
-                                <th>物料消耗</th>
-                                <th>维修费</th>
-                                <th>福利费</th>
-                                <th>职工教育经费</th>
-                                <th>工会经费</th>
-                                <th>其他</th>
-                                <th>手续费</th>
-                                <th>利息收入</th>
-                                <th>利息支出</th>
-                                <th>汇兑损益</th>
-                                <th>费用合计</th>
+                                <th v-for="i in subjectData">{{i.optionName}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <template>
-                                <!-- <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}"> -->
-                                <tr role="row">
-                                    <td>1</td><!-- 序号 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 分公司 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 预算/实际 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 当月金额 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 累计金额 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 社保及公积金 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 宣传推广费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 运杂费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 研发费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 认证注册费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 差旅费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 市内交通费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 招待费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 通讯费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 办公费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 培训费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 会议费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 劳务费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 租赁费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 装修费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 水电费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 折旧费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 无形资产摊销 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 汽车费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 税金 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 开办费摊销 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 审计费用 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 保险费用 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 咨询、注册费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 误餐费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 设计、印刷费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 招聘费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 坏账准备 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 存货损失 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 物料消耗 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 维修费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 福利费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 职工教育经费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 工会经费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 其他 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 手续费 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 利息收入 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 利息支出 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 汇兑损益 -->
-                                    <td>{{trlist["'"+index+1+"'"]["0"][0].asdasd}}</td><!-- 费用合计 -->
-                                </tr>
+                            <template v-for="(index,trlist) in listData">
+                             <tr role="row" v-for="n in trlist[0]" v-bind:class="{'odd':(index%2==0)}">
+                                <td v-for="m in n">
+                                    {{m}}
+                                </td>
+                             </tr>
                             </template>
                             </tbody>
                         </table>
@@ -156,6 +73,9 @@
                             </page>
                        </div>
                     </div>
+                    <div class="no-list" v-else>
+                        未找到数据
+                    </div>
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
@@ -164,7 +84,7 @@
                     <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="infaceList.subCompanyID" @change="showType()">
+                            <select class="form-control" v-model="infaceList.subCompanyID">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
@@ -260,15 +180,7 @@
                 costType:{},
                 timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
                 listData:{},
-                data:{
-                    1:{
-                        0:[{"subCompanyId": 1,"subCompanyName":"全国卡说"}],
-                    },
-                    2:{
-                        0:[{"subCompanyId": 2,"subCompanyName": "北京卡说"}],
-                    }
-
-                }
+                subjectData:{},
 			}
 		},
 		methods:{
@@ -302,7 +214,7 @@
             initList(){
                 this.setTime();
                 back_json.saveArray(this.$route.path,this.checkForm);
-                // this.getZlists(this.checkForm);//没有接口
+                this.getZlists(this.checkForm);//没有接口
             },
             getClist(){
                 // *** 请求公司数据
@@ -316,8 +228,58 @@
                         }
                     });
             },
+            verifyField (data) {
+                let errMapper;
+                if(this.typeTitle=='预算录入'){ // 错误名称映射表 表内是需要检测的字段
+                    errMapper = {
+                        subCompanyId:'分公司',
+                        subject:'费用类型',
+                    }
+                    // 金额检查
+                    let amountList = data.amountList
+                    if(amountList.length<12){
+                        throw new Error('金额都是必填项!');
+                    }
+                    amountList && amountList.forEach(m => {
+                        if (!m) {
+                            throw new Error('金额都是必填项!')
+                        }
+                    })
+                }else{
+                    errMapper = {
+                        subCompanyID:'分公司',
+                        subject:'费用类型',
+                        department:'部门',
+                        date:'时间',
+                        amount:'金额'
+                    }
+                }
+                // 检测是否存在未填写项
+                for (let k in data) {
+                    let m = data[k]
+                    let err = errMapper[k] && new Error(`${errMapper[k]}为必填项!`)
+
+                    /*global _*/
+                    if ((!m && err) || (_.isArray(m) && !m.length && err)) {
+                        throw err
+                    }
+                }
+            },
+            errHandle(err){
+                dialogs('info', err)
+            },
             saveChange(){
-                this.model.costBugetTypeInP(this.budgetList).then((res)=>{
+                let data=this.typeTitle=='预算录入'?this.budgetList:this.infaceList;
+                let key=this.typeTitle=='预算录入'?'costBugetTypeInP':'costBugetActualTypeInP';
+                if (true) {
+                    try {
+                        this.verifyField(data)
+                    } catch (e) {
+                        this.errHandle(e.message)
+                        return
+                    }
+                }
+                this.model[key](data).then((res)=>{
                     if(res.data.code==0){
                         dialogs('success','保存成功！');
                         this.type_in=false;
@@ -325,18 +287,26 @@
                 });
             },
             showType(){
-                if(!!this.budgetList.subCompanyId&&!!this.budgetList.subject){
-                    this.model.costBugetTypeInG(this.budgetList).then((res)=>{
-                        if(res.data.code==0){
-                            this.$set('budgetList.amountList',res.data.data.amountList)
-                        }
-                    });
+                if(this.typeTitle=='预算录入'){
+                    if(!!this.budgetList.subCompanyId&&!!this.budgetList.subject){
+                        this.model.costBugetTypeInG(this.budgetList).then((res)=>{
+                            if(res.data.code==0){
+                                this.$set('budgetList.amountList',res.data.data.amountList)
+                            }
+                        });
+                    }
                 }
             },
             getZlists(data){
                 this.model.getExpenseManageLlst(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
+                        this.$set('pageall',res.data.data);
+                    }
+                })
+                this.model.getExpenseManageSubject(data).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('subjectData',res.data.data.data);
                     }
                 })
             },

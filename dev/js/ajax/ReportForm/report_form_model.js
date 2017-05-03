@@ -93,6 +93,9 @@ function model(_this){
         getExpenseManageLlst(data){
             return _this.$http.get(_this.$API.getExpenseManagementLlst+ $.param(data))
         },
+        getExpenseManageSubject(data){
+            return _this.$http.get(_this.$API.getExpenseManageSubject+ $.param(data))
+        },
         /**
          * @description  费用管理-费用预算录入
          * @params {data}
@@ -107,7 +110,7 @@ function model(_this){
          * @returns {*}
          * */
         costBugetTypeInG(data){
-            return _this.$http.get(_this.$API.CostBugetIn + $.param(data))
+            return _this.$http.get(_this.$API.costBugetIn + $.param(data))
         },
         /**
          * @description  费用管理-费用实际费用录入
@@ -126,7 +129,7 @@ function model(_this){
             return _this.$http.get(_this.$API.commonCostType)
         },
         /**
-         * @description  费用管理-部门费用明细查询
+         * @description  费用管理-费用实际费用查询
          * @params {data}
          * @returns {*}
          * */
