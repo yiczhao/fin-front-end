@@ -39,30 +39,38 @@
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
-                            <tr role="row">
-                                <th>序号</th>
-                                <th>分公司</th>
-                                <th>三方名称</th>
-                                <th>合同编号</th>
-                                <th>合同结算金额</th>
-                                <th>操作</th>
-                                <th>待结算金额</th>
-                                <th>开票/回款</th>
-                                <th>已开票金额</th>
-                                <th>已回款</th>
-                                <th>应收账款</th>
-                                <th>成本</th>
-                                <th>已划付</th>
-                                <th>待划付</th>
-                                <th>税金账户</th>
-                                <th>欠发票账户</th>
-                                <th>毛利</th>
-                                <th>毛利率</th>
-                                <th>结算确认</th>
-                                <th>备注</th>
-                            </tr>
+                                <tr role="row">
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="6" style="background:#f1f1f1">合同情况</th>
+                                    <th colspan="3" style="background:#e1e1e1">回款情况</th>
+                                    <th colspan="8" style="background:#d1d1d1">划付情况</th>
+                                </tr>
                             </thead>
                             <tbody>
+                                <tr role="row">
+                                    <td>序号</td>
+                                    <td>分公司</td>
+                                    <td>三方名称</td>
+                                    <td>合同编号</td>
+                                    <td>合同结算金额</td>
+                                    <td>操作</td>
+                                    <td>待结算金额</td>
+                                    <td>开票/回款</td>
+                                    <td>已开票金额</td>
+                                    <td>已回款</td>
+                                    <td>应收账款</td>
+                                    <td>成本</td>
+                                    <td>已划付</td>
+                                    <td>待划付</td>
+                                    <td>税金账户</td>
+                                    <td>欠发票账户</td>
+                                    <td>毛利</td>
+                                    <td>毛利率</td>
+                                    <td>结算确认</td>
+                                    <td>备注</td>
+                                </tr>
                                 <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.subCompanyName}}</td>
@@ -375,7 +383,7 @@
                     }
                     let data={
                         id:this.relist.contractID,
-                        invoiceAmount2:this.relist.invoiceAmount2,
+                        invoiceAmount2:accMul(this.relist.invoiceAmount2,100),
                         thirdPartyAccountID:this.relist.thirdPartyAccountID,
                         contractMemo:this.relist.contractMemo
                     }
@@ -393,7 +401,7 @@
                     }
                     let data={
                         id:this.relist.contractID,
-                        collectionAmount2:this.relist.collectionAmount2,
+                        collectionAmount2:accMul(this.relist.collectionAmount2,100),
                         thirdPartyAccountID:this.relist.thirdPartyAccountID,
                         contractMemo:this.relist.contractMemo
                     }

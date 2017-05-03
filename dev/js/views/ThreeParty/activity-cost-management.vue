@@ -40,10 +40,9 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th colspan="10">收入</th>
-                                <th></th>
-                                <th colspan="12">成本</th>
-                                <th colspan="3">毛利</th>
+                                <th style="background:#f1f1f1" colspan="11">收入</th>
+                                <th style="background:#e1e1e1" colspan="12">成本</th>
+                                <th style="background:#d1d1d1" colspan="3">毛利</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
