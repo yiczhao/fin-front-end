@@ -26,6 +26,13 @@ export default function install(Vue) {
         getbankAccount(type) {
             return Vue.http.get('./bankAccount/account/list/' + type);
         },
+        /**
+         * @description 查询当前登录用户所属分公司的备付金账户数据
+         * @returns {*}
+         */
+        getCurUserBankAccount(){
+            return Vue.http.get('./bankAccount/curUser/info');
+        },
 
         /**
          * @description 查询城市列表数据

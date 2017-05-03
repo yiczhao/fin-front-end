@@ -335,6 +335,9 @@
                             if(response.data.code==0){
                                 this.$set('redata', response.data.data);
                                 $('#modal_applyPay').modal('show');
+                                if(response.data.data.bankAccountID){
+                                    this.applyData.bankAccountID = response.data.data.bankAccountID;
+                                }
                             }
                         });
             },

@@ -118,6 +118,7 @@
                 id:'',
                 subcompanyList:[],
                 bankAccountList: [],
+                curBankAccountID:'',
                 dtitle:'',
                 remarks:'',
                 withdrawCashAmounts:0,
@@ -147,6 +148,16 @@
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
                             this.$set('bankAccountList', response.data.data)
+                        }
+                    });
+            },
+            //获取当前登录用户所属分公司的备付金账户
+            getCurUserBankAccountInfo(){
+                this.$common_model.getCurUserBankAccount()
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('curBankAccountID', response.data.data.id)
                         }
                     });
             },
@@ -215,7 +226,7 @@
                       mergePay:false,
                       remarks:'',
                       payType:'',
-                      bankAccountID:''
+                      bankAccountID:this.curBankAccountID
                  };
                 this.show=true;
             },
@@ -267,6 +278,7 @@
             this.getSubcompany();
             this.getBankAccountList('1');
             this.query();
+            this.getCurUserBankAccountInfo();
         },
         watch:{
         }
