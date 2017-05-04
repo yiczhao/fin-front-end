@@ -144,7 +144,6 @@
         methods:{
             // *** 请求账户列表数据
             getZlists(data){
-                if(sessionStorage.getItem('isHttpin')==1)return;
                 this.model.invoiceCollection(data)
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型

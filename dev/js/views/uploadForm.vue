@@ -63,6 +63,11 @@
                                         <input type="button" class="btn btn-primary" value="生成活动执行表" data-toggle="modal" @click="generateActivityEffectAgain($event)"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="大后台数据同步" data-toggle="modal" @click="intiBOSSData($event)"/>
+                                    </td>
+                                </tr>
 							</table>
 						</form>
 					</div>
@@ -226,6 +231,12 @@
             },
             generateActivityEffectAgain(e){
                 this.$http.post('./dev/tool/activityEffect/generate/again')
+                        .then((response)=>{
+                            dialogs('success',response.data.message);
+                        })
+            },
+            intiBOSSData(e){
+                this.$http.post('./dev/tool/boss/data/init')
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
