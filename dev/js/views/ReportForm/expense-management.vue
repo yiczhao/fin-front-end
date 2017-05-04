@@ -32,11 +32,11 @@
                                 <option value="">选择费用类型</option>
                                 <option value="0">工资</option>
                             </select>
-                            <getmonth :value.sync="checkForm.date"></getmonth>
+                            <datepicker :readonly="true" :value.sync="checkForm.date" format="YYYY-MM-DD"></datepicker>
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="initList()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList">查询</a>
                     </div>
                 </div>
                 <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
