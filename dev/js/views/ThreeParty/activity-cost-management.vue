@@ -21,7 +21,7 @@
                             </select>
                             <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="三方名称">
                             <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
-                            <input type="text" class="form-control" v-model="defaultData.activityID" placeholder="活动ID" v-limitnumber="defaultData.activityId">
+                            <input type="text" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID" v-limitnumber="defaultData.activityId">
                             <getmonth :value.sync="date"></getmonth>
                         </form>
                     </div>
@@ -211,7 +211,7 @@
                     subCompanyID:'',
                     thirdPartyAccountName:'',
                     contractNumber:'',
-                    activityID:'',
+                    activityOperationID:'',
                     year:'',
                     month:'',
                     pageIndex:1,
@@ -273,18 +273,6 @@
                 this.modal_other=true;
                 debugger
             },
-            // showDialog(){
-            //     this.modal_other=true;
-            //     let data={
-            //         activityID:this.defaultData.activityID,
-            //         subCompanyID:this.defaultData.subCompanyID,
-            //     };
-            //     this.model.getOtherInfo(data).then((res)=>{//获取
-            //         if(res.data.code==0){
-            //             this.$set('redata',res.data.data);
-            //         }
-            //     })
-            // },
             saveOther(){
                 if(this.redata.description==''){
                     dialogs('info','请输入活动说明！');
