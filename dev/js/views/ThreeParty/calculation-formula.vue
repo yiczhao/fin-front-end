@@ -115,9 +115,6 @@
                     '税率',
                     '收入小计',
                 ],
-                getDataDefault:{
-                },
-                activityInfo:{},
                 defaultData:{
                     id:'',
                     activityName:'',
@@ -140,7 +137,6 @@
                     costFundOccupyFee:[],
                     costOtherExpense:[]
                 },
-                formulaeInfo:{},
             }
         },
         methods:{
@@ -199,7 +195,6 @@
                 }
             	this.model.getFormulae(data).then((res)=>{
             		if(res.data.code==0){
-            			// this.$set('activityInfo',res.data.data);
                         let data={};
                         _.forEach(res.data.data,(value,key)=>{
                             data[key]=this.enString(value);
@@ -235,7 +230,5 @@
             (this.$route.params.acmCompanyID!=':acmCompanyID')?this.defaultData.subCompanyID=this.$route.params.acmCompanyID:null;//分公司ID
             this.getFormulae();
         },
-        watch:{
-        }
     }
 </script>
