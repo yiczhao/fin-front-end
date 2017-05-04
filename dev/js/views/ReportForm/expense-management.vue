@@ -31,7 +31,7 @@
                                 <option value="2">实际</option>
                             </select>
                             <div class="inline">
-                                <datepicker :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>
+                                <getmonth :value.sync="checkForm.startDate"></getmonth>
                             </div>
                         </form>
                     </div>
@@ -179,7 +179,7 @@
 		},
 		methods:{
             setTime(){
-                var date =  this.checkForm.date.split('-');
+                var date =  this.checkForm.startDate.split('-');
                 var year = parseInt(date[0]);
                 var month = parseInt(date[1]);
                 this.checkForm.year = year;
@@ -206,6 +206,7 @@
                 this.type_in=false;
             },
             initList(){
+                this.setTime();
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);//没有接口
             },
