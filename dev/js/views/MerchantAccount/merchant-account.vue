@@ -18,17 +18,17 @@
                             <input type="number" class="form-control" v-model="conditionData.merchantOperationID"
                                    placeholder="商户ID"
                                    v-limitnumber="">
-                            <!--<input type="text" class="form-control" v-model="conditionData.backendMerchantCode"-->
-                                   <!--placeholder="商户号">-->
+                            <input type="text" class="form-control" v-model="conditionData.backendMerchantCode"
+                                   placeholder="商户号">
 
-                            <!--<input type="text" class="form-control" v-model="conditionData.backendMerchantName"-->
-                                   <!--placeholder="商户简称">-->
+                            <input type="text" class="form-control" v-model="conditionData.backendMerchantName"
+                                   placeholder="商户简称">
 
-                            <!--<input type="number" class="form-control" v-model="" placeholder="门店号"-->
-                                   <!--v-limitnumber="conditionData.backendStoreCode">-->
+                            <input type="number" class="form-control" v-model="" placeholder="门店号"
+                                   v-limitnumber="conditionData.backendStoreCode">
 
-                            <!--<input type="text" class="form-control" v-model="conditionData.storeName"-->
-                                   <!--placeholder="门店名称">-->
+                            <input type="text" class="form-control" v-model="conditionData.storeName"
+                                   placeholder="门店名称">
 
                             <select class="form-control" v-model="conditionData.subCompanyID"
                                     @change="getCityList(conditionData.subCompanyID)">
@@ -71,10 +71,10 @@
                             <thead>
                             <tr role="row">
                                 <th>商户ID</th>
-                                <!--<th>商户号</th>-->
-                                <!--<th>商户简称</th>-->
-                                <!--<th>商户类型</th>-->
-                                <!--<th>门店号</th>-->
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>商户类型</th>
+                                <th>门店号</th>
                                 <th>门店名称</th>
                                 <th>分公司</th>
                                 <th>城市</th>
@@ -89,19 +89,19 @@
                                 <th>状态</th>
                                 <th>操作</th>
                                 <th>最新更新时间</th>
-                                <!--<th>转账配置</th>-->
+                                <th>转账配置</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trList) in merchantAccountList">
                                 <td>{{trList.merchantOperationID}}</td>
-                                <!--<td>{{trList.backendMerchantCode}}</td>-->
-                                <!--<td>{{trList.backendMerchantName}}</td>-->
-                                <!--<td>-->
-                                    <!--<template v-if="trList.merchantType ==1 ">单店</template>-->
-                                    <!--<template v-if="trList.merchantType ==2">连锁商户</template>-->
-                                <!--</td>-->
-                                <!--<td>{{trList.backendStoreCode}}</td>-->
+                                <td>{{trList.backendMerchantCode}}</td>
+                                <td>{{trList.backendMerchantName}}</td>
+                                <td>
+                                    <template v-if="trList.merchantType ==1 ">单店</template>
+                                    <template v-if="trList.merchantType ==2">连锁商户</template>
+                                </td>
+                                <td>{{trList.backendStoreCode}}</td>
                                 <td>{{trList.storeName}}</td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>{{trList.cityName}}</td>
@@ -137,9 +137,9 @@
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
-                                <!--<td>-->
-                                    <!--<a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>-->
-                                <!--</td>-->
+                                <td>
+                                    <a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
