@@ -164,7 +164,7 @@
                 this.model.contractaddList(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('defaultData',res.data.data);
-                        this.getThirdParty(this.defaultData.subCompanyID);
+                        this.getThirdParty(this.defaultData.subCompanyID,true);
                     }
                 })
             },
@@ -178,7 +178,7 @@
                     });
             },
             //获取城市数据
-            getThirdParty(_id){
+            getThirdParty(_id,isEdit){
                 if(!_id){
                     this.defaultData.thirdPartyAccountID='';
                     return;
@@ -191,7 +191,9 @@
                     .then((response)=>{
                         if(response.data.code==0){
                             this.$set('thirdPartyList', response.data.data);
-                            this.defaultData.thirdPartyAccountID='';
+                            if(!isEdit){
+                                this.defaultData.thirdPartyAccountID='';
+                            }
                         }
                     });
             },

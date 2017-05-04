@@ -271,7 +271,6 @@
                 this.redata.activityID=activityID;
                 this.redata.subCompanyID=subCompanyID;
                 this.modal_other=true;
-                debugger
             },
             // showDialog(){
             //     this.modal_other=true;
