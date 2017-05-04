@@ -1565,7 +1565,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method post
      */
-    _o.saveActivityFormulae = './activityIncomeCost/default/formulae/save?';
+    _o.saveActivityFormulae = './activityIncomeCost/formulae/save';
     /**
      * @description 三方管理-活动收入成本管理-获取其他信息
      * @author 冷艳君

@@ -187,7 +187,6 @@
             },
             initList(){
                 this.setTime();
-                this.defaultData.pageIndex=1;
                 back_json.saveArray(this.$route.path,this.defaultData);
                 this.getZlists(this.defaultData);
             },

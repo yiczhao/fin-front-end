@@ -15,21 +15,21 @@
                     <div class="heading-left"></div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="defaultData.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <input type="text" class="form-control" v-model="checkForm.thirdPartyAccountName" placeholder="三方名称">
-                            <input type="text" class="form-control" v-model="checkForm.contractNumber" placeholder="合同编号">
-                            <input type="text" class="form-control" v-model="checkForm.activityID" placeholder="活动ID" v-limitnumber="checkForm.activityId">
+                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
+                            <input type="text" class="form-control" v-model="defaultData.activityID" placeholder="活动ID" v-limitnumber="defaultData.activityId">
+                            <getmonth :value.sync="date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="searchData()">查询</a>
+                            <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="infoList.length>0" class="dataTables_wrapper no-footer"> -->
-                <div class="dataTables_wrapper no-footer">
+                <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -90,15 +90,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr role="row" v-for="(index,trlist) in infoList" v-bind:class="{'odd':(index%2==0)}">
+                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td><!-- 序号 -->
                                     <td>{{trlist.subCompanyName}}</td><!-- 分公司 -->
                                     <td>{{trlist.thirdPartyAccountName}}</td><!-- 三方名称 -->
                                     <td>{{trlist.contractNumber}}</td><!-- 合同编号 -->
                                     <td>{{trlist.activityOperationID }}</td><!-- 活动ID -->
                                     <td>
-                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID,'acmContractID':trlist.contractID,'OperationID':trlist.activityOperationID }}">计算公式</a>
-                                        <a @click="modal_other=true">其他信息</a>
+                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID}}">计算公式</a>
+                                        <a @click="otherInfo(trlist.activityID,trlist.subCompanyID)">其他信息</a>
                                     </td><!-- 执行表参数 -->
                                     <!-- 收入 -->
                                     <td>{{trlist.incomeServiceAmount}}</td><!-- 服务费 -->
@@ -129,18 +129,16 @@
                                     <td>{{trlist.merchantCooperationGrossProfit}}</td><!-- 商合部毛利 -->
                                     <td>{{trlist.marketGrossProfit}}</td><!-- 市场部毛利 -->
                                     <td>{{trlist.grossProfitSum}}</td><!-- 小计 -->
-                                    <td>{{trlist.activityAttribution}}</td><!-- 活动归属 -->
+                                    <td><!-- 活动归属 -->
+                                        <span v-if="trlist.activityAttribution==1">分-分</span>
+                                        <span v-if="trlist.activityAttribution==2">总-总</span>
+                                        <span v-if="trlist.activityAttribution==3">总-总 分-分</span>
+                                    </td>
                                     <td>{{trlist.operator}}</td><!-- 经办人 -->
                                     <td>{{trlist.description}}</td><!-- 活动说明 -->
                                     <td>{{trlist.collectPeriod}}</td><!-- 回款账期 -->
                                     <td>{{trlist.remarks}}</td><!-- 备注 -->
                                 </tr>
-                                <!-- <tr>
-                                    <td>
-                                        <a v-link="{name:'calculation-formula'}">计算公式</a>
-                                        <a @click="showDialog()">其他信息</a>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -150,8 +148,8 @@
                         </div>
                         <div class="right">
                             <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
+                                  :cur.sync="defaultData.pageIndex"
+                                  :page_size.sync="defaultData.pageSize">
                             </page>
                        </div>
                     </div>
@@ -202,9 +200,6 @@
         </div>
 	</index>
 </template>
-<style lang="sass">
-    
-</style>
 <script>
 	import model from '../../ajax/ThreeParty/costmanagement_model.js'
 	export default{
@@ -212,7 +207,7 @@
 			this.model = model(this);
 			return{
                 modal_other:false,
-                checkForm:{
+                defaultData:{
                     subCompanyID:'',
                     thirdPartyAccountName:'',
                     contractNumber:'',
@@ -222,12 +217,13 @@
                     pageIndex:1,
                     pageSize:10,
                 },
+                date:'',
                 pageall:1,
                 companylists:[],
-                infoList:[],
+                listData:[],
                 redata:{
-                    "id": '',
-                    "activityId": '',
+                    "subCompanyID":'',
+                    "activityID": '',
                     "activityAttribution": '',
                     "operator": '',
                     "collectPeriod": '',
@@ -237,8 +233,17 @@
 			}
 		},
 		methods:{
-            searchData(){
-                console.log('success')
+            setTime(){
+                var date =  this.date.split('-');
+                var year = parseInt(date[0]);
+                var month = parseInt(date[1]);
+                this.defaultData.year = year;
+                this.defaultData.month = month;
+            },
+            initList(){
+                this.setTime();
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlist();
             },
             getClist(){
                 // *** 请求公司数据
@@ -253,50 +258,59 @@
                         }
                     });
             },
-            getInfoList(){
-                 this.model.getCostList(this.checkForm).then((res)=>{
+            getZlist(){
+                 this.model.getCostList(this.defaultData).then((res)=>{
                      if(res.data.code==0){
-                         this.$set('infoList',res.data.data);
+                         this.$set('listData',res.data.data);
                          this.pageall=res.data.total;
                      }
                  })
             },
-            showDialog(){
+            otherInfo(activityID,subCompanyID){
+                this.redata={"subCompanyID":'',"activityID": '',"activityAttribution": '',"operator": '',"collectPeriod": '',"description": '',"remarks": ''};
+                this.redata.activityID=activityID;
+                this.redata.subCompanyID=subCompanyID;
                 this.modal_other=true;
-                let data={
-                    activityID:this.checkForm.activityID,
-                    subCompanyID:this.checkForm.subCompanyID,
-                };
-                this.model.getOtherInfo(data).then((res)=>{//获取
-                    if(res.data.code==0){
-                        // this.$set('redata',res.data.data);
-                        console.log('success');
-                    }
-                })
+                debugger
             },
+            // showDialog(){
+            //     this.modal_other=true;
+            //     let data={
+            //         activityID:this.defaultData.activityID,
+            //         subCompanyID:this.defaultData.subCompanyID,
+            //     };
+            //     this.model.getOtherInfo(data).then((res)=>{//获取
+            //         if(res.data.code==0){
+            //             this.$set('redata',res.data.data);
+            //         }
+            //     })
+            // },
             saveOther(){
                 if(this.redata.description==''){
                     dialogs('info','请输入活动说明！');
                     return;
                 }
-                // let data=_.cloneDeep(this.redata);
-                // data.collectAmount=accMul(data.collectAmount,100);
-                // data.invoiceAmount=accMul(data.invoiceAmount,100);
                 this.model.saveOtherInfo(this.redata).then((res)=>{//保存
                     if(res.data.code==0){
-                        // dialogs('success','保存成功！');
-                        console.log('success');
+                        dialogs('success','保存成功！');
                     }
                 })
-
+                this.modal_other=false;
+                this.redata={};
+                this.initList();
             },
         },
 		ready(){
             var vm=this;
             vm.getClist();
-            (vm.$route.params.activityCostNumber!=':activityCostNumber')?vm.checkForm.contractNumber=vm.$route.params.activityCostNumber:null;
-            (vm.$route.params.activityCostName!=':activityCostName')?vm.checkForm.thirdPartyAccountName=vm.$route.params.activityCostName:null;
-            vm.getInfoList();
+            (vm.$route.params.activityCostNumber!=':activityCostNumber')?vm.defaultData.contractNumber=vm.$route.params.activityCostNumber:null;
+            (vm.$route.params.activityCostName!=':activityCostName')?vm.defaultData.thirdPartyAccountName=vm.$route.params.activityCostName:null;
+            vm.initList();
         },
+        watch:{
+            'defaultData.pageIndex+defaultData.pageSize'(){
+                this.initList();
+            }
+        }
 	}
 </script>
