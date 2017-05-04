@@ -1567,7 +1567,7 @@ export default function install(Vue) {
      */
     _o.saveActivityFormulae = './activityIncomeCost/formulae/save';
     /**
-     * @description 三方管理-活动收入成本管理-获取其他信息
+     * @description 三方管理-活动收入成本管理-获取其他信息GET /v1/finance/cost/detail
      * @author 冷艳君
      * @method get
      */
@@ -1655,6 +1655,13 @@ export default function install(Vue) {
      * @method get
      */
     _o.getFinanceManagement = './target/finance_management?';
+
+    /**
+     * @description 报表管理 指标管理--查询部门（选项）
+     * @author 周俭
+     * @method get
+     */
+    _o.getCommonDepartment = './common/department';
 
     /**
      * @description 报表管理 指标录入

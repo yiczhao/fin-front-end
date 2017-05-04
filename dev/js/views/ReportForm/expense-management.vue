@@ -30,10 +30,6 @@
                                 <option value="2">预算</option>
                                 <option value="2">实际</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.subject">
-                                <option value="">选择费用类型</option>
-                                <option value="0">工资</option>
-                            </select>
                             <div class="inline">
                                 <datepicker :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>
                             </div>
@@ -159,7 +155,6 @@
                 checkForm:{
                     subCompanyId:'',
                     type:'',
-                    subject:'',
                     startDate:'',
                 },
                 infaceList:{

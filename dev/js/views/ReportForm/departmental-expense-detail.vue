@@ -18,25 +18,26 @@
                     <div class="heading-left"></div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="checkForm.subCompanyId">
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.departmental">
+                            <select class="form-control" v-model="checkForm.department">
                                 <option value="">部门</option>
+                                <option v-for="(index,n) in departmentType" v-text="n.name" :value="n.id"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.expenseType">
+                            <select class="form-control" v-model="checkForm.subject">
                                 <option value="">费用类型</option>
+                                <option v-for="(index,n) in costType" v-text="n.name" :value="n.id"></option>
                             </select>
-                            <getmonth :value.sync="checkForm.date"></getmonth>
+                            <getmonth :value.sync="date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
                             <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
-                <div class="dataTables_wrapper no-footer">
+                <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -50,29 +51,28 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <template>
-                                <!-- <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}"> -->
-                                <tr role="row">
+                                <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
                                     <td>{{trlist.department}}</td><!-- {{部门}} -->
-                                    <td>{{trlist.subject}}</td><!-- {{费用类型}} -->
-                                    <td>{{trlist.date}}</td><!-- {{时间}} -->
+                                    <td>{{trlist.subjectName}}</td><!-- {{费用类型}} -->
+                                    <td>{{trlist.date | datetimes }}</td><!-- {{时间}} -->
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
                                 </tr>
-                            </template>
                             </tbody>
                         </table>
                     </div>
                     <div class="datatable-bottom">
                         <div class="right">
-                        <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
                                   :page_size.sync="checkForm.pageSize">
                             </page>
                        </div>
                     </div>
+                </div>
+                <div class="no-list" v-else>
+                    未找到数据
                 </div>
             </div>
         </div>
@@ -85,27 +85,41 @@
 			this.model = model(this);
 			return{
                 checkForm:{
-                    subCompanyID:'',
-                    departmental:'',
-                    expenseType:'',
-                    date:'',
-                    year:'',
-                    month:'',
+                    subCompanyId:'',
+                    department:'',
+                    subject:'',
                     pageIndex: 1,
                     pageSize: 10,
+                    year:'',
+                    month:'',
                 },
+                date:'',
                 dateS:'3',
                 pageall:1,
                 companylists:[],
                 listData:{},
+                costType:{},
+                departmentType:{},
 			}
 		},
 		methods:{
+            setTime(){
+                let date,year,month,myDate,today;
+                myDate=new Date();
+                today=myDate.getDate();
+                date =  this.date.split('-');
+                year = parseInt(date[0]);
+                month = parseInt(date[1]);
+                this.checkForm.year = year;
+                this.checkForm.month=month;
+                // if(today-1!=0){this.defaultData.month = month+1;this.data='2017-5';}else{this.defaultData.month=month};
+            },
             getTime(){
                 this.checkForm.startDate=init_date(this.dateS)[0];
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
             initList(){
+                this.setTime();
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists();
             },
@@ -121,13 +135,28 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
+                this.model.costCommonTypeIn().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('costType',res.data.data)
+                    }
+                });
+                this.model.costCommonTypeIn().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('costType',res.data.data)
+                    }
+                });
+                this.model.getSearchDepartment().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('departmentType',res.data.data)
+                    }
+                });
             },
             getZlists(){
-                // this.model.getCostCommonDetail(this.checkForm).then((res)=>{
-                //     if(res.data.code==0){
-                //         this.$set('listData',res.data.data);
-                //     }
-                // })
+                this.model.getCostCommonDetail(this.checkForm).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('listData',res.data.data);
+                    }
+                })
             },
         },
 		ready(){

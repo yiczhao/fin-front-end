@@ -78,6 +78,14 @@ function model(_this){
             return _this.$http.get(_this.$API.getFinanceManagement+ $.param(data))
         },
         /**
+         * @description  指标管理 查询部门(选项)
+         * @params {data}
+         * @returns {*}
+         * */
+        getSearchDepartment(){
+            return _this.$http.get(_this.$API.getCommonDepartment)
+        },
+        /**
          * @description  指标录入
          * @params {data}
          * @returns {*}
@@ -129,7 +137,7 @@ function model(_this){
             return _this.$http.get(_this.$API.commonCostType)
         },
         /**
-         * @description  费用管理-费用实际费用查询
+         * @description  部门费用明细
          * @params {data}
          * @returns {*}
          * */
