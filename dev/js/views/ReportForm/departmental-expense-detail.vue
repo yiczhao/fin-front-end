@@ -123,7 +123,6 @@
                     });
             },
             getZlists(){
-                this.sortByKey('profitFinished',this.boll)
                 // this.model.getCostCommonDetail(this.checkForm).then((res)=>{
                 //     if(res.data.code==0){
                 //         this.$set('listData',res.data.data);
