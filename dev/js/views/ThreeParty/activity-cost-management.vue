@@ -286,7 +286,7 @@
                     pageIndex:1,
                     pageSize:10,
                 },
-                date:'',
+                date:yestodayMonth(),
                 pageall:1,
                 companylists:[],
                 listData:[],
@@ -303,11 +303,15 @@
 		},
 		methods:{
             setTime(){
-                var date =  this.date.split('-');
-                var year = parseInt(date[0]);
-                var month = parseInt(date[1]);
+                let date,year,month,myDate,today;
+                myDate=new Date();
+                today=myDate.getDate();
+                date =  this.date.split('-');
+                year = parseInt(date[0]);
+                month = parseInt(date[1]);
                 this.defaultData.year = year;
-                this.defaultData.month = month;
+                this.defaultData.month=month;
+                // if(today-1!=0){this.defaultData.month = month+1;this.data='2017-5';}else{this.defaultData.month=month};
             },
             initList(){
                 this.setTime();
@@ -340,6 +344,15 @@
                 this.redata.activityID=activityID;
                 this.redata.subCompanyID=subCompanyID;
                 this.modal_other=true;
+                let data={
+                    activityID:activityID,
+                    subCompanyID:subCompanyID,
+                }
+                this.model.getOtherInfo(data).then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('redata',res.data.data);
+                    }
+                })
             },
             saveOther(){
                 if(this.redata.description==''){

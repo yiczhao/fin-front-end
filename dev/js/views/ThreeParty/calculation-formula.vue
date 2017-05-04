@@ -12,7 +12,7 @@
                     <span>活动名称：</span><span style="margin-right: 10px;">{{defaultData.activityName}}</span>
                     <span>活动ID：</span><span style="margin-right: 10px;">{{defaultData.activityOperationID}}</span>
                     <span>合同：</span><span style="margin-right: 10px;"></span>
-                    <span class="btn btn-primary" v-if="defaultData.contractFileID!=0">下载</span>
+                    <span class="btn btn-primary" v-if="defaultData.contractFileID!=0"  href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</span>
                     <span class="btn btn-default" v-else>下载</span>
                 </div>
                 <div class="other-info">

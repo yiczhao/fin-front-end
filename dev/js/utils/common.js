@@ -220,6 +220,14 @@ window.firstMonth=()=>{
     var m = 1;
     return y+'-'+m;
 };
+window.yestodayMonth=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var t = time.getDate();
+    (t-1==0)?m=m-1:null;
+    return y+'-'+m;
+};
 window.getDate=(value,type)=>{
     if(value==null || value=='')return '';
     switch (type){
