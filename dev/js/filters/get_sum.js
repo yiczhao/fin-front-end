@@ -4,6 +4,6 @@ exports.get_sum = (lists) => {
 	_.map(lists,(val)=>{
 		sum += parseFloat(val);
 	})
-	return sum;
+	return sum/100;
 }
 
