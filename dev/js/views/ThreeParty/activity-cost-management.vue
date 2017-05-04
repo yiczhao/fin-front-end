@@ -134,8 +134,8 @@
                                         <span v-else>{{trlist.incomeWeChatMarketFee/100 | currency ''}}</span>
                                     </td><!-- 微信运营 -->
                                     <td>
-                                        <span v-if="trlist.incomeOtherExpense==null">--</span>
-                                        <span v-else>{{trlist.incomeOtherExpense/100 | currency ''}}</span>
+                                        <span v-if="trlist.incomeOther==null">--</span>
+                                        <span v-else>{{trlist.incomeOther/100 | currency ''}}</span>
                                     </td><!-- 其他 -->
                                     <td>{{trlist.incomeSum/100 | currency ''}}</td><!-- 小计 -->
                                     <td>{{trlist.contractAmountMemo}}</td><!-- 合同金额说明 -->
