@@ -25,22 +25,25 @@
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.budget">
+                            <select class="form-control" v-model="checkForm.type">
                                 <option value="">预算/实际</option>
+                                <option value="2">预算</option>
+                                <option value="2">实际</option>
                             </select>
-                            <select class="form-control" v-model="checkForm.budgetType">
+                            <select class="form-control" v-model="checkForm.subject">
                                 <option value="">选择费用类型</option>
                                 <option value="0">工资</option>
                             </select>
-                            <datepicker :readonly="true" :value.sync="checkForm.date" format="YYYY-MM-DD"></datepicker>
+                            <div class="inline">
+                                <datepicker :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>
+                            </div>
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="initList">查询</a>
+                        <a class="btn btn-info add-top" @click="initList">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
-                <div class="dataTables_wrapper no-footer">
+                 <div class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table class="table">
                             <thead>
@@ -76,10 +79,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="no-list" v-else>
-                        未找到数据
-                    </div>
                 </div>
+                <div class="no-list"></div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
                         :title.sync="typeTitle" @kok="saveChange()" @kcancel="cancel()"
@@ -157,11 +158,9 @@
                 typeTitle:'',
                 checkForm:{
                     subCompanyId:'',
-                    budget:'',
-                    budgetType:'',
-                    date:'',
-                    year:'',
-                    month:'',
+                    type:'',
+                    subject:'',
+                    startDate:'',
                 },
                 infaceList:{
                     // subCompanyID:'',
@@ -212,7 +211,6 @@
                 this.type_in=false;
             },
             initList(){
-                this.setTime();
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists(this.checkForm);//没有接口
             },
