@@ -13,6 +13,12 @@ exports.datetimes = filter_date.filter_date
 import geturl from './geturl'
 exports.geturl = geturl.geturl
 
+import get_sum from './get_sum'
+exports.get_sum = get_sum.get_sum
+
+import get_sub_company from './get_sub_company'
+exports.get_sub_company = get_sub_company.get_sub_company
+
 import filter_grade from './filter_grade'
 exports.filter_grade = filter_grade.filter_grade
 

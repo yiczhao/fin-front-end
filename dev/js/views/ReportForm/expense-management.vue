@@ -21,7 +21,7 @@
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.subCompanyID">
+                            <select class="form-control" v-model="checkForm.subCompanyId">
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
@@ -48,17 +48,29 @@
                                 <th>序号</th>
                                 <th>分公司</th>
                                 <th>预算/实际</th>
-                                <th>当月金额</th>
-                                <th>累计金额</th>
+                                <th>小计</th>
                                 <th v-for="i in subjectData">{{i.optionName}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <template v-for="(index,trlist) in listData">
-                             <tr role="row" v-for="n in trlist[0]" v-bind:class="{'odd':(index%2==0)}">
-                                <td v-for="m in n">
-                                    {{m}}
-                                </td>
+                            <template v-for="(key,trlist) in listData">
+                             <tr role="row" v-for="n in trlist" v-bind:class="{'odd':($parent.$index%2==0)}">
+                                 <td>
+                                     {{$parent.$index+1}}
+                                 </td>
+                                 <td>
+                                    {{key | get_sub_company companylists}}
+                                 </td>
+                                 <td>
+                                     <template v-if="$key==1">预算</template>
+                                     <template v-if="$key==2">实际</template>
+                                 </td>
+                                 <td>
+                                    {{n | get_sum | currency ''}}
+                                 </td>
+                                 <td v-for="m in n" track-by="$index">
+                                     {{m/100 | currency ''}}
+                                 </td>
                              </tr>
                             </template>
                             </tbody>
@@ -84,7 +96,7 @@
                     <validator name="vali" v-if="typeTitle=='实际费用录入'">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="infaceList.subCompanyID">
+                            <select class="form-control" v-model="infaceList.subCompanyId">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
@@ -111,7 +123,7 @@
                         </div>
                         <div class="form-group">
                             <label><i>*</i>时间</label>
-                            <getmonth :value.sync="infaceList.date"></getmonth>
+                            <datepicker :readonly="true" :value.sync="infaceList.date" format="YYYY-MM-DD"></datepicker>
                         </div>
                         <div class="form-group">
                             <label><i>*</i>金额</label>
@@ -153,7 +165,7 @@
                 type_in:false,
                 typeTitle:'',
                 checkForm:{
-                    subCompanyID:'',
+                    subCompanyId:'',
                     budget:'',
                     budgetType:'',
                     date:'',
@@ -200,7 +212,7 @@
                 })
                 if(title=='infact'){
                     this.typeTitle='实际费用录入';
-                    this.infaceList={subCompanyID:'',subject:'',department:'',date:getNowMonth(),amount:''};
+                    this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:''};
                 }else{
                     this.typeTitle='预算录入';
                     this.budgetList={subCompanyId:'',subject:'',year:'2017',amountList:[]};
@@ -247,7 +259,7 @@
                     })
                 }else{
                     errMapper = {
-                        subCompanyID:'分公司',
+                        subCompanyId:'分公司',
                         subject:'费用类型',
                         department:'部门',
                         date:'时间',
