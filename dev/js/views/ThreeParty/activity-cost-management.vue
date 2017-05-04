@@ -101,34 +101,103 @@
                                         <a @click="otherInfo(trlist.activityID,trlist.subCompanyID)">其他信息</a>
                                     </td><!-- 执行表参数 -->
                                     <!-- 收入 -->
-                                    <td>{{trlist.incomeServiceAmount}}</td><!-- 服务费 -->
-                                    <td>{{trlist.thirdPartyReceivable}}</td><!-- 三方应收 -->
-                                    <td>{{trlist.incomeTaxFee}}</td><!-- 税费 -->
-                                    <td>{{trlist.incomeCommision}}</td><!-- 佣金 -->
-                                    <td>{{trlist.incomeAdvertisementFee }}</td><!-- 广告费 -->
-                                    <td>{{trlist.incomeMaterialFee}}</td><!-- 物料费 -->
-                                    <td>{{trlist.incomeRedPackets}}</td><!-- 现金红包 -->
-                                    <td>{{trlist.incomeWeChatMarketFee}}</td><!-- 微信运营 -->
-                                    <td>{{trlist.incomeOther}}</td><!-- 其他 -->
-                                    <td>{{trlist.incomeSum}}</td><!-- 小计 -->
+                                    <td>
+                                        <span v-if="trlist.incomeServiceAmount==null">--</span>
+                                        <span v-else>{{trlist.incomeServiceAmount/100 | currency ''}}</span>
+                                    </td><!-- 服务费 -->
+                                    <td>
+                                        <span v-if="trlist.thirdPartyReceivable==null">--</span>
+                                        <span v-else>{{trlist.thirdPartyReceivable/100 | currency ''}}</span>
+                                    </td><!-- 三方应收 -->
+                                    <td>
+                                        <span v-if="trlist.incomeTaxFee==null">--</span>
+                                        <span v-else>{{trlist.incomeTaxFee/100 | currency ''}}</span>
+                                    </td><!-- 税费 -->
+                                    <td>
+                                        <span v-if="trlist.incomeCommision==null">--</span>
+                                        <span v-else>{{trlist.incomeCommision/100 | currency ''}}</span>
+                                    </td><!-- 佣金 -->
+                                    <td>
+                                        <span v-if="trlist.incomeAdvertisementFee==null">--</span>
+                                        <span v-else>{{trlist.incomeAdvertisementFee/100 | currency ''}}</span>
+                                    </td><!-- 广告费 -->
+                                    <td>
+                                        <span v-if="trlist.incomeMaterialFee==null">--</span>
+                                        <span v-else>{{trlist.incomeMaterialFee/100 | currency ''}}</span>
+                                    </td><!-- 物料费 -->
+                                    <td>
+                                        <span v-if="trlist.incomeRedPackets==null">--</span>
+                                        <span v-else>{{trlist.incomeRedPackets/100 | currency ''}}</span>
+                                    </td><!-- 现金红包 -->
+                                    <td>
+                                        <span v-if="trlist.incomeWeChatMarketFee==null">--</span>
+                                        <span v-else>{{trlist.incomeWeChatMarketFee/100 | currency ''}}</span>
+                                    </td><!-- 微信运营 -->
+                                    <td>
+                                        <span v-if="trlist.incomeWeChatMarketFee==null">--</span>
+                                        <span v-else>{{trlist.incomeWeChatMarketFee/100 | currency ''}}</span>
+                                    </td><!-- 其他 -->
+                                    <td>{{trlist.incomeSum/100 | currency ''}}</td><!-- 小计 -->
                                     <td>{{trlist.contractAmountMemo}}</td><!-- 合同金额说明 -->
                                     <!-- 成本 -->
-                                    <td>{{trlist.merchantSubsidyShould}}</td><!-- 商户应补 -->
-                                    <td>{{trlist.costServiceAmount}}</td><!-- 服务费分润 -->
-                                    <td>{{trlist.costDiscountDiff}}</td><!-- 折扣差分润 -->
-                                    <td>{{trlist.costCommision}}</td><!-- 佣金分润 -->
-                                    <td>{{trlist.costTaxFee}}</td><!-- 税费 -->
-                                    <td>{{trlist.costAdvertisementFee }}</td><!-- 广告费 -->
-                                    <td>{{trlist.costMaterialFee}}</td><!-- 物料费 -->
-                                    <td>{{trlist.costRedPackets}}</td><!-- 现金红包 -->
-                                    <td>{{trlist.costWeChatMarketFee}}</td><!-- 微信运营 -->
-                                    <td>{{trlist.costAmountOccupy}}</td><!-- 资金占用 -->
-                                    <td>{{trlist.costOther}}</td><!-- 其他 -->
-                                    <td>{{trlist.costSum}}</td><!-- 小计 -->
+                                    <td>
+                                        <span v-if="trlist.merchantSubsidyShould==null">--</span>
+                                        <span v-else>{{trlist.merchantSubsidyShould/100 | currency ''}}</span>
+                                    </td><!-- 商户应补 -->
+                                    <td>
+                                        <span v-if="trlist.costServiceAmount==null">--</span>
+                                        <span v-else>{{trlist.costServiceAmount/100 | currency ''}}</span>
+                                    </td><!-- 服务费分润 -->
+                                    <td>
+                                        <span v-if="trlist.costDiscountDiff==null">--</span>
+                                        <span v-else>{{trlist.costDiscountDiff/100 | currency ''}}</span>
+                                    </td><!-- 折扣差分润 -->
+                                    <td>
+                                        <span v-if="trlist.costCommision==null">--</span>
+                                        <span v-else>{{trlist.costCommision/100 | currency ''}}</span>
+                                    </td><!-- 佣金分润 -->
+                                    <td>
+                                        <span v-if="trlist.costTaxFee==null">--</span>
+                                        <span v-else>{{trlist.costTaxFee/100 | currency ''}}</span>
+                                    </td><!-- 税费 -->
+                                    <td>
+                                        <span v-if="trlist.costAdvertisementFee==null">--</span>
+                                        <span v-else>{{trlist.costAdvertisementFee/100 | currency ''}}</span>
+                                    </td><!-- 广告费 -->
+                                    <td>
+                                        <span v-if="trlist.costMaterialFee==null">--</span>
+                                        <span v-else>{{trlist.costMaterialFee/100 | currency ''}}</span>
+                                    </td><!-- 物料费 -->
+                                    <td>
+                                        <span v-if="trlist.costRedPackets==null">--</span>
+                                        <span v-else>{{trlist.costRedPackets/100 | currency ''}}</span>
+                                    </td><!-- 现金红包 -->
+                                    <td>
+                                        <span v-if="trlist.costWeChatMarketFee==null">--</span>
+                                        <span v-else>{{trlist.costWeChatMarketFee/100 | currency ''}}</span>
+                                    </td><!-- 微信运营 -->
+                                    <td>
+                                        <span v-if="trlist.costAmountOccupy==null">--</span>
+                                        <span v-else>{{trlist.costAmountOccupy/100 | currency ''}}</span>
+                                    </td><!-- 资金占用 -->
+                                    <td>
+                                        <span v-if="trlist.costOther==null">--</span>
+                                        <span v-else>{{trlist.costOther/100 | currency ''}}</span>
+                                    </td><!-- 其他 -->
+                                    <td>{{trlist.costSum/100 | currency ''}}</td><!-- 小计 -->
                                     <!-- 毛利 -->
-                                    <td>{{trlist.merchantCooperationGrossProfit}}</td><!-- 商合部毛利 -->
-                                    <td>{{trlist.marketGrossProfit}}</td><!-- 市场部毛利 -->
-                                    <td>{{trlist.grossProfitSum}}</td><!-- 小计 -->
+                                    <td>
+                                        <span v-if="trlist.merchantCooperationGrossProfit==null">--</span>
+                                        <span v-else>{{trlist.merchantCooperationGrossProfit/100 | currency ''}}</span>
+                                    </td><!-- 商合部毛利 -->
+                                    <td>
+                                        <span v-if="trlist.marketGrossProfit==null">--</span>
+                                        <span v-else>{{trlist.marketGrossProfit/100 | currency ''}}</span>
+                                    </td><!-- 市场部毛利 -->
+                                    <td>
+                                        <span v-if="trlist.grossProfitSum==null">--</span>
+                                        <span v-else>{{trlist.grossProfitSum/100 | currency ''}}</span>
+                                    </td><!-- 小计 -->
                                     <td><!-- 活动归属 -->
                                         <span v-if="trlist.activityAttribution==1">分-分</span>
                                         <span v-if="trlist.activityAttribution==2">总-总</span>
