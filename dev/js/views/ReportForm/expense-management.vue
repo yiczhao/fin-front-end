@@ -76,15 +76,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-bottom">
-                        <div class="right">
-                        <!-- v-if="zdlists.length>0"  -->
-                            <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
-                            </page>
-                       </div>
-                    </div>
                     <div class="no-list" v-else>
                         未找到数据
                     </div>
@@ -171,8 +162,6 @@
                     date:'',
                     year:'',
                     month:'',
-                    pageIndex: 1,
-                    pageSize: 10,
                 },
                 infaceList:{
                     // subCompanyID:'',
@@ -187,7 +176,6 @@
                     // year:'2017',
                     // amountList:[],
                 },
-                pageall:1,
                 companylists:[],
                 costType:{},
                 timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
@@ -313,7 +301,6 @@
                 this.model.getExpenseManageLlst(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
-                        this.$set('pageall',res.data.data);
                     }
                 })
                 this.model.getExpenseManageSubject(data).then((res)=>{
@@ -326,11 +313,6 @@
 		ready(){
             this.getClist();
             this.initList();
-		},
-        watch:{
-            'checkForm.pageIndex+checkForm.pageSize'(){
-                this.initList();
-            }
-        }
+		}
 	}
 </script>
