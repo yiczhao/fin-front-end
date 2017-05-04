@@ -198,7 +198,7 @@
                 </div>
                 <div class="form-group">
                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>结算备注：</label>
-                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.confirmRemarks" placeholder="50字以内"></textarea>
+                    <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="relist.confirmRemarks" placeholder="50字以内"></textarea>
                 </div>
             </content-dialog>
 
@@ -232,12 +232,12 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label"><i>*</i>金   额：</label>
-                    <input class="form-control" v-if="dialogTitle==='开票'" v-limitaddprice="relist.invoiceAmount2" v-model="relist.invoiceAmount2">
-                    <input class="form-control" v-if="dialogTitle==='回款'" v-limitaddprice="relist.collectionAmount2" v-model="relist.collectionAmount2">
+                    <input class="form-control" v-if="dialogTitle==='开票'" v-limitprice="relist.invoiceAmount2" v-model="relist.invoiceAmount2">
+                    <input class="form-control" v-if="dialogTitle==='回款'" v-limitprice="relist.collectionAmount2" v-model="relist.collectionAmount2">
                 </div>
                 <div class="form-group">
                     <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备   注：</label>
-                    <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="relist.contractMemo" placeholder="50字以内"></textarea>
+                    <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="relist.contractMemo" placeholder="50字以内"></textarea>
                 </div>
             </content-dialog>
         </div>

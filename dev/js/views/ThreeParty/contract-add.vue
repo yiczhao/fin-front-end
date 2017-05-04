@@ -118,7 +118,7 @@
                 </div>
                 <div class="panel-footer">
                     <span class="btn btn-primary" v-if="$route.params.contractAddId===':contractAddId'" @click="submit">保存</span>
-                    <span class="btn btn-primary" v-if="$route.params.contractAddId!==':contractAddId'" @click="edit">编辑</span>
+                    <span class="btn btn-primary" v-if="$route.params.contractAddId!==':contractAddId'" @click="edit">保存</span>
                     <span class="btn btn-default" v-link="{name:'contract-management-info'}">取消</span>
                 </div>
             </div>
@@ -179,6 +179,10 @@
             },
             //获取城市数据
             getThirdParty(_id){
+                if(!_id){
+                    this.defaultData.thirdPartyAccountID='';
+                    return;
+                }
                 this.cityID='';
                 let data={
                     'subCompanyID':_id
@@ -187,6 +191,7 @@
                     .then((response)=>{
                         if(response.data.code==0){
                             this.$set('thirdPartyList', response.data.data);
+                            this.defaultData.thirdPartyAccountID='';
                         }
                     });
             },
