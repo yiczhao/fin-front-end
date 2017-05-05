@@ -205,6 +205,13 @@
                         </template>
                         <span v-if="relist.payType===5">网银转账</span>
                     </div>
+                    <div class="form-group" v-if="relist.payType!==1">
+                        <label><i>*</i>所属分公司</label>
+                        <select class="form-control" v-model="relist.subCompanyID">
+                            <option value="">请选择所属分公司</option>
+                            <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}</option>
+                        </select>
+                    </div>
                     <div class="form-group" v-if="relist.ifBankActivityPay===0">
                         <label><i>*</i>结算三方</label>
                         <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val1="['required']">

@@ -81,7 +81,7 @@
                         <!-- <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
                         </div> -->
-                        <div class="right">
+                        <div class="right" v-if="listData.length>0">
                         <!-- v-if="zdlists.length>0"  -->
                             <page :all="pageall"
                                   :cur.sync="defaultData.pageIndex"
@@ -207,6 +207,7 @@
                 this.model.getAllopatryListCount(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
+                        this.$set('pageall',res.data.total);
                     }
                 })
             },
