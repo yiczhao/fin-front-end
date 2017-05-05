@@ -264,7 +264,6 @@
             },
             saveChange(){
                 let data={};
-                debugger
                 if(this.typeTitle!=='预算录入'){
                     data=_.cloneDeep(this.infaceList);
                     data.amount=accMul(data.amount,100);
