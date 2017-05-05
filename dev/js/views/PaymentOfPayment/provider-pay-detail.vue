@@ -140,7 +140,7 @@
                                     </template>
                                 </td>
                                 <td>
-                                    <a v-if="trlist.orderNumber!=''&&trlist.orderNumber!=null" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber}}" data-ksa="reserve_cash_order_manage.search">付款订单</a>
+                                    <a v-if="trlist.orderNumber!=''&&trlist.orderNumber!=null" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':5}}" data-ksa="reserve_cash_order_manage.search">付款订单</a>
                                 </td>
                                 <td>{{trlist.remarks}}</td>
                                 <td>{{trlist.refuseReason}}</td>
