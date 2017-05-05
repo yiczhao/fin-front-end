@@ -123,7 +123,6 @@
         </div>
 	</index>
 </template>
-</style>
 <script>
     import model from '../../ajax/ReportForm/report_form_model.js'
 	export default{
@@ -246,13 +245,13 @@
                     }
                 }
                 this.saveCompanyName();
-                debugger
                 this.model.getIndexAdd(this.typeIn).then((res)=>{
                     if(res.data.code==0){
                         dialogs('success','保存成功！');
+                        this.initList();
+                        this.type_in=false;
                     }
                 });
-                this.typeIn={};
             },
             initList(){
                 this.setTime();
