@@ -60,7 +60,7 @@
                                     <td>{{index+1}}</td>
                                     <th>{{trlist.subCompanyName}}</th><!-- {{分公司}} -->
                                     <th>{{trlist.year}}</th><!-- {{年份}} -->
-                                    <th>{{trlist.yearTarget}}百万</th><!-- {{年收入目标}} -->
+                                    <th>{{trlist.yearTarget}}</th><!-- {{年收入目标}} -->
                                     <th>{{trlist.yearProfitTarget}}</th><!-- {{年净利润目标}} -->
                                     <th>{{trlist.january}}</th><!-- {{1月（元）}} -->
                                     <th>{{trlist.february}}</th><!-- {{2月（元）}} -->
@@ -110,7 +110,7 @@
                             <span>{{yearShow}}年</span>
                         </div>
                         <div class="form-group">
-                            <label><i>*</i>年收入目标（百万）</label>
+                            <label><i>*</i>年收入目标</label>
                             <input type="text" class="form-control" v-model="typeIn.yearTarget">
                         </div>
                         <div class="form-group" v-for="(index,value) in timeList">
