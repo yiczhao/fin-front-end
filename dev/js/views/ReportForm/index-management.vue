@@ -78,17 +78,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="datatable-bottom">
-                       <!--  <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>
-                        </div> -->
-                        <div class="right">
-                            <page :all="pageall"
-                                  :cur.sync="checkForm.pageIndex"
-                                  :page_size.sync="checkForm.pageSize">
-                            </page>
-                       </div>
-                    </div>
                 </div>
                 <div class="no-list" v-else>
                     未找到数据
@@ -135,8 +124,6 @@
                     date:'',
                     year:'',
                     month:'',
-                    pagIndex: 1,
-                    pageSize: 10,
                 },
                 dateS:'3',
                 typeIn:{
@@ -157,7 +144,6 @@
                     december:'',
                     year:'',
                 },
-                pageall:1,
                 companylists:[],
                 listData:{},
                 // timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
@@ -284,11 +270,6 @@
 		ready(){
             this.getClist();
             this.initList();
-		},
-        watch:{
-            'checkForm.pageIndex+checkForm.pageSize'(){
-                this.initList();
-            }
-        }
+		}
 	}
 </script>
