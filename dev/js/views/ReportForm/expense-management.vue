@@ -118,6 +118,10 @@
                             <input type="text" class="form-control" v-limitprice="infaceList.amount" v-model="infaceList.amount" placeholder="">
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
+                        <div class="form-group">
+                            <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备   注：</label>
+                            <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="infaceList.remarks " placeholder="50字以内"></textarea>
+                        </div>
                     </validator>
                     <validator name="vali" v-if="typeTitle=='预算录入'">
                         <div class="form-group">
@@ -194,7 +198,7 @@
                 })
                 if(title=='infact'){
                     this.typeTitle='实际费用录入';
-                    this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:''};
+                    this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:'',remarks:''};
                 }else{
                     this.typeTitle='预算录入';
                     this.budgetList={subCompanyId:'',subject:'',year:'2017',amountList:[]};
@@ -285,6 +289,7 @@
                 this.model[key](data).then((res)=>{
                     if(res.data.code==0){
                         dialogs('success','保存成功！');
+                        this.initList();
                         this.type_in=false;
                     }
                 });
