@@ -209,7 +209,6 @@
             			this.defaultData.id=res.data.data;
                         dialogs('success','保存成功！');
             		}
-                    this.getFormulae();
             	})
             },
             saveDefault(){
