@@ -70,6 +70,7 @@
                                 <th>划付类型</th>
                                 <th>付款方式</th>
                                 <th>申请时间</th>
+                                <th>结算三方</th>
                                 <th>付款账户</th>
                                 <th>活动ID</th>
                                 <th>账户名</th>
@@ -98,6 +99,7 @@
                                     <template v-if="trlist.payType==1">备付金</template>
                                 </td>
                                 <td>{{trlist.applyTime | datetime}}</td>
+                                <td>{{trlist.thirdPartyAccountName}}</td>
                                 <td>{{trlist.payAccount}}</td>
                                 <td>{{trlist.activityID}}</td>
                                 <td>{{trlist.collectionAccountName}}</td>
@@ -144,7 +146,7 @@
                                 <td>{{trlist.refuseReason}}</td>
                             </tr>
                             <tr>
-                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>合计：</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </tbody>

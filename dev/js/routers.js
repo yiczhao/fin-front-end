@@ -483,7 +483,7 @@ export default function (router) {
 		// 税率管理
 		'/taxRate/': {
 			name: 'taxRate',
-			router_type: "activity",
+			router_type: "third",
 			component: function (resolve) {
 				require(['./views/Activity/taxRate.vue'], resolve);
 			}
