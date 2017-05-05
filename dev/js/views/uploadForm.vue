@@ -23,7 +23,7 @@
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
 								</tr>
 								<tr>
-									<td>选择日期：
+									<td>选择日期（同步数据）：
 										<datepicker :readonly="true" :value.sync="dateStr1" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime1($event)"/></td>
@@ -161,7 +161,7 @@
             },
 			submitTime1(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/tradeDetail/rollback',this.dateStr1)
+                this.$http.get('./dev/tool/syn/activation?dateStr='+this.dateStr1)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
