@@ -362,11 +362,11 @@
                 this.model.saveOtherInfo(this.redata).then((res)=>{//保存
                     if(res.data.code==0){
                         dialogs('success','保存成功！');
+                        this.modal_other=false;
+                        this.redata={};
+                        this.initList();
                     }
                 })
-                this.modal_other=false;
-                this.redata={};
-                this.initList();
             },
         },
 		ready(){
