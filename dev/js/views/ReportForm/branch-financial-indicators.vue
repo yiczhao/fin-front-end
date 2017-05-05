@@ -36,12 +36,33 @@
                             <tr role="row sortSpan">
                                 <th>排名</th>
                                 <th>分公司</th>
-                                <th @click="sortByKey('income',boll)"><span>&#9660</span>收入</th>
-                                <th @click="sortByKey('cost',boll)"><span>&#9660</span>成本</th>
-                                <th @click="sortByKey('spend',boll)"><span>&#9660</span>费用 </th>
-                                <th @click="sortByKey('profit',boll)"><span>&#9660</span>净利润</th>
-                                <th @click="sortByKey('profitRate',boll)"><span>&#9660</span>净利率</th>
-                                <th @click="sortByKey('profitFinished',boll)"><span>&#9660</span>净利润指标完成率</th>
+                                <th @click="sortByKey('income',0)">
+                                    <span v-if="boll[0]">&#9660;</span>
+                                    <span v-if="!boll[0]">&#9650;</span>
+                                    收入
+                                </th>
+                                <th @click="sortByKey('cost',1)">
+                                    <span v-if="boll[1]">&#9660;</span>
+                                    <span v-if="!boll[1]">&#9650;</span>
+                                    成本
+                                </th>
+                                <th @click="sortByKey('spend',2)">
+                                    <span v-if="boll[2]">&#9660;</span>
+                                    <span v-if="!boll[2]">&#9650;</span>费用
+                                </th>
+                                <th @click="sortByKey('profit',3)">
+                                    <span v-if="boll[3]">&#9660;</span>
+                                    <span v-if="!boll[3]">&#9650;</span>净利润
+                                </th>
+                                <th @click="sortByKey('profitRate',4)">
+                                    <span v-if="boll[4]">&#9660;</span>
+                                    <span v-if="!boll[4]">&#9650;</span>
+                                    净利率
+                                </th>
+                                <th @click="sortByKey('profitFinished',5)">
+                                    <span v-if="boll[5]">&#9660;</span>
+                                    <span v-if="!boll[5]">&#9650;</span>净利润指标完成率
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -97,7 +118,7 @@
                 pageall:1,
                 companylists:[],
                 listData:[],
-                boll:false,
+                boll:[false,false,false,false,false,false],
 			}
 		},
 		methods:{
@@ -133,23 +154,25 @@
 
             },
             getZlists(){
-                this.sortByKey('profitFinished',this.boll)
+                this.sortByKey('profitFinished',0)
                 this.model.getFinanceRanking(this.checkForm).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
-                        this.sortByKey('profitFinished',this.boll)
+                        this.sortByKey('profitFinished',0)
                     }
                 })
             },
-            sortByKey(key,boll){
+            sortByKey(key,index){
                 let data=_.cloneDeep(this.listData);
-                if(boll){
+                let boll=_.cloneDeep(this.boll);
+                if(boll[index]){
                     data= data.sort((a,b)=>{return a[key]-b[key]});//正序
                 }else{
                     data= data.sort((a,b)=>{return b[key]-a[key]});//倒序
                 }
-                this.boll=!this.boll;
+                boll[index]=!boll[index];
                 this.$set('listData', data);
+                this.$set('boll', boll);
             },
         },
 		ready(){
