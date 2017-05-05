@@ -60,20 +60,20 @@
                                     <td>{{index+1}}</td>
                                     <th>{{trlist.subCompanyName}}</th><!-- {{分公司}} -->
                                     <th>{{trlist.year}}</th><!-- {{年份}} -->
-                                    <th>{{trlist.yearTarget}}</th><!-- {{年收入目标}} -->
-                                    <th>{{trlist.yearProfitTarget}}</th><!-- {{年净利润目标}} -->
-                                    <th>{{trlist.january}}</th><!-- {{1月（元）}} -->
-                                    <th>{{trlist.february}}</th><!-- {{2月（元）}} -->
-                                    <th>{{trlist.march}}</th><!-- {{3月（元）}} -->
-                                    <th>{{trlist.april}}</th><!-- {{4月（元）}} -->
-                                    <th>{{trlist.may}}</th><!-- {{5月（元）}} -->
-                                    <th>{{trlist.june}}</th><!-- {{6月（元）}} -->
-                                    <th>{{trlist.july}}</th><!-- {{7月（元）}} -->
-                                    <th>{{trlist.august}}</th><!-- {{8月（元）}} -->
-                                    <th>{{trlist.september}}</th><!-- {{9月（元）}} -->
-                                    <th>{{trlist.october}}</th><!-- {{10月（元）}} -->
-                                    <th>{{trlist.november}}</th><!-- {{11月（元）}} -->
-                                    <th>{{trlist.december}}</th><!-- {{12月（元）}} -->
+                                    <th>{{trlist.yearTarget| currency ''}}</th><!-- {{年收入目标}} -->
+                                    <th>{{trlist.yearProfitTarget| currency ''}}</th><!-- {{年净利润目标}} -->
+                                    <th>{{trlist.january| currency ''}}</th><!-- {{1月（元）}} -->
+                                    <th>{{trlist.february| currency ''}}</th><!-- {{2月（元）}} -->
+                                    <th>{{trlist.march| currency ''}}</th><!-- {{3月（元）}} -->
+                                    <th>{{trlist.april| currency ''}}</th><!-- {{4月（元）}} -->
+                                    <th>{{trlist.may| currency ''}}</th><!-- {{5月（元）}} -->
+                                    <th>{{trlist.june| currency ''}}</th><!-- {{6月（元）}} -->
+                                    <th>{{trlist.july| currency ''}}</th><!-- {{7月（元）}} -->
+                                    <th>{{trlist.august| currency ''}}</th><!-- {{8月（元）}} -->
+                                    <th>{{trlist.september| currency ''}}</th><!-- {{9月（元）}} -->
+                                    <th>{{trlist.october| currency ''}}</th><!-- {{10月（元）}} -->
+                                    <th>{{trlist.november| currency ''}}</th><!-- {{11月（元）}} -->
+                                    <th>{{trlist.december| currency ''}}</th><!-- {{12月（元）}} -->
                                 </tr>
                             </tbody>
                         </table>
