@@ -263,7 +263,17 @@
                 dialogs('info', err)
             },
             saveChange(){
-                let data=this.typeTitle=='预算录入'?this.budgetList:this.infaceList;
+                let data={};
+                debugger
+                if(this.typeTitle!=='预算录入'){
+                    data=_.cloneDeep(this.infaceList);
+                    data.amount=accMul(data.amount,100);
+                }else{
+                    data=_.cloneDeep(this.budgetList);
+                    _.map(data.amountList,(val,index)=>{
+                        data.amountList[index]=accMul(val,100);
+                    })
+                }
                 let key=this.typeTitle=='预算录入'?'costBugetTypeInP':'costBugetActualTypeInP';
                 if (true) {
                     try {
