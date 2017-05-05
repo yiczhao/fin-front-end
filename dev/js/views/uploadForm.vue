@@ -18,6 +18,12 @@
 								</tr>
 								<tr>
 									<td>选择日期：
+										<datepicker :readonly="true" :value.sync="dateStr3" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime3($event)"/></td>
+								</tr>
+								<tr>
+									<td>选择日期：
 										<datepicker :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
@@ -119,6 +125,7 @@
 				name1:'',
 				dateStr:'',
 				dateStr1:'',
+				dateStr3:'',
                 startdateStr:'',
                 enddateStr:'',
 				startID:'',
@@ -171,6 +178,13 @@
             submitTime2(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.$http.get('./dev/tool/count/activation')
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            submitTime3(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.$http.get('./dev/tool/tradeDetail/pull?dateStr='+this.dateStr3)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
