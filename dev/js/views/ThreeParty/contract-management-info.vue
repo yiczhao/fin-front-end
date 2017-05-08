@@ -43,9 +43,14 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th colspan="6" style="background:#f1f1f1">合同情况</th>
+                                    <th colspan="5" style="background:#f1f1f1">合同情况</th>
                                     <th colspan="3" style="background:#e1e1e1">回款情况</th>
-                                    <th colspan="8" style="background:#d1d1d1">划付情况</th>
+                                    <th></th>
+                                    <th colspan="4" style="background:#d1d1d1">划付情况</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
