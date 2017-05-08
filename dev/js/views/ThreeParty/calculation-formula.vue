@@ -11,8 +11,8 @@
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动名称：</span><span style="margin-right: 10px;">{{defaultData.activityName}}</span>
                     <span>活动ID：</span><span style="margin-right: 10px;">{{defaultData.activityOperationID}}</span>
-                    <span v-if="defaultData.contractFileID!=0">合同：</span><span style="margin-right: 10px;"></span>
-                    <a class="btn btn-primary" v-if="defaultData.contractFileID!=0" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
+                    <span v-if="!!defaultData.contractFileID">合同：</span><span style="margin-right: 10px;"></span>
+                    <a class="btn btn-primary" v-if="!!defaultData.contractFileID" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                 </div>
                 <div class="other-info">
                 	<span>注：收入小计需要设置公式来计算，成本小计直接取各个成本项的和，无需编辑计算公式</span>
