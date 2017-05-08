@@ -38,6 +38,20 @@
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime1($event)"/>
 									</td>
+								</tr>								<tr>
+									<td><span>终端激活递延成本拉取：</span></td>
+									<td>选择日期（同步数据）：
+										<datepicker :readonly="true" :value.sync="dateStrDefer" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTimeDefer($event)"/>
+									</td>
+								</tr>								<tr>
+									<td><span>财务数据拉取：</span></td>
+									<td>选择日期（同步数据）：
+										<datepicker :readonly="true" :value.sync="dateStrFinance" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTimeFinance($event)"/>
+									</td>
 								</tr>
 								<tr>
 									<td><span>终端激活明细统计：</span></td>
@@ -201,6 +215,20 @@
 			submitTime1(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 this.$http.post('./dev/tool/syn/activation?dateStr='+this.dateStr1)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+			submitTimeDefer(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.$http.post('./dev/tool/syn/deffer?dateStr='+this.dateStrDefer)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+			submitTimeFinance(e){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.$http.post('./dev/tool/syn/finance?dateStr='+this.dateStrFinance)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
