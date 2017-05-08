@@ -111,7 +111,7 @@
                         </div>
                         <div class="form-group">
                             <label><i>*</i>金额</label>
-                            <input type="text" class="form-control" v-limitprice="infaceList.amount" v-model="infaceList.amount" placeholder="">
+                            <input type="text" class="form-control" v-limitaddprice="infaceList.amount" v-model="infaceList.amount" placeholder="">
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
                         <div class="form-group">
