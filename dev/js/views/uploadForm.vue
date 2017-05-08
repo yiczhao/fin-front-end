@@ -129,6 +129,15 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>商户账户更新：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="begin" placeholder="begin"/>
+										<input type="text" class="form-control" v-model="end" placeholder="end"/>
+										<input type="text" class="form-control" v-model="code" placeholder="code"/>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="商户账户更新" @click="merchantAccountSyn($event)"/></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -177,7 +186,10 @@
                 bankAccountID:'',
 				flowID:'',
 				serialNumber :'',
-				jobID:''
+				jobID:'',
+				end:'',
+				begin:'',
+				code:''
             }
         },
         methods:{
@@ -351,7 +363,18 @@
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
-			}
+			},
+            merchantAccountSyn(e){
+                let data={
+                    begin :  this.begin,
+                    end : this.end,
+                    code : this.code,
+                }
+                this.$http.post('./dev/tool/merchant_account/syn?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
         },
         ready() {
         },
