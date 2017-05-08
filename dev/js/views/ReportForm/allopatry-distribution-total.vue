@@ -64,7 +64,7 @@
                                     <td>{{trlist.snTypeName }}</td><!-- {{SN归属合伙人}} -->
                                     <td>
                                         <!-- <a v-link="{name:'partner-order'}" @click="typeInShow('partner')">合伙人订单</a> -->
-                                        <a @click="typeInShow('partner',trlist.id)">合伙人订单</a>
+                                        <a @click="typeInShow('partner',trlist)">合伙人订单</a>
                                         <!-- <a v-link="{name:'shipment-quantity'}" @click="typeInShow('shipment')">发货数量</a> -->
                                         <!--<a @click="typeInShow('shipment')">发货数量</a>-->
                                     </td>
@@ -100,7 +100,7 @@
                     <validator name="vali2" v-if="typeTitle=='合伙人订单'">
                         <div class="form-group">
                             <label>SN归属合伙人</label>
-                            <span>汉付信通</span>
+                            <span>{{partnerOrder.snTypeName}}</span>
                         </div>
                         <div class="form-group">
                             <label>预收账款</label>
@@ -164,7 +164,7 @@
                 this.defaultData.year = year;
                 this.defaultData.month = month;
             },
-            typeInShow(title,id){
+            typeInShow(title,{id,snTypeName}){
                 this.type_in=true;
                 if(title!='partner'){
                     this.typeTitle='发货数量';
@@ -174,6 +174,7 @@
                     this.partnerOrder={dataId:'',preIncome:'',purchaseNumber:'',},
                     this.partnerOrder.dataId=id;
                 };
+                this.partnerOrder.snTypeName=snTypeName;
             },
             saveChange(){
                 this.type_in=false;//test

@@ -11,32 +11,43 @@
 						<form method="POST" enctype="multipart/form-data">
 							<table>
 								<tr>
+									<td><span>交易漏单白名单：</span></td>
 									<td>
-										<input type="text"/>
+										<input type="text" class="form-control"/>
 										File to upload:<input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data">Name:<input type="text"  class="form-control" name="name"/></td>
 									<td><input class="btn btn-primary" type="button" value="提交" @click="submits($event)"/></td>
 								</tr>
 								<tr>
+									<td><span>大后台交易数据拉取：</span></td>
 									<td>选择日期：
 										<datepicker :readonly="true" :value.sync="dateStr3" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime3($event)"/></td>
 								</tr>
 								<tr>
+									<td><span>交易数据回滚：</span></td>
 									<td>选择日期：
 										<datepicker :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
 								</tr>
 								<tr>
+									<td><span>终端激活明细拉取：</span></td>
 									<td>选择日期（同步数据）：
 										<datepicker :readonly="true" :value.sync="dateStr1" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime1($event)"/>
-										<input type="button" class="btn btn-primary" value="统计" @click="submitTime2($event)"/>
 									</td>
 								</tr>
+								<tr>
+									<td><span>终端激活明细统计：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="统计" @click="submitTime2($event)"/>
+									</td>
+									<td></td>
+								</tr>
                                 <tr>
+									<td><span>备付金明细拉取：</span></td>
                                     <td>
                                         开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
                                         结束日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="enddateStr" format="YYYY-MM-DD"></datepicker>
@@ -47,6 +58,7 @@
                                     </td>
                                 </tr>
 								<tr>
+									<td><span>撤单：</span></td>
 									<td>
 										<input type="text" class="form-control" v-model="flowID" placeholder="flowID"/>
 										<input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号"/>
@@ -56,6 +68,7 @@
 									</td>
 								</tr>
 								<tr>
+									<td><span>定时任务重跑：</span></td>
 									<td>
 										<input type="text" class="form-control" v-model="jobID" placeholder="jobID"/>
 									</td>
@@ -64,6 +77,7 @@
 									</td>
 								</tr>
 								<tr>
+									<td><span>活动执行表：</span></td>
                                     <td>
                                         <input type="text" class="form-control" v-model="activityID" placeholder="activityID"/>
                                         <input type="text" class="form-control" v-model="subCompanyID" placeholder="subCompanyID"/>
@@ -75,17 +89,32 @@
                                     </td>
                                 </tr>
                                 <tr>
+									<td><span>生成活动执行表：</span></td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="生成活动执行表" data-toggle="modal" @click="generateActivityEffectAgain($event)"/>
                                     </td>
 									<td></td>
                                 </tr>
                                 <tr>
+									<td><span>大后台数据同步：</span></td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="大后台数据同步" data-toggle="modal" @click="intiBOSSData($event)"/>
                                     </td>
 									<td></td>
                                 </tr>
+								<tr>
+									<td><span>生成财务指标分析表：</span></td>
+									<td>选择日期：
+										<datepicker :readonly="true" :value.sync="countDateStr" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="生成财务指标分析表" @click="generateFinanceTargetDetail($event)"/></td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="重新生成财务指标分析表" data-toggle="modal" @click="reGenerateFinanceTargetDetail($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -128,6 +157,7 @@
 				dateStr3:'',
                 startdateStr:'',
                 enddateStr:'',
+                countDateStr:'',
 				startID:'',
 				endID:'',
                 bankAccountID:'',
@@ -170,21 +200,21 @@
             },
 			submitTime1(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.get('./dev/tool/syn/activation?dateStr='+this.dateStr1)
+                this.$http.post('./dev/tool/syn/activation?dateStr='+this.dateStr1)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             submitTime2(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.get('./dev/tool/count/activation')
+                this.$http.post('./dev/tool/count/activation')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             submitTime3(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.get('./dev/tool/tradeDetail/pull?dateStr='+this.dateStr3)
+                this.$http.post('./dev/tool/tradeDetail/pull',this.dateStr3)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -216,7 +246,7 @@
 						})
 			},
 			excuteJob(){
-				this.$http.get('./job/'+this.jobID)
+				this.$http.post('./job/'+this.jobID)
 						.then((response)=>{
 							dialogs('success',response.data.message);
 						})
@@ -281,7 +311,19 @@
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
-            }
+            },
+            generateFinanceTargetDetail(e){
+                this.$http.post('./dev/tool/finance_target/generate?dateStr='+this.countDateStr)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            reGenerateFinanceTargetDetail(e){
+                this.$http.post('./dev/tool/finance_target/regenerate')
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+			}
         },
         ready() {
         },
