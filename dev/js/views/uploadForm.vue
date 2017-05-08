@@ -200,21 +200,21 @@
             },
 			submitTime1(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.get('./dev/tool/syn/activation?dateStr='+this.dateStr1)
+                this.$http.post('./dev/tool/syn/activation?dateStr='+this.dateStr1)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             submitTime2(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.get('./dev/tool/count/activation')
+                this.$http.post('./dev/tool/count/activation')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             submitTime3(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.get('./dev/tool/tradeDetail/pull?dateStr='+this.dateStr3)
+                this.$http.post('./dev/tool/tradeDetail/pull?dateStr='+this.dateStr3)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -246,7 +246,7 @@
 						})
 			},
 			excuteJob(){
-				this.$http.get('./job/'+this.jobID)
+				this.$http.post('./job/'+this.jobID)
 						.then((response)=>{
 							dialogs('success',response.data.message);
 						})
@@ -313,13 +313,13 @@
                         })
             },
             generateFinanceTargetDetail(e){
-                this.$http.get('./dev/tool/finance_target/generate?dateStr='+this.countDateStr)
+                this.$http.post('./dev/tool/finance_target/generate?dateStr='+this.countDateStr)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             reGenerateFinanceTargetDetail(e){
-                this.$http.get('./dev/tool/finance_target/regenerate')
+                this.$http.post('./dev/tool/finance_target/regenerate')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
