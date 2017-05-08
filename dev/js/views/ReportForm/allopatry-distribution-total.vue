@@ -31,7 +31,7 @@
                                 <option value="">sn归属合伙人</option>
                                 <option :value="n.id" v-for="(index,n) in snPartnerList" v-text="n.name"></option>
                             </select>
-                            <getmonth :value.sync="date"></getmonth>
+                            <getmonth :value.sync="defaultData.dates"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -140,8 +140,8 @@
                     month:'',
                     pageIndex: 1,
                     pageSize: 10,
+                    dates:'',
                 },
-                date:'',
                 partnerOrder:{
                     dataId:'',
                     preIncome:'',
@@ -154,12 +154,13 @@
                 pageall:1,
                 companylists:[],
                 commonbusinessList:[],
+                snPartnerList:[],
                 listData:{},
 			}
 		},
 		methods:{
             setTime(){
-                var date =  this.date.split('-');
+                var date =  this.defaultData.dates.split('-');
                 var year = parseInt(date[0]);
                 var month = parseInt(date[1]);
                 this.defaultData.year = year;
@@ -230,6 +231,7 @@
         },
 		ready(){
             this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
 		},
         watch:{

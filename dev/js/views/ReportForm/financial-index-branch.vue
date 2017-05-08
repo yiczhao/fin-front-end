@@ -182,6 +182,7 @@
         },
 		ready(){
             this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.initList();
 		},
         watch:{

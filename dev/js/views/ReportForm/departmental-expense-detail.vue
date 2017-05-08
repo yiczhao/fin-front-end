@@ -46,6 +46,7 @@
                                 <th>分公司</th>
                                 <th>部门</th>
                                 <th>费用类型</th>
+                                <th>金额</th>
                                 <th>时间</th>
                                 <th>备注</th>
                             </tr>
@@ -56,6 +57,7 @@
                                     <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
                                     <td>{{trlist.departmentName}}</td><!-- {{部门}} -->
                                     <td>{{trlist.subjectName}}</td><!-- {{费用类型}} -->
+                                    <td>{{trlist.amount/100 | currency ''}}</td>
                                     <td>{{trlist.date | datetimes }}</td><!-- {{时间}} -->
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
                                 </tr>
@@ -92,6 +94,7 @@
                     pageSize: 10,
                     year:'',
                     month:'',
+                    department:''
                 },
                 date:'',
                 dateS:'3',
@@ -162,6 +165,7 @@
         },
 		ready(){
             this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.initList();
 		},
         watch:{

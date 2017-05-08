@@ -8,9 +8,6 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
-                    <div class="heading-left">
-                        <a class="btn btn-add add-top" v-link="{name:'contract-add'}" data-ksa="contract.add">添加合同</a>
-                    </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <select class="form-control" v-model="defaultData.subCompanyID" @change="getcontractNumber(defaultData.subCompanyID)">

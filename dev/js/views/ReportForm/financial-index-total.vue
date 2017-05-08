@@ -164,6 +164,7 @@
         },
 		ready(){
             this.getSlist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
 		},
         watch:{

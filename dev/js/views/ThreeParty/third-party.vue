@@ -212,13 +212,6 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <select class="form-control" v-model="shdata.type">
-                                        <option value="">请选择类型</option>
-                                        <option value="1">银行</option>
-                                        <option value="2">运营商</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
                                     <input type="text" class="form-control" v-model="shdata.name" placeholder="名称">
                                 </div>
                                 <div class="col-md-2">

@@ -136,7 +136,7 @@
                         </div>
                         <div class="form-group" v-for="(index,value) in timeList">
                             <label><i>*</i>2017年{{$index+1}}月</label>
-                            <input type="text" class="form-control" v-limitprice="budgetList.amountList[index]" v-model="budgetList.amountList[index]" placeholder="">
+                            <input type="text" class="form-control" v-limitaddprice="budgetList.amountList[index]" v-model="budgetList.amountList[index]" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>
@@ -257,7 +257,7 @@
                 // 检测是否存在未填写项
                 for (let k in data) {
                     let m = data[k]
-                    let err = errMapper[k] && new Error(`${errMapper[k]}为必填项!`)
+                    let err = errMapper[k] && new Error(`请检查${errMapper[k]}项!`)
 
                     /*global _*/
                     if ((!m && err) || (_.isArray(m) && !m.length && err)) {
@@ -322,6 +322,7 @@
         },
 		ready(){
             this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.initList();
 		}
 	}

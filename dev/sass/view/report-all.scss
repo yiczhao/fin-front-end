@@ -1,5 +1,9 @@
 .allopatry-distribution,.expense-management,.index-management{
 	.kdialog{
+		.kdialog__content{
+			overflow: auto;
+			max-height: 500px;
+		}
 		.form-control{
 			display: inline-block;width: 74%;
 		}

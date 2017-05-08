@@ -18,18 +18,6 @@
                     <div class="heading-left">
                         <a class="btn btn-add" @click="indexIn()">指标录入</a>
                     </div>
-                    <div class="heading-right">
-                        <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.subCompanyID">
-                                <option value="">全部分公司</option>
-                                <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
-                            </select>
-                            <getmonth :value.sync="checkForm.date"></getmonth>
-                        </form>
-                    </div>
-                    <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="initList()">查询</a>
-                    </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -121,7 +109,7 @@
                 type_in:false,
                 checkForm:{
                     subCompanyID:'',
-                    date:'',
+                    date:getNow(),
                     year:'',
                     month:'',
                 },
@@ -269,6 +257,7 @@
         },
 		ready(){
             this.getClist();
+            (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.initList();
 		}
 	}

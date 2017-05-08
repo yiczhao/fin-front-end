@@ -53,7 +53,7 @@ module.exports = [
 		]
 	},
 	{
-		name: '三方管理',
+		name: '三方结算管理',
 		icon: ' icon-users4',
 		type: 'third',
 		ksa: 'third_party_account_manage',
