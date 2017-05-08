@@ -62,17 +62,18 @@
                                     <td>{{trlist.subCompanyName }}</td><!-- 分公司 -->
                                     <td>{{trlist.itemNname  }}</td><!-- 项目 -->
                                     <td>{{trlist.businessName  }}</td><!-- 业务名称 -->
-                                    <td>{{trlist.income  }}</td><!-- 收入 -->
-                                    <td>{{trlist.cost}}</td><!-- 成本 -->
+                                    <td>{{trlist.businessDetailName  }}</td><!-- 业务明细项目 -->
+                                    <td>{{trlist.income/100 | currency ''  }}</td><!-- 收入 -->
+                                    <td>{{trlist.cost/100 | currency ''}}</td><!-- 成本 -->
                                 </tr>
                                 <tr>
                                     <td>合计：</td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{totalData.spendTotal}}</td>
-                                    <td>{{totalData.profitTotal}}</td>
-                                    <td>{{totalData.profitRateTotal}}</td>
-                                    <td>{{totalData.targetFinishTotal}}</td>
+                                    <td>费用:{{totalData.spendTotal/100 | currency ''}}</td>
+                                    <td>净利润:{{totalData.profitTotal/100 | currency ''}}</td>
+                                    <td>净利率:{{totalData.profitRateTotal}}%</td>
+                                    <td>净利润指标完成率:{{totalData.targetFinishTotal}}%</td>
                                 </tr>
                             </tbody>
                         </table>

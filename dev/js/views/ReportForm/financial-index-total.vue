@@ -56,16 +56,16 @@
                                 <td>{{trlist.itemNname}}</td><!-- {{项目}} -->
                                 <td>{{trlist.businessName}}</td><!-- {{业务名称}} -->
                                 <td>{{trlist.businessDetailName}}</td><!-- {{业务明细项目}} -->
-                                <td>{{trlist.income}}</td><!-- {{收入}} -->
-                                <td>{{trlist.cost}}</td><!-- {{成本}} -->
+                                <td>{{trlist.income/100 | currency ''}}</td><!-- {{收入}} -->
+                                <td>{{trlist.cost/100 | currency ''}}</td><!-- {{成本}} -->
                             </tr>
                             <tr>
                                 <td>合计：</td>
                                 <td></td>
-                                <td>费用:{{totalData.costTotal}}</td><!--{{费用}} -->
-                                <td>净利润:{{totalData.profitTotal}}</td><!--{{净利润}} -->
-                                <td>净利率:{{totalData.profitRateTotal}}</td><!--{{净利率}} -->
-                                <td>净利润指标完成率:{{totalData.targetFinishTotal}}</td><!--{{净利润指标完成率}} -->
+                                <td>费用:{{totalData.costTotal/100 | currency ''}}</td><!--{{费用}} -->
+                                <td>净利润:{{totalData.profitTotal/100 | currency ''}}</td><!--{{净利润}} -->
+                                <td>净利率:{{totalData.profitRateTotal}}%</td><!--{{净利率}} -->
+                                <td>净利润指标完成率:{{totalData.targetFinishTotal}}%</td><!--{{净利润指标完成率}} -->
                             </tr>
                             </tbody>
                         </table>

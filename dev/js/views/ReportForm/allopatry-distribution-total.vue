@@ -66,13 +66,13 @@
                                         <!-- <a v-link="{name:'partner-order'}" @click="typeInShow('partner')">合伙人订单</a> -->
                                         <a @click="typeInShow('partner',trlist.id)">合伙人订单</a>
                                         <!-- <a v-link="{name:'shipment-quantity'}" @click="typeInShow('shipment')">发货数量</a> -->
-                                        <a @click="typeInShow('shipment')">发货数量</a>
+                                        <!--<a @click="typeInShow('shipment')">发货数量</a>-->
                                     </td>
-                                    <td>{{trlist.preIncome }}</td><!-- {{预收账款}} -->
+                                    <td>{{trlist.preIncome/100 | currency '' }}</td><!-- {{预收账款}} -->
                                     <td>{{trlist.purchaseNumber }}</td><!-- {{采购数量}} -->
-                                    <td><a v-link="{name:'allopatry-distribution-detail'}">激活数量{{trlist.number}}</a></td><!-- 激活数量 -->
-                                    <td>{{trlist.income }}</td><!-- {{收入}} -->
-                                    <td>{{trlist.cost}}</td><!-- {{成本}} -->
+                                    <td><a v-link="{name:'allopatry-distribution-detail'}">{{trlist.number}}</a></td><!-- 激活数量 -->
+                                    <td>{{trlist.income/100 | currency '' }}</td><!-- {{收入}} -->
+                                    <td>{{trlist.cost/100 | currency ''}}</td><!-- {{成本}} -->
                                 </tr>
                             </tbody>
                         </table>
