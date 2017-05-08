@@ -22,7 +22,7 @@
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.departmentName">
+                            <select class="form-control" v-model="checkForm.department">
                                 <option value="">部门</option>
                                 <option v-for="(index,n) in departmentType" v-text="n.name" :value="n.id"></option>
                             </select>
