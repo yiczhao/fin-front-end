@@ -86,6 +86,12 @@
                                     </td>
 									<td></td>
                                 </tr>
+								<tr>
+									<td>选择日期：
+										<datepicker :readonly="true" :value.sync="countDateStr" format="YYYY-MM-DD"></datepicker>
+									</td>
+									<td><input type="button" class="btn btn-primary" value="生成财务指标分析表" @click="generateFinanceTargetDetail($event)"/></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -128,6 +134,7 @@
 				dateStr3:'',
                 startdateStr:'',
                 enddateStr:'',
+                countDateStr:'',
 				startID:'',
 				endID:'',
                 bankAccountID:'',
@@ -281,7 +288,13 @@
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
-            }
+            },
+            generateFinanceTargetDetail(e){
+                this.$http.get('./dev/tool/finance_target/generate?dateStr='+this.countDateStr)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+			}
         },
         ready() {
         },
