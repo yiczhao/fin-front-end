@@ -109,6 +109,12 @@
 									</td>
 									<td><input type="button" class="btn btn-primary" value="生成财务指标分析表" @click="generateFinanceTargetDetail($event)"/></td>
 								</tr>
+								<tr>
+									<td>
+										<input type="button" class="btn btn-primary" value="重新生成财务指标分析表" data-toggle="modal" @click="reGenerateFinanceTargetDetail($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -308,6 +314,12 @@
             },
             generateFinanceTargetDetail(e){
                 this.$http.get('./dev/tool/finance_target/generate?dateStr='+this.countDateStr)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            reGenerateFinanceTargetDetail(e){
+                this.$http.get('./dev/tool/finance_target/regenerate')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
