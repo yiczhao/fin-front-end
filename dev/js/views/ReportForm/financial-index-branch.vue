@@ -60,7 +60,7 @@
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.subCompanyName }}</td><!-- 分公司 -->
-                                    <td>{{trlist.itemNname  }}</td><!-- 项目 -->
+                                    <td>{{trlist.itemName  }}</td><!-- 项目 -->
                                     <td>{{trlist.businessName  }}</td><!-- 业务名称 -->
                                     <td>{{trlist.businessDetailName  }}</td><!-- 业务明细项目 -->
                                     <td>{{trlist.income/100 | currency ''  }}</td><!-- 收入 -->
