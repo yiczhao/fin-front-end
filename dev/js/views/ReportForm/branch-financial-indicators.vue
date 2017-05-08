@@ -69,12 +69,12 @@
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td><!-- {{排名}} -->
                                     <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
-                                    <td>{{trlist.income}}</td><!-- {{收入}} -->
-                                    <td>{{trlist.cost}}</td><!-- {{成本}} -->
-                                    <td>{{trlist.spend}}</td><!-- {{费用}} -->
-                                    <td>{{trlist.profit}}</td><!-- {{净利润}} -->
-                                    <td>{{trlist.profitRate}}</td><!-- {{净利率}} -->
-                                    <td>{{trlist.profitFinished}}</td><!-- {{净利润指标完成率}} -->
+                                    <td>{{trlist.income/100 | currency ''}}</td><!-- {{收入}} -->
+                                    <td>{{trlist.cost/100 | currency ''}}</td><!-- {{成本}} -->
+                                    <td>{{trlist.spend/100 | currency ''}}</td><!-- {{费用}} -->
+                                    <td>{{trlist.profit/100 | currency ''}}</td><!-- {{净利润}} -->
+                                    <td>{{trlist.profitRate}}%</td><!-- {{净利率}} -->
+                                    <td>{{trlist.profitFinished}}%</td><!-- {{净利润指标完成率}} -->
                                 </tr>
                             </tbody>
                         </table>
