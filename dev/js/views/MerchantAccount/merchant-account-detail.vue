@@ -50,7 +50,7 @@
                                     <template v-if="trList.expired == 1">正在使用</template>
                                     <template v-if="trList.expired == 2">待确认</template>
                                 </td>
-                                <td>{{trList.updatedAt | datetime}}</td>
+                                <td>{{trList.createAt | datetime}}</td>
                             </tr>
                             </tbody>
                         </table>
