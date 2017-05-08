@@ -331,7 +331,7 @@ export default function (router) {
 			}
 		},
 		/* 报表管理-异地激活收入成本分配明细表 */
-		'/allopatry-distribution-detail': {
+		'/allopatry-distribution-detail/:distributionsubCompanyId/:distributionbusinessTypeId/:distributionsnType': {
 			name: 'allopatry-distribution-detail',
 			router_type: "report",
 			component: function (resolve) {
