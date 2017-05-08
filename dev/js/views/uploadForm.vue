@@ -11,24 +11,28 @@
 						<form method="POST" enctype="multipart/form-data">
 							<table>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>
-										<input type="text"/>
+										<input type="text" class="form-control"/>
 										File to upload:<input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data">Name:<input type="text"  class="form-control" name="name"/></td>
 									<td><input class="btn btn-primary" type="button" value="提交" @click="submits($event)"/></td>
 								</tr>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>选择日期：
 										<datepicker :readonly="true" :value.sync="dateStr3" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime3($event)"/></td>
 								</tr>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>选择日期：
 										<datepicker :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
 								</tr>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>选择日期（同步数据）：
 										<datepicker :readonly="true" :value.sync="dateStr1" format="YYYY-MM-DD"></datepicker>
 									</td>
@@ -37,6 +41,7 @@
 									</td>
 								</tr>
                                 <tr>
+									<td><span>例子1：</span></td>
                                     <td>
                                         开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
                                         结束日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="enddateStr" format="YYYY-MM-DD"></datepicker>
@@ -47,6 +52,7 @@
                                     </td>
                                 </tr>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>
 										<input type="text" class="form-control" v-model="flowID" placeholder="flowID"/>
 										<input type="text" class="form-control" v-model="serialNumber" placeholder="交易流水号"/>
@@ -56,6 +62,7 @@
 									</td>
 								</tr>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>
 										<input type="text" class="form-control" v-model="jobID" placeholder="jobID"/>
 									</td>
@@ -64,6 +71,7 @@
 									</td>
 								</tr>
 								<tr>
+									<td><span>例子1：</span></td>
                                     <td>
                                         <input type="text" class="form-control" v-model="activityID" placeholder="activityID"/>
                                         <input type="text" class="form-control" v-model="subCompanyID" placeholder="subCompanyID"/>
@@ -75,18 +83,21 @@
                                     </td>
                                 </tr>
                                 <tr>
+									<td><span>例子1：</span></td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="生成活动执行表" data-toggle="modal" @click="generateActivityEffectAgain($event)"/>
                                     </td>
 									<td></td>
                                 </tr>
                                 <tr>
+									<td><span>例子1：</span></td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="大后台数据同步" data-toggle="modal" @click="intiBOSSData($event)"/>
                                     </td>
 									<td></td>
                                 </tr>
 								<tr>
+									<td><span>例子1：</span></td>
 									<td>选择日期：
 										<datepicker :readonly="true" :value.sync="countDateStr" format="YYYY-MM-DD"></datepicker>
 									</td>
