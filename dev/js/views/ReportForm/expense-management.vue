@@ -119,8 +119,8 @@
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
                         <div class="form-group">
-                            <label style="position: relative;top: -95px;" class="control-label"><i>*</i>备   注：</label>
-                            <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="infaceList.remarks " placeholder="50字以内"></textarea>
+                            <label style="position: relative;top: -95px;" class="control-label">备   注：</label>
+                            <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="infaceList.remarks "></textarea>
                         </div>
                     </validator>
                     <validator name="vali" v-if="typeTitle=='预算录入'">
