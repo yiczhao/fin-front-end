@@ -101,11 +101,7 @@
                             <label><i>*</i>部门</label>
                             <select class="form-control" v-model="infaceList.department">
                                 <option value="">请选择部门</option>
-                                <option value="1">总经办</option>
-                                <option value="2">商合部</option>
-                                <option value="3">市场部</option>
-                                <option value="4">运营支撑部</option>
-                                <option value="5">综合部</option>
+                                <option v-for="(index,n) in departmentList" v-text="n.name" :value="n.id"></option>
                             </select>
                             <!-- <span v-if="$vali.val1.required && fire1" class="validation-error-label">请选择费用类型</span> -->
                         </div>
@@ -176,6 +172,7 @@
                 },
                 companylists:[],
                 costType:{},
+                departmentList:[],
                 timeList:['1','2','3','4','5','6','7','8','9','10','11','12'],
                 listData:{},
                 subjectData:{},
@@ -194,6 +191,11 @@
                 this.model.costCommonTypeIn().then((res)=>{
                     if(res.data.code==0){
                         this.$set('costType',res.data.data)
+                    }
+                })
+                this.model.departmentList().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('departmentList',res.data.data)
                     }
                 })
                 if(title=='infact'){

@@ -25,11 +25,11 @@
                             </select>
                             <select class="form-control" v-model="defaultData.businessTypeId">
                                 <option value="">业务类型</option>
+                                <option :value="n.id" v-for="(index,n) in commonbusinessList" v-text="n.name"></option>
                             </select>
                             <select class="form-control" v-model="defaultData.snType">
                                 <option value="">sn归属合伙人</option>
-                                <option value="0">汉付信通</option>
-                                <option value="1">上海新卡说</option>
+                                <option :value="n.id" v-for="(index,n) in snPartnerList" v-text="n.name"></option>
                             </select>
                             <getmonth :value.sync="date"></getmonth>
                         </form>
@@ -153,6 +153,7 @@
                 typeTitle:'',
                 pageall:1,
                 companylists:[],
+                commonbusinessList:[],
                 listData:{},
 			}
 		},
@@ -201,6 +202,20 @@
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
                             this.$set('companylists', response.data.data)
+                        }
+                    });
+                this.model.getSearchBusiness(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('commonbusinessList', response.data.data)
+                        }
+                    });
+                this.model.snPartnerList(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('snPartnerList', response.data.data)
                         }
                     });
             },

@@ -1729,6 +1729,20 @@ export default function install(Vue) {
      * @method post
      */
     _o.commonCostDetail = './cost/detail?';
+    /**
+     * @description 报表管理 费用管理 获取部门
+     * @author 周俭
+     * @method get
+     */
+    _o.departmentList = './common/department';
+    /**
+     * @description 报表管理 费用管理 获取部门
+     * @author 周俭
+     * @method get
+     */
+    _o.snPartnerList = './target/sn_partner_list';
+
+
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

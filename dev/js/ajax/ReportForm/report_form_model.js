@@ -176,6 +176,23 @@ function model(_this){
         snInfoTypeIn(data){
             return _this.$http.get(_this.$API.snInfoSave+ $.param(data))
         },
+        /**
+         * @description  异地激活收入成本分配统计--合伙人订单录入
+         * @params {data}
+         * @returns {*}
+         * */
+        departmentList(){
+            return _this.$http.get(_this.$API.departmentList)
+        },
+        /**
+         * @description  异地激活收入成本分配统计--合伙人订单录入
+         * @params {data}
+         * @returns {*}
+         * */
+        snPartnerList(){
+            return _this.$http.get(_this.$API.snPartnerList)
+        },
+
     }
 }
 module.exports=model;
