@@ -214,7 +214,7 @@
             },
             submitTime3(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/tradeDetail/pull?dateStr='+this.dateStr3)
+                this.$http.post('./dev/tool/tradeDetail/pull',this.dateStr3)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
