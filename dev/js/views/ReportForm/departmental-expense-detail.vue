@@ -22,7 +22,7 @@
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <select class="form-control" v-model="checkForm.department">
+                            <select class="form-control" v-model="checkForm.departmentName">
                                 <option value="">部门</option>
                                 <option v-for="(index,n) in departmentType" v-text="n.name" :value="n.id"></option>
                             </select>
@@ -54,7 +54,7 @@
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
                                     <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
-                                    <td>{{trlist.department}}</td><!-- {{部门}} -->
+                                    <td>{{trlist.departmentName}}</td><!-- {{部门}} -->
                                     <td>{{trlist.subjectName}}</td><!-- {{费用类型}} -->
                                     <td>{{trlist.date | datetimes }}</td><!-- {{时间}} -->
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
@@ -86,7 +86,7 @@
 			return{
                 checkForm:{
                     subCompanyId:'',
-                    department:'',
+                    departmentName:'',
                     subject:'',
                     pageIndex: 1,
                     pageSize: 10,
