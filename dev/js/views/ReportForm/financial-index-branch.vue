@@ -42,7 +42,6 @@
                     </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
-                <div class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
