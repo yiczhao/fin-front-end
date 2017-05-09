@@ -108,13 +108,6 @@
                                     </td>
 									<td></td>
                                 </tr>
-                                <tr>
-									<td><span>大后台数据同步：</span></td>
-                                    <td>
-                                        <input type="button" class="btn btn-primary" value="大后台数据同步" data-toggle="modal" @click="intiBOSSData($event)"/>
-                                    </td>
-									<td></td>
-                                </tr>
 								<tr>
 									<td><span>生成财务指标分析表：</span></td>
 									<td>选择日期：
@@ -341,12 +334,6 @@
             },
             generateActivityEffectAgain(e){
                 this.$http.post('./dev/tool/activityEffect/generate/again')
-                        .then((response)=>{
-                            dialogs('success',response.data.message);
-                        })
-            },
-            intiBOSSData(e){
-                this.$http.post('./dev/tool/boss/data/init')
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
