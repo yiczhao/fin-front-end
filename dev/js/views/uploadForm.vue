@@ -13,7 +13,6 @@
 								<tr>
 									<td><span>交易漏单白名单：</span></td>
 									<td>
-										<input type="text" class="form-control"/>
 										File to upload:<input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data">Name:<input type="text"  class="form-control" name="name"/></td>
 									<td><input class="btn btn-primary" type="button" value="提交" @click="submits($event)"/></td>
 								</tr>
