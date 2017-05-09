@@ -155,7 +155,7 @@
                 checkForm:{
                     subCompanyId:'',
                     type:'',
-                    startDate:'',
+                    startDate:yestodayMonth(),
                 },
                 infaceList:{
                     // subCompanyID:'',

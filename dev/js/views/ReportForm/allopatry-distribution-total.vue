@@ -140,7 +140,7 @@
                     month:'',
                     pageIndex: 1,
                     pageSize: 10,
-                    dates:'',
+                    dates:yestodayMonth(),
                 },
                 partnerOrder:{
                     dataId:'',

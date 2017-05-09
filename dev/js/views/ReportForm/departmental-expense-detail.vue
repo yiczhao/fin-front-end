@@ -96,7 +96,7 @@
                     month:'',
                     department:''
                 },
-                date:'',
+                date:yestodayMonth(),
                 dateS:'3',
                 pageall:1,
                 companylists:[],

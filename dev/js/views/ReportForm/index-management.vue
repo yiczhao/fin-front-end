@@ -109,7 +109,7 @@
                 type_in:false,
                 checkForm:{
                     subCompanyID:'',
-                    date:getNow(),
+                    date:yestodayMonth(),
                     year:'',
                     month:'',
                 },

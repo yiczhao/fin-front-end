@@ -108,7 +108,7 @@
 			return{
                 checkForm:{
                     subCompanyID:'',
-                    date:'',
+                    date:yestodayMonth(),
                     year:'',
                     month:'',
                     pageIndex: 1,

@@ -109,7 +109,7 @@
                     pageIndex: 1,
                     pageSize: 10,
                 },
-                date:'',
+                date:yestodayMonth(),
                 partnerOrder:{
                     amount:'',
                     quantity:'',
@@ -174,9 +174,9 @@
 		ready:function(){
             var vm=this;
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
-            (this.$route.params.advanceId==':distributionsubCompanyId')?this.defaultData.subCompanyId='':this.defaultData.subCompanyId=this.$route.params.distributionsubCompanyId;
-            (this.$route.params.advanceId==':distributionbusinessTypeId')?this.defaultData.businessTypeId='':this.defaultData.businessTypeId=this.$route.params.distributionbusinessTypeId;
-            (this.$route.params.advanceId==':distributionsnType')?this.defaultData.snType='':this.defaultData.snType=this.$route.params.distributionsnType;
+            (this.$route.params.distributionsubCompanyId==':distributionsubCompanyId')?this.defaultData.subCompanyId='':this.defaultData.subCompanyId=this.$route.params.distributionsubCompanyId;
+            (this.$route.params.distributionbusinessTypeId==':distributionbusinessTypeId')?this.defaultData.businessTypeId='':this.defaultData.businessTypeId=this.$route.params.distributionbusinessTypeId;
+            (this.$route.params.distributionsnType==':distributionsnType')?this.defaultData.snType='':this.defaultData.snType=this.$route.params.distributionsnType;
             vm.initList();
             vm.getClist();
 		},
