@@ -167,6 +167,7 @@
                 this.model.getAllopatryListDetali(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
+                        this.$set('pageall',res.data.total);
                     }
                 });
             },
