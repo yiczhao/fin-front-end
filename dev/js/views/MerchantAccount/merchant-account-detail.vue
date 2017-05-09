@@ -56,7 +56,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="no-list" v-else>
                     未找到数据
                 </div>

@@ -28,8 +28,8 @@
                             <a class="btn btn-info add-top" @click="initList()">查询</a>
                     </div>
                 </div>
-                <!-- <div v-show="listData.length>0" class="dataTables_wrapper no-footer"> -->
-                <div class="dataTables_wrapper no-footer">
+                 <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
+                <!--<div class="dataTables_wrapper no-footer">-->
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
@@ -154,11 +154,10 @@
 
             },
             getZlists(){
-                this.sortByKey('profitFinished',0)
                 this.model.getFinanceRanking(this.checkForm).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
-                        this.sortByKey('profitFinished',0)
+                        this.sortByKey('profitFinished',5);
                     }
                 })
             },

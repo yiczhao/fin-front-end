@@ -13,7 +13,6 @@
 								<tr>
 									<td><span>交易漏单白名单：</span></td>
 									<td>
-										<input type="text" class="form-control"/>
 										File to upload:<input type="file" name="file" @change="uploads($event)"/><input type="hidden" class="hidden-data">Name:<input type="text"  class="form-control" name="name"/></td>
 									<td><input class="btn btn-primary" type="button" value="提交" @click="submits($event)"/></td>
 								</tr>
@@ -106,13 +105,6 @@
 									<td><span>生成活动执行表：</span></td>
                                     <td>
                                         <input type="button" class="btn btn-primary" value="生成活动执行表" data-toggle="modal" @click="generateActivityEffectAgain($event)"/>
-                                    </td>
-									<td></td>
-                                </tr>
-                                <tr>
-									<td><span>大后台数据同步：</span></td>
-                                    <td>
-                                        <input type="button" class="btn btn-primary" value="大后台数据同步" data-toggle="modal" @click="intiBOSSData($event)"/>
                                     </td>
 									<td></td>
                                 </tr>
@@ -342,12 +334,6 @@
             },
             generateActivityEffectAgain(e){
                 this.$http.post('./dev/tool/activityEffect/generate/again')
-                        .then((response)=>{
-                            dialogs('success',response.data.message);
-                        })
-            },
-            intiBOSSData(e){
-                this.$http.post('./dev/tool/boss/data/init')
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })

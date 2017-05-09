@@ -76,7 +76,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="no-list"></div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
                         :title.sync="typeTitle" @kok="saveChange()" @kcancel="cancel()"
@@ -241,7 +240,7 @@
                         throw new Error('金额都是必填项!');
                     }
                     amountList && amountList.forEach(m => {
-                        if (!m) {
+                        if (m==='') {
                             throw new Error('金额都是必填项!')
                         }
                     })
@@ -258,9 +257,8 @@
                 for (let k in data) {
                     let m = data[k]
                     let err = errMapper[k] && new Error(`请检查${errMapper[k]}项!`)
-
                     /*global _*/
-                    if ((!m && err) || (_.isArray(m) && !m.length && err)) {
+                    if ((m==='' && err) || (_.isArray(m) && !m.length && err)) {
                         throw err
                     }
                 }
