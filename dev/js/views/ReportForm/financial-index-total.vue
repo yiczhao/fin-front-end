@@ -62,10 +62,10 @@
                             <tr>
                                 <td>合计：</td>
                                 <td></td>
-                                <td>费用:{{totalData.costTotal/100 | currency ''}}</td><!--{{费用}} -->
-                                <td>净利润:{{totalData.profitTotal/100 | currency ''}}</td><!--{{净利润}} -->
-                                <td>净利率:{{totalData.profitRateTotal}}%</td><!--{{净利率}} -->
-                                <td>净利润指标完成率:{{totalData.targetFinishTotal}}%</td><!--{{净利润指标完成率}} -->
+                                <td></td>
+                                <td></td>
+                                <td>{{totalData.incomeTotal/100 | currency ''}}</td>
+                                <td>{{totalData.costTotal/100 | currency ''}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -80,6 +80,12 @@
                                   :page_size.sync="defaultData.pageSize">
                             </page>
                        </div>
+                    </div>
+                    <div v-show="listData.length>0" style="padding:20px">
+                        <span style="font-size: 16px;margin-right: 20px;">费用:{{totalData.spendTotal/100 | currency ''}}</span>
+                        <span style="font-size: 16px;margin-right: 20px;">净利润:{{totalData.profitTotal/100 | currency ''}}</span>
+                        <span style="font-size: 16px;margin-right: 20px;">净利率:{{totalData.profitRateTotal}}%</span>
+                        <span style="font-size: 16px;margin-right: 20px;">净利润指标完成率:{{totalData.targetFinishTotal}}%</span>
                     </div>
                 </div>
                 <div class="no-list" v-else>
