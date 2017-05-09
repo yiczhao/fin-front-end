@@ -154,11 +154,10 @@
 
             },
             getZlists(){
-                this.sortByKey('profitFinished',0)
                 this.model.getFinanceRanking(this.checkForm).then((res)=>{
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
-                        this.sortByKey('profitFinished',0)
+                        this.sortByKey('profitFinished',5);
                     }
                 })
             },
