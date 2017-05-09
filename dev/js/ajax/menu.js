@@ -53,12 +53,22 @@ module.exports = [
 		]
 	},
 	{
-		name: '三方管理',
+		name: '三方结算管理',
 		icon: ' icon-users4',
 		type: 'third',
 		ksa: 'third_party_account_manage',
 		sub_menu: [
 			{name: '三方管理', link: 'third-party', ksa: 'third_party_account_manage'}
+		]
+	},
+	{
+		name: '报表管理',
+		icon: 'icon-table2',
+		// ksa: 'report_form_mange',
+		type: 'report',
+		sub_menu: [
+			// {name: '报表管理', link: 'financial-index-total', ksa: 'report_form_mange'},
+			{name: '报表管理', link: 'financial-index-total'},
 		]
 	},
 	{

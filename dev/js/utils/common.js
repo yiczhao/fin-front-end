@@ -208,10 +208,24 @@ window.getNow=()=>{
     var m = time.getMonth();
     return y+'-'+m;
 };
+window.getNowMonth=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    return y+'-'+m;
+};
 window.firstMonth=()=>{
     var time = new Date();
     var y = time.getFullYear();
     var m = 1;
+    return y+'-'+m;
+};
+window.yestodayMonth=()=>{
+    var time = new Date();
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var t = time.getDate();
+    (t-1==0)?m=m-1:null;
     return y+'-'+m;
 };
 window.getDate=(value,type)=>{

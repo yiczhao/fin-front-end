@@ -473,6 +473,9 @@
                             if(response.data.code==0){
                                 this.$set('redata', response.data.data);
                                 this.modal_applyPay = true;
+                                if(response.data.data.bankAccountID){
+                                      this.applyData.bankAccountID = response.data.data.bankAccountID;
+                                }
                             }
                         });
             },

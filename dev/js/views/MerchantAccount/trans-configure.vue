@@ -4,58 +4,60 @@
            :hname="'merchant-account-transConf'"
            :isshow="'isshow'">
         <div slot="content" class="content">
-            <span class="flex">
-            <div class="dialog-row">
-                <label class="control-label">商户ID：</label>
-                <label>{{merchantOperationID}}</label>
-            </div>
-            <div class="dialog-row">
-                <label class="control-label">商户号：</label>
-                <label>{{transConfModel.backendMerchantCode}}</label>
-            </div>
-            <div class="dialog-row">
-                <label class="control-label">商户简称：</label>
-                <label>{{transConfModel.backendMerchantName}}</label>
-            </div>
-            </span>
-            <span class="flex">
-            <div class="dialog-row">
-                <label class="control-label">门店号：</label>
-                <label>{{transConfModel.backendStoreCode}}</label>
-            </div>
+            <div class="panel panel-flat" style="padding: 20px">
+                <span class="flex">
+                <div class="dialog-row">
+                    <label class="control-label">商户ID：</label>
+                    <label>{{merchantOperationID}}</label>
+                </div>
+                <div class="dialog-row">
+                    <label class="control-label">商户号：</label>
+                    <label>{{transConfModel.backendMerchantCode}}</label>
+                </div>
+                <div class="dialog-row">
+                    <label class="control-label">商户简称：</label>
+                    <label>{{transConfModel.backendMerchantName}}</label>
+                </div>
+                </span>
+                <span class="flex">
+                <div class="dialog-row">
+                    <label class="control-label">门店号：</label>
+                    <label>{{transConfModel.backendStoreCode}}</label>
+                </div>
 
-            <div class="dialog-row">
-                <label class="control-label">门店名称：</label>
-                <label>{{transConfModel.storeName}}</label>
-            </div>
-            <div class="dialog-row"></div>
-            </span>
-            <span class="flex">
-            <div class="dialog-row">
-                <label class="control-label">开户行：</label>
-                <label>{{transConfModel.bankName}}</label>
-            </div>
+                <div class="dialog-row">
+                    <label class="control-label">门店名称：</label>
+                    <label>{{transConfModel.storeName}}</label>
+                </div>
+                <div class="dialog-row"></div>
+                </span>
+                <span class="flex">
+                <div class="dialog-row">
+                    <label class="control-label">开户行：</label>
+                    <label>{{transConfModel.bankName}}</label>
+                </div>
 
-            <div class="dialog-row">
-                <label class="control-label">是否建行：</label>
-                <input type="radio" id="normalTaxPayer" value="1" v-model="transConfModel.isCcb">
-                <label for="normalTaxPayer">是</label>
-                <input type="radio" id="tinyTaxPayer" value="0" v-model="transConfModel.isCcb">
-                <label for="tinyTaxPayer">否</label>
-            </div>
-            <div class="dialog-row"></div>
-            </span>
+                <div class="dialog-row">
+                    <label class="control-label">是否建行：</label>
+                    <input type="radio" id="normalTaxPayer" value="1" v-model="transConfModel.isCcb">
+                    <label for="normalTaxPayer">是</label>
+                    <input type="radio" id="tinyTaxPayer" value="0" v-model="transConfModel.isCcb">
+                    <label for="tinyTaxPayer">否</label>
+                </div>
+                <div class="dialog-row"></div>
+                </span>
 
-            <div class="dialog-row float">
-                <label>转账特殊备注：</label>
-                <input type="text" class="form-control w350" v-model="transConfModel.specialRemarks"
-                       placeholder="目前只有中石化商户需要在此填写商户编号">
-            </div>
+                <div class="dialog-row float">
+                    <label>转账特殊备注：</label>
+                    <input type="text" class="form-control w350" v-model="transConfModel.specialRemarks"
+                           placeholder="目前只有中石化商户需要在此填写商户编号">
+                </div>
 
-            <div class="dialog-row input-dialog">
-                <button type="button" @click="confirm" class="btn btn-primary">确认</button>
-                <button type="button" class="btn btn-gray" v-link="{name:'merchant-account'}">取消
-                </button>
+                <div class="dialog-row input-dialog">
+                    <button type="button" @click="confirm" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-gray" v-link="{name:'merchant-account'}">取消
+                    </button>
+                </div>
             </div>
         </div>
     </index>

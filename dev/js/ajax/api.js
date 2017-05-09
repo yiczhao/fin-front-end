@@ -1405,6 +1405,12 @@ export default function install(Vue) {
      */
     _o.contract_list = './contract/list?';
     /**
+     * @description 列表数据合计接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contract_sum = './contract/sum?';
+    /**
      * @description 新增合同接口地址
      * @author 于凯乐
      * @method post
@@ -1422,63 +1428,321 @@ export default function install(Vue) {
      * @method get
      */
     _o.contract_editInfo = './contract/info?';
-
+    /**
+     * @description 开票确定接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_invoice = './contract/invoice';
+    /**
+     * @description 回款确认接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contract_collection = './contract/collection';
     /**
      * @description 关联合同接口地址
      * @author 于凯乐
      * @method post
      */
     _o.contract_associate = './contract/associate';
+    /**
+     * @description 结算确认接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contractSettlement = './contract/settlement';
+    /**
+     * @description 回款开票信息接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contractInvoiceInfo = './contract/invoiceInfo?';
 
+    //- todo  三方管理-合同管理-回款开票明细 invoice-collection
+    /**
+     * @description 回款开票明细接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.invoiceCollection = './invoiceCollection/list?';
+    /**
+     * @description 回款开票明细接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.invoiceCollectionSum = './invoiceCollection/sum?';
+    /**
+     * @description 回款开票明细接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getContractNumber = './contract/contractByUser?';
+
+    //- todo  三方管理-合同管理-回款开票明细 merchant-account
 	/**
 	 * @description 商户账户 列表
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountList = './merchantAccount/list?';
-
 	/**
 	 * @description 商户账户 明细
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountDetail = './merchantAccount/detail/';
-
 	/**
 	 * @description 商户账户 确认
 	 * @author 于凯乐
 	 * @method post
 	 */
 	_o.merchantAccountConfirm = './merchantAccount/confirm?';
-
 	/**
 	 * @description 商户账户 配置信息
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountConfigureInfo = './merchantAccount/configureInfo/';
-
-
 	/**
 	 * @description 商户账户 配置确认
 	 * @author 于凯乐
 	 * @method post
 	 */
 	_o.merchantAccountConfigure = './merchantAccount/configure';
-
 	/**
 	 * @description 商户账户 导出Excel
 	 * @author 于凯乐
 	 * @method get
 	 */
 	_o.merchantAccountExportToExcel = '/data/export/excel/merchantAccount?';
-
     /**
      * @description 商户账户最新信息 查询
      * @author 冷艳君
      * @method get
      */
     _o.merchantAccountInfo = './merchantAccount/info/';
+    /**
+     * @description 活动收入成本 列表查询
+     * @author 冷艳君
+     * @method get
+     */
+    _o.activityIncomeCostInfo = './activityIncomeCost/list?';
+
+    //- todo  三方管理-合同管理-新增合同 contract-add
+    /**
+     * @description 新增合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contractAdd = './contract/add';
+    /**
+     * @description 新增合同接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contractEdit = './contract/edit';
+    /**
+     * @description 根据分公司ID获取三方列表
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getThirdPartyAccountList = './thirdParty/thirdPartyAccountList?';
+    /**
+     * @description 三方管理-活动收入成本管理-获取默认计算公式
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getActivityFormulaeDefault = './activityIncomeCost/default/formulae/info/';
+    /**
+     * @description 三方管理-活动收入成本管理-获取计算公式信息
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getActivityFormulae = './activityIncomeCost/formulae/info?';
+    /**
+     * @description 三方管理-活动收入成本管理-保存计算公式信息
+     * @author 冷艳君
+     * @method post
+     */
+    _o.saveActivityFormulae = './activityIncomeCost/formulae/save';
+    /**
+     * @description 三方管理-活动收入成本管理-获取其他信息GET /v1/finance/cost/detail
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getActivityOtherInfo = './activityIncomeCost/otherInfo/info?';
+    /**
+     * @description 三方管理-活动收入成本管理-保存其他信息
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.saveActivityOtherInfo = './activityIncomeCost/otherInfo/save?';
+    /**
+     * @description 三方管理-活动收入成本管理-设为默认公式信息
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.saveActivityDefaultFormulae = './activityIncomeCost/default/formulae/setup/';
+    /**
+     * @description 编辑合同接口地址
+     * @author 于凯乐
+     * @method get
+     */
+    _o.contractaddList = './contract/info?';
+
+
+
+
+    /**
+     * @description 报表管理 获取财务指标分析（总）合计
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceSumTotal = './target/finance_sum_total?';
+
+    /**
+     * @description 报表管理 获取财务指标分析（总）列表
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceListTotal = './target/finance_list_total?';
+
+    /**
+     * @description 报表管理 获取财务指标分析（总）查询业务(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonBusiness = './common/business';
+    /**
+     * @description 报表管理 获取财务指标分析（总）查询项目(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonItem = './common/item';
+    /**
+     * @description 报表管理 获取财务指标分析（总）查询业务项目明细(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonBusinessDetail = './common/businessDetail';
+
+    /**
+     * @description 报表管理 获取财务指标分析（分）合计
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceSumBranch = './target/finance_sum_branch?';
+
+    /**
+     * @description 报表管理 获取财务指标分析（分）列表
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceListBranch = './target/finance_list_branch?';
+
+    /**
+     * @description 报表管理 财务指标排行
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceRanking = './target/finance_ranking?';
+
+
+    /**
+     * @description 报表管理 指标管理
+     * @author 周俭
+     * @method get
+     */
+    _o.getFinanceManagement = './target/finance_management?';
+
+    /**
+     * @description 报表管理 指标管理--查询部门（选项）
+     * @author 周俭
+     * @method get
+     */
+    _o.getCommonDepartment = './common/department';
+
+    /**
+     * @description 报表管理 指标录入
+     * @author 周俭
+     * @method post
+     */
+    _o.typeInFinanceAdd = './target/finance_add';
+
+    /**
+     * @description 报表管理 异地激活收入成本分配明细
+     * @author 周俭
+     * @method get
+     */
+    _o.getAllopatryActivationDetailList = './target/activation_detail_list?';
+    /**
+     * @description 报表管理 异地激活收入成本分配明细--获取合伙人
+     * @author 周俭
+     * @method get
+     */
+    _o.getAllopatrySnPartnerList = './target/sn_partner_list';
+
+    /**
+     * @description 报表管理 异地激活收入成本分配统计
+     * @author 周俭
+     * @method get
+     */
+    _o.getAllopatryActivationCountList = './target/activation_count_list?';
+
+    /**
+     * @description 报表管理 异地激活收入成本分配统计--合伙人订单录入
+     * @author 周俭
+     * @method get
+     */
+    _o.snInfoSave = './target/sn_info_save?';
+
+    /**
+     * @description 报表管理 费用管理
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getExpenseManagementLlst = './cost/list?';
+    /**
+     * @description 报表管理 费用管理
+     * @author 于凯乐
+     * @method get
+     */
+    _o.getExpenseManageSubject = './cost/subject?';
+
+    /**
+     * @description 报表管理 费用管理 费用预算录入
+     * @author 洪钢
+     * @method post
+     */
+    _o.costBugetIn = './cost/budget?';
+
+    /**
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型
+     * @author 洪钢
+     * @method post
+     */
+    _o.commonCostType = './common/costType?';
+    /**
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型
+     * @author 洪钢
+     * @method post
+     */
+    _o.commonCostDetail = './cost/detail?';
+    /**
+     * @description 报表管理 费用管理 获取部门
+     * @author 周俭
+     * @method get
+     */
+    _o.departmentList = './common/department';
+    /**
+     * @description 报表管理 费用管理 获取部门
+     * @author 周俭
+     * @method get
+     */
+    _o.snPartnerList = './target/sn_partner_list';
+
+
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

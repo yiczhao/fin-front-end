@@ -26,6 +26,13 @@ export default function install(Vue) {
         getbankAccount(type) {
             return Vue.http.get('./bankAccount/account/list/' + type);
         },
+        /**
+         * @description 查询当前登录用户所属分公司的备付金账户数据
+         * @returns {*}
+         */
+        getCurUserBankAccount(){
+            return Vue.http.get('./bankAccount/curUser/info');
+        },
 
         /**
          * @description 查询城市列表数据
@@ -82,6 +89,14 @@ export default function install(Vue) {
          */
         suspensionTaxAccountDetail_info(data){
             return Vue.http.get('./subsidyAccount/suspensionTaxAccountDetail/info?' + $.param(data))
+        },
+        /**
+         * @description 获取三方
+         * @param {data}
+         * @returns {*}
+         */
+        thirdPartyAccount(){
+            return Vue.http.get('./thirdParty/list?')
         }
     };
     Object.defineProperties(Vue.prototype, {
