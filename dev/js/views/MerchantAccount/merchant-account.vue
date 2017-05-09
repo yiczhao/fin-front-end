@@ -132,13 +132,13 @@
                                     <template v-if="trList.expired==2">待确认</template>
                                 </td>
                                 <td>
-                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-ksa="merchant_account_manage.confirm">确认</a>
+                                    <a v-if="trList.expired==2" @click="confirmAlert(trList.id)" data-ksa="merchant_account_manage.update">确认</a>
                                     <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);" data-ksa="merchant_account_manage.update">更新</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
                                 <!--确认按钮-->
                                 <td>
-                                    <a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.config">配置</a>
+                                    <a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.update">配置</a>
                                 </td>
                             </tr>
                             </tbody>
