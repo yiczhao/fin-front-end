@@ -66,8 +66,8 @@
                                     <td>{{trlist.storeSubCompanyName}}</td><!-- 门店所在地分公司 -->
                                     <td>{{trlist.localSubCompanyName}}</td><!-- 合伙人所在地分公司 -->
                                     <td>{{trlist.number}}</td><!-- 台数 -->
-                                    <td>{{trlist.income}}</td><!-- 收入 -->
-                                    <td>{{trlist.cost}}</td><!-- 成本 -->
+                                    <td>{{trlist.income/100 | currency ''}}</td><!-- 收入 -->
+                                    <td>{{trlist.cost/100 | currency ''}}</td><!-- 成本 -->
                                 </tr>
                             </tbody>
                         </table>

@@ -345,7 +345,7 @@
                     subCompanyID:subCompanyID,
                 }
                 this.model.getOtherInfo(data).then((res)=>{
-                    if(res.data.code==0){
+                    if(res.data.code==0&&!!res.data.data){
                         this.$set('redata',res.data.data);
                     }
                 })
