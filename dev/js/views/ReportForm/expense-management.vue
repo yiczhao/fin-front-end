@@ -216,10 +216,6 @@
                 this.getZlists(this.checkForm);//没有接口
             },
             getClist(){
-                // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
                 this.$common_model.getcompany(data).then((res)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(res.data.code==0){
