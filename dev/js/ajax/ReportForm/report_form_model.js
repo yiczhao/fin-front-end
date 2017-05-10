@@ -46,6 +46,14 @@ function model(_this){
             return _this.$http.get(_this.$API.getCommonBusiness)
         },
         /**
+         * @description  获取财务指标分析（总）（分） 查询业务(选项)
+         * @params {data}
+         * @returns {*}
+         * */
+        getCommonActivation(){
+            return _this.$http.get(_this.$API.getCommonActivation)
+        },
+        /**
          * @description  获取财务指标分析（总）（分） 查询项目(选项)
          * @params {data}
          * @returns {*}

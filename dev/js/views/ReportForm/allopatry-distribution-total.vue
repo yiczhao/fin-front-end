@@ -201,7 +201,7 @@
                             this.$set('companylists', response.data.data)
                         }
                     });
-                this.model.getSearchBusiness()
+                this.model.getCommonActivation()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
