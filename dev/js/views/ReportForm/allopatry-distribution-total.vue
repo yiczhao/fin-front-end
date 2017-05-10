@@ -104,11 +104,11 @@
                         </div>
                         <div class="form-group">
                             <label>预收账款</label>
-                            <input type="text" style="width: 69%;" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.preIncome" placeholder=""><span>元</span>
+                            <input type="text" style="width: 69%;" v-limitprice="partnerOrder.preIncome" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.preIncome" placeholder=""><span>元</span>
                         </div>
                         <div class="form-group">
                             <label>采购数量</label>
-                            <input type="text" style="width: 69%;" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.purchaseNumber" placeholder=""><span>台</span>
+                            <input type="text" style="width: 69%;" v-limitids="partnerOrder.purchaseNumber" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.purchaseNumber" placeholder=""><span>台</span>
                         </div>
                     </validator>
                     <validator name="vali2" v-if="typeTitle=='发货数量'">
