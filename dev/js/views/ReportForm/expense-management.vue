@@ -216,7 +216,7 @@
                 this.getZlists(this.checkForm);//没有接口
             },
             getClist(){
-                this.$common_model.getcompany(data).then((res)=>{
+                this.$common_model.getcompany().then((res)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(res.data.code==0){
                             this.$set('companylists', res.data.data)
