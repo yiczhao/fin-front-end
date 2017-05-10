@@ -177,9 +177,11 @@
                             dialogs('info','无默认公式！')
                             return;
                         }
-                        let data={};
+                        let data=_.cloneDeep(this.defaultData);
                         _.forEach(res.data.data,(value,key)=>{
-                            data[key]=this.enString(value);
+                            if(key!='id'&&key!='subCompanyID'&&key!='activityOperationID'&&key!='activityName'&&key!='activityID'&&key!='contractFileID'){
+                                data[key]=this.enString(value);
+                            }
                         })
                         this.$set('defaultData',data);
                         dialogs('success','加载成功！')
