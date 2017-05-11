@@ -1741,6 +1741,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.snPartnerList = './target/sn_partner_list';
+    /**
+     * @description 报表管理 异地激活收入成本-查询业务(选项)
+     * @author
+     * @method get
+     */
+    _o.getCommonActivation = './common/business_activation';
 
 
 

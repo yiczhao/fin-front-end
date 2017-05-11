@@ -104,11 +104,11 @@
                         </div>
                         <div class="form-group">
                             <label>预收账款</label>
-                            <input type="text" style="width: 69%;" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.preIncome" placeholder=""><span>元</span>
+                            <input type="text" style="width: 69%;" v-limitprice="partnerOrder.preIncome" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.preIncome" placeholder=""><span>元</span>
                         </div>
                         <div class="form-group">
                             <label>采购数量</label>
-                            <input type="text" style="width: 69%;" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.purchaseNumber" placeholder=""><span>台</span>
+                            <input type="text" style="width: 69%;" v-limitids="partnerOrder.purchaseNumber" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.purchaseNumber" placeholder=""><span>台</span>
                         </div>
                     </validator>
                     <validator name="vali2" v-if="typeTitle=='发货数量'">
@@ -194,25 +194,21 @@
                 this.getZlists(this.defaultData);
             },
             getClist(){
-                // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
-                this.$common_model.getcompany(data)
+                this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
                             this.$set('companylists', response.data.data)
                         }
                     });
-                this.model.getSearchBusiness(data)
+                this.model.getCommonActivation()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
                             this.$set('commonbusinessList', response.data.data)
                         }
                     });
-                this.model.snPartnerList(data)
+                this.model.snPartnerList()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){

@@ -216,11 +216,7 @@
                 this.getZlists(this.checkForm);//没有接口
             },
             getClist(){
-                // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
-                this.$common_model.getcompany(data).then((res)=>{
+                this.$common_model.getcompany().then((res)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(res.data.code==0){
                             this.$set('companylists', res.data.data)
@@ -270,12 +266,12 @@
                 let data={};
                 if(this.typeTitle!=='预算录入'){
                     data=_.cloneDeep(this.infaceList);
-                    data.amount=accMul(data.amount,100);
+//                    data.amount=accMul(data.amount,100);
                 }else{
                     data=_.cloneDeep(this.budgetList);
-                    _.map(data.amountList,(val,index)=>{
-                        data.amountList[index]=accMul(val,100);
-                    })
+//                    _.map(data.amountList,(val,index)=>{
+//                        data.amountList[index]=accMul(val,100);
+//                    })
                 }
                 let key=this.typeTitle=='预算录入'?'costBugetTypeInP':'costBugetActualTypeInP';
                 if (true) {

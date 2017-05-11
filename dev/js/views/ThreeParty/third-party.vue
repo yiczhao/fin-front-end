@@ -76,8 +76,8 @@
                                     <td>{{trlist.cityName}}</td>
                                     <td>{{trlist.contractSettlementAmount/100 | currency ''}}</td>
                                     <td>{{trlist.unsettlementAmount/100 | currency ''}}</td>
-                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                     <td>{{trlist.billingAmount/100 | currency ''}}</td>
+                                    <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                     <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
                                     <td>
                                         <a v-link="{name:'contract-management-info',params:{'contractId':trlist.id,'contractName':trlist.accountName,'contractCity':trlist.cityName,'contractCompanyName':trlist.subCompanyName,'contractCompanyId':trlist.subCompanyID}}" data-ksa="contract.search">合同</a>
@@ -105,8 +105,8 @@
                                     <td></td>
                                     <td>{{total.contractSettlementAmountTotal/100 | currency ''}}</td>
                                     <td>{{total.unsettlementAmountTotal/100 | currency ''}}</td>
-                                    <td>{{total.collectionAmountTotal/100 | currency ''}}</td>
                                     <td>{{total.billingAmountTotal/100 | currency ''}}</td>
+                                    <td>{{total.collectionAmountTotal/100 | currency ''}}</td>
                                     <td>{{total.accountsReceivableTotal/100 | currency ''}}</td>
                                     <td></td>
                                     <td></td>
@@ -483,11 +483,7 @@
                         })
             },
             getClist(){
-                // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
-                this.$common_model.getcompany(data)
+                this.$common_model.getcompany()
                         .then((response)=>{
                             // *** 判断请求是否成功如若成功则填充数据到模型
                             (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
