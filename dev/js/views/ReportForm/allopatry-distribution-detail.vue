@@ -18,8 +18,7 @@
                             </select>
                             <select class="form-control" v-model="defaultData.businessTypeId">
                                 <option value="">业务类型</option>
-                                <option value="1">知店销售</option>
-                                <option value="2">K1销售</option>
+                                <option v-for="(index,n) in commonbusinessList" v-text="n.name" :value="n.id"></option>
                             </select>
                             <select class="form-control" v-model="defaultData.snType">
                                 <option value="">sn归属合伙人</option>
@@ -67,8 +66,8 @@
                                     <td>{{trlist.storeSubCompanyName}}</td><!-- 门店所在地分公司 -->
                                     <td>{{trlist.localSubCompanyName}}</td><!-- 合伙人所在地分公司 -->
                                     <td>{{trlist.number}}</td><!-- 台数 -->
-                                    <td>{{trlist.income}}</td><!-- 收入 -->
-                                    <td>{{trlist.cost}}</td><!-- 成本 -->
+                                    <td>{{trlist.income/100 | currency ''}}</td><!-- 收入 -->
+                                    <td>{{trlist.cost/100 | currency ''}}</td><!-- 成本 -->
                                 </tr>
                             </tbody>
                         </table>
@@ -121,6 +120,7 @@
                 typeTitle:'',
                 pageall:1,
                 companylists:[],
+                commonbusinessList:[],
                 listData:{},
 			}
 		},
@@ -145,11 +145,7 @@
                 this.type_in=false;//test
             },
             getClist(){
-                // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
-                this.$common_model.getcompany(data)
+                this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
@@ -162,6 +158,13 @@
                         this.$set('SnPartnerList',res.data.data);
                     }
                 });
+                this.model.getCommonActivation()
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('commonbusinessList', response.data.data)
+                        }
+                    });
             },
             getZlists(data){
                 this.model.getAllopatryListDetali(data).then((res)=>{

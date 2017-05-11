@@ -291,11 +291,7 @@
                 });
             },
             getClist(){
-                // *** 请求公司数据
-                let data={
-                    'type':'ImportUser'
-                }
-                this.$common_model.getcompany(data)
+                this.$common_model.getcompany()
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         if(response.data.code==0){
