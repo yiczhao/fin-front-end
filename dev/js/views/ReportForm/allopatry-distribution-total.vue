@@ -6,13 +6,13 @@
         <div class="content allopatry-distribution" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
-                    <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
-                    <li><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
-                    <li><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
-                    <li><a v-link="{name:'expense-management'}">费用管理</a></li>
-                    <li><a v-link="{name:'index-management'}">指标管理</a></li>
-                    <li><a v-link="{name:'departmental-expense-detail'}">部门费用明细</a></li>
-                    <li class="active"><a>异地激活收入成本分配总表</a></li>
+                    <li data-ksa="target_total"><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
+                    <li data-ksa="target_branch"><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
+                    <li data-ksa="ranking"><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
+                    <li data-ksa="cost"><a v-link="{name:'expense-management'}">费用管理</a></li>
+                    <li data-ksa="target_manage"><a v-link="{name:'index-management'}">指标管理</a></li>
+                    <li data-ksa="cost"><a v-link="{name:'departmental-expense-detail'}">部门费用明细</a></li>
+                    <li data-ksa="activation_detail" class="active"><a>异地激活收入成本分配总表</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left"></div>
@@ -35,7 +35,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="initList()">查询</a>
+                            <a class="btn btn-info add-top" data-ksa="activation_detail.search"  @click="initList()">查询</a>
                     </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper">
@@ -64,13 +64,13 @@
                                     <td>{{trlist.snTypeName }}</td><!-- {{SN归属合伙人}} -->
                                     <td>
                                         <!-- <a v-link="{name:'partner-order'}" @click="typeInShow('partner')">合伙人订单</a> -->
-                                        <a @click="typeInShow('partner',trlist)">合伙人订单</a>
+                                        <a @click="typeInShow('partner',trlist)" data-ksa="activation_total.update">合伙人订单</a>
                                         <!-- <a v-link="{name:'shipment-quantity'}" @click="typeInShow('shipment')">发货数量</a> -->
                                         <!--<a @click="typeInShow('shipment')">发货数量</a>-->
                                     </td>
                                     <td>{{trlist.preIncome/100 | currency '' }}</td><!-- {{预收账款}} -->
                                     <td>{{trlist.purchaseNumber }}</td><!-- {{采购数量}} -->
-                                    <td><a v-link="{name:'allopatry-distribution-detail'}">{{trlist.number}}</a></td><!-- 激活数量 -->
+                                    <td><a v-link="{name:'allopatry-distribution-detail'}"  data-ksa="common.search">{{trlist.number}}</a></td><!-- 激活数量 -->
                                     <td>{{trlist.income/100 | currency '' }}</td><!-- {{收入}} -->
                                     <td>{{trlist.cost/100 | currency ''}}</td><!-- {{成本}} -->
                                 </tr>
