@@ -96,7 +96,7 @@ export default function install(Vue) {
          * @returns {*}
          */
         thirdPartyAccount(){
-            return Vue.http.get('./thirdParty/list?')
+            return Vue.http.get('./thirdParty/all')
         }
     };
     Object.defineProperties(Vue.prototype, {

@@ -27,7 +27,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="invoiceCollection.search" style="margin-left: -21px;">查询</a>
                     </div>
                 </div>
                 <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">

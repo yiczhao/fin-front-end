@@ -7,8 +7,8 @@
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
-                    <li data-ksa="activity_manage"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
-                    <li class="active"><a>活动收入成本管理</a></li>
+                    <li data-ksa="contract" ><a v-link="{name:'contract-management-info'}">合同管理</a></li>
+                    <li data-ksa="activity_income_cost_manage" class="active"><a>活动收入成本管理</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div class="heading">
@@ -26,7 +26,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="initList()">查询</a>
+                            <a class="btn btn-info add-top" data-ksa="activity_income_cost_manage.search" @click="initList()">查询</a>
                     </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
@@ -97,8 +97,8 @@
                                     <td>{{trlist.contractNumber}}</td><!-- 合同编号 -->
                                     <td>{{trlist.activityOperationID }}</td><!-- 活动ID -->
                                     <td>
-                                        <a v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID}}">计算公式</a>
-                                        <a @click="otherInfo(trlist.activityID,trlist.subCompanyID)">其他信息</a>
+                                        <a data-ksa="activity_income_cost_manage.formulae" v-link="{name:'calculation-formula',params:{'acmActivityID':trlist.activityID,'acmCompanyID':trlist.subCompanyID}}">计算公式</a>
+                                        <a data-ksa="activity_income_cost_manage.other_info" @click="otherInfo(trlist.activityID,trlist.subCompanyID)">其他信息</a>
                                     </td><!-- 执行表参数 -->
                                     <!-- 收入 -->
                                     <td>

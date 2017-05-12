@@ -6,13 +6,13 @@
         <div class="content expense-management departmental-expense-detail" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
-                    <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
-                    <li><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
-                    <li><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
-                    <li><a v-link="{name:'expense-management'}">费用管理</a></li>
-                    <li><a v-link="{name:'index-management'}">指标管理</a></li>
-                    <li class="active"><a>部门费用明细</a></li>
-                    <li><a v-link="{name:'allopatry-distribution-total'}">异地激活收入成本分配总表</a></li>
+                    <li data-ksa="target_total"><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
+                    <li data-ksa="target_branch"><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
+                    <li data-ksa="ranking"><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
+                    <li data-ksa="cost"><a v-link="{name:'expense-management'}">费用管理</a></li>
+                    <li data-ksa="target_manage"><a v-link="{name:'index-management'}">指标管理</a></li>
+                    <li data-ksa="cost" class="active"><a>部门费用明细</a></li>
+                    <li data-ksa="activation_detail"><a v-link="{name:'allopatry-distribution-total'}">异地激活收入成本分配总表</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
@@ -36,7 +36,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" @click="initList()">查询</a>
+                            <a class="btn btn-info add-top"  data-ksa="cost.search" @click="initList()">查询</a>
                     </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper no-footer">

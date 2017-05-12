@@ -7,8 +7,8 @@
             <div class="panel panel-flat">
                 <ul class="tab-bor">
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
-                    <li data-ksa="activity_manage" class="active"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
-                    <li><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
+                    <li data-ksa="contract" class="active"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
+                    <li data-ksa="activity_income_cost_manage"><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div class="heading">
@@ -27,7 +27,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="initList" data-ksa="third_party_account_manage.search" style="margin-left: -21px;">查询</a>
+                        <a class="btn btn-info add-top" @click="initList" data-ksa="contract.search" style="margin-left: -21px;">查询</a>
                     </div>
                 </div>
                 <!--<div style="padding: 0 20px;font-size: 18px;">-->
@@ -91,14 +91,14 @@
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
                                     </td>
                                     <td>
-                                        <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>
+                                        <a data-ksa="activity_income_cost_manage.search" v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>
                                     </td>
                                     <td>
-                                        <a @click="associateShow(trlist,'开票')">开票</a>
-                                        <a @click="associateShow(trlist,'回款')">回款</a>
+                                        <a data-ksa="contract.invoice" @click="associateShow(trlist,'开票')">开票</a>
+                                        <a data-ksa="contract.collection" @click="associateShow(trlist,'回款')">回款</a>
                                     </td>
                                     <td>
-                                        <a v-link="{name:'invoice-collection',params:
+                                        <a data-ksa="contract.search" v-link="{name:'invoice-collection',params:
                                         {'invoiceCollectionId':trlist.contractID,
                                         'invoiceCollectionName':trlist.thirdPartyAccountName,
                                         'invoiceCollectionsubCompanyID':trlist.subCompanyID,
@@ -106,7 +106,7 @@
                                          }}">{{trlist.billingAmount/100 | currency ''}}</a>
                                     </td>
                                     <td>
-                                        <a v-link="{name:'invoice-collection',params:
+                                        <a data-ksa="contract.search" v-link="{name:'invoice-collection',params:
                                         {'invoiceCollectionId':trlist.contractID,
                                         'invoiceCollectionName':trlist.thirdPartyAccountName,
                                         'invoiceCollectionsubCompanyID':trlist.subCompanyID,
@@ -115,7 +115,7 @@
                                     </td>
                                     <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
                                     <td>
-                                        <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.cost/100 | currency ''}}</a>
+                                        <a data-ksa="activity_income_cost_manage.search" v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.cost/100 | currency ''}}</a>
                                     </td>
                                     <td>{{trlist.paidAmount/100 | currency ''}}</td>
                                     <td>{{trlist.unpaidAmount/100 | currency ''}}</td>
@@ -124,7 +124,7 @@
                                     <td>{{trlist.grossProfit/100 | currency ''}}</td>
                                     <td>{{trlist.grossMargin}} <span v-if="!!trlist.grossMargin">%</span></td>
                                     <td>
-                                        <template v-if="!trlist.status"><a @click="settlementShow(trlist)">确认</a></template>
+                                        <template v-if="!trlist.status"><a data-ksa="contract.settlementInfo" @click="settlementShow(trlist)">确认</a></template>
                                         <template v-else>已确认</template>
                                     </td>
                                     <td>{{trlist.remarks}}</td>
