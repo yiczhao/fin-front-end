@@ -103,11 +103,11 @@
                             <span>{{partnerOrder.snTypeName}}</span>
                         </div>
                         <div class="form-group">
-                            <label>预收账款</label>
+                            <label><i>*</i>预收账款</label>
                             <input type="text" style="width: 69%;" v-limitprice="partnerOrder.preIncome" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.preIncome" placeholder=""><span>元</span>
                         </div>
                         <div class="form-group">
-                            <label>采购数量</label>
+                            <label><i>*</i>采购数量</label>
                             <input type="text" style="width: 69%;" v-limitids="partnerOrder.purchaseNumber" class="form-control" v-validate:val2="['required']" v-model="partnerOrder.purchaseNumber" placeholder=""><span>台</span>
                         </div>
                     </validator>
@@ -179,10 +179,14 @@
                 this.partnerOrder.snTypeName=snTypeName;
             },
             saveChange(){
-                this.type_in=false;//test
+                if(!this.partnerOrder.preIncome&&!this.partnerOrder.purchaseNumber){
+                    dialogs('info', '金额与数量都为必填项！');
+                    return;
+                }
                 this.model.snInfoTypeIn(this.partnerOrder).then((res)=>{
                     if(res.data.code==0){
-                        dialogs('success','录入成功！')
+                        dialogs('success','录入成功！');
+                        this.type_in=false;
                         this.partnerOrder={};
                         this.initList();
                     }
