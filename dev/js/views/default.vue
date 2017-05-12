@@ -25,10 +25,6 @@
                         if(response.data.code===0){
                             sessionStorage.setItem('userData',JSON.stringify(response.data.data));
                             this.loginList=JSON.parse(sessionStorage.getItem('userData'));
-                            if(KSAuthKit){
-                                KSAuthKit.off();
-                                KSAuthKit.on();
-                            }
                             $('body').removeClass('login');
                             $('.message-notify.show,.message-notify').css('top','6px');
                         }
