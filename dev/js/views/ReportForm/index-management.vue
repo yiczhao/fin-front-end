@@ -6,17 +6,17 @@
         <div class="content index-management" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
-                    <li><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
-                    <li><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
-                    <li><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
-                    <li><a v-link="{name:'expense-management'}">费用管理</a></li>
-                    <li class="active"><a>指标管理</a></li>
-                    <li><a v-link="{name:'departmental-expense-detail'}">部门费用明细</a></li>
-                    <li><a v-link="{name:'allopatry-distribution-total'}">异地激活收入成本分配总表</a></li>
+                    <li data-ksa="target.search"><a v-link="{name:'financial-index-total'}">财务指标分析表（总）</a></li>
+                    <li data-ksa="target.search"><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
+                    <li data-ksa="target.search"><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
+                    <li data-ksa="cost"><a v-link="{name:'expense-management'}">费用管理</a></li>
+                    <li data-ksa="target.search" class="active"><a>指标管理</a></li>
+                    <li data-ksa="cost.search"><a v-link="{name:'departmental-expense-detail'}">部门费用明细</a></li>
+                    <li data-ksa="target.search"><a v-link="{name:'allopatry-distribution-total'}">异地激活收入成本分配总表</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add" @click="indexIn()">指标录入</a>
+                        <a class="btn btn-add"  data-ksa="target.update" @click="indexIn()">指标录入</a>
                     </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper no-footer">
