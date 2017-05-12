@@ -142,7 +142,7 @@
                     month:'',
                     department:''
                 },
-                date:yestodayMonth(),
+                date:' ',
                 dateS:'3',
                 pageall:1,
                 companylists:[],
@@ -215,6 +215,7 @@
                 });
             },
             setTime(){
+                if(!this.date.trim())return;
                 let date,year,month,myDate,today;
                 myDate=new Date();
                 today=myDate.getDate();
