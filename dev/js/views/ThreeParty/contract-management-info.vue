@@ -8,7 +8,7 @@
                 <ul class="tab-bor">
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
                     <li data-ksa="contract" class="active"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
-                    <li><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
+                    <li data-ksa="activity_income_cost_manage"><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div class="heading">
@@ -91,7 +91,7 @@
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
                                     </td>
                                     <td>
-                                        <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>
+                                        <a data-ksa="activity_income_cost_manage.search" v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>
                                     </td>
                                     <td>
                                         <a data-ksa="contract.invoice" @click="associateShow(trlist,'开票')">开票</a>
@@ -115,7 +115,7 @@
                                     </td>
                                     <td>{{trlist.accountsReceivable/100 | currency ''}}</td>
                                     <td>
-                                        <a v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.cost/100 | currency ''}}</a>
+                                        <a data-ksa="activity_income_cost_manage.search" v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.cost/100 | currency ''}}</a>
                                     </td>
                                     <td>{{trlist.paidAmount/100 | currency ''}}</td>
                                     <td>{{trlist.unpaidAmount/100 | currency ''}}</td>

@@ -8,7 +8,7 @@
                 <ul class="tab-bor">
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">三方管理</a></li>
                     <li data-ksa="contract"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
-                    <li><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
+                    <li data-ksa="activity_income_cost_manage"><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
                     <li data-ksa="tax_rate" class="active"><a v-link="{name:'taxRate'}">税率管理</a></li>
                 </ul>
                 <div v-show="taxRateList.length>0" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"> <!--v-if taxRateList.length>0-->
