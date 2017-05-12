@@ -38,7 +38,7 @@
                         </form>
                     </div>
                     <div class="heading-middle">
-                            <a class="btn btn-info add-top" data-ksa="target.search" @click="initList()">查询</a>
+                            <a class="btn btn-info add-top" data-ksa="activation_detail.search" @click="initList()">查询</a>
                     </div>
                 </div>
                 <div v-show="listData.length>0" class="dataTables_wrapper">

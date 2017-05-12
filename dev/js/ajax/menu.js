@@ -64,11 +64,11 @@ module.exports = [
 	{
 		name: '报表管理',
 		icon: 'icon-table2',
-        ksa: 'target',
+        ksa: 'cost',
 		type: 'report',
 		sub_menu: [
 			// {name: '报表管理', link: 'financial-index-total', ksa: 'report_form_mange'},
-			{name: '报表管理', link: 'financial-index-total'},
+			{name: '报表管理', link: 'financial-index-total', ksa: 'cost'},
 		]
 	},
 	{
