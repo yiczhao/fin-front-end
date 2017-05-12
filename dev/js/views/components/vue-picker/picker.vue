@@ -39,6 +39,10 @@
     },
     methods:{
       showDatePicker(){
+        if(!this.value.trim()){
+            this.value=getNow();
+            this.resetDate();
+        }
         this.showgetmonth? this.resetDate() : this.showgetmonth=true;
       },
       resetDate(){
