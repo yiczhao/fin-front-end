@@ -130,6 +130,13 @@
 									</td>
 									<td><input type="button" class="btn btn-primary" value="商户账户更新" @click="merchantAccountSyn($event)"/></td>
 								</tr>
+								<tr>
+									<td><span>待划付金额校正：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="待划付金额校正" data-toggle="modal" @click="correctUnpaidAmount($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -361,6 +368,12 @@
                         dialogs('success',response.data.message);
                     })
             },
+            correctUnpaidAmount(e){
+                this.$http.post('./dev/tool/subsidyAccount/correct')
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+			}
         },
         ready() {
         },
