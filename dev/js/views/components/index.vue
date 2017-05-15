@@ -39,10 +39,10 @@
                 window.location.href = authUrl1
                 return
             }
-            if(KSAuthKit){
-                KSAuthKit.off();
-                KSAuthKit.on();
-            }
+//            if(KSAuthKit){
+//                KSAuthKit.off();
+//                KSAuthKit.on();
+//            }
         },
         watch: {
             userData() {
