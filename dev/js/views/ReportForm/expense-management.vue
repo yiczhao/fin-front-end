@@ -26,7 +26,7 @@
                             </select>
                             <select class="form-control" v-model="checkForm.type">
                                 <option value="">预算/实际</option>
-                                <option value="2">预算</option>
+                                <option value="1">预算</option>
                                 <option value="2">实际</option>
                             </select>
                             <div class="inline">
