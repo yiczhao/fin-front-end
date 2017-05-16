@@ -133,6 +133,7 @@
 								<tr>
 									<td><span>待划付金额校正：</span></td>
 									<td>
+										<input type="text" class="form-control" v-model="subsidyAccountID" placeholder="subsidyAccountID"/>
 										<input type="button" class="btn btn-primary" value="待划付金额校正" data-toggle="modal" @click="correctUnpaidAmount($event)"/>
 									</td>
 									<td></td>
@@ -188,7 +189,8 @@
 				jobID:'',
 				end:'',
 				begin:'',
-				code:''
+				code:'',
+                subsidyAccountID:''
             }
         },
         methods:{
@@ -369,7 +371,7 @@
                     })
             },
             correctUnpaidAmount(e){
-                this.$http.post('./dev/tool/subsidyAccount/correct')
+                this.$http.post('./dev/tool/subsidyAccount/correct/'+this.subsidyAccountID)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
