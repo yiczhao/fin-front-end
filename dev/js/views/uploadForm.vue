@@ -146,6 +146,14 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>修复税金和发票数据：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="subsidyAccountIDs" placeholder="subsidyAccountIDs"/>
+										<input type="button" class="btn btn-primary" value="修复" data-toggle="modal" @click="updateSubsidyAccountTaxAndInvoice($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -199,6 +207,7 @@
 				begin:'',
 				code:'',
                 subsidyAccountIDsStr1:'',
+                subsidyAccountIDs:'',
                 subsidyAccountIDsStr2:''
             }
         },
@@ -387,6 +396,12 @@
 			},
             correctPaidDetail(e){
                 this.$http.post('./dev/tool/subsidyAccount/paidDetail/correct/'+this.subsidyAccountIDsStr2)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            updateSubsidyAccountTaxAndInvoice(e){
+                this.$http.post('./dev/tool/updateSubsidyAccountTaxAndInvoice/'+this.subsidyAccountIDs)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
