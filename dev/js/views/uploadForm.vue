@@ -1,7 +1,7 @@
 <template>
-    <index :title="'上传文件'" 
+    <index :title="'上传文件'"
            :ptitle="'上传文件'"
-           :hname="'uploadForm'"  
+           :hname="'uploadForm'"
            :isshow="'isshow'">
         <div class="content blists" slot="content">
         	<div class="panel panel-flat">
@@ -130,6 +130,22 @@
 									</td>
 									<td><input type="button" class="btn btn-primary" value="商户账户更新" @click="merchantAccountSyn($event)"/></td>
 								</tr>
+								<tr>
+									<td><span>待划付已划付金额校正：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="subsidyAccountIDsStr1" placeholder="subsidyAccountIDsStr"/>
+										<input type="button" class="btn btn-primary" value="校正" data-toggle="modal" @click="correctUnpaidAmount($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>已划付金额明细校正：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="subsidyAccountIDsStr2" placeholder="subsidyAccountIDsStr"/>
+										<input type="button" class="btn btn-primary" value="校正" data-toggle="modal" @click="correctPaidDetail($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -181,7 +197,9 @@
 				jobID:'',
 				end:'',
 				begin:'',
-				code:''
+				code:'',
+                subsidyAccountIDsStr1:'',
+                subsidyAccountIDsStr2:''
             }
         },
         methods:{
@@ -361,6 +379,18 @@
                         dialogs('success',response.data.message);
                     })
             },
+            correctUnpaidAmount(e){
+                this.$http.post('./dev/tool/subsidyAccount/amount/correct/'+this.subsidyAccountIDsStr1)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+			},
+            correctPaidDetail(e){
+                this.$http.post('./dev/tool/subsidyAccount/paidDetail/correct/'+this.subsidyAccountIDsStr2)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            }
         },
         ready() {
         },

@@ -16,7 +16,6 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add" data-ksa="cost.edit_principle" @click="typeIn('infact')" >实际费用录入</a>
                         <a class="btn btn-add" data-ksa="cost.edit_budget" @click="typeIn('budget')" >预算录入</a>
                     </div>
                     <div class="heading-right">
@@ -27,7 +26,7 @@
                             </select>
                             <select class="form-control" v-model="checkForm.type">
                                 <option value="">预算/实际</option>
-                                <option value="2">预算</option>
+                                <option value="1">预算</option>
                                 <option value="2">实际</option>
                             </select>
                             <div class="inline">
@@ -156,13 +155,6 @@
                     type:'',
                     startDate:yestodayMonth(),
                 },
-                infaceList:{
-                    // subCompanyID:'',
-                    // subject:'',
-                    // department:'',
-                    // date:'',
-                    // amount:'',
-                },
                 budgetList:{
                     // subCompanyId:'',
                     // subject:'',
@@ -197,16 +189,10 @@
                         this.$set('departmentList',res.data.data)
                     }
                 })
-                if(title=='infact'){
-                    this.typeTitle='实际费用录入';
-                    this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:'',remarks:''};
-                }else{
-                    this.typeTitle='预算录入';
-                    this.budgetList={subCompanyId:'',subject:'',year:'2017',amountList:[]};
-                }
+                this.typeTitle='预算录入';
+                this.budgetList={subCompanyId:'',subject:'',year:'2017',amountList:[]};
             },
             cancel(){
-                this.infaceList={date:getNowMonth()};
                 this.budgetList={amountList:[]};
                 this.type_in=false;
             },
