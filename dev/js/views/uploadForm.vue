@@ -157,6 +157,7 @@
 								<tr>
 									<td><span>计算补贴账户的交易统计信息：</span></td>
 									<td>
+										<input type="text" class="form-control" v-model="generateSubsidyAccountIDs" placeholder="generateSubsidyAccountIDs"/>
 										<input type="button" class="btn btn-primary" value="计算补贴账户的交易统计信息" @click="generateSubsidyAccount($event)"/>
 									</td>
 									<td></td>
@@ -215,6 +216,7 @@
 				code:'',
                 subsidyAccountIDsStr1:'',
                 subsidyAccountIDs:'',
+                generateSubsidyAccountIDs:'',
                 subsidyAccountIDsStr2:''
             }
         },
@@ -414,7 +416,7 @@
                     })
             },
             generateSubsidyAccount(e){
-                this.$http.post('./dev/tool/generateSubsidyAccount')
+                this.$http.post('./dev/tool/generateSubsidyAccountInvoiceAmount/'+this.generateSubsidyAccountIDs)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
