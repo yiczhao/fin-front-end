@@ -154,6 +154,13 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>计算补贴账户的交易统计信息：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="计算补贴账户的交易统计信息" @click="generateSubsidyAccount($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -402,6 +409,12 @@
             },
             updateSubsidyAccountTaxAndInvoice(e){
                 this.$http.post('./dev/tool/updateSubsidyAccountTaxAndInvoice/'+this.subsidyAccountIDs)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            generateSubsidyAccount(e){
+                this.$http.post('./dev/tool/generateSubsidyAccount')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
