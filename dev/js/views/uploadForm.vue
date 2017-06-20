@@ -1,7 +1,7 @@
 <template>
-    <index :title="'上传文件'" 
+    <index :title="'上传文件'"
            :ptitle="'上传文件'"
-           :hname="'uploadForm'"  
+           :hname="'uploadForm'"
            :isshow="'isshow'">
         <div class="content blists" slot="content">
         	<div class="panel panel-flat">
@@ -131,10 +131,34 @@
 									<td><input type="button" class="btn btn-primary" value="商户账户更新" @click="merchantAccountSyn($event)"/></td>
 								</tr>
 								<tr>
-									<td><span>待划付金额校正：</span></td>
+									<td><span>待划付已划付金额校正：</span></td>
 									<td>
-										<input type="text" class="form-control" v-model="subsidyAccountID" placeholder="subsidyAccountID"/>
-										<input type="button" class="btn btn-primary" value="待划付金额校正" data-toggle="modal" @click="correctUnpaidAmount($event)"/>
+										<input type="text" class="form-control" v-model="subsidyAccountIDsStr1" placeholder="subsidyAccountIDsStr"/>
+										<input type="button" class="btn btn-primary" value="校正" data-toggle="modal" @click="correctUnpaidAmount($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>已划付金额明细校正：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="subsidyAccountIDsStr2" placeholder="subsidyAccountIDsStr"/>
+										<input type="button" class="btn btn-primary" value="校正" data-toggle="modal" @click="correctPaidDetail($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>修复税金和发票数据：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="subsidyAccountIDs" placeholder="subsidyAccountIDs"/>
+										<input type="button" class="btn btn-primary" value="修复" data-toggle="modal" @click="updateSubsidyAccountTaxAndInvoice($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>计算补贴账户的交易统计信息：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="generateSubsidyAccountIDs" placeholder="generateSubsidyAccountIDs"/>
+										<input type="button" class="btn btn-primary" value="计算补贴账户的交易统计信息" @click="generateSubsidyAccount($event)"/>
 									</td>
 									<td></td>
 								</tr>
@@ -190,7 +214,10 @@
 				end:'',
 				begin:'',
 				code:'',
-                subsidyAccountID:''
+                subsidyAccountIDsStr1:'',
+                subsidyAccountIDs:'',
+                generateSubsidyAccountIDs:'',
+                subsidyAccountIDsStr2:''
             }
         },
         methods:{
@@ -371,11 +398,29 @@
                     })
             },
             correctUnpaidAmount(e){
-                this.$http.post('./dev/tool/subsidyAccount/correct/'+this.subsidyAccountID)
+                this.$http.post('./dev/tool/subsidyAccount/amount/correct/'+this.subsidyAccountIDsStr1)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
-			}
+			},
+            correctPaidDetail(e){
+                this.$http.post('./dev/tool/subsidyAccount/paidDetail/correct/'+this.subsidyAccountIDsStr2)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            updateSubsidyAccountTaxAndInvoice(e){
+                this.$http.post('./dev/tool/updateSubsidyAccountTaxAndInvoice/'+this.subsidyAccountIDs)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            generateSubsidyAccount(e){
+                this.$http.post('./dev/tool/generateSubsidyAccountInvoiceAmount/'+this.generateSubsidyAccountIDs)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            }
         },
         ready() {
         },
