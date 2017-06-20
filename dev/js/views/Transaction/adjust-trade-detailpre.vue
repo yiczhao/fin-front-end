@@ -42,7 +42,7 @@
                             <datepicker :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
 
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
                         <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         <input type="text" class="form-control" placeholder="商户号" v-model="checkForm.merchantCode">
                         <input type="text" class="form-control" placeholder="商户简称" v-model="checkForm.merchantName">
@@ -73,9 +73,10 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
 
+                                <th>商户简称</th>
                                 <th>商户号</th>
                                 <th>门店名称</th>
                                 <th>门店号</th>
@@ -102,8 +103,9 @@
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.merchantOperationName}}</td>
 
+                                <td>{{trlist.merchantName}}</td>
                                 <td>{{trlist.merchantCode}}</td>
                                 <td>{{trlist.storeName}}</td>
                                 <td>{{trlist.storeCode}}</td>
