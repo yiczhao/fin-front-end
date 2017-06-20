@@ -45,10 +45,10 @@
 
                                 <input type="text" class="form-control" v-model="checkForm.id" v-limitnumber="checkForm.id" placeholder="ID">
 
-                                <input type="text" class="form-control" v-model="checkForm.merchantCode" placeholder="商户号">
-                                <input type="text" class="form-control" v-model="checkForm.merchantShortName" placeholder="商户简称">
-                                <input type="text" class="form-control" v-model="checkForm.storeCode" placeholder="门店号">
-                                <input type="text" class="form-control" v-model="checkForm.storeName" placeholder="门店名称">
+                                <input type="text" class="form-control" v-model="checkForm.backendMerchantCode" placeholder="商户号">
+                                <input type="text" class="form-control" v-model="checkForm.backendMerchantName" placeholder="商户简称">
+                                <input type="text" class="form-control" v-model="checkForm.backendStoreCode" placeholder="门店号">
+                                <input type="text" class="form-control" v-model="checkForm.backendStoreName" placeholder="门店名称">
                                 <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
                                 <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
                                 <input type="text" class="form-control" v-model="checkForm.receiptAccountName" placeholder="收款账户名">
@@ -126,10 +126,10 @@
                                         <td>{{sa.subCompanyName}}</td>
                                         <td>{{sa.cityName}}</td>
                                         <td>{{sa.paymentAccountShortName}}</td>
-                                        <td>{{sa.merchantCode}}</td>
-                                        <td>{{sa.merchantShortName}}</td>
-                                        <td>{{sa.storeCode}}</td>
-                                        <td>{{sa.storeName}}</td>
+                                        <td>{{sa.backendMerchantCode}}</td>
+                                        <td>{{sa.backendMerchantName}}</td>
+                                        <td>{{sa.backendStoreCode}}</td>
+                                        <td>{{sa.backendStoreName}}</td>
                                         <td>{{sa.merchantOperationID}}</td>
                                         <td><span v-if="!existInBackend">{{sa.merchantName}}</span></td>
                                         <td>{{sa.activityOperationID}}</td>
@@ -289,10 +289,10 @@
                     merchantName:"",
                     receiptAccountName:"",
                     receiptAccountNumber:"",
-                    merchantCode:"",
-                    merchantShortName:"",
-                    storeCode:"",
-                    storeName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     remarks:"",
                     activityOperationID:"",
                     pageIndex:1,
