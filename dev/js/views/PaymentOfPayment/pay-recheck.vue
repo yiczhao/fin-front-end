@@ -64,10 +64,12 @@
                             </div>
 
                             <input type="text" class="form-control" v-model="checkForm.id" placeholder="请输入ID" v-limitnumber="checkForm.id">
-
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="请输入商户ID" v-limitnumber="checkForm.merchantOperationID">
-
-                            <input type="text" class="form-control" v-model="checkForm.keywords"  placeholder="商户名/收款账户名/账号">
+                            <input type="text" class="form-control" v-model="checkForm.backendMerchantCode" placeholder="商户号">
+                            <input type="text" class="form-control" v-model="checkForm.backendMerchantName" placeholder="商户简称">
+                            <input type="text" class="form-control" v-model="checkForm.backendStoreCode" placeholder="门店号">
+                            <input type="text" class="form-control" v-model="checkForm.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
+                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
 
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="请输入备注关键词">
 
@@ -91,8 +93,12 @@
                                     <th>分公司</th>
                                     <th>城市</th>
                                     <th>付款账户</th>
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
+                                    <th>商户号</th>
+                                    <th>商户简称</th>
+                                    <th>门店号</th>
+                                    <th>门店名称</th>
+                                    <th>商盟ID</th>
+                                    <th>商盟商户名称</th>
                                     <th>活动ID</th>
                                     <th>活动名称</th>
                                     <th>收款账户名</th>
@@ -118,8 +124,14 @@
                                 <td>{{n.subCompanyName}}</td>
                                 <td>{{n.cityName }}</td>
                                 <td>{{n.payAccount }}</td>
+                                <td>{{n.backendMerchantCode}}</td>
+                                <td>{{n.backendMerchantName}}</td>
+                                <td>{{n.backendStoreCode}}</td>
+                                <td>{{n.backendStoreName}}</td>
                                 <td>{{n.merchantOperationID }}</td>
-                                <td>{{n.merchantName }}</td>
+                                <td>
+                                    <span v-if="!!n.merchantName">{{n.merchantName}}</span>
+                                </td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.collectionBankName }}</td>
@@ -169,7 +181,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
@@ -289,7 +301,12 @@
                     endDate:'',
                     id:'',
                     merchantOperationID:'',
-                    keywords:'',
+                    merchantOperationID:"",
+                    merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     remarks:'',
                     pageIndex:1,
                     pageSize:10,
