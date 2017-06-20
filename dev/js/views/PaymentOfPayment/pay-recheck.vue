@@ -130,7 +130,7 @@
                                 <td>{{n.backendStoreName}}</td>
                                 <td>{{n.merchantOperationID }}</td>
                                 <td>
-                                    <span v-if="!!n.merchantName">{{n.merchantName}}</span>
+                                    <span v-if="!n.backendStoreCode">{{n.merchantName}}</span>
                                 </td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
@@ -300,7 +300,6 @@
                     startDate:'',
                     endDate:'',
                     id:'',
-                    merchantOperationID:'',
                     merchantOperationID:"",
                     merchantName:"",
                     backendMerchantCode:"",
