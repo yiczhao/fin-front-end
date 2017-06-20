@@ -203,11 +203,34 @@
                 dialogs('info', err)
             },
             saveCompanyName(){
+                let data={"subCompanyID":this.typeIn.subCompanyId,"year":this.typeIn.year}
+                this.model.financeInfo(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0 && response.data.data.january){
+                            this.$set('typeIn', response.data.data)
+                        }else{
+                            this.typeIn.yearTarget='';
+                            this.typeIn.january='';
+                            this.typeIn.february='';
+                            this.typeIn.march='';
+                            this.typeIn.april='';
+                            this.typeIn.may='';
+                            this.typeIn.june='';
+                            this.typeIn.july='';
+                            this.typeIn.august='';
+                            this.typeIn.september='';
+                            this.typeIn.october='';
+                            this.typeIn.november='';
+                            this.typeIn.december='';
+                        }
+                    });
                 _.map(this.companylists,(val)=>{
                     if(val.subCompanyID==this.typeIn.subCompanyId){
                         this.typeIn.subCompanyName=val.name;
                     }
                 })
+
             },
             saveChange(){
                 if (true) {
