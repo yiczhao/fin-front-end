@@ -45,9 +45,14 @@
 
                                 <input type="text" class="form-control" v-model="checkForm.id" v-limitnumber="checkForm.id" placeholder="ID">
 
-                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
-                                <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号">
+                                <input type="text" class="form-control" v-model="checkForm.merchantCode" placeholder="商户号">
+                                <input type="text" class="form-control" v-model="checkForm.merchantShortName" placeholder="商户简称">
+                                <input type="text" class="form-control" v-model="checkForm.storeCode" placeholder="门店号">
+                                <input type="text" class="form-control" v-model="checkForm.storeName" placeholder="门店名称">
+                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
+                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
+                                <input type="text" class="form-control" v-model="checkForm.receiptAccountName" placeholder="收款账户名">
+                                <input type="text" class="form-control" v-model="checkForm.receiptAccountNumber" placeholder="收款帐号">
 
                                 <select class="form-control" v-model="checkForm.createType">
                                     <option value="">请选择生成方式</option>
@@ -89,8 +94,12 @@
                                         <th>分公司</th>
                                         <th>城市</th>
                                         <th>付款账户</th>
-                                        <th>商户ID</th>
-                                        <th>商户名称</th>
+                                        <th>商户号</th>
+                                        <th>商户简称</th>
+                                        <th>门店号</th>
+                                        <th>门店名称</th>
+                                        <th>商盟ID</th>
+                                        <th>商盟商户名称</th>
                                         <th>活动ID</th>
                                         <th>活动名称</th>
                                         <th>收款账户名</th>
@@ -117,8 +126,12 @@
                                         <td>{{sa.subCompanyName}}</td>
                                         <td>{{sa.cityName}}</td>
                                         <td>{{sa.paymentAccountShortName}}</td>
+                                        <td>{{sa.merchantCode}}</td>
+                                        <td>{{sa.merchantShortName}}</td>
+                                        <td>{{sa.storeCode}}</td>
+                                        <td>{{sa.storeName}}</td>
                                         <td>{{sa.merchantOperationID}}</td>
-                                        <td>{{sa.merchantName}}</td>
+                                        <td><span v-if="!existInBackend">{{sa.merchantName}}</span></td>
                                         <td>{{sa.activityOperationID}}</td>
                                         <td>{{sa.activityName}}</td>
                                         <td>{{sa.receiptAccountName}}</td>
@@ -181,7 +194,7 @@
                                     </tr>
                                     <tr>
                                         <td>合计：</td>
-                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                         <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                         <td>{{total.payAmount/100 | currency ''}}</td>
                                         <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td>
@@ -274,7 +287,12 @@
                     endDate:"",
                     merchantOperationID:"",
                     merchantName:"",
-                    keywords:"",
+                    receiptAccountName:"",
+                    receiptAccountNumber:"",
+                    merchantCode:"",
+                    merchantShortName:"",
+                    storeCode:"",
+                    storeName:"",
                     remarks:"",
                     activityOperationID:"",
                     pageIndex:1,
