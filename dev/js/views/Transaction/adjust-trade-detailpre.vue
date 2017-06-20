@@ -44,10 +44,10 @@
 
                         <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
                         <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
-                        <input type="text" class="form-control" placeholder="商户号" v-model="checkForm.merchantCode">
-                        <input type="text" class="form-control" placeholder="商户简称" v-model="checkForm.merchantName">
-                        <input type="text" class="form-control" placeholder="门店号" v-model="checkForm.storeCode">
-                        <input type="text" class="form-control" placeholder="门店名称" v-model="checkForm.storeName">
+                        <input type="text" class="form-control" placeholder="商户号" v-model="checkForm.backendMerchantCode">
+                        <input type="text" class="form-control" placeholder="商户简称" v-model="checkForm.backendMerchantName">
+                        <input type="text" class="form-control" placeholder="门店号" v-model="checkForm.backendStoreCode">
+                        <input type="text" class="form-control" placeholder="门店名称" v-model="checkForm.backendStoreName">
                         <input type="text" class="form-control" placeholder="交易流水号" v-model="checkForm.serialNumber">
 
                         <select class="form-control" v-model="checkForm.status">
@@ -103,12 +103,12 @@
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantOperationName}}</td>
-
                                 <td>{{trlist.merchantName}}</td>
-                                <td>{{trlist.merchantCode}}</td>
-                                <td>{{trlist.storeName}}</td>
-                                <td>{{trlist.storeCode}}</td>
+
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
 
                                 <td>{{trlist.limitDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.principalDeduct/100 | currency ''}}</td>
@@ -150,7 +150,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.limitDeduct/100 | currency ''}}</td>
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
@@ -359,11 +359,10 @@
                     timeRange:'3',
                     pageSize:10,
 
-                    merchantCode:'',
-                    merchantName:'',
-                    storeCode:'',
-                    storeName:'',
-                    serialNumber:''
+                    backendMerchantCode:'',
+                    backendMerchantName:'',
+                    backendStoreCode:'',
+                    backendStoreName:''
                 },
                 subcompanyList:[],
                 pageall:1,
