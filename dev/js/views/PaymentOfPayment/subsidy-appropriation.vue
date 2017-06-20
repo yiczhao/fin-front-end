@@ -131,7 +131,9 @@
                                         <td>{{sa.backendStoreCode}}</td>
                                         <td>{{sa.backendStoreName}}</td>
                                         <td>{{sa.merchantOperationID}}</td>
-                                        <td><span v-if="!existInBackend">{{sa.merchantName}}</span></td>
+                                        <td>
+                                            <span v-if="!sa.existInBackend">{{sa.merchantName}}</span>
+                                        </td>
                                         <td>{{sa.activityOperationID}}</td>
                                         <td>{{sa.activityName}}</td>
                                         <td>{{sa.receiptAccountName}}</td>
