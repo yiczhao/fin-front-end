@@ -134,7 +134,7 @@
                         </div>
                         <div class="form-group" v-for="(index,value) in timeList">
                             <label><i>*</i>2017年{{$index+1}}月</label>
-                            <input type="text" class="form-control" v-limitaddprice="budgetList.amountList[index]" v-model="budgetList.amountList[index]" placeholder="">
+                            <input type="text" class="form-control" v-limitprice="budgetList.amountList[index]" v-model="budgetList.amountList[index]" placeholder="">
                         </div>
                     </validator>
                 </content-dialog>
