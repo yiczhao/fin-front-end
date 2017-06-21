@@ -41,13 +41,12 @@
                             <datepicker :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
-
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
-                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         <input type="text" class="form-control" placeholder="商户号" v-model="checkForm.backendMerchantCode">
                         <input type="text" class="form-control" placeholder="商户简称" v-model="checkForm.backendMerchantName">
                         <input type="text" class="form-control" placeholder="门店号" v-model="checkForm.backendStoreCode">
                         <input type="text" class="form-control" placeholder="门店名称" v-model="checkForm.backendStoreName">
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
+                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         <input type="text" class="form-control" placeholder="交易流水号" v-model="checkForm.serialNumber">
 
                         <select class="form-control" v-model="checkForm.status">
@@ -73,13 +72,13 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商盟ID</th>
-                                <th>商盟商户名称</th>
 
                                 <th>商户简称</th>
                                 <th>商户号</th>
                                 <th>门店名称</th>
                                 <th>门店号</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
 
                                 <th>额度抵扣</th>
                                 <th>本金抵扣</th>
@@ -102,13 +101,14 @@
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
 
                                 <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.merchantOperationID}}</td>
+                                <td>{{trlist.merchantName}}</td>
+
 
                                 <td>{{trlist.limitDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.principalDeduct/100 | currency ''}}</td>
@@ -187,14 +187,30 @@
                     <validator name="vali">
                         <div class="dialog-row">
                         <span>
-                             <label><i>*</i>商户ID：</label>
-                             <input type="text"
-                                    class="form-control"
-                                    v-model="redata.merchantOperationID "
-                                    v-validate:val1="['required']"
-                                    v-bind:class="{'error-input':fire && $vali.val1.required}"
-                                    v-limitnumber="redata.merchantOperationID"
-                                    placeholder="请输入商户ID">
+                              <label>
+                                  <i>*</i><select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;border: 0;color: #777;">
+                                      <option value="1">商户ID：</option>
+                                      <option value="2">门店号：</option>
+                                  </select>
+                             </label>
+                             <template v-if="merchantType==1">
+                                <input type="text"
+                                       class="form-control"
+                                       v-model="redata.merchantOperationID "
+                                       v-validate:val1="['required']"
+                                       v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                       v-limitnumber="redata.merchantOperationID"
+                                       placeholder="请输入商户ID">
+                            </template>
+                            <template v-if="merchantType==2">
+                                <input type="text"
+                                       class="form-control"
+                                       v-model="redata.backendStoreCode"
+                                       v-validate:val1="['required']"
+                                       v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                       v-limitnumber="redata.backendStoreCode"
+                                       placeholder="请输入门店号">
+                            </template>
                         </span>
                             <span>
                              <label><i>*</i>参与活动：</label>
@@ -375,7 +391,9 @@
                 addTitle:'',
                 uploadText:'',
                 tradeData:{},
+                merchantType:1,
                 redata:{
+                    "backendStoreCode":'',
                     "activityOperationID": '',
                     "certificateID": '',
                     "collectionAmount": '',
