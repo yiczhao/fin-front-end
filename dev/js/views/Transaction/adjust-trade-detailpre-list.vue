@@ -41,7 +41,9 @@
                                 <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>
+                                    <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
+                                </td>
                                 <td>{{trlist.limitDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.principalDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
