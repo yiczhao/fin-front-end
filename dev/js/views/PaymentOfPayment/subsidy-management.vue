@@ -31,9 +31,13 @@
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
                             <input type="text" class="form-control" v-model="defaultData.activityOperationID" v-limitids="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" v-limitids="defaultData.merchantOperationID" placeholder="商户ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" v-limitids="defaultData.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
                             <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
-                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名称">
+                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商盟商户名称">
+                            <input type="text" class="form-control" placeholder="商户号" v-model="defaultData.backendMerchantCode">
+                            <input type="text" class="form-control" placeholder="商户简称" v-model="defaultData.backendMerchantName">
+                            <input type="text" class="form-control" placeholder="门店号" v-model="defaultData.backendStoreCode">
+                            <input type="text" class="form-control" placeholder="门店名称" v-model="defaultData.backendStoreName">
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -49,8 +53,15 @@
                                 <th>城市</th>
                                 <th>活动ID</th>
                                 <th>活动名称</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+
+                                <th>商户简称</th>
+                                <th>商户号</th>
+                                <th>门店名称</th>
+                                <th>门店号</th>
+
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
+
                                 <th>交易笔数</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
@@ -71,8 +82,17 @@
                                 <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.activityOperationID}}</td>
                                 <td>{{trlist.activityName}}</td>
+
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>
+                                    <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
+                                </td>
+
                                 <td>{{trlist.consumptionCount}}</td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
@@ -93,6 +113,10 @@
                             </tr>
                             <tr role="row" v-show="total!=''">
                                 <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -328,7 +352,12 @@
                     'pageTotal': 1,
                     'pageIndex': 1,
                     'pageSize': 10,
-                    mid:''
+                    mid:'',
+
+                    backendMerchantCode:'',
+                    backendMerchantName:'',
+                    backendStoreCode:'',
+                    backendStoreName:''
                 },
                 zdlists:[],
                 subcompanyList:[],
