@@ -30,14 +30,14 @@
                                 <option value="">全部城市</option>
                                 <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
-                            <input type="text" class="form-control" v-model="defaultData.activityOperationID" v-limitids="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" v-limitids="defaultData.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
-                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
+                            <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
+                            <input type="text" class="form-control" v-model="defaultData.backendMerchantName" placeholder="商户简称">
+                            <input type="text" class="form-control" v-model="defaultData.backendStoreCode" placeholder="门店号">
+                            <input type="text" class="form-control" v-model="defaultData.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
                             <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商盟商户名称">
-                            <input type="text" class="form-control" placeholder="商户号" v-model="defaultData.backendMerchantCode">
-                            <input type="text" class="form-control" placeholder="商户简称" v-model="defaultData.backendMerchantName">
-                            <input type="text" class="form-control" placeholder="门店号" v-model="defaultData.backendStoreCode">
-                            <input type="text" class="form-control" placeholder="门店名称" v-model="defaultData.backendStoreName">
+                            <input type="text" class="form-control" v-model="defaultData.activityOperationID" v-limitids="defaultData.activityOperationID" placeholder="活动ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.activityName" placeholder="活动名称">
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -53,15 +53,12 @@
                                 <th>城市</th>
                                 <th>活动ID</th>
                                 <th>活动名称</th>
-
-                                <th>商户简称</th>
                                 <th>商户号</th>
-                                <th>门店名称</th>
+                                <th>商户简称</th>
                                 <th>门店号</th>
-
+                                <th>门店名称</th>
                                 <th>商盟ID</th>
                                 <th>商盟商户名称</th>
-
                                 <th>交易笔数</th>
                                 <th>三方应收</th>
                                 <th>商户应补</th>
@@ -82,17 +79,14 @@
                                 <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.activityOperationID}}</td>
                                 <td>{{trlist.activityName}}</td>
-
                                 <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
-
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>
                                     <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
                                 </td>
-
                                 <td>{{trlist.consumptionCount}}</td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
@@ -163,12 +157,22 @@
                 >
                     <div class="modal-body">
                         <div class="form-group">
-                            <label style="width: 15%;text-align: right;">商户：</label>
-                            <span>{{rechargeInfo.val1}}</span><span>({{rechargeInfo.val4}})</span>
+                            <label v-if="!rechargeInfo.val7">商盟商户名称：</label>
+                            <span v-if="!rechargeInfo.val7">{{rechargeInfo.val1}}</span>
+                            <label style="width: 15%;text-align: right;">商盟ID：</label>
+                            <span>{{rechargeInfo.val4}}</span>
                         </div>
                         <div class="form-group">
-                            <label style="width: 15%;text-align: right;">活动：</label>
-                            <span>{{rechargeInfo.val2}}</span><span>({{rechargeInfo.val5}})</span>
+                            <label style="width: 15%;text-align: right;">活动名称：</label>
+                            <span>{{rechargeInfo.val2}}</span>
+                            <label style="width: 15%;text-align: right;">活动ID：</label>
+                            <span>{{rechargeInfo.val5}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;">门店名称：</label>
+                            <span>{{rechargeInfo.val6}}</span>
+                            <label style="width: 15%;text-align: right;">门店号：</label>
+                            <span>{{rechargeInfo.val7}}</span>
                         </div>
                         <div class="form-group">
                             <label class="control-label">税金池余额：{{redata.suspensionTaxAmount/100 | currency ''}} 元</label>
@@ -217,39 +221,47 @@
                         :title.sync="'发票充值'"
                 >
                     <validator name="vali">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label style="width: 15%;text-align: right;">商户：</label>
-                               <span>{{rechargeInfo.val1}}</span><span>({{rechargeInfo.val4}})</span>
-                            </div>
-                            <div class="form-group">
-                                <label style="width: 15%;text-align: right;">活动：</label>
-                                <span>{{rechargeInfo.val2}}</span><span>({{rechargeInfo.val5}})</span>
-                            </div>
-                            <div class="form-group">
-                                <label style="width: 15%;text-align: right;">余额：</label>
-                                <span>{{rechargeInfo.val3/100 | currency '' }}元</span>
-                            </div>
-                            <div class="form-group">
-                                <label style="width: 15%;text-align: right;"><i style="color:red;">*</i>金额：</label>
-                                <input style="width: 70%;display: inline-block" placeholder="单位：元" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
-                            </div>
-                            <div class="form-group" v-else>
-                                <label style="width: 15%;text-align: right;">上传凭证：</label>
-                                <input  style="display:none" @change="uploads($event)" type="file">
-                                <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                                <span v-text="uploadText" v-show="uploadText!=''"></span>
-                            </div>
-                            <div class="form-group">
-                                <label style="width: 15%;text-align: right;position: relative;top: -95px;" class="control-label">备注：</label>
-                                <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
-                            </div>
-                            <div class="form-group tc">
-                                <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
-                            </div>
-                            <div class="form-group tc">
-                                <span v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
-                            </div>
+                        <div class="form-group">
+                            <label v-if="!rechargeInfo.val7">商盟商户名称：</label>
+                           <span v-if="!rechargeInfo.val7">{{rechargeInfo.val1}}</span>
+                            <label style="width: 15%;text-align: right;">商盟ID：</label>
+                            <span>{{rechargeInfo.val4}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;">活动名称：</label>
+                            <span>{{rechargeInfo.val2}}</span>
+                            <label style="width: 15%;text-align: right;">活动ID：</label>
+                            <span>{{rechargeInfo.val5}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;">门店名称：</label>
+                            <span>{{rechargeInfo.val6}}</span>
+                            <label style="width: 15%;text-align: right;">门店号：</label>
+                            <span>{{rechargeInfo.val7}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;">余额：</label>
+                            <span>{{rechargeInfo.val3/100 | currency '' }}元</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;"><i style="color:red;">*</i>金额：</label>
+                            <input style="width: 70%;display: inline-block" placeholder="单位：元" type="text" class="form-control" v-validate:val2="['required']" v-model="rechargeData.payoutAmount" v-limitprice="rechargeData.payoutAmount">
+                        </div>
+                        <div class="form-group" v-else>
+                            <label style="width: 15%;text-align: right;">上传凭证：</label>
+                            <input  style="display:none" @change="uploads($event)" type="file">
+                            <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
+                            <span v-text="uploadText" v-show="uploadText!=''"></span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;position: relative;top: -95px;" class="control-label">备注：</label>
+                            <textarea style="display: inline-block;width: 70%;" rows="5" cols="5" class="form-control" v-model="rechargeData.remarks"></textarea>
+                        </div>
+                        <div class="form-group tc">
+                            <button type="button" @click="rechargeTrue" class="btn btn-primary">充值</button>
+                        </div>
+                        <div class="form-group tc">
+                            <span v-show="($vali.invalid && fire) || errortext!=''" class="validation-error-label" v-text="errortext"></span>
                         </div>
                     </validator>
                 </content-dialog>
@@ -263,8 +275,27 @@
                         <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationID" v-model="batchData.activityOperationID"></textarea>
                     </div>
                     <div class="form-group">
-                        <label style="position: relative;top: -95px;" class="control-label">商户ID：</label>
-                        <textarea style="display: inline-block;width: 88%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationID" v-model="batchData.merchantOperationID"></textarea>
+                        <label style="position: relative;top: -95px;" class="control-label">商户：</label>
+                        <select class="form-control" v-model="merchantType1" style="position: relative;top: -93px;width: 76px;padding: 0;color: #777;display: inline-block;">
+                            <option value="1">商盟ID：</option>
+                            <option value="2">门店号：</option>
+                        </select>
+                        <template v-if="merchantType1==1">
+                            <textarea
+                                    style="display: inline-block;width: 75%;"
+                                    rows="5" cols="5" class="form-control"
+                                    v-limitids="batchData.merchantOperationID"
+                                    v-model="batchData.merchantOperationID"
+                                    placeholder="请输入商盟ID"></textarea>
+                        </template>
+                        <template v-if="merchantType1==2">
+                            <textarea
+                                    style="display: inline-block;width: 75%;"
+                                    rows="5" cols="5" class="form-control"
+                                    v-limitids="batchData.backendStoreCode"
+                                    v-model="batchData.backendStoreCode"
+                                    placeholder="请输入门店号"></textarea>
+                        </template>
                     </div>
                     <div class="form-group tc">
                         <a @click="batchApplyNext" class="btn btn-primary">下一步</a>
@@ -278,8 +309,31 @@
                     <validator name="valis">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="labels"><i>*</i>商户ID：</label>
-                            <input type="text" v-validate:val1="['required']" class="form-control input" v-model="rechargesData.merchantID" v-limitnumber="rechargesData.merchantID">
+                            <label class="labels">
+                                <i>*</i>商户：
+                            </label>
+                            <select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;color: #777;display: inline-block;">
+                                <option value="1">商盟ID：</option>
+                                <option value="2">门店号：</option>
+                            </select>
+                            <template v-if="merchantType==1">
+                                <input type="text"
+                                       v-validate:val1="['required']"
+                                       class="form-control input"
+                                       v-model="rechargesData.merchantID"
+                                       v-limitnumber="rechargesData.merchantID"
+                                       placeholder="请输入商盟ID"
+                                       style="width: 63%;">
+                            </template>
+                            <template v-if="merchantType==2">
+                                <input type="text"
+                                       v-validate:val1="['required']"
+                                       class="form-control input"
+                                       v-model="rechargesData.backendStoreCode"
+                                       v-limitnumber="rechargesData.backendStoreCode"
+                                       placeholder="请输入门店号"
+                                       style="width: 63%;">
+                            </template>
                         </div>
                         <div class="form-group">
                             <label class="labels"><i>*</i>活动ID：</label>
@@ -345,9 +399,13 @@
                 defaultData:{
                     'subCompanyID': '',
                     'cityID': '',
-                    'merchantOperationID': '',
                     'activityOperationID': '',
-                    'merchantName': '',
+                    merchantOperationID:"",
+                    merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     'activityName': '',
                     'pageTotal': 1,
                     'pageIndex': 1,
@@ -370,6 +428,7 @@
                 },
                 batchData:{
                     activityOperationID:'',
+                    backendStoreCode:'',
                     merchantOperationID:''
                 },
                 rechargeData:{
@@ -378,7 +437,10 @@
                     remarks:'',
                     certificateId:''
                 },
+                merchantType:1,
+                merchantType1:1,
                 rechargesData:{
+                    backendStoreCode:'',
                     activityID:'',
                     merchantID:'',
                     incomeAmount:'',
@@ -399,6 +461,8 @@
                     val3:'',
                     val4:'',
                     val5:'',
+                    val6:'',
+                    val7:'',
                 },
                 errortext:'',
                 applyText:'',
@@ -478,7 +542,7 @@
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.subsidyAccountExcel+ $.param(this.defaultData));
             },
-            applyPay({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID}){
+            applyPay({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID,backendStoreCode,backendStoreName}){
                 this.applyData={
                     remarks:'',
                     ids:[],
@@ -492,6 +556,8 @@
                 this.rechargeInfo.val3=invoiceAmount;
                 this.rechargeInfo.val4=merchantOperationID;
                 this.rechargeInfo.val5=activityOperationID;
+                this.rechargeInfo.val6=backendStoreName;
+                this.rechargeInfo.val7=backendStoreCode;
                 this.applyData.ids=[id];
                 let data={
                     id:id,
@@ -537,7 +603,7 @@
                             }
                         });
             },
-            recharge({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID}){
+            recharge({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID,backendStoreName,backendStoreCode}){
                 this.rechargeData={
                     subsidyAccountID:'',
                     payoutAmount:'',
@@ -550,6 +616,8 @@
                 this.rechargeInfo.val3=invoiceAmount;
                 this.rechargeInfo.val4=merchantOperationID;
                 this.rechargeInfo.val5=activityOperationID;
+                this.rechargeInfo.val6=backendStoreName;
+                this.rechargeInfo.val7=backendStoreCode;
                 this.uploadText='';
                 this.modal_recharge = true;
             },
@@ -611,8 +679,12 @@
                 this.modal_batch=true;
             },
             batchApplyNext(){
-                if(this.batchData.activityOperationID==''&&this.batchData.merchantOperationID==''){
-                    dialogs('info','活动ID及商户ID不能都为空！');
+                if(this.merchantType1==1&&!this.batchData.activityOperationID&&!this.batchData.merchantOperationID){
+                    dialogs('info','活动ID及商盟ID不能都为空！');
+                    return;
+                }
+                if(this.merchantType1==2&&!this.batchData.activityOperationID&&!this.batchData.backendStoreCode){
+                    dialogs('info','活动ID及门店号不能都为空！');
                     return;
                 }
                 this.model.subsidyManagement_batch(this.batchData)

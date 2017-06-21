@@ -188,42 +188,45 @@
                 >
                     <validator name="vali">
                         <div class="dialog-row">
-                        <span>
-                              <label>
-                                  <i>*</i><select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;border: 0;color: #777;">
-                                      <option value="1">商户ID：</option>
+                            <span>
+                                  <label>
+                                      <i>*</i>商户：
+                                  </label>
+                                 <select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;color: #777;">
+                                      <option value="1">商盟ID：</option>
                                       <option value="2">门店号：</option>
                                   </select>
-                             </label>
-                             <template v-if="merchantType==1">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="redata.merchantOperationID "
-                                       v-validate:val1="['required']"
-                                       v-bind:class="{'error-input':fire && $vali.val1.required}"
-                                       v-limitnumber="redata.merchantOperationID"
-                                       placeholder="请输入商户ID">
-                            </template>
-                            <template v-if="merchantType==2">
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="redata.backendStoreCode"
-                                       v-validate:val1="['required']"
-                                       v-bind:class="{'error-input':fire && $vali.val1.required}"
-                                       v-limitnumber="redata.backendStoreCode"
-                                       placeholder="请输入门店号">
-                            </template>
-                        </span>
+                                 <template v-if="merchantType==1">
+                                    <input type="text"
+                                           class="form-control"
+                                           v-model="redata.merchantOperationID "
+                                           v-validate:val1="['required']"
+                                           v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                           v-limitnumber="redata.merchantOperationID"
+                                           placeholder="请输入商盟ID">
+                                </template>
+                                <template v-if="merchantType==2">
+                                    <input type="text"
+                                           class="form-control"
+                                           v-model="redata.backendStoreCode"
+                                           v-validate:val1="['required']"
+                                           v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                           v-limitnumber="redata.backendStoreCode"
+                                           placeholder="请输入门店号">
+                                </template>
+                            </span>
+                        </div>
+                        <div class="dialog-row">
                             <span>
-                             <label><i>*</i>参与活动：</label>
-                             <input type="text"
-                                    class="form-control"
-                                    v-model="redata.activityOperationID"
-                                    v-validate:val2="['required']"
-                                    v-limitnumber="redata.activityOperationID"
-                                    v-bind:class="{'error-input':fire && $vali.val2.required}"
-                                    placeholder="请输入活动ID">
-                        </span>
+                                 <label><i>*</i>参与活动：</label>
+                                 <input type="text"
+                                        class="form-control"
+                                        v-model="redata.activityOperationID"
+                                        v-validate:val2="['required']"
+                                        v-limitnumber="redata.activityOperationID"
+                                        v-bind:class="{'error-input':fire && $vali.val2.required}"
+                                        placeholder="请输入活动ID">
+                            </span>
                         </div>
                         <div class="dialog-row">
                          <span>

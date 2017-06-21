@@ -209,21 +209,22 @@
                 <validator name="vali">
                     <div class="dialog-row">
                         <label>
-                            <i>*</i><select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;border: 0;color: #777;">
-                                <option value="1">商户ID：</option>
-                                <option value="2">门店号：</option>
-                            </select>
+                            <i>*</i>商盟ID：
                         </label>
-
+                        <select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;color: #777;">
+                            <option value="1">商盟ID：</option>
+                            <option value="2">门店号：</option>
+                        </select>
                         <template v-if="merchantType==1">
-                            <input type="text" class="form-control" placeholder="商户ID"
+                            <input type="text" class="form-control" placeholder="商盟ID"
                                    v-if="merchantType==1"
                                    v-model="tradeInfo.merchantOperationID"
                                    v-validate:val1="['required']"
                                    v-limitnumber="tradeInfo.merchantOperationID"
                                    v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                   style="width: 270px;"
                             >
-                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
+                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商盟ID</span>
                         </template>
                         <template v-if="merchantType==2">
                             <input type="text" class="form-control" placeholder="门店号"
