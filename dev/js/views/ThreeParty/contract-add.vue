@@ -112,10 +112,10 @@
                                  <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传</a>
                                  <span v-text="uploadText" v-show="uploadText!=''"></span>
                             </span>
+                            <a v-if="!!defaultData.contractFileID && $route.params.contractAddId!==':contractAddId'" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                             <a v-if="!!defaultData.contractFileID && $route.params.contractAddId!==':contractAddId'"
                                @click="removeContarct"
                             >删除</a>
-                            <a class="btn btn-primary" v-if="!!defaultData.contractFileID && $route.params.contractAddId!==':contractAddId'" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                         </div>
                     </div>
                 </div>
