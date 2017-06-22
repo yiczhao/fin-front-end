@@ -9,11 +9,11 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <span v-show="paidHd!=''">活动名称：{{paidHd}}</span>
-                    <span class="mr20" v-show="!!paidSh1">商户号：{{paidSh1}}</span>
-                    <span class="mr20" v-show="!!paidSh2">商户简称：{{paidSh2}}</span>
-                    <span class="mr20" v-show="!!paidSh3">门店号：{{paidSh3}}</span>
-                    <span class="mr20" v-show="!!paidSh4">门店名称：{{paidSh4}}</span>
-                    <span v-show="paidSh!=''&&!paidSh3">商盟商户名称：{{paidSh}}</span>
+                    <span class="mr20" v-show="!!paidSh1">商户简称：{{paidSh1}}</span>
+                    <span class="mr20" v-show="!!paidSh2">商户号：{{paidSh2}}</span>
+                    <span class="mr20" v-show="!!paidSh3">门店名称：{{paidSh3}}</span>
+                    <span class="mr20" v-show="!!paidSh4">门店号：{{paidSh4}}</span>
+                    <span v-show="paidSh!=''&&!paidSh4">商盟商户名称：{{paidSh}}</span>
                 </div>
                 <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
