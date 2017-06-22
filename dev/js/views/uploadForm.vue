@@ -162,6 +162,13 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>修复暂扣税金和商户实补：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复暂扣税金和商户实补" @click="repairTradeDetailTax($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -417,6 +424,12 @@
             },
             generateSubsidyAccount(e){
                 this.$http.post('./dev/tool/generateSubsidyAccountInvoiceAmount/'+this.generateSubsidyAccountIDs)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repairTradeDetailTax(e){
+                this.$http.post('./dev/tool/tradeDetailTax/repair')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
