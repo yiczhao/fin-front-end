@@ -21,7 +21,7 @@
           {{i+1}}月
         </span>
       </div>
-      <div class="get-month_row get-month_title">
+      <div class="get-month_row get-month_title" v-show="clear">
         <span @click="value=''">
           清空
         </span>
@@ -32,7 +32,8 @@
 <script>
   export default{
     props: {
-      value: { type: String, default: '' },
+        value: { type: String, default: '' },
+        clear: { type: Boolean, default: false },
     },
     data(){
       return{

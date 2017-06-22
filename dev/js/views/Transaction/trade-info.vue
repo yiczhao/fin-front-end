@@ -244,11 +244,6 @@
         </div>
     </index>
 </template>
-<style scope>
-html #app .heading .heading-left .form-control, #app .heading .heading-right .form-control,html  #app .heading .heading-middle .form-control{
-        vertical-align: baseline;
-}
-</style>
 <script>
     import model from '../../ajax/Transaction/trade_model'
     export default{

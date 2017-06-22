@@ -32,7 +32,7 @@
                                 <option value="">费用类型</option>
                                 <option v-for="(index,n) in costType" v-text="n.name" :value="n.id"></option>
                             </select>
-                            <getmonth :value.sync="date"></getmonth>
+                            <getmonth :clear="true" :value.sync="date"></getmonth>
                         </form>
                     </div>
                     <div class="heading-middle">
@@ -215,7 +215,11 @@
                 });
             },
             setTime(){
-                if(!this.date.trim())return;
+                if(!this.date.trim()){
+                    this.checkForm.year = '';
+                    this.checkForm.month='';
+                    return;
+                };
                 let date,year,month,myDate,today;
                 myDate=new Date();
                 today=myDate.getDate();
