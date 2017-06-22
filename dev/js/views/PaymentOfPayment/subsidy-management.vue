@@ -700,9 +700,18 @@
                 }
             },
             batchApply(){
+                debugger
                 this.batchData={
                     activityOperationID:this.defaultData.activityOperationID,
-                    merchantOperationID:this.defaultData.merchantOperationID
+                    merchantOperationID:this.defaultData.merchantOperationID,
+                    backendStoreCode:this.defaultData.backendStoreCode
+                }
+                if(!!this.defaultData.backendStoreCode){
+                    this.merchantType1=2;
+                }
+                if(!!this.defaultData.merchantOperationID){
+                    this.batchData.backendStoreCode='';
+                    this.merchantType1=1;
                 }
                 this.modal_batch=true;
             },
