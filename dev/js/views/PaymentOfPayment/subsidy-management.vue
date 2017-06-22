@@ -700,7 +700,6 @@
                 }
             },
             batchApply(){
-                debugger
                 this.batchData={
                     activityOperationID:this.defaultData.activityOperationID,
                     merchantOperationID:this.defaultData.merchantOperationID,
