@@ -193,6 +193,12 @@
                             <span>{{rechargeInfo.val5}}</span>
                         </div>
                         <div class="form-group">
+                            <label style="width: 15%;text-align: right;">商户简称：</label>
+                            <span>{{rechargeInfo.val8}}</span>
+                            <label style="width: 15%;text-align: right;">商户号：</label>
+                            <span>{{rechargeInfo.val9}}</span>
+                        </div>
+                        <div class="form-group">
                             <label style="width: 15%;text-align: right;">门店名称：</label>
                             <span>{{rechargeInfo.val6}}</span>
                             <label style="width: 15%;text-align: right;">门店号：</label>
@@ -256,6 +262,12 @@
                             <span>{{rechargeInfo.val2}}</span>
                             <label style="width: 15%;text-align: right;">活动ID：</label>
                             <span>{{rechargeInfo.val5}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 15%;text-align: right;">商户简称：</label>
+                            <span>{{rechargeInfo.val8}}</span>
+                            <label style="width: 15%;text-align: right;">商户号：</label>
+                            <span>{{rechargeInfo.val9}}</span>
                         </div>
                         <div class="form-group">
                             <label style="width: 15%;text-align: right;">门店名称：</label>
@@ -491,6 +503,8 @@
                     val5:'',
                     val6:'',
                     val7:'',
+                    val8:'',
+                    val9:'',
                 },
                 errortext:'',
                 applyText:'',
@@ -570,7 +584,7 @@
                 this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.subsidyAccountExcel+ $.param(this.defaultData));
             },
-            applyPay({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID,backendStoreCode,backendStoreName}){
+            applyPay({id,merchantName,activityName,backendMerchantCode,backendMerchantName,invoiceAmount,activityOperationID,merchantOperationID,backendStoreCode,backendStoreName}){
                 this.applyData={
                     remarks:'',
                     ids:[],
@@ -586,6 +600,8 @@
                 this.rechargeInfo.val5=activityOperationID;
                 this.rechargeInfo.val6=backendStoreName;
                 this.rechargeInfo.val7=backendStoreCode;
+                this.rechargeInfo.val8=backendMerchantName;
+                this.rechargeInfo.val9=backendMerchantCode;
                 this.applyData.ids=[id];
                 let data={
                     id:id,
@@ -631,7 +647,7 @@
                             }
                         });
             },
-            recharge({id,merchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID,backendStoreName,backendStoreCode}){
+            recharge({id,merchantName,backendMerchantCode,backendMerchantName,activityName,invoiceAmount,activityOperationID,merchantOperationID,backendStoreName,backendStoreCode}){
                 this.rechargeData={
                     subsidyAccountID:'',
                     payoutAmount:'',
@@ -646,6 +662,8 @@
                 this.rechargeInfo.val5=activityOperationID;
                 this.rechargeInfo.val6=backendStoreName;
                 this.rechargeInfo.val7=backendStoreCode;
+                this.rechargeInfo.val8=backendMerchantName;
+                this.rechargeInfo.val9=backendMerchantCode;
                 this.uploadText='';
                 this.modal_recharge = true;
             },
