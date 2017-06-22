@@ -9,7 +9,11 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
                     <span v-show="paidHd!=''">活动名称：{{paidHd}}</span>
-                    <span v-show="paidSh!=''">商户名称：{{paidSh}}</span>
+                    <span class="mr20" v-show="!!paidSh1">商户号：{{paidSh1}}</span>
+                    <span class="mr20" v-show="!!paidSh2">商户简称：{{paidSh2}}</span>
+                    <span class="mr20" v-show="!!paidSh3">门店号：{{paidSh3}}</span>
+                    <span class="mr20" v-show="!!paidSh4">门店名称：{{paidSh4}}</span>
+                    <span v-show="paidSh!=''&&!paidSh3">商盟商户名称：{{paidSh}}</span>
                 </div>
                 <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -97,6 +101,10 @@ export default{
                 },
                 paidHd:'',
                 paidSh:'',
+                paidSh1:'',
+                paidSh2:'',
+                paidSh3:'',
+                paidSh4:'',
                 tradeList:[],
                 nums:{}
             }
@@ -123,6 +131,10 @@ export default{
             (this.$route.params.paidId!=':paidId')?this.defaultData.id=this.$route.params.paidId:null;
             (this.$route.params.paidHd!=':paidHd')?this.paidHd=this.$route.params.paidHd:null;
             (this.$route.params.paidSh!=':paidSh')?this.paidSh=this.$route.params.paidSh:null;
+            (this.$route.params.paidSh1!=':paidSh1')?this.paidSh1=this.$route.params.paidSh1:null;
+            (this.$route.params.paidSh2!=':paidSh2')?this.paidSh2=this.$route.params.paidSh2:null;
+            (this.$route.params.paidSh3!=':paidSh3')?this.paidSh3=this.$route.params.paidSh3:null;
+            (this.$route.params.paidSh4!=':paidSh4')?this.paidSh4=this.$route.params.paidSh4:null;
             this.getTradeList();
         },
         watch:{

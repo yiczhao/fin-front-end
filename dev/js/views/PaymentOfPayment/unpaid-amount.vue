@@ -8,9 +8,15 @@
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <span class="mr20" v-show="unpaidHd!=''">活动名称：{{unpaidHd}}</span>
-                    <span class="mr20" v-show="unpaidSh!=''">商户名称：{{unpaidSh}}</span>
-                    <span class="mr20" v-show="unpaidYe!=''">待划付：{{unpaidYe/100 | currency ''}}元</span>
+                    <span class="mr20" v-show="!!unpaidHd">活动名称：{{unpaidHd}}</span>
+                    <span class="mr20" v-show="!!unpaidSh1">商户号：{{unpaidSh1}}</span>
+                    <span class="mr20" v-show="!!unpaidSh2">商户简称：{{unpaidSh2}}</span>
+                    <span class="mr20" v-show="!!unpaidSh3">门店号：{{unpaidSh3}}</span>
+                    <span class="mr20" v-show="!!unpaidSh4">门店名称：{{unpaidSh4}}</span>
+                    <span class="mr20" v-show="!!unpaidSh&&!unpaidSh3">商盟商户名称：{{unpaidSh}}</span>
+                </div>
+                <div class="panel-heading">
+                    <span class="mr20" v-show="!!unpaidYe">待划付：{{unpaidYe/100 | currency ''}}元</span>
                     <span class="mr20" >未进税金账户金额：{{nums.suspensionTax/100+nums.merchantSubsidyActual/100 | currency ''}}元</span>
                     <span class="mr20" >已进税金账户金额：{{unpaidTs/100 | currency ''}}元</span>
                     <span class="mr20" >提现中金额：{{Amount/100 | currency ''}}元</span>
@@ -118,6 +124,10 @@ export default{
                 },
                 unpaidHd:'',
                 unpaidSh:'',
+                unpaidSh1:'',
+                unpaidSh2:'',
+                unpaidSh3:'',
+                unpaidSh4:'',
                 unpaidTs:'',
                 unpaidYe:'',
                 Amount:'',
@@ -158,6 +168,10 @@ export default{
             (this.$route.params.unpaidSh!=':unpaidSh')?this.unpaidSh=this.$route.params.unpaidSh:null;
             (this.$route.params.unpaidTs!=':unpaidTs')?this.unpaidTs=this.$route.params.unpaidTs:null;
             (this.$route.params.unpaidYe!=':unpaidYe')?this.unpaidYe=this.$route.params.unpaidYe:null;
+            (this.$route.params.unpaidSh1!=':unpaidSh1')?this.unpaidSh1=this.$route.params.unpaidSh1:null;
+            (this.$route.params.unpaidSh2!=':unpaidSh2')?this.unpaidSh2=this.$route.params.unpaidSh2:null;
+            (this.$route.params.unpaidSh3!=':unpaidSh3')?this.unpaidSh3=this.$route.params.unpaidSh3:null;
+            (this.$route.params.unpaidSh4!=':unpaidSh4')?this.unpaidSh4=this.$route.params.unpaidSh4:null;
             this.getTradeList();
         },
         watch:{

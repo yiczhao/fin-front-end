@@ -57,10 +57,15 @@
                         <a class="btn btn-info add-top" @click="checkNew" data-ksa="invoice_account_detail.search">查询</a>
                     </div>
                 </div>
-
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
-                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
-                    <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                    <span class="mr20" v-show="!!paidSh1">商户号：{{paidSh1}}</span>
+                    <span class="mr20" v-show="!!paidSh2">商户简称：{{paidSh2}}</span>
+                    <span class="mr20" v-show="!!paidSh3">门店号：{{paidSh3}}</span>
+                    <span class="mr20" v-show="!!paidSh4">门店名称：{{paidSh4}}</span>
+                    <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
+                    <span v-if="!paidSh3">商盟商户名称：</span><span v-if="!paidSh3" style="margin-right: 10px;">{{balance.merchantName}}</span>
+                </div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
                     <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.invoiceAmount/100 | currency ''}}元</span>
@@ -236,6 +241,10 @@
                     val2:'',
                     val3:'',
                 },
+                paidSh1:'',
+                paidSh2:'',
+                paidSh3:'',
+                paidSh4:'',
                 errortext:'',
                 uploadText:'',
                 dateS:'4'
@@ -371,6 +380,10 @@
             let vm=this;
             (vm.$route.params.invoiceBTid==':invoiceBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.invoiceBTid;
             (vm.$route.params.invoiceHDid==':invoiceHDid')? vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID='' : vm.rechargeData.subsidyAccountID=vm.defaultData.subsidyAccountID=vm.$route.params.invoiceHDid;
+            (this.$route.params.invoiceCollectionSh1!=':invoiceCollectionSh1')?this.paidSh1=this.$route.params.invoiceCollectionSh1:null;
+            (this.$route.params.invoiceCollectionSh2!=':invoiceCollectionSh2')?this.paidSh2=this.$route.params.invoiceCollectionSh2:null;
+            (this.$route.params.invoiceCollectionSh3!=':invoiceCollectionSh3')?this.paidSh3=this.$route.params.invoiceCollectionSh3:null;
+            (this.$route.params.invoiceCollectionSh4!=':invoiceCollectionSh4')?this.paidSh4=this.$route.params.invoiceCollectionSh4:null;
             vm.getTime();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.getZlists();

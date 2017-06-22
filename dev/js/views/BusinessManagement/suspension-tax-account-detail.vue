@@ -62,8 +62,14 @@
                 </div>
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
-                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
-                    <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                    <span class="mr20" v-show="!!paidSh1">商户号：{{paidSh1}}</span>
+                    <span class="mr20" v-show="!!paidSh2">商户简称：{{paidSh2}}</span>
+                    <span class="mr20" v-show="!!paidSh3">门店号：{{paidSh3}}</span>
+                    <span class="mr20" v-show="!!paidSh4">门店名称：{{paidSh4}}</span>
+                    <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
+                    <span v-if="!paidSh3">商盟商户名称：</span><span v-if="!paidSh3" style="margin-right: 10px;">{{balance.merchantName}}</span>
+                </div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
                     <span>退税款：</span><span style="margin-right: 10px;">{{balance.suspensionTaxAmount/100| currency '' }}元</span>
@@ -249,6 +255,10 @@
                     payType:'',
                     bankAccountID:''
                 },
+                paidSh1:'',
+                paidSh2:'',
+                paidSh3:'',
+                paidSh4:'',
                 applyText:''
             }
         },
@@ -386,6 +396,10 @@
             let vm=this;
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
+            (this.$route.params.suspensionSh1!=':suspensionSh1')?this.paidSh1=this.$route.params.suspensionSh1:null;
+            (this.$route.params.suspensionSh2!=':suspensionSh2')?this.paidSh2=this.$route.params.suspensionSh2:null;
+            (this.$route.params.suspensionSh3!=':suspensionSh3')?this.paidSh3=this.$route.params.suspensionSh3:null;
+            (this.$route.params.suspensionSh4!=':suspensionSh4')?this.paidSh4=this.$route.params.suspensionSh4:null;
             vm.getTime();
             vm.getBankAccountList('1');
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
