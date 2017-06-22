@@ -94,33 +94,39 @@
                                 <td>{{trlist.suspensionTax/100 | currency ''}}</td>
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td><a data-ksa="subsidy_account_manage.search"
-                                       v-link="{name:'paid-amount',params:{paidId:trlist.id,paidHd:trlist.activityName,paidSh:trlist.merchantName,paidSh1:trlist.backendMerchantName,paidSh2:trlist.backendMerchantCode,paidSh3:trlist.backendStoreName,paidSh4:trlist.backendStoreCode}}">{{trlist.paidAmount/100 | currency ''}}</a></td>
+                                       v-link="{name:'paid-amount',params:{paidId:trlist.id,paidHd:trlist.activityName,paidSh:trlist.merchantName,
+                                       paidSh1:!trlist.backendMerchantName?':paidSh1':trlist.backendMerchantName,
+                                       paidSh2:!trlist.backendMerchantCode?':paidSh2':trlist.backendMerchantCode,
+                                       paidSh3:!trlist.backendStoreName?':paidSh3':trlist.backendStoreName,
+                                       paidSh4:!trlist.backendStoreCode?':paidSh4':trlist.backendStoreCode
+                                       }}">{{trlist.paidAmount/100 | currency ''}}</a></td>
                                 <td><a data-ksa="subsidy_account_manage.search"
                                        v-link="{name:'unpaid-amount',params:{unpaidId:trlist.id,
                                        unpaidHd:trlist.activityName,
                                        unpaidSh:trlist.merchantName,
-                                       unpaidSh1:trlist.backendMerchantCode,
-                                       unpaidSh2:trlist.backendMerchantName,
-                                       unpaidSh3:trlist.backendStoreCode,
-                                       unpaidSh4:trlist.backendStoreName,
+                                       unpaidSh1:!trlist.backendMerchantCode?':unpaidSh1':trlist.backendMerchantCode,
+                                       unpaidSh2:!trlist.backendMerchantName?':unpaidSh2':trlist.backendMerchantName,
+                                       unpaidSh3:!trlist.backendStoreCode?':unpaidSh3':trlist.backendStoreCode,
+                                       unpaidSh4:!trlist.backendStoreName?':unpaidSh4':trlist.backendStoreName,
                                        unpaidTs:trlist.suspensionTaxAmount,
                                        unpaidYe:trlist.unpaidAmount}}">{{trlist.unpaidAmount/100 | currency ''}}</a></td>
                                 <td><a data-ksa="suspension_tax_account_detail_manage.search"
                                        v-link="{name:'suspension-tax',params:{suspensionHDid:trlist.id,
                                        suspensionBTid:trlist.merchantID,
                                        suspensionSHid:trlist.merchantID,
-                                       suspensionSh1:trlist.backendMerchantCode,
-                                       suspensionSh2:trlist.backendMerchantName,
-                                       suspensionSh3:trlist.backendStoreCode,
-                                       suspensionSh4:trlist.backendStoreName,
+                                       suspensionSh1:!trlist.backendMerchantCode?':suspensionSh1':trlist.backendMerchantCode,
+                                       suspensionSh2:!trlist.backendMerchantName?':suspensionSh2':trlist.backendMerchantName,
+                                       suspensionSh3:!trlist.backendStoreCode?':suspensionSh3':trlist.backendStoreCode,
+                                       suspensionSh4:!trlist.backendStoreName?':suspensionSh4':trlist.backendStoreName,
                                        }}">{{trlist.suspensionTaxAmount/100| currency ''}}</a></td>
                                 <td><a data-ksa="invoice_account_detail.search"
                                        v-link="{name:'invoice-account',params:{
-                                       invoiceCollectionSh1:trlist.backendMerchantCode,
-                                       invoiceCollectionSh2:trlist.backendMerchantName,
-                                       invoiceCollectionSh3:trlist.backendStoreCode,
-                                       invoiceCollectionSh4:trlist.backendStoreName,
-                                       invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
+                                       invoiceCollectionSh1:!trlist.backendMerchantCode?':invoiceCollectionSh1':trlist.backendMerchantCode,
+                                       invoiceCollectionSh2:!trlist.backendMerchantName?':invoiceCollectionSh2':trlist.backendMerchantName,
+                                       invoiceCollectionSh3:!trlist.backendStoreCode?':invoiceCollectionSh3':trlist.backendStoreCode,
+                                       invoiceCollectionSh4:!trlist.backendStoreName?':invoiceCollectionSh4':trlist.backendStoreName,
+                                       invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID
+                                       }}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
                                     <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'activityOperationID':trlist.activityOperationID,'merchantOperationID':trlist.merchantOperationID}}">明细</a>
                                 </td>
