@@ -165,6 +165,7 @@
 								<tr>
 									<td><span>修复暂扣税金和商户实补：</span></td>
 									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="serialNumbers" placeholder="交易流水号，以逗号分隔"></textarea>
 										<input type="button" class="btn btn-primary" value="修复暂扣税金和商户实补" @click="repairTradeDetailTax($event)"/>
 									</td>
 									<td></td>
@@ -217,6 +218,7 @@
                 bankAccountID:'',
 				flowID:'',
 				serialNumber :'',
+				serialNumbers :'',
 				jobID:'',
 				end:'',
 				begin:'',
@@ -429,7 +431,10 @@
                     })
             },
             repairTradeDetailTax(e){
-                this.$http.post('./dev/tool/tradeDetailTax/repair')
+                let data={
+                    serialNumber:this.serialNumbers
+                }
+                this.$http.post('./dev/tool/tradeDetailTax/repair',data)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
