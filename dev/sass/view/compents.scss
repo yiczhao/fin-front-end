@@ -60,7 +60,9 @@
   }
   .tab-bor {
     border-bottom: 1px solid #E9E9E9;
-    margin-left: -1px; }
+    margin-left: -1px;
+    position: relative;
+    z-index: 2;}
   .tab-bor li {
     margin-bottom: -2px;
     display: inline-block;
