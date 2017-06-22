@@ -85,6 +85,8 @@
   .heading{
     display: table;
     padding-bottom: 20px;
+    z-index: 2;
+    position: relative;
     width: 100%;
     font-size: 0;
     -webkit-text-size-adjust:none;
