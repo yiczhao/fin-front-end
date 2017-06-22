@@ -300,7 +300,9 @@
                     </div>
                     <div class="form-group">
                         <label style="position: relative;top: -95px;" class="control-label">商户：</label>
-                        <select class="form-control" v-model="merchantType1" style="position: relative;top: -93px;width: 76px;padding: 0;color: #777;display: inline-block;">
+                        <select class="form-control" v-model="merchantType1"
+                                @change="batchData.merchantOperationID=batchData.backendStoreCode=''"
+                                style="position: relative;top: -93px;width: 76px;padding: 0;color: #777;display: inline-block;">
                             <option value="1">商盟ID：</option>
                             <option value="2">门店号：</option>
                         </select>
@@ -336,7 +338,9 @@
                             <label class="labels">
                                 <i>*</i>商户：
                             </label>
-                            <select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;color: #777;display: inline-block;">
+                            <select class="form-control" v-model="merchantType"
+                                    @change="rechargesData.merchantID=rechargesData.backendStoreCode=''"
+                                    style="width: 76px;padding: 0;color: #777;display: inline-block;">
                                 <option value="1">商盟ID：</option>
                                 <option value="2">门店号：</option>
                             </select>

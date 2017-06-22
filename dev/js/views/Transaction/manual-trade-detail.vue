@@ -211,7 +211,9 @@
                         <label>
                             <i>*</i>商盟ID：
                         </label>
-                        <select class="form-control" v-model="merchantType" style="width: 76px;padding: 0;color: #777;">
+                        <select class="form-control" v-model="merchantType"
+                                @change="tradeInfo.merchantOperationID=redata.backendStoreCode=''"
+                                style="width: 76px;padding: 0;color: #777;">
                             <option value="1">商盟ID：</option>
                             <option value="2">门店号：</option>
                         </select>
