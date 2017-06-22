@@ -16,10 +16,10 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户简称</th>
                                 <th>商户号</th>
-                                <th>门店名称</th>
+                                <th>商户简称</th>
                                 <th>门店号</th>
+                                <th>门店名称</th>
                                 <th>商盟ID</th>
                                 <th>商盟商户名称</th>
                                 <th>额度抵扣</th>
@@ -36,10 +36,10 @@
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
-                                <td>{{trlist.backendStoreName}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>
                                     <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
