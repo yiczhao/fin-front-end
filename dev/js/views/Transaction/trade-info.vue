@@ -378,6 +378,7 @@
             (this.$route.params.merchantName==':merchantName')? this.checkForm.merchantName='' : this.checkForm.merchantName=this.$route.params.merchantName;
             (this.$route.params.activityOperationID==':activityOperationID')? this.checkForm.activityOperationID='' : this.checkForm.activityOperationID=this.$route.params.activityOperationID;
             (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
+            (this.$route.params.backendStoreCode==':backendStoreCode')? this.checkForm.backendStoreCode='' : this.checkForm.backendStoreCode=this.$route.params.backendStoreCode;
             this.getSubcompany();
             this.getTime();
             this.getSettlementTime();

@@ -35,7 +35,7 @@ export default function (router) {
 			}
 		},
 		//交易处理-交易明细
-		'/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber/:tradeCompanyId': {
+		'/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber/:tradeCompanyId/:backendStoreCode': {
 			name: 'trade-info',
 			router_type: "trade",
 			component: function (resolve) {
