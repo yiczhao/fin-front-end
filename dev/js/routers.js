@@ -147,7 +147,7 @@ export default function (router) {
 			}
 		},
 		//备付金支出-退税管理-待划付明细
-		'/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs/:unpaidYe/:unpaidSh1/:unpaidSh2/:unpaidSh3/:unpaidSh4': {
+		'/unpaid-amount/:unpaidId/:unpaidHd/:unpaidSh/:unpaidTs/:unpaidYe': {
 			name: 'unpaid-amount',
 			router_type: "payment",
 			component: function (resolve) {
@@ -155,7 +155,7 @@ export default function (router) {
 			}
 		},
 		//备付金支出-退税管理-已划付明细
-		'/paid-amount/:paidId/:paidHd/:paidSh/:paidSh1/:paidSh2/:paidSh3/:paidSh4': {
+		'/paid-amount/:paidId/:paidHd/:paidSh': {
 			name: 'paid-amount',
 			router_type: "payment",
 			component: function (resolve) {
@@ -396,7 +396,7 @@ export default function (router) {
 		//     }
 		// },
 		/* 商户管理-商户列表-活动管理-发票账户明细 */
-		'/invoice-account-detail/:invoiceHDid/:invoiceBTid/:invoiceCollectionSh1/:invoiceCollectionSh2/:invoiceCollectionSh3/:invoiceCollectionSh4': {
+		'/invoice-account-detail/:invoiceHDid/:invoiceBTid': {
 			name: 'invoice-account',
 			router_type: "payment",
 			component: function (resolve) {
@@ -404,7 +404,7 @@ export default function (router) {
 			}
 		},
 		/* 商户管理-商户列表-活动管理-暂扣税金账户明细 */
-		'/suspension-tax-account-detail/:suspensionHDid/:suspensionBTid/:suspensionSh1/:suspensionSh2/:suspensionSh3/:suspensionSh4': {
+		'/suspension-tax-account-detail/:suspensionHDid/:suspensionBTid': {
 			name: 'suspension-tax',
 			router_type: "payment",
 			component: function (resolve) {

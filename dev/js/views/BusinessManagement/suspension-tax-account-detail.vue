@@ -62,12 +62,12 @@
                 </div>
 
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
-                    <span class="mr20" v-show="!!paidSh1">商户号：{{paidSh1}}</span>
-                    <span class="mr20" v-show="!!paidSh2">商户简称：{{paidSh2}}</span>
-                    <span class="mr20" v-show="!!paidSh3">门店号：{{paidSh3}}</span>
-                    <span class="mr20" v-show="!!paidSh4">门店名称：{{paidSh4}}</span>
+                    <span class="mr20">商户号：{{balance.backendMerchantCode}}</span>
+                    <span class="mr20">商户简称：{{balance.backendMerchantName}}</span>
+                    <span class="mr20">门店号：{{balance.backendStoreCode}}</span>
+                    <span class="mr20">门店名称：{{balance.backendName}}</span>
                     <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
-                    <span v-if="!paidSh3">商盟商户名称：</span><span v-if="!paidSh3" style="margin-right: 10px;">{{balance.merchantName}}</span>
+                    <span>商盟商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                 </div>
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
@@ -241,7 +241,11 @@
                     activityId:'',
                     merchantName:'',
                     merchantId:'',
-                    suspensionTaxAmount:''
+                    backendMerchantCode: "",
+                    backendMerchantName: "",
+                    backendName: "",
+                    backendStoreCode: "",
+                    invoiceAmount:''
                 },
                 redata:{
                     suspensionTaxAmount:'',
@@ -255,10 +259,6 @@
                     payType:'',
                     bankAccountID:''
                 },
-                paidSh1:'',
-                paidSh2:'',
-                paidSh3:'',
-                paidSh4:'',
                 applyText:''
             }
         },
@@ -310,6 +310,10 @@
                                     activityId:response.data.data.activity.operationId,
                                     merchantId:response.data.data.merchant.operationId,
                                     merchantName:response.data.data.merchant.name,
+                                    backendMerchantCode:response.data.data.merchant.backendMerchantCode,
+                                    backendMerchantName:response.data.data.merchant.backendMerchantName,
+                                    backendName:response.data.data.merchant.backendName,
+                                    backendStoreCode:response.data.data.merchant.backendStoreCode,
                                     suspensionTaxAmount:response.data.data.subsidyAccount.suspensionTaxAmount
                                 }
                             }
@@ -396,10 +400,6 @@
             let vm=this;
             (vm.$route.params.suspensionBTid==':suspensionBTid')? vm.defaultData.merchantID='' : vm.defaultData.merchantID=vm.$route.params.suspensionBTid;
             (vm.$route.params.suspensionHDid==':suspensionHDid')? vm.applyData.id=vm.defaultData.subsidyAccountID='' : vm.applyData.id=vm.defaultData.subsidyAccountID=vm.$route.params.suspensionHDid;
-            (this.$route.params.suspensionSh1!=':suspensionSh1')?this.paidSh1=this.$route.params.suspensionSh1:null;
-            (this.$route.params.suspensionSh2!=':suspensionSh2')?this.paidSh2=this.$route.params.suspensionSh2:null;
-            (this.$route.params.suspensionSh3!=':suspensionSh3')?this.paidSh3=this.$route.params.suspensionSh3:null;
-            (this.$route.params.suspensionSh4!=':suspensionSh4')?this.paidSh4=this.$route.params.suspensionSh4:null;
             vm.getTime();
             vm.getBankAccountList('1');
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;

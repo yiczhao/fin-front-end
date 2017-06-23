@@ -8,12 +8,12 @@
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <span class="mr20" v-show="!!unpaidHd">活动名称：{{unpaidHd}}</span>
-                    <span class="mr20" v-show="!!unpaidSh1">商户号：{{unpaidSh1}}</span>
-                    <span class="mr20" v-show="!!unpaidSh2">商户简称：{{unpaidSh2}}</span>
-                    <span class="mr20" v-show="!!unpaidSh3">门店号：{{unpaidSh3}}</span>
-                    <span class="mr20" v-show="!!unpaidSh4">门店名称：{{unpaidSh4}}</span>
-                    <span class="mr20" v-show="!!unpaidSh&&!unpaidSh3">商盟商户名称：{{unpaidSh}}</span>
+                    <span class="mr20">商户号：{{balance.backendMerchantCode}}</span>
+                    <span class="mr20">商户简称：{{balance.backendMerchantName}}</span>
+                    <span class="mr20">门店号：{{balance.backendStoreCode}}</span>
+                    <span class="mr20">门店名称：{{balance.backendName}}</span>
+                    <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
+                    <span>商盟商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                 </div>
                 <div class="panel-heading">
                     <span class="mr20" v-show="!!unpaidYe">待划付：{{unpaidYe/100 | currency ''}}元</span>
@@ -122,12 +122,14 @@ export default{
                     pageIndex:1,
                     pageSize:10,
                 },
-                unpaidHd:'',
-                unpaidSh:'',
-                unpaidSh1:'',
-                unpaidSh2:'',
-                unpaidSh3:'',
-                unpaidSh4:'',
+                balance:{
+                    merchantName:'',
+                    merchantId:'',
+                    backendMerchantCode: "",
+                    backendMerchantName: "",
+                    backendName: "",
+                    backendStoreCode: ""
+                },
                 unpaidTs:'',
                 unpaidYe:'',
                 Amount:'',
@@ -161,18 +163,32 @@ export default{
                              }
                          });
             },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.unpaidId
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.balance={
+                                merchantId:response.data.data.merchant.operationId,
+                                merchantName:response.data.data.merchant.name,
+                                backendMerchantCode:response.data.data.merchant.backendMerchantCode,
+                                backendMerchantName:response.data.data.merchant.backendMerchantName,
+                                backendName:response.data.data.merchant.backendName,
+                                backendStoreCode:response.data.data.merchant.backendStoreCode,
+                            }
+                        }
+                    });
+            }
         },
         ready() {
             (this.$route.params.unpaidId!=':unpaidId')?this.defaultData.id=this.$route.params.unpaidId:null;
-            (this.$route.params.unpaidHd!=':unpaidHd')?this.unpaidHd=this.$route.params.unpaidHd:null;
-            (this.$route.params.unpaidSh!=':unpaidSh')?this.unpaidSh=this.$route.params.unpaidSh:null;
             (this.$route.params.unpaidTs!=':unpaidTs')?this.unpaidTs=this.$route.params.unpaidTs:null;
             (this.$route.params.unpaidYe!=':unpaidYe')?this.unpaidYe=this.$route.params.unpaidYe:null;
-            (this.$route.params.unpaidSh1!=':unpaidSh1')?this.unpaidSh1=this.$route.params.unpaidSh1:null;
-            (this.$route.params.unpaidSh2!=':unpaidSh2')?this.unpaidSh2=this.$route.params.unpaidSh2:null;
-            (this.$route.params.unpaidSh3!=':unpaidSh3')?this.unpaidSh3=this.$route.params.unpaidSh3:null;
-            (this.$route.params.unpaidSh4!=':unpaidSh4')?this.unpaidSh4=this.$route.params.unpaidSh4:null;
             this.getTradeList();
+            this.getBlance();
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){
