@@ -102,7 +102,7 @@
                                 <td><a data-ksa="invoice_account_detail.search"
                                        v-link="{name:'invoice-account',params:{invoiceHDid:trlist.id,invoiceBTid:trlist.merchantID}}">{{trlist.invoiceAmount/100| currency ''}}</a></td>
                                 <td>
-                                    <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'backendStoreCode':trlist.backendStoreCode,'activityOperationID':trlist.activityOperationID,'merchantOperationID':trlist.merchantOperationID}}">明细</a>
+                                    <a data-ksa="trade_detail_manage.search" v-link="{name:'trade-info',params:{'backendStoreCode':!trlist.backendStoreCode?':backendStoreCode':trlist.backendStoreCode,'activityOperationID':trlist.activityOperationID,'merchantOperationID':trlist.merchantOperationID}}">明细</a>
                                 </td>
                                 <td>
                                     <a @click="recharge(trlist)" class="mr20" data-ksa="subsidy_account_manage.recharge">发票充值</a>
