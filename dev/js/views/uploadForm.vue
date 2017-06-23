@@ -170,6 +170,30 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>根据大后台的交易数据进行商户id的修复：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="serialNumbersForSys" placeholder="交易流水号，以逗号分隔"></textarea>
+										<input type="button" class="btn btn-primary" value="修复商户id" @click="repairTradeDetailForSys($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>根据merchant_trade_detail数据更新交易的merchant_id：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="serialNumbersForTrade" placeholder="交易流水号，以逗号分隔"></textarea>
+										<input type="button" class="btn btn-primary" value="修复商户merchant_id" @click="repairTradeDetailForTrade($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>根据商户数据更新交易的city_id, subcompany_id：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="cityIdAndSubCompanyId" placeholder="交易流水号，以逗号分隔"></textarea>
+										<input type="button" class="btn btn-primary" value="修复cityId&&subcompanyId" @click="repaircityIdAndSubCompanyId($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -219,6 +243,9 @@
 				flowID:'',
 				serialNumber :'',
 				serialNumbers :'',
+                serialNumbersForSys:'',
+                serialNumbersForTrade:'',
+                cityIdAndSubCompanyId:'',
 				jobID:'',
 				end:'',
 				begin:'',
@@ -435,6 +462,33 @@
                     serialNumber:this.serialNumbers
                 }
                 this.$http.post('./dev/tool/tradeDetailTax/repair',data)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repairTradeDetailForSys(e){
+                let data={
+                    tradeNumbers:this.serialNumbersForSys
+                }
+                this.$http.post('./dev/tool/tradeDetailFix/fixMerchantIdFromRemote?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repairTradeDetailForTrade(e){
+                let data={
+                    tradeNumbers:this.serialNumbersForTrade
+                }
+                this.$http.post('./dev/tool/tradeDetailFix/fixMerchantIdFromNative?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repaircityIdAndSubCompanyId(e){
+                let data={
+                    tradeNumbers:this.cityIdAndSubCompanyId
+                }
+                this.$http.post('./dev/tool/fixTradeDetail/cityAndMerchant?'+$.param(data))
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
