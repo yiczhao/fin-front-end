@@ -1,6 +1,6 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
     <index :title="'商户账户管理'"
-           :ptitle="'商户账户'"
+           :ptitle="'商户管理'"
            :hname="'merchant-account'"
            :isshow="'isshow'">
 
