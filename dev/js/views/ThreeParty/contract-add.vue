@@ -155,6 +155,7 @@
                     contractServiceFee :'',
                     contractSettlementFee :'',
                     contractTaxFee :'',
+                    contractFileName:'',
                     contractWeChatMarketFee :''
                 }
             }
@@ -171,6 +172,7 @@
                 this.model.contractaddList(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('defaultData',res.data.data);
+                        this.uploadText=!res.data.data.contractFileName?'':res.data.data.contractFileName;
                         this.getThirdParty(this.defaultData.subCompanyID,true);
                     }
                 })
