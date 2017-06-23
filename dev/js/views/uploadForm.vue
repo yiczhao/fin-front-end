@@ -553,7 +553,11 @@
                 }
                 this.$http.post('./dev/tool/merchant/add',data)
                     .then((response)=>{
+                    if(response.data.code == 0){
                         dialogs('success',response.data.message);
+					}else{
+                        dialogs('error',response.data.message);
+					}
                     })
             }
         },
