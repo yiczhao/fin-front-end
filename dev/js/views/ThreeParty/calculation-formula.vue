@@ -11,7 +11,8 @@
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动名称：</span><span style="margin-right: 10px;">{{defaultData.activityName}}</span>
                     <span>活动ID：</span><span style="margin-right: 10px;">{{defaultData.activityOperationID}}</span>
-                    <span v-if="!!defaultData.contractFileID">合同：</span><span style="margin-right: 10px;"></span>
+                    <span v-if="!!defaultData.contractFileID">合同：</span>
+                    <span v-if="!!defaultData.contractFileName" style="margin-right: 10px;">{{defaultData.contractFileName}}</span>
                     <a class="btn btn-primary" v-if="!!defaultData.contractFileID" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                 </div>
                 <div class="other-info">
