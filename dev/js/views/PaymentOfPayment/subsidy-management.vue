@@ -161,7 +161,7 @@
                 >
                     <div class="modal-body">
                         <div class="form-group">
-                            <label v-if="!rechargeInfo.val7">商盟商户名称：</label>
+                            <label>商盟商户名称：</label>
                             <span v-if="!rechargeInfo.val7">{{rechargeInfo.val1}}</span>
                             <label style="width: 15%;text-align: right;">商盟ID：</label>
                             <span>{{rechargeInfo.val4}}</span>
@@ -232,7 +232,7 @@
                 >
                     <validator name="vali">
                         <div class="form-group">
-                            <label v-if="!rechargeInfo.val7">商盟商户名称：</label>
+                            <label>商盟商户名称：</label>
                            <span v-if="!rechargeInfo.val7">{{rechargeInfo.val1}}</span>
                             <label style="width: 15%;text-align: right;">商盟ID：</label>
                             <span>{{rechargeInfo.val4}}</span>
