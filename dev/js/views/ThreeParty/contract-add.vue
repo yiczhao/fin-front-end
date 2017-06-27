@@ -240,6 +240,7 @@
                 }
             },
             submit() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.defaultData.thirdPartyAccountID){
                     dialogs('info','请选择三方');
                     return;
@@ -258,6 +259,7 @@
                 })
             },
             edit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.defaultData.thirdPartyAccountID){
                     dialogs('info','请选择三方');
                     return;
