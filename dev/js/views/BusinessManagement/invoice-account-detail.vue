@@ -57,10 +57,15 @@
                         <a class="btn btn-info add-top" @click="checkNew" data-ksa="invoice_account_detail.search">查询</a>
                     </div>
                 </div>
-
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
-                    <span>商户ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
-                    <span>商户名：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                    <span class="mr20">商户号：{{balance.backendMerchantCode}}</span>
+                    <span class="mr20">商户简称：{{balance.backendMerchantName}}</span>
+                    <span class="mr20">门店号：{{balance.backendStoreCode}}</span>
+                    <span class="mr20">门店名称：{{balance.backendName}}</span>
+                    <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
+                    <span>商盟商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                </div>
+                <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动ID：</span><span style="margin-right: 10px;">{{balance.activityId}}</span>
                     <span>活动名：</span><span style="margin-right: 10px;">{{balance.activityName}}</span>
                     <span>欠发票金额：</span><span style="margin-right: 10px;">{{balance.invoiceAmount/100 | currency ''}}元</span>
@@ -223,6 +228,10 @@
                     activityId:'',
                     merchantName:'',
                     merchantId:'',
+                    backendMerchantCode: "",
+                    backendMerchantName: "",
+                    backendName: "",
+                    backendStoreCode: "",
                     invoiceAmount:''
                 },
                 rechargeData:{
@@ -280,6 +289,10 @@
                                     activityName:response.data.data.activity.name,
                                     merchantId:response.data.data.merchant.operationId,
                                     merchantName:response.data.data.merchant.name,
+                                    backendMerchantCode:response.data.data.merchant.backendMerchantCode,
+                                    backendMerchantName:response.data.data.merchant.backendMerchantName,
+                                    backendName:response.data.data.merchant.backendName,
+                                    backendStoreCode:response.data.data.merchant.backendStoreCode,
                                     invoiceAmount:response.data.data.subsidyAccount.invoiceAmount
                                 }
                             }

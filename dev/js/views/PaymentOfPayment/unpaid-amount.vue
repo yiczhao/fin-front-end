@@ -8,9 +8,15 @@
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <span class="mr20" v-show="unpaidHd!=''">活动名称：{{unpaidHd}}</span>
-                    <span class="mr20" v-show="unpaidSh!=''">商户名称：{{unpaidSh}}</span>
-                    <span class="mr20" v-show="unpaidYe!=''">待划付：{{unpaidYe/100 | currency ''}}元</span>
+                    <span class="mr20">商户号：{{balance.backendMerchantCode}}</span>
+                    <span class="mr20">商户简称：{{balance.backendMerchantName}}</span>
+                    <span class="mr20">门店号：{{balance.backendStoreCode}}</span>
+                    <span class="mr20">门店名称：{{balance.backendName}}</span>
+                    <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
+                    <span>商盟商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
+                </div>
+                <div class="panel-heading">
+                    <span class="mr20" v-show="!!unpaidYe">待划付：{{unpaidYe/100 | currency ''}}元</span>
                     <span class="mr20" >未进税金账户金额：{{nums.suspensionTax/100+nums.merchantSubsidyActual/100 | currency ''}}元</span>
                     <span class="mr20" >已进税金账户金额：{{unpaidTs/100 | currency ''}}元</span>
                     <span class="mr20" >提现中金额：{{Amount/100 | currency ''}}元</span>
@@ -116,8 +122,14 @@ export default{
                     pageIndex:1,
                     pageSize:10,
                 },
-                unpaidHd:'',
-                unpaidSh:'',
+                balance:{
+                    merchantName:'',
+                    merchantId:'',
+                    backendMerchantCode: "",
+                    backendMerchantName: "",
+                    backendName: "",
+                    backendStoreCode: ""
+                },
                 unpaidTs:'',
                 unpaidYe:'',
                 Amount:'',
@@ -151,14 +163,32 @@ export default{
                              }
                          });
             },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.unpaidId
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.balance={
+                                merchantId:response.data.data.merchant.operationId,
+                                merchantName:response.data.data.merchant.name,
+                                backendMerchantCode:response.data.data.merchant.backendMerchantCode,
+                                backendMerchantName:response.data.data.merchant.backendMerchantName,
+                                backendName:response.data.data.merchant.backendName,
+                                backendStoreCode:response.data.data.merchant.backendStoreCode,
+                            }
+                        }
+                    });
+            }
         },
         ready() {
             (this.$route.params.unpaidId!=':unpaidId')?this.defaultData.id=this.$route.params.unpaidId:null;
-            (this.$route.params.unpaidHd!=':unpaidHd')?this.unpaidHd=this.$route.params.unpaidHd:null;
-            (this.$route.params.unpaidSh!=':unpaidSh')?this.unpaidSh=this.$route.params.unpaidSh:null;
             (this.$route.params.unpaidTs!=':unpaidTs')?this.unpaidTs=this.$route.params.unpaidTs:null;
             (this.$route.params.unpaidYe!=':unpaidYe')?this.unpaidYe=this.$route.params.unpaidYe:null;
             this.getTradeList();
+            this.getBlance();
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){

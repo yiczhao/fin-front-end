@@ -200,6 +200,14 @@ function model(_this){
         snPartnerList(){
             return _this.$http.get(_this.$API.snPartnerList)
         },
+        /**
+         * @description  获取分公司的指标
+         * @params {data}
+         * @returns {*}
+         * */
+        financeInfo(data){
+            return _this.$http.get(_this.$API.financeInfo+$.param(data))
+        },
 
     }
 }

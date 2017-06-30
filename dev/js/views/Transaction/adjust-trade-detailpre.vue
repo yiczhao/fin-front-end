@@ -41,9 +41,14 @@
                             <datepicker :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                         </div>
-
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
+                        <input type="text" class="form-control" placeholder="商户号" v-model="checkForm.backendMerchantCode">
+                        <input type="text" class="form-control" placeholder="商户简称" v-model="checkForm.backendMerchantName">
+                        <input type="text" class="form-control" placeholder="门店号" v-model="checkForm.backendStoreCode">
+                        <input type="text" class="form-control" placeholder="门店名称" v-model="checkForm.backendStoreName">
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
                         <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
+                        <input type="text" class="form-control" placeholder="交易流水号" v-model="checkForm.serialNumber">
+
                         <select class="form-control" v-model="checkForm.status">
                             <option value="">全部交易状态</option>
                             <option value="1">未提交</option>
@@ -67,8 +72,14 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
+
                                 <th>额度抵扣</th>
                                 <th>本金抵扣</th>
                                 <th>三方应收</th>
@@ -90,8 +101,17 @@
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
+
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>
+                                    <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
+                                </td>
+
+
                                 <td>{{trlist.limitDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.principalDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
@@ -132,7 +152,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.limitDeduct/100 | currency ''}}</td>
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
@@ -145,16 +165,16 @@
                     </div>
 
                     <div class="datatable-bottom">
-                       <div class="left">
+                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="adjustTradeDetailPre" data-ksa="adjust_trade_detail_pre_manage.export">Excel导出</a>
-                       </div>
+                        </div>
 
-                       <div class="right">
+                        <div class="right">
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
                                   :page_size.sync="checkForm.pageSize">
                             </page>
-                       </div>
+                        </div>
                     </div>
 
                 </div>
@@ -167,29 +187,50 @@
                         :title.sync="addTitle"
                 >
                     <validator name="vali">
-                    <div class="dialog-row">
-                        <span>
-                             <label><i>*</i>商户ID：</label>
-                             <input type="text"
-                                    class="form-control"
-                                    v-model="redata.merchantOperationID "
-                                    v-validate:val1="['required']"
-                                    v-bind:class="{'error-input':fire && $vali.val1.required}"
-                                    v-limitnumber="redata.merchantOperationID"
-                                    placeholder="请输入商户ID">
-                        </span>
-                        <span>
-                             <label><i>*</i>参与活动：</label>
-                             <input type="text"
-                                    class="form-control"
-                                    v-model="redata.activityOperationID"
-                                    v-validate:val2="['required']"
-                                    v-limitnumber="redata.activityOperationID"
-                                    v-bind:class="{'error-input':fire && $vali.val2.required}"
-                                    placeholder="请输入活动ID">
-                        </span>
-                    </div>
-                    <div class="dialog-row">
+                        <div class="dialog-row">
+                            <span>
+                                  <label>
+                                      <i>*</i>商户：
+                                  </label>
+                                 <select class="form-control" v-model="merchantType"
+                                         @change="redata.merchantOperationID=redata.backendStoreCode=''"
+                                         style="width: 76px;padding: 0;color: #777;">
+                                      <option value="1">商盟ID：</option>
+                                      <option value="2">门店号：</option>
+                                  </select>
+                                 <template v-if="merchantType==1">
+                                    <input type="text"
+                                           class="form-control"
+                                           v-model="redata.merchantOperationID "
+                                           v-validate:val1="['required']"
+                                           v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                           v-limitnumber="redata.merchantOperationID"
+                                           placeholder="请输入商盟ID">
+                                </template>
+                                <template v-if="merchantType==2">
+                                    <input type="text"
+                                           class="form-control"
+                                           v-model="redata.backendStoreCode"
+                                           v-validate:val1="['required']"
+                                           v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                           v-limitnumber="redata.backendStoreCode"
+                                           placeholder="请输入门店号">
+                                </template>
+                            </span>
+                        </div>
+                        <div class="dialog-row">
+                            <span>
+                                 <label><i>*</i>参与活动：</label>
+                                 <input type="text"
+                                        class="form-control"
+                                        v-model="redata.activityOperationID"
+                                        v-validate:val2="['required']"
+                                        v-limitnumber="redata.activityOperationID"
+                                        v-bind:class="{'error-input':fire && $vali.val2.required}"
+                                        placeholder="请输入活动ID">
+                            </span>
+                        </div>
+                        <div class="dialog-row">
                          <span>
                              <label class="tlabel"><i>*</i>交易流水号：</label>
                              <textarea rows="3"
@@ -199,15 +240,15 @@
                                        v-bind:class="{'error-input':fire && $vali.val3.required}"
                                        placeholder="请输入交易流水号"></textarea>
                          </span>
-                        <div class="pl95">
-                            <a class="btn btn-info" @click="getTradeData" data-ksa="manually_settlement.search">查询</a>
+                            <div class="pl95">
+                                <a class="btn btn-info" @click="getTradeData" data-ksa="manually_settlement.search">查询</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="dialog-row" v-show="!!redata.tradeCount||!!redata.consumptionAmount">
-                        <span class="pl95">交易笔数：{{redata.tradeCount}}笔</span>
-                        <span>消费金额：{{redata.consumptionAmount | currency ''}}元</span>
-                    </div>
-                    <div class="dialog-row">
+                        <div class="dialog-row" v-show="!!redata.tradeCount||!!redata.consumptionAmount">
+                            <span class="pl95">交易笔数：{{redata.tradeCount}}笔</span>
+                            <span>消费金额：{{redata.consumptionAmount | currency ''}}元</span>
+                        </div>
+                        <div class="dialog-row">
                         <span>
                              <label><i>*</i>额度抵扣：</label>
                              <input
@@ -217,7 +258,7 @@
                                      v-limitprice="redata.limitDeduct"
                                      type="text" class="form-control" placeholder="额度抵扣">
                         </span>
-                        <span>
+                            <span>
                              <label><i>*</i>商户应补：</label>
                              <input type="text"
                                     class="form-control"
@@ -227,8 +268,8 @@
                                     v-limitprice="redata.merchantSubsidyShould"
                                     placeholder="商户应补">
                         </span>
-                    </div>
-                    <div class="dialog-row">
+                        </div>
+                        <div class="dialog-row">
                         <span>
                              <label><i>*</i>本金抵扣：</label>
                              <input type="text"
@@ -239,7 +280,7 @@
                                     v-limitprice="redata.principalDeduct"
                                     placeholder="本金抵扣">
                         </span>
-                        <span>
+                            <span>
                              <label><i>*</i>扣收金额：</label>
                              <input type="text"
                                     class="form-control"
@@ -249,8 +290,8 @@
                                     v-limitprice="redata.collectionAmount"
                                     placeholder="扣收金额">
                         </span>
-                    </div>
-                    <div class="dialog-row">
+                        </div>
+                        <div class="dialog-row">
                         <span>
                              <label><i>*</i>三方应收：</label>
                              <input type="text"
@@ -261,7 +302,7 @@
                                     v-limitprice="redata.thirdPartyReceivable"
                                     placeholder="三方应收">
                         </span>
-                        <span>
+                            <span>
                              <label><i>*</i>佣金：</label>
                              <input type="text"
                                     class="form-control"
@@ -272,18 +313,18 @@
                                     v-limitprice="redata.commission33211"
                                     placeholder="佣金">
                         </span>
-                    </div>
-                    <div class="dialog-row">
+                        </div>
+                        <div class="dialog-row">
                         <span>
                              <label><i>*</i>上传凭证：</label>
                              <input type="file" style="display: none;" @change="uploads($event)">
                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                              <span v-text="uploadText" v-show="uploadText!=''"></span>
                             <span v-if="redata.certificateID=='' && fire"
-                                      class="validation-error-label">请上传凭证</span>
+                                  class="validation-error-label">请上传凭证</span>
                         </span>
-                    </div>
-                    <div class="dialog-row">
+                        </div>
+                        <div class="dialog-row">
                          <span>
                              <label class="tlabel"><i>*</i>备注：</label>
                              <textarea rows="3"
@@ -293,11 +334,11 @@
                                        v-bind:class="{'error-input':fire && $vali.val10.required}"
                              ></textarea>
                         </span>
-                    </div>
-                    <div class="form-group tc">
-                        <a @click="saveAdd" class="btn btn-primary">保存</a>
-                        <a @click="addShow=false" class="btn btn-default">取消</a>
-                    </div>
+                        </div>
+                        <div class="form-group tc">
+                            <a @click="saveAdd" class="btn btn-primary">保存</a>
+                            <a @click="addShow=false" class="btn btn-default">取消</a>
+                        </div>
                     </validator>
                 </content-dialog>
 
@@ -339,7 +380,12 @@
                     status:'',
                     pageIndex:1,
                     timeRange:'3',
-                    pageSize:10
+                    pageSize:10,
+
+                    backendMerchantCode:'',
+                    backendMerchantName:'',
+                    backendStoreCode:'',
+                    backendStoreName:''
                 },
                 subcompanyList:[],
                 pageall:1,
@@ -352,7 +398,9 @@
                 addTitle:'',
                 uploadText:'',
                 tradeData:{},
+                merchantType:1,
                 redata:{
+                    "backendStoreCode":'',
                     "activityOperationID": '',
                     "certificateID": '',
                     "collectionAmount": '',
@@ -376,14 +424,14 @@
         },
         methods:{
             //获取交易记录
-             getTradeList(data){
-                 this.model.adjustTradeDetailPre_total(data)
-                         .then((response)=>{
-                             (response.data.code==0)?this.$set('nums',response.data.data):null;
-                         });
-                 this.model.adjustTradeDetailPre_list(data)
+            getTradeList(data){
+                this.model.adjustTradeDetailPre_total(data)
                     .then((response)=>{
-                         if(response.data.code==0){
+                        (response.data.code==0)?this.$set('nums',response.data.data):null;
+                    });
+                this.model.adjustTradeDetailPre_list(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
                             this.$set('tradeList', response.data.data)
                             this.$set('pageall', response.data.total)
                         }
@@ -391,7 +439,7 @@
             },
             //获取分公司数据
             getSubcompany(){
-                 this.$common_model.getcompany()
+                this.$common_model.getcompany()
                     .then((response)=>{
                         if(response.data.code==0){
                             this.$set('subcompanyList', response.data.data)
@@ -404,7 +452,7 @@
                 let data={
                     'subCompanyID':_id
                 }
-                 this.$common_model.getcity(data)
+                this.$common_model.getcity(data)
                     .then((response)=>{
                         if(response.data.code==0){
                             this.$set('cityList', response.data.data)
@@ -491,13 +539,13 @@
                         data: this.result.split(',')[1]
                     }
                     vm.$common_model.upload(datas)
-                            .then((response)=> {
-                                if (response.data.code == 0) {
-                                    vm.redata.certificateID = response.data.data;
-                                    vm.uploadText = files.name;
-                                    dialogs('success', '上传成功！');
-                                }
-                            })
+                        .then((response)=> {
+                            if (response.data.code == 0) {
+                                vm.redata.certificateID = response.data.data;
+                                vm.uploadText = files.name;
+                                dialogs('success', '上传成功！');
+                            }
+                        })
                 }
             },
             getTradeData(){
@@ -609,10 +657,10 @@
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
-       watch:{
+        watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){
                 this.query();
             }
-       }
+        }
     }
 </script>

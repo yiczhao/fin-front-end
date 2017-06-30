@@ -8,8 +8,12 @@
         <div class="content adjust-trade-detailpre" slot="content">
             <div class="panel panel-flat">
                 <div class="panel-heading">
-                    <span v-show="paidHd!=''">活动名称：{{paidHd}}</span>
-                    <span v-show="paidSh!=''">商户名称：{{paidSh}}</span>
+                    <span class="mr20">商户号：{{balance.backendMerchantCode}}</span>
+                    <span class="mr20">商户简称：{{balance.backendMerchantName}}</span>
+                    <span class="mr20">门店号：{{balance.backendStoreCode}}</span>
+                    <span class="mr20">门店名称：{{balance.backendName}}</span>
+                    <span>商盟ID：</span><span style="margin-right: 10px;">{{balance.merchantId}}</span>
+                    <span>商盟商户名称：</span><span style="margin-right: 10px;">{{balance.merchantName}}</span>
                 </div>
                 <div v-cloak v-show="tradeList.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
@@ -95,6 +99,14 @@ export default{
                     pageIndex:1,
                     pageSize:10,
                 },
+                balance:{
+                    merchantName:'',
+                    merchantId:'',
+                    backendMerchantCode: "",
+                    backendMerchantName: "",
+                    backendName: "",
+                    backendStoreCode: ""
+                },
                 paidHd:'',
                 paidSh:'',
                 tradeList:[],
@@ -118,12 +130,30 @@ export default{
                         }
                     });
             },
+            //获取分公司数据
+            getBlance(){
+                let data={
+                    id:this.$route.params.paidId
+                }
+                this.$common_model.suspensionTaxAccountDetail_info(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.balance={
+                                merchantId:response.data.data.merchant.operationId,
+                                merchantName:response.data.data.merchant.name,
+                                backendMerchantCode:response.data.data.merchant.backendMerchantCode,
+                                backendMerchantName:response.data.data.merchant.backendMerchantName,
+                                backendName:response.data.data.merchant.backendName,
+                                backendStoreCode:response.data.data.merchant.backendStoreCode,
+                            }
+                        }
+                    });
+            }
         },
         ready() {
             (this.$route.params.paidId!=':paidId')?this.defaultData.id=this.$route.params.paidId:null;
-            (this.$route.params.paidHd!=':paidHd')?this.paidHd=this.$route.params.paidHd:null;
-            (this.$route.params.paidSh!=':paidSh')?this.paidSh=this.$route.params.paidSh:null;
             this.getTradeList();
+            this.getBlance();
         },
         watch:{
             'defaultData.pageIndex+defaultData.pageSize'(){

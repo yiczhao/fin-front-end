@@ -162,6 +162,61 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>修复暂扣税金和商户实补：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="serialNumbers" placeholder="交易流水号，以逗号分隔"></textarea>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复暂扣税金和商户实补" @click="repairTradeDetailTax($event)"/>
+									</td>
+								</tr>
+								<tr>
+									<td><span>根据大后台的交易数据进行商户id的修复：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="serialNumbersForSys" placeholder="交易流水号，以逗号分隔"></textarea>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复商户id" @click="repairTradeDetailForSys($event)"/>
+									</td>
+								</tr>
+								<tr>
+									<td><span>根据merchant_trade_detail数据更新交易的merchant_id：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="serialNumbersForTrade" placeholder="交易流水号，以逗号分隔"></textarea>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复商户merchant_id" @click="repairTradeDetailForTrade($event)"/>
+									</td>
+								</tr>
+								<tr>
+									<td><span>根据商户数据更新交易的city_id, subcompany_id：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="cityIdAndSubCompanyId" placeholder="交易流水号，以逗号分隔"></textarea>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复cityId&&subcompanyId" @click="repaircityIdAndSubCompanyId($event)"/>
+									</td>
+								</tr>
+								<tr>
+									<td><span>商户添加：</span></td>
+									<td>
+										<input type="text" class="form-control" v-model="merchantOperationID" placeholder="商盟ID"/>
+										<input type="text" class="form-control" v-model="merchantName" placeholder="商盟商户名称"/>
+										<select class="form-control" v-model="subCompanyID" @change="getCity(subCompanyID)">
+											<option value="">全部分公司</option>
+											<option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+										</select>
+
+										<select class="form-control" v-model="cityID">
+											<option value="">全部城市</option>
+											<option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
+										</select>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="保存" @click="addMerchant($event)"/>
+									</td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -210,6 +265,10 @@
                 bankAccountID:'',
 				flowID:'',
 				serialNumber :'',
+				serialNumbers :'',
+                serialNumbersForSys:'',
+                serialNumbersForTrade:'',
+                cityIdAndSubCompanyId:'',
 				jobID:'',
 				end:'',
 				begin:'',
@@ -217,7 +276,13 @@
                 subsidyAccountIDsStr1:'',
                 subsidyAccountIDs:'',
                 generateSubsidyAccountIDs:'',
-                subsidyAccountIDsStr2:''
+                subsidyAccountIDsStr2:'',
+				subCompanyID:'',
+				cityID:'',
+                subcompanyList:[],
+                cityList:[],
+				merchantOperationID:'',
+				merchantName:''
             }
         },
         methods:{
@@ -420,9 +485,85 @@
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
+            },
+            repairTradeDetailTax(e){
+                let data={
+                    serialNumber:this.serialNumbers
+                }
+                this.$http.post('./dev/tool/tradeDetailTax/repair',data)
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repairTradeDetailForSys(e){
+                let data={
+                    tradeNumbers:this.serialNumbersForSys
+                }
+                this.$http.post('./dev/tool/tradeDetailFix/fixMerchantIdFromRemote?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repairTradeDetailForTrade(e){
+                let data={
+                    tradeNumbers:this.serialNumbersForTrade
+                }
+                this.$http.post('./dev/tool/tradeDetailFix/fixMerchantIdFromNative?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            repaircityIdAndSubCompanyId(e){
+                let data={
+                    tradeNumbers:this.cityIdAndSubCompanyId
+                }
+                this.$http.post('./dev/tool/fixTradeDetail/cityAndMerchant?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+            },
+            //获取分公司数据
+            getSubcompany(){
+                this.$common_model.getcompany()
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.$set('subcompanyList', response.data.data)
+                        }
+                    });
+            },
+            //获取城市数据
+            getCity(_id){
+                this.cityID='';
+                let data={
+                    'subCompanyID':_id
+                }
+                this.$common_model.getcity(data)
+                    .then((response)=>{
+                        if(response.data.code==0){
+                            this.$set('cityList', response.data.data)
+                        }
+                    });
+            },
+            addMerchant(e){
+                let data={
+                    merchantOperationID:this.merchantOperationID,
+                    merchantName:this.merchantName,
+                    subCompanyID:this.subCompanyID,
+                    cityID:this.cityID
+                }
+                this.$http.post('./dev/tool/merchant/add',data)
+                    .then((response)=>{
+                    if(response.data.code == 0){
+                        dialogs('success',response.data.message);
+					}else{
+                        dialogs('error',response.data.message);
+					}
+                    })
             }
         },
         ready() {
+            this.getSubcompany();
+            this.getCity();
         },
        watch:{
        }

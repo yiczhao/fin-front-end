@@ -49,7 +49,7 @@ module.exports = [
 		ksa: 'merchant_manage',
 		type: 'business',
 		sub_menu: [
-			{name: '商户管理', link: 'business-lists', ksa: 'merchant_manage'},
+			{name: '商户管理', link: 'merchant-account', ksa: 'merchant_manage'},
 		]
 	},
 	{

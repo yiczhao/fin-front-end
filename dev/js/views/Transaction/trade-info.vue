@@ -67,17 +67,18 @@
 
                         <input type="text" class="form-control" v-model="checkForm.subsidyTaxRebateId" v-limitnumber="checkForm.subsidyTaxRebateId" placeholder="补贴退税ID">
 
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
-                        <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+                        <input type="text" class="form-control" v-model="checkForm.backendMerchantCode" placeholder="商户号">
+                        <input type="text" class="form-control" v-model="checkForm.backendMerchantName" placeholder="商户简称">
+                        <input type="text" class="form-control" v-model="checkForm.backendStoreCode" placeholder="门店号">
+                        <input type="text" class="form-control" v-model="checkForm.backendStoreName" placeholder="门店名称">
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
+                        <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
 
                         <input type="text" class="form-control" v-model="checkForm.tradeDetailID" v-limitnumber="checkForm.tradeDetailID" placeholder="交易ID">
 
                         <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
 
-                        <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
-
-                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID" >  
+                        <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID" >
                     </div>
 
                     <div class="heading-middle">
@@ -94,8 +95,12 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>消费金额</th>
                                 <th>折扣金额</th>
                                 <th>实付金额</th>
@@ -111,8 +116,6 @@
                                 <th>入账金额</th>
                                 <th>交易时间</th>
                                 <th>结算时间</th>
-                                <th>手机号</th>
-                                <th>卡号</th>
                                 <th>参与活动</th>
                                 <th>交易类型</th>
                                 <th>凭证</th>
@@ -125,8 +128,14 @@
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>
+                                    <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                </td>
                                 <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.discountAmount/100 | currency ''}}</td>
                                 <td>{{trlist.payAmount/100 | currency ''}}</td>
@@ -161,8 +170,6 @@
                                 <td>{{trlist.entryAmount/100 | currency ''}}</td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <td>{{trlist.settleDate | datetimes}}</td>
-                                <td>{{trlist.consumptionPhone}}</td>
-                                <td>{{trlist.consumptionAccountNumber}}</td>
                                 <td>
                                     <template v-if="!trlist.activityName">
                                         无
@@ -191,7 +198,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
@@ -205,7 +212,6 @@
                                 <td>{{nums.collectionAmount/100 | currency ''}}</td>
                                 <td>{{nums.commission33211/100 | currency ''}}</td>
                                 <td>{{nums.entryAmount/100 | currency ''}}</td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -238,11 +244,6 @@
         </div>
     </index>
 </template>
-<style scope>
-html #app .heading .heading-left .form-control, #app .heading .heading-right .form-control,html  #app .heading .heading-middle .form-control{
-        vertical-align: baseline;
-}
-</style>
 <script>
     import model from '../../ajax/Transaction/trade_model'
     export default{
@@ -265,9 +266,12 @@ html #app .heading .heading-left .form-control, #app .heading .heading-right .fo
                     endSettlementDate:"",
                     merchantOperationID:"",
                     merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     tradeDetailID:"",
                     serialNumber:"",
-                    phone:"",
                     activityOperationID:'',
                     pageIndex:1,
                     timeRange:'3',
@@ -374,6 +378,7 @@ html #app .heading .heading-left .form-control, #app .heading .heading-right .fo
             (this.$route.params.merchantName==':merchantName')? this.checkForm.merchantName='' : this.checkForm.merchantName=this.$route.params.merchantName;
             (this.$route.params.activityOperationID==':activityOperationID')? this.checkForm.activityOperationID='' : this.checkForm.activityOperationID=this.$route.params.activityOperationID;
             (this.$route.params.serialNumber==':serialNumber')? this.checkForm.serialNumber='' : this.checkForm.serialNumber=this.$route.params.serialNumber;
+            (this.$route.params.backendStoreCode==':backendStoreCode')? this.checkForm.backendStoreCode='' : this.checkForm.backendStoreCode=this.$route.params.backendStoreCode;
             this.getSubcompany();
             this.getTime();
             this.getSettlementTime();

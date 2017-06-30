@@ -47,9 +47,14 @@
                             <option value="3">审核通过</option>
                             <option value="4">审核不通过</option>
                         </select>
-                        <input type="text" class="form-control" v-model="defaultData.merchantOperationID"
-                               placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                        <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
+
+                        <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
+                        <input type="text" class="form-control" v-model="defaultData.backendMerchantName" placeholder="商户简称">
+                        <input type="text" class="form-control" v-model="defaultData.backendStoreCode" placeholder="门店号">
+                        <input type="text" class="form-control" v-model="defaultData.backendStoreName" placeholder="门店名称">
+                        <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商盟ID" v-limitnumber="defaultData.merchantOperationID">
+                        <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商盟商户名称">
+
                         <input type="text" class="form-control" placeholder="活动ID"
                                v-limitnumber="defaultData.activityOperationID"
                                v-model="defaultData.activityOperationID">
@@ -71,8 +76,12 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>消费金额</th>
                                 <th>折扣金额</th>
                                 <th>实付金额</th>
@@ -99,8 +108,14 @@
                                 <td>{{manualTradeDetail.serialNumber}}</td>
                                 <td>{{manualTradeDetail.subCompanyName}}</td>
                                 <td>{{manualTradeDetail.cityName}}</td>
-                                <td>{{manualTradeDetail.merchantOperationID}}</td>
-                                <td>{{manualTradeDetail.merchantName}}</td>
+                                <td>{{manualTradeDetail.backendMerchantCode}}</td>
+                                <td>{{manualTradeDetail.backendMerchantName}}</td>
+                                <td>{{manualTradeDetail.backendStoreCode}}</td>
+                                <td>{{manualTradeDetail.backendStoreName}}</td>
+                                <td>{{manualTradeDetail.merchantOperationID }}</td>
+                                <td>
+                                    <span v-if="!manualTradeDetail.backendMerchantCode">{{manualTradeDetail.merchantName}}</span>
+                                </td>
                                 <td>{{manualTradeDetail.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{manualTradeDetail.discountAmount/100 | currency ''}}</td>
                                 <td>{{manualTradeDetail.payAmount/100 | currency ''}}</td>
@@ -153,7 +168,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
@@ -193,14 +208,37 @@
             >
                 <validator name="vali">
                     <div class="dialog-row">
-                        <label><i>*</i>商户ID：</label>
-                        <input type="text" class="form-control" placeholder="商户ID"
-                               v-model="tradeInfo.merchantOperationID"
-                               v-validate:val1="['required']"
-                               v-limitnumber="tradeInfo.merchantOperationID"
-                               v-bind:class="{'error-input':fire && $vali.val1.required}"
-                        >
-                        <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商户ID</span>
+                        <label>
+                            <i>*</i>商盟ID：
+                        </label>
+                        <select class="form-control" v-model="merchantType"
+                                @change="tradeInfo.merchantOperationID=redata.backendStoreCode=''"
+                                style="width: 76px;padding: 0;color: #777;">
+                            <option value="1">商盟ID：</option>
+                            <option value="2">门店号：</option>
+                        </select>
+                        <template v-if="merchantType==1">
+                            <input type="text" class="form-control" placeholder="商盟ID"
+                                   v-if="merchantType==1"
+                                   v-model="tradeInfo.merchantOperationID"
+                                   v-validate:val1="['required']"
+                                   v-limitnumber="tradeInfo.merchantOperationID"
+                                   v-bind:class="{'error-input':fire && $vali.val1.required}"
+                                   style="width: 270px;"
+                            >
+                            <span v-if="$vali.val1.required && fire" class="validation-error-label">请输入商盟ID</span>
+                        </template>
+                        <template v-if="merchantType==2">
+                            <input type="text" class="form-control" placeholder="门店号"
+                                   v-if="merchantType==2"
+                                   v-model="tradeInfo.backendStoreCode"
+                                   v-validate:val9="['required']"
+                                   v-limitnumber="tradeInfo.backendStoreCode"
+                                   v-bind:class="{'error-input':fire && $vali.val9.required}"
+                            >
+                            <span v-if="$vali.val9.required && fire" class="validation-error-label">请输入门店号</span>
+                        </template>
+
                     </div>
                     <div class="dialog-row">
                         <label><i>*</i>参与活动ID：</label>
@@ -313,8 +351,12 @@
                     cityID: "",
                     startDate: "",
                     endDate: "",
-                    merchantOperationID: "",
-                    merchantName: "",
+                    merchantOperationID:"",
+                    merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     tradeDetailID: "",
                     serialNumber: "",
                     activityOperationID: '',
@@ -329,9 +371,11 @@
                 fires: false,
                 show: false,
                 dtitle: '',
+                merchantType:1,
                 tradeInfo: {
                     id: '',
                     merchantOperationID: '',
+                    backendStoreCode: '',
                     activityOperationID: '',
                     consumptionAmount: '',
                     discountAmount: '',

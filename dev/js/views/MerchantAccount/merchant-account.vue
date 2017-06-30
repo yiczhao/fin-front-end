@@ -1,14 +1,14 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
     <index :title="'商户账户管理'"
-           :ptitle="'商户账户'"
+           :ptitle="'商户管理'"
            :hname="'merchant-account'"
            :isshow="'isshow'">
 
         <div class="content merchant-account" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li data-ksa="merchant_manage"><a v-link="{name:'business-lists'}">商户列表</a></li>
                     <li data-ksa="merchant_account_manage" class="active"><a v-link="{name:'merchant-account'}">商户账户</a></li>
+                    <li data-ksa="merchant_manage"><a v-link="{name:'business-lists'}">商户列表</a></li>
                     <li data-ksa="advance_payment_account_manage"><a v-link="{name:'prepayment-lists'}">预付款</a></li>
                 </ul>
                 <div class="heading">

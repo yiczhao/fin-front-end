@@ -1747,8 +1747,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.getCommonActivation = './common/business_activation';
-
-
+    /**
+     * @description 分公司指标信息
+     * @author
+     * @method get
+     */
+    _o.financeInfo = './target/finance_info?';
 
     Object.defineProperties(Vue.prototype, {
         $API: {get(){return _o}}

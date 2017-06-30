@@ -112,7 +112,10 @@
                                  <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传</a>
                                  <span v-text="uploadText" v-show="uploadText!=''"></span>
                             </span>
-                            <a class="btn btn-primary" v-if="!!defaultData.contractFileID && $route.params.contractAddId!==':contractAddId'" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
+                            <a v-if="!!defaultData.contractFileID && $route.params.contractAddId!==':contractAddId'" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
+                            <a v-if="!!defaultData.contractFileID"
+                               @click="removeContarct"
+                            >删除</a>
                         </div>
                     </div>
                 </div>
@@ -152,11 +155,16 @@
                     contractServiceFee :'',
                     contractSettlementFee :'',
                     contractTaxFee :'',
+                    contractFileName:'',
                     contractWeChatMarketFee :''
                 }
             }
         },
         methods:{
+            removeContarct(){
+                this.defaultData.contractFileID='';
+                this.uploadText='';
+            },
             getList(){
                 let data={
                     id:this.$route.params.contractAddId
@@ -164,6 +172,7 @@
                 this.model.contractaddList(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('defaultData',res.data.data);
+                        this.uploadText=!res.data.data.contractFileName?'':res.data.data.contractFileName;
                         this.getThirdParty(this.defaultData.subCompanyID,true);
                     }
                 })
@@ -231,6 +240,7 @@
                 }
             },
             submit() {
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.defaultData.thirdPartyAccountID){
                     dialogs('info','请选择三方');
                     return;
@@ -249,6 +259,7 @@
                 })
             },
             edit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 if(!this.defaultData.thirdPartyAccountID){
                     dialogs('info','请选择三方');
                     return;

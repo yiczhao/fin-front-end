@@ -11,7 +11,8 @@
                 <div style="margin: 0 0 20px 20px;font-size: 18px;">
                     <span>活动名称：</span><span style="margin-right: 10px;">{{defaultData.activityName}}</span>
                     <span>活动ID：</span><span style="margin-right: 10px;">{{defaultData.activityOperationID}}</span>
-                    <span v-if="!!defaultData.contractFileID">合同：</span><span style="margin-right: 10px;"></span>
+                    <span v-if="!!defaultData.contractFileID">合同：</span>
+                    <span v-if="!!defaultData.contractFileName" style="margin-right: 10px;">{{defaultData.contractFileName}}</span>
                     <a class="btn btn-primary" v-if="!!defaultData.contractFileID" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                 </div>
                 <div class="other-info">
@@ -171,6 +172,7 @@
                 return data;
             },
             loadDault(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
             	this.model.getDefaultFormulae(this.defaultData.subCompanyID).then((res)=>{
             		if(res.data.code==0){
             			if(!res.data.data){
@@ -191,6 +193,7 @@
             	})
             },
             getFormulae(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data={
                     activityID:this.defaultData.activityID,
                     subCompanyID:this.defaultData.subCompanyID,
@@ -206,6 +209,7 @@
             	})
             },
             submit(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
                 let data=this.getsubitData();
             	this.model.saveFormulae(data).then((res)=>{
             		if(res.data.code==0){
@@ -215,6 +219,7 @@
             	})
             },
             saveDefault(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
             	if(!this.defaultData.id){
             		dialogs('info','请先保存公式再设为默认公式！');
             		return

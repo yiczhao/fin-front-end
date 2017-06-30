@@ -24,8 +24,12 @@
                                     <th><input type="checkbox" v-model="checkAll" @click="chooseAll"></th>
                                     <th>活动ID</th>
                                     <th>活动名称</th>
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
+                                    <th>商户号</th>
+                                    <th>商户简称</th>
+                                    <th>门店号</th>
+                                    <th>门店名称</th>
+                                    <th>商盟ID</th>
+                                    <th>商盟商户名称</th>
                                     <th>收款账号</th>
                                     <th>收款账户名</th>
                                     <th>退税款</th>
@@ -36,8 +40,14 @@
                                 <td><input type="checkbox" v-if="n.withdrawCashAmount!=0" @click="checked(n)" v-model="n.ischeck"/></td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
+                                <td>{{n.backendMerchantCode}}</td>
+                                <td>{{n.backendMerchantName}}</td>
+                                <td>{{n.backendStoreCode}}</td>
+                                <td>{{n.backendStoreName}}</td>
                                 <td>{{n.merchantOperationID}}</td>
-                                <td>{{n.merchantName}}</td>
+                                <td>
+                                    <span v-if="!n.backendStoreCode">{{n.merchantName}}</span>
+                                </td>
                                 <td>{{n.receiptAccountNumber}}</td>
                                 <td>{{n.receiptAccountName}}</td>
                                 <td>{{n.suspensionTaxAmount/100 | currency ''}}</td>
@@ -45,7 +55,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td>
+                                <td></td><td></td><td></td><td></td><td></td>
                                 <td></td><td></td><td></td><td></td><td></td>
                                 <td>{{suspensionTaxAmount/100 | currency ''}}</td>
                                 <td>{{total/100 | currency ''}}</td>
