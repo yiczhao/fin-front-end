@@ -305,49 +305,49 @@
 						name:form.find('input[type="text"]').val(),
 						data:form.find('.hidden-data').val()
 					}
-					this.$http.post('./dev/tool/upload',datas)
+					this.$http.post('./src/tool/upload',datas)
 							.then((response)=>{
 						dialogs('success',response.data.message);
 				})
 			},
             submitTime(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/tradeDetail/rollback',this.dateStr)
+                this.$http.post('./src/tool/tradeDetail/rollback',this.dateStr)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
 			submitTime1(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/syn/activation?dateStr='+this.dateStr1)
+                this.$http.post('./src/tool/syn/activation?dateStr='+this.dateStr1)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
 			submitTimeDefer(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/syn/deffer?dateStr='+this.dateStrDefer)
+                this.$http.post('./src/tool/syn/deffer?dateStr='+this.dateStrDefer)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
 			submitTimeFinance(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/syn/finance?dateStr='+this.dateStrFinance)
+                this.$http.post('./src/tool/syn/finance?dateStr='+this.dateStrFinance)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             submitTime2(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/count/activation')
+                this.$http.post('./src/tool/count/activation')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             submitTime3(e){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.$http.post('./dev/tool/tradeDetail/pull',this.dateStr3)
+                this.$http.post('./src/tool/tradeDetail/pull',this.dateStr3)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -359,7 +359,7 @@
                     endDate :this.enddateStr.replace(/\-/g,''),
 					bankAccountID:this.bankAccountID
                 }
-                this.$http.post('./dev/tool/reserveCashDetail',data)
+                this.$http.post('./src/tool/reserveCashDetail',data)
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
@@ -373,7 +373,7 @@
 					flowID :this.flowID,
 					serialNumber :this.serialNumber
 				}
-				this.$http.post('./dev/tool/tradeDetail/revoke',data)
+				this.$http.post('./src/tool/tradeDetail/revoke',data)
 						.then((response)=>{
 							dialogs('success','撤销成功！');
 						})
@@ -385,31 +385,31 @@
 						})
 			},
 			generateMerchantSubsidyPaidDetail(){
-				this.$http.post('./dev/tool/subsidyAccount/generateMerchantSubsidyPaidDetail')
+				this.$http.post('./src/tool/subsidyAccount/generateMerchantSubsidyPaidDetail')
 						.then((response)=>{
 							dialogs('success',response.data.message);
 						})
 			},
 			caculateSubsidyAccountTradeData(e){
-                this.$http.post('./dev/tool/subsidyAccount/generateTradeStatisticsData')
+                this.$http.post('./src/tool/subsidyAccount/generateTradeStatisticsData')
                         .then((response)=>{
                             dialogs('success','处理成功！');
                         })
             },
             correctSubsidyAccountData(e){
-                this.$http.post('./dev/tool/subsidyAccount/correct')
+                this.$http.post('./src/tool/subsidyAccount/correct')
                         .then((response)=>{
                             dialogs('success','处理成功！');
                         })
             },
             generatActivitySubCompany(e){
-                this.$http.post('./dev/tool/activitySubCompany/generate')
+                this.$http.post('./src/tool/activitySubCompany/generate')
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
             },
             generateOldActivitySubCompany(e){
-                this.$http.post('./dev/tool/oldActivitySubCompany/generate')
+                this.$http.post('./src/tool/oldActivitySubCompany/generate')
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
@@ -422,31 +422,31 @@
                        year : this.year,
                        month : this.month
                     }
-                this.$http.post('./dev/tool/activityEffect/generate',data)
+                this.$http.post('./src/tool/activityEffect/generate',data)
                                     .then((response)=>{
                                         dialogs('success',response.data.message);
                                     })
             },
             updateSubsidyAccount(e){
-                this.$http.post('./dev/tool/subsidyAccount/update')
+                this.$http.post('./src/tool/subsidyAccount/update')
                     .then((response) => {
                         dialogs('success', response.data.message);
                     })
             },
             generateActivityEffectAgain(e){
-                this.$http.post('./dev/tool/activityEffect/generate/again')
+                this.$http.post('./src/tool/activityEffect/generate/again')
                         .then((response)=>{
                             dialogs('success',response.data.message);
                         })
             },
             generateFinanceTargetDetail(e){
-                this.$http.post('./dev/tool/finance_target/generate?dateStr='+this.countDateStr)
+                this.$http.post('./src/tool/finance_target/generate?dateStr='+this.countDateStr)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             reGenerateFinanceTargetDetail(e){
-                this.$http.post('./dev/tool/finance_target/regenerate')
+                this.$http.post('./src/tool/finance_target/regenerate')
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -457,31 +457,31 @@
                     end : this.end,
                     code : this.code,
                 }
-                this.$http.post('./dev/tool/merchant_account/syn?'+$.param(data))
+                this.$http.post('./src/tool/merchant_account/syn?'+$.param(data))
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             correctUnpaidAmount(e){
-                this.$http.post('./dev/tool/subsidyAccount/amount/correct/'+this.subsidyAccountIDsStr1)
+                this.$http.post('./src/tool/subsidyAccount/amount/correct/'+this.subsidyAccountIDsStr1)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
 			},
             correctPaidDetail(e){
-                this.$http.post('./dev/tool/subsidyAccount/paidDetail/correct/'+this.subsidyAccountIDsStr2)
+                this.$http.post('./src/tool/subsidyAccount/paidDetail/correct/'+this.subsidyAccountIDsStr2)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             updateSubsidyAccountTaxAndInvoice(e){
-                this.$http.post('./dev/tool/updateSubsidyAccountTaxAndInvoice/'+this.subsidyAccountIDs)
+                this.$http.post('./src/tool/updateSubsidyAccountTaxAndInvoice/'+this.subsidyAccountIDs)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
             },
             generateSubsidyAccount(e){
-                this.$http.post('./dev/tool/generateSubsidyAccountInvoiceAmount/'+this.generateSubsidyAccountIDs)
+                this.$http.post('./src/tool/generateSubsidyAccountInvoiceAmount/'+this.generateSubsidyAccountIDs)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -490,7 +490,7 @@
                 let data={
                     serialNumber:this.serialNumbers
                 }
-                this.$http.post('./dev/tool/tradeDetailTax/repair',data)
+                this.$http.post('./src/tool/tradeDetailTax/repair',data)
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -499,7 +499,7 @@
                 let data={
                     tradeNumbers:this.serialNumbersForSys
                 }
-                this.$http.post('./dev/tool/tradeDetailFix/fixMerchantIdFromRemote?'+$.param(data))
+                this.$http.post('./src/tool/tradeDetailFix/fixMerchantIdFromRemote?'+$.param(data))
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -508,7 +508,7 @@
                 let data={
                     tradeNumbers:this.serialNumbersForTrade
                 }
-                this.$http.post('./dev/tool/tradeDetailFix/fixMerchantIdFromNative?'+$.param(data))
+                this.$http.post('./src/tool/tradeDetailFix/fixMerchantIdFromNative?'+$.param(data))
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -517,7 +517,7 @@
                 let data={
                     tradeNumbers:this.cityIdAndSubCompanyId
                 }
-                this.$http.post('./dev/tool/fixTradeDetail/cityAndMerchant?'+$.param(data))
+                this.$http.post('./src/tool/fixTradeDetail/cityAndMerchant?'+$.param(data))
                     .then((response)=>{
                         dialogs('success',response.data.message);
                     })
@@ -551,7 +551,7 @@
                     subCompanyID:this.subCompanyID,
                     cityID:this.cityID
                 }
-                this.$http.post('./dev/tool/merchant/add',data)
+                this.$http.post('./src/tool/merchant/add',data)
                     .then((response)=>{
                     if(response.data.code == 0){
                         dialogs('success',response.data.message);
