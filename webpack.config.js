@@ -18,7 +18,6 @@ module.exports = {
         bootstrap: __dirname+'/src/app/assets/bootstrap.min.js',
         cssasset: __dirname + '/src/assets/sass/app.scss',
         app: __dirname + '/src/app/index.js',
-        vuecore: __dirname + '/src/app/vuecore.js'
     },
 
     output: {
@@ -87,16 +86,12 @@ module.exports = {
             name: 'jquery',
             filename: 'jquery.js'
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vuecore',
-            filename: 'vuecore.js'
-        }),
         new ExtractTextPlugin('app_[chunkhash:8].css'),
         new webpack.optimize.DedupePlugin(),
         new HtmlWebpackPlugin({
             title:'卡说 · 财务管理系统',
             template:'index.ejs',
-            chunks: ['bootstrap','app','vuecore','cssasset'],
+            chunks: ['bootstrap','app','cssasset'],
             inject:false,
             minify: {
                 collapseWhitespace: true
