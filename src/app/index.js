@@ -2,9 +2,7 @@
  * 入口文件
  * @author cwxtDesigner
  */
-import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
 import validator from 'vue-validator'
 import config from  './config'
 import filters from './filters'
@@ -22,6 +20,8 @@ import store from './utils/store.js'
 import API from './ajax/api.js'
 import common_model from './ajax/components/model.js'
 import notify_instance from './views/components/notify'
+
+import serviceInstall from './service/install.js'
 Vue.component('index', Index);
 Vue.component('datepicker', datepicker);
 Vue.component('getmonth', getmonth);
@@ -46,6 +46,8 @@ let router = new VueRouter({
 	transitionOnLoad: true
 });
 let app = Vue.extend({});
+// Service.router = routers(Vue);
+// Service.router.start(app,'#app');
 routers(router);
 router.start(app, "#app");
 
