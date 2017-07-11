@@ -24,7 +24,7 @@
     import nvMenu from './menu.vue'
     import breadcrumb from './breadcrumb.vue'
     import nvFooter from './footer.vue'
-    import Cookie from '../../utils/Cookie'
+    import Cookie from '../../../utils/Cookie'
     export default{
         data(){
             return{

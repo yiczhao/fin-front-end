@@ -22,8 +22,8 @@
 </template>
 
 <script>
-    import menu_list from '../../ajax/menu.js'
-    import MenuAdapter from '../../utils/menu_adapter'
+    import menu_list from '../../../ajax/menu.js'
+    import MenuAdapter from '../../../utils/menu_adapter'
 
     export default{
         data(){

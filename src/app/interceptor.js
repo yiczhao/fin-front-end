@@ -1,6 +1,6 @@
 /**
  * 拦截器
- * @author zdzDesigner
+ * @author yiczhao
  */
 import config from './config'
 import Cookie from './utils/Cookie'

@@ -3,38 +3,26 @@
  * @author cwxtDesigner
  */
 import VueRouter from 'vue-router'
-import validator from 'vue-validator'
 import config from  './config'
 import filters from './filters'
 import directives from './directives'
 import routers from './routers.js'
 import interceptor from './interceptor.js'
 // *** 公共组件
-import Index from './views/components/index.vue'
-import page from './views/components/page.vue'
-import datepicker from './views/components/datepicker.vue'
-import getmonth from './views/components/vue-picker/picker.vue'
-import ContentDialog from './views/components/ContentDialog.vue'
+
 import common from  './utils/common'
 import store from './utils/store.js'
 import API from './ajax/api.js'
 import common_model from './ajax/components/model.js'
-import notify_instance from './views/components/notify'
-
 import serviceInstall from './service/install.js'
-Vue.component('index', Index);
-Vue.component('datepicker', datepicker);
-Vue.component('getmonth', getmonth);
-Vue.component('page', page);
-Vue.component('ContentDialog', ContentDialog);
+import components from './views/components'
 // *** 引入filter
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 // *** 引入directive
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
 
-Vue.use(VueResource);
+Vue.use(components)
 Vue.use(VueRouter);
-Vue.use(validator);
 Vue.use(store);
 Vue.use(API);
 Vue.use(common_model);

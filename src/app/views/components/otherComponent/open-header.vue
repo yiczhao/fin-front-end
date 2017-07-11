@@ -2,7 +2,7 @@
     <div class="navbar navbar-inverse">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <img class="companylogo"  src="../../../img/logo.png">
+                <img class="companylogo"  src="../../../../img/logo.png">
                 <a class="thislogo" >
                     <span class="font-large">卡说大后台</span>
                 </a>
@@ -49,8 +49,8 @@
     </div>
 </template>
 <script>
-    import CryptoJS from '../../utils/brix-crypto-js'
-    import Cookie from '../../utils/Cookie'
+    import CryptoJS from '../../../utils/brix-crypto-js'
+    import Cookie from '../../../utils/Cookie'
     export default {
         props:{
 
@@ -162,10 +162,10 @@
         margin-right:9px;
         width: 20px;
         height: 20px;
-        background: url(../../../img/addsystem.png) center /80% 80% no-repeat;
+        background: url(../../../../img/addsystem.png) center /80% 80% no-repeat;
     }
     .system-add:hover{
-        background: url(../../../img/addsystem-hover.png) center /80% 80% no-repeat;
+        background: url(../../../../img/addsystem-hover.png) center /80% 80% no-repeat;
     }
     .system-del{
         float:right;
@@ -173,10 +173,10 @@
         margin-right: 10px;
         width: 20px;
         height: 20px;
-        background: url(../../../img/delsystem.png) center /80% 80% no-repeat;
+        background: url(../../../../img/delsystem.png) center /80% 80% no-repeat;
     }
     .system-del:hover{
-        background: url(../../../img/delsystem-hover.png) center /80% 80% no-repeat;
+        background: url(../../../../img/delsystem-hover.png) center /80% 80% no-repeat;
     }
     .k-header-list{
         cursor: pointer;user-select: none;
@@ -258,6 +258,6 @@
         width: 20px;
         height: 20px;
         margin-bottom: -7px;
-        background: url(../../../img/listshow.svg) center /80% 80% no-repeat;
+        background: url(../../../../img/listshow.svg) center /80% 80% no-repeat;
     }
 </style>

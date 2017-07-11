@@ -53,7 +53,7 @@
 </script>
 
 <style lang="sass">
-  @import "../../../style/bootstrap";
+  @import "../../../../style/bootstrap";
 
   $kdialog-width: 560px;
   $kdialog-close-size: 32px;

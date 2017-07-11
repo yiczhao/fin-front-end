@@ -10,7 +10,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var _package = require('./package.json')
 
 
-console.log(process.env.NODE_ENV ? 'pro':'src')
 
 module.exports = {
     entry: {
