@@ -237,7 +237,7 @@
                     </div>
                 </div>
                 
-                <div class="no-list" v-else>
+                <div class="no-list" v-show="!tradeList.length&&searched">
                     未查询到交易明细数据！
                 </div>
             </div>
@@ -253,6 +253,7 @@
         data(){
             this.model=model(this);
             return{
+                searched:false,
                 origin:window.origin,
                 checkForm:{
                     subsidyPayId:"",
@@ -307,6 +308,7 @@
                  this.model.tradedetail(data)
                     .then((response)=>{
                          if(response.data.code==0){
+                             this.searched=true;
                             this.$set('tradeList', response.data.data.list)
                             this.$set('nums',response.data.data.total)
                             this.$set('pageall', response.data.total)
@@ -340,7 +342,7 @@
                 this.query();
             },
             query() {
-                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(sessionStorage.getItem('isHttpin')==1 || !this.checkForm.subCompanyID)return;
                 //初始化
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
@@ -382,7 +384,7 @@
             (this.$route.params.tradeCompanyId==':tradeCompanyId')? this.checkForm.subCompanyID='' : this.checkForm.subCompanyID=this.$route.params.tradeCompanyId;
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
-            this.query();
+//            this.query();
         },
        watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){
