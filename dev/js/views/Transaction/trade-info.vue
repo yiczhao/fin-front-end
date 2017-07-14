@@ -304,14 +304,11 @@
         methods:{
             //获取交易记录
              getTradeList(data){
-                 this.model.tradedetailsum(data)
-                         .then((response)=>{
-                             (response.data.code==0)?this.$set('nums',response.data.data):null;
-                         });
                  this.model.tradedetail(data)
                     .then((response)=>{
                          if(response.data.code==0){
-                            this.$set('tradeList', response.data.data)
+                            this.$set('tradeList', response.data.data.list)
+                            this.$set('nums',response.data.data.total)
                             this.$set('pageall', response.data.total)
                         }
                     });
