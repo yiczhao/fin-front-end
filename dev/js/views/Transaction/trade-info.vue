@@ -18,7 +18,7 @@
                     </div>
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
-                            <option value="">全部分公司</option>
+                            <option value="">请选择分公司</option>
                             <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
 
@@ -342,7 +342,11 @@
                 this.query();
             },
             query() {
-                if(sessionStorage.getItem('isHttpin')==1 || !this.checkForm.subCompanyID)return;
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                if(!this.checkForm.subCompanyID){
+                    dialogs('info','请选择分公司！')
+                    return;
+                }
                 //初始化
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
