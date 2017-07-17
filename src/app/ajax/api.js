@@ -1242,7 +1242,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.advancePaymentMerchant_status = './advancePaymentMerchant/status';
+    _o.advancePaymentMerchant_status = './advancePaymentMerchant/delete';
     /**
      * @description 预付合计接口地址
      * @author 冷艳君

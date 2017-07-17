@@ -36,7 +36,7 @@
                             <input type="text" class="form-control" v-model="checkForm.advancePaymentAccountDetailID" placeholder="预付款流水ID" v-limitnumber="checkForm.advancePaymentAccountDetailID">
 
                             <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="收款账户名、帐号" >
-                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="预付款账户名" >
+                                <input type="text" class="form-control" v-model="checkForm.advancePaymentAccountName" placeholder="预付款账户名" >
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">请选择状态</option>
                                 <option value="0">已关闭</option>
@@ -83,7 +83,7 @@
                                     <td>{{apd.applyTime | datetime}}</td>
                                     <td>{{apd.subCompanyName}}</td>
                                     <td>{{apd.payAccount}}</td>
-                                    <td>{{apd.merchantName}}</td>
+                                    <td>{{apd.advancePaymentAccountName}}</td>
                                     <td>{{apd.collectionAccountName}}</td>
                                     <td>{{apd.collectionAccountNumber}}</td>
                                     <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
