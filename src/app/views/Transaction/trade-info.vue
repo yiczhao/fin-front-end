@@ -18,7 +18,7 @@
                     </div>
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
-                            <option value="">全部分公司</option>
+                            <option value="">请选择分公司</option>
                             <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
 
@@ -47,20 +47,6 @@
                         <div  v-show="checkForm.timeRange==4" class="inline">
                             <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
                             <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
-                        </div>
-
-                        <div  class="inline"><label>结算时间：</label></div>
-                        <select class="form-control" v-model="checkForm.settlementTimeRange" @change="getSettlementTime">
-                            <option value="0">昨天</option>
-                            <option value="1">最近一周</option>
-                            <option value="2">最近一个月</option>
-                            <option value="3">最近三个月</option>
-                            <option value="4">自定义时间</option>
-                        </select>
-
-                        <div  v-show="checkForm.settlementTimeRange==4" class="inline">
-                            <datepicker  :readonly="true" :value.sync="checkForm.startSettlementDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="checkForm.endSettlementDate" format="YYYY-MM-DD"></datepicker>
                         </div>
 
                         <input type="text" class="form-control" v-model="checkForm.subsidyPayId" v-limitnumber="checkForm.subsidyPayId" placeholder="补贴划付ID">
@@ -115,7 +101,6 @@
                                 <th>佣金</th>
                                 <th>入账金额</th>
                                 <th>交易时间</th>
-                                <th>结算时间</th>
                                 <th>参与活动</th>
                                 <th>交易类型</th>
                                 <th>凭证</th>
@@ -169,7 +154,6 @@
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td>{{trlist.entryAmount/100 | currency ''}}</td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
-                                <td>{{trlist.settleDate | datetimes}}</td>
                                 <td>
                                     <template v-if="!trlist.activityName">
                                         无
@@ -217,7 +201,6 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
                             </tr>
                             </tbody>
                         </table>
@@ -237,7 +220,7 @@
                     </div>
                 </div>
                 
-                <div class="no-list" v-else>
+                <div class="no-list" v-show="!tradeList.length">
                     未查询到交易明细数据！
                 </div>
             </div>
@@ -253,6 +236,7 @@
         data(){
             this.model=model(this);
             return{
+                searched:false,
                 origin:window.origin,
                 checkForm:{
                     subsidyPayId:"",
@@ -275,7 +259,6 @@
                     activityOperationID:'',
                     pageIndex:1,
                     timeRange:'3',
-                    settlementTimeRange:'3',
                     pageSize:10
                 },
                 subcompanyList:[],
@@ -304,14 +287,11 @@
         methods:{
             //获取交易记录
              getTradeList(data){
-                 this.model.tradedetailsum(data)
-                         .then((response)=>{
-                             (response.data.code==0)?this.$set('nums',response.data.data):null;
-                         });
                  this.model.tradedetail(data)
                     .then((response)=>{
                          if(response.data.code==0){
-                            this.$set('tradeList', response.data.data)
+                            this.$set('tradeList', response.data.data.list)
+                            this.$set('nums',response.data.data.total)
                             this.$set('pageall', response.data.total)
                         }
                     });
@@ -321,13 +301,16 @@
                  this.$common_model.getcompany()
                     .then((response)=>{
                         if(response.data.code==0){
-                            this.$set('subcompanyList', response.data.data)
+                            this.$set('subcompanyList', response.data.data);
+                            if(response.data.data.length==1){
+                                this.checkForm.subCompanyID=response.data.data[0].subCompanyID;
+                            }
                         }
                     });
             },
             //获取城市数据
             getCity(_id){
-                this.cityID='';
+                this.checkForm.cityID='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -339,6 +322,10 @@
                     });
             },
             checkNew(){
+                if(!this.checkForm.subCompanyID){
+                    dialogs('info','请选择分公司！')
+                    return;
+                }
                 this.checkForm.pageIndex=1;
                 this.query();
             },
@@ -366,10 +353,6 @@
                 this.checkForm.startDate=init_date(this.checkForm.timeRange)[0];
                 this.checkForm.endDate=init_date(this.checkForm.timeRange)[1];
             },
-            getSettlementTime(){
-                this.checkForm.startSettlementDate=init_date(this.checkForm.settlementTimeRange)[0];
-                this.checkForm.endSettlementDate=init_date(this.checkForm.settlementTimeRange)[1];
-            }
         },
         ready() {
             (this.$route.params.subsidyPayId==':subsidyPayId')?this.checkForm.subsidyPayId='' : this.checkForm.subsidyPayId=this.$route.params.subsidyPayId;
@@ -381,7 +364,6 @@
             (this.$route.params.backendStoreCode==':backendStoreCode')? this.checkForm.backendStoreCode='' : this.checkForm.backendStoreCode=this.$route.params.backendStoreCode;
             this.getSubcompany();
             this.getTime();
-            this.getSettlementTime();
             (this.$route.params.tradeCompanyId==':tradeCompanyId')? this.checkForm.subCompanyID='' : this.checkForm.subCompanyID=this.$route.params.tradeCompanyId;
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
