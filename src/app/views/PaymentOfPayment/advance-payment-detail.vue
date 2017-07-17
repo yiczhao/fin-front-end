@@ -14,14 +14,9 @@
                 <div class="heading">
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
+                            <select class="form-control" v-model="checkForm.subCompanyID">
                                 <option value="">全部分公司</option>
                                 <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                            </select>
-
-                            <select class="form-control" v-model="checkForm.cityID">
-                                <option value="">全部城市</option>
-                                <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
                             </select>
 
                             <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
@@ -38,12 +33,10 @@
                                 <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
                             </div>
 
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
                             <input type="text" class="form-control" v-model="checkForm.advancePaymentAccountDetailID" placeholder="预付款流水ID" v-limitnumber="checkForm.advancePaymentAccountDetailID">
 
-                            <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号" >
-
+                            <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="收款账户名、帐号" >
+                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="预付款账户名" >
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">请选择状态</option>
                                 <option value="0">已关闭</option>
@@ -73,10 +66,8 @@
                                     <th>ID</th>
                                     <th>申请时间</th>
                                     <th>分公司</th>
-                                    <th>城市</th>
                                     <th>付款账户</th>
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
+                                    <th>预付款账户名</th>
                                     <th>收款账户名</th>
                                     <th>收款账号</th>
                                     <th>预付金额</th>
@@ -91,9 +82,7 @@
                                     <td>{{apd.advancePaymentAccountDetailID}}</td>
                                     <td>{{apd.applyTime | datetime}}</td>
                                     <td>{{apd.subCompanyName}}</td>
-                                    <td>{{apd.cityName}}</td>
                                     <td>{{apd.payAccount}}</td>
-                                    <td>{{apd.merchantOperationID}}</td>
                                     <td>{{apd.merchantName}}</td>
                                     <td>{{apd.collectionAccountName}}</td>
                                     <td>{{apd.collectionAccountNumber}}</td>
