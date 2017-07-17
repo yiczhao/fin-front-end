@@ -12,7 +12,7 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">添加</a>
+                        <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">新增</a>
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
@@ -56,7 +56,9 @@
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
                                        data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
-                                    <a data-ksa="advance_payment_merchant_manage.enable_disable" 
+                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"
+                                       @click="showMerchants(prepayment)">编辑</a>
+                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"
                                        @click="show_waring(prepayment.id)">删除</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>
@@ -88,69 +90,21 @@
                 
                 <!-- 添加商户 -->
                 <content-dialog
-                        :show.sync="modal_prepayment_info" :is-button="false" :type.sync="'infos'"
-                        :title.sync="'添加商户'"
+                        :show.sync="modal_prepayment_info" :type.sync="'infos'"
+                        :title.sync="'添加商户'" @kok="submit" @kcancel="modal_prepayment_info = false"
                 >
-                    <div class="addDialogs">
-                        <form class="form-inline">
-                            <input type="text" class="form-control"
-                                   v-model="merchantInfo.merchantOperationID" placeholder="商户ID" v-limitnumber="merchantInfo.merchantOperationID">
-                            <input type="text" class="form-control" v-model="merchantInfo.merchantName"
-                                   placeholder="商户名">
-                            <select class="form-control" v-model="merchantInfo.companyId"
-                                    @change="getshCity(merchantInfo.companyId)">
-                                <option value="">全部分公司</option>
-                                <option v-for="n in subcompanyList" v-text="n.name"
-                                        :value="n.subCompanyID"></option>
-                            </select>
-                            <select class="form-control" v-model="merchantInfo.cityId">
-                                <option value="">全部城市</option>
-                                <option v-for="n in shCity" v-text="n.name" :value="n.cityID"></option>
-                            </select>
-                            <input type="button" class="btn btn-info" @click="getMerchantList"
-                                   value="查询">
-                        </form>
-
-                        <div class="addbottom clearfix">
-                            <div style="text-indent: 76%">已选择：</div>
-                            <div class="left">
-                                <table v-if="merchantList.length>0"
-                                       class="table">
-                                    <thead>
-                                    <tr role="row">
-                                        <th><input type="checkbox" v-model="checkAll" @click="chooseAll"/>全选</th>
-                                        <th>分公司</th>
-                                        <th>城市</th>
-                                        <th>商户名</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr v-for="(index,merchant) in merchantList" v-show="merchant.isAdd">
-                                        <td>
-                                            <input type="checkbox" @click="checked(merchant)" v-model="merchant.ischeck"/>
-                                            {{index+1}}
-                                        </td>
-                                        <td>{{merchant.subCompanyName}}</td>
-                                        <td>{{merchant.cityName}}</td>
-                                        <td>{{merchant.merchantName}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <span v-if="!merchantList.length>0 && firstAdd">
-                                        未查询到商户数据！
-                                    </span>
-                            </div>
-                            <div class="center">
-                                <input type="button" class="btn btn-info" @click="addTrue" value="添加">
-                                <input type="button" class="btn btn-info" @click="delTrue" value="删除">
-                                <input type="button" class="btn btn-info" @click="submit" value="确认">
-                            </div>
-                            <div class="right">
-                                <ul>
-                                    <li v-for="n in checkedLis" @click="checkLi($event,n)">{{n.merchantName}}</li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label class="payment-method"><i style="color:red;">*</i>分公司：</label>
+                        <select class="form-control" v-model="merchantInfo.subCompanyID">
+                            <option value="">全部分公司</option>
+                            <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>预付款账户名：</label>
+                        <input  type="text" class="form-control"
+                               v-model="merchantInfo.accountName"
+                                placeholder="30个中文字符"/>
                     </div>
                 </content-dialog>
 
@@ -248,11 +202,9 @@
                 prepaymentList: [],
                 merchantList: [],
                 merchantInfo: {
-                    companyId: "",
-                    cityId: "",
-                    merchantOperationID: "",
-                    merchantName: "",
-                    isStore: "0",
+                    id:"",
+                    accountName: "",
+                    subCompanyID: "",
                 },
                 applyAdvancePay: {
                     merchantName: "",//商户名
@@ -293,128 +245,32 @@
             }
         },
         methods: {
-            checkLi(e,n){
-                if(!e.target.classList.length){
-                    this.removeIds.push(n.merchantID);
-                    e.target.classList.add('check-li');
-                }
-                else{
-                    _.remove(this.removeIds, function(e) {
-                        return e==n.merchantID;
-                    })
-                    e.target.classList.remove('check-li');
-                }
-            },
-            addTrue() {
-                if(this.checkedIds==''){
-                    dialogs('info','请勾选要添加的商户！');
-                    return;
-                }
-                this.$set('checkedLis',this.checkedIds);
-                let data=_.cloneDeep(this.merchantList);
-                _.map(data,(val)=>{
-                    this.checkedLis.map((value)=>{
-                        if(val.merchantID==value.merchantID){
-                            val.isAdd=false;
-                        }
-                    })
-                })
-                this.$set('merchantList',data);
-                this.checkedIds=[];
-            },
-            delTrue() {
-                if(this.removeIds==''){
-                    dialogs('info','请选择要删除的商户！');
-                    return;
-                }
-                let dataLi=_.cloneDeep(this.checkedLis);
-                _.map(this.removeIds,(val)=>{
-                    _.remove(dataLi, function(e) {
-                        return e.merchantID==val;
-                    })
-                })
-                this.$set('checkedLis',dataLi);
-                let data=_.cloneDeep(this.merchantList);
-                _.map(data,(val)=>{
-                    this.removeIds.map((value)=>{
-                        if(val.merchantID==value){
-                            val.isAdd=true;
-                            val.ischeck=false;
-                        }
-                    })
-                })
-                this.$set('merchantList',data);
-                this.removeIds=[];
-            },
             submit() {
-                if(this.checkedLis==''){
-                    return;
-                }
-                let data = {
-                    'merchantIDs':[]
-                }
-                _.map(this.checkedLis,(val)=>{
-                    data.merchantIDs.push(val.merchantID+"");
-                })
-                this.model.insertBatch(data).then((response)=>{
+                this.model.insertBatch(this.merchantInfo).then((response)=>{
                     // *** 判断请求是否成功如若
                     if (response.data.code == 0) {
                         this.query();
-                        dialogs();
+                        dialogs('succuess',response.data.message);
                     }
                     this.modal_prepayment_info = false;
                 });
             },
-            chooseAll(){
-                this.checkedIds=[];
-                let cloneData=_.cloneDeep(this.merchantList);
-                cloneData.map((value)=>{
-                    if(this.checkAll){
-                        value.ischeck=false;
-                    }else{
-                        this.checkedIds.push(value);
-                        value.ischeck=true;
-                    }
-                })
-                this.merchantList=cloneData;
-            },
-            checked(n){
-                if(!n.ischeck){
-                    this.checkedIds.push(n);
-                }else{
-                    _.remove(this.checkedIds, function(e) {
-                        return e.merchantID==n.merchantID;
-                    })
-                }
-            },
-            //获取商户数据
-            getMerchantList(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.firstAdd=true;
-                this.merchantList=[];
-                this.checkedIds=[];
-                this.checkedLis=[];
-                this.$common_model.getmerchant_list(this.merchantInfo)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code == 0) ? this.$set('merchantList', response.data.data) : null;
-                            _.map(this.merchantList, function(value) {
-                                value.isAdd=true;
-                            })
-                        });
-            },
             //显示选择商户窗口
-            showMerchants() {
-                this.merchantInfo.companyId =this.merchantInfo.cityId=this.merchantInfo.merchantOperationID = this.merchantInfo.merchantName = "";
-                this.firstAdd=false;
-                this.merchantList=[];
-                this.checkedIds=[];
-                this.checkedLis=[];
-                this.queryForMerchantList();
-            },
-            queryForMerchantList() {
-                this.getshCity();
-                this.modal_prepayment_info = true;
+            showMerchants(list) {
+                if(list){
+                    this.merchantInfo={
+                        id:list.id,
+                        accountName: list.accountName,
+                        subCompanyID: list.subCompanyID
+                    }
+                }else{
+                    this.merchantInfo={
+                        id:'',
+                        accountName: "",
+                        subCompanyID: ""
+                    }
+                }
+                this.modal_prepayment_info=true;
             },
             initList(){
                 this.modal_prepayment_info=false;

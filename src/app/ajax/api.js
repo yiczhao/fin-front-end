@@ -1236,7 +1236,7 @@ export default function install(Vue) {
      * @author 冷艳君
      * @method POST
      */
-    _o.insertBatch = './advancePaymentMerchant/create';
+    _o.insertBatch = './advancePaymentMerchant/edit';
     /**
      * @description 预付停用启用接口地址
      * @author 冷艳君
