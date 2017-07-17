@@ -136,7 +136,6 @@
                                 <td>{{n.payoutAccount}}</td>
                                 <td>
                                     <template v-if="n.purpose==1"> 补贴划付</template>
-                                    <template v-if="n.purpose==2"> 额度采购</template>
                                     <template v-if="n.purpose==3"> 退税划付</template>
                                     <template v-if="n.purpose==4"> 预付款</template>
                                     <template v-if="n.purpose==5"> 供货商划付</template>
@@ -258,7 +257,6 @@
                                 <td  v-if="trlist.purpose=='1'&&!listinfos[0].providerPayDetail">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                                 <td v-if="!trlist.providerPayDetail">
                                     <template v-if="trlist.purpose==1"> 补贴划付</template>
-                                    <template v-if="trlist.purpose==2"> 额度采购</template>
                                     <template v-if="trlist.purpose==3"> 退税划付</template>
                                     <template v-if="trlist.purpose==4"> 预付款</template>
                                     <template v-if="trlist.purpose==5"> 供货商划付</template>
@@ -361,7 +359,6 @@
                                     <td>{{n.payoutAmount/100 | currency '' }}</td>
                                     <td>
                                         <template v-if="n.purpose==1"> 补贴划付</template>
-                                        <template v-if="n.purpose==2"> 额度采购</template>
                                         <template v-if="n.purpose==3"> 退税划付</template>
                                         <template v-if="n.purpose==4"> 预付款</template>
                                         <template v-if="n.purpose==5"> 供货商划付</template>

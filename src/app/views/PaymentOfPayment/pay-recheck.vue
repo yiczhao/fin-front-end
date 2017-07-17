@@ -39,7 +39,6 @@
                                 <option value="3">补贴退税</option>
                                 <option value="10">税金提现</option>
                                 <option value="4">预付款</option>
-                                <option value="2">额度采购</option>
                             </select>
 
                             <select class="form-control" v-model="checkForm.status">
@@ -152,7 +151,6 @@
                                 </td>
                                 <td>
                                     <template v-if="n.purpose==1">补贴划付</template>
-                                    <template v-if="n.purpose==2">额度采购</template>
                                     <template v-if="n.purpose==3">退税划付</template>
                                     <template v-if="n.purpose==4">预付款</template>
                                     <template v-if="n.purpose==5">供货商划付</template>
@@ -245,7 +243,6 @@
                             <td  v-show="trlist.purpose==1||trlist.purpose==3">{{trlist.suspensionTaxAmount/100 | currency '' }}</td>
                             <td>
                                 <template v-if="trlist.purpose==1">补贴划付</template>
-                                <template v-if="trlist.purpose==2">额度采购</template>
                                 <template v-if="trlist.purpose==3">退税划付</template>
                                 <template v-if="trlist.purpose==4">预付款</template>
                                 <template v-if="trlist.purpose==5">供货商划付</template>

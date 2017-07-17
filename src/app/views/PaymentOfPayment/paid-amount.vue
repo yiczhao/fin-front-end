@@ -48,7 +48,6 @@
                                 </td>
                                 <td>
                                     <template v-if="trlist.purpose==1">补贴划付</template>
-                                    <template v-if="trlist.purpose==2">额度采购</template>
                                     <template v-if="trlist.purpose==3">补贴退税</template>
                                     <template v-if="trlist.purpose==4">预付款</template>
                                     <template v-if="trlist.purpose==5">供货商划付</template>

@@ -130,14 +130,6 @@ export default function (router) {
 				require(['./views/PaymentOfPayment/payment-details.vue'], resolve);
 			}
 		},
-		//备付金支出-额度采购
-		// '/limit-purchase-detail/:id':{
-		//     name:'limit-purchase-detail',
-		//      router_type:"payment",
-		//     component: function(resolve){
-		//         require(['./views/PaymentOfPayment/limit-purchase-detail.vue'],resolve);
-		//     }
-		// },
 		//备付金支出-退税管理
 		'/subsidy-management': {
 			name: 'subsidy-management',
