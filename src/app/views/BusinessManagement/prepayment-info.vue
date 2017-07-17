@@ -35,7 +35,7 @@
                         <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
 
                         <input type="text" class="form-control" v-model="defaultData.merchantName"
-                               placeholder="商户名">
+                               placeholder="账户名">
 
                         <select class="form-control" v-model="defaultData.status">
                             <option value="">请选择状态</option>
@@ -61,7 +61,7 @@
                 <div v-show="!!zdlists.length" v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
                     <div class="datatable-header" v-if="!!blanceList">
-                        <span>账户名：{{blanceList.merchantName}}</span>
+                        <span>预付款账户名：{{blanceList.merchantName}}</span>
                         <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
 
@@ -70,7 +70,7 @@
                             <thead>
                             <tr role="row">
                                 <th>订单号</th>
-                                <th>商户名称</th>
+                                <th>预付款账户名</th>
                                 <th>收入</th>
                                 <th>支出</th>
                                 <th>状态</th>
@@ -153,7 +153,7 @@
             >
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>商户名：</label>{{blanceList.merchantName}}
+                        <label>预付款账户名：</label>{{blanceList.merchantName}}
                     </div>
                     <div class="form-group">
                         <label>余额：</label><span>{{blanceList.balanceAmount/100 | currency ''}}</span>
@@ -179,7 +179,7 @@
                     <validator name="vali">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>商户名：</label>{{applyAdvancePay.merchantName}}
+                                <label>预付款账户名：</label>{{applyAdvancePay.merchantName}}
                             </div>
                             <div class="form-group">
                                 <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
