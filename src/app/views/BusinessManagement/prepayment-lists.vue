@@ -162,7 +162,7 @@
                     <validator name="vali">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>商户名：</label>{{applyAdvancePay.merchantName}}
+                                <label>预付款账户名：</label>{{applyAdvancePay.merchantName}}
                             </div>
                             <div class="form-group">
                                 <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
