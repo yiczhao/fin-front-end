@@ -46,7 +46,7 @@
                             <tr role="row">
                                 <th>活动ID</th>
                                 <th>活动名称</th>
-                                <th>三方名称</th>
+                                <th>银行名称</th>
                                 <th>合同编号</th>
                                 <th>分公司 </th>
                                 <th>起止时间</th>

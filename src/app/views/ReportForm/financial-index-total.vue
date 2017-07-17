@@ -10,9 +10,9 @@
                     <li data-ksa="target_branch"><a v-link="{name:'financial-index-branch'}">财务指标分析表（分）</a></li>
                     <li data-ksa="ranking"><a v-link="{name:'branch-financial-indicators'}">财务指标排行</a></li>
                     <li data-ksa="cost"><a v-link="{name:'expense-management'}">费用管理</a></li>
-                    <li data-ksa="target_manage"><a v-link="{name:'index-management'}">指标管理</a></li>
                     <li data-ksa="cost"><a v-link="{name:'departmental-expense-detail'}">部门费用明细</a></li>
-                    <li data-ksa="activation_detail"><a v-link="{name:'allopatry-distribution-total'}">异地激活收入成本分配总表</a></li>
+                    <li data-ksa="target_manage"><a v-link="{name:'index-management'}">指标管理</a></li>
+                    <li data-ksa="activation_detail"><a v-link="{name:'allopatry-distribution-total'}">激活收入成本分配表</a></li>
                 </ul>
                 <div class="heading">
                     <div class="heading-left"></div>

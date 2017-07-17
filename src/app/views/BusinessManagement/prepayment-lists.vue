@@ -16,24 +16,11 @@
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="预付款账户名">
 
-                                <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
+                                <select class="form-control" v-model="checkForm.subCompanyID">
                                     <option value="">全部分公司</option>
                                     <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
-                                </select>
-
-                                <select class="form-control" v-model="checkForm.cityID">
-                                    <option value="">全部城市</option>
-                                    <option v-for="n in cityList" v-text="n.name" :value="n.cityID"></option>
-                                </select>
-
-                                <select class="form-control" v-model="checkForm.status">
-                                    <option value="">账户状态</option>
-                                    <option value="0">停用</option>
-                                    <option value="1">正常</option>
-                                    <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                                 </select>
                         </form>
                     </div>
@@ -49,35 +36,19 @@
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>预付款账户名</th>
                                 <th>分公司</th>
-                                <th>城市</th>
                                 <th>余额</th>
-                                <th>状态</th>
                                 <th>操作</th>
                                 <th>开通时间</th>
-                                <th>联系人</th>
-                                <th>电话</th>
-                                <th>工作人员</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="(index,prepayment) in prepaymentList" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{prepayment.merchantOperationID}}</td>
                                 <td>{{prepayment.merchantName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
-                                <td>{{prepayment.cityName}}</td>
                                 <td>
                                     {{prepayment.balanceAmount/100 | currency ''}}
-                                </td>
-                                <td>
-                                    <template v-if="prepayment.status==0">
-                                        <span style="color:rgb(255,​ 0,​ 0);">停用</span>
-                                    </template>
-                                    <template v-if="prepayment.status==1">
-                                        <span style="color:rgb(0,​ 128,​ 0);">正常</span>
-                                    </template>
                                 </td>
                                 <td>
                                     <a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"
@@ -86,25 +57,14 @@
                                        data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
                                     <a data-ksa="advance_payment_merchant_manage.enable_disable" 
-                                       @click="show_waring(prepayment.id,0)" v-if="prepayment.status==0">启用</a>
-                                    <a data-ksa="advance_payment_merchant_manage.enable_disable" 
-                                       @click="show_waring(prepayment.id,1)" v-if="prepayment.status==1">停用</a>
+                                       @click="show_waring(prepayment.id)">删除</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>
-                                <td>{{prepayment.connectionPerson}}</td>
-                                <td>{{prepayment.connectionPhone}}</td>
-                                <td>{{prepayment.servicePerson}}</td>
                             </tr>
                             <tr role="row">
                                 <td>合计：</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
                                 <td>{{total/100 | currency ''}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -607,10 +567,9 @@
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getPrepaymentList(this.checkForm);
             },
-            show_waring(_id, status){
+            show_waring(_id){
                 this._id = _id;
-                this.isEnable = status;
-                status==0?this.dtitle='你确定启用该账户？':this.dtitle='你确定停用该账户？'
+                this.dtitle='你确定删除该账户？'
                 this.modal_waring = true;
             },
             change_status(){
@@ -624,14 +583,9 @@
                             if(res.data.code == 0 && this.isEnable == 0)
                                 {
                                     this.query()
-                                    dialogs('success', '已启用！')
+                                    dialogs('success', res.data.message)
                                     this.modal_waring = false;
                                 }
-                            else if (res.data.code == 0 && this.isEnable == 1) {
-                                    this.query()
-                                    dialogs('success', '已停用！')
-                                    this.modal_waring = false;
-                            }
                         })
             }
         },

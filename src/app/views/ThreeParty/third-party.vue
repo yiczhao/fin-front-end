@@ -1,12 +1,12 @@
 <template>
-    <index :title="'三方管理'"
-           :ptitle="'三方结算管理'"
+    <index :title="'银行结算管理'"
+           :ptitle="'银行管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
-                    <li class="active" data-ksa="third_party_account_manage" class="active"><a>三方管理</a></li>
+                    <li class="active" data-ksa="third_party_account_manage" class="active"><a>银行结算管理</a></li>
                     <li data-ksa="contract" ><a v-link="{name:'contract-management-info'}">合同管理</a></li>
                     <li data-ksa="activity_income_cost_manage"><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
                     <li data-ksa="tax_rate"><a v-link="{name:'taxRate'}">税率管理</a></li>
@@ -51,7 +51,7 @@
                             <thead>
                             <tr role="row">
                                 <th>账户ID</th>
-                                <th>三方名称</th>
+                                <th>银行名称</th>
                                 <th>分公司</th>
                                 <th>城市 </th>
                                 <th>合同结算金额</th>

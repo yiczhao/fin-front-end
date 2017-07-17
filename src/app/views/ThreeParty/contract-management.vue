@@ -1,6 +1,6 @@
 <template>
     <index :title="'合同管理'"
-           :ptitle="'三方结算管理'"
+           :ptitle="'银行管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
         <div class="content" slot="content">

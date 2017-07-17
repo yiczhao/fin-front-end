@@ -1,6 +1,6 @@
 <template>
     <index :title="'开票回款明细'"
-           :ptitle="'三方结算管理'"
+           :ptitle="'银行管理'"
            :p2title="'合同管理'"
            :hname="'third-party'"
            :h2name="'contract-management-info'"

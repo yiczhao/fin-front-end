@@ -53,12 +53,12 @@ module.exports = [
 		]
 	},
 	{
-		name: '三方结算管理',
+		name: '银行管理',
 		icon: ' icon-users4',
 		type: 'third',
 		ksa: 'third_party_account_manage',
 		sub_menu: [
-			{name: '三方结算管理', link: 'third-party', ksa: 'third_party_account_manage'}
+			{name: '银行管理', link: 'third-party', ksa: 'third_party_account_manage'}
 		]
 	},
 	{

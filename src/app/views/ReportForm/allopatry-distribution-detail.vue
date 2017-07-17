@@ -1,7 +1,7 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-    <index :title="'异地激活收入成本分配明细表'"
+    <index :title="'激活收入成本分配表'"
            :ptitle="'报表管理'"
-           :p2title="'异地激活收入成本分配总表'"
+           :p2title="'激活收入成本分配表'"
            :hname="'financial-index-total'"
            :h2name="'allopatry-distribution-total'"
            :isshow="'isshow'">

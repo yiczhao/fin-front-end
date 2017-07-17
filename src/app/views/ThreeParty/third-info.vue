@@ -1,6 +1,6 @@
 <template>
     <index :title="'账户明细'"
-           :ptitle="'三方管理'"
+           :ptitle="'银行管理'"
            :hname="'third-party'"
            :isshow="'isshow'">
         <div class="content" slot="content">

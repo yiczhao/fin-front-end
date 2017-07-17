@@ -1,7 +1,7 @@
 <template>
     <index :title="'新增合同'"
            :p2title="'合同管理'"
-           :ptitle="'三方结算管理'"
+           :ptitle="'银行管理'"
            :h2name="'contract-management-info'"
            :hname="'third-party'"
            :isshow="'isshow'">
