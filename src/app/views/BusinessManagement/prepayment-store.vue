@@ -11,17 +11,6 @@
                     <div class="heading-left">
                         <a class="btn btn-add addd-top" @click="addUser" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
                     </div>
-
-                    <div class="heading-right">
-                        <form class="form-inline manage-form">
-                                <input type="number" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                                <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商户名">
-                        </form>
-                    </div>
-
-                    <div class="heading-middle">
-                        <a class="btn btn-info add-top" @click="checkNew" data-ksa="advance_payment_merchant_store_manage.search">查询</a>
-                    </div>
                 </div>
 
                 <div style="margin-bottom: 20px;padding-left: 20px;font-size: 16px;">
@@ -33,24 +22,26 @@
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
                                 <tr role="row">
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
+                                    <th>商户号</th>
+                                    <th>商户简称</th>
+                                    <th>门店号</th>
+                                    <th>门店名称</th>
+                                    <th>商盟ID</th>
+                                    <th>商盟商户名称</th>
                                     <th>操作</th>
                                     <th>更新时间 </th>
-                                    <th>联系人</th>
-                                    <th>电话</th>
-                                    <th>更新人员</th>
                                 </tr>
                             </thead>
                         <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td><a @click="delstore(trlist.id)" data-ksa="advance_payment_merchant_store_manage.delete">删除</a></td>
                                 <td>{{trlist.updateAt | datetime}}</td>
-                                <td>{{trlist.connectionPerson}}</td>
-                                <td>{{trlist.connectionPhone}} </td>
-                                <td>{{trlist.updateBy}} </td>
                             </tr>
                         </tbody>
                     </table>
