@@ -34,7 +34,7 @@
 
                         <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">
 
-                        <input type="text" class="form-control" v-model="defaultData.merchantName"
+                        <input type="text" class="form-control" v-model="defaultData.accountName"
                                placeholder="账户名">
 
                         <select class="form-control" v-model="defaultData.status">
@@ -61,7 +61,7 @@
                 <div v-show="!!zdlists.length" v-show="!!zdlists.length" id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"
                      v-cloak>
                     <div class="datatable-header" v-if="!!blanceList">
-                        <span>预付款账户名：{{blanceList.merchantName}}</span>
+                        <span>预付款账户名：{{blanceList.accountName}}</span>
                         <span>账户余额：{{blanceList.balanceAmount/100 | currency ''}}元</span>
                     </div>
 
@@ -82,7 +82,7 @@
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td>{{trlist.orderNumber}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>{{trlist.accountName}}</td>
                                 <td>
                                     <template v-if="trlist.payType==2">-</template>
                                     {{trlist.incomeAmount/100 | currency ''}}
@@ -153,7 +153,7 @@
             >
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>预付款账户名：</label>{{blanceList.merchantName}}
+                        <label>预付款账户名：</label>{{blanceList.accountName}}
                     </div>
                     <div class="form-group">
                         <label>余额：</label><span>{{blanceList.balanceAmount/100 | currency ''}}</span>
@@ -179,7 +179,7 @@
                     <validator name="vali">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>预付款账户名：</label>{{applyAdvancePay.merchantName}}
+                                <label>预付款账户名：</label>{{applyAdvancePay.accountName}}
                             </div>
                             <div class="form-group">
                                 <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
@@ -356,7 +356,7 @@
                 defaultData: {
                     "advancePaymentMerchantID": '',
                     "orderNumber": '',
-                    "merchantName": '',
+                    "accountName": '',
                     "status": '',
                     "purpose": '',
                     "payType": '',
@@ -370,7 +370,7 @@
                 bankAccountList:[],
                 zdlists: [],
                 applyAdvancePay: {
-                    merchantName: "",//商户名
+                    accountName: "",//商户名
                     balanceAmount: "",//余额
                     advancePaymentMerchantId: "",//    预付款商户ID Integer
                     collectionBankName: "",//  开户行 String
@@ -447,7 +447,7 @@
                             if (response.data.code == 0) {
                                 this.$set('entity', response.data.data);
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
-                                this.applyAdvancePay.merchantName = this.entity.merchantName;//1
+                                this.applyAdvancePay.accountName = this.entity.accountName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
                                 this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
                                 this.applyAdvancePay.collectionAccountName = this.entity.collectionAccountName;//   收款账户    String   --6-1

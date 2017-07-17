@@ -16,7 +16,7 @@
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                                <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="预付款账户名">
+                                <input type="text" class="form-control" v-model="checkForm.accountName" placeholder="预付款账户名">
 
                                 <select class="form-control" v-model="checkForm.subCompanyID">
                                     <option value="">全部分公司</option>
@@ -45,7 +45,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="(index,prepayment) in prepaymentList" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{prepayment.merchantName}}</td>
+                                <td>{{prepayment.accountName}}</td>
                                 <td>{{prepayment.subCompanyName}}</td>
                                 <td>
                                     {{prepayment.balanceAmount/100 | currency ''}}
@@ -53,7 +53,7 @@
                                 <td>
                                     <a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"
                                        v-if="prepayment.status==1">预付</a>
-                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.merchantName}}"
+                                    <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.accountName}}"
                                        data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
                                     <a data-ksa="advance_payment_merchant_manage.enable_disable"
@@ -116,7 +116,7 @@
                     <validator name="vali">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>预付款账户名：</label>{{applyAdvancePay.merchantName}}
+                                <label>预付款账户名：</label>{{applyAdvancePay.accountName}}
                             </div>
                             <div class="form-group">
                                 <label>余额：</label><span style="color:red">{{applyAdvancePay.balanceAmount/100 | currency ''}}</span>
@@ -190,7 +190,7 @@
                     subCompanyID: "",
                     cityID: "",
                     merchantOperationID: "",
-                    merchantName: "",
+                    accountName: "",
                     status: "",
                     pageIndex: 1,
                     pageSize: 10,
@@ -207,7 +207,7 @@
                     subCompanyID: "",
                 },
                 applyAdvancePay: {
-                    merchantName: "",//商户名
+                    accountName: "",//商户名
                     balanceAmount: "",//余额
                     advancePaymentMerchantId: "",//    预付款商户ID Integer
                     collectionBankName: "",//  开户行 String
@@ -301,7 +301,7 @@
                             if (response.data.code == 0) {
                                 this.$set('entity', response.data.data);
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
-                                this.applyAdvancePay.merchantName = this.entity.merchantName;//1
+                                this.applyAdvancePay.accountName = this.entity.accountName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
                                 this.applyAdvancePay.payTypes = this.entity.payType;
                                 this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
