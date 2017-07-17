@@ -35,14 +35,14 @@
         },
         ready () {
             // 插入权限控制 JS
-//            if(!Cookie.get('KSAuthUserToken')){
-//                window.location.href = authUrl1
-//                return
-//            }
-//            if(KSAuthKit){
-//                KSAuthKit.off();
-//                KSAuthKit.on();
-//            }
+            if(!Cookie.get('KSAuthUserToken')){
+                window.location.href = authUrl1
+                return
+            }
+            if(KSAuthKit){
+                KSAuthKit.off();
+                KSAuthKit.on();
+            }
         },
         watch: {
             userData() {
