@@ -403,27 +403,6 @@ export default function (router) {
 				require(['./views/BusinessManagement/suspension-tax-account-detail.vue'], resolve);
 			}
 		},
-		/* 商户管理-额度采购 */
-		// '/business-limit/:id':{
-		//     name:'business-limit',
-		//     component: function(resolve){
-		//         require(['./views/BusinessManagement/business-limit.vue'],resolve);
-		//     }
-		// },
-		/* 商户管理-额度采购账户列表 */
-		// '/limitaccount-management/:limitPurchaseMerchantInfoID/:accountName':{
-		//     name:'limitaccount-management',
-		//     component: function(resolve){
-		//         require(['./views/BusinessManagement/limitaccount-management.vue'],resolve);
-		//     }
-		// },
-		/* 商户管理-额度采购账户明细 */
-		// '/limitaccount-info/:limitPurchaseMerchantInfoID/:accountName':{
-		//     name:'limitaccount-info',
-		//     component: function(resolve){
-		//         require(['./views/BusinessManagement/limitaccount-info.vue'],resolve);
-		//     }
-		// },
 		/* 商户管理-预付款 */
 		'/prepayment-lists/': {
 			name: 'prepayment-lists',
@@ -440,6 +419,14 @@ export default function (router) {
 				require(['./views/BusinessManagement/prepayment-store.vue'], resolve);
 			}
 		},
+		/* 商户管理-预付款门店管理 */
+        '/add-store/:addStoreId': {
+            name: 'add-store',
+            router_type: "business",
+            component: function (resolve) {
+                require(['./views/BusinessManagement/add-store.vue'], resolve);
+            }
+        },
 		/* 商户管理-预付款账户明细 */
 		'/prepayment-info/:id/:orderNumber': {
 			name: 'prepayment-info',

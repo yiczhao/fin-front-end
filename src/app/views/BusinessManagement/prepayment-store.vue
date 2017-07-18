@@ -9,7 +9,7 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add addd-top" @click="addUser" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
+                        <a class="btn btn-add addd-top" v-link="{'name':'add-store',params:{addStoreId:defaultData.id}}" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
                     </div>
                 </div>
 

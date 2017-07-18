@@ -258,6 +258,5 @@
         width: 20px;
         height: 20px;
         margin-bottom: -7px;
-        background: url(../../../../img/listshow.svg) center /80% 80% no-repeat;
     }
 </style>
