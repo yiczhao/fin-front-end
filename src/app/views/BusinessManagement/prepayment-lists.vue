@@ -52,7 +52,7 @@
                                 </td>
                                 <td>
                                     <a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"
-                                       v-if="prepayment.status==1">预付</a>
+                                       >预付</a>
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.accountName}}"
                                        data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
@@ -312,21 +312,9 @@
                                 this.applyAdvancePay.isCcb = this.entity.isCcb;
                                 this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
                                 this.applyAdvancePay.remarks = "";// 备注  String           --4
-
                                 //显示窗口
                                 this.saveerror = false;
-                                if(response.data.data.bankAccountID){
-                                    this.applyAdvancePay.bankAccountID = response.data.data.bankAccountID;
-                                }
-                                //判断是否有银行卡账号
-                                if (this.applyAdvancePay.collectionAccountNumber == null) {
-                                    dialogs('error', '该商户未设置划款账户，无法充值！');
-                                    return false;
-                                } else {
-                                    //显示窗口
-                                    this.saveerror = false;
-                                    this.modal_prepayment_recharge = true;
-                                }
+                                this.modal_prepayment_recharge = true;
                             }
                         });
             },
