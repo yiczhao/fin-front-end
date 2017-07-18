@@ -12,7 +12,7 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.add">新增</a>
+                        <a class="btn btn-add add-top" data-toggle="modal" @click="showMerchants()" data-ksa="advance_payment_merchant_manage.edit">新增</a>
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
@@ -56,9 +56,9 @@
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.accountName}}"
                                        data-ksa="advance_payment_merchant_store_manage.search">门店</a>
                                     <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
-                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"
+                                    <a data-ksa="advance_payment_merchant_manage.edit"
                                        @click="showMerchants(prepayment)">编辑</a>
-                                    <a data-ksa="advance_payment_merchant_manage.enable_disable"
+                                    <a data-ksa="advance_payment_merchant_manage.delete"
                                        @click="show_waring(prepayment.id)">删除</a>
                                 </td>
                                 <td>{{prepayment.startTime | datetime}}</td>
