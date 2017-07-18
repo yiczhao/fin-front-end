@@ -91,11 +91,11 @@
                 <!-- 添加商户 -->
                 <content-dialog
                         :show.sync="modal_prepayment_info" :type.sync="'infos'"
-                        :title.sync="'添加商户'" @kok="submit" @kcancel="modal_prepayment_info = false"
+                        :title.sync="addtitle" @kok="submit" @kcancel="modal_prepayment_info = false"
                 >
                     <div class="form-group">
                         <label class="payment-method"><i style="color:red;">*</i>分公司：</label>
-                        <select class="form-control" v-model="merchantInfo.subCompanyID">
+                        <select class="form-control" :disabled="addtitle==='编辑预付款账户'" v-model="merchantInfo.subCompanyID">
                             <option value="">全部分公司</option>
                             <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
@@ -189,6 +189,7 @@
         data(){
             this.model = model(this)
             return {
+                addtitle:'',
                 modal_prepayment_info: false,
                 modal_prepayment_recharge: false,
                 modal_waring: false,
@@ -267,12 +268,14 @@
             //显示选择商户窗口
             showMerchants(list) {
                 if(list){
+                    this.addtitle='编辑预付款账户';
                     this.merchantInfo={
                         id:list.id,
                         accountName: list.accountName,
                         subCompanyID: list.subCompanyID
                     }
                 }else{
+                    this.addtitle='新增预付款账户';
                     this.merchantInfo={
                         id:'',
                         accountName: "",
