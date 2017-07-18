@@ -4,7 +4,7 @@
   "description": "Fin",
   "main": "index.js",
   "scripts": {
-    "pro": "NODE_ENV=pro webpack -p",
+    "pro": "webpack -p",
     "dev": "node build/develop.js",
     "devmac": "npm run build & npm run proxymock --p",
     "build": "webpack --watch",

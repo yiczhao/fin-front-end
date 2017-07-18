@@ -94,6 +94,7 @@
                 city:[],
                 companylists:[],
                 defaultData:{
+                    id:'',
                     subCompanyID: '',
                     cityId: '',
                     merchantOperationID:"",
