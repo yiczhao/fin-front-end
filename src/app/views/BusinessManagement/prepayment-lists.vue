@@ -385,7 +385,7 @@
                     payType:this.applyAdvancePay.payTypes,
                     bankAccountID: this.applyAdvancePay.bankAccountID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
-                    merchantId: this.applyAdvancePay.merchantId,
+                    merchantID: this.applyAdvancePay.merchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks
                 }
