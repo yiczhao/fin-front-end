@@ -93,8 +93,8 @@
                 pageall:1,
                 city:[],
                 companylists:[],
+                id:'',
                 defaultData:{
-                    id:'',
                     subCompanyID: '',
                     cityId: '',
                     merchantOperationID:"",
@@ -149,7 +149,7 @@
                     return;
                 }
                 let data = {
-                    'id':this.defaultData.id,
+                    'id':this.id,
                     'merchantIDs':[]
                 }
                 _.map(this.checkedLis,(val)=>{
@@ -204,7 +204,7 @@
         },
         ready() {
             this.getClist();
-            (this.$route.params.addStoreId==':addStoreId')?this.defaultData.id='' :this.defaultData.id=this.$route.params.addStoreId;
+            (this.$route.params.addStoreId==':addStoreId')?this.id='' :this.id=this.$route.params.addStoreId;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
         },
