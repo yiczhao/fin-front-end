@@ -37,7 +37,7 @@
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
-                                <td>{{trlist.backendStoreName}}</td>
+                                <td>{{trlist.backendName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.merchantName}}</td>
                                 <td><a @click="delstore(trlist.id)" data-ksa="advance_payment_merchant_store_manage.delete">删除</a></td>
