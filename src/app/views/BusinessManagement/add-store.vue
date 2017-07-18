@@ -114,23 +114,33 @@
         computed:{
             checkAll(){
                 let clength=0;
-                this.merchantList.map((value)=>{
+                this.zdlists.map((value)=>{
                     (!value.ischeck)?clength++:null;
                 })
                 return !clength
             }
         },
         methods: {
-            checkLi(e,n){
-                if(!e.target.classList.length){
-                    this.removeIds.push(n.merchantID);
-                    e.target.classList.add('check-li');
-                }
-                else{
-                    _.remove(this.removeIds, function(e) {
-                        return e==n.merchantID;
+            chooseAll(){
+                this.orderIDs=[];
+                let cloneData=_.cloneDeep(this.zdlists);
+                cloneData.map((value)=>{
+                    if(this.checkAll){
+                        value.ischeck=false;
+                    }else {
+                        this.checkedLis.push(value.id);
+                        value.ischeck = true;
+                    }
+                })
+                this.zdlists=cloneData;
+            },
+            checked(bool,_id){
+                if(!bool){
+                    this.checkedLis.push(_id);
+                }else{
+                    _.remove(this.checkedLis, function(n) {
+                        return n==_id;
                     })
-                    e.target.classList.remove('check-li');
                 }
             },
             submit() {
@@ -143,7 +153,7 @@
                     'merchantIDs':[]
                 }
                 _.map(this.checkedLis,(val)=>{
-                    data.merchantIDs.push(val.merchantID+"");
+                    data.merchantIDs.push(val+"");
                 })
                 this.model.store_add(data).then((response)=>{
                     if(response.data.code == 0){
@@ -152,28 +162,6 @@
                         this.modal_add = false;
                     }
                 });
-            },
-            chooseAll(){
-                this.checkedIds=[];
-                let cloneData=_.cloneDeep(this.merchantList);
-                cloneData.map((value)=>{
-                    if(this.checkAll){
-                        value.ischeck=false;
-                    }else{
-                        this.checkedIds.push(value);
-                        value.ischeck=true;
-                    }
-                })
-                this.merchantList=cloneData;
-            },
-            checked(n){
-                if(!n.ischeck){
-                    this.checkedIds.push(n);
-                }else{
-                    _.remove(this.checkedIds, function(e) {
-                        return e.merchantID==n.merchantID;
-                    })
-                }
             },
             // *** 请求账户列表数据
             getZlists(data){
