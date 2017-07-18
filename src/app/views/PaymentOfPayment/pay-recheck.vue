@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="heading-right">
-                        <form class="form-inline manage-form"> 
+                        <form class="form-inline manage-form">
                             <select class="form-control" v-model="checkForm.payType">
                                 <option value="">全部付款方式</option>
                                 <option value="1">备付金账户</option>
@@ -123,14 +123,13 @@
                                 <td>{{n.subCompanyName}}</td>
                                 <td>{{n.cityName }}</td>
                                 <td>{{n.payAccount }}</td>
-                                <td>{{n.backendMerchantCode}}</td>
-                                <td>{{n.backendMerchantName}}</td>
-                                <td>{{n.backendStoreCode}}</td>
-                                <td>{{n.backendStoreName}}</td>
-                                <td>{{n.merchantOperationID }}</td>
-                                <td>
-                                    <span v-if="!n.backendStoreCode">{{n.merchantName}}</span>
-                                </td>
+
+                                <td><span v-if="n.purpose==4">{{n.backendMerchantCode}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendMerchantName}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendStoreCode}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendStoreName}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.merchantOperationID }}</span></td>
+                                <td><span v-if="!n.backendStoreCode && !n.purpose==4">{{n.merchantName}}</span></td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.collectionBankName }}</td>
