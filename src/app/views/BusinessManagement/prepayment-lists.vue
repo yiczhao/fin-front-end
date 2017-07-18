@@ -303,15 +303,10 @@
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
                                 this.applyAdvancePay.accountName = this.entity.accountName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
-                                this.applyAdvancePay.payTypes = this.entity.payType;
-                                this.applyAdvancePay.payAccount = this.entity.payAccount;//  付款账户    String  --5
-                                this.applyAdvancePay.collectionAccountName = this.entity.collectionAccountName;//   收款账户    String   --6-1
-                                this.applyAdvancePay.collectionAccountNumber = this.entity.collectionAccountNumber;// 收款账号    String   --6-2
-                                this.applyAdvancePay.collectionBankName = this.entity.collectionBankName;//  开户行 String            --6-3
-                                this.applyAdvancePay.collectionBankNumber = this.entity.collectionBankNumber;//    提入行号    String    --6-4
-                                this.applyAdvancePay.isCcb = this.entity.isCcb;
-                                this.applyAdvancePay.advancePaymentAmount = "";//    预付金额    Integer   --3
-                                this.applyAdvancePay.remarks = "";// 备注  String           --4
+                                this.applyAdvancePay.advancePaymentAmount = '';
+                                this.applyAdvancePay.remarks = '';
+                                this.applyAdvancePay.payTypes = '';
+                                this.applyAdvancePay.bankAccountID='';
                                 //显示窗口
                                 this.saveerror = false;
                                 this.modal_prepayment_recharge = true;
@@ -390,17 +385,17 @@
                 this.modal_prepayment_recharge = false;
             },
             changePayType(e){
+                this.applyAdvancePay.bankAccountID='';
                 if(this.applyAdvancePay.payTypes=='1'){
-                    if(this.applyAdvancePay.collectionAccountName == null
-                                                      || this.applyAdvancePay.collectionAccountNumber == null
-                                                      || this.applyAdvancePay.collectionBankName == null
-                                                      || this.applyAdvancePay.isCcb == null
-                                                      || (this.applyAdvancePay.isCcb != '1' && this.applyAdvancePay.collectionBankNumber == null)){
-                         dialogs('error', '该商户划款账户未设置或信息不全，无法充值！');
-                         e.target.value = '5';
-                         this.applyAdvancePay.payTypes = '5';
-                         return;
-                     }
+                    this.model.changeBnakInfo(this.applyAdvancePay.advancePaymentMerchantId)
+                        .then((response)=>{
+                            if (response.data.code == 0) {
+                                this.applyAdvancePay.collectionAccountName =response.data.data.accountName;
+                                this.applyAdvancePay.collectionAccountNumber = response.data.data.accountNumber;//1
+                                this.applyAdvancePay.collectionBankName = response.data.data.bankName;//2
+                                this.applyAdvancePay.collectionBankNumber = response.data.data.bankNumber;
+                            }
+                        });
                 }
             },
             checkNew(){

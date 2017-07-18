@@ -1249,6 +1249,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.advancePaymentMerchant_total = './advancePaymentMerchant/total?';
+    /**
+     * @description 预付停用启用接口地址
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.changeBankInfo = './advancePaymentMerchant/chargeBankInfo/';
 
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**
