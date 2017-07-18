@@ -53,11 +53,11 @@
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td><label><input type="checkbox"  @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck">{{trlist.id}}</label></td>
                                 <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
-                                <td>{{trlist.backendStoreName}}</td>
+                                <td>{{trlist.backendName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>
                                     <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
