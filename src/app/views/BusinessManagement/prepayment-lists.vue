@@ -134,7 +134,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                <select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 30%;display: inline-block;" @change="changePayType">
+                                <select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 60%;display: inline-block;">
                                     <option value="">请选择付款方式</option>
                                     <option value="1">备付金账户</option>
                                     <option value="5">网银转账</option>
@@ -142,12 +142,19 @@
                             </div>
                             <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
-                                <select class="form-control" v-model="applyAdvancePay.bankAccountID" style="width: 30%;display: inline-block;">
+                                <select class="form-control" v-model="applyAdvancePay.bankAccountID" style="width: 60%;display: inline-block;">
                                     <option value="">请选择付款账号</option>
                                     <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
                                 </select>
                             </div>
                             <div class="form-group" v-show="applyAdvancePay.payTypes==1">
+                                <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                <select class="form-control" @change="changePayType" v-model="applyAdvancePay.merchantId" style="width: 60%;display: inline-block;">
+                                    <option value="">请选择收款信息</option>
+                                    <option v-for="n in merchantIdList" v-text="n.name" :value="n.id"></option>
+                                </select>
+                            </div>
+                            <div class="form-group" v-show="!!applyAdvancePay.merchantId">
                                 <label>收款信息：</label>
                                 <br/>
                                 <div class="collectionAccount-bgcolor">
@@ -199,6 +206,7 @@
                 bankAccountList: [],
                 cityList: [],
                 shCity: [],
+                merchantIdList: [],
                 prepaymentList: [],
                 merchantList: [],
                 merchantInfo: {
@@ -220,6 +228,7 @@
                     collectionAccountNumber: "",// 收款账号    String
                     advancePaymentAmount: "",//    预付金额    Integer
                     remarks: "",// 备注  String
+                    merchantId:"",
                     merchantAccountID: ""//商户账户ID   Integer
                 },
                 entity: {},
@@ -300,6 +309,7 @@
                         .then((response)=>{
                             if (response.data.code == 0) {
                                 this.$set('entity', response.data.data);
+                                this.$set('merchantIdList', this.entity.list)
                                 this.applyAdvancePay.advancePaymentMerchantId = this.entity.id;
                                 this.applyAdvancePay.accountName = this.entity.accountName;//1
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
@@ -307,6 +317,7 @@
                                 this.applyAdvancePay.remarks = '';
                                 this.applyAdvancePay.payTypes = '';
                                 this.applyAdvancePay.bankAccountID='';
+                                this.applyAdvancePay.merchantId='';
                                 //显示窗口
                                 this.saveerror = false;
                                 this.modal_prepayment_recharge = true;
@@ -385,9 +396,8 @@
                 this.modal_prepayment_recharge = false;
             },
             changePayType(e){
-                this.applyAdvancePay.bankAccountID='';
-                if(this.applyAdvancePay.payTypes=='1'){
-                    this.model.changeBnakInfo(this.applyAdvancePay.advancePaymentMerchantId)
+                if(!!this.applyAdvancePay.merchantId){
+                    this.model.changeBnakInfo(this.applyAdvancePay.merchantId)
                         .then((response)=>{
                             if (response.data.code == 0) {
                                 this.applyAdvancePay.collectionAccountName =response.data.data.accountName;
