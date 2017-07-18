@@ -89,6 +89,7 @@
                                 <th>状态</th>
                                 <th>操作</th>
                                 <th>最新更新时间</th>
+                                <th>确认时间</th>
                                 <th>转账配置</th>
                             </tr>
                             </thead>
@@ -136,6 +137,7 @@
                                     <a v-if="trList.existInBackend == 0"  @click="modal_update(trList.id)" href="javascript:void(0);" data-ksa="merchant_account_manage.update">更新</a>
                                 </td>
                                 <td>{{trList.createAt | datetime}}</td>
+                                <td>{{trList.confirmTime | datetime}}</td>
                                 <!--确认按钮-->
                                 <td>
                                     <a v-if="trList.expired!=2" v-link="{name:'merchant-account-transConf',params:{'transConfMerchantID':trList.id, 'transConfMerchantOperationID':trList.merchantOperationID}}" data-ksa="merchant_account_manage.update">配置</a>
