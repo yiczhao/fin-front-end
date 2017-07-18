@@ -183,7 +183,6 @@
             },
             //获取城市数据
             getCity(_id){
-                this.shdata.cityId='';
                 let data={
                     'subCompanyID':_id
                 }
