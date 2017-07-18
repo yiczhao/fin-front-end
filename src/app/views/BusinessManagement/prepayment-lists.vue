@@ -104,6 +104,7 @@
                         <label>预付款账户名：</label>
                         <input  type="text" class="form-control"
                                v-model="merchantInfo.accountName"
+                                maxlength="30"
                                 placeholder="30个中文字符"/>
                     </div>
                 </content-dialog>
@@ -384,6 +385,7 @@
                     payType:this.applyAdvancePay.payTypes,
                     bankAccountID: this.applyAdvancePay.bankAccountID,
                     advancePaymentMerchantID: this.applyAdvancePay.advancePaymentMerchantId,
+                    merchantId: this.applyAdvancePay.merchantId,
                     advancePaymentAmount: accMul(this.applyAdvancePay.advancePaymentAmount,100),
                     remarks: this.applyAdvancePay.remarks
                 }
