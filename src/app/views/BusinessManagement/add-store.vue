@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                 <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                    <td><label><input type="checkbox"  @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck">{{trlist.id}}</label></td>
+                                    <td><label><input type="checkbox"  @click="checked(trlist.ischeck,trlist.merchantID)" v-model="trlist.ischeck">{{trlist.merchantID}}</label></td>
                                     <td>{{trlist.backendMerchantCode}}</td>
                                     <td>{{trlist.backendMerchantName}}</td>
                                     <td>{{trlist.backendStoreCode}}</td>
@@ -84,7 +84,7 @@
                 storeName:'',
                 defaultData:{
                     merchantOperationID:"",
-                    subCompanyID:"",
+                    companyId:"",
                     merchantName:"",
                     backendMerchantCode:"",
                     backendMerchantName:"",
@@ -114,7 +114,7 @@
                     if(this.checkAll){
                         value.ischeck=false;
                     }else {
-                        this.checkedLis.push(value.id);
+                        this.checkedLis.push(value.merchantID);
                         value.ischeck = true;
                     }
                 })
@@ -181,7 +181,7 @@
         ready() {
             (this.$route.params.addStoreId==':addStoreId')?this.id='' :this.id=this.$route.params.addStoreId;
             (this.$route.params.addStoreName==':addStoreName')?this.storeName='' :this.storeName=this.$route.params.addStoreName;
-            (this.$route.params.addStoreCompany==':addStoreCompany')?this.defaultData.subCompanyID='' :this.defaultData.subCompanyID=this.$route.params.addStoreCompany;
+            (this.$route.params.addStoreCompany==':addStoreCompany')?this.defaultData.companyId='' :this.defaultData.companyId=this.$route.params.addStoreCompany;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
         }
     }
