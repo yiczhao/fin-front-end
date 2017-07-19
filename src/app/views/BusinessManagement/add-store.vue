@@ -13,7 +13,7 @@
                         <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
                         <input type="text" class="form-control" v-model="defaultData.backendMerchantName" placeholder="商户简称">
                         <input type="text" class="form-control" v-model="defaultData.backendStoreCode" placeholder="门店号">
-                        <input type="text" class="form-control" v-model="defaultData.backendStoreName" placeholder="门店名称">
+                        <input type="text" class="form-control" v-model="defaultData.backendName" placeholder="门店名称">
                         <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商盟ID" v-limitnumber="defaultData.merchantOperationID">
                         <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商盟商户名称">
                     </div>
@@ -24,32 +24,34 @@
 
                 <div v-show="zdlists.length>0" class="dataTables_wrapper no-footer">
                     <div class="datatable-scroll">
-                        <table id="table1" class="table datatable-selection-single dataTable no-footer">
-                            <thead>
-                            <tr role="row">
-                                <th><label><input type="checkbox"  v-model="checkAll" @click="chooseAll">全选</label></th>
-                                <th>商户号</th>
-                                <th>商户简称</th>
-                                <th>门店号</th>
-                                <th>门店名称</th>
-                                <th>商盟ID</th>
-                                <th>商盟商户名称</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td><label><input type="checkbox"  @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck">{{trlist.id}}</label></td>
-                                <td>{{trlist.backendMerchantCode}}</td>
-                                <td>{{trlist.backendMerchantName}}</td>
-                                <td>{{trlist.backendStoreCode}}</td>
-                                <td>{{trlist.backendName}}</td>
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>
-                                    <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div style="max-height:1200px;    overflow: auto;">
+                            <table id="table1" class="table datatable-selection-single dataTable no-footer">
+                                <thead>
+                                <tr role="row">
+                                    <th><label><input type="checkbox"  v-model="checkAll" @click="chooseAll">全选</label></th>
+                                    <th>商户号</th>
+                                    <th>商户简称</th>
+                                    <th>门店号</th>
+                                    <th>门店名称</th>
+                                    <th>商盟ID</th>
+                                    <th>商盟商户名称</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                    <td><label><input type="checkbox"  @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck">{{trlist.id}}</label></td>
+                                    <td>{{trlist.backendMerchantCode}}</td>
+                                    <td>{{trlist.backendMerchantName}}</td>
+                                    <td>{{trlist.backendStoreCode}}</td>
+                                    <td>{{trlist.backendName}}</td>
+                                    <td>{{trlist.merchantOperationID}}</td>
+                                    <td>
+                                        <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div style="margin:20px;overflow:hidden">
                             <a style="float:right;margin-left:20px" class="btn btn-info add-top" @click="submit()">确认</a>
                             <a style="float:right" class="btn btn-default"
@@ -86,7 +88,8 @@
                     backendMerchantCode:"",
                     backendMerchantName:"",
                     backendStoreCode:"",
-                    backendStoreName:"",
+                    backendName:"",
+                    isStore:0
                 },
                 zdlists:[],
                 merchantList:[],
@@ -149,7 +152,7 @@
             getZlists(data){
                 this.checkedLis=[];
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                this.model.prepayment_store(data)
+                this.$common_model.getmerchant_list(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
                         (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
