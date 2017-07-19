@@ -412,7 +412,7 @@ export default function (router) {
 			}
 		},
 		/* 商户管理-预付款门店管理 */
-		'/prepayment-store/:id/:storeMerchantName': {
+		'/prepayment-store/:id/:storeMerchantName/:storeMerchantsubCompanyId': {
 			name: 'prepayment-store',
 			router_type: "business",
 			component: function (resolve) {
@@ -420,7 +420,7 @@ export default function (router) {
 			}
 		},
 		/* 商户管理-预付款门店管理 */
-        '/add-store/:addStoreId/:addStoreName': {
+        '/add-store/:addStoreId/:addStoreName/:addStoreCompany': {
             name: 'add-store',
             router_type: "business",
             component: function (resolve) {

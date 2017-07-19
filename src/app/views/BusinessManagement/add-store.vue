@@ -84,6 +84,7 @@
                 storeName:'',
                 defaultData:{
                     merchantOperationID:"",
+                    subCompanyID:"",
                     merchantName:"",
                     backendMerchantCode:"",
                     backendMerchantName:"",
@@ -152,6 +153,15 @@
             getZlists(data){
                 this.checkedLis=[];
                 if(sessionStorage.getItem('isHttpin')==1)return;
+                if( !data.merchantOperationID
+                    &&!data.merchantName
+                    &&!data.backendMerchantCode
+                    &&!data.backendMerchantName
+                    &&!data.backendStoreCode
+                    &&!data.backendName){
+                    dialogs('info','至少输入一个查询条件！')
+                    return;
+                }
                 this.$common_model.getmerchant_list(data)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -171,6 +181,7 @@
         ready() {
             (this.$route.params.addStoreId==':addStoreId')?this.id='' :this.id=this.$route.params.addStoreId;
             (this.$route.params.addStoreName==':addStoreName')?this.storeName='' :this.storeName=this.$route.params.addStoreName;
+            (this.$route.params.addStoreCompany==':addStoreCompany')?this.defaultData.subCompanyID='' :this.defaultData.subCompanyID=this.$route.params.addStoreCompany;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
         }
     }

@@ -9,7 +9,9 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add addd-top" v-link="{'name':'add-store',params:{addStoreId:defaultData.id,addStoreName:merchantName}}" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
+                        <a class="btn btn-add addd-top" v-link="{'name':'add-store',params:{
+                        addStoreId:defaultData.id,addStoreName:merchantName,addStoreCompany:subCompanyId
+                        }}" data-ksa="advance_payment_merchant_store_manage.add">添加</a>
                     </div>
                 </div>
 
@@ -155,6 +157,7 @@
                 modal_waring: false,
                 pageall:1,
                 merchantName:'',
+                subCompanyId:'',
                 city:[],
                 companylists:[],
                 defaultData:{
@@ -373,6 +376,7 @@
             var vm=this;
             (vm.$route.params.id!=':id')?vm.defaultData.id=vm.$route.params.id:null;
             (vm.$route.params.storeMerchantName!=':storeMerchantName')?vm.merchantName=vm.$route.params.storeMerchantName:null;
+            (vm.$route.params.storeMerchantsubCompanyId!=':storeMerchantsubCompanyId')?vm.subCompanyId=vm.$route.params.storeMerchantsubCompanyId:null;
             vm.getClist();
             (back_json.isback&&back_json.fetchArray(vm.$route.path)!='')?vm.defaultData=back_json.fetchArray(vm.$route.path):null;
             vm.initList();
