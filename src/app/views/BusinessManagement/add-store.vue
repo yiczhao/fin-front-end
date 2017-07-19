@@ -17,7 +17,7 @@
                             <option value="">请选择分公司</option>
                             <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
-                        <select class="form-control" v-model="defaultData.cityId">
+                        <select class="form-control" v-model="defaultData.cityID">
                             <option value="">全部城市</option>
                             <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
                         </select>
@@ -96,7 +96,7 @@
                 id:'',
                 defaultData:{
                     subCompanyID: '',
-                    cityId: '',
+                    cityID: '',
                     merchantOperationID:"",
                     merchantName:"",
                     backendMerchantCode:"",
@@ -184,7 +184,7 @@
             },
             //获取城市数据
             getCity(_id){
-                this.defaultData.cityId='';
+                this.defaultData.cityID='';
                 let data={
                     'subCompanyID':_id
                 }
