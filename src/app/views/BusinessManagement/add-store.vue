@@ -51,7 +51,7 @@
                             </tbody>
                         </table>
                         <div style="margin:20px;overflow:hidden">
-                            <a style="float:right;margin-left:20px" class="btn btn-add add-top" @click="submit()">添加门店</a>
+                            <a style="float:right;margin-left:20px" class="btn btn-info add-top" @click="submit()">确认</a>
                             <a style="float:right" class="btn btn-default"
                                v-link="{'name':'prepayment-store',params:{'id':id,'storeMerchantName':storeName}}">取消</a>
                         </div>
