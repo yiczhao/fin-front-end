@@ -101,7 +101,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>预付款账户名：</label>
+                        <label><i style="color:red;">*</i>预付款账户名：</label>
                         <input  type="text" class="form-control"
                                v-model="merchantInfo.accountName"
                                 maxlength="30"
@@ -257,6 +257,10 @@
         },
         methods: {
             submit() {
+                if(!this.merchantInfo.subCompanyID||!this.merchantInfo.accountName){
+                    dialogs('info','请完善信息！')
+                    return
+                }
                 this.model.insertBatch(this.merchantInfo).then((response)=>{
                     // *** 判断请求是否成功如若
                     if (response.data.code == 0) {
