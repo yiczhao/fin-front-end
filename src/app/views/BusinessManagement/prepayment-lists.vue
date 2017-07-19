@@ -133,22 +133,22 @@
                             <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
                                       v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                             </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="payment-method"><i style="color:red;">*</i>付款方式：</label>-->
+                                <!--<select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 60%;display: inline-block;">-->
+                                    <!--<option value="">请选择付款方式</option>-->
+                                    <!--<option value="1">备付金账户</option>-->
+                                    <!--<option value="5">网银转账</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
                             <div class="form-group">
-                                <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
-                                <select class="form-control" v-model="applyAdvancePay.payTypes" style="width: 60%;display: inline-block;">
-                                    <option value="">请选择付款方式</option>
-                                    <option value="1">备付金账户</option>
-                                    <option value="5">网银转账</option>
-                                </select>
-                            </div>
-                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
                                 <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
                                 <select class="form-control" v-model="applyAdvancePay.bankAccountID" style="width: 60%;display: inline-block;">
                                     <option value="">请选择付款账号</option>
                                     <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
                                 </select>
                             </div>
-                            <div class="form-group" v-show="applyAdvancePay.payTypes==1">
+                            <div class="form-group">
                                 <label class="payment-method"><i style="color:red;">*</i>收款信息：</label>
                                 <select class="form-control" @change="changePayType" v-model="applyAdvancePay.merchantId" style="width: 60%;display: inline-block;">
                                     <option value="">请选择收款信息</option>
@@ -224,7 +224,7 @@
                     collectionBankNumber: "",//    提入行号    String
                     bankAccountID: "",//    付款账户ID   Integer
                     merchantID: "",//  商户ID    Integer
-                    payTypes: "", // 付款方式
+                    payTypes: "1", // 付款方式
                     payAccount: "",//  付款账户    String
                     collectionAccountName: "",//   收款账户    String
                     collectionAccountNumber: "",// 收款账号    String
@@ -323,7 +323,7 @@
                                 this.applyAdvancePay.balanceAmount = this.entity.balanceAmount;//2
                                 this.applyAdvancePay.advancePaymentAmount = '';
                                 this.applyAdvancePay.remarks = '';
-                                this.applyAdvancePay.payTypes = '';
+                                this.applyAdvancePay.payTypes = '1';
                                 this.applyAdvancePay.bankAccountID='';
                                 this.applyAdvancePay.merchantId='';
                                 //显示窗口
@@ -375,14 +375,14 @@
             },
             subApplyAdvancePay() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                 if(this.applyAdvancePay.payTypes==''){
-                    dialogs('info','请选择付款方式！');
-                                      return;
-                                   }
                 this.saveerror = true;
                 if (this.$vali.invalid && this.saveerror)return;
-                if(this.applyAdvancePay.payTypes=='1'&& this.applyAdvancePay.bankAccountID==''){
+                if(!this.applyAdvancePay.bankAccountID){
                     dialogs('info','请选择付款账户！');
+                    return;
+                }
+                if(!this.applyAdvancePay.merchantID){
+                    dialogs('info','请选择收款信息！');
                     return;
                 }
                 let entity = {
