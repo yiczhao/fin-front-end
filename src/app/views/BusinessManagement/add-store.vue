@@ -165,6 +165,7 @@
             },
             // *** 请求账户列表数据
             getZlists(data){
+                this.checkedLis=[];
                 if(sessionStorage.getItem('isHttpin')==1)return;
                     this.model.prepayment_store(data)
                             .then((response)=>{
@@ -183,6 +184,7 @@
             },
             //获取城市数据
             getCity(_id){
+                this.defaultData.cityId='';
                 let data={
                     'subCompanyID':_id
                 }
@@ -203,6 +205,7 @@
         },
         ready() {
             this.getClist();
+            this.getCity();
             (this.$route.params.addStoreId==':addStoreId')?this.id='' :this.id=this.$route.params.addStoreId;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
             this.initList();
