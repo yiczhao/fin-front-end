@@ -149,7 +149,7 @@
                                 </select>
                             </div>
                             <div class="form-group" v-show="applyAdvancePay.payTypes==1">
-                                <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                                <label class="payment-method"><i style="color:red;">*</i>收款信息：</label>
                                 <select class="form-control" @change="changePayType" v-model="applyAdvancePay.merchantId" style="width: 60%;display: inline-block;">
                                     <option value="">请选择收款信息</option>
                                     <option v-for="n in merchantIdList" v-text="n.name" :value="n.id"></option>

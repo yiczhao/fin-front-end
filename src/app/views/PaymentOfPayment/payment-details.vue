@@ -92,8 +92,12 @@
                             <tr role="row">
                                 <th><input type="checkbox"  v-model="checkAll" @click="chooseAll"></th>
                                 <th>订单号</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>划付金额</th>
                                 <th>暂扣税金</th>
                                 <th>付款账户</th>
@@ -122,10 +126,12 @@
                                 <td>
                                     <span>{{n.orderNumber}}</span>
                                 </td>
-                                <td>
-                                    {{n.merchantOperationID}}
-                                </td>
-                                <td>{{n.merchantName}}</td>
+                                <td><span v-if="n.purpose==4">{{n.backendMerchantCode}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendMerchantName}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendStoreCode}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendStoreName}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.merchantOperationID }}</span></td>
+                                <td><span v-if="!n.backendStoreCode && !n.purpose==4">{{n.merchantName}}</span></td>
                                 <td>
                                     {{n.payoutAmount/100 | currency '' }}
                                 </td>
@@ -197,6 +203,10 @@
                         </template>
                         <tr>
                             <td>合计：</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
