@@ -122,7 +122,7 @@
         },
         methods: {
             chooseAll(){
-                this.orderIDs=[];
+                this.checkedLis=[];
                 let cloneData=_.cloneDeep(this.zdlists);
                 cloneData.map((value)=>{
                     if(this.checkAll){
