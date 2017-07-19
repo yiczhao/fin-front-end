@@ -8,19 +8,8 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <div class="heading">
-                    <div class="heading-left">
-                        <a class="btn btn-add add-top" @click="submit()">添加门店</a>
-                    </div>
 
                     <div class="heading-right">
-                        <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
-                            <option value="">请选择分公司</option>
-                            <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
-                        </select>
-                        <select class="form-control" v-model="defaultData.cityID">
-                            <option value="">全部城市</option>
-                            <option v-for="(index,n) in city" v-text="n.name" :value="n.cityID"></option>
-                        </select>
                         <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
                         <input type="text" class="form-control" v-model="defaultData.backendMerchantName" placeholder="商户简称">
                         <input type="text" class="form-control" v-model="defaultData.backendStoreCode" placeholder="门店号">
@@ -37,23 +26,19 @@
                     <div class="datatable-scroll">
                         <table id="table1" class="table datatable-selection-single dataTable no-footer">
                             <thead>
-                                <tr role="row">
-                                    <th><label><input type="checkbox"  v-model="checkAll" @click="chooseAll">全选</label></th>
-                                    <th>分公司</th>
-                                    <th>城市</th>
-                                    <th>商户号</th>
-                                    <th>商户简称</th>
-                                    <th>门店号</th>
-                                    <th>门店名称</th>
-                                    <th>商盟ID</th>
-                                    <th>商盟商户名称</th>
-                                </tr>
+                            <tr role="row">
+                                <th><label><input type="checkbox"  v-model="checkAll" @click="chooseAll">全选</label></th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
+                            </tr>
                             </thead>
-                        <tbody>
+                            <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
                                 <td><label><input type="checkbox"  @click="checked(trlist.ischeck,trlist.id)" v-model="trlist.ischeck">{{trlist.id}}</label></td>
-                                <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
@@ -63,22 +48,21 @@
                                     <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                    </div>
-
-                    <div class="datatable-bottom">
-                       <div class="right">
-                            <page :all="pageall"
-                                  :cur.sync="defaultData.pageIndex"
-                                  :page_size.sync="defaultData.pageSize">
-                            </page>
-                       </div>
+                            </tbody>
+                        </table>
+                        <div style="margin:20px;overflow:hidden">
+                            <a style="float:right;margin-left:20px" class="btn btn-add add-top" @click="submit()">添加门店</a>
+                            <a style="float:right" class="btn btn-default"
+                               v-link="{'name':'prepayment-store',params:{'id':id,'storeMerchantName':storeName}}">取消</a>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="no-list" v-else>
+
+                <div class="no-list" v-if="!zdlists.length&&firstSearch">
                     未找到数据
+                </div>
+                <div class="no-list" v-if="!zdlists.length&&!firstSearch">
+                    请输入查询条件并查询
                 </div>
             </div>
         </div>
@@ -91,20 +75,18 @@
             this.model =model(this)
             return{
                 pageall:1,
+                firstSearch:false,
                 city:[],
                 companylists:[],
                 id:'',
+                storeName:'',
                 defaultData:{
-                    subCompanyID: '',
-                    cityID: '',
                     merchantOperationID:"",
                     merchantName:"",
                     backendMerchantCode:"",
                     backendMerchantName:"",
                     backendStoreCode:"",
                     backendStoreName:"",
-                    pageIndex: 1,
-                    pageSize: 10
                 },
                 zdlists:[],
                 merchantList:[],
@@ -167,35 +149,15 @@
             getZlists(data){
                 this.checkedLis=[];
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                    this.model.prepayment_store(data)
-                            .then((response)=>{
-                                // *** 判断请求是否成功如若成功则填充数据到模型
-                                (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
-                                (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
-                            });
-            },
-            getClist(){
-                // *** 请求公司数据
-                this.$common_model.getcompany()
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('companylists', response.data.data) : null;
-                        });
-            },
-            //获取城市数据
-            getCity(_id){
-                this.defaultData.cityID='';
-                let data={
-                    'subCompanyID':_id
-                }
-                this.$common_model.getcity(data)
-                        .then((response)=>{
-                            // *** 判断请求是否成功如若成功则填充数据到模型
-                            (response.data.code==0) ? this.$set('city', response.data.data) : null;
-                        });
+                this.model.prepayment_store(data)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        (response.data.code==0) ? this.$set('zdlists', response.data.data) : null;
+                        (response.data.code==0) ? this.$set('pageall', response.data.total) : null;
+                        this.firstSearch=true;
+                    });
             },
             checkNew(){
-                this.defaultData.pageIndex=1;
                 this.initList();
             },
             initList(){
@@ -204,16 +166,9 @@
             },
         },
         ready() {
-            this.getClist();
-            this.getCity();
             (this.$route.params.addStoreId==':addStoreId')?this.id='' :this.id=this.$route.params.addStoreId;
+            (this.$route.params.addStoreName==':addStoreName')?this.storeName='' :this.storeName=this.$route.params.addStoreName;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.defaultData=back_json.fetchArray(this.$route.path):null;
-            this.initList();
-        },
-        watch:{
-            'defaultData.pageSize+defaultData.pageIndex'(){
-                this.initList();
-            }
         }
     }
 </script>

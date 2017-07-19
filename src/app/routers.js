@@ -420,7 +420,7 @@ export default function (router) {
 			}
 		},
 		/* 商户管理-预付款门店管理 */
-        '/add-store/:addStoreId': {
+        '/add-store/:addStoreId/:addStoreName': {
             name: 'add-store',
             router_type: "business",
             component: function (resolve) {
