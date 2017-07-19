@@ -399,10 +399,10 @@
                             if (response.data.code == 0) {
                                 dialogs('success','提交成功！');
                                 this.query();
+                                //关闭弹出层
+                                this.modal_prepayment_recharge = false;
                             }
                         });
-                //关闭弹出层
-                this.modal_prepayment_recharge = false;
             },
             changePayType(e){
                 if(!!this.applyAdvancePay.merchantId){
