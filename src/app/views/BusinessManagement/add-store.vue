@@ -55,7 +55,7 @@
                         <div style="margin:20px;overflow:hidden">
                             <a style="float:right;margin-left:20px" class="btn btn-info add-top" @click="submit()">确认</a>
                             <a style="float:right" class="btn btn-default"
-                               v-link="{'name':'prepayment-store',params:{'id':id,'storeMerchantName':storeName}}">取消</a>
+                               v-link="{'name':'prepayment-store',params:{'id':id,'storeMerchantName':storeName,addStoreCompany:defaultData.companyId}}">取消</a>
                         </div>
                     </div>
                 </div>
