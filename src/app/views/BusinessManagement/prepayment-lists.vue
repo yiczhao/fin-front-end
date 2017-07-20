@@ -381,7 +381,7 @@
                     dialogs('info','请选择付款账户！');
                     return;
                 }
-                if(!this.applyAdvancePay.merchantID){
+                if(!this.applyAdvancePay.merchantId){
                     dialogs('info','请选择收款信息！');
                     return;
                 }
