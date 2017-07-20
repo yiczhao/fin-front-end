@@ -362,6 +362,7 @@
                 pageall: 1,
                 blanceList:{},
                 total: {},
+                merchantIdList: [],
                 defaultData: {
                     "advancePaymentMerchantID": '',
                     "orderNumber": '',
@@ -495,7 +496,7 @@
                         // *** 判断请求是否成功如若
                         if (response.data.code == 0) {
                             dialogs('success','提交成功！');
-                            this.query();
+                            this.initList();
                             //关闭弹出层
                             this.modal_prepayment_recharge = false;
                         }

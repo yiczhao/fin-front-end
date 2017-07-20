@@ -52,6 +52,14 @@ function model(_this){
          * */
         advancePaymentMerchantAdjust(data){
             return _this.$http.post(_this.$API.advancePaymentMerchantAdjust+$.param(data))
+        },
+        /**
+         * @description 获取预付充值数据
+         * @params {data}
+         * @returns {*}
+         * */
+        changeBnakInfo(_id){
+            return _this.$http.get(_this.$API.changeBankInfo+_id)
         }
     }
 }
