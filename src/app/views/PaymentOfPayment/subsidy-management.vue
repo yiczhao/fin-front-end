@@ -189,7 +189,7 @@
                             <label class="control-label">可提现金额：{{redata.withdrawCashAmount/100 | currency ''}} 元</label>
                         </div>
                         <div class="form-group" v-if="!!redata.advancePaymentMerchantModel">
-                            <span style="color:red">该门店关联了{{redata.advancePaymentMerchantModel.accountName}}预付款账户，余额是
+                            <span style="color:red">该门店关联了"{{redata.advancePaymentMerchantModel.accountName}}"预付款账户，余额是
                             {{redata.advancePaymentMerchantModel.balanceAmount/100 | currency ''}}元，请先确认付款方式</span>
                         </div>
                         <div class="form-group">

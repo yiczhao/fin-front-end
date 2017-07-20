@@ -59,6 +59,10 @@
             >
                 <div class="modal-body">
                     <div class="form-group">
+                        <div class="form-group" v-if="!!redata.advancePaymentMerchantModel">
+                            <span style="color:red">该门店关联了"{{redata.advancePaymentMerchantModel.accountName}}"预付款账户，余额是
+                            {{redata.advancePaymentMerchantModel.balanceAmount/100 | currency ''}}元，请先确认付款方式</span>
+                        </div>
                         <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                         <select class="form-control" v-model="batchsData.payType" style="width: 80%;display: inline-block;">
                             <option value="">请选择付款方式</option>
@@ -94,6 +98,7 @@
                     mergePay:false,
                     payType:''
                 },
+                redata:[],
                 recheckLists:[],
                 id:''
             }
@@ -134,7 +139,18 @@
                     mergePay:false,
                     payType:''
                 }
-                this.show=true;
+                let data=[]
+                _.map(this.recheckLists,(val)=>{
+                    data.push(val.merchantID);
+                })
+                this.model.manuallySettlement_generateInfo({merchantIDs:data.toString()})
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('redata', response.data.data);
+                            this.show=true;
+                        }
+                    });
             },
             submit(){
                 if(sessionStorage.getItem('isHttpin')==1)return;

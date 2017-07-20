@@ -45,6 +45,14 @@ function model(_this) {
         manuallySettlement_list(data){
             return _this.$http.get(_this.$API.manuallySettlement_list+ $.param(data));
         },
+        /**
+         * @description 查询划付信息
+         * @param data
+         * @returns {*}
+         */
+        manuallySettlement_generateInfo(data){
+            return _this.$http.post(_this.$API.manuallySettlement_generateInfo+ $.param(data));
+        }
     }
 }
 module.exports = model

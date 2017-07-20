@@ -392,6 +392,12 @@ export default function install(Vue) {
      * @method GET
      */
     _o.manuallySettlement_list = './manuallySettlement/generate/list?';
+    /**
+     * @description 手工结算之申请划付列表数据
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.manuallySettlement_generateInfo = './manuallySettlement/generate/info?';
 
     //- todo 交易管理-交易白名单 white-lists
     /**
