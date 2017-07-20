@@ -404,7 +404,7 @@ export default function (router) {
 			}
 		},
 		/* 商户管理-预付款 */
-		'/prepayment-lists/': {
+		'/prepayment-lists/:advancePaymentAccountName': {
 			name: 'prepayment-lists',
 			router_type: "business",
 			component: function (resolve) {

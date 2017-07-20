@@ -92,6 +92,7 @@
                                     <th>分公司</th>
                                     <th>城市</th>
                                     <th>付款账户</th>
+                                    <th>预付款商户否</th>
                                     <th>商户号</th>
                                     <th>商户简称</th>
                                     <th>门店号</th>
@@ -123,6 +124,12 @@
                                 <td>{{n.subCompanyName}}</td>
                                 <td>{{n.cityName }}</td>
                                 <td>{{n.payAccount }}</td>
+                                <td>
+                                    <a v-link="{'name':'prepayment-lists',params:{
+                        advancePaymentAccountName:n.advancePaymentAccountName}}" v-if="!!n.advancePaymentAccountName">
+                                        {{n.advancePaymentAccountName}}</br>余额：{{n.balanceAmount/100 | currency ''}}元
+                                    </a>
+                                </td>
 
                                 <td><span v-if="n.purpose!=4">{{n.backendMerchantCode}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendMerchantName}}</span></td>
@@ -178,7 +185,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
                                 <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>

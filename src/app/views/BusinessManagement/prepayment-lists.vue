@@ -451,6 +451,7 @@
             this.getSubcompany();
             this.getCity();
             this.getBankAccountList('1');
+            (this.$route.params.advancePaymentAccountName!=':advancePaymentAccountName')?this.checkForm.accountName=this.$route.params.advancePaymentAccountName:null;
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
