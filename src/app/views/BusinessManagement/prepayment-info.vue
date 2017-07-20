@@ -192,7 +192,7 @@
                                    v-model="applyAdvancePay.advancePaymentAmount" v-limitprice="applyAdvancePay.advancePaymentAmount"/>
                         </div>
                         <div class="form-group">
-                            <label style="position: relative;top: 0px;"><i style="color:red">*</i>备注：</label>
+                            <label style="position: relative;top: -40px;"><i style="color:red">*</i>备注：</label>
                             <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remarks"
                                       v-model="applyAdvancePay.remarks" placeholder="最多15字符"></textarea>
                         </div>
@@ -218,7 +218,7 @@
                                 <option v-for="n in merchantIdList" v-text="n.name" :value="n.id"></option>
                             </select>
                         </div>
-                        <div class="form-group" v-show="!!applyAdvancePay.merchantId">
+                        <div class="form-group" v-if="applyAdvancePay.merchantId!=''">
                             <label>收款信息：</label>
                             <br/>
                             <div class="collectionAccount-bgcolor">
@@ -393,6 +393,7 @@
                     collectionAccountNumber: "",// 收款账号    String
                     advancePaymentAmount: "",//    预付金额    Integer
                     remarks: "",// 备注  String
+                    merchantId: "",// 备注  String
                     merchantAccountID: ""//商户账户ID   Integer
                 },
                 entity: {},
@@ -507,6 +508,7 @@
                     this.model.changeBnakInfo(this.applyAdvancePay.merchantId)
                         .then((response)=>{
                             if (response.data.code == 0) {
+                                debugger
                                 this.applyAdvancePay.collectionAccountName =response.data.data.accountName;
                                 this.applyAdvancePay.collectionAccountNumber = response.data.data.accountNumber;//1
                                 this.applyAdvancePay.collectionBankName = response.data.data.bankName;//2
