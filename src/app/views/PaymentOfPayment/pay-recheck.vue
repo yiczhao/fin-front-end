@@ -124,12 +124,12 @@
                                 <td>{{n.cityName }}</td>
                                 <td>{{n.payAccount }}</td>
 
-                                <td><span v-if="n.purpose==4">{{n.backendMerchantCode}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendMerchantCode}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendMerchantName}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendStoreCode}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendStoreName}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.merchantOperationID }}</span></td>
-                                <td><span v-if="!n.backendStoreCode && !n.purpose==4">{{n.merchantName}}</span></td>
+                                <td><span v-if="!n.backendStoreCode && n.purpose!=4">{{n.merchantName}}</span></td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.collectionBankName }}</td>
