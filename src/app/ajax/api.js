@@ -840,6 +840,12 @@ export default function install(Vue) {
      */
     _o.subsidyManagement_batchs = './subsidyAccount/batchApplyPay/applyPay';
     /**
+     * @description 批量提现弹出框数据
+     * @author 冷艳君
+     * @method POST
+     */
+    _o.subsidyManagement_batchInfo = './subsidyAccount/batchApplyPay/info?';
+    /**
      * @description 退税管理发票充值接口地址
      * @author 于凯乐
      * @method POST

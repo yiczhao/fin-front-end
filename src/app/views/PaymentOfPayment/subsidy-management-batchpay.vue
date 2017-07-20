@@ -75,6 +75,10 @@
                 <div class="form-group">
                     <label class="control-label">合计提现金额 {{withdrawCashAmounts/100 | currency ''}} 元</label>
                 </div>
+                    <div class="form-group" v-if="!!batchsData.advancePaymentMerchantModel">
+                        <span style="color:red">该门店关联了{{batchsData.advancePaymentMerchantModel.accountName}}预付款账户，余额是
+                        {{batchsData.advancePaymentMerchantModel.balanceAmount}}元，请先确认付款方式</span>
+                    </div>
                 <div class="form-group">
                     <label class="control-label"style="width: 14%;"><i style="color:red;">*</i>付款方式：</label>
                     <select v-validate:val1="['required']" class="form-control" v-model="batchsData.payType" style="display: inline-block;width: 80%;">
@@ -238,7 +242,12 @@
                       payType:'',
                       bankAccountID:this.curBankAccountID
                  };
-                this.show=true;
+                this.subsidyManagement_batchInfo({ids:this.checkedIds}).then((res)=>{
+                    if(res.data.code===0){
+                        this.batchsData.advancePaymentMerchantModel=res.data.data.advancePaymentMerchantModel;
+                        this.show=true;
+                    }
+                })
             },
             batchs(){
                 if(!this.$vali.valid){

@@ -237,6 +237,10 @@
                             补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元，
                             暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTaxAmount/100 | currency ''}}</span>  元
                         </div>
+                        <div class="form-group" v-if="!!applyPayInfo.advancePaymentMerchantModel">
+                            <span style="color:red">该门店关联了{{applyPayInfo.advancePaymentMerchantModel.accountName}}预付款账户，余额是
+                            {{applyPayInfo.advancePaymentMerchantModel.balanceAmount}}元，请先确认付款方式</span>
+                        </div>
                         <div class="form-group">
                             <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                             <select class="form-control" v-model="payTypes" style="width: 30%;display: inline-block;">

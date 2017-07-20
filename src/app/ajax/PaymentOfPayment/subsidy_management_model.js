@@ -62,6 +62,14 @@ function model(_this){
             return _this.$http.post(_this.$API.subsidyManagement_batchs,data)
         },
         /**
+         * @description 批量提现弹出框数据
+         * @params {data}
+         * @returns {*}
+         * */
+        subsidyManagement_batchInfo(data){
+            return _this.$http.get(_this.$API.subsidyManagement_batchInfo+ $.param(data))
+        },
+        /**
          * @description 退税管理每商户发票充值
          * @params {data}
          * @returns {*}
