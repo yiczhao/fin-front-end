@@ -59,9 +59,9 @@
             >
                 <div class="modal-body">
                     <div class="form-group">
-                        <div class="form-group" v-if="!!redata.advancePaymentMerchantModel">
-                            <span style="color:red">该门店关联了"{{redata.advancePaymentMerchantModel.accountName}}"预付款账户，余额是
-                            {{redata.advancePaymentMerchantModel.balanceAmount/100 | currency ''}}元，请先确认付款方式</span>
+                        <div class="form-group" v-if="!!redata">
+                            <span style="color:red">该门店关联了"{{redata.accountName}}"预付款账户，余额是
+                            {{redata.balanceAmount/100 | currency ''}}元，请先确认付款方式</span>
                         </div>
                         <label class="payment-method"><i style="color:red;">*</i>付款方式：</label>
                         <select class="form-control" v-model="batchsData.payType" style="width: 80%;display: inline-block;">
