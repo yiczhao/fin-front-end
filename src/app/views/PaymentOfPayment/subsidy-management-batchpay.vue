@@ -77,7 +77,7 @@
                 </div>
                     <div class="form-group" v-if="!!batchsData.advancePaymentMerchantModel">
                         <span style="color:red">该门店关联了{{batchsData.advancePaymentMerchantModel.accountName}}预付款账户，余额是
-                        {{batchsData.advancePaymentMerchantModel.balanceAmount}}元，请先确认付款方式</span>
+                        {{batchsData.advancePaymentMerchantModel.balanceAmount/100 | currency ''}}元，请先确认付款方式</span>
                     </div>
                 <div class="form-group">
                     <label class="control-label"style="width: 14%;"><i style="color:red;">*</i>付款方式：</label>

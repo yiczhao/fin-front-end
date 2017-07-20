@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="form-group" v-if="!!redata.advancePaymentMerchantModel">
                                     <span style="color:red">该门店关联了{{redata.advancePaymentMerchantModel.accountName}}预付款账户，余额是
-                                    {{redata.advancePaymentMerchantModel.balanceAmount}}元，请先确认付款方式</span>
+                                    {{redata.advancePaymentMerchantModel.balanceAmount/100 | currency ''}}元，请先确认付款方式</span>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><i style="color:red;">*</i>付款方式：</label>
