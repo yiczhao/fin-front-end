@@ -146,7 +146,7 @@
                         this.initList();
                         dialogs('successTime','已添加！');
                         setTimeout(()=>{
-                            this.$router.go({'name':'prepayment-store',params:{'id':this.id,'storeMerchantName':this.storeName,addStoreCompany:this.defaultData.companyId}});
+                            this.$router.go({'name':'prepayment-store',params:{'id':this.id,'storeMerchantName':this.storeName,storeMerchantsubCompanyId:this.defaultData.companyId}});
                         },2000)
                         this.modal_add = false;
                     }
