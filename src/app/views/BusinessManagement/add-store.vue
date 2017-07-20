@@ -144,7 +144,10 @@
                 this.model.store_add(data).then((response)=>{
                     if(response.data.code == 0){
                         this.initList();
-                        dialogs('success','已添加！');
+                        dialogs('successTime','已添加！');
+                        setTimeout(()=>{
+                            this.$router.go({'name':'prepayment-store',params:{'id':this.id,'storeMerchantName':this.storeName,addStoreCompany:this.defaultData.companyId}});
+                        },2000)
                         this.modal_add = false;
                     }
                 });
