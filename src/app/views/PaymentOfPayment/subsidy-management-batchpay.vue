@@ -242,7 +242,7 @@
                       payType:'',
                       bankAccountID:this.curBankAccountID
                  };
-                this.subsidyManagement_batchInfo({ids:this.checkedIds}).then((res)=>{
+                this.model.subsidyManagement_batchInfo({ids:this.checkedIds.ids.toString()}).then((res)=>{
                     if(res.data.code===0){
                         this.batchsData.advancePaymentMerchantModel=res.data.data.advancePaymentMerchantModel;
                         this.show=true;
