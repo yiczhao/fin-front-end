@@ -51,7 +51,7 @@ function model(_this) {
          * @returns {*}
          */
         manuallySettlement_generateInfo(data){
-            return _this.$http.post(_this.$API.manuallySettlement_generateInfo+ $.param(data));
+            return _this.$http.get(_this.$API.manuallySettlement_generateInfo+ $.param(data));
         }
     }
 }
