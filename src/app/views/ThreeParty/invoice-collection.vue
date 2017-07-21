@@ -14,7 +14,7 @@
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="银行名称">
                             <select class="form-control" v-model="defaultData.contractNumber">
                                 <option value="">合同编号</option>
                                 <option v-for="(index,n) in contractlists" v-text="n.contractNumber" :value="n.contractNumber"></option>
@@ -37,7 +37,7 @@
                             <tr role="row">
                                 <th>序号</th>
                                 <th>分公司</th>
-                                <th>三方名称</th>
+                                <th>银行名称</th>
                                 <th>时间</th>
                                 <th>开票/回款</th>
                                 <th>收入</th>

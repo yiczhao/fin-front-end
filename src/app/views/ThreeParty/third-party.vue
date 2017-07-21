@@ -20,7 +20,7 @@
                         <form class="form-inline manage-form">
                             <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="账户ID" v-limitnumber="defaultData.operationID">
 
-                            <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="defaultData.accountName" placeholder="银行名称">
 
                             <select class="form-control" v-model="defaultData.subCompanyID" @change="getCity(defaultData.subCompanyID)">
                                 <option value="">全部分公司</option>

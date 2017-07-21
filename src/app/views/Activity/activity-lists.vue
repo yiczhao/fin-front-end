@@ -169,7 +169,7 @@
                                         <th></th>
                                         <th>分公司</th>
                                         <th>城市</th>
-                                        <th>第三方名称</th>
+                                        <th>银行名称</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>

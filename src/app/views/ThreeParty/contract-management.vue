@@ -9,7 +9,7 @@
                     <div class="heading-left">
                         <a class="btn btn-add add-top" @click="addContract" data-ksa="contract.add">添加合同</a>
                     </div>
-                    <span>三方名称：{{contractName}}</span>
+                    <span>银行名称：{{contractName}}</span>
                     <span>分公司：{{contractCompanyName}}</span>
                     <span>城市：{{contractCity}}</span>
                 </div>

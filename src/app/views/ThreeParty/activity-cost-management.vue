@@ -19,7 +19,7 @@
                                 <option value="">全部分公司</option>
                                 <option :value="n.subCompanyID" v-for="(index,n) in companylists" v-text="n.name"></option>
                             </select>
-                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="银行名称">
                             <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
                             <input type="text" class="form-control" v-model="defaultData.activityOperationID" placeholder="活动ID" v-limitnumber="defaultData.activityId">
                             <getmonth :value.sync="date"></getmonth>
@@ -52,7 +52,7 @@
                             <tr role="row border-top">
                                 <th class="top-none">序号</th>
                                 <th class="top-none">分公司</th>
-                                <th class="top-none">三方名称</th>
+                                <th class="top-none">银行名称</th>
                                 <th class="top-none">合同编号</th>
                                 <th class="top-none">活动ID</th>
                                 <th class="top-none">执行表参数</th>

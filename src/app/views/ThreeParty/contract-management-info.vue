@@ -21,7 +21,7 @@
                                 <option value="">全部分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
-                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="三方名称">
+                            <input type="text" class="form-control" v-model="defaultData.thirdPartyAccountName" placeholder="银行名称">
                             <input type="text" class="form-control" v-model="defaultData.contractNumber" placeholder="合同编号">
                             <getmonth :value.sync="defaultData.startDate"></getmonth>
                         </form>
@@ -57,7 +57,7 @@
                                 <tr role="row">
                                     <td>序号</td>
                                     <td>分公司</td>
-                                    <td>三方名称</td>
+                                    <td>银行名称</td>
                                     <td>合同编号</td>
                                     <td>合同结算金额</td>
                                     <td>操作</td>
@@ -174,7 +174,7 @@
                     <span>{{relist.subCompanyName}}</span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">三方名称：</label>
+                    <label class="control-label">银行名称：</label>
                     <span>{{relist.thirdPartyAccountName}}</span>
                 </div>
                 <div class="form-group">
@@ -216,7 +216,7 @@
                     <span>{{relist.subCompanyName}}</span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">三方名称：</label>
+                    <label class="control-label">银行名称：</label>
                     <span>{{relist.thirdPartyAccountName}}</span>
                 </div>
                 <div class="form-group">
