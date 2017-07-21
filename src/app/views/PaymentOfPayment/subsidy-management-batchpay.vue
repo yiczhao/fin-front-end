@@ -122,6 +122,7 @@
                     mergePay:false,
                     remarks:'',
                     payType:'',
+                    advancePaymentMerchantModel:{},
                     bankAccountID:''
                 },
                 recheckLists:[],
@@ -240,10 +241,12 @@
                       mergePay:false,
                       remarks:'',
                       payType:'',
+                      advancePaymentMerchantModel:{},
                       bankAccountID:this.curBankAccountID
                  };
                 this.model.subsidyManagement_batchInfo({ids:this.checkedIds.ids.toString()}).then((res)=>{
                     if(res.data.code===0){
+                        debugger
                         this.batchsData.advancePaymentMerchantModel=res.data.data.advancePaymentMerchantModel;
                         this.show=true;
                     }
