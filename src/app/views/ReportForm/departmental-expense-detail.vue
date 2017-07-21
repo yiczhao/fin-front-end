@@ -79,7 +79,7 @@
                     未找到数据
                 </div>
                 <content-dialog
-                        :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
+                        :show.sync="type_in" :is-button="false" :is-cancle="true" :type.sync="'infos'"
                         :title.sync="'实际费用录入'" @kok="saveChange()" @kcancel="cancel()"
                 >
                     <validator name="vali">
@@ -115,9 +115,14 @@
                             <input type="text" class="form-control" v-limitprice="infaceList.amount" v-model="infaceList.amount" placeholder="">
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin:0">
                             <label style="position: relative;top: -95px;" class="control-label">备   注：</label>
                             <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="infaceList.remarks "></textarea>
+                        </div>
+                        <div class="form-group tc">
+                            <a @click="cancel" class="btn btn-default">取消</a>
+                            <a @click="saveChange1" class="btn btn-primary">保存并继续</a>
+                            <a @click="saveChange" class="btn btn-primary">保存</a>
                         </div>
                     </validator>
                 </content-dialog>
@@ -211,6 +216,28 @@
                         dialogs('success','保存成功！');
                         this.initList();
                         this.type_in=false;
+                    }
+                });
+            },
+            saveChange1(){
+                let data={};
+                data=_.cloneDeep(this.infaceList);
+                let key=this.typeTitle=='预算录入'?'costBugetTypeInP':'costBugetActualTypeInP';
+                if (true) {
+                    try {
+                        this.verifyField(data)
+                    } catch (e) {
+                        this.errHandle(e.message)
+                        return
+                    }
+                }
+                this.model[key](data).then((res)=>{
+                    if(res.data.code==0){
+                        this.infaceList.subCompanyId='';
+                        this.infaceList.remarks='';
+                        this.infaceList.subject='';
+                        this.infaceList.amount='';
+                        dialogs('success','保存成功！');
                     }
                 });
             },
