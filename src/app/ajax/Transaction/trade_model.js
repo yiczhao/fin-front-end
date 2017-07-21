@@ -28,6 +28,14 @@ function model(_this) {
          */
         skipToThird(_id){
             return _this.$http.get(_this.$API.skipToThird+ _id);
+        },
+        /**
+         * @description 快速对账
+         * @param data
+         * @returns {*}
+         */
+        quickCheck(data){
+            return _this.$http.get(_this.$API.quickCheck+ $.param(data));
         }
     }
 }

@@ -15,6 +15,8 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
+                        <a class="btn btn-add add-top"
+                           @click="quickCheck">快速对账</a>
                     </div>
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
@@ -285,6 +287,18 @@
             }
         },
         methods:{
+            quickCheck(){
+                if(!this.checkForm.backendStoreCode&&!this.checkForm.activityOperationID){
+                    dialogs('info','门店号与活动ID为必填项！')
+                    return;
+                }
+                this.$router.go({name:'quick-check', params:{
+                    checkstartDate:this.checkForm.startDate,
+                    checkendDate:this.checkForm.endDate,
+                    checkbackendStoreCode:this.checkForm.backendStoreCode,
+                    checkactivityOperationID:this.checkForm.activityOperationID
+                }})
+            },
             //获取交易记录
              getTradeList(data){
                  this.model.tradedetail(data)

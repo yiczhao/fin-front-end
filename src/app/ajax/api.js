@@ -235,6 +235,13 @@ export default function install(Vue) {
      * @method GET
      */
     _o.getBalance = './bankAccount/reserveCash/info/';
+    /**
+     * @description 快速对账
+     * @author 冷艳君
+     * @method GET
+     */
+    _o.quickCheck = './tradeDetail/check?';
+
 
     //- todo 交易管理-手工单管理 manual-trade-detail
     /**

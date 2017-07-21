@@ -42,6 +42,14 @@ export default function (router) {
 				require(['./views/Transaction/trade-info.vue'], resolve);
 			}
 		},
+        //交易处理-手工结算
+        '/quick-check/:checkstartDate/:checkendDate/:checkbackendStoreCode/:checkactivityOperationID': {
+            name: 'quick-check',
+            router_type: "trade",
+            component: function (resolve) {
+                require(['./views/Transaction/quick-check.vue'], resolve);
+            }
+        },
 		//交易处理-手工结算
 		'/manually-settlement/': {
 			name: 'manually-settlement',
