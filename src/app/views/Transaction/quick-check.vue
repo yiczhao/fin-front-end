@@ -19,7 +19,7 @@
                         <div style="width:50%;float:left;padding:0 20px;margin-bottom:20px">
                             <p>大后台比财务系统多：</p>
                             <div style="max-height:500px;overflow:auto;padding:0 30px;min-height:500px;">
-                                <p v-for="n in tradeList.tradeMoreThanSys.transactionNos">
+                                <p v-for="n in tradeList.sysMoreThanTrade.transactionNos">
                                     {{n}}
                                 </p>
                             </div>
