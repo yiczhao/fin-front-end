@@ -505,6 +505,10 @@
             },
             changePayType(e){
                 if(!!this.applyAdvancePay.merchantId){
+                    this.applyAdvancePay.collectionAccountName='';
+                    this.applyAdvancePay.collectionAccountNumber='';
+                    this.applyAdvancePay.collectionBankName='';
+                    this.applyAdvancePay.collectionBankNumber='';
                     this.model.changeBnakInfo(this.applyAdvancePay.merchantId)
                         .then((response)=>{
                             if (response.data.code == 0) {
