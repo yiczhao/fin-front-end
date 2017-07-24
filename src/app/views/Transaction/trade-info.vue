@@ -16,7 +16,7 @@
                 <div class="heading">
                     <div class="heading-left">
                         <a class="btn btn-add add-top"
-                           @click="quickCheck">快速对账</a>
+                           @click="quickCheck" data-ksa="trade_detail_manage.check">快速对账</a>
                     </div>
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
@@ -288,7 +288,6 @@
         },
         methods:{
             quickCheck(){
-                debugger
                 if(!this.checkForm.backendStoreCode||!this.checkForm.activityOperationID){
                     dialogs('info','门店号与活动ID为必填项！')
                     return;
