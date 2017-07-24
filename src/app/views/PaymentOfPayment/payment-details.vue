@@ -126,7 +126,7 @@
                                 <td>
                                     <span>{{n.orderNumber}}</span>
                                 </td>
-                                <td><span v-if="n.purpose==4">{{n.backendMerchantCode}}</span></td>
+                                <td><span v-if="n.purpose!=4">{{n.backendMerchantCode}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendMerchantName}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendStoreCode}}</span></td>
                                 <td><span v-if="n.purpose!=4">{{n.backendStoreName}}</span></td>
