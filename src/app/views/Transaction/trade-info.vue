@@ -288,7 +288,8 @@
         },
         methods:{
             quickCheck(){
-                if(!this.checkForm.backendStoreCode&&!this.checkForm.activityOperationID){
+                debugger
+                if(!this.checkForm.backendStoreCode||!this.checkForm.activityOperationID){
                     dialogs('info','门店号与活动ID为必填项！')
                     return;
                 }
