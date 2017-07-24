@@ -215,6 +215,9 @@
                         <!--<div class="left">-->
                             <!--<a class="icon-file-excel" style="line-height: 30px;" @click="">Excel导出</a>-->
                         <!--</div>-->
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="activityIncomeExcel">Excel导出</a>
+                        </div>
                         <div class="right">
                             <page :all="pageall"
                                   :cur.sync="defaultData.pageIndex"
@@ -276,6 +279,7 @@
 			this.model = model(this);
 			return{
                 modal_other:false,
+                origin:window.origin,
                 defaultData:{
                     subCompanyID:'',
                     thirdPartyAccountName:'',
@@ -284,7 +288,7 @@
                     year:'',
                     month:'',
                     pageIndex:1,
-                    pageSize:10,
+                    pageSize:10
                 },
                 date:yestodayMonth(),
                 pageall:1,
@@ -349,6 +353,11 @@
                         this.$set('redata',res.data.data);
                     }
                 })
+            },activityIncomeExcel() {
+                if(!this.listData.length>0)return;
+                //初始化
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.activityIncomeExcel+ $.param(this.defaultData));
             },
             saveOther(){
                 if(this.redata.description==''){

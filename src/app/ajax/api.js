@@ -126,6 +126,12 @@ export default function install(Vue) {
      */
     _o.costDetailToExcel = '/data/export/excel/costDetail?';
 
+    /**
+     * @description 活动收入成本管理导出
+     * @author 周俭
+     * @method get
+     */
+    _o.activityIncomeExcel = '/data/export/excel/exportDetail?';
 
     //- todo 财务处理-账户列表 account-management
     /**
