@@ -119,6 +119,13 @@ export default function install(Vue) {
      */
     _o.providerPayDetailexcel = '/data/export/excel/providerPayDetail?';
 
+    /**
+     * @description 部门费用明细导出
+     * @author 于凯乐
+     * @method get
+     */
+    _o.costDetailToExcel = '/data/export/excel/costDetail?';
+
 
     //- todo 财务处理-账户列表 account-management
     /**

@@ -67,6 +67,10 @@
                         </table>
                     </div>
                     <div class="datatable-bottom">
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="costDetailToExcel" data-ksa="detail.export">Excel导出</a>
+                        </div>
+
                         <div class="right">
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
@@ -159,6 +163,11 @@
 			}
 		},
 		methods:{
+            costDetailToExcel(){
+                if(!this.listData.length>0)return;
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.costDetailToExcel+ $.param(this.checkForm));
+            },
             typeIn(){
                 this.type_in=true;
                 this.model.costCommonTypeIn().then((res)=>{

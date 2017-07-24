@@ -208,6 +208,15 @@ function model(_this){
         financeInfo(data){
             return _this.$http.get(_this.$API.financeInfo+$.param(data))
         },
+        /**
+         * @description  部门费用明细导出
+         * @params {data}
+         * @returns {*}
+         * */
+        costDetailToExcel(data){
+            return _this.$http.get(_this.$API.costDetailToExcel+$.param(data))
+        },
+
 
     }
 }
