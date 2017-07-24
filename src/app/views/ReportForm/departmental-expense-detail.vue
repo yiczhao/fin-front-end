@@ -116,7 +116,7 @@
                             <!-- <span v-if="$vali.val2.required && fire1" class="validation-error-label">请输入金额</span> -->
                         </div>
                         <div class="form-group" style="margin:0">
-                            <label style="position: relative;top: -95px;" class="control-label">备   注：</label>
+                            <label style="position: relative;top: -95px;" class="control-label">备   注</label>
                             <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="infaceList.remarks "></textarea>
                         </div>
                         <div class="form-group tc" style="margin-top: 15px;">
