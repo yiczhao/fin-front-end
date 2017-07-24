@@ -119,9 +119,9 @@
                             <label style="position: relative;top: -95px;" class="control-label">备   注：</label>
                             <textarea style="display: inline-block;" rows="5" cols="5" class="form-control" v-model="infaceList.remarks "></textarea>
                         </div>
-                        <div class="form-group tc">
-                            <a @click="cancel" class="btn btn-default">取消</a>
-                            <a @click="saveChange1" class="btn btn-primary">保存并继续</a>
+                        <div class="form-group tc" style="margin-top: 15px;">
+                            <a @click="cancel" class="btn btn-default mr20">取消</a>
+                            <a @click="saveChange1" class="btn btn-primary mr20">保存并继续</a>
                             <a @click="saveChange" class="btn btn-primary">保存</a>
                         </div>
                     </validator>
