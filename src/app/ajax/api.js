@@ -139,6 +139,13 @@ export default function install(Vue) {
      */
     _o.activityIncomeExcel = '/data/export/excel/exportDetail?';
 
+    /**
+     * @description 银行管理导出
+     * @author 于凯乐
+     * @method get
+     */
+    _o.thirdPartyToExcel = '/data/export/excel/thirdParty?';
+
     //- todo 财务处理-账户列表 account-management
     /**
      * @description 账户列表接口地址

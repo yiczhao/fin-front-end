@@ -121,6 +121,9 @@
                     </div>
 
                     <div class="datatable-bottom">
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="thirdPartyToExcel" data-ksa="third_party_account_manage.export">Excel导出</a>
+                        </div>
 
                        <div class="right">
                             <page :all="pageall"
@@ -370,6 +373,11 @@
             }
         },
         methods: {
+            thirdPartyToExcel(){
+                if(!this.zdlists.length>0)return;
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.thirdPartyToExcel+ $.param(this.defaultData));
+            },
             checkLi(e,n){
                 if(!e.target.classList.length){
                     this.removeIds.push(n.operationID);

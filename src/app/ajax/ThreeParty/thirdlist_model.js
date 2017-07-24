@@ -52,6 +52,15 @@ function model(_this){
          * */
         gettotal(data){
             return _this.$http.get(_this.$API.gettotal+ $.param(data))
+        },
+
+        /**
+         * @description 导出
+         * @params {data}
+         * @returns {*}
+         * */
+        thirdPartyToExcel(data){
+            return _this.$http.get(_this.$API.thirdPartyToExcel+ $.param(data))
         }
     }
 }
