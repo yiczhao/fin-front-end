@@ -29,6 +29,12 @@ export default function install(Vue) {
      */
     _o.abnormalexcel = '/data/export/excel/abnormal?';
     /**
+     * @description 合同导出接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.contractExport = '/data/export/excel/contractDetail?';
+    /**
      * @description 导出接口地址
      * @author 于凯乐
      * @method GET

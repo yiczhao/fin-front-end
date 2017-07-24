@@ -151,7 +151,9 @@
                         <!--<div class="left">-->
                             <!--<a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>-->
                         <!--</div>-->
-
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="contractExcel">Excel导出</a>
+                        </div>
                         <div class="right">
                             <page :all="pageall"
                                   :cur.sync="defaultData.pageIndex"
@@ -379,6 +381,12 @@
                             this.initList();
                         }
                     })
+            }
+            ,contractExcel() {
+                if(!this.total>0)return;
+                //初始化
+                this.defaultData.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.contractExport+ $.param(this.defaultData));
             },
             associateTrue(){
                 if(this.dialogTitle==='开票'){
