@@ -299,8 +299,8 @@
                         <select class="form-control" v-model="merchantType1"
                                 @change="batchData.merchantOperationID=batchData.backendStoreCode=''"
                                 style="position: relative;top: -93px;width: 76px;padding: 0;color: #777;display: inline-block;">
-                            <option value="1">商盟ID：</option>
-                            <option value="2">门店号：</option>
+                            <option value="1">商盟ID</option>
+                            <option value="2">门店号</option>
                         </select>
                         <template v-if="merchantType1==1">
                             <textarea
@@ -337,8 +337,8 @@
                             <select class="form-control" v-model="merchantType"
                                     @change="rechargesData.merchantID=rechargesData.backendStoreCode=''"
                                     style="width: 76px;padding: 0;color: #777;display: inline-block;">
-                                <option value="1">商盟ID：</option>
-                                <option value="2">门店号：</option>
+                                <option value="1">商盟ID</option>
+                                <option value="2">门店号</option>
                             </select>
                             <template v-if="merchantType==1">
                                 <input type="text"

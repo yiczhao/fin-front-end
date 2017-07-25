@@ -209,13 +209,13 @@
                 <validator name="vali">
                     <div class="dialog-row">
                         <label>
-                            <i>*</i>商盟ID：
+                            <i>*</i>商户：
                         </label>
                         <select class="form-control" v-model="merchantType"
                                 @change="tradeInfo.merchantOperationID=redata.backendStoreCode=''"
                                 style="width: 76px;padding: 0;color: #777;">
-                            <option value="1">商盟ID：</option>
-                            <option value="2">门店号：</option>
+                            <option value="1">商盟ID</option>
+                            <option value="2">门店号</option>
                         </select>
                         <template v-if="merchantType==1">
                             <input type="text" class="form-control" placeholder="商盟ID"
