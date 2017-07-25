@@ -84,7 +84,7 @@
                     </div>
                      <div class="datatable-bottom">
                          <div class="left">
-                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="costExcel" >Excel导出</a>
+                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="costExcel" data-ksa="cost.export">Excel导出</a>
                          </div>
                      </div>
                  </div>

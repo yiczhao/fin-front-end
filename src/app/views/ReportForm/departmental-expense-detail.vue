@@ -51,6 +51,7 @@
                                 <th>金额</th>
                                 <th>时间</th>
                                 <th>备注</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -62,6 +63,10 @@
                                     <td>{{trlist.amount/100 | currency ''}}</td>
                                     <td>{{trlist.date | datetimes }}</td><!-- {{时间}} -->
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
+                                    <td>
+                                        <a  @click="editTypeIn" >编辑</a>
+                                        <a  @click="deleteTypeIn" >删除</a>
+                                    </td><!-- {{备注}} -->
                                 </tr>
                                 <tr role="row">
                                     <td>合计：</td>
@@ -71,13 +76,14 @@
                                     <td>{{totalAmount/100 | currency ''}}</td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="costDetailToExcel" data-ksa="detail.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="costDetailToExcel" data-ksa="cost.export">Excel导出</a>
                         </div>
 
                         <div class="right">
@@ -192,6 +198,25 @@
                 })
                 this.typeTitle='实际费用录入';
                 this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:'',remarks:''};
+            },
+            editTypeIn(){
+                this.model.costCommonTypeIn().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('costType',res.data.data)
+                    }
+                })
+                this.model.departmentList().then((res)=>{
+                    if(res.data.code==0){
+                        this.$set('departmentList',res.data.data)
+                    }
+                })
+                this.typeTitle='实际费用录入';
+                this.$set('infaceList',list);
+                this.infaceList.amount=this.infaceList.amount/100;
+                this.type_in=true;
+            },
+            deleteTypeIn(){
+
             },
             cancel(){
                 this.infaceList={date:getNowMonth()};

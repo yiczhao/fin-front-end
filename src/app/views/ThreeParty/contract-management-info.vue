@@ -152,7 +152,7 @@
                             <!--<a class="icon-file-excel" style="line-height: 30px;" >Excel导出</a>-->
                         <!--</div>-->
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" v-on:click="contractExcel">Excel导出</a>
+                            <a class="icon-file-excel" data-ksa="contract.export" style="line-height: 30px;" v-on:click="contractExcel">Excel导出</a>
                         </div>
                         <div class="right">
                             <page :all="pageall"
