@@ -78,7 +78,8 @@
 
                             <div  class="inline" style="line-height: 36px;">
                                 划付时间：
-                                <datepicker :readonly="true" :value.sync="checkForm.paymentTime" format="YYYY-MM-DD"></datepicker>
+                                <datepicker :readonly="true" :value.sync="checkForm.startPayDate" format="YYYY-MM-DD"></datepicker>
+                                至<datepicker :readonly="true" :value.sync="checkForm.endPayDate" format="YYYY-MM-DD"></datepicker>
                             </div>
 
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
@@ -408,7 +409,8 @@
                     mid:'',
                     pageIndex:1,
                     dateS:'4',
-                    paymentTime:getPreYear(),
+                    startPayDate:init_date('4')[0],
+                    endPayDate:init_date('4')[1],
                     pageSize:10
                 },
                 total:{
