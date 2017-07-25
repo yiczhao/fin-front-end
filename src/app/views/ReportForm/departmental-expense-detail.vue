@@ -64,6 +64,15 @@
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
                                 </tr>
                             </tbody>
+                            <tr role="row">
+                                <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{totalAmount/100 | currency ''}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="datatable-bottom">
@@ -159,7 +168,8 @@
                 costType:{},
                 departmentType:{},
                 departmentList:[],
-                infaceList:{}
+                infaceList:{},
+                totalAmount:''
 			}
 		},
 		methods:{
@@ -305,7 +315,11 @@
                         this.$set('listData',res.data.data);
                         this.$set('pageall',res.data.total);
                     }
-                })
+                });
+                this.model.getCostDetailTotal(this.checkForm)
+                    .then((response)=>{
+                        (response.data.code==0)?this.$set('totalAmount',response.data.data):null;
+                    })
             },
         },
 		ready(){

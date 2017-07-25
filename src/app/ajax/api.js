@@ -1781,6 +1781,12 @@ export default function install(Vue) {
      */
     _o.commonCostDetail = './cost/detail?';
     /**
+     * @description 报表管理 费用管理 预算-预算录入-查询费用类型
+     * @author 洪钢
+     * @method post
+     */
+    _o.commonCostDetailTotal = './cost/detail/total?';
+    /**
      * @description 报表管理 费用管理 获取部门
      * @author 周俭
      * @method get

@@ -153,6 +153,14 @@ function model(_this){
             return _this.$http.get(_this.$API.commonCostDetail+ $.param(data))
         },
         /**
+         * @description  部门费用明细合计
+         * @params {data}
+         * @returns {*}
+         * */
+        getCostDetailTotal(data){
+            return _this.$http.get(_this.$API.commonCostDetailTotal+ $.param(data))
+        },
+        /**
          * @description  异地激活收入成本分配明细
          * @params {data}
          * @returns {*}
