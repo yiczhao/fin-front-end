@@ -74,7 +74,13 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                     <div class="datatable-bottom">
+
+                         <div class="left">
+                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="costExcel" >Excel导出</a>
+                         </div>
+                     </div>
+                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="true" :is-cancle="true" :type.sync="'infos'"
                         :title.sync="typeTitle" @kok="saveChange()" @kcancel="cancel()"
@@ -149,6 +155,7 @@
 			this.model = model(this);
 			return{
                 type_in:false,
+                origin:window.origin,
                 typeTitle:'',
                 checkForm:{
                     subCompanyId:'',
@@ -286,6 +293,14 @@
                         });
                     }
                 }
+            },
+            costExcel(){
+                if(!this.subjectData.length>0){
+                    alert("return"); return;
+                }
+                //初始化
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.costExport+ $.param(this.checkForm));
             },
             getZlists(data){
                 this.model.getExpenseManageLlst(data).then((res)=>{

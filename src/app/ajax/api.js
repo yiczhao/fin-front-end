@@ -35,6 +35,12 @@ export default function install(Vue) {
      */
     _o.contractExport = '/data/export/excel/contractDetail?';
     /**
+     * @description 费用管理导出接口地址
+     * @author 周俭
+     * @method post
+     */
+    _o.costExport = '/data/export/excel/costManage?';
+    /**
      * @description 导出接口地址
      * @author 于凯乐
      * @method GET
