@@ -577,6 +577,7 @@
                     payType:'',
                     bankAccountID:''
                 };
+                this.applyText='';
                 this.rechargeInfo.val1=merchantName;
                 this.rechargeInfo.val2=activityName;
                 this.rechargeInfo.val3=invoiceAmount;
@@ -649,6 +650,8 @@
                 this.rechargeInfo.val8=backendMerchantName;
                 this.rechargeInfo.val9=backendMerchantCode;
                 this.uploadText='';
+                this.errortext='';
+                this.fire=false;
                 this.modal_recharge = true;
             },
             rechargeTrue(){
@@ -747,6 +750,7 @@
                 };
                 this.modal_recharges=true;
                 this.fire=false;
+                this.applyText='';
                 this.errortext='';
                 this.uploadText='';
             },
