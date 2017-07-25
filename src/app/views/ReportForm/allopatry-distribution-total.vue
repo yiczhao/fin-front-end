@@ -74,6 +74,18 @@
                                     <td>{{trlist.income/100 | currency '' }}</td><!-- {{收入}} -->
                                     <td>{{trlist.cost/100 | currency ''}}</td><!-- {{成本}} -->
                                 </tr>
+                                <tr role="row">
+                                    <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td> </td>
+                                    <td>{{total.preIncome/100 | currency '' }}</td>
+                                    <td>{{total.purchaseNumber }}</td>
+                                    <td>{{total.number}}</td>
+                                    <td>{{total.income/100 | currency '' }}</td>
+                                    <td>{{total.cost/100 | currency ''}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -156,6 +168,13 @@
                 commonbusinessList:[],
                 snPartnerList:[],
                 listData:{},
+                total:{
+                    preIncome:0,
+                    purchaseNumber:0,
+                    number:0,
+                    income:0,
+                    cost:0
+                }
 			}
 		},
 		methods:{
@@ -226,7 +245,11 @@
                         this.$set('listData',res.data.data);
                         this.$set('pageall',res.data.total);
                     }
-                })
+                });
+                this.model.getAllopatryListCountTotal(data)
+                    .then((response)=>{
+                        (response.data.code==0)?this.$set('total',response.data.data):null;
+                    })
             },
         },
 		ready(){

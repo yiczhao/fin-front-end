@@ -185,6 +185,14 @@ function model(_this){
             return _this.$http.get(_this.$API.getAllopatryActivationCountList+ $.param(data))
         },
         /**
+         * @description  异地激活收入成本分配统计
+         * @params {data}
+         * @returns {*}
+         * */
+        getAllopatryListCountTotal(data){
+            return _this.$http.get(_this.$API.getAllopatryActivationCountListTotal+ $.param(data))
+        },
+        /**
          * @description  异地激活收入成本分配统计--合伙人订单录入
          * @params {data}
          * @returns {*}
