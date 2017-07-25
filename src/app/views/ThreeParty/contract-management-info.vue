@@ -193,7 +193,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">已开票金额：</label>
-                    <span>{{relist.billingAmount/100 | currency ''}}</span>
+                    <span>{{relist.invoiceAmount/100 | currency ''}}</span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">已回款：</label>
@@ -231,7 +231,7 @@
                 </div>
                 <div class="form-group" v-if="dialogTitle==='开票'">
                     <label class="control-label">已开票金额：</label>
-                    <span>{{relist.billingAmount/100 | currency ''}}</span>
+                    <span>{{relist.invoiceAmount/100 | currency ''}}</span>
                 </div>
                 <div class="form-group" v-if="dialogTitle==='回款'">
                     <label class="control-label">应收账款：</label>
@@ -358,6 +358,7 @@
                         this.relist.invoiceAmount=res.data.data.invoiceAmount;
                         this.relist.accountsReceivable=res.data.data.accountsReceivable;
                         this.relist.collectionAmount=res.data.data.collectionAmount;
+                        this.relist.unSettlementAmount=res.data.data.unSettlementAmount;
                         this.relist.invoiceAmount2='';
                         this.relist.collectionAmount2='';
                         this.modal_associate=true;
