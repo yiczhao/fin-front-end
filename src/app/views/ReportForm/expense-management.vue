@@ -71,11 +71,18 @@
                                  </td>
                              </tr>
                             </template>
+                            <tr v-if="!!totalList.length">
+                                <td colspan="4">
+                                    合计：
+                                </td>
+                                <td v-for="m in totalList" track-by="$index">
+                                    {{m/100 | currency ''}}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                      <div class="datatable-bottom">
-
                          <div class="left">
                              <a class="icon-file-excel" style="line-height: 30px;" v-on:click="costExcel" >Excel导出</a>
                          </div>
@@ -168,6 +175,7 @@
                     // year:'2017',
                     // amountList:[],
                 },
+                totalList:[],
                 companylists:[],
                 costType:{},
                 departmentList:[],
@@ -303,14 +311,34 @@
                 window.open(window.origin+this.$API.costExport+ $.param(this.checkForm));
             },
             getZlists(data){
-                this.model.getExpenseManageLlst(data).then((res)=>{
-                    if(res.data.code==0){
-                        this.$set('listData',res.data.data);
-                    }
-                })
                 this.model.getExpenseManageSubject(data).then((res)=>{
                     if(res.data.code==0){
                         this.$set('subjectData',res.data.data.data);
+                        this.model.getExpenseManageLlst(data).then((res)=>{
+                            if(res.data.code==0){
+                                this.$set('listData',res.data.data);
+                                let x;
+                                let list=[];
+                                for (x in this.listData)
+                                {
+                                    if(!!this.listData[x]['1'].length){
+                                        _.map(this.listData[x]['1'],(val,index)=>{
+                                            list[index]=0;
+                                        });
+                                    }
+                                    break;
+                                }
+                                for (x in this.listData)
+                                {
+                                    if(!!this.listData[x]['1'].length){
+                                        _.map(this.listData[x]['1'],(val,index)=>{
+                                            list[index]+=val;
+                                        });
+                                    }
+                                }
+                                this.$set('totalList',list);
+                            }
+                        })
                     }
                 })
             },
