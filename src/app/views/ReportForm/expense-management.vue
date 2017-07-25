@@ -323,15 +323,7 @@
                                 {
                                     if(!!this.listData[x]['1'].length){
                                         _.map(this.listData[x]['1'],(val,index)=>{
-                                            list[index]=0;
-                                        });
-                                    }
-                                    break;
-                                }
-                                for (x in this.listData)
-                                {
-                                    if(!!this.listData[x]['1'].length){
-                                        _.map(this.listData[x]['1'],(val,index)=>{
+                                            list[index]=list[index] || 0;
                                             list[index]+=val;
                                         });
                                     }
