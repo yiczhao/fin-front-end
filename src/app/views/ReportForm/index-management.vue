@@ -46,24 +46,41 @@
                             <tbody>
                                 <tr role="row" v-for="(index,trlist) in listData" v-bind:class="{'odd':(index%2==0)}">
                                     <td>{{index+1}}</td>
-                                    <th>{{trlist.subCompanyName}}</th><!-- {{分公司}} -->
-                                    <th>{{trlist.year}}</th><!-- {{年份}} -->
-                                    <th>{{trlist.yearTarget/100| currency ''}}</th><!-- {{年收入目标}} -->
-                                    <th>{{trlist.yearProfitTarget/100| currency ''}}</th><!-- {{年净利润目标}} -->
-                                    <th>{{trlist.january/100| currency ''}}</th><!-- {{1月（元）}} -->
-                                    <th>{{trlist.february/100| currency ''}}</th><!-- {{2月（元）}} -->
-                                    <th>{{trlist.march/100| currency ''}}</th><!-- {{3月（元）}} -->
-                                    <th>{{trlist.april/100| currency ''}}</th><!-- {{4月（元）}} -->
-                                    <th>{{trlist.may/100| currency ''}}</th><!-- {{5月（元）}} -->
-                                    <th>{{trlist.june/100| currency ''}}</th><!-- {{6月（元）}} -->
-                                    <th>{{trlist.july/100| currency ''}}</th><!-- {{7月（元）}} -->
-                                    <th>{{trlist.august/100| currency ''}}</th><!-- {{8月（元）}} -->
-                                    <th>{{trlist.september/100| currency ''}}</th><!-- {{9月（元）}} -->
-                                    <th>{{trlist.october/100| currency ''}}</th><!-- {{10月（元）}} -->
-                                    <th>{{trlist.november/100| currency ''}}</th><!-- {{11月（元）}} -->
-                                    <th>{{trlist.december/100| currency ''}}</th><!-- {{12月（元）}} -->
+                                    <td>{{trlist.subCompanyName}}</td><!-- {{分公司}} -->
+                                    <td>{{trlist.year}}</td><!-- {{年份}} -->
+                                    <td>{{trlist.yearTarget/100| currency ''}}</td><!-- {{年收入目标}} -->
+                                    <td>{{trlist.yearProfitTarget/100| currency ''}}</td><!-- {{年净利润目标}} -->
+                                    <td>{{trlist.january/100| currency ''}}</td><!-- {{1月（元）}} -->
+                                    <td>{{trlist.february/100| currency ''}}</td><!-- {{2月（元）}} -->
+                                    <td>{{trlist.march/100| currency ''}}</td><!-- {{3月（元）}} -->
+                                    <td>{{trlist.april/100| currency ''}}</td><!-- {{4月（元）}} -->
+                                    <td>{{trlist.may/100| currency ''}}</td><!-- {{5月（元）}} -->
+                                    <td>{{trlist.june/100| currency ''}}</td><!-- {{6月（元）}} -->
+                                    <td>{{trlist.july/100| currency ''}}</td><!-- {{7月（元）}} -->
+                                    <td>{{trlist.august/100| currency ''}}</td><!-- {{8月（元）}} -->
+                                    <td>{{trlist.september/100| currency ''}}</td><!-- {{9月（元）}} -->
+                                    <td>{{trlist.october/100| currency ''}}</td><!-- {{10月（元）}} -->
+                                    <td>{{trlist.november/100| currency ''}}</td><!-- {{11月（元）}} -->
+                                    <td>{{trlist.december/100| currency ''}}</td><!-- {{12月（元）}} -->
                                 </tr>
                             </tbody>
+                            <tr>
+                                <td colspan="3">合计：</td>
+                                <td>{{total.yearTarget/100| currency ''}}</td><!-- {{年收入目标}} -->
+                                <td>{{total.yearProfitTarget/100| currency ''}}</td><!-- {{年净利润目标}} -->
+                                <td>{{total.january/100| currency ''}}</td><!-- {{1月（元）}} -->
+                                <td>{{total.february/100| currency ''}}</td><!-- {{2月（元）}} -->
+                                <td>{{total.march/100| currency ''}}</td><!-- {{3月（元）}} -->
+                                <td>{{total.april/100| currency ''}}</td><!-- {{4月（元）}} -->
+                                <td>{{total.may/100| currency ''}}</td><!-- {{5月（元）}} -->
+                                <td>{{total.june/100| currency ''}}</td><!-- {{6月（元）}} -->
+                                <td>{{total.july/100| currency ''}}</td><!-- {{7月（元）}} -->
+                                <td>{{total.august/100| currency ''}}</td><!-- {{8月（元）}} -->
+                                <td>{{total.september/100| currency ''}}</td><!-- {{9月（元）}} -->
+                                <td>{{total.october/100| currency ''}}</td><!-- {{10月（元）}} -->
+                                <td>{{total.november/100| currency ''}}</td><!-- {{11月（元）}} -->
+                                <td>{{total.december/100| currency ''}}</td><!-- {{12月（元）}} -->
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -131,6 +148,22 @@
                     november:'',
                     december:'',
                     year:'',
+                },
+                total:{
+                    yearTarget:0,
+                    yearProfitTarget:0,
+                    january:0,
+                    february:0,
+                    march:0,
+                    april:0,
+                    may:0,
+                    june:0,
+                    july:0,
+                    august:0,
+                    september:0,
+                    october:0,
+                    november:0,
+                    december:0
                 },
                 companylists:[],
                 listData:{},
@@ -269,6 +302,12 @@
                     if(res.data.code==0){
                         this.$set('listData',res.data.data);
                         // this.yearShow=res.data.data.year;
+                        _.map(this.listData,(val)=>{
+                            Object.keys(val).forEach((k) => {
+                                this.total[k]+= parseFloat(val[k]);
+                                }
+                            );
+                        })
                         this.yearShow=this.checkForm.year
                     }
                 })
