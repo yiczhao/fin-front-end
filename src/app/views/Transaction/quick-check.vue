@@ -11,7 +11,7 @@
                     </div>
                     <div style="margin:20px">
                         <span class="mr20">门店号：{{checkForm.backendStoreCode}}</span>
-                        <span class="mr20">门店名称：{{tradeList.backendName}}</span>
+                        <span class="mr20">门店名称：{{tradeList.backendStoreName}}</span>
                         <span class="mr20">商户号：{{tradeList.backendMerchantCode}}</span>
                         <span class="mr20">商户简称：{{tradeList.backendMerchantName}}</span>
                     </div>
