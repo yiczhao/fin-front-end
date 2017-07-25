@@ -63,16 +63,16 @@
                                     <td>{{trlist.date | datetimes }}</td><!-- {{时间}} -->
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
                                 </tr>
+                                <tr role="row">
+                                    <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{totalAmount/100 | currency ''}}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             </tbody>
-                            <tr role="row">
-                                <td>合计：</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{totalAmount/100 | currency ''}}</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                         </table>
                     </div>
                     <div class="datatable-bottom">

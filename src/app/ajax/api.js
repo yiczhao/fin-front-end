@@ -1746,6 +1746,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.getAllopatryActivationCountList = './target/activation_count_list?';
+    /**
+     * @description 报表管理 异地激活收入成本分配统计 合计
+     * @author 冷艳君
+     * @method get
+     */
+    _o.getAllopatryActivationCountListTotal = './target/activation_count_list/total?';
 
     /**
      * @description 报表管理 异地激活收入成本分配统计--合伙人订单录入
