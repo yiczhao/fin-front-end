@@ -247,6 +247,14 @@ window.getDate=(value,type)=>{
     function add0(m){return m<10?'0'+m:m }
     return y+'-'+add0(m)+'-'+add0(d);
 };
+window.getPreYear=()=>{
+    var time = new Date();
+    var y = time.getFullYear()-1;
+    var m = time.getMonth()+1;
+    var d = time.getDate();
+    function add0(m){return m<10?'0'+m:m }
+    return y+'-'+add0(m)+'-'+add0(d);
+};
 
 var _i={};
 _i.fetchArray=(key)=>{

@@ -76,6 +76,11 @@
                                 <option value="11">供应商划付</option>
                             </select>
 
+                            <div  class="inline" style="line-height: 36px;">
+                                划付时间：
+                                <datepicker :readonly="true" :value.sync="checkForm.paymentTime" format="YYYY-MM-DD"></datepicker>
+                            </div>
+
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">
                         </form>
                     </div>
@@ -403,6 +408,7 @@
                     mid:'',
                     pageIndex:1,
                     dateS:'4',
+                    paymentTime:getPreYear(),
                     pageSize:10
                 },
                 total:{
