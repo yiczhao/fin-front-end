@@ -321,10 +321,12 @@
                                 let list=[];
                                 for (x in this.listData)
                                 {
-                                    if(!!this.listData[x]['1'].length){
-                                        _.map(this.listData[x]['1'],(val,index)=>{
-                                            list[index]=list[index] || 0;
-                                            list[index]+=val;
+                                    if(!!this.listData[x]['1']){
+                                        _.map(this.listData[x],(arr)=>{
+                                            _.map(arr,(val,index)=>{
+                                                list[index]=list[index] || 0;
+                                                list[index]+=val;
+                                            })
                                         });
                                     }
                                 }

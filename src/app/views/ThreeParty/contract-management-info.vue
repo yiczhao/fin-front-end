@@ -89,7 +89,7 @@
                                         <a data-ksa="contract.edit" v-link="{name:'contract-add',params:{'contractAddId':trlist.contractID}}">编辑</a>
                                         <a v-if="!!trlist.contractFileID" href="{{origin}}/file/download/{{trlist.contractFileID}}">附件</a>
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
-                                        <a @click="delete(trlist.contractID)">删除</a>
+                                        <a @click="deletecontract(trlist.contractID)">删除</a>
                                     </td>
                                     <td>
                                         <a data-ksa="activity_income_cost_manage.search" v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>
@@ -435,7 +435,7 @@
                         })
                 }
             },
-            delete(_id){
+            deletecontract(_id){
                 this.id=_id;
                 this.deleteShow=true;
             },

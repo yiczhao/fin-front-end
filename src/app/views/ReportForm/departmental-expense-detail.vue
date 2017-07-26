@@ -104,7 +104,7 @@
                     <validator name="vali">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="infaceList.subCompanyId">
+                            <select class="form-control" :disabled="!!infaceList.id" v-model="infaceList.subCompanyId">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in companylists" v-text="n.name" :value="n.subCompanyID"></option>
                             </select>
