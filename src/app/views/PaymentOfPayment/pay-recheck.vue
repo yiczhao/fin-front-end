@@ -146,8 +146,8 @@
                                     <template v-else> {{n.bankNumber}}</template>
                                 </td>
                                 <td>
-                                    <template v-if="n.isCcb==1">是</template>
-                                    <template v-else>否</template>
+                                    <template v-if="n.isCcb==1&&n.payType==1">是</template>
+                                    <template  v-if="n.isCcb!=1&&n.payType==1">否</template>
                                 </td>
                                 <td>
                                     <template v-if="n.payType==1">备付金账户</template>
