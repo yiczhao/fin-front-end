@@ -64,8 +64,8 @@
                                     <td>{{trlist.date | datetimes }}</td><!-- {{时间}} -->
                                     <td>{{trlist.remarks}}</td><!-- {{备注}} -->
                                     <td>
-                                        <a  @click="editTypeIn" >编辑</a>
-                                        <a  @click="deleteTypeIn" >删除</a>
+                                        <a  @click="typeIn(trlist.id)" >编辑</a>
+                                        <a  @click="deleteTypeIn(trlist.id)" >删除</a>
                                     </td><!-- {{备注}} -->
                                 </tr>
                                 <tr role="row">
@@ -99,7 +99,7 @@
                 </div>
                 <content-dialog
                         :show.sync="type_in" :is-button="false" :is-cancle="true" :type.sync="'infos'"
-                        :title.sync="'实际费用录入'" @kok="saveChange()" @kcancel="cancel()"
+                        :title.sync="typeTitle" @kok="saveChange()" @kcancel="cancel()"
                 >
                     <validator name="vali">
                         <div class="form-group">
@@ -140,10 +140,16 @@
                         </div>
                         <div class="form-group tc" style="margin-top: 15px;">
                             <a @click="cancel" class="btn btn-default mr20">取消</a>
-                            <a @click="saveChange1" class="btn btn-primary mr20">保存并继续</a>
-                            <a @click="saveChange" class="btn btn-primary">保存</a>
+                            <a v-if="typeTitle==='实际费用录入'" @click="saveChange1" class="btn btn-primary mr20">保存并继续</a>
+                            <a v-if="typeTitle==='实际费用录入'" @click="saveChange" class="btn btn-primary">保存</a>
+                            <a v-if="typeTitle==='实际费用录入编辑'" @click="saveChange" class="btn btn-primary">保存</a>
                         </div>
                     </validator>
+                </content-dialog>
+                <content-dialog
+                        :show.sync="deleteShow" :is-cancel="true" :type.sync="'infos'"
+                        :title.sync="'确认删除此费用明细？'" @kok="deleteTrue" @kcancel="deleteShow = false"
+                >
                 </content-dialog>
             </div>
         </div>
@@ -155,7 +161,9 @@
 		data(){
 			this.model = model(this);
 			return{
+                typeTitle:'',
                 type_in:false,
+                deleteShow:false,
                 checkForm:{
                     subCompanyId:'',
                     departmentName:'',
@@ -166,6 +174,7 @@
                     month:'',
                     department:''
                 },
+                id:'',
                 date:' ',
                 dateS:'3',
                 pageall:1,
@@ -184,7 +193,7 @@
                 this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
                 window.open(window.origin+this.$API.costDetailToExcel+ $.param(this.checkForm));
             },
-            typeIn(){
+            typeIn(_id){
                 this.type_in=true;
                 this.model.costCommonTypeIn().then((res)=>{
                     if(res.data.code==0){
@@ -196,27 +205,32 @@
                         this.$set('departmentList',res.data.data)
                     }
                 })
-                this.typeTitle='实际费用录入';
-                this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:'',remarks:''};
+                if(!_id){
+                    this.typeTitle='实际费用录入';
+                    this.infaceList={subCompanyId:'',subject:'',department:'',date:'',amount:'',remarks:''};
+                    this.type_in=true;
+                }else{
+                    this.typeTitle='实际费用录入编辑';
+                    this.model.costBugetInInfo({id:_id}).then((res)=>{
+                        if(res.data.code==0){
+                            this.$set('infaceList',res.data.data);
+                            this.infaceList.date=getDate(this.infaceList.date);
+                            this.type_in=true;
+                        }
+                    })
+                }
             },
-            editTypeIn(){
-                this.model.costCommonTypeIn().then((res)=>{
+            deleteTypeIn(_id){
+                this.deleteShow=true;
+                this.id=_id;
+            },
+            deleteTrue(){
+                this.model.costBugetInDelete(this.id).then((res)=>{
                     if(res.data.code==0){
-                        this.$set('costType',res.data.data)
+                        dialogs('success','已删除！');
+                        this.initList();
                     }
                 })
-                this.model.departmentList().then((res)=>{
-                    if(res.data.code==0){
-                        this.$set('departmentList',res.data.data)
-                    }
-                })
-                this.typeTitle='实际费用录入';
-                this.$set('infaceList',list);
-                this.infaceList.amount=this.infaceList.amount/100;
-                this.type_in=true;
-            },
-            deleteTypeIn(){
-
             },
             cancel(){
                 this.infaceList={date:getNowMonth()};
@@ -306,6 +320,7 @@
                 this.checkForm.endDate=init_date(this.dateS)[1];
             },
             initList(){
+                this.deleteShow=false;
                 this.setTime();
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getZlists();

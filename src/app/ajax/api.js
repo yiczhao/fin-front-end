@@ -1779,6 +1779,18 @@ export default function install(Vue) {
      * @method post
      */
     _o.costBugetIn = './cost/budget?';
+    /**
+     * @description 报表管理 费用管理 费用预算编辑
+     * @author 于凯乐
+     * @method get
+     */
+    _o.costBugetInInfo = './cost/info?';
+    /**
+     * @description 报表管理 费用管理 费用预算删除
+     * @author 于凯乐
+     * @method post
+     */
+    _o.costBugetInDelete = './cost/detail/delete/';
 
     /**
      * @description 报表管理 费用管理 预算-预算录入-查询费用类型

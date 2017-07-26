@@ -145,6 +145,22 @@ function model(_this){
             return _this.$http.get(_this.$API.commonCostType)
         },
         /**
+         * @description  费用管理-费用明细编辑
+         * @params {data}
+         * @returns {*}
+         * */
+        costBugetInInfo(data){
+            return _this.$http.get(_this.$API.costBugetInInfo + $.param(data))
+        },
+        /**
+         * @description  费用管理-费用明细删除
+         * @params {data}
+         * @returns {*}
+         * */
+        costBugetInDelete(_id){
+            return _this.$http.post(_this.$API.costBugetInDelete+_id)
+        },
+        /**
          * @description  部门费用明细
          * @params {data}
          * @returns {*}
