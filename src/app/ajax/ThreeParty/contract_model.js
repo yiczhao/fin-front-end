@@ -85,6 +85,14 @@ function model(_this){
         getContractNumber(data){
             return _this.$http.get(_this.$API.getContractNumber+$.param(data))
         },
+        /**
+         * @description 删除合同
+         * @params {data}
+         * @returns {*}
+         * */
+        contract_delete(_id){
+            return _this.$http.delete(_this.$API.contract_delete+ _id)
+        }
     }
 }
 module.exports=model;

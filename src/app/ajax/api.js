@@ -1515,6 +1515,13 @@ export default function install(Vue) {
      * @method get
      */
     _o.contractInvoiceInfo = './contract/invoiceInfo?';
+    /**
+     * @description 删除合同
+     * @author 冷艳君
+     * @method delete
+     */
+    _o.contract_delete = './contract/delete/';
+
 
     //- todo  三方管理-合同管理-回款开票明细 invoice-collection
     /**
