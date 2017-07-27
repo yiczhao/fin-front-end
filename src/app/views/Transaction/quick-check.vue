@@ -31,7 +31,7 @@
                                 <p style="color:red;text-align:right;margin-top:20px">大后台共{{tradeList.sysMoreThanTrade.countTotal}}笔 </p>
                                 <p style="color:red;text-align:right">比财务系统多{{tradeList.sysMoreThanTrade.countMore}}笔 </p>
                                 <p style="color:red;text-align:right">银行应补多{{tradeList.sysMoreThanTrade.bankMore}}元 </p>
-                                <p style="color:red;text-align:right">商户应补多{{tradeList.sysMoreThanTrade.merchantMore/100 | currency ''}}元</p>
+                                <p style="color:red;text-align:right">商户应补多{{tradeList.sysMoreThanTrade.merchantMore}}元</p>
                             </div>
                             <div style="width:50%;float:left;padding:0 20px;border-left:1px solid #dadada;">
                                 <p>财务系统比大后台多：</p>
