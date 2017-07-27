@@ -191,8 +191,8 @@
                                     <span v-else> {{n.incomeBankNumber }}</span>
                                 </td>
                                 <td>
-                                    <span v-if="n.ccb">是</span>
-                                    <span v-else>否</span>
+                                    <span v-if="n.ccb&&n.payType==1">是</span>
+                                    <span v-if="!n.ccb&&n.payType==1">否</span>
                                 </td>
                                 <td>{{n.applyTime | datetime}}</td>
                                 <td>{{n.paymentTime  | datetime}}</td>
