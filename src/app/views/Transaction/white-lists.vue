@@ -131,8 +131,13 @@
                                 <input type="radio" id="two" value="1" v-model="redata.validType" v-validate:isCcb="['required']">
                                 <label style="text-align: left;" for="two">自定义</label>
                                 <div v-show="redata.validType=='1'" style="padding-left: 75px;">
-                                    <datepicker :width="'215px'" :readonly="true" :value.sync="startDate" format="YYYY-MM-DD"></datepicker>至
-                                    <datepicker :width="'215px'" :readonly="true" :value.sync="redata.endDate" format="YYYY-MM-DD"></datepicker>
+                                    <div style="width:215px;display:inline-block">
+                                        <datepicker :value.sync="startDate"></datepicker>
+                                    </div>
+                                    <span>至</span>
+                                    <div style="width:215px;display:inline-block">
+                                        <datepicker :value.sync="redata.endDate"></datepicker>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

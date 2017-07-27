@@ -127,6 +127,24 @@
     display:inline-block;
     margin-right: 20px;
     font-size: 13px;
+    height:36px;
+    &>span{
+      position: relative;
+      top: -10px;
+      margin: 0 5px;
+    }
+    .KsDatePicker{
+      display: inline-block;
+      .KsDater{
+        left:0;
+      }
+      .KsDateMonthPicker-input input, .KsDatePicker-input input, .KsDaterMultiPicker-input input, .KsDateYearPicker-input input{
+        height: 34px;
+      }
+    }
+    .KsDater-date-head .retreat{
+      text-align: left;
+    }
   }
   .btn-info{
     background: #2196f3;

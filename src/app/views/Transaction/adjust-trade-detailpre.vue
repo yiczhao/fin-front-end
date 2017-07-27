@@ -38,8 +38,9 @@
                         </select>
 
                         <div v-show="checkForm.timeRange==4"  class="inline">
-                            <datepicker :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                            <datepicker :value.sync="checkForm.startDate"></datepicker>
+                            <span>至</span>
+                            <datepicker :value.sync="checkForm.endDate"></datepicker>
                         </div>
                         <input type="text" class="form-control" placeholder="商户号" v-model="checkForm.backendMerchantCode">
                         <input type="text" class="form-control" placeholder="商户简称" v-model="checkForm.backendMerchantName">

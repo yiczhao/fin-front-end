@@ -20,8 +20,9 @@
                                 <option value="4">自定义时间</option>
                             </select>
                             <div v-show="dateS==4" class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                                <datepicker :value.sync="checkForm.startDate"></datepicker>
+                                <span>至</span>
+                                <datepicker :value.sync="checkForm.endDate"></datepicker>
                             </div>
                             <select class="form-control" v-model="checkForm.runningChannelID">
                                 <option value="">全部交易通道</option>

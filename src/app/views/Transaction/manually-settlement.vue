@@ -35,8 +35,9 @@
                         </select>
 
                         <div  v-show="checkForm.timeRange==4" class="inline">
-                            <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                            <datepicker :value.sync="checkForm.startDate"></datepicker>
+                            <span>至</span>
+                            <datepicker :value.sync="checkForm.endDate"></datepicker>
                         </div>
                         <input type="text" class="form-control" v-model="checkForm.merchantOperationIDs" placeholder="商户ID（多个ID以逗号隔开）" v-limitids="checkForm.merchantOperationIDs">
                         <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
@@ -176,8 +177,8 @@
                             <option value="4">自定义时间</option>
                         </select>
                         <div style="width: 80%;margin: 15px 0 0 19%;" v-show="batchData.timeRange==4">
-                            <datepicker  :readonly="true" :value.sync="batchData.startDate" format="YYYY-MM-DD"></datepicker>至
-                            <datepicker  :readonly="true" :value.sync="batchData.endDate" format="YYYY-MM-DD"></datepicker>
+                            <datepicker :value.sync="batchData.startDate"></datepicker>至
+                            <datepicker :value.sync="batchData.endDate"></datepicker>
                         </div>
                     </div>
                     <div class="form-group">

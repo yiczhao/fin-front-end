@@ -1,12 +1,14 @@
 import loop from './loop'
 import index from './otherComponent/index.vue'
 import page from './otherComponent/page.vue'
-import datepicker from './otherComponent/datepicker.vue'
+// import datepicker from './otherComponent/datepicker.vue'
 import getmonth from './otherComponent/picker.vue'
 import ContentDialog from './otherComponent/ContentDialog.vue'
 import KsMask from 'KS/components/KsMask/index.js'
 import KsButton from 'KS/components/KsButton/index.1.0.0.js'
 import KsIcon from 'KS/components/KsIcon/index.1.0.0.js'
+import KsDater from 'KS/components/KsDater/index.1.0.0.js'
+import datepicker from 'KS/components/KsDatePicker/index.1.0.0.js'
 import notify_instance from './notify'
 var components = {
     loop,
@@ -16,6 +18,7 @@ var components = {
     page,
     ContentDialog,
     KsButton,
+    KsDater,
     KsIcon
 };
 

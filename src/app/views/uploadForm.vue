@@ -19,35 +19,35 @@
 								<tr>
 									<td><span>大后台交易数据拉取：</span></td>
 									<td>选择日期：
-										<datepicker :readonly="true" :value.sync="dateStr3" format="YYYY-MM-DD"></datepicker>
+										<datepicker type="date" v-bind:value.sync="dateStr3"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime3($event)"/></td>
 								</tr>
 								<tr>
 									<td><span>交易数据回滚：</span></td>
 									<td>选择日期：
-										<datepicker :readonly="true" :value.sync="dateStr" format="YYYY-MM-DD"></datepicker>
+										<datepicker type="date" v-bind:value.sync="dateStr"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime($event)"/></td>
 								</tr>
 								<tr>
 									<td><span>终端激活明细拉取：</span></td>
 									<td>选择日期（同步数据）：
-										<datepicker :readonly="true" :value.sync="dateStr1" format="YYYY-MM-DD"></datepicker>
+										<datepicker type="date" v-bind:value.sync="dateStr1"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTime1($event)"/>
 									</td>
 								</tr>								<tr>
 									<td><span>终端激活递延成本拉取：</span></td>
 									<td>选择日期（同步数据）：
-										<datepicker :readonly="true" :value.sync="dateStrDefer" format="YYYY-MM-DD"></datepicker>
+										<datepicker type="date" v-bind:value.sync="dateStrDefer"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTimeDefer($event)"/>
 									</td>
 								</tr>								<tr>
 									<td><span>财务数据拉取：</span></td>
 									<td>选择日期（同步数据）：
-										<datepicker :readonly="true" :value.sync="dateStrFinance" format="YYYY-MM-DD"></datepicker>
+										<datepicker type="date" v-bind:value.sync="dateStrFinance"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="提交" @click="submitTimeFinance($event)"/>
 									</td>
@@ -62,8 +62,9 @@
                                 <tr>
 									<td><span>备付金明细拉取：</span></td>
                                     <td>
-                                        开始日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="startdateStr" format="YYYY-MM-DD"></datepicker>
-                                        结束日期：<datepicker  :readonly="true" :width="'150px'" :value.sync="enddateStr" format="YYYY-MM-DD"></datepicker>
+                                        开始日期：
+										<datepicker type="date" v-bind:value.sync="startdateStr"></datepicker>
+										<datepicker type="date" v-bind:value.sync="enddateStr"></datepicker>
                                         <input type="text" class="form-control" v-model="bankAccountID" placeholder="账号"/>
                                     </td>
                                     <td>
@@ -111,7 +112,7 @@
 								<tr>
 									<td><span>生成财务指标分析表：</span></td>
 									<td>选择日期：
-										<datepicker :readonly="true" :value.sync="countDateStr" format="YYYY-MM-DD"></datepicker>
+										<datepicker type="date" v-bind:value.sync="countDateStr"></datepicker>
 									</td>
 									<td><input type="button" class="btn btn-primary" value="生成财务指标分析表" @click="generateFinanceTargetDetail($event)"/></td>
 								</tr>

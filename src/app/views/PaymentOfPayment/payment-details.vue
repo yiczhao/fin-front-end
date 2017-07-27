@@ -47,8 +47,9 @@
                             </select>
 
                             <div v-show="checkForm.dateS==4"  class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                                <datepicker type="date" v-bind:value.sync="checkForm.startDate"></datepicker>
+                                <span>至</span>
+                                <datepicker type="date" v-bind:value.sync="checkForm.endDate"></datepicker>
                             </div>
 
                             <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
@@ -76,10 +77,10 @@
                                 <option value="11">供应商划付</option>
                             </select>
 
-                            <div  class="inline" style="line-height: 36px;">
-                                划付时间：
-                                <datepicker :readonly="true" :value.sync="checkForm.startPayDate" format="YYYY-MM-DD"></datepicker>
-                                至<datepicker :readonly="true" :value.sync="checkForm.endPayDate" format="YYYY-MM-DD"></datepicker>
+                            <div  class="inline">
+                                <span>划付时间：</span>
+                                <datepicker type="date" v-bind:value.sync="checkForm.startPayDate"></datepicker>
+                                <datepicker type="date" v-bind:value.sync="checkForm.endPayDate"></datepicker>
                             </div>
 
                             <input type="text" class="form-control" v-model="checkForm.remarks" placeholder="备注">

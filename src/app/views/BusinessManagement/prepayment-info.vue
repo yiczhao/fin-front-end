@@ -25,11 +25,9 @@
                             </select>
 
                             <div  v-show="defaultData.dateS==4" class="inline">
-                                <datepicker :readonly="true" :value.sync="defaultData.startDate"
-                                            format="YYYY-MM-DD"></datepicker>
-                                至
-                                <datepicker :readonly="true" :value.sync="defaultData.endDate"
-                                            format="YYYY-MM-DD"></datepicker>
+                                <datepicker :value.sync="defaultData.startDate"></datepicker>
+                                <span>至</span>
+                                <datepicker :value.sync="defaultData.endDate"></datepicker>
                             </div>
 
                         <input type="text" class="form-control" v-model="defaultData.orderNumber" placeholder="订单号" v-limitnumber="defaultData.orderNumber">

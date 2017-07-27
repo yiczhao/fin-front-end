@@ -24,8 +24,11 @@
                 <div class="datatable-body" v-show="dzradio=='G'">
                     <div class="datatable-title">
                         <span>请选择银行流水</span>
-                        <datepicker  :readonly="true" :value.sync="detailData.startDate" format="YYYY-MM-DD"></datepicker>至
-                        <datepicker  :readonly="true" :value.sync="detailData.endDate" format="YYYY-MM-DD"></datepicker>
+                        <div class="inline">
+                            <datepicker :value.sync="detailData.startDate"></datepicker>
+                            <span>至</span>
+                            <datepicker :value.sync="detailData.endDate"></datepicker>
+                        </div>
                         <a class="btn btn-info add-top" @click="searchDetail" data-ksa="principle_cash_checking.search">查询</a>
                     </div>
                     <table class="table">
@@ -66,8 +69,11 @@
                 <div class="datatable-body br20" v-show="dzradio=='G'">
                     <div class="datatable-title">
                         <span>请选择本金入账订单</span>
-                        <datepicker  :readonly="true" :value.sync="orderData.startDate" format="YYYY-MM-DD"></datepicker>至
-                        <datepicker  :readonly="true" :value.sync="orderData.endDate" format="YYYY-MM-DD"></datepicker>
+                        <div class="inline">
+                            <datepicker :value.sync="orderData.startDate"></datepicker>
+                            <span>至</span>
+                            <datepicker :value.sync="orderData.endDate"></datepicker>
+                        </div>
                         <a class="btn btn-info add-top" @click="searchOrder" data-ksa="">查询</a>
                     </div>
                     <table class="table">

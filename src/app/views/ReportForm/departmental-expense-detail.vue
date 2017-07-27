@@ -127,7 +127,9 @@
                         </div>
                         <div class="form-group">
                             <label><i>*</i>时间</label>
-                            <datepicker :readonly="true" :value.sync="infaceList.date" format="YYYY-MM-DD"></datepicker>
+                            <div class="inline" style="width:75%;position: relative;top: 13px;">
+                                <datepicker :value.sync="infaceList.date"></datepicker>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label><i>*</i>金额</label>

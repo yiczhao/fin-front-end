@@ -156,9 +156,10 @@
                         <span v-if="$vali.val5.required && fire1" class="validation-error-label">请输入开户行</span>
                     </div>
                     <div class="form-group">
-                        <label><i>*</i>起始日期</label>
-                        <datepicker :width="'79%'" :readonly="true" :value.sync="relist.startDate | datetimes" format="YYYY-MM-DD"></datepicker>
-                        <span v-show="timeerror">请选择起始日期</span>
+                        <label style="position: relative;top: -10px;"><i>*</i>起始日期</label>
+                        <div class="inline" style="width:75%">
+                            <datepicker :value.sync="relist.startDate | datetimes"></datepicker>
+                        </div><span v-show="timeerror">请选择起始日期</span>
                     </div>
                     <div class="form-group">
                         <label><i>*</i>类型</label>

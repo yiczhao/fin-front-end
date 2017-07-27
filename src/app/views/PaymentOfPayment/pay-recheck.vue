@@ -58,8 +58,9 @@
                             </select>
 
                             <div v-show="checkForm.timeRange==4" class="inline">
-                                <datepicker  :readonly="true" :value.sync="checkForm.startDate" format="YYYY-MM-DD"></datepicker>至
-                                <datepicker  :readonly="true" :value.sync="checkForm.endDate" format="YYYY-MM-DD"></datepicker>
+                                <datepicker :value.sync="checkForm.startDate"></datepicker>
+                                <span>至</span>
+                                <datepicker :value.sync="checkForm.endDate"></datepicker>
                             </div>
 
                             <input type="text" class="form-control" v-model="checkForm.id" placeholder="请输入ID" v-limitnumber="checkForm.id">
