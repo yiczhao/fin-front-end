@@ -410,8 +410,8 @@
                     mid:'',
                     pageIndex:1,
                     dateS:'4',
-                    startPayDate:init_date('4')[0],
-                    endPayDate:init_date('4')[1],
+                    startPayDate:'',
+                    endPayDate:'',
                     pageSize:10
                 },
                 total:{
