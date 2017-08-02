@@ -34,7 +34,6 @@ ENV KS_PROJECT_NAME $KS_PPROJECT_NAME
 ENV KS_PROJECT_PORT 80
 EXPOSE $KS_PROJECT_PORT
 
-COPY index.html /usr/share/nginx/html/
-COPY dist /usr/share/nginx/html/dist
+COPY dist /usr/share/nginx/html/
 
 

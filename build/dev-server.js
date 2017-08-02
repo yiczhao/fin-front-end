@@ -1,0 +1,53 @@
+/**
+ * @description 开发服务器
+ * @author: yiczhao.
+ */
+var webpack = require('webpack')
+var merge = require('webpack-merge')
+var path = require('path')
+
+var webpackConfig = require('../webpack.config')
+var BrowserSync = require('browser-sync-webpack-plugin')
+var HtmlWebpackPlguin = require('html-webpack-plugin')
+
+var mixinWebpackConfig = merge.smart(webpackConfig, {
+  watch: true,
+  plugins: [
+    new BrowserSync({
+      host: 'localhost',
+      port: 8077,
+      server: {
+        baseDir: path.join(__dirname, '../dist/'),
+        index: 'index.html',
+      }
+    }),
+    new webpack.ProgressPlugin(function (percentage, msg) {
+      console.log('进度：' + Math.round(percentage * 100) + '% ---> ' + msg)
+    })
+  ],
+  loaders: [
+    {
+      test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      loader: 'url',
+      query: {
+        limit: 10000
+      }
+    },
+  ],
+  vue: {
+    loaders: {
+      scss: 'vue-style-loader!css-loader!sass-loader'
+    }
+  }
+})
+
+webpack(mixinWebpackConfig, function (err, status) {
+  if (err) throw err
+  process.stdout.write(status.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n')
+})
