@@ -76,150 +76,284 @@
                 </div>
 
                 <div v-cloak v-show="!!tradeList.length" class="dataTables_wrapper no-footer">
-                    <div class="datatable-scroll">
-                        <table class="table">
-                            <thead>
-                            <tr role="row">
-                                <th>交易ID</th>
-                                <th>交易流水号</th>
-                                <th>分公司</th>
-                                <th>城市</th>
-                                <th>商户号</th>
-                                <th>商户简称</th>
-                                <th>门店号</th>
-                                <th>门店名称</th>
-                                <th>商盟ID</th>
-                                <th>商盟商户名称</th>
-                                <th>消费金额</th>
-                                <th>可打折金额</th>
-                                <th>实付金额</th>
-                                <th>额度抵扣</th>
-                                <th>本金抵扣</th>
-                                <th>银行应补</th>
-                                <th>商户应补</th>
-                                <th>暂扣税金</th>
-                                <th>商户实补</th>
-                                <th>折扣差</th>
-                                <th>扣收金额</th>
-                                <th>导流佣金</th>
-                                <th>入账金额</th>
-                                <th>交易时间</th>
-                                <th>参与活动</th>
-                                <th>交易类型</th>
-                                <th>凭证</th>
-                                <th>备注</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.id}}</td>
-                                <td>{{trlist.serialNumber}}</td>
-                                <td>{{trlist.subCompanyName}}</td>
-                                <td>{{trlist.cityName}}</td>
-                                <td>{{trlist.backendMerchantCode}}</td>
-                                <td>{{trlist.backendMerchantName}}</td>
-                                <td>{{trlist.backendStoreCode}}</td>
-                                <td>{{trlist.backendStoreName}}</td>
-                                <td>{{trlist.merchantOperationID}}</td>
-                                <td>
-                                    <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
-                                </td>
-                                <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
-                                <td>{{trlist.discountAmount/100 | currency ''}}</td>
-                                <td>{{trlist.payAmount/100 | currency ''}}</td>
-                                <td>
-                                    <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.limitDeduct/100 | currency ''}}</a>-->
-                                    <!--<span v-else>{{trlist.limitDeduct/100 | currency ''}}</span>-->
-                                    <span>{{trlist.limitDeduct/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.principalDeduct/100 | currency ''}}</a>-->
-                                    <!--<span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>-->
-                                    <span>{{trlist.principalDeduct/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <a data-ksa="third_party_account_manage.search" @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
-                                    <span v-else>0.00</span>
-                                </td>
-                                <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
-                                <td>
-                                    <a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
-                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
-                                    <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
-                                </td>
-                                <td>
-                                    <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
-                                    <span v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</span>
-                                </td>
-                                <td>{{trlist.discountDiff/100 | currency ''}}</td>
-                                <td>{{trlist.collectionAmount/100 | currency ''}}</td>
-                                <td>{{trlist.commission33211/100 | currency ''}}</td>
-                                <td>{{trlist.entryAmount/100 | currency ''}}</td>
-                                <td>{{trlist.tradeTime | datetime}}</td>
-                                <td>
-                                    <template v-if="!trlist.activityName">
-                                        无
-                                    </template>
-                                    <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.type==1">
-                                        正常交易
-                                    </template>
-                                    <template v-if="trlist.type==2">
-                                        手工单
-                                    </template>
-                                    <template v-if="trlist.type==3">
-                                        调账
-                                    </template>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.type==2||trlist.type==3">
-                                        <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载</a>
-                                    </template>
-                                </td>
-                                <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
-                                    {{trlist.remarks | substring 15}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>合计：</td>
-                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                                <td>{{nums.consumptionAmount/100 | currency ''}}</td>
-                                <td>{{nums.discountAmount/100 | currency ''}}</td>
-                                <td>{{nums.payAmount/100 | currency ''}}</td>
-                                <td>{{nums.limitDeduct/100 | currency ''}}</td>
-                                <td>{{nums.principalDeduct/100 | currency ''}}</td>
-                                <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
-                                <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
-                                <td>{{nums.suspensionTax/100 | currency ''}}</td>
-                                <td>{{nums.merchantSubsidyActual/100 | currency ''}}</td>
-                                <td>{{nums.discountDiff/100 | currency ''}}</td>
-                                <td>{{nums.collectionAmount/100 | currency ''}}</td>
-                                <td>{{nums.commission33211/100 | currency ''}}</td>
-                                <td>{{nums.entryAmount/100 | currency ''}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <div style="position:relative;padding-top:100px;margin-top: -100px;overflow: auto;">
+                            <div class="datatable-fixed" style="height:45px;position: absolute;top: 100px;overflow: hidden;background:#fff;">
+                                <table id="datatable" class="table">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>交易ID</th>
+                                        <th>交易流水号</th>
+                                        <th>分公司</th>
+                                        <th>城市</th>
+                                        <th>商户号</th>
+                                        <th>商户简称</th>
+                                        <th>门店号</th>
+                                        <th>门店名称</th>
+                                        <th>商盟ID</th>
+                                        <th>商盟商户名称</th>
+                                        <th>消费金额</th>
+                                        <th>可打折金额</th>
+                                        <th>实付金额</th>
+                                        <th>额度抵扣</th>
+                                        <th>本金抵扣</th>
+                                        <th>银行应补</th>
+                                        <th>商户应补</th>
+                                        <th>暂扣税金</th>
+                                        <th>商户实补</th>
+                                        <th>折扣差</th>
+                                        <th>扣收金额</th>
+                                        <th>导流佣金</th>
+                                        <th>入账金额</th>
+                                        <th>交易时间</th>
+                                        <th>参与活动</th>
+                                        <th>交易类型</th>
+                                        <th>凭证</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
+                                        <td>{{trlist.id}}</td>
+                                        <td>{{trlist.serialNumber}}</td>
+                                        <td>{{trlist.subCompanyName}}</td>
+                                        <td>{{trlist.cityName}}</td>
+                                        <td>{{trlist.backendMerchantCode}}</td>
+                                        <td>{{trlist.backendMerchantName}}</td>
+                                        <td>{{trlist.backendStoreCode}}</td>
+                                        <td>{{trlist.backendStoreName}}</td>
+                                        <td>{{trlist.merchantOperationID}}</td>
+                                        <td>
+                                            <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                        </td>
+                                        <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.discountAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.payAmount/100 | currency ''}}</td>
+                                        <td>
+                                            <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.limitDeduct/100 | currency ''}}</a>-->
+                                            <!--<span v-else>{{trlist.limitDeduct/100 | currency ''}}</span>-->
+                                            <span>{{trlist.limitDeduct/100 | currency ''}}</span>
+                                        </td>
+                                        <td>
+                                            <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.principalDeduct/100 | currency ''}}</a>-->
+                                            <!--<span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>-->
+                                            <span>{{trlist.principalDeduct/100 | currency ''}}</span>
+                                        </td>
+                                        <td>
+                                            <a data-ksa="third_party_account_manage.search" @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
+                                            <span v-else>0.00</span>
+                                        </td>
+                                        <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                        <td>
+                                            <a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                            <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                            <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                            <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                        </td>
+                                        <td>
+                                            <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                            <span v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</span>
+                                        </td>
+                                        <td>{{trlist.discountDiff/100 | currency ''}}</td>
+                                        <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.commission33211/100 | currency ''}}</td>
+                                        <td>{{trlist.entryAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.tradeTime | datetime}}</td>
+                                        <td>
+                                            <template v-if="!trlist.activityName">
+                                                无
+                                            </template>
+                                            <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
+                                        </td>
+                                        <td>
+                                            <template v-if="trlist.type==1">
+                                                正常交易
+                                            </template>
+                                            <template v-if="trlist.type==2">
+                                                手工单
+                                            </template>
+                                            <template v-if="trlist.type==3">
+                                                调账
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template v-if="trlist.type==2||trlist.type==3">
+                                                <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载</a>
+                                            </template>
+                                        </td>
+                                        <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
+                                            {{trlist.remarks | substring 15}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>合计：</td>
+                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                        <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                        <td>{{nums.discountAmount/100 | currency ''}}</td>
+                                        <td>{{nums.payAmount/100 | currency ''}}</td>
+                                        <td>{{nums.limitDeduct/100 | currency ''}}</td>
+                                        <td>{{nums.principalDeduct/100 | currency ''}}</td>
+                                        <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
+                                        <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                        <td>{{nums.suspensionTax/100 | currency ''}}</td>
+                                        <td>{{nums.merchantSubsidyActual/100 | currency ''}}</td>
+                                        <td>{{nums.discountDiff/100 | currency ''}}</td>
+                                        <td>{{nums.collectionAmount/100 | currency ''}}</td>
+                                        <td>{{nums.commission33211/100 | currency ''}}</td>
+                                        <td>{{nums.entryAmount/100 | currency ''}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="max-height: 800px;overflow-x: hidden;" :style="{ width: tableWidth}">
+                                <table class="table">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>交易ID</th>
+                                        <th>交易流水号</th>
+                                        <th>分公司</th>
+                                        <th>城市</th>
+                                        <th>商户号</th>
+                                        <th>商户简称</th>
+                                        <th>门店号</th>
+                                        <th>门店名称</th>
+                                        <th>商盟ID</th>
+                                        <th>商盟商户名称</th>
+                                        <th>消费金额</th>
+                                        <th>可打折金额</th>
+                                        <th>实付金额</th>
+                                        <th>额度抵扣</th>
+                                        <th>本金抵扣</th>
+                                        <th>银行应补</th>
+                                        <th>商户应补</th>
+                                        <th>暂扣税金</th>
+                                        <th>商户实补</th>
+                                        <th>折扣差</th>
+                                        <th>扣收金额</th>
+                                        <th>导流佣金</th>
+                                        <th>入账金额</th>
+                                        <th>交易时间</th>
+                                        <th>参与活动</th>
+                                        <th>交易类型</th>
+                                        <th>凭证</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(index,trlist) in tradeList" v-bind:class="{'odd':(index%2==0)}">
+                                        <td>{{trlist.id}}</td>
+                                        <td>{{trlist.serialNumber}}</td>
+                                        <td>{{trlist.subCompanyName}}</td>
+                                        <td>{{trlist.cityName}}</td>
+                                        <td>{{trlist.backendMerchantCode}}</td>
+                                        <td>{{trlist.backendMerchantName}}</td>
+                                        <td>{{trlist.backendStoreCode}}</td>
+                                        <td>{{trlist.backendStoreName}}</td>
+                                        <td>{{trlist.merchantOperationID}}</td>
+                                        <td>
+                                            <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                        </td>
+                                        <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.discountAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.payAmount/100 | currency ''}}</td>
+                                        <td>
+                                            <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.limitDeduct/100 | currency ''}}</a>-->
+                                            <!--<span v-else>{{trlist.limitDeduct/100 | currency ''}}</span>-->
+                                            <span>{{trlist.limitDeduct/100 | currency ''}}</span>
+                                        </td>
+                                        <td>
+                                            <!--<a v-link="{name:'limitaccount-info'}" v-if="trlist.limitDeduct>0||trlist.principalDeduct>0">{{trlist.principalDeduct/100 | currency ''}}</a>-->
+                                            <!--<span v-else>{{trlist.principalDeduct/100 | currency ''}}</span>-->
+                                            <span>{{trlist.principalDeduct/100 | currency ''}}</span>
+                                        </td>
+                                        <td>
+                                            <a data-ksa="third_party_account_manage.search" @click="goThird(trlist.id,trlist.serialNumber)" v-if="trlist.activityOperationID!=0&&trlist.thirdPartyReceivable!=0">{{trlist.thirdPartyReceivable/100 | currency ''}}</a>
+                                            <span v-else>0.00</span>
+                                        </td>
+                                        <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                        <td>
+                                            <a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                            <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
+                                            <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                            <span v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID==0">{{trlist.suspensionTax/100 | currency ''}}</span>
+                                        </td>
+                                        <td>
+                                            <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyPayID!=0&&trlist.merchantSubsidyActual!=0">{{trlist.merchantSubsidyActual/100 | currency ''}}</a>
+                                            <span v-else>{{trlist.merchantSubsidyActual/100 | currency ''}}</span>
+                                        </td>
+                                        <td>{{trlist.discountDiff/100 | currency ''}}</td>
+                                        <td>{{trlist.collectionAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.commission33211/100 | currency ''}}</td>
+                                        <td>{{trlist.entryAmount/100 | currency ''}}</td>
+                                        <td>{{trlist.tradeTime | datetime}}</td>
+                                        <td>
+                                            <template v-if="!trlist.activityName">
+                                                无
+                                            </template>
+                                            <a data-ksa="activity_manage.search" v-else v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a>
+                                        </td>
+                                        <td>
+                                            <template v-if="trlist.type==1">
+                                                正常交易
+                                            </template>
+                                            <template v-if="trlist.type==2">
+                                                手工单
+                                            </template>
+                                            <template v-if="trlist.type==3">
+                                                调账
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template v-if="trlist.type==2||trlist.type==3">
+                                                <a href="{{origin}}/file/download/{{trlist.certificateId}}">下载</a>
+                                            </template>
+                                        </td>
+                                        <td aria-label="{{trlist.remarks}}" v-bind:class="{'hint--top':(trlist.remarks!=null&&trlist.remarks.length>15)}">
+                                            {{trlist.remarks | substring 15}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>合计：</td>
+                                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                        <td>{{nums.consumptionAmount/100 | currency ''}}</td>
+                                        <td>{{nums.discountAmount/100 | currency ''}}</td>
+                                        <td>{{nums.payAmount/100 | currency ''}}</td>
+                                        <td>{{nums.limitDeduct/100 | currency ''}}</td>
+                                        <td>{{nums.principalDeduct/100 | currency ''}}</td>
+                                        <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
+                                        <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                        <td>{{nums.suspensionTax/100 | currency ''}}</td>
+                                        <td>{{nums.merchantSubsidyActual/100 | currency ''}}</td>
+                                        <td>{{nums.discountDiff/100 | currency ''}}</td>
+                                        <td>{{nums.collectionAmount/100 | currency ''}}</td>
+                                        <td>{{nums.commission33211/100 | currency ''}}</td>
+                                        <td>{{nums.entryAmount/100 | currency ''}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
+                        </div>
                     <div class="datatable-bottom">
-                       <div class="left">
+                        <div class="left">
                             <a class="icon-file-excel" style="line-height: 30px;" v-on:click="tradeDetailexcel" data-ksa="trade_detail_manage.export">Excel导出</a>
-                       </div>
+                        </div>
 
-                       <div class="right">
-                            <page :all="pageall" 
+                        <div class="right">
+                            <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
                                   :page_size.sync="checkForm.pageSize">
                             </page>
-                       </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -264,6 +398,7 @@
                     timeRange:'3',
                     pageSize:10
                 },
+                tableWidth:0,
                 subcompanyList:[],
                 pageall:1,
                 select_merchantId:'',
@@ -305,9 +440,12 @@
                  this.model.tradedetail(data)
                     .then((response)=>{
                          if(response.data.code==0){
-                            this.$set('tradeList', response.data.data.list)
-                            this.$set('nums',response.data.data.total)
-                            this.$set('pageall', response.data.total)
+                            this.$set('tradeList', response.data.data.list);
+                            this.$set('nums',response.data.data.total);
+                            this.$set('pageall', response.data.total);
+                            this.$nextTick(()=>{
+                                this.tableWidth=$('#datatable').width()+'px';
+                            })
                         }
                     });
             },
