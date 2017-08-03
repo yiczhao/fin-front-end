@@ -218,6 +218,13 @@
 										<input type="button" class="btn btn-primary" value="保存" @click="addMerchant($event)"/>
 									</td>
 								</tr>
+								<tr>
+									<td><span>原预付充值明细处理：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="处理" data-toggle="modal" @click="dealAdvancePaymentRechargeDetail($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -561,7 +568,13 @@
                         dialogs('error',response.data.message);
 					}
                     })
-            }
+            },
+            dealAdvancePaymentRechargeDetail(){
+                this.$http.post('./dev/tool/advancePaymentRechargeDetail/deal')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			}
         },
         ready() {
             this.getSubcompany();
