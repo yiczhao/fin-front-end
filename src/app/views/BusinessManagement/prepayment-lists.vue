@@ -51,11 +51,11 @@
                                     {{prepayment.balanceAmount/100 | currency ''}}
                                 </td>
                                 <td>
-                                    <a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"
-                                       >预付</a>
+                                    <!--<a data-ksa="advance_payment_merchant_manage.recharge" @click="getRechargeInfo(prepayment.id)"-->
+                                       <!--&gt;预付</a>-->
                                     <a v-link="{'name':'prepayment-store',params:{'id':prepayment.id,'storeMerchantName':prepayment.accountName,storeMerchantsubCompanyId:prepayment.subCompanyID}}"
                                        data-ksa="advance_payment_merchant_store_manage.search">门店</a>
-                                    <a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>
+                                    <!--<a v-link=" {'name':'prepayment-info',params:{'id':prepayment.id}}" data-ksa="advance_payment_account_manage.search">明细</a>-->
                                     <a data-ksa="advance_payment_merchant_manage.edit"
                                        @click="showMerchants(prepayment)">编辑</a>
                                     <a data-ksa="advance_payment_merchant_manage.delete"

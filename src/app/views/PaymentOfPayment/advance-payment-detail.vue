@@ -12,6 +12,9 @@
                     <li data-ksa="provider_pay_detail"><a v-link="{name:'provider-pay-detail'}">供应商划付</a></li>
                 </ul>
                 <div class="heading">
+                    <div class="heading-left">
+                        <a class="btn btn-add" @click="addUser" data-ksa="provider_pay_detail.add">新增划付</a>
+                    </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
                             <select class="form-control" v-model="checkForm.subCompanyID">
@@ -69,13 +72,16 @@
                                     <th>分公司</th>
                                     <th>付款账户</th>
                                     <th>预付款账户名</th>
-                                    <th>收款账户名</th>
-                                    <th>收款账号</th>
+                                    <th>收款账户信息</th>
                                     <th>预付金额</th>
-                                    <th>账户详情</th>
+                                    <th>付款方式</th>
+                                    <th>付款账户</th>
                                     <th>状态</th>
-                                    <th>付款流水</th>
+                                    <th>操作</th>
+                                    <th>账户详情</th>
+                                    <th>数据流转</th>
                                     <th>备注</th>
+                                    <th>不通过原因</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,13 +90,19 @@
                                     <td>{{apd.applyTime | datetime}}</td>
                                     <td>{{apd.subCompanyName}}</td>
                                     <td>{{apd.payAccount}}</td>
-                                    <td>{{apd.advancePaymentAccountName}}</td>
-                                    <td>{{apd.collectionAccountName}}</td>
-                                    <td>{{apd.collectionAccountNumber}}</td>
+                                    <td>{{apd.advancePaymentAccountName}}</td><td>
+                                        {{apd.collectionAccountName}}
+                                        <br>
+                                        {{apd.collectionAccountNumber}}
+                                    </td>
                                     <td>{{apd.advancePaymentAmount/100 | currency ''}}</td>
                                     <td>
-                                        <a v-if="apd.reserveCashOrderID==0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'payRecheckID':apd.payRecheckID}}" data-ksa="advance_payment_account_manage.search">查看</a>
-                                        <a v-if="apd.reserveCashOrderID!=0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'orderNumber':apd.orderNumber}}" data-ksa="advance_payment_account_manage.search">查看</a>
+                                        <template v-if="apd.status==0">已关闭</template>
+                                        <template v-if="apd.status==7">等待复核</template>
+                                    </td>
+                                    <td>
+                                        <template v-if="apd.status==0">已关闭</template>
+                                        <template v-if="apd.status==7">等待复核</template>
                                     </td>
                                     <td>
                                         <template v-if="apd.status==0">已关闭</template>
@@ -103,9 +115,25 @@
                                         <template v-if="apd.status==6">划付失败</template>
                                     </td>
                                     <td>
-                                        <a v-if="apd.status==7||apd.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':apd.payRecheckID}}">查看</a>
-                                        <a v-if="apd.status!=1&&apd.status!=7&&apd.status!=8" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">查看</a>
+                                        <template v-if="apd.status==1||apd.status==4">
+                                            <a data-ksa="provider_pay_detail.edit" @click="rewrite(apd)">编辑</a>
+                                            <a data-ksa="provider_pay_detail.apply" @click="submit(apd.id)">提交</a>
+                                            <a data-ksa="provider_pay_detail.delete" @click="deleteList(apd.id)">删除</a>
+                                        </template>
+                                        <template v-if="apd.status==2">
+                                            <a data-ksa="provider_pay_detail.approve" @click="pass(apd.id)">通过</a>
+                                            <a data-ksa="provider_pay_detail.refuse" @click="back(apd.id)">退回</a>
+                                        </template>
                                     </td>
+                                    <td>
+                                        <a v-if="apd.reserveCashOrderID==0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'payRecheckID':apd.payRecheckID}}" data-ksa="advance_payment_account_manage.search">查看</a>
+                                        <a v-if="apd.reserveCashOrderID!=0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'orderNumber':apd.orderNumber}}" data-ksa="advance_payment_account_manage.search">查看</a>
+                                    </td>
+                                    <td>
+                                        <a v-if="apd.status==7||apd.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':apd.payRecheckID}}">付款订单</a>
+                                        <a v-if="apd.status!=1&&apd.status!=7&&apd.status!=8" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">付款订单</a>
+                                    </td>
+                                    <td>{{apd.remarks}}</td>
                                     <td>{{apd.remarks}}</td>
                                 </tr>
                             </tbody>

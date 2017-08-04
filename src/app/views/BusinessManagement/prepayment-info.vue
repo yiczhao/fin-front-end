@@ -9,8 +9,8 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left" style="width:220px">
-                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"
-                        @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
+                        <!--<a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"-->
+                        <!--@click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>-->
                         <a class="btn btn-add add-top" data-ksa="advance_payment_account_manage.adjust" style="margin-right:0px;" @click="adjustBalance">余额校正</a>
                     </div>
 
