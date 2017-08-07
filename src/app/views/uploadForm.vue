@@ -225,6 +225,13 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>划付报表生成：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成" data-toggle="modal" @click="generatePayReport($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -571,6 +578,12 @@
             },
             dealAdvancePaymentRechargeDetail(){
                 this.$http.post('./dev/tool/advancePaymentRechargeDetail/deal')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            generatePayReport(){
+                this.$http.post('./dev/tool/payReport/generate')
                     .then((response) => {
                         dialogs('success', response.data.message);
                     })
