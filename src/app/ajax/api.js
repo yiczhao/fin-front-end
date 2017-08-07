@@ -728,7 +728,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method delete
      */
-    _o.advance_delete = './advancePaymentDetail/delete/';
+    _o.advance_delete = './advancePaymentMerchant/delete/';
     /**
      * @description 预付款划付编辑接口地址
      * @author 于凯乐
