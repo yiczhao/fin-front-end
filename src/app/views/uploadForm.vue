@@ -232,6 +232,13 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>补贴账户生成：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成" data-toggle="modal" @click="repairSubsidyAccount($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -584,6 +591,12 @@
 			},
             generatePayReport(){
                 this.$http.post('./dev/tool/payReport/generate')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            repairSubsidyAccount(){
+                this.$http.post('./dev/tool/subsidyAccount/repair')
                     .then((response) => {
                         dialogs('success', response.data.message);
                     })
