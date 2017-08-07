@@ -12,7 +12,55 @@ function model(_this){
          * */
         advance_list(data){
             return _this.$http.get(_this.$API.advance_list+ $.param(data))
-        }
+        },
+        /**
+         * @description 新增预付款划付划付
+         * @param {data}
+         * @returns {*}
+         */
+        advance_add (data) {
+            return _this.$http.post(_this.$API.advance_add,data)
+        },
+        /**
+         * @description 预付款划付划付退回
+         * @param {data}
+         * @returns {*}
+         */
+        advance_back (data) {
+            return _this.$http.post(_this.$API.advance_back,data)
+        },
+        /**
+         * @description 预付款划付划付删除
+         * @param {data}
+         * @returns {*}
+         */
+        advance_delete (id) {
+            return _this.$http.delete(_this.$API.advance_delete+id)
+        },
+        /**
+         * @description 预付款划付划付编辑
+         * @param {data}
+         * @returns {*}
+         */
+        advance_edit(data) {
+            return _this.$http.post(_this.$API.advance_edit,data)
+        },
+        /**
+         * @description 预付款划付划付通过
+         * @param {data}
+         * @returns {*}
+         */
+        advance_pass(id) {
+            return _this.$http.post(_this.$API.advance_pass+id)
+        },
+        /**
+         * @description 预付款划付划付提交
+         * @param {data}
+         * @returns {*}
+         */
+        advance_submit(id) {
+            return _this.$http.post(_this.$API.advance_submit+id)
+        },
     }
 }
 module.exports=model;

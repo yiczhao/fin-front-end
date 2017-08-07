@@ -362,6 +362,14 @@
                 this.defaultData.pageIndex=1;
                 this.initList();
             },
+            initList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.waringshow=false;
+                this.addshow=false;
+                this.modal_back=false;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists(this.defaultData);
+            },
             addUser(){
                 this.fire1=false;
                 this.relist={
@@ -380,19 +388,11 @@
                     subCompanyID:'',
                     status:'',
                     ifBankActivityPay:1,
-	                thirdPartyAccountID:'',
+                    thirdPartyAccountID:'',
                     payType:5
                 },
-                this.accountId='';
+                    this.accountId='';
                 this.addshow=true;
-            },
-            initList(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.waringshow=false;
-                this.addshow=false;
-                this.modal_back=false;
-                back_json.saveArray(this.$route.path,this.defaultData);
-                this.getZlists(this.defaultData);
             },
             rewrite(_list){
                 this.relist=_.cloneDeep(_list);

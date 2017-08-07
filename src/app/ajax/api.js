@@ -711,6 +711,42 @@ export default function install(Vue) {
      * @method POST
      */
     _o.advance_list = './advancePaymentDetail/list?';
+    /**
+     * @description 预付款划付新增接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_add = './advancePaymentDetail/save';
+    /**
+     * @description 预付款划付退回接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_back = './advancePaymentAccount/back';
+    /**
+     * @description 预付款划付删除接口地址
+     * @author 于凯乐
+     * @method delete
+     */
+    _o.advance_delete = './advancePaymentDetail/delete/';
+    /**
+     * @description 预付款划付编辑接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_edit = './advancePaymentDetail/editInfo';
+    /**
+     * @description 预付款划付通过接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_pass = './advancePaymentAccount/approve/';
+    /**
+     * @description 预付款划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_submit = './advancePaymentAccount/submit/';
 
     //- todo  备付金支出-额度采购 limit-purchase-detail
     /**
