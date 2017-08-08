@@ -61,6 +61,30 @@ function model(_this){
         advance_submit(id) {
             return _this.$http.post(_this.$API.advance_submit+id)
         },
+        /**
+         * @description 预付款划付划付提交
+         * @param {data}
+         * @returns {*}
+         */
+        queryAdvancePaymentMerchantList(id) {
+            return _this.$http.get(_this.$API.queryAdvancePaymentMerchantList+ id)
+        },/**
+         * @description 预付款划付划付提交
+         * @param {data}
+         * @returns {*}
+         */
+        advancePaymentMerchant(id) {
+            return _this.$http.get(_this.$API.advancePaymentMerchant+ id)
+        },
+        changeBankInfo(id) {
+            return _this.$http.get(_this.$API.changeBankInfo+ id)
+        },
+        advancePaymentEdit(data) {
+            return _this.$http.get(_this.$API.advancePaymentEdit+ $.param(data))
+        },
+        advance_save (data) {
+            return _this.$http.post(_this.$API.advance_save,data)
+        },
     }
 }
 module.exports=model;

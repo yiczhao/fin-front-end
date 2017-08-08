@@ -119,7 +119,7 @@
                                     <td>
                                         <template v-if="!apd.reserveCashOrderID">
                                             <template v-if="apd.status==1||apd.status==4">
-                                                <a data-ksa="provider_pay_detail.edit" @click="rewrite(apd)">编辑</a>
+                                                <a data-ksa="provider_pay_detail.edit" @click="rewrite(apd.advancePaymentAccountDetailID)">编辑</a>
                                                 <a data-ksa="provider_pay_detail.apply" @click="submit(apd.advancePaymentAccountDetailID)">提交</a>
                                                 <a data-ksa="provider_pay_detail.delete" @click="deleteList(apd.advancePaymentAccountDetailID)">删除</a>
                                             </template>
@@ -168,91 +168,66 @@
 
                 <content-dialog
                         :show.sync="addshow" :is-cancel="true" :type.sync="'infos'"
-                        :title.sync="'供应商划付'" @kok="addBtn" @kcancel="addshow = false"
+                        :title.sync="'新增划付'" @kok="addBtn" @kcancel="addshow = false"
                 >
                     <validator name="vali">
                         <div class="form-group">
-                            <label class="w28" ><i>*</i>划付类型：</label>
-                            <input type="radio" id="one1" :value="1" v-model="relist.ifBankActivityPay">
-                            <label class="w28" for="one1">银行活动划付</label>
-                            <input type="radio" id="two1" :value="0" @change="relist.thirdPartyAccountID=''" v-model="relist.ifBankActivityPay">
-                            <label class="w28" for="two1">非银行活动划付</label>
+                            <label><i>*</i>分公司</label>
+                            <select class="form-control" v-model="relist.subCompanyID" @change="queryAdvancePaymentMerchantList(relist.subCompanyID)">
+                                <option value="">请选择分公司</option>
+                                <option v-for="(index,n) in subcompanyList" :value="n.subCompanyID">{{n.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>预付款账户名：</label>
+                            <select class="form-control" v-model="relist.advancePaymentId" @change="getRechargeInfo(relist.advancePaymentId)">
+                                <option value="">请预付款账户名</option>
+                                <option v-for="(index,n) in accountList" :value="n.id">{{n.accountName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>余额：</label><span style="color:red">{{relist.balanceAmount/100 | currency ''}}</span>
                         </div>
                         <div class="form-group">
                             <label class="w28" ><i>*</i>付款方式：</label>
-                            <select class="form-control" v-model="relist.payType" @change="relist.subCompanyID=''">
+                            <select class="form-control" v-model="relist.payType" @change="relist.paymentAccountId=''">
                                 <option :value="5">网银转账</option>
                                 <option :value="1">备付金</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label><i>*</i>付款账号</label>
-                            <template v-if="relist.payType===1">
-                                <select class="form-control" v-model="relist.subCompanyID" v-validate:val10="['required']">
-                                    <option value="">请选择付款账号</option>
-                                    <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}备付金</option>
-                                </select>
-                            </template>
-                            <span v-if="relist.payType===5">网银转账</span>
-                        </div>
-                        <div class="form-group" v-if="relist.payType!==1">
-                            <label><i>*</i>所属分公司</label>
-                            <select class="form-control" v-model="relist.subCompanyID">
-                                <option value="">请选择所属分公司</option>
-                                <option v-for="(index,n) in companylists" :value="n.subCompanyID">{{n.name}}</option>
+
+                        <div class="form-group"  v-show="relist.payType==1">
+                            <label class="payment-method"><i style="color:red;">*</i>付款账号：</label>
+                            <select class="form-control" v-model="relist.paymentAccountId" style="width: 60%;display: inline-block;">
+                                <option value="">请选择付款账号</option>
+                                <option v-for="n in bankAccountList" v-text="n.shortName" :value="n.id"></option>
                             </select>
                         </div>
-                        <div class="form-group" v-if="relist.ifBankActivityPay===0">
-                            <label><i>*</i>结算三方</label>
-                            <select class="form-control" v-model="relist.thirdPartyAccountID" v-validate:val1="['required']">
-                                <option value="">请选择结算三方</option>
-                                <option v-for="(index,n) in thirdPartyAccountlists" :value="n.id">{{n.accountName}}</option>
+                        <div class="form-group"  v-show="relist.payType==1">
+                            <label class="payment-method"><i style="color:red;">*</i>收款信息：</label>
+                            <select class="form-control" @change="changePayType" v-model="relist.receiveAccountId" style="width: 60%;display: inline-block;">
+                                <option value="">请选择收款信息</option>
+                                <option v-for="n in merchantIdList" v-text="n.name" :value="n.id"></option>
                             </select>
                         </div>
-                        <div class="form-group" v-if="relist.ifBankActivityPay===1">
-                            <label><i>*</i>活动ID</label>
-                            <input type="text" class="form-control" v-validate:val2="['required']" v-limitnumber="relist.activityID" v-model="relist.activityID" placeholder="活动ID">
-                        </div>
-                        <div class="form-group" v-if="relist.payType!==5">
-                            <label><i>*</i>账户名</label>
-                            <input type="text" class="form-control" v-validate:val3="['required']" v-model="relist.collectionAccountName" placeholder="50字以内" maxlength="50">
-                        </div>
-                        <div class="form-group" v-if="relist.payType!==5">
-                            <label><i>*</i>收款账号</label>
-                            <input type="text" class="form-control" v-validate:val4="['required']" v-model="relist.collectionAccountNumber">
-                        </div>
-                        <div class="form-group" v-if="relist.payType!==5">
-                            <label><i>*</i>开户行</label>
-                            <input type="text" class="form-control" v-validate:val5="['required']" v-model="relist.collectionBankName">
-                        </div>
-                        <div class="form-group" v-if="relist.payType!==5">
-                            <label class="w28" ><i>*</i>建行否：</label>
-                            <input type="radio" id="one" value="true" v-model="relist.ccb" v-validate:val7="['required']">
-                            <label class="w28" for="one">是</label>
-                            <input type="radio" id="two" value="false" v-model="relist.ccb" v-validate:val7="['required']">
-                            <label class="w28" for="two">否</label>
-                        </div>
-                        <div class="form-group" v-if="relist.ccb != 'true'&&relist.payType!==5">
-                            <label><i>*</i>提入行号</label>
-                            <input type="text" class="form-control w65" v-validate:val6="['required']" v-model="relist.collectionBankNumber">
-                            <a href="https://www.hebbank.com/corporbank/otherBankQueryWeb.do" target="_blank" class="btn btn-primary" style="vertical-align: top;">查询行号</a>
+                        <div class="form-group" v-show="!!relist.receiveAccountId" style="padding-left: 40px;background: #ddd;">
+                            <div class="collectionAccount-bgcolor">
+                                <label>账户名：</label> {{relist.collectionAccountName}}<br/>
+                                <label>账号：</label>{{relist.collectionAccountNumber}}<br/>
+                                <label>开户行：</label>{{relist.collectionBankName}}<br/>
+                                <label>提入行号：</label>{{relist.collectionBankNumber}}
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label><i>*</i>金额</label>
-                            <input type="text" class="form-control" v-validate:val8="['required']" v-limitaddprice="relist.payAmount" v-model="relist.payAmount">
+                            <label><i style="color:red">*</i>预付金额：</label>
+                            <input v-validate:val1="['required']" type="text" class="form-control"
+                                   name="advancePaymentAmount"
+                                   v-model="relist.amount" v-limitprice="relist.amount"/>
                         </div>
                         <div class="form-group">
-                            <label><i>*</i>用途</label>
-                            <select class="form-control" v-validate:val9="['required']" v-model="relist.purpose">
-                                <option value="">请选择用途</option>
-                                <option value="1">广告费</option>
-                                <option value="2">物料费</option>
-                                <option value="0">其他</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="w28"><i>*</i>备注：</label>
-                            <input v-model="relist.remarks" class="form-control" type="text" placeholder="最多15字符" maxlength="15" v-validate:val0="['required']">
+                            <label style="position: relative;top: -35px;"><i style="color:red">*</i>备注：</label>
+                            <textarea v-validate:val2="['required']" class="form-control" maxlength="15" name="remark"
+                                      v-model="relist.remark" placeholder="最多15字符"></textarea>
                         </div>
                     </validator>
                 </content-dialog>
@@ -300,6 +275,9 @@
                 pageall:1,
                 cityList:[],
                 advancePaymentDetailList:[],
+                accountList:[],
+                merchantIdList:[],
+                bankAccountList:[],
                 waring:'',
                 relist:{},
                 remarks:'',
@@ -310,6 +288,16 @@
             }
         },
         methods:{
+            //获取付款账户数据
+            getBankAccountList(_type){
+                this.$common_model.getbankAccount(_type)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('bankAccountList', response.data.data)
+                        }
+                    });
+            },
             //获取补贴划付数据
              getadvancePaymentDetailList(data){
                  if(sessionStorage.getItem('isHttpin')==1)return;
@@ -319,6 +307,16 @@
                         if(response.data.code==0){
                              this.$set('advancePaymentDetailList', response.data.data)
                              this.$set('pageall', response.data.total)
+                        }
+                    });
+            },
+            queryAdvancePaymentMerchantList(id){
+                if(!id)return;
+                this.model.queryAdvancePaymentMerchantList(id)
+                    .then((response)=>{
+                        // *** 判断请求是否成功如若成功则填充数据到模型
+                        if(response.data.code==0){
+                            this.$set('accountList', response.data.data)
                         }
                     });
             },
@@ -352,6 +350,23 @@
                 this.checkForm.status=this.checkForm.orderStatus='';
                 (values[1]=='s')?this.checkForm.status=values[0]:this.checkForm.orderStatus=values[0];
             },
+            changePayType(e){
+                if(!!this.relist.receiveAccountId){
+                    this.relist.collectionAccountName='';
+                    this.relist.collectionAccountNumber='';
+                    this.relist.collectionBankName='';
+                    this.relist.collectionBankNumber='';
+                    this.model.changeBankInfo(this.relist.receiveAccountId)
+                        .then((response)=>{
+                            if (response.data.code == 0) {
+                                this.relist.collectionAccountName =response.data.data.accountName;
+                                this.relist.collectionAccountNumber = response.data.data.accountNumber;//1
+                                this.relist.collectionBankName = response.data.data.bankName;//2
+                                this.relist.collectionBankNumber = response.data.data.bankNumber;
+                            }
+                        });
+                }
+            },
             checkNew(){
                 this.checkForm.pageIndex=1;
                 this.query();
@@ -378,32 +393,50 @@
             addUser(){
                 this.fire1=false;
                 this.relist={
-                    activityID :'',
-                    applyTime :'',
-                    id:'',
-                    ccb :'false',
+                    advancePaymentId :'',
+                    receiveAccountId :'',
+                    paymentAccountId :'',
+                    amount :'',
                     collectionAccountName:'',
                     collectionAccountNumber:'',
                     collectionBankName:'',
                     collectionBankNumber:'',
-                    payAccount:'',
-                    payAmount:'',
-                    purpose:'',
-                    remarks:'',
+                    balanceAmount:'',
+                    remark:'',
                     subCompanyID:'',
-                    status:'',
-                    ifBankActivityPay:1,
-                    thirdPartyAccountID:'',
                     payType:5
                 },
-                    this.accountId='';
+                this.accountId='';
                 this.addshow=true;
+
             },
-            rewrite(_list){
-                this.relist=_.cloneDeep(_list);
-                this.relist.purpose= this.relist.purpose+'';
-                (this.relist.ccb=='0')? this.relist.ccb='false':this.relist.ccb='true';
-                this.addshow=true;
+            //获取预付充值数据
+            getRechargeInfo(prepaymentId) {
+                if(!prepaymentId)return;
+                _.map(this.accountList,(val)=>{
+                    if(val.id===prepaymentId){
+                        this.relist.balanceAmount=val.balanceAmount;
+                    }
+                })
+                this.model.advancePaymentMerchant(prepaymentId)
+                    .then((response)=>{
+                        if (response.data.code == 0) {
+                            this.$set('merchantIdList', response.data.data.list)
+                        }
+                    });
+            },
+            rewrite(_id){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                let data={
+                    id:_id
+                }
+                this.model.advancePaymentEdit(data)
+                    .then((response)=>{
+                        if (response.data.code == 0) {
+                            this.$set('relsit', response.data.data.list)
+                            this.addshow=true;
+                        }
+                    });
             },
             submit(a){
                 this.waring = '你确认提交信息？';
@@ -477,9 +510,9 @@
                     dialogs('info','请填写所有必填项！');
                     return;}
                 let data=_.cloneDeep(this.relist);
-                data.payAmount=accMul(data.payAmount,100);
+                data.amount=accMul(data.amount,100);
                 if(data.id==''){
-                    this.model.advance_add(data).then((response)=>{
+                    this.model.advance_save(data).then((response)=>{
                         if(response.data.code==-1){
                             dialogs('error',response.data.message);
                         }else{
@@ -488,7 +521,7 @@
                         }
                     })
                 }else{
-                    this.model.advance_edit(data).then((response)=>{
+                    this.model.advance_save(data).then((response)=>{
                         if(response.data.code==-1){
                             dialogs('error',response.data.message);
                         }else{
@@ -507,6 +540,7 @@
             (this.$route.params.advanceId==':advanceId')?this.checkForm.advancePaymentAccountDetailID='':this.checkForm.advancePaymentAccountDetailID=this.$route.params.advanceId;
             this.getCity();
             this.getSubcompany();
+            this.getBankAccountList('1');
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
             this.query();
         },
