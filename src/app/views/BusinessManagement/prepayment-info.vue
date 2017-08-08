@@ -73,7 +73,7 @@
                                 <th>支出</th>
                                 <th>状态</th>
                                 <th>交易时间</th>
-                                <th>操作</th>
+                                <!--<th>操作</th>-->
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -101,18 +101,18 @@
                                     <template v-if="trlist.status==8">复核不通过</template>
                                 </td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
-                                <td v-if="trlist.orderNumber==null&&trlist.status==5"></td>
-                                <td v-else>
-                                    <template v-if="trlist.status==7||trlist.status==8">
-                                        <a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
-                                    </template>
-                                    <template v-else>
-                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
-                                           v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
-                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':trlist.orderPayType}}"
-                                           v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
-                                    </template>
-                                </td>
+                                <!--<td v-if="trlist.orderNumber==null&&trlist.status==5"></td>-->
+                                <!--<td v-else>-->
+                                    <!--<template v-if="trlist.status==7||trlist.status==8">-->
+                                        <!--<a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>-->
+                                    <!--</template>-->
+                                    <!--<template v-else>-->
+                                        <!--<a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"-->
+                                           <!--v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>-->
+                                        <!--<a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':trlist.orderPayType}}"-->
+                                           <!--v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>-->
+                                    <!--</template>-->
+                                <!--</td>-->
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
@@ -121,7 +121,7 @@
                                 <td>{{total.incomeAmount/100| currency '' }}</td>
                                 <td>{{total.payoutAmount/100| currency '' }}</td>
                                 <td></td>
-                                <td></td>
+                                <!--<td></td>-->
                                 <td></td>
                                 <td></td>
                             </tr>
