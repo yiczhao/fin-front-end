@@ -239,6 +239,13 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>补贴代扣字段更新：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="更新" data-toggle="modal" @click="updateSubsidyWithhold($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -597,6 +604,12 @@
 			},
             repairSubsidyAccount(){
                 this.$http.post('./dev/tool/subsidyAccount/repair')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            updateSubsidyWithhold(){
+                this.$http.post('./dev/tool/subsidyWithhold/update')
                     .then((response) => {
                         dialogs('success', response.data.message);
                     })
