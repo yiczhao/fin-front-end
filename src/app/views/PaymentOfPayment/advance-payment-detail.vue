@@ -134,9 +134,10 @@
                                         <a v-if="apd.reserveCashOrderID!=0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'orderNumber':apd.orderNumber}}" data-ksa="advance_payment_account_manage.search">查看</a>
                                     </td>
                                     <td>
-                                        <a v-if="apd.status==7||apd.status==8" v-link="{'name':'pay-recheck',params:{'recheckId':apd.payRecheckID}}">付款订单</a>
-                                        <a v-if="apd.status!=1&&apd.status!=7&&apd.status!=8" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">付款订单</a>
-                                    </td>
+                                        <template v-if="!!apd.reserveCashOrderID">
+                                            <a v-if="apd.status!=0" @click="gopayment(apd.reserveCashOrderID,4)" data-ksa="reserve_cash_order_manage.search">付款订单</a>
+                                        </template>
+                                       </td>
                                     <td>{{apd.remarks}}</td>
                                     <td>{{apd.refuseReason}}</td>
                                 </tr>

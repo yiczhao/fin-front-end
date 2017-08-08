@@ -22,6 +22,7 @@
                             <select class="form-control" v-model="checkForm.payType">
                                 <option value="">全部付款方式</option>
                                 <option value="1">备付金账户</option>
+                                <option value="2">商户预付款账户</option>
                                 <option value="3">银行结算</option>
                                 <option value="4">其他</option>
                                 <option value="5">网银转账</option>
