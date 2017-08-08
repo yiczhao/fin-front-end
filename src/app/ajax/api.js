@@ -758,7 +758,7 @@ export default function install(Vue) {
      * @author 于凯乐
      * @method post
      */
-    _o.advancePaymentEdit = './advancePaymentDetail/editInfo?';
+    _o.advancePaymentEdit = './advancePaymentDetail/editInfo/';
     /**
      * @description 预付款划付提交接口地址
      * @author 于凯乐

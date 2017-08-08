@@ -79,8 +79,8 @@ function model(_this){
         changeBankInfo(id) {
             return _this.$http.get(_this.$API.changeBankInfo+ id)
         },
-        advancePaymentEdit(data) {
-            return _this.$http.get(_this.$API.advancePaymentEdit+ $.param(data))
+        advancePaymentEdit(id) {
+            return _this.$http.get(_this.$API.advancePaymentEdit+ id)
         },
         advance_save (data) {
             return _this.$http.post(_this.$API.advance_save,data)

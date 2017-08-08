@@ -174,7 +174,7 @@
                     <validator name="vali">
                         <div class="form-group">
                             <label><i>*</i>分公司</label>
-                            <select class="form-control" v-model="relist.subCompanyID" @change="queryAdvancePaymentMerchantList(relist.subCompanyID)">
+                            <select class="form-control" v-model="relist.subCompanyId" @change="queryAdvancePaymentMerchantList(relist.subCompanyId)">
                                 <option value="">请选择分公司</option>
                                 <option v-for="(index,n) in subcompanyList" :value="n.subCompanyID">{{n.name}}</option>
                             </select>
@@ -187,7 +187,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>余额：</label><span style="color:red">{{relist.balanceAmount/100 | currency ''}}</span>
+                            <label>余额：</label><span style="color:red">{{balanceAmount/100 | currency ''}}</span>
                         </div>
                         <div class="form-group">
                             <label class="w28" ><i>*</i>付款方式：</label>
@@ -213,10 +213,10 @@
                         </div>
                         <div class="form-group" v-show="!!relist.receiveAccountId" style="padding-left: 40px;background: #ddd;">
                             <div class="collectionAccount-bgcolor">
-                                <label>账户名：</label> {{relist.collectionAccountName}}<br/>
-                                <label>账号：</label>{{relist.collectionAccountNumber}}<br/>
-                                <label>开户行：</label>{{relist.collectionBankName}}<br/>
-                                <label>提入行号：</label>{{relist.collectionBankNumber}}
+                                <label>账户名：</label> {{collectionAccountName}}<br/>
+                                <label>账号：</label>{{collectionAccountNumber}}<br/>
+                                <label>开户行：</label>{{collectionBankName}}<br/>
+                                <label>提入行号：</label>{{collectionBankNumber}}
                             </div>
                         </div>
                         <div class="form-group">
@@ -272,6 +272,11 @@
                     pageSize:10,
                     timeRange:'3'
                 },
+                balanceAmount:'',
+                collectionAccountName:'',
+                collectionAccountNumber:'',
+                collectionBankName:'',
+                collectionBankNumber:'',
                 subcompanyList:[],
                 pageall:1,
                 cityList:[],
@@ -313,6 +318,7 @@
             },
             queryAdvancePaymentMerchantList(id){
                 if(!id)return;
+                this.relist.advancePaymentId='';
                 this.model.queryAdvancePaymentMerchantList(id)
                     .then((response)=>{
                         // *** 判断请求是否成功如若成功则填充数据到模型
@@ -353,17 +359,17 @@
             },
             changePayType(e){
                 if(!!this.relist.receiveAccountId){
-                    this.relist.collectionAccountName='';
-                    this.relist.collectionAccountNumber='';
-                    this.relist.collectionBankName='';
-                    this.relist.collectionBankNumber='';
+                    this.collectionAccountName='';
+                    this.collectionAccountNumber='';
+                    this.collectionBankName='';
+                    this.collectionBankNumber='';
                     this.model.changeBankInfo(this.relist.receiveAccountId)
                         .then((response)=>{
                             if (response.data.code == 0) {
-                                this.relist.collectionAccountName =response.data.data.accountName;
-                                this.relist.collectionAccountNumber = response.data.data.accountNumber;//1
-                                this.relist.collectionBankName = response.data.data.bankName;//2
-                                this.relist.collectionBankNumber = response.data.data.bankNumber;
+                                this.collectionAccountName =response.data.data.accountName;
+                                this.collectionAccountNumber = response.data.data.accountNumber;//1
+                                this.collectionBankName = response.data.data.bankName;//2
+                                this.collectionBankNumber = response.data.data.bankNumber;
                             }
                         });
                 }
@@ -393,18 +399,18 @@
             },
             addUser(){
                 this.fire1=false;
+                this.collectionAccountName='';
+                this.collectionAccountNumber='';
+                this.collectionBankName='';
+                this.collectionBankNumber='';
+                this.balanceAmount='';
                 this.relist={
                     advancePaymentId :'',
                     receiveAccountId :'',
                     paymentAccountId :'',
                     amount :'',
-                    collectionAccountName:'',
-                    collectionAccountNumber:'',
-                    collectionBankName:'',
-                    collectionBankNumber:'',
-                    balanceAmount:'',
                     remark:'',
-                    subCompanyID:'',
+                    subCompanyId:'',
                     payType:5
                 },
                 this.accountId='';
@@ -414,9 +420,10 @@
             //获取预付充值数据
             getRechargeInfo(prepaymentId) {
                 if(!prepaymentId)return;
+                this.relist.receiveAccountId='';
                 _.map(this.accountList,(val)=>{
                     if(val.id===prepaymentId){
-                        this.relist.balanceAmount=val.balanceAmount;
+                        this.balanceAmount=val.balanceAmount;
                     }
                 })
                 this.model.advancePaymentMerchant(prepaymentId)
@@ -428,14 +435,30 @@
             },
             rewrite(_id){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                let data={
-                    id:_id
-                }
-                this.model.advancePaymentEdit(data)
+                this.model.advancePaymentEdit(_id)
                     .then((response)=>{
                         if (response.data.code == 0) {
-                            this.$set('relsit', response.data.data.list)
-                            this.addshow=true;
+                            this.$set('relist', response.data.data);
+                            this.model.queryAdvancePaymentMerchantList(this.relist.subCompanyId)
+                                .then((response)=>{
+                                    // *** 判断请求是否成功如若成功则填充数据到模型
+                                    if(response.data.code==0){
+                                        this.$set('accountList', response.data.data);
+                                        _.map(this.accountList,(val)=>{
+                                            if(val.id===this.relist.advancePaymentId){
+                                                this.balanceAmount=val.balanceAmount;
+                                            }
+                                        })
+                                        this.model.advancePaymentMerchant(this.relist.advancePaymentId)
+                                            .then((response)=>{
+                                                if (response.data.code == 0) {
+                                                    this.$set('merchantIdList', response.data.data.list)
+                                                    this.addshow=true;
+                                                    this.changePayType();
+                                                }
+                                            })
+                                    }
+                                });
                         }
                     });
             },
