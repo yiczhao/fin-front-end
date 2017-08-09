@@ -90,15 +90,20 @@
                                     {{trlist.payoutAmount/100 | currency ''}}
                                 </td>
                                 <td>
-                                    <template v-if="trlist.status==0">已关闭</template>
-                                    <template v-if="trlist.status==1">等待审核</template>
-                                    <template v-if="trlist.status==2">等待划付</template>
-                                    <template v-if="trlist.status==3">转账中</template>
-                                    <template v-if="trlist.status==4">等待对账</template>
-                                    <template v-if="trlist.status==5">对账成功</template>
-                                    <template v-if="trlist.status==6">划付失败</template>
-                                    <template v-if="trlist.status==7">等待复核</template>
-                                    <template v-if="trlist.status==8">复核不通过</template>
+                                    <template v-if="!!trlist.reserveCashOrderID">
+                                        <template v-if="trlist.status==0">审核不通过</template>
+                                        <template v-if="trlist.status==2">等待划付</template>
+                                        <template v-if="trlist.status==3">转账中</template>
+                                        <template v-if="trlist.status==4">等待对账</template>
+                                        <template v-if="trlist.status==5">对账成功</template>
+                                        <template v-if="trlist.status==6">划付失败</template>
+                                    </template>
+                                    <template v-else>
+                                        <template v-if="trlist.status==1">未提交</template>
+                                        <template v-if="trlist.status==2">等待审核</template>
+                                        <template v-if="trlist.status==3">审核通过</template>
+                                        <template v-if="trlist.status==4">审核不通过</template>
+                                    </template>
                                 </td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
                                 <!--<td v-if="trlist.orderNumber==null&&trlist.status==5"></td>-->
