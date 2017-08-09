@@ -103,6 +103,7 @@
                                     <th>活动名称</th>
                                     <th>收款账户名</th>
                                     <th>收款账号</th>
+                                    <th>收款开户行</th>
                                     <th>提入行号</th>
                                     <th>是否建行</th>
                                     <th>付款方式</th>
@@ -141,6 +142,7 @@
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.collectionBankName }}</td>
                                 <td>{{n.collectionBankNumber}}</td>
+                                <td>{{n.bankName}}</td>
                                 <td>
                                     <template v-if="n.isCcb==1"></template>
                                     <template v-else> {{n.bankNumber}}</template>
@@ -188,7 +190,7 @@
                                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
-                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </table>
                     </div>
