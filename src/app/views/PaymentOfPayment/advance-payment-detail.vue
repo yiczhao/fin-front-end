@@ -412,12 +412,12 @@
                 this.collectionBankNumber='';
                 this.balanceAmount='';
                 this.relist={
+                    subCompanyId:'',
                     advancePaymentId :'',
                     receiveAccountId :'',
                     paymentAccountId :'',
                     amount :'',
                     remark:'',
-                    subCompanyId:'',
                     payType:5
                 },
                 this.accountId='';
@@ -535,13 +535,50 @@
                     })
                 }
             },
+            verifyField (data) {
+                let errMapper={};
+                if(data.payType==1){
+                    errMapper= {
+                        subCompanyId:'分公司',
+                        advancePaymentId :'预付款账户名',
+                        receiveAccountId :'收款信息',
+                        paymentAccountId :'付款账号',
+                        amount :'预付金额',
+                        remark:'备注',
+                    }
+                }else {
+                    errMapper= {
+                        subCompanyId:'分公司',
+                        advancePaymentId :'预付款账户名',
+                        amount :'预付金额',
+                        remark:'备注',
+                    }
+                }
+                // 检测是否存在未填写项
+                for (let k in data) {
+                    let m = data[k]
+                    let err = errMapper[k] && new Error(`请检查${errMapper[k]}项!`)
+                    /*global _*/
+                    if ((!m && err) || (_.isArray(m) && !m.length && err)) {
+                        throw err
+                    }
+                }
+            },
+            errHandle(err){
+                dialogs('info', err)
+            },
             addBtn(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(!this.$vali.valid){
-                    dialogs('info','请填写所有必填项！');
-                    return;}
                 let data=_.cloneDeep(this.relist);
                 data.amount=accMul(data.amount,100);
+                if (true) {
+                    try {
+                        this.verifyField(data)
+                    } catch (e) {
+                        this.errHandle(e.message)
+                        return
+                    }
+                }
                 if(data.id==''){
                     this.model.advance_save(data).then((response)=>{
                         if(response.data.code==-1){
