@@ -46,11 +46,15 @@
 
                                 <input type="text" class="form-control" v-model="checkForm.id" v-limitnumber="checkForm.id" placeholder="ID">
 
-                                <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
+                            <input type="text" class="form-control" v-model="checkForm.backendMerchantCode" placeholder="商户号">
+                            <input type="text" class="form-control" v-model="checkForm.backendMerchantName" placeholder="商户简称">
+                            <input type="text" class="form-control" v-model="checkForm.backendStoreCode" placeholder="门店号">
+                            <input type="text" class="form-control" v-model="checkForm.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
 
-                                <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="商户名、收款账户名、帐号">
 
-                                <select class="form-control" v-model="checkForm.createType">
+                            <select class="form-control" v-model="checkForm.createType">
                                     <option value="">请选择生成方式</option>
                                     <option value="1">系统生成</option>
                                     <option value="2">手工单</option>
@@ -87,8 +91,12 @@
                                     <th>分公司</th>
                                     <th>城市</th>
                                     <th>付款账户</th>
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
+                                    <th>商户号</th>
+                                    <th>商户简称</th>
+                                    <th>门店号</th>
+                                    <th>门店名称</th>
+                                    <th>商盟ID</th>
+                                    <th>商盟商户名称</th>
                                     <th>收款账户名</th>
                                     <th>收款账号</th>
                                     <th>生成方式</th>
@@ -109,8 +117,14 @@
                                     <td>{{strd.subCompanyName}}</td>
                                     <td>{{strd.cityName}}</td>
                                     <td>{{strd.payAccount}}</td>
+                                    <td>{{strd.backendMerchantCode}}</td>
+                                    <td>{{strd.backendMerchantName}}</td>
+                                    <td>{{strd.backendStoreCode}}</td>
+                                    <td>{{strd.backendStoreName}}</td>
                                     <td>{{strd.merchantOperationID}}</td>
-                                    <td>{{strd.merchantName}}</td>
+                                    <td>
+                                        <span v-if="!strd.backendStoreCode">{{strd.merchantName}}</span>
+                                    </td>
                                     <td>{{strd.collectionAccountName}}</td>
                                     <td>{{strd.collectionAccountNumber}}</td>
                                     <td>
@@ -160,6 +174,10 @@
                                 </tr>
                                 <tr>
                                     <td>合计：</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -242,7 +260,11 @@
                     remarks:'',
                     endDate:"",
                     merchantOperationID:"",
-                    keywords:"",
+                    merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     pageIndex:1,
                     pageSize:10,
                     timeRange:'4'
