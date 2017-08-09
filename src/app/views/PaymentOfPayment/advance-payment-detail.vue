@@ -153,6 +153,9 @@
                     </div>
 
                     <div class="datatable-bottom">
+                        <div class="left">
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="reserve_cash_order_manage.export">Excel导出</a>
+                        </div>
                        <div class="right">
                             <page :all="pageall"
                                   :cur.sync="checkForm.pageIndex"
@@ -301,6 +304,11 @@
             }
         },
         methods:{
+            excel(){
+                if(!this.advancePaymentDetailList.length>0)return;
+                this.checkForm.mid=JSON.parse(sessionStorage.getItem('userData')).authToken;
+                window.open(window.origin+this.$API.advancePaymentDetailexcel+ $.param(this.checkForm));
+            },
             //获取付款账户数据
             getBankAccountList(_type){
                 this.$common_model.getbankAccount(_type)

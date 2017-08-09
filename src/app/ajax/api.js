@@ -151,6 +151,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.thirdPartyToExcel = '/data/export/excel/thirdParty?';
+    /**
+     * @description 预付款划付导出
+     * @author 于凯乐
+     * @method get
+     */
+    _o.advancePaymentDetailexcel = '/data/export/excel/advancePaymentDetail?';
 
     //- todo 财务处理-账户列表 account-management
     /**
