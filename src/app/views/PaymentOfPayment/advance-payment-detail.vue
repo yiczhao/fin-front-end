@@ -41,7 +41,7 @@
 
                             <input type="text" class="form-control" v-model="checkForm.keywords" placeholder="收款账户名、帐号" >
                                 <input type="text" class="form-control" v-model="checkForm.advancePaymentAccountName" placeholder="预付款账户名" >
-                            <select class="form-control" v-model="status" @change="getStatus(status)">
+                            <select class="form-control" v-model="checkForm.modelstatus" @change="getStatus(checkForm.modelstatus)">
                                 <option value="">全部状态</option>
                                 <option value="1,s">未提交</option>
                                 <option value="2,s">等待审核</option>
@@ -263,7 +263,6 @@
         data(){
             this.model=model(this);
             return{
-                status:'',
                 checkForm:{
                     subCompanyID:"",
                     advancePaymentAccountDetailID:"",
@@ -277,6 +276,7 @@
                     keywords:"",
                     pageIndex:1,
                     pageSize:10,
+                    modelstatus:'',
                     timeRange:'3'
                 },
                 balanceAmount:'',
