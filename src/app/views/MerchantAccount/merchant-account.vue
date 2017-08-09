@@ -15,20 +15,13 @@
 
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <input type="number" class="form-control" v-model="conditionData.merchantOperationID"
-                                   placeholder="商户ID"
-                                   v-limitnumber="">
-                            <input type="text" class="form-control" v-model="conditionData.backendMerchantCode"
-                                   placeholder="商户号">
+                            <input type="text" class="form-control" v-model="conditionData.backendMerchantCode" placeholder="商户号">
+                            <input type="text" class="form-control" v-model="conditionData.backendMerchantName" placeholder="商户简称">
+                            <input type="text" class="form-control" v-model="conditionData.backendStoreCode" placeholder="门店号">
+                            <input type="text" class="form-control" v-model="conditionData.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="conditionData.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="conditionData.merchantName" placeholder="商盟商户名称">
 
-                            <input type="text" class="form-control" v-model="conditionData.backendMerchantName"
-                                   placeholder="商户简称">
-
-                            <input type="number" class="form-control" v-model="" placeholder="门店号"
-                                   v-limitnumber="conditionData.backendStoreCode">
-
-                            <input type="text" class="form-control" v-model="conditionData.storeName"
-                                   placeholder="门店名称">
 
                             <select class="form-control" v-model="conditionData.subCompanyID"
                                     @change="getCityList(conditionData.subCompanyID)">
@@ -70,12 +63,12 @@
                         <table class="table">
                             <thead>
                             <tr role="row">
-                                <th>商户ID</th>
                                 <th>商户号</th>
                                 <th>商户简称</th>
-                                <th>商户类型</th>
                                 <th>门店号</th>
                                 <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>分公司</th>
                                 <th>城市</th>
                                 <th>账户名</th>
@@ -95,15 +88,14 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trList) in merchantAccountList">
-                                <td>{{trList.merchantOperationID}}</td>
                                 <td>{{trList.backendMerchantCode}}</td>
                                 <td>{{trList.backendMerchantName}}</td>
-                                <td>
-                                    <template v-if="trList.merchantType ==1 ">单店</template>
-                                    <template v-if="trList.merchantType ==2">连锁商户</template>
-                                </td>
                                 <td>{{trList.backendStoreCode}}</td>
-                                <td>{{trList.storeName}}</td>
+                                <td>{{trList.backendStoreName}}</td>
+                                <td>{{trList.merchantOperationID}}</td>
+                                <td>
+                                    <span v-if="!trList.backendStoreCode">{{trList.merchantName}}</span>
+                                </td>
                                 <td>{{trList.subCompanyName}}</td>
                                 <td>{{trList.cityName}}</td>
                                 <td>{{trList.accountName}}</td>
@@ -265,15 +257,16 @@
 				companyList: [],
 				conditionData: {
 					'id': '',
-					'merchantOperationID': '',
 					'subCompanyID': '',
 					'cityID': '',
-					'backendMerchantCode': '',
-					'storeName': '',
-					'backendMerchantName': '',
-					'backendStoreCode': '',
 					'expired': '',
 					'settlementCycle': '',
+                    merchantOperationID:"",
+                    merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
 					'pageIndex': 1,
 					'pageSize': 10
 				},
