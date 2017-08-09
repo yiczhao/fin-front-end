@@ -128,6 +128,13 @@
                                                 <a data-ksa="provider_pay_detail.refuse" @click="back(apd.advancePaymentAccountDetailID)">退回</a>
                                             </template>
                                         </template>
+                                        <template v-else>
+                                            <template v-if="apd.status==0">
+                                                <a data-ksa="provider_pay_detail.edit" @click="rewrite(apd.advancePaymentAccountDetailID)">编辑</a>
+                                                <a data-ksa="provider_pay_detail.apply" @click="submit(apd.advancePaymentAccountDetailID)">提交</a>
+                                                <a data-ksa="provider_pay_detail.delete" @click="deleteList(apd.advancePaymentAccountDetailID)">删除</a>
+                                            </template>
+                                        </template>
                                     </td>
                                     <td>
                                         <a v-if="apd.reserveCashOrderID==0" v-link="{'name':'prepayment-info',params:{'id':apd.advancePaymentMerchantID,'payRecheckID':apd.payRecheckID}}" data-ksa="advance_payment_account_manage.search">查看</a>
