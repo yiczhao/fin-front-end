@@ -52,9 +52,8 @@
                                 <datepicker type="date" v-bind:value.sync="checkForm.endDate"></datepicker>
                             </div>
 
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
-
-                            <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">
+                            <input type="text" class="form-control" v-model="checkForm.incomeAccountName" placeholder="收款账户名">
+                            <input type="text" class="form-control" v-model="checkForm.incomeAccountNumber" placeholder="收款账号">
 
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">请选择对账状态</option>
@@ -400,8 +399,8 @@
                     subCompanyID:'',
                     payType: '1',
                     orderNumber: '',
-                    merchantOperationID:'',
-                    keyword:'',
+                    incomeAccountName:'',
+                    incomeAccountNumber:'',
                     status:'',
                     purpose:'',
                     remarks:'',
