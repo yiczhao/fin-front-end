@@ -210,6 +210,14 @@ export default function (router) {
 				require(['./views/PaymentOfPayment/provider-pay-detail.vue'], resolve);
 			}
 		},
+		/* 三方管理-划付报表 */
+        '/pay-report': {
+            name: 'pay-report',
+            router_type: "third",
+            component: function (resolve) {
+                require(['./views/ThreeParty/pay-report.vue'], resolve);
+            }
+        },
 		/* 三方管理-账户列表 */
 		'/third-party/': {
 			name: 'third-party',

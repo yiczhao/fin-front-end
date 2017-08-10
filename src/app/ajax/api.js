@@ -157,6 +157,12 @@ export default function install(Vue) {
      * @method get
      */
     _o.advancePaymentDetailexcel = '/data/export/excel/advancePaymentDetail?';
+    /**
+     * @description 划付报表导出
+     * @author 于凯乐
+     * @method
+     */
+    _o.payReportExcel = '/data/export/excel/activityPayReport?';
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -1487,6 +1493,20 @@ export default function install(Vue) {
      * @method POST
      */
     _o.gettotal = './thirdParty/sum?';
+
+    //- todo  三方管理-划付报表 pay-report
+    /**
+     * @description 划付报表列表接口地址
+     * @author 周俭
+     * @method get
+     */
+    _o.payReportList = './activityPayReport/list?';
+    /**
+     * @description 划付报表合计接口地址
+     * @author 周俭
+     * @method get
+     */
+    _o.payReportTotal = './activityPayReport/total?';
 
 
     //- todo  三方管理-账户明细 third-info

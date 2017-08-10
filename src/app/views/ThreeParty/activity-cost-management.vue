@@ -6,6 +6,7 @@
         <div class="content activity-cost-management" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
+                    <li data-ksa="third_party_account_manage"><a v-link="{name:'pay-report'}">划付报表</a></li>
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">银行管理</a></li>
                     <li data-ksa="contract" ><a v-link="{name:'contract-management-info'}">合同管理</a></li>
                     <li data-ksa="activity_income_cost_manage" class="active"><a>活动收入成本管理</a></li>
