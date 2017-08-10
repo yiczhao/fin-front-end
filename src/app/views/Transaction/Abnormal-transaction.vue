@@ -46,9 +46,12 @@
                                 <datepicker :value.sync="checkForm.endDate"></datepicker>
                             </div>
 
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商户ID" v-limitnumber="checkForm.merchantOperationID">
-
-                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+                            <input type="text" class="form-control" v-model="checkForm.backendMerchantCode" placeholder="商户号">
+                            <input type="text" class="form-control" v-model="checkForm.backendMerchantName" placeholder="商户简称">
+                            <input type="text" class="form-control" v-model="checkForm.backendStoreCode" placeholder="门店号">
+                            <input type="text" class="form-control" v-model="checkForm.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" placeholder="商盟ID" v-limitnumber="checkForm.merchantOperationID">
+                            <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
 
                             <input type="text" class="form-control" v-model="checkForm.tradeDetailID" v-limitnumber="checkForm.tradeDetailID" placeholder="交易ID">
 
@@ -74,8 +77,12 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>消费金额</th>
                                 <th>可打折金额</th>
                                 <th>实付金额</th>
@@ -101,8 +108,14 @@
                                 <td><a v-link="{name:'trade-info',params:{serialNumber:trlist.serialNumber}}">{{trlist.serialNumber}}</a></td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>
+                                    <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                </td>
                                 <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.discountAmount/100 | currency ''}}</td>
                                 <td>{{trlist.payAmount/100 | currency ''}}</td>
@@ -141,6 +154,7 @@
                             <tr>
                                 <td>合计：</td>
                                 <td></td><td></td><td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td>
                                 <td>{{nums.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{nums.discountAmount/100 | currency ''}}</td>
                                 <td>{{nums.payAmount/100 | currency ''}}</td>
@@ -219,6 +233,10 @@
                     endDate:"",
                     merchantOperationID:"",
                     merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     tradeDetailID:"",
                     serialNumber:"",
                     phone:"",
