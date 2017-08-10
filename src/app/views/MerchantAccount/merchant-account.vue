@@ -91,7 +91,7 @@
                                 <td>{{trList.backendMerchantCode}}</td>
                                 <td>{{trList.backendMerchantName}}</td>
                                 <td>{{trList.backendStoreCode}}</td>
-                                <td>{{trList.backendStoreName}}</td>
+                                <td>{{trList.storeName}}</td>
                                 <td>{{trList.merchantOperationID}}</td>
                                 <td>
                                     <span v-if="!trList.backendStoreCode">{{trList.merchantName}}</span>
