@@ -70,6 +70,7 @@
                                 <th>本金抵扣</th>
                                 <th>银行应补</th>
                                 <th>商户应补</th>
+                                <th>补贴代扣</th>
                                 <th>暂扣税金</th>
                                 <th>商户实补</th>
                                 <th>折扣差</th>
@@ -98,6 +99,7 @@
                                 <td><span>{{trlist.principalDeduct/100 | currency ''}}</span></td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{trlist.subsidyWithhold/100 | currency ''}}</td>
                                 <td>{{trlist.suspensionTax/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyActual/100 | currency ''}}</td>
                                 <td>{{trlist.discountDiff/100 | currency ''}}</td>
@@ -130,6 +132,7 @@
                                 <td><b>{{nums.principalDeduct/100 | currency ''}}</b></td>
                                 <td><b>{{nums.thirdPartyReceivable/100 | currency ''}}</b></td>
                                 <td><b>{{nums.merchantSubsidyShould/100 | currency ''}}</b></td>
+                                <td><b>{{nums.subsidyWithhold/100 | currency ''}}</b></td>
                                 <td><b>{{nums.suspensionTax/100 | currency ''}}</b></td>
                                 <td><b>{{nums.merchantSubsidyActual/100 | currency ''}}</b></td>
                                 <td><b>{{nums.discountDiff/100 | currency ''}}</b></td>

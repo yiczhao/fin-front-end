@@ -98,6 +98,7 @@
                                         <th>本金抵扣</th>
                                         <th>银行应补</th>
                                         <th>商户应补</th>
+                                        <th>补贴代扣</th>
                                         <th>暂扣税金</th>
                                         <th>商户实补</th>
                                         <th>折扣差</th>
@@ -134,6 +135,7 @@
                                         <th>本金抵扣</th>
                                         <th>银行应补</th>
                                         <th>商户应补</th>
+                                        <th>补贴代扣</th>
                                         <th>暂扣税金</th>
                                         <th>商户实补</th>
                                         <th>折扣差</th>
@@ -179,6 +181,7 @@
                                             <span v-else>0.00</span>
                                         </td>
                                         <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                        <td>{{trlist.subsidyWithhold/100 | currency ''}}</td>
                                         <td>
                                             <a data-ksa="subsidy_tax_rebate_detail_manage.search" v-link="{name:'subsidy-tax-rebate',params:{subsidyTaxRebateID:trlist.subsidyTaxRebateID}}" v-if="trlist.subsidyTaxRebateID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
                                             <a data-ksa="subsidy_pay_detail_manage.search" v-link="{name:'subsidy-appropriation',params:{subsidyPayID:trlist.subsidyPayID}}" v-if="trlist.subsidyTaxRebateID==0&&trlist.suspensionTax!=0&&trlist.subsidyPayID>0">{{trlist.suspensionTax/100 | currency ''}}</a>
@@ -230,6 +233,7 @@
                                         <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                         <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
                                         <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                        <td>{{nums.subsidyWithhold/100 | currency ''}}</td>
                                         <td>{{nums.suspensionTax/100 | currency ''}}</td>
                                         <td>{{nums.merchantSubsidyActual/100 | currency ''}}</td>
                                         <td>{{nums.discountDiff/100 | currency ''}}</td>
