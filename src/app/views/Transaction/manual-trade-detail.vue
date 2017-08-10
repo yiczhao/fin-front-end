@@ -277,14 +277,14 @@
                         <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                     </div>
                     <div class="dialog-row">
-                        <label><i>*</i>三方应收：</label>
+                        <label><i>*</i>银行应补：</label>
                         <input type="text" class="form-control"
                                v-model="tradeInfo.thirdPartyReceivable"
                                v-validate:val6="['required']"
                                v-limitaddprice="tradeInfo.thirdPartyReceivable"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val6.required}">
-                        <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
+                        <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入银行应补</span>
                     </div>
                     <div class="dialog-row">
                         <label><i>*</i>暂扣税金：</label>

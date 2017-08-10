@@ -58,7 +58,7 @@
                                 <th class="top-none">活动ID</th>
                                 <th class="top-none">执行表参数</th>
                                 <th>服务费</th>
-                                <th>三方应收</th>
+                                <th>银行应补</th>
                                 <th>税费</th>
                                 <th>广告费</th>
                                 <th>物料费</th>

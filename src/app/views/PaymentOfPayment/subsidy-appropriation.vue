@@ -234,7 +234,7 @@
                         <div class="form-group">
                             您目前选择了 <span style="color:#ff9900; font-size:13px;font-family: Bold;font-weight: 700;">{{applyPayInfo.payCount}}</span> 条划付记录，
                             共计 <span style="color: #008000;font-family: Bold;font-weight: 700;">{{applyPayInfo.tradeCount}}</span>  笔，
-                            三方应收： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartySubsidyShould/100 | currency ''}}</span>  元，
+                            银行应补： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.thirdPartySubsidyShould/100 | currency ''}}</span>  元，
                             补贴划付： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.payAmount/100 | currency ''}}</span>  元，
                             暂扣税金： <span style="color: #ff0000;font-family: Bold;font-weight: 700;">{{applyPayInfo.suspensionTaxAmount/100 | currency ''}}</span>  元
                         </div>

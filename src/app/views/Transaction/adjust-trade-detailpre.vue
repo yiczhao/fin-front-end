@@ -298,7 +298,7 @@
                         </div>
                         <div class="dialog-row">
                         <span>
-                             <label><i>*</i>三方应收：</label>
+                             <label><i>*</i>银行应补：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.thirdPartyReceivable"
@@ -308,7 +308,7 @@
                                     placeholder="三方应收">
                         </span>
                             <span>
-                             <label><i>*</i>佣金：</label>
+                             <label><i>*</i>导流佣金：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.commission33211"
@@ -316,7 +316,7 @@
                                     v-validate:val9="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val9.required}"
                                     v-limitprice="redata.commission33211"
-                                    placeholder="佣金">
+                                    placeholder="导流佣金">
                         </span>
                         </div>
                         <div class="dialog-row">
