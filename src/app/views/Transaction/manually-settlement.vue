@@ -39,11 +39,14 @@
                             <span>至</span>
                             <datepicker :value.sync="checkForm.endDate"></datepicker>
                         </div>
-                        <input type="text" class="form-control" v-model="checkForm.merchantOperationIDs" placeholder="商户ID（多个ID以逗号隔开）" v-limitids="checkForm.merchantOperationIDs">
-                        <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商户名">
+                        <input type="text" class="form-control" v-model="checkForm.backendMerchantCode" placeholder="商户号">
+                        <input type="text" class="form-control" v-model="checkForm.backendMerchantName" placeholder="商户简称">
+                        <input type="text" class="form-control" v-model="checkForm.backendStoreCode" placeholder="门店号">
+                        <input type="text" class="form-control" v-model="checkForm.backendStoreName" placeholder="门店名称">
+                        <input type="text" class="form-control" v-model="checkForm.merchantOperationIDs" placeholder="商盟ID（多个ID以逗号隔开）">
+                        <input type="text" class="form-control" v-model="checkForm.merchantName" placeholder="商盟商户名称">
                         <input type="text" class="form-control" v-model="checkForm.tradeDetailID" placeholder="交易ID" v-limitnumber="checkForm.tradeDetailID">
                         <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
-                        <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
                         <input type="text" class="form-control" placeholder="活动ID（多个ID以逗号隔开）" v-limitids="checkForm.activityOperationIDs" v-model="checkForm.activityOperationIDs">
                     </div>
 
@@ -61,8 +64,12 @@
                                 <th>交易流水号</th>
                                 <th>分公司</th>
                                 <th>城市</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>消费金额</th>
                                 <th>可打折金额</th>
                                 <th>实付金额</th>
@@ -78,8 +85,6 @@
                                 <th>导流佣金</th>
                                 <th>入账金额</th>
                                 <th>交易时间</th>
-                                <th>手机号</th>
-                                <th>卡号</th>
                                 <th>参与活动</th>
                                 <th>备注</th>
                             </tr>
@@ -90,8 +95,14 @@
                                 <td>{{trlist.serialNumber}}</td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
-                                <td>{{trlist.merchantName}}</td>
+                                <td>
+                                    <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                </td>
                                 <td>{{trlist.consumptionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.discountAmount/100 | currency ''}}</td>
                                 <td>{{trlist.payAmount/100 | currency ''}}</td>
@@ -107,8 +118,6 @@
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td>{{trlist.entryAmount/100 | currency ''}}</td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
-                                <td>{{trlist.consumptionPhone}}</td>
-                                <td>{{trlist.consumptionAccountNumber}}</td>
                                 <td>
                                     <template v-if="!trlist.activityName">
                                         无
@@ -120,6 +129,10 @@
                             </tbody>
                             <tr role="row" v-if="nums!=''" >
                                 <td>合计：</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -139,8 +152,6 @@
                                 <td><b>{{nums.collectionAmount/100 | currency ''}}</b></td>
                                 <td><b>{{nums.commission33211/100 | currency ''}}</b></td>
                                 <td><b>{{nums.entryAmount/100 | currency ''}}</b></td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -171,7 +182,7 @@
                         :title.sync="'申请划付'"
                 >
                     <div class="form-group">
-                        <label style="width:18%;text-align:right;" class="control-label">时间：</label>
+                        <label style="width:14%;" class="control-label">时间：</label>
                         <select class="form-control" style="display: inline-block;width: 80%;" v-model="batchData.timeRange" @change="getbatchDataTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
@@ -185,12 +196,32 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">活动ID：</label>
+                        <label style="width:14%;position: relative;top: -95px;" class="control-label">活动ID：</label>
                         <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.activityOperationIDs" v-model="batchData.activityOperationIDs"></textarea>
                     </div>
                     <div class="form-group">
-                        <label style="width:18%;text-align:right;position: relative;top: -95px;" class="control-label">商户ID：</label>
-                        <textarea style="display: inline-block;width: 80%;" rows="5" cols="5" class="form-control" v-limitids="batchData.merchantOperationIDs" v-model="batchData.merchantOperationIDs"></textarea>
+                        <select class="form-control" v-model="merchantType1"
+                                @change="batchData.merchantOperationID=batchData.backendStoreCode=''"
+                                style="position: relative;top: -93px;width: 76px;padding: 0;color: #777;display: inline-block;">
+                            <option value="1">商盟ID</option>
+                            <option value="2">门店号</option>
+                        </select>
+                        <template v-if="merchantType1==1">
+                            <textarea
+                                    style="display: inline-block;width: 75%;"
+                                    rows="5" cols="5" class="form-control"
+                                    v-limitids="batchData.merchantOperationID"
+                                    v-model="batchData.merchantOperationID"
+                                    placeholder="请输入商盟ID"></textarea>
+                        </template>
+                        <template v-if="merchantType1==2">
+                            <textarea
+                                    style="display: inline-block;width: 75%;"
+                                    rows="5" cols="5" class="form-control"
+                                    v-limitids="batchData.backendStoreCode"
+                                    v-model="batchData.backendStoreCode"
+                                    placeholder="请输入门店号"></textarea>
+                        </template>
                     </div>
                     <div class="form-group tc">
                         <a @click="payApplyTrue" class="btn btn-primary">下一步</a>
@@ -216,9 +247,12 @@
                     endDate:"",
                     merchantOperationIDs:"",
                     merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     tradeDetailID:"",
                     serialNumber:"",
-                    phone:"",
                     activityOperationIDs:'',
                     pageIndex:1,
                     timeRange:'3',
@@ -233,6 +267,7 @@
                 applyPayInfo:{
 
                 },
+                merchantType1:1,
                 show:false,
                 modal_batch:false,
                 submitId:[],
@@ -307,15 +342,20 @@
                     startDate:this.checkForm.startDate,
                     endDate:this.checkForm.endDate,
                     activityOperationIDs:this.checkForm.activityOperationIDs,
+                    backendStoreCode:this.checkForm.backendStoreCode,
                     merchantOperationIDs:this.checkForm.merchantOperationIDs
                 }
                 this.modal_batch=true;
             },
             payApplyTrue(){
                 if(sessionStorage.getItem('isHttpin')==1)return;
-                if(this.batchData.merchantOperationIDs==''&&this.batchData.activityOperationIDs==''){
-                    dialogs('info','商户ID和活动ID不能都为空！');
-                    return false
+                if(this.merchantType1==1&&!this.batchData.activityOperationIDs&&!this.batchData.merchantOperationIDs){
+                    dialogs('info','活动ID及商盟ID不能都为空！');
+                    return;
+                }
+                if(this.merchantType1==2&&!this.batchData.activityOperationIDs&&!this.batchData.backendStoreCode){
+                    dialogs('info','活动ID及门店号不能都为空！');
+                    return;
                 }
                 this.model.manuallySettlement_list(this.batchData)
                         .then((response)=>{
