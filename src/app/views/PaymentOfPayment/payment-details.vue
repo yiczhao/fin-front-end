@@ -98,8 +98,6 @@
                             <tr role="row">
                                 <th><input type="checkbox"  v-model="checkAll" @click="chooseAll"></th>
                                 <th>订单号</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
                                 <th>划付金额</th>
                                 <th>暂扣税金</th>
                                 <th>付款账户</th>
@@ -128,8 +126,6 @@
                                 <td>
                                     <span>{{n.orderNumber}}</span>
                                 </td>
-                                <td><span v-if="n.purpose!=4">{{n.merchantOperationID }}</span></td>
-                                <td><span v-if="n.purpose!=4">{{n.merchantName}}</span></td>
                                 <td>
                                     {{n.payoutAmount/100 | currency '' }}
                                 </td>
@@ -201,8 +197,6 @@
                         </template>
                         <tr>
                             <td>合计：</td>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td>{{total.payoutAmount/100 | currency ''}}</td>
                             <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
