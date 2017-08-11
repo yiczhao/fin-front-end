@@ -363,8 +363,10 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="no-list" v-show="!tradeList.length">
+                <div class="no-list" v-show="!tradeList.length&&searched">
+                    请输入筛选条件查询交易数据！
+                </div>
+                <div class="no-list" v-show="!tradeList.length&&!searched">
                     未查询到交易明细数据！
                 </div>
             </div>
@@ -383,6 +385,7 @@
                 searched:false,
                 origin:window.origin,
                 leakFlag:false,
+                searched:true,
                 checkForm:{
                     subsidyPayId:"",
                     subsidyTaxRebateId:"",
@@ -491,16 +494,13 @@
                     });
             },
             checkNew(){
-                if(!this.checkForm.subCompanyID){
-                    dialogs('info','请选择分公司！')
-                    return;
-                }
                 this.checkForm.pageIndex=1;
                 this.query();
             },
             query() {
                 if(sessionStorage.getItem('isHttpin')==1)return;
                 //初始化
+                this.searched=false;
                 back_json.saveArray(this.$route.path,this.checkForm);
                 this.getTradeList(this.checkForm);
             },
@@ -536,7 +536,9 @@
             (this.$route.params.tradeCompanyId==':tradeCompanyId')? this.checkForm.subCompanyID='' : this.checkForm.subCompanyID=this.$route.params.tradeCompanyId;
             this.getCity();
             (back_json.isback&&back_json.fetchArray(this.$route.path)!='')?this.checkForm=back_json.fetchArray(this.$route.path):null;
-            this.query();
+            if(location.href.indexOf('/trade-info/:subsidyPayId/:subsidyTaxRebateId/:merchantOperationID/:merchantName/:activityOperationID/:serialNumber/:tradeCompanyId/:backendStoreCode')<0){
+                this.query();
+            }
         },
        watch:{
             'checkForm.pageIndex+checkForm.pageSize'(){
