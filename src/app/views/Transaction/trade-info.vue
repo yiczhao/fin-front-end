@@ -30,12 +30,15 @@
                         </select>
 
                         <select class="form-control" v-model="checkForm.type">
-                        <option value="">请选择交易类型</option>
-                        <option value="1">正常交易</option>
-                        <option value="2">手工单</option>
-                        <option value="3">调账</option>
+                            <option value="">请选择交易类型</option>
+                            <option value="1">正常交易</option>
+                            <option value="2">手工单</option>
+                            <option value="3">调账</option>
                             <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                         </select>
+                        <div  class="inline"><label><input type="checkbox" v-model="leakFlag" @change="changeleakFlag"/>
+                            <span>仅展示补单</span></label></div>
+
 
                         <div  class="inline"><label>交易时间：</label></div>
                         <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
@@ -283,6 +286,7 @@
             return{
                 searched:false,
                 origin:window.origin,
+                leakFlag:false,
                 checkForm:{
                     subsidyPayId:"",
                     subsidyTaxRebateId:"",
@@ -302,6 +306,7 @@
                     tradeDetailID:"",
                     serialNumber:"",
                     activityOperationID:'',
+                    leakFlag:null,
                     pageIndex:1,
                     timeRange:'3',
                     pageSize:10
@@ -331,6 +336,13 @@
             }
         },
         methods:{
+            changeleakFlag(){
+                if(this.leakFlag){
+                    this.checkForm.leakFlag=1
+                }else{
+                    this.checkForm.leakFlag=null
+                }
+            },
             quickCheck(){
                 if(!this.checkForm.backendStoreCode||!this.checkForm.activityOperationID){
                     dialogs('info','门店号与活动ID为必填项！')
