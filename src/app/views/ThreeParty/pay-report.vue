@@ -78,10 +78,10 @@
                                 <td>{{trlist.activityName }}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendMerchantName}}</td>
-                                <td>{{trlist.backendStoreCode}}</td>
-                                <td>{{trlist.backendStoreName}}</td>
-                                <td>{{trlist.merchantOperationID }}</td>
-                                <td><span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span></td>
+                                <td>{{trlist.storeCode}}</td>
+                                <td>{{trlist.storeName}}</td>
+                                <td>{{trlist.operationId }}</td>
+                                <td><span v-if="!trlist.storeCode">{{trlist.merchantName}}</span></td>
                                 <td>
                                     <span>{{trlist.consumptionCount}}</span>
                                 </td>
