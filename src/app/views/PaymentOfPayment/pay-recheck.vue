@@ -495,9 +495,9 @@
                 this.model.payrecheck_pass(data)
                         .then( (response)=> {
                             if(response.data.code==0){
-                                this.query();
                                 dialogs('success','已通过！');
                             }
+                            this.query();
                         })
             }
         },
