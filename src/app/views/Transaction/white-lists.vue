@@ -33,9 +33,13 @@
                             <option value="false">已失效</option>
                         </select>
 
-                        <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="商户/活动ID" v-limitnumber="defaultData.operationID">
+                        <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID/商盟ID" v-limitnumber="defaultData.operationID">
                         
-                        <input type="text" class="form-control" v-model="defaultData.name" placeholder="商户/活动名">
+                        <input type="text" class="form-control" v-model="defaultData.name" placeholder="活动名称">
+                        <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
+                        <input type="text" class="form-control" v-model="defaultData.backendMerchantName" placeholder="商户简称">
+                        <input type="text" class="form-control" v-model="defaultData.backendStoreCode" placeholder="门店号">
+                        <input type="text" class="form-control" v-model="defaultData.backendStoreName" placeholder="门店名称">
 
                         <a class="btn btn-info" @click="checkNew" data-ksa="exception_trade_white_list_manage.search">查询</a>
                     </div>
@@ -47,8 +51,12 @@
                         <table class="table datatable-selection-single dataTable no-footer">
                             <thead>
                             <tr role="row">
-                                <th>商户/活动ID</th>
-                                <th>商户/活动名称</th>
+                                <th>商户号</th>
+                                <th>商户简称</th>
+                                <th>门店号</th>
+                                <th>门店名称</th>
+                                <th>活动ID/商盟ID</th>
+                                <th>活动名称</th>
                                 <th>分公司</th>
                                 <th>有效期 </th>
                                 <th>状态</th>
@@ -59,6 +67,10 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
                                 <td>{{trlist.operationID }}</td>
                                 <td>{{trlist.name }}</td>
                                 <td>{{trlist.subCompanyName }}</td>
@@ -188,6 +200,10 @@
                 companylists:[],
                 startDate:'',
                 defaultData:{
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
                     'subCompanyID': '',
                     'type': '',
                     'status': '',
