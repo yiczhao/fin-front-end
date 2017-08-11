@@ -201,7 +201,7 @@
                     </div>
                     <div class="form-group">
                         <select class="form-control" v-model="merchantType1"
-                                @change="batchData.merchantOperationID=batchData.backendStoreCode=''"
+                                @change="batchData.merchantOperationIDs=batchData.backendStoreCode=''"
                                 style="position: relative;top: -93px;width: 76px;padding: 0;color: #777;display: inline-block;">
                             <option value="1">商盟ID</option>
                             <option value="2">门店号</option>
@@ -210,8 +210,8 @@
                             <textarea
                                     style="display: inline-block;width: 75%;"
                                     rows="5" cols="5" class="form-control"
-                                    v-limitids="batchData.merchantOperationID"
-                                    v-model="batchData.merchantOperationID"
+                                    v-limitids="batchData.merchantOperationIDs"
+                                    v-model="batchData.merchantOperationIDs"
                                     placeholder="请输入商盟ID"></textarea>
                         </template>
                         <template v-if="merchantType1==2">
