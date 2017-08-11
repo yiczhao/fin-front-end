@@ -54,7 +54,7 @@
                                 <th>活动ID</th>
                                 <th>活动名称</th>
                                 <th>商户号</th>
-                                <th>商户</th>
+                                <th>商户简称</th>
                                 <th>门店号</th>
                                 <th>门店名称</th>
                                 <th>商盟ID</th>
