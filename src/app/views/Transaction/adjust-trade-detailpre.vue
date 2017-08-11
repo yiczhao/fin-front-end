@@ -246,7 +246,7 @@
                                        v-model="redata.serialNumber"
                                        v-validate:val3="['required']"
                                        v-bind:class="{'error-input':fire && $vali.val3.required}"
-                                       placeholder="请输入交易流水号"></textarea>
+                                       placeholder="单次最多调账300笔，每两笔之间逗号隔开"></textarea>
                          </span>
                             <div class="pl95">
                                 <a class="btn btn-info" @click="getTradeData" data-ksa="manually_settlement.search">查询</a>
@@ -308,7 +308,7 @@
                                     v-validate:val8="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val8.required}"
                                     v-limitprice="redata.thirdPartyReceivable"
-                                    placeholder="三方应收">
+                                    placeholder="银行应补">
                         </span>
                             <span>
                              <label><i>*</i>导流佣金：</label>
@@ -327,7 +327,8 @@
                              <label><i>*</i>上传凭证：</label>
                              <input type="file" style="display: none;" @change="uploads($event)">
                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                             <span v-text="uploadText" v-show="uploadText!=''"></span>
+                            <span style="color:red">附件大小3M以内，可截图后压缩</span>
+                            <span v-text="uploadText" v-show="uploadText!=''"></span>
                             <span v-if="redata.certificateID=='' && fire"
                                   class="validation-error-label">请上传凭证</span>
                         </span>
@@ -340,6 +341,7 @@
                                        v-model="redata.remarks"
                                        v-validate:val10="['required']"
                                        v-bind:class="{'error-input':fire && $vali.val10.required}"
+                                       placeholder="不多于200个中文字符"
                              ></textarea>
                         </span>
                         </div>
