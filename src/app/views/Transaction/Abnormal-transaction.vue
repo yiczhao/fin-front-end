@@ -57,7 +57,6 @@
 
                             <input type="text" class="form-control" v-model="checkForm.serialNumber" placeholder="交易流水号">
 
-                            <input type="number" class="form-control" v-model="checkForm.phone" placeholder="手机号">
 
                             <input type="text" class="form-control" placeholder="活动ID" v-limitnumber="checkForm.activityOperationID" v-model="checkForm.activityOperationID">
                         </form>
@@ -94,8 +93,6 @@
                                 <th>扣收金额</th>
                                 <th>导流佣金</th>
                                 <th>交易时间</th>
-                                <th>手机号</th>
-                                <th>卡号</th>
                                 <th>参与活动</th>
                                 <th>状态</th>
                                 <th>操作</th>
@@ -133,8 +130,6 @@
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
                                 <td>{{trlist.commission33211/100 | currency ''}}</td>
                                 <td>{{trlist.tradeTime | datetime}}</td>
-                                <td>{{trlist.consumptionPhone}}</td>
-                                <td>{{trlist.consumptionAccountNumber}}</td>
                                 <td> <a data-ksa="activity_manage.search" v-link="{name:'activity-lists',params:{operationID:trlist.activityOperationID,name:trlist.activityName,osubcompanyID:trlist.subCompanyID}}">{{trlist.activityOperationID}}:{{trlist.activityName}}</a></td>
                                 <td>
                                     <span v-if="trlist.isHandled==0" style="color:red;">
@@ -165,8 +160,6 @@
                                 <td>{{nums.discountDiff/100 | currency ''}}</td>
                                 <td>{{nums.collectionAmount/100 | currency ''}}</td>
                                 <td>{{nums.commission33211/100 | currency ''}}</td>
-                                <td></td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -239,7 +232,6 @@
                     backendStoreName:"",
                     tradeDetailID:"",
                     serialNumber:"",
-                    phone:"",
                     activityOperationID:'',
                     pageIndex:1,
                     pageSize:10,
