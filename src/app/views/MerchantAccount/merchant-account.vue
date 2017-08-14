@@ -18,7 +18,7 @@
                             <input type="text" class="form-control" v-model="conditionData.backendMerchantCode" placeholder="商户号">
                             <input type="text" class="form-control" v-model="conditionData.backendMerchantName" placeholder="商户简称">
                             <input type="text" class="form-control" v-model="conditionData.backendStoreCode" placeholder="门店号">
-                            <input type="text" class="form-control" v-model="conditionData.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="conditionData.storeName" placeholder="门店名称">
                             <input type="text" class="form-control" v-model="conditionData.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
                             <input type="text" class="form-control" v-model="conditionData.merchantName" placeholder="商盟商户名称">
 
@@ -266,7 +266,7 @@
                     backendMerchantCode:"",
                     backendMerchantName:"",
                     backendStoreCode:"",
-                    backendStoreName:"",
+                    storeName:"",
 					'pageIndex': 1,
 					'pageSize': 10
 				},
