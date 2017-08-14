@@ -144,7 +144,7 @@
                 <validator name="vali">
                     <form novalidate>
                         <div id="modal_recharge" data-backdrop="static"  class="modal fade" style="display: none;">
-                            <div class="modal-dialog modal-sm">
+                            <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">×</button>
@@ -152,12 +152,16 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label>商户名：</label>
-                                            <span>{{rechargeInfo.val1}}</span>
+                                            <span style="width: 42%;display: inline-block;">商户号：{{balance.backendMerchantCode}}</span>
+                                            <span class="mr20">商户简称：{{balance.backendMerchantName}}</span>
                                         </div>
                                         <div class="form-group">
-                                            <label>活动名：</label>
-                                            <span>{{rechargeInfo.val2}}</span>
+                                            <span style="width: 42%;display: inline-block;">门店号：{{balance.backendStoreCode}}</span>
+                                            <span class="mr20">门店名称：{{balance.backendName}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <span style="width: 42%;display: inline-block;">商盟ID：{{balance.merchantId}}</span>
+                                            <span>商盟商户名称：{{balance.merchantName}}</span>
                                         </div>
                                         <div class="form-group">
                                             <label>余额：</label>
