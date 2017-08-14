@@ -225,6 +225,9 @@
                                            placeholder="请输入门店号">
                                 </template>
                             </span>
+                            <div class="pl95">
+                                <span style="color:red">保存时若提示系统内多个门店ID为xxxx，请选择并填写【门店号】进行调账</span>
+                            </div>
                         </div>
                         <div class="dialog-row">
                             <span>
@@ -246,10 +249,11 @@
                                        v-model="redata.serialNumber"
                                        v-validate:val3="['required']"
                                        v-bind:class="{'error-input':fire && $vali.val3.required}"
-                                       placeholder="单次最多调账300笔，每两笔之间逗号隔开"></textarea>
+                                       placeholder="单次最多调账300笔，每两个交易流水号之间用逗号隔开"></textarea>
                          </span>
                             <div class="pl95">
                                 <a class="btn btn-info" @click="getTradeData" data-ksa="manually_settlement.search">查询</a>
+                                <span style="color:red">请点击【查询】查看录入的交易笔数是否正确</span>
                             </div>
                         </div>
                         <div class="dialog-row" v-show="!!redata.tradeCount||!!redata.consumptionAmount">
@@ -327,7 +331,7 @@
                              <label><i>*</i>上传凭证：</label>
                              <input type="file" style="display: none;" @change="uploads($event)">
                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                            <span style="color:red">附件大小3M以内，可截图后压缩</span>
+                            <span style="color:red">rar/zip等压缩包格式，附件大小3M以内，如文件过大，可将凭证图片截图后压缩</span>
                             <span v-text="uploadText" v-show="uploadText!=''"></span>
                             <span v-if="redata.certificateID=='' && fire"
                                   class="validation-error-label">请上传凭证</span>
@@ -341,7 +345,7 @@
                                        v-model="redata.remarks"
                                        v-validate:val10="['required']"
                                        v-bind:class="{'error-input':fire && $vali.val10.required}"
-                                       placeholder="不多于200个中文字符"
+                                       placeholder="填写本次调账的备注信息，200个中文字符以内"
                              ></textarea>
                         </span>
                         </div>

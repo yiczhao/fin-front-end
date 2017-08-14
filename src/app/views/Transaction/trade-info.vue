@@ -20,7 +20,7 @@
                     </div>
                     <div class="heading-right">
                         <select class="form-control" v-model="checkForm.subCompanyID" @change="getCity(checkForm.subCompanyID)">
-                            <option value="">请选择分公司</option>
+                            <option value="">全部分公司</option>
                             <option v-for="n in subcompanyList" v-text="n.name" :value="n.subCompanyID"></option>
                         </select>
 
