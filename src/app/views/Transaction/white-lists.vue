@@ -26,6 +26,7 @@
                             <option value="">请选择类型</option>
                             <option value="2">活动</option>
                             <option value="1">商户</option>
+                            <option value="3">门店</option>
                         </select>
                         <select class="form-control" v-model="defaultData.status">
                             <option value="">请选择状态</option>
@@ -33,7 +34,7 @@
                             <option value="false">已失效</option>
                         </select>
 
-                        <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID/商盟ID" v-limitnumber="defaultData.operationID">
+                        <input type="number" class="form-control" v-model="defaultData.operationID" placeholder="活动ID/商盟ID/门店号" v-limitnumber="defaultData.operationID">
                         
                         <input type="text" class="form-control" v-model="defaultData.name" placeholder="活动名称">
                         <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
@@ -55,7 +56,9 @@
                                 <th>商户简称</th>
                                 <th>门店号</th>
                                 <th>门店名称</th>
-                                <th>活动ID/商盟ID</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
+                                <th>活动ID</th>
                                 <th>活动名称</th>
                                 <th>分公司</th>
                                 <th>有效期 </th>
@@ -67,18 +70,14 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.backendMerchantCode}}</td>
-                                <td>{{trlist.backendMerchantName}}</td>
-                                <td>{{trlist.backendStoreCode}}</td>
-                                <td>{{trlist.backendStoreName}}</td>
-                                <td>
-                                    <template v-if="trlist.operationID">{{trlist.operationID}}</template>
-                                    <template v-if="trlist.activityId">{{trlist.activityId}}</template>
-                                </td>
-                                <td>
-                                    <template v-if="trlist.name">{{trlist.name}}</template>
-                                    <template v-if="trlist.activityName">{{trlist.activityName}}</template>
-                                </td>
+                                <td><template v-if="trlist.type==3">{{trlist.backendMerchantCode}}</template></td>
+                                <td><template v-if="trlist.type==3">{{trlist.backendMerchantName}}</template></td>
+                                <td><template v-if="trlist.type==3">{{trlist.backendStoreCode}}</template></td>
+                                <td><template v-if="trlist.type==3">{{trlist.backendStoreName}}</template></td>
+                                <td><template v-if="trlist.type==1">{{trlist.operationID}}</template></td>
+                                <td><template v-if="trlist.type==1">{{trlist.merchantName}}</template></td>
+                                <td><template v-if="trlist.type==2">{{trlist.activityId}}</template></td>
+                                <td><template v-if="trlist.type==2">{{trlist.activityName}}</template></td>
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
                                     {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
@@ -127,11 +126,12 @@
                                 <select class="form-control"  v-model="redata.type"  v-validate:type="['required']">
                                     <option value="2">活动</option>
                                     <option value="1">商户</option>
+                                    <option value="3">门店</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"><i>*</i>ID：</label>
-                                <input style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                <input style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID/门店号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                                 <input style="margin-left: 10px;margin-top: -4px;"  type="button" class="btn btn-info" @click="queryId" value="查询">
                             </div>
                             <div class="form-group">
@@ -390,7 +390,12 @@
                 }
                 this.updataerror=false;
                 this.saveerror='';
-                this.model.whitesave(this.redata)
+                let data=_.cloneDeep(this.redata);
+                if(data.type=='3'){
+                    data.backendStoreCode=data.operationID;
+                    data.operationID='';
+                }
+                this.model.whitesave(data)
                         .then((res) => {
                             if(res.data.code == 0){
                                 this.initList()
@@ -425,6 +430,17 @@
                                     this.redata.subCompanyName=res.data.data.subCompanyName ;
                                 }
                             })
+                }else if(this.redata.type=='3'){
+                    let data={
+                        backendStoreCode:this.redata.operationID
+                    }
+                    this.model.queryC(data)
+                        .then((res) => {
+                            if(res.data.code == 0){
+                                this.redata.listName=res.data.data.merchantName;
+                                this.redata.subCompanyName=res.data.data.subCompanyName ;
+                            }
+                        })
                 }
                 else{
                     let data={
