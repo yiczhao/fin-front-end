@@ -71,8 +71,14 @@
                                 <td>{{trlist.backendMerchantName}}</td>
                                 <td>{{trlist.backendStoreCode}}</td>
                                 <td>{{trlist.backendStoreName}}</td>
-                                <td>{{trlist.operationID }}</td>
-                                <td>{{trlist.name }}</td>
+                                <td>
+                                    <template v-if="trlist.operationID">{{trlist.operationID}}</template>
+                                    <template v-if="trlist.activityId">{{trlist.activityId}}</template>
+                                </td>
+                                <td>
+                                    <template v-if="trlist.name">{{trlist.name}}</template>
+                                    <template v-if="trlist.activityName">{{trlist.activityName}}</template>
+                                </td>
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
                                     {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
