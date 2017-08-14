@@ -246,6 +246,13 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>重新生成活动收入成本：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成" data-toggle="modal" @click="generateActivityIncomeCostAgain($event)"/>
+									</td>
+									<td></td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -610,6 +617,12 @@
 			},
             updateSubsidyWithhold(){
                 this.$http.post('./dev/tool/subsidyWithhold/update')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            generateActivityIncomeCostAgain(){
+                this.$http.post('./dev/tool/activityIncomeCost/generate/again')
                     .then((response) => {
                         dialogs('success', response.data.message);
                     })
