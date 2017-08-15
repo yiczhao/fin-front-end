@@ -70,14 +70,16 @@
                             </thead>
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td><template v-if="trlist.type==3">{{trlist.backendMerchantCode}}</template></td>
-                                <td><template v-if="trlist.type==3">{{trlist.backendMerchantName}}</template></td>
-                                <td><template v-if="trlist.type==3">{{trlist.backendStoreCode}}</template></td>
-                                <td><template v-if="trlist.type==3">{{trlist.backendStoreName}}</template></td>
-                                <td><template v-if="trlist.type==1">{{trlist.operationID}}</template></td>
-                                <td><template v-if="trlist.type==1">{{trlist.merchantName}}</template></td>
-                                <td><template v-if="trlist.type==2">{{trlist.activityId}}</template></td>
-                                <td><template v-if="trlist.type==2">{{trlist.activityName}}</template></td>
+                                <td>{{trlist.backendMerchantCode}}</td>
+                                <td>{{trlist.backendMerchantName}}</td>
+                                <td>{{trlist.backendStoreCode}}</td>
+                                <td>{{trlist.backendStoreName}}</td>
+                                <td>{{trlist.operationID}}</td>
+                                <td>
+                                    <span v-if="!trlist.existInBackend">{{trlist.merchantName}}</span>
+                                </td>
+                                <td>{{trlist.activityId}}</td>
+                                <td>{{trlist.activityName}}</td>
                                 <td>{{trlist.subCompanyName }}</td>
                                 <td>
                                     {{trlist.startDate | datetimes }}--{{trlist.endDate | datetimes  }}
@@ -124,24 +126,46 @@
                             <div class="form-group">
                                 <label class="control-label"><i>*</i>类型：</label>
                                 <select class="form-control"  v-model="redata.type"  v-validate:type="['required']">
-                                    <option value="2">活动</option>
-                                    <option value="1">商户</option>
-                                    <option value="3">门店</option>
+                                    <option value="2">活动ID</option>
+                                    <option value="1">商盟ID</option>
+                                    <option value="3">门店号</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"><i>*</i>ID：</label>
-                                <input style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商户/活动ID/门店号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                <input v-if="redata.type==1" style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="商盟ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                <input v-if="redata.type==2" style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="活动ID" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                <input v-if="redata.type==3" style="width: 60%;" v-validate:operationID="['required']" v-model="redata.operationID" class="form-control" type="text" placeholder="门店号" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                                 <input style="margin-left: 10px;margin-top: -4px;"  type="button" class="btn btn-info" @click="queryId" value="查询">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">名称：</label>
-                                {{redata.listName}}
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label">分公司：</label>
-                                {{redata.subCompanyName}}
+                                {{whiteData.subCompanyName}}
                             </div>
+                            <template v-if="redata.type!=2">
+                                <div class="form-group">
+                                    <label class="control-label">商盟ID：</label>
+                                    <span>{{whiteData.merchantOperationID}}</span>
+                                    <span style="margin-left:20px">商盟商户名称：{{whiteData.merchantName}}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">商户号：</label>
+                                    <span>{{whiteData.backendMerchantCode}}</span>
+                                    <span style="margin-left:20px">商户简称：{{whiteData.backendMerchantName}}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">门店号：</label>
+                                    <span>{{whiteData.backendStoreCode}}</span>
+                                    <span style="margin-left:20px">门店名称：{{whiteData.backendName}}</span>
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div class="form-group">
+                                    <label class="control-label">活动ID：</label>
+                                    <span>{{whiteData.operationID}}</span>
+                                    <span style="margin-left:20px">活动名称：{{whiteData.name}}</span>
+                                </div>
+                            </template>
                             <div class="form-group">
                                 <label class="control-label"><i>*</i>有效期：</label>
                                 <input type="radio" id="one" value="2" v-model="redata.validType" v-validate:isCcb="['required']">
@@ -227,12 +251,21 @@
                     type:1,
                     remarks:'',
                     operationID:'',
-                    listName:'',
-                    subCompanyName:'',
                     certificateID:'',
                     startDate:'',
                     endDate:'',
                     validType:'2'
+                },
+                whiteData:{
+                    operationID:'',
+                    subCompanyName:'',
+                    merchantName:'',
+                    backendMerchantCode:'',
+                    backendMerchantName:'',
+                    backendStoreCode:'',
+                    backendStoreName:'',
+                    activityId:'',
+                    activityName:''
                 },
                 saveerror:'',
                 updataerror:false,
@@ -287,12 +320,21 @@
                     type:1,
                     remarks:'',
                     operationID:'',
-                    listName:'',
-                    subCompanyName:'',
                     certificateID:'',
                     startDate:'',
                     endDate:'',
                     validType:'2'
+                };
+                this.whiteData={
+                    operationID:'',
+                    subCompanyName:'',
+                    merchantName:'',
+                    backendMerchantCode:'',
+                    backendMerchantName:'',
+                    backendStoreCode:'',
+                    backendStoreName:'',
+                    activityId:'',
+                    activityName:''
                 };
                 this.saveerror='';
                 this.uploadText='';
@@ -366,7 +408,7 @@
                     this.updataerror=true;
                     this.saveerror='您的信息未填写完整！';
                     return;}
-                if(this.redata.listName==''){
+                if(this.whiteData.subCompanyName==''){
                     this.updataerror=true;
                     this.saveerror='请查询是否存在此商户/活动！';
                     return;}
@@ -426,8 +468,7 @@
                     this.model.queryA(data)
                             .then((res) => {
                                 if(res.data.code == 0){
-                                    this.redata.listName=res.data.data.name;
-                                    this.redata.subCompanyName=res.data.data.subCompanyName ;
+                                    this.$set('whiteData',res.data.data)
                                 }
                             })
                 }else if(this.redata.type=='3'){
@@ -437,8 +478,7 @@
                     this.model.queryC(data)
                         .then((res) => {
                             if(res.data.code == 0){
-                                this.redata.listName=res.data.data.merchantName;
-                                this.redata.subCompanyName=res.data.data.subCompanyName ;
+                                this.$set('whiteData',res.data.data)
                             }
                         })
                 }
@@ -449,8 +489,7 @@
                     this.model.queryC(data)
                             .then((res) => {
                                 if(res.data.code == 0){
-                                    this.redata.listName=res.data.data.merchantName;
-                                    this.redata.subCompanyName=res.data.data.subCompanyName ;
+                                    this.$set('whiteData',res.data.data)
                                 }
                             })
                 }
