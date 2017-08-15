@@ -201,7 +201,7 @@
                         </div>
                         <div class="form-group">
                             <label class="w28" ><i>*</i>付款方式：</label>
-                            <select class="form-control" v-model="relist.payType" @change="relist.paymentAccountId=''">
+                            <select class="form-control" v-model="relist.payType" @change="relist.paymentAccountId=relist.receiveAccountId=''">
                                 <option :value="5">网银转账</option>
                                 <option :value="1">备付金</option>
                             </select>
