@@ -125,7 +125,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="control-label"><i>*</i>类型：</label>
-                                <select class="form-control"  v-model="redata.type"  v-validate:type="['required']">
+                                <select class="form-control"  v-model="redata.type" @change="resetwhiteData" v-validate:type="['required']">
                                     <option value="2">活动ID</option>
                                     <option value="1">商盟ID</option>
                                     <option value="3">门店号</option>
@@ -314,17 +314,7 @@
                 var d = time.getDate();
                 return y+'-'+this.add0(m)+'-'+this.add0(d);
             },
-            addWhite(){
-                this.redata={
-                    id:'',
-                    type:1,
-                    remarks:'',
-                    operationID:'',
-                    certificateID:'',
-                    startDate:'',
-                    endDate:'',
-                    validType:'2'
-                };
+            resetwhiteData(){
                 this.whiteData={
                     operationID:'',
                     subCompanyName:'',
@@ -336,6 +326,19 @@
                     activityId:'',
                     activityName:''
                 };
+            },
+            addWhite(){
+                this.redata={
+                    id:'',
+                    type:1,
+                    remarks:'',
+                    operationID:'',
+                    certificateID:'',
+                    startDate:'',
+                    endDate:'',
+                    validType:'2'
+                };
+                this.resetwhiteData();
                 this.saveerror='';
                 this.uploadText='';
                 this.updataerror=false;
