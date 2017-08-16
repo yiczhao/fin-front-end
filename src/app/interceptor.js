@@ -11,7 +11,7 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 		request (request) {
-			if(request.url.indexOf('tradeDetail/list')<=0&&request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('bankAccount/account/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
+			if(request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('bankAccount/account/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
                 eventBus.$emit('AJAX_REQUEST')
 				sessionStorage.setItem('isHttpin',1);
 				if(request.url.indexOf('pageIndex=')>0&&request.url.indexOf('pageSize=')>0){
@@ -34,7 +34,7 @@ export default function install(Vue,router_proto) {
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			if(response.request.url.indexOf('tradeDetail/list')<=0&&response.request.url.indexOf('auth/usersystem/list')<=0&&response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0&&response.request.url.indexOf('/sum')<=0){
+			if(response.request.url.indexOf('auth/usersystem/list')<=0&&response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0&&response.request.url.indexOf('/sum')<=0){
                 eventBus.$emit('AJAX_RESPONSE');
 				if((response.data.data==''||response.data.data==null||typeof response.data.data=='undefined')&&response.request.url.indexOf('pageIndex=')>0&&response.request.url.indexOf('pageSize=')>0){
 					document.querySelector('.no-list').style.display='block';
