@@ -300,6 +300,7 @@
                 modal_back:false,
                 accountId:'',
                 waringshow:false,
+                merchantHasId:true,
                 addshow:false
             }
         },
@@ -444,9 +445,11 @@
                 this.model.advancePaymentMerchant(prepaymentId)
                     .then((response)=>{
                         if (response.data.code == 0) {
+                            this.merchantHasId=false;
                             this.$set('merchantIdList', response.data.data.list)
                         }else{
                             this.merchantIdList=[];
+                            this.merchantHasId=true;
                         }
                     });
             },
@@ -589,7 +592,7 @@
                         return
                     }
                 }
-                if(!this.collectionAccountName){
+                if(this.merchantHasId){
                     this.errHandle('该商户无收款信息！')
                     return;
                 }

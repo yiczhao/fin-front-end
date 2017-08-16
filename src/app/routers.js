@@ -520,7 +520,6 @@ export default function (router) {
 		transition.next();
 	});
 	router.afterEach((transition) => {
-		Message.hide();
 		window.routerType = transition.to.matched[0].handler.router_type
 		if (back_json.num == 0) {
 			back_json.isback = true;
