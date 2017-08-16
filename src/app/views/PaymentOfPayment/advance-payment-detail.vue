@@ -593,7 +593,7 @@
                     }
                 }
                 if(this.merchantHasId){
-                    this.errHandle('该商户无收款信息！')
+                    this.errHandle('当前预付款账户尚未添加门店，不能充值！')
                     return;
                 }
                 if(data.id==''){
