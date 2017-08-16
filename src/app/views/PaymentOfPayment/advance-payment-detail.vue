@@ -445,6 +445,8 @@
                     .then((response)=>{
                         if (response.data.code == 0) {
                             this.$set('merchantIdList', response.data.data.list)
+                        }else{
+                            this.merchantIdList=[];
                         }
                     });
             },
@@ -586,6 +588,10 @@
                         this.errHandle(e.message)
                         return
                     }
+                }
+                if(!this.collectionAccountName){
+                    this.errHandle('该商户无收款信息！')
+                    return;
                 }
                 if(data.id==''){
                     this.model.advance_save(data).then((response)=>{
