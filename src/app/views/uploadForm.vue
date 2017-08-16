@@ -253,6 +253,15 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<td><span>修复交易时间：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="errorSerialNumbers" placeholder="交易流水号，以逗号分隔"></textarea>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复交易时间" @click="repairTradeTime($event)"/>
+									</td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -318,7 +327,8 @@
                 subcompanyList:[],
                 cityList:[],
 				merchantOperationID:'',
-				merchantName:''
+				merchantName:'',
+                errorSerialNumbers:''
             }
         },
         methods:{
@@ -625,6 +635,15 @@
                 this.$http.post('./dev/tool/activityIncomeCost/generate/again')
                     .then((response) => {
                         dialogs('success', response.data.message);
+                    })
+			},
+			repairTradeTime(e){
+                let data={
+                    serialNumber:this.errorSerialNumbers
+                }
+                this.$http.post('./dev/tool/tradeTime/repair?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
                     })
 			}
         },
