@@ -13,7 +13,7 @@
                 </ul>
                 <div class="heading">
                     <div class="heading-left">
-                        <a class="btn btn-add" @click="addUser" data-ksa="provider_pay_detail.add">新增划付</a>
+                        <a class="btn btn-add" @click="addUser" data-ksa="advance_payment_detail_manage.add">新增划付</a>
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
@@ -119,20 +119,20 @@
                                     <td>
                                         <template v-if="!apd.reserveCashOrderID">
                                             <template v-if="apd.status==1||apd.status==4">
-                                                <a data-ksa="provider_pay_detail.edit" @click="rewrite(apd.advancePaymentAccountDetailID)">编辑</a>
-                                                <a data-ksa="provider_pay_detail.apply" @click="submit(apd.advancePaymentAccountDetailID)">提交</a>
-                                                <a data-ksa="provider_pay_detail.delete" @click="deleteList(apd.advancePaymentAccountDetailID)">删除</a>
+                                                <a data-ksa="advance_payment_detail_manage.edit" @click="rewrite(apd.advancePaymentAccountDetailID)">编辑</a>
+                                                <a data-ksa="advance_payment_detail_manage.submit" @click="submit(apd.advancePaymentAccountDetailID)">提交</a>
+                                                <a data-ksa="advance_payment_detail_manage.delete" @click="deleteList(apd.advancePaymentAccountDetailID)">删除</a>
                                             </template>
                                             <template v-if="apd.status==2">
-                                                <a data-ksa="provider_pay_detail.approve" @click="pass(apd.advancePaymentAccountDetailID)">通过</a>
-                                                <a data-ksa="provider_pay_detail.refuse" @click="back(apd.advancePaymentAccountDetailID)">退回</a>
+                                                <a data-ksa="advance_payment_detail_manage.approve" @click="pass(apd.advancePaymentAccountDetailID)">通过</a>
+                                                <a data-ksa="advance_payment_detail_manage.back" @click="back(apd.advancePaymentAccountDetailID)">退回</a>
                                             </template>
                                         </template>
                                         <template v-else>
                                             <template v-if="apd.status==0">
-                                                <a data-ksa="provider_pay_detail.edit" @click="rewrite(apd.advancePaymentAccountDetailID)">编辑</a>
-                                                <a data-ksa="provider_pay_detail.apply" @click="submit(apd.advancePaymentAccountDetailID)">提交</a>
-                                                <a data-ksa="provider_pay_detail.delete" @click="deleteList(apd.advancePaymentAccountDetailID)">删除</a>
+                                                <a data-ksa="advance_payment_detail_manage.edit" @click="rewrite(apd.advancePaymentAccountDetailID)">编辑</a>
+                                                <a data-ksa="advance_payment_detail_manage.submit" @click="submit(apd.advancePaymentAccountDetailID)">提交</a>
+                                                <a data-ksa="advance_payment_detail_manage.delete" @click="deleteList(apd.advancePaymentAccountDetailID)">删除</a>
                                             </template>
                                         </template>
                                     </td>
@@ -154,7 +154,7 @@
 
                     <div class="datatable-bottom">
                         <div class="left">
-                            <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="reserve_cash_order_manage.export">Excel导出</a>
+                            <a class="icon-file-excel" style="line-height: 30px;" @click="excel" data-ksa="advance_payment_detail_manage.export">Excel导出</a>
                         </div>
                        <div class="right">
                             <page :all="pageall"
