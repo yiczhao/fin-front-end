@@ -453,6 +453,7 @@
                 this.errorHideL();
                 this.select_merchantId = '';
                 this.tradeInfo.merchantOperationID = '';
+                this.tradeInfo.backendStoreCode='';
                 this.tradeInfo.activityOperationID = '';
                 this.tradeInfo.consumptionAmount = '';
                 this.tradeInfo.discountAmount = '';
