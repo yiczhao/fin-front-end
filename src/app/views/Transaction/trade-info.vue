@@ -36,11 +36,14 @@
                             <option value="3">调账</option>
                             <option v-for="(index,n) in typelists" v-text="n.value" :value="n.accountType"></option>
                         </select>
-                        <div  class="inline"><label><input type="checkbox" v-model="leakFlag" @change="changeleakFlag"/>
-                            <span>仅展示补单</span></label></div>
+                        <div  class="inline">
+                            <label style="font-size: 14px;position: relative;top: 6px;"><input type="checkbox" v-model="leakFlag" @change="changeleakFlag"/>
+                            <span>仅展示补单</span>
+                            </label>
+                        </div>
 
 
-                        <div  class="inline"><label>交易时间：</label></div>
+                        <div  class="inline"><label style="font-size: 14px;position: relative;top: 6px;">交易时间：</label></div>
                         <select class="form-control" v-model="checkForm.timeRange" @change="getTime">
                             <option value="0">昨天</option>
                             <option value="1">最近一周</option>
