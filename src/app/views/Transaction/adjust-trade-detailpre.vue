@@ -333,8 +333,10 @@
                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
                             <span style="color:red">rar/zip等压缩包格式，附件大小3M以内，如文件过大，可将凭证图片截图后压缩</span>
                             <span v-text="uploadText" v-show="uploadText!=''"></span>
-                            <span v-if="redata.certificateID=='' && fire"
-                                  class="validation-error-label">请上传凭证</span>
+                             <div class="pl95">
+                                <span v-if="redata.certificateID=='' && fire"
+                                      class="validation-error-label">请上传凭证</span>
+                            </div>
                         </span>
                         </div>
                         <div class="dialog-row">

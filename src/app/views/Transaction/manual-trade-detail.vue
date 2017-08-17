@@ -213,7 +213,7 @@
                             <i>*</i>商户：
                         </label>
                         <select class="form-control" v-model="merchantType"
-                                @change="tradeInfo.merchantOperationID=redata.backendStoreCode=''"
+                                @change="tradeInfo.merchantOperationID=tradeInfo.backendStoreCode=''"
                                 style="width: 76px;padding: 0;color: #777;">
                             <option value="1">商盟ID</option>
                             <option value="2">门店号</option>
@@ -234,6 +234,7 @@
                                    v-if="merchantType==2"
                                    v-model="tradeInfo.backendStoreCode"
                                    v-validate:val9="['required']"
+                                   style="width: 270px;"
                                    v-limitnumber="tradeInfo.backendStoreCode"
                                    v-bind:class="{'error-input':fire && $vali.val9.required}"
                             >
