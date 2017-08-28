@@ -18,19 +18,29 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>商户ID</th>
-                                    <th>商户名称</th>
+                                    <th>商户号</th>
+                                    <th>商户简称</th>
+                                    <th>门店号</th>
+                                    <th>门店名称</th>
+                                    <th>商盟ID</th>
+                                    <th>商盟商户名称</th>
                                     <th>活动ID</th>
                                     <th>活动名称</th>
                                     <th>交易笔数</th>
-                                    <th>三方应收</th>
+                                    <th>银行应补</th>
                                     <th>补贴划付</th>
                                     <th>暂扣税金</th>
                                 </tr>
                             </thead>
                             <tr v-for="(index,n) in recheckLists" v-bind:class="{'odd':(index%2==0)}">
+                                <td>{{n.backendMerchantCode}}</td>
+                                <td>{{n.backendMerchantName}}</td>
+                                <td>{{n.backendStoreCode}}</td>
+                                <td>{{n.backendStoreName}}</td>
                                 <td>{{n.merchantOperationID}}</td>
-                                <td>{{n.merchantName}}</td>
+                                <td>
+                                    <span v-if="!n.existInBackend">{{n.merchantName}}</span>
+                                </td>
                                 <td>{{n.activityOperationID}}</td>
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.tradeSize}}</td>
@@ -40,7 +50,7 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
-                                <td></td><td></td><td></td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.tradeSize}}</td>
                                 <td>{{total.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{total.merchantSubsidyActual/100 | currency ''}}</td>

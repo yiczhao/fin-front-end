@@ -114,6 +114,7 @@
                             </span>
                             <a v-if="!!defaultData.contractFileID && $route.params.contractAddId!==':contractAddId'" href="{{origin}}/file/download/{{defaultData.contractFileID}}">下载</a>
                             <a v-if="!!defaultData.contractFileID"
+                               data-ksa="contract.delete"
                                @click="removeContarct"
                             >删除</a>
                         </div>

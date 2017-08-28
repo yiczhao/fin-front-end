@@ -6,6 +6,7 @@
         <div class="content activity-cost-management" slot="content">
            	<div class="panel panel-flat">
            	 	<ul class="tab-bor">
+                    <li data-ksa="third_party_account_manage"><a v-link="{name:'pay-report'}">划付报表</a></li>
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">银行管理</a></li>
                     <li data-ksa="contract" ><a v-link="{name:'contract-management-info'}">合同管理</a></li>
                     <li data-ksa="activity_income_cost_manage" class="active"><a>活动收入成本管理</a></li>
@@ -57,9 +58,8 @@
                                 <th class="top-none">活动ID</th>
                                 <th class="top-none">执行表参数</th>
                                 <th>服务费</th>
-                                <th>三方应收</th>
+                                <th>银行应补</th>
                                 <th>税费</th>
-                                <th>佣金</th>
                                 <th>广告费</th>
                                 <th>物料费</th>
                                 <th>现金红包</th>
@@ -67,6 +67,7 @@
                                 <th>其他</th>
                                 <th>小计</th>
                                 <th class="top-none">合同金额说明</th>
+                                <th>佣金</th>
                                 <th>商户应补</th>
                                 <th>服务费分润</th>
                                 <th>折扣差分润</th>
@@ -116,10 +117,6 @@
                                     <td>
                                         <span v-if="trlist.incomeCommision==null">--</span>
                                         <span v-else>{{trlist.incomeCommision/100 | currency ''}}</span>
-                                    </td><!-- 佣金 -->
-                                    <td>
-                                        <span v-if="trlist.incomeAdvertisementFee==null">--</span>
-                                        <span v-else>{{trlist.incomeAdvertisementFee/100 | currency ''}}</span>
                                     </td><!-- 广告费 -->
                                     <td>
                                         <span v-if="trlist.incomeMaterialFee==null">--</span>
@@ -138,7 +135,11 @@
                                         <span v-else>{{trlist.incomeOther/100 | currency ''}}</span>
                                     </td><!-- 其他 -->
                                     <td>{{trlist.incomeSum/100 | currency ''}}</td><!-- 小计 -->
-                                    <td>{{trlist.contractAmountMemo}}</td><!-- 合同金额说明 -->
+                                    <td>{{trlist.contractAmountMemo}}</td><!-- 合同金额说明 --><!-- 佣金 -->
+                                    <td>
+                                        <span v-if="trlist.incomeAdvertisementFee==null">--</span>
+                                        <span v-else>{{trlist.incomeAdvertisementFee/100 | currency ''}}</span>
+                                    </td>
                                     <!-- 成本 -->
                                     <td>
                                         <span v-if="trlist.merchantSubsidyShould==null">--</span>

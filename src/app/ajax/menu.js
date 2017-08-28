@@ -58,7 +58,7 @@ module.exports = [
 		type: 'third',
 		ksa: 'third_party_account_manage',
 		sub_menu: [
-			{name: '银行结算管理', link: 'third-party', ksa: 'third_party_account_manage'}
+			{name: '银行结算管理', link: 'pay-report', ksa: 'third_party_account_manage'}
 		]
 	},
 	{

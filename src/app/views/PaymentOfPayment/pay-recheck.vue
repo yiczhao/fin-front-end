@@ -38,7 +38,6 @@
                                 <option value="1">补贴划付</option>
                                 <option value="3">补贴退税</option>
                                 <option value="10">税金提现</option>
-                                <option value="4">预付款</option>
                             </select>
 
                             <select class="form-control" v-model="checkForm.status">
@@ -92,6 +91,7 @@
                                     <th>申请时间</th>
                                     <th>分公司</th>
                                     <th>城市</th>
+                                    <th>付款方式</th>
                                     <th>付款账户</th>
                                     <th>预付款商户否</th>
                                     <th>商户号</th>
@@ -104,9 +104,9 @@
                                     <th>活动名称</th>
                                     <th>收款账户名</th>
                                     <th>收款账号</th>
+                                    <th>收款开户行</th>
                                     <th>提入行号</th>
                                     <th>是否建行</th>
-                                    <th>付款方式</th>
                                     <th>用途</th>
                                     <th>银行应补</th>
                                     <th>划付金额</th>
@@ -124,6 +124,12 @@
                                 <td>{{n.createTime | datetime}}</td>
                                 <td>{{n.subCompanyName}}</td>
                                 <td>{{n.cityName }}</td>
+                                <td>
+                                    <template v-if="n.payType==1">备付金账户</template>
+                                    <template v-if="n.payType==2">预付款账户</template>
+                                    <template v-if="n.payType==3">银行结算</template>
+                                    <template v-if="n.payType==5">网银转账</template>
+                                </td>
                                 <td>{{n.payAccount }}</td>
                                 <td>
                                     <a v-link="{'name':'prepayment-lists',params:{
@@ -142,6 +148,7 @@
                                 <td>{{n.activityName}}</td>
                                 <td>{{n.collectionBankName }}</td>
                                 <td>{{n.collectionBankNumber}}</td>
+                                <td>{{n.bankName}}</td>
                                 <td>
                                     <template v-if="n.isCcb==1"></template>
                                     <template v-else> {{n.bankNumber}}</template>
@@ -149,12 +156,6 @@
                                 <td>
                                     <template v-if="n.isCcb==1&&n.payType==1">是</template>
                                     <template  v-if="n.isCcb!=1&&n.payType==1">否</template>
-                                </td>
-                                <td>
-                                    <template v-if="n.payType==1">备付金账户</template>
-                                    <template v-if="n.payType==2">预付款账户</template>
-                                    <template v-if="n.payType==3">银行结算</template>
-                                    <template v-if="n.payType==5">网银转账</template>
                                 </td>
                                 <td>
                                     <template v-if="n.purpose==1">补贴划付</template>
@@ -189,7 +190,7 @@
                                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
-                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </table>
                     </div>
@@ -494,9 +495,9 @@
                 this.model.payrecheck_pass(data)
                         .then( (response)=> {
                             if(response.data.code==0){
-                                this.query();
                                 dialogs('success','已通过！');
                             }
+                            this.query();
                         })
             }
         },

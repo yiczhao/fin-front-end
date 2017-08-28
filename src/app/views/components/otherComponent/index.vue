@@ -13,6 +13,7 @@
                     keep-alive></breadcrumb>
             <slot name="content" slot="content"></slot>
         </div>
+        <loading></loading>
     </div>
     <nv-footer keep-alive></nv-footer>
     <div class="script-playground" style="dispaly: none"

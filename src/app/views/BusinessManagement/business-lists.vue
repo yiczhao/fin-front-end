@@ -15,16 +15,14 @@
                     </div>
                     <div class="heading-right">
                         <form class="form-inline manage-form">
-                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID"
-                                   placeholder="商户ID" v-limitnumber="defaultData.merchantOperationID">
-                            <input type="text" class="form-control" v-model="defaultData.backendMerchantCode"
-                                   placeholder="商户号">
-                            <input type="text" class="form-control" v-model="defaultData.backendMerchantName"
-                                   placeholder="商户名称">
-                            <input type="text" class="form-control" v-model="defaultData.backendStoreCode"
-                                   placeholder="门店号">
-                            <input type="text" class="form-control" v-model="defaultData.storeName"
-                                   placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="defaultData.backendMerchantCode" placeholder="商户号">
+                            <input type="text" class="form-control" v-model="defaultData.backendMerchantName" placeholder="商户简称">
+                            <input type="text" class="form-control" v-model="defaultData.backendStoreCode" placeholder="门店号">
+                            <input type="text" class="form-control" v-model="defaultData.backendStoreName" placeholder="门店名称">
+                            <input type="text" class="form-control" v-model="defaultData.merchantOperationID" placeholder="商盟ID（多个ID以逗号隔开）">
+                            <input type="text" class="form-control" v-model="defaultData.merchantName" placeholder="商盟商户名称">
+
+
                             <input type="text" class="form-control" v-model="defaultData.startValue"
                                    v-limitnumber="defaultData.startValue" placeholder="佣金值" style="margin-right:0">
                             <span style="margin:0 10px;font-size:13px;">至</span>
@@ -55,12 +53,12 @@
                         <table id="table1" class="table">
                             <thead>
                             <tr role="row">
-                                <th>商户ID</th>
                                 <th>商户号</th>
-                                <th>商户名称</th>
-                                <th>商户类型</th>
+                                <th>商户简称</th>
                                 <th>门店号</th>
                                 <th>门店名称</th>
+                                <th>商盟ID</th>
+                                <th>商盟商户名称</th>
                                 <th>分公司</th>
                                 <th>城市</th>
                                 <!--<th>划款账户</th>-->
@@ -80,15 +78,14 @@
 
                             <tbody>
                             <tr role="row" v-for="(index,trlist) in zdlists" v-bind:class="{'odd':(index%2==0)}">
-                                <td>{{trlist.merchantOperationID}}</td>
                                 <td>{{trlist.backendMerchantCode}}</td>
                                 <td>{{trlist.backendMerchantName}}</td>
-                                <td>
-                                    <template v-if="trlist.merchantType==1">单店</template>
-                                    <template v-if="trlist.merchantType==2">连锁总店</template>
-                                </td>
                                 <td>{{trlist.backendStoreCode}}</td>
                                 <td>{{trlist.storeName}}</td>
+                                <td>{{trlist.merchantOperationID}}</td>
+                                <td>
+                                    <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
+                                </td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
                                 <!--<td><a @click="control(trlist)" data-ksa="merchant_manage.manage">管理</a></td>-->
@@ -354,11 +351,12 @@
                 pageAll:1,
 				loginList: {},
 				defaultData: {
-					"merchantOperationID": "",
-					"backendMerchantCode": "",
-					"backendMerchantName": "",
-					"backendStoreCode": "",
-					"storeName": "",
+                    merchantOperationID:"",
+                    merchantName:"",
+                    backendMerchantCode:"",
+                    backendMerchantName:"",
+                    backendStoreCode:"",
+                    backendStoreName:"",
 					"companyId": "",
 					"cityId": ""
 //					"startValue": "",

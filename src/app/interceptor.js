@@ -2,7 +2,7 @@
  * 拦截器
  * @author yiczhao
  */
-import config from './config'
+import eventBus from './views/components/eventBus'
 import Cookie from './utils/Cookie'
 import md5 from 'blueimp-md5'
 export default function install(Vue,router_proto) {
@@ -11,8 +11,8 @@ export default function install(Vue,router_proto) {
 	Vue.http.options.emulateJSON = false;
 	Vue.http.interceptors.push({
 		request (request) {
-			if(request.url.indexOf('tradeDetail/list')<=0&&request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('bankAccount/account/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
-				Message.show('loading','loading...');
+			if(request.url.indexOf('auth/usersystem/list')<=0&&request.url.indexOf('subCompany/list')<=0&&request.url.indexOf('city/list')<=0&&request.url.indexOf('bankAccount/account/list')<=0&&request.url.indexOf('/total')<=0&&request.url.indexOf('/sum')<=0){
+                eventBus.$emit('AJAX_REQUEST')
 				sessionStorage.setItem('isHttpin',1);
 				if(request.url.indexOf('pageIndex=')>0&&request.url.indexOf('pageSize=')>0){
 					document.querySelector('.no-list').style.display='none';
@@ -30,13 +30,12 @@ export default function install(Vue,router_proto) {
 			request.headers['X-AUTH-TOKEN']=authtoken;
 			request.headers['X-USER-TOKEN'] =token;
 			request.headers['X-Fin-Token'] =fintoken;
-			// config.mock_get(Vue,request)
 			return request;
 		},
 		response (response) {
 			sessionStorage.setItem('isHttpin',0);
-			if(response.request.url.indexOf('tradeDetail/list')<=0&&response.request.url.indexOf('auth/usersystem/list')<=0&&response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0&&response.request.url.indexOf('/sum')<=0){
-				Message.hide();
+			if(response.request.url.indexOf('auth/usersystem/list')<=0&&response.request.url.indexOf('subCompany/list')<=0&&response.request.url.indexOf('city/list')<=0&&response.request.url.indexOf('/total')<=0&&response.request.url.indexOf('/sum')<=0){
+                eventBus.$emit('AJAX_RESPONSE');
 				if((response.data.data==''||response.data.data==null||typeof response.data.data=='undefined')&&response.request.url.indexOf('pageIndex=')>0&&response.request.url.indexOf('pageSize=')>0){
 					document.querySelector('.no-list').style.display='block';
 				}

@@ -85,6 +85,7 @@
                                 <th>本金抵扣</th>
                                 <th>银行应补</th>
                                 <th>商户应补</th>
+                                <th>补贴代扣</th>
                                 <th>商户实补</th>
                                 <th>暂扣税金</th>
                                 <th>扣收金额</th>
@@ -117,6 +118,7 @@
                                 <td>{{trlist.principalDeduct/100 | currency ''}}</td>
                                 <td>{{trlist.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{trlist.subsidyWithhold/100 | currency ''}}</td>
                                 <td>{{trlist.merchantSubsidyActual/100 | currency ''}}</td>
                                 <td>{{trlist.suspensionTax/100 | currency ''}}</td>
                                 <td>{{trlist.collectionAmount/100 | currency ''}}</td>
@@ -160,6 +162,7 @@
                                 <td>{{nums.principalDeduct/100 | currency ''}}</td>
                                 <td>{{nums.thirdPartyReceivable/100 | currency ''}}</td>
                                 <td>{{nums.merchantSubsidyShould/100 | currency ''}}</td>
+                                <td>{{nums.subsidyWithhold/100 | currency ''}}</td>
                                 <td>{{nums.merchantSubsidyActual/100 | currency ''}}</td>
                                 <td>{{nums.suspensionTax/100 | currency ''}}</td>
                                 <td>{{nums.collectionAmount/100 | currency ''}}</td>
@@ -222,6 +225,9 @@
                                            placeholder="请输入门店号">
                                 </template>
                             </span>
+                            <div class="pl95">
+                                <span style="color:red">保存时若提示系统内多个门店ID为xxxx，请选择并填写【门店号】进行调账</span>
+                            </div>
                         </div>
                         <div class="dialog-row">
                             <span>
@@ -243,10 +249,11 @@
                                        v-model="redata.serialNumber"
                                        v-validate:val3="['required']"
                                        v-bind:class="{'error-input':fire && $vali.val3.required}"
-                                       placeholder="请输入交易流水号"></textarea>
+                                       placeholder="单次最多调账300笔，每两个交易流水号之间用逗号隔开"></textarea>
                          </span>
                             <div class="pl95">
                                 <a class="btn btn-info" @click="getTradeData" data-ksa="manually_settlement.search">查询</a>
+                                <span style="color:red">请点击【查询】查看录入的交易笔数是否正确</span>
                             </div>
                         </div>
                         <div class="dialog-row" v-show="!!redata.tradeCount||!!redata.consumptionAmount">
@@ -298,17 +305,17 @@
                         </div>
                         <div class="dialog-row">
                         <span>
-                             <label><i>*</i>三方应收：</label>
+                             <label><i>*</i>银行应补：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.thirdPartyReceivable"
                                     v-validate:val8="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val8.required}"
                                     v-limitprice="redata.thirdPartyReceivable"
-                                    placeholder="三方应收">
+                                    placeholder="银行应补">
                         </span>
                             <span>
-                             <label><i>*</i>佣金：</label>
+                             <label><i>*</i>导流佣金：</label>
                              <input type="text"
                                     class="form-control"
                                     v-model="redata.commission33211"
@@ -316,7 +323,7 @@
                                     v-validate:val9="['required']"
                                     v-bind:class="{'error-input':fire && $vali.val9.required}"
                                     v-limitprice="redata.commission33211"
-                                    placeholder="佣金">
+                                    placeholder="导流佣金">
                         </span>
                         </div>
                         <div class="dialog-row">
@@ -324,9 +331,12 @@
                              <label><i>*</i>上传凭证：</label>
                              <input type="file" style="display: none;" @change="uploads($event)">
                              <a href="javascript:void(0)" class="btn btn-primary" @click="uploadClick">上传凭证</a>
-                             <span v-text="uploadText" v-show="uploadText!=''"></span>
-                            <span v-if="redata.certificateID=='' && fire"
-                                  class="validation-error-label">请上传凭证</span>
+                            <span style="color:red">rar/zip等压缩包格式，附件大小3M以内，如文件过大，可将凭证图片截图后压缩</span>
+                            <span v-text="uploadText" v-show="uploadText!=''"></span>
+                             <div class="pl95">
+                                <span v-if="redata.certificateID=='' && fire"
+                                      class="validation-error-label">请上传凭证</span>
+                            </div>
                         </span>
                         </div>
                         <div class="dialog-row">
@@ -337,6 +347,7 @@
                                        v-model="redata.remarks"
                                        v-validate:val10="['required']"
                                        v-bind:class="{'error-input':fire && $vali.val10.required}"
+                                       placeholder="填写本次调账的备注信息，200个中文字符以内"
                              ></textarea>
                         </span>
                         </div>

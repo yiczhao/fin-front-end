@@ -236,28 +236,20 @@
                 >
                     <validator name="vali">
                         <div class="form-group">
-                            <label>商盟商户名称：</label>
-                           <span v-if="!rechargeInfo.val7">{{rechargeInfo.val1}}</span>
-                            <label style="width: 15%;text-align: right;">商盟ID：</label>
-                            <span>{{rechargeInfo.val4}}</span>
+                            <span style="width: 50%;display: inline-block;">商盟商户名称：{{rechargeInfo.val1}}</span>
+                            <span>商盟ID：{{rechargeInfo.val4}}</span>
                         </div>
                         <div class="form-group">
-                            <label style="width: 15%;text-align: right;">活动名称：</label>
-                            <span>{{rechargeInfo.val2}}</span>
-                            <label style="width: 15%;text-align: right;">活动ID：</label>
-                            <span>{{rechargeInfo.val5}}</span>
+                            <span style="width: 50%;display: inline-block;">活动名称：{{rechargeInfo.val2}}</span>
+                            <span>活动ID：{{rechargeInfo.val5}}</span>
                         </div>
                         <div class="form-group">
-                            <label style="width: 15%;text-align: right;">商户简称：</label>
-                            <span>{{rechargeInfo.val8}}</span>
-                            <label style="width: 15%;text-align: right;">商户号：</label>
-                            <span>{{rechargeInfo.val9}}</span>
+                            <span style="width: 50%;display: inline-block;">商户简称：{{rechargeInfo.val8}}</span>
+                            <span>商户号：{{rechargeInfo.val9}}</span>
                         </div>
                         <div class="form-group">
-                            <label style="width: 15%;text-align: right;">门店名称：</label>
-                            <span>{{rechargeInfo.val6}}</span>
-                            <label style="width: 15%;text-align: right;">门店号：</label>
-                            <span>{{rechargeInfo.val7}}</span>
+                            <span style="width: 50%;display: inline-block;">门店名称：{{rechargeInfo.val6}}</span>
+                            <span>门店号：{{rechargeInfo.val7}}</span>
                         </div>
                         <div class="form-group">
                             <label style="width: 15%;text-align: right;">余额：</label>

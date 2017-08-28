@@ -9,8 +9,8 @@
             <div class="panel panel-flat">
                 <div class="heading">
                     <div class="heading-left" style="width:220px">
-                        <a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"
-                        @click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>
+                        <!--<a data-toggle="modal" data-target="#modal_add" class="btn btn-add add-top"-->
+                        <!--@click="getRechargeInfo(defaultData.advancePaymentMerchantID)" data-ksa="advance_payment_merchant_manage.recharge">预付充值</a>-->
                         <a class="btn btn-add add-top" data-ksa="advance_payment_account_manage.adjust" style="margin-right:0px;" @click="adjustBalance">余额校正</a>
                     </div>
 
@@ -73,7 +73,7 @@
                                 <th>支出</th>
                                 <th>状态</th>
                                 <th>交易时间</th>
-                                <th>操作</th>
+                                <!--<th>操作</th>-->
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -90,29 +90,34 @@
                                     {{trlist.payoutAmount/100 | currency ''}}
                                 </td>
                                 <td>
-                                    <template v-if="trlist.status==0">已关闭</template>
-                                    <template v-if="trlist.status==1">等待审核</template>
-                                    <template v-if="trlist.status==2">等待划付</template>
-                                    <template v-if="trlist.status==3">转账中</template>
-                                    <template v-if="trlist.status==4">等待对账</template>
-                                    <template v-if="trlist.status==5">对账成功</template>
-                                    <template v-if="trlist.status==6">划付失败</template>
-                                    <template v-if="trlist.status==7">等待复核</template>
-                                    <template v-if="trlist.status==8">复核不通过</template>
-                                </td>
-                                <td>{{trlist.tradeTime | datetime}}</td>
-                                <td v-if="trlist.orderNumber==null&&trlist.status==5"></td>
-                                <td v-else>
-                                    <template v-if="trlist.status==7||trlist.status==8">
-                                        <a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>
+                                    <template v-if="!!trlist.reserveCashOrderID">
+                                        <template v-if="trlist.status==0">审核不通过</template>
+                                        <template v-if="trlist.status==2">等待划付</template>
+                                        <template v-if="trlist.status==3">转账中</template>
+                                        <template v-if="trlist.status==4">等待对账</template>
+                                        <template v-if="trlist.status==5">对账成功</template>
+                                        <template v-if="trlist.status==6">划付失败</template>
                                     </template>
                                     <template v-else>
-                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"
-                                           v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>
-                                        <a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':trlist.orderPayType}}"
-                                           v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>
+                                        <template v-if="trlist.status==1">未提交</template>
+                                        <template v-if="trlist.status==2">等待审核</template>
+                                        <template v-if="trlist.status==3">审核通过</template>
+                                        <template v-if="trlist.status==4">审核不通过</template>
                                     </template>
                                 </td>
+                                <td>{{trlist.tradeTime | datetime}}</td>
+                                <!--<td v-if="trlist.orderNumber==null&&trlist.status==5"></td>-->
+                                <!--<td v-else>-->
+                                    <!--<template v-if="trlist.status==7||trlist.status==8">-->
+                                        <!--<a v-link="{'name':'pay-recheck',params:{'recheckId':trlist.payRecheckID}}">查看</a>-->
+                                    <!--</template>-->
+                                    <!--<template v-else>-->
+                                        <!--<a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':2}}"-->
+                                           <!--v-if="trlist.purpose!=6&&trlist.purpose!=4">查看</a>-->
+                                        <!--<a data-ksa="reserve_cash_order_manage.search" v-link="{'name':'payment-details',params:{'reserveCashOrderNumber':trlist.orderNumber,'payType':trlist.orderPayType}}"-->
+                                           <!--v-if="trlist.purpose!=6&&trlist.purpose==4">查看</a>-->
+                                    <!--</template>-->
+                                <!--</td>-->
                                 <td>{{trlist.remarks}}</td>
                             </tr>
                             <tr>
@@ -121,7 +126,7 @@
                                 <td>{{total.incomeAmount/100| currency '' }}</td>
                                 <td>{{total.payoutAmount/100| currency '' }}</td>
                                 <td></td>
-                                <td></td>
+                                <!--<td></td>-->
                                 <td></td>
                                 <td></td>
                             </tr>

@@ -151,6 +151,18 @@ export default function install(Vue) {
      * @method get
      */
     _o.thirdPartyToExcel = '/data/export/excel/thirdParty?';
+    /**
+     * @description 预付款划付导出
+     * @author 于凯乐
+     * @method get
+     */
+    _o.advancePaymentDetailexcel = '/data/export/excel/advancePaymentDetail?';
+    /**
+     * @description 划付报表导出
+     * @author 于凯乐
+     * @method
+     */
+    _o.payReportExcel = '/data/export/excel/activityPayReport?';
 
     //- todo 财务处理-账户列表 account-management
     /**
@@ -711,6 +723,61 @@ export default function install(Vue) {
      * @method POST
      */
     _o.advance_list = './advancePaymentDetail/list?';
+    /**
+     * @description 预付款划付新增接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_add = './advancePaymentDetail/save';
+    /**
+     * @description 预付款划付退回接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_back = './advancePaymentAccount/back';
+    /**
+     * @description 预付款划付删除接口地址
+     * @author 于凯乐
+     * @method delete
+     */
+    _o.advance_delete = './advancePaymentDetail/delete/';
+    /**
+     * @description 预付款划付编辑接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_edit = './advancePaymentDetail/editInfo';
+    /**
+     * @description 预付款划付通过接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_pass = './advancePaymentAccount/approve/';
+    /**
+     * @description 预付款划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_submit = './advancePaymentAccount/submit/';
+    /**
+     * @description 预付款划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.queryAdvancePaymentMerchantList = './advancePaymentDetail/queryAdvancePaymentMerchantList/';
+    /**
+     * @description 预付款划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advancePaymentEdit = './advancePaymentDetail/editInfo/';
+    /**
+     * @description 预付款划付提交接口地址
+     * @author 于凯乐
+     * @method post
+     */
+    _o.advance_save = './advancePaymentDetail/save';
+
 
     //- todo  备付金支出-额度采购 limit-purchase-detail
     /**
@@ -1307,6 +1374,7 @@ export default function install(Vue) {
      */
     _o.changeBankInfo = './advancePaymentMerchant/chargeBankInfo/';
 
+
     //- todo  商户管理-预付款-门店管理 prepayment-store
     /**
      * @description 预付款门店数据接口地址
@@ -1425,6 +1493,20 @@ export default function install(Vue) {
      * @method POST
      */
     _o.gettotal = './thirdParty/sum?';
+
+    //- todo  三方管理-划付报表 pay-report
+    /**
+     * @description 划付报表列表接口地址
+     * @author 周俭
+     * @method get
+     */
+    _o.payReportList = './activityPayReport/list?';
+    /**
+     * @description 划付报表合计接口地址
+     * @author 周俭
+     * @method get
+     */
+    _o.payReportTotal = './activityPayReport/total?';
 
 
     //- todo  三方管理-账户明细 third-info

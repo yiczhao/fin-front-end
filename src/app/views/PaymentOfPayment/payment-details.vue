@@ -52,9 +52,8 @@
                                 <datepicker type="date" v-bind:value.sync="checkForm.endDate"></datepicker>
                             </div>
 
-                            <input type="text" class="form-control" v-model="checkForm.merchantOperationID" v-limitnumber="checkForm.merchantOperationID" placeholder="商户ID">
-
-                            <input type="text" class="form-control" v-model="checkForm.keyword" placeholder="商户名、账户名、账号">
+                            <input type="text" class="form-control" v-model="checkForm.incomeAccountName" placeholder="收款账户名">
+                            <input type="text" class="form-control" v-model="checkForm.incomeAccountNumber" placeholder="收款账号">
 
                             <select class="form-control" v-model="checkForm.status">
                                 <option value="">请选择对账状态</option>
@@ -99,8 +98,6 @@
                             <tr role="row">
                                 <th><input type="checkbox"  v-model="checkAll" @click="chooseAll"></th>
                                 <th>订单号</th>
-                                <th>商户ID</th>
-                                <th>商户名称</th>
                                 <th>划付金额</th>
                                 <th>暂扣税金</th>
                                 <th>付款账户</th>
@@ -129,8 +126,6 @@
                                 <td>
                                     <span>{{n.orderNumber}}</span>
                                 </td>
-                                <td><span v-if="n.purpose!=4">{{n.merchantOperationID }}</span></td>
-                                <td><span v-if="n.purpose!=4">{{n.merchantName}}</span></td>
                                 <td>
                                     {{n.payoutAmount/100 | currency '' }}
                                 </td>
@@ -202,8 +197,6 @@
                         </template>
                         <tr>
                             <td>合计：</td>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td>{{total.payoutAmount/100 | currency ''}}</td>
                             <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
@@ -400,8 +393,8 @@
                     subCompanyID:'',
                     payType: '1',
                     orderNumber: '',
-                    merchantOperationID:'',
-                    keyword:'',
+                    incomeAccountName:'',
+                    incomeAccountNumber:'',
                     status:'',
                     purpose:'',
                     remarks:'',

@@ -218,6 +218,50 @@
 										<input type="button" class="btn btn-primary" value="保存" @click="addMerchant($event)"/>
 									</td>
 								</tr>
+								<tr>
+									<td><span>原预付充值明细处理：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="处理" data-toggle="modal" @click="dealAdvancePaymentRechargeDetail($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>划付报表生成：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成" data-toggle="modal" @click="generatePayReport($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>补贴账户生成：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成" data-toggle="modal" @click="repairSubsidyAccount($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>补贴代扣字段更新：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="更新" data-toggle="modal" @click="updateSubsidyWithhold($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>重新生成活动收入成本：</span></td>
+									<td>
+										<input type="button" class="btn btn-primary" value="生成" data-toggle="modal" @click="generateActivityIncomeCostAgain($event)"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><span>修复交易时间：</span></td>
+									<td>
+										<textarea rows="5" cols="5" class="form-control" v-model="errorSerialNumbers" placeholder="交易流水号，以逗号分隔"></textarea>
+									</td>
+									<td>
+										<input type="button" class="btn btn-primary" value="修复交易时间" @click="repairTradeTime($event)"/>
+									</td>
+								</tr>
 							</table>
 						</form>
 					</div>
@@ -283,7 +327,8 @@
                 subcompanyList:[],
                 cityList:[],
 				merchantOperationID:'',
-				merchantName:''
+				merchantName:'',
+                errorSerialNumbers:''
             }
         },
         methods:{
@@ -561,7 +606,46 @@
                         dialogs('error',response.data.message);
 					}
                     })
-            }
+            },
+            dealAdvancePaymentRechargeDetail(){
+                this.$http.post('./dev/tool/advancePaymentRechargeDetail/deal')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            generatePayReport(){
+                this.$http.post('./dev/tool/payReport/generate')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            repairSubsidyAccount(){
+                this.$http.post('./dev/tool/subsidyAccount/repair')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            updateSubsidyWithhold(){
+                this.$http.post('./dev/tool/subsidyWithhold/update')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+            generateActivityIncomeCostAgain(){
+                this.$http.post('./dev/tool/activityIncomeCost/generate/again')
+                    .then((response) => {
+                        dialogs('success', response.data.message);
+                    })
+			},
+			repairTradeTime(e){
+                let data={
+                    serialNumber:this.errorSerialNumbers
+                }
+                this.$http.post('./dev/tool/tradeTime/repair?'+$.param(data))
+                    .then((response)=>{
+                        dialogs('success',response.data.message);
+                    })
+			}
         },
         ready() {
             this.getSubcompany();

@@ -48,7 +48,7 @@
                         <datepicker :value.sync="defaultData.endDate"></datepicker>
                     </div>
                     <input type="text" class="form-control" v-model="defaultData.accountNumber" placeholder="请输入活动ID" v-limitnumber="defaultData.activityID">
-                    <select class="form-control" v-model="status" @change="getStatus(status)">
+                    <select class="form-control" v-model="defaultData.modelstatus" @change="getStatus(defaultData.modelstatus)">
                         <option value="">全部状态</option>
                         <option value="1,s">未提交</option>
                         <option value="2,s">等待审核</option>
@@ -293,6 +293,7 @@
             return{
                 pageall:1,
                 defaultData:{
+                    modelstatus:'',
                     "subCompanyID": "",
                     "startDate": "",
                     "endDate": "",
@@ -305,7 +306,6 @@
                     "pageSize": 10
                 },
                 dateS:'3',
-                status:'',
                 zdlists:[],
                 thirdPartyAccountlists:[],
                 relist:{},
@@ -362,6 +362,14 @@
                 this.defaultData.pageIndex=1;
                 this.initList();
             },
+            initList(){
+                if(sessionStorage.getItem('isHttpin')==1)return;
+                this.waringshow=false;
+                this.addshow=false;
+                this.modal_back=false;
+                back_json.saveArray(this.$route.path,this.defaultData);
+                this.getZlists(this.defaultData);
+            },
             addUser(){
                 this.fire1=false;
                 this.relist={
@@ -380,19 +388,11 @@
                     subCompanyID:'',
                     status:'',
                     ifBankActivityPay:1,
-	                thirdPartyAccountID:'',
+                    thirdPartyAccountID:'',
                     payType:5
                 },
-                this.accountId='';
+                    this.accountId='';
                 this.addshow=true;
-            },
-            initList(){
-                if(sessionStorage.getItem('isHttpin')==1)return;
-                this.waringshow=false;
-                this.addshow=false;
-                this.modal_back=false;
-                back_json.saveArray(this.$route.path,this.defaultData);
-                this.getZlists(this.defaultData);
             },
             rewrite(_list){
                 this.relist=_.cloneDeep(_list);

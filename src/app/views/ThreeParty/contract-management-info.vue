@@ -6,6 +6,7 @@
         <div class="content" slot="content">
             <div class="panel panel-flat">
                 <ul class="tab-bor">
+                    <li data-ksa="third_party_account_manage"><a v-link="{name:'pay-report'}">划付报表</a></li>
                     <li data-ksa="third_party_account_manage"><a v-link="{name:'third-party'}">银行管理</a></li>
                     <li data-ksa="contract" class="active"><a v-link="{name:'contract-management-info'}">合同管理</a></li>
                     <li data-ksa="activity_income_cost_manage"><a v-link="{name:'activity-cost-management'}">活动收入成本管理</a></li>
@@ -89,7 +90,7 @@
                                         <a data-ksa="contract.edit" v-link="{name:'contract-add',params:{'contractAddId':trlist.contractID}}">编辑</a>
                                         <a v-if="!!trlist.contractFileID" href="{{origin}}/file/download/{{trlist.contractFileID}}">附件</a>
                                         <!--<a data-ksa="contract.associate" @click="associateShow(trlist.contractNumber,trlist.id,trlist.activityOperationID)">关联</a>-->
-                                        <a @click="deletecontract(trlist.contractID)">删除</a>
+                                        <a data-ksa="contract.delete" @click="deletecontract(trlist.contractID)">删除</a>
                                     </td>
                                     <td>
                                         <a data-ksa="activity_income_cost_manage.search" v-link="{name:'activity-cost-management',params:{'activityCostNumber':trlist.contractNumber,'activityCostName':trlist.thirdPartyAccountName}}">{{trlist.unSettlementAmount/100 | currency ''}}</a>

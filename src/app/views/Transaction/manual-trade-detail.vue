@@ -213,7 +213,7 @@
                             <i>*</i>商户：
                         </label>
                         <select class="form-control" v-model="merchantType"
-                                @change="tradeInfo.merchantOperationID=redata.backendStoreCode=''"
+                                @change="tradeInfo.merchantOperationID=tradeInfo.backendStoreCode=''"
                                 style="width: 76px;padding: 0;color: #777;">
                             <option value="1">商盟ID</option>
                             <option value="2">门店号</option>
@@ -234,6 +234,7 @@
                                    v-if="merchantType==2"
                                    v-model="tradeInfo.backendStoreCode"
                                    v-validate:val9="['required']"
+                                   style="width: 270px;"
                                    v-limitnumber="tradeInfo.backendStoreCode"
                                    v-bind:class="{'error-input':fire && $vali.val9.required}"
                             >
@@ -277,14 +278,14 @@
                         <span v-if="$vali.val5.required && fire" class="validation-error-label">请输入实付金额</span>
                     </div>
                     <div class="dialog-row">
-                        <label><i>*</i>三方应收：</label>
+                        <label><i>*</i>银行应补：</label>
                         <input type="text" class="form-control"
                                v-model="tradeInfo.thirdPartyReceivable"
                                v-validate:val6="['required']"
                                v-limitaddprice="tradeInfo.thirdPartyReceivable"
                                min="0"
                                v-bind:class="{'error-input':fire && $vali.val6.required}">
-                        <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入三方应收</span>
+                        <span v-if="$vali.val6.required && fire" class="validation-error-label">请输入银行应补</span>
                     </div>
                     <div class="dialog-row">
                         <label><i>*</i>暂扣税金：</label>
@@ -452,6 +453,7 @@
                 this.errorHideL();
                 this.select_merchantId = '';
                 this.tradeInfo.merchantOperationID = '';
+                this.tradeInfo.backendStoreCode='';
                 this.tradeInfo.activityOperationID = '';
                 this.tradeInfo.consumptionAmount = '';
                 this.tradeInfo.discountAmount = '';
