@@ -431,6 +431,7 @@
                 },
                 this.accountId='';
                 this.merchantIdList=[];
+                this.accountList=[];
                 this.addshow=true;
 
             },
