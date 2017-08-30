@@ -430,6 +430,8 @@
                     payType:5
                 },
                 this.accountId='';
+                this.merchantIdList=[];
+                this.accountList=[];
                 this.addshow=true;
 
             },

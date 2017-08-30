@@ -84,7 +84,7 @@
                                 <td>{{trlist.storeName}}</td>
                                 <td>{{trlist.merchantOperationID}}</td>
                                 <td>
-                                    <span v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</span>
+                                    <template v-if="!trlist.backendStoreCode">{{trlist.merchantName}}</template>
                                 </td>
                                 <td>{{trlist.subCompanyName}}</td>
                                 <td>{{trlist.cityName}}</td>
@@ -428,7 +428,7 @@
 			}
 		},
 		methods: {
-			// *** 请求账户列表数据
+			//请求账户列表数据
 			getZlists(data){
 				if (sessionStorage.getItem('isHttpin') == 1)return;
 				if (data.endValue < data.startValue) {

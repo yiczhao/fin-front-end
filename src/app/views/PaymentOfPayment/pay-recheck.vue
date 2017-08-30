@@ -187,10 +187,11 @@
                             </tr>
                             <tr>
                                 <td>合计：</td>
+                                <td></td>
                                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                                 <td>{{total.thirdPartySubsidyShould/100 | currency ''}}</td>
                                 <td>{{total.payAmount/100 | currency ''}}</td>
-                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td>{{total.suspensionTaxAmount/100 | currency ''}}</td><td></td><td></td><td></td><td></td><td></td>
                             </tr>
                         </table>
                     </div>
